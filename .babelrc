@@ -1,0 +1,29 @@
+{
+  "presets": [
+    [
+      "env",
+      {
+        "modules": false,
+        "targets": {
+          "browsers": [
+            "ie >= 10",
+            "Chrome >= 40"
+          ]
+        }
+      }
+    ],
+    [
+      "stage-0"
+    ],
+    [
+      "react"
+    ]
+  ],
+  "plugins": [
+    "transform-decorators-legacy",
+    "syntax-dynamic-import",
+    "transform-runtime",
+    ["import", { "libraryName": "antd", "style": "false" }],
+    ["react-intl", { "messagesDir": "./locale/messages/", "enforceDescriptions": "false" }]
+  ]
+}
