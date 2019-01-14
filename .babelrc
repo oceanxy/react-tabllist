@@ -20,10 +20,7 @@
     ]
   ],
   "plugins": [
-    "transform-decorators-legacy",
     "syntax-dynamic-import",
-    "transform-runtime",
-    ["import", { "libraryName": "antd", "style": "false" }],
-    ["react-intl", { "messagesDir": "./locale/messages/", "enforceDescriptions": "false" }]
+    "transform-runtime"
   ]
 }
