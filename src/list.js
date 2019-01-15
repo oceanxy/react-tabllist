@@ -1,14 +1,8 @@
 /**
  * @Author: Oceanxy
  * @Email: xieyang@hiynn.com
- * @Description: 列表/表格 组件
+ * @Description: react-tabllist
  * @Date: 2018-10-08 17:56:19
- * @history
- *    2.0 正式版
- *    3.0 加入 checkbox/radio/a/button，在数据里面定义对象的type字段为指定值即可；react 依赖 v16.4+
- *    3.1 加入行序号功能
- *    3.2 加入单元格点击事件
- *    3.3 加入数据更新时的动画
  * @LastModified: Oceanxy（xieyang@hiynn.com）
  * @LastModifiedTime: 2019-01-02 14:52:40
  */

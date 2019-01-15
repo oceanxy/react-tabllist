@@ -1,12 +1,3 @@
-.DS_STORE
-*.log
-*.tgz
-
 node_modules
-dist
-dist/scripts
-coverage
 
 .idea/
-
-.vscode

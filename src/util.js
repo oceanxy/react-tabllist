@@ -1,7 +1,7 @@
 /**
  * @Author: Oceanxy
  * @Email: xieyang@hiynn.com
- * @Description: 列表/表格 组件 工具类
+ * @Description: util
  * @Date: 2018-10-08 17:56:19
  * @LastModified: Oceanxy（xieyang@hiynn.com）
  * @LastModifiedTime: 2018-12-18 10:00:07

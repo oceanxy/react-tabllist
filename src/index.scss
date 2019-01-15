@@ -3,10 +3,6 @@
 }
 
 .list {
-  //* {
-  //  transition: all 400ms;
-  //}
-
   .list-cont {
     margin: 0;
     padding: 0;
@@ -38,16 +34,13 @@
         border: none;
         outline: none;
         cursor: pointer;
-        background: url(./images/btn-normal.png) no-repeat center / 100% 100%;
         transition: all 400ms;
 
         &:hover {
-          background-image: url(./images/btn-hover.png);
         }
       }
 
       &.active input[type=button] {
-        background-image: url(./images/btn-hover.png);
       }
 
       .list-cell {

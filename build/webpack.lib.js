@@ -1,11 +1,6 @@
-const path = require('path')
-const htmlWebpackPlugin = require("html-webpack-plugin");
-
 module.exports = {
   // 入口文件
-  entry: {
-    main: path.resolve(__dirname, '../examples/index.js')
-  },
+  entry: {},
   // 出口文件
   output: {},
   module: {
@@ -33,11 +28,5 @@ module.exports = {
         }
       }
     ]
-  },
-  plugins: [
-    new htmlWebpackPlugin({
-      template: path.join(__dirname, "../examples/index.html"),
-      filename: "index.html"
-    })
-  ]
+  }
 }

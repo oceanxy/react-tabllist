@@ -1,10 +1,12 @@
 const path = require('path')
 const merge = require('webpack-merge')
 const baseConfig = require('./webpack.lib')
+const htmlWebpackPlugin = require('html-webpack-plugin')
 
 let config = {
   mode: 'development',
   entry: {
+    main: path.resolve(__dirname, '../test/index.js'),
     vendors: [
       'react',
       'react-dom',
@@ -12,7 +14,7 @@ let config = {
     ]
   },
   output: {
-    path: path.resolve(__dirname, '../lib'),
+    path: path.resolve(__dirname, '../test'),
     filename: 'scripts/[name].js'
   },
   module: {
@@ -24,7 +26,7 @@ let config = {
           'style-loader',
           'css-loader',
           'postcss-loader',
-          'sass-loader?sourceMap'
+          'sass-loader'
         ]
       },
       {
@@ -39,11 +41,17 @@ let config = {
     ]
   },
   devServer: {
-    contentBase: path.resolve(__dirname, '../dist'),
+    contentBase: path.resolve(__dirname, '../test'),
     host: 'localhost',
     compress: true,
     port: 8080
-  }
+  },
+  plugins: [
+    new htmlWebpackPlugin({
+      template: path.join(__dirname, '../test/index.html'),
+      filename: 'index.html'
+    })
+  ]
 }
 
 module.exports = merge(baseConfig, config)

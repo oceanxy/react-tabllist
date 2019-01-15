@@ -1,19 +1,24 @@
 {
   "name": "react-tabllist",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "React-based customizable style table or list components that support event and callback functions.",
-  "main": "index.js",
+  "main": "./dist/react-tabllist",
   "scripts": {
-    "start": "webpack-dev-server --config=build/webpack.dev.js",
-    "build": "webpack --config=build/webpack.lib.js"
+    "start": "webpack-dev-server --config=build/webpack.dev",
+    "build": "webpack --config=build/webpack.config",
+    "buildmin": "webpack --config=build/webpack.config.min"
   },
   "keywords": [
     "react",
     "table",
     "list"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:oceanxy/react-tabllist.git"
+  },
   "author": "Oceanxy",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
