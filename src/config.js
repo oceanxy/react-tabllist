@@ -14,13 +14,13 @@ export default {
   ],
   property: {
     style: {
-      width: '94%',
+      width: '100%',
       margin: '0 auto',
-      height: 200
+      height: 300
     },
     list: {
       border: {
-        borderWidth: 0,
+        borderWidth: 1,
         borderStyle: 'solid',
         borderColor: '#f4f4f4'
       },
@@ -47,7 +47,7 @@ export default {
             },
             specialStyle: []
           },
-          spacing: 10,
+          spacing: 0,
           rowCheckBox: false,
           style: {
             height: 30

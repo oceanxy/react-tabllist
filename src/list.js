@@ -4,7 +4,7 @@
  * @Description: react-tabllist
  * @Date: 2018-10-08 17:56:19
  * @LastModified: Oceanxy（xieyang@hiynn.com）
- * @LastModifiedTime: 2019-01-02 14:52:40
+ * @LastModifiedTime: 2019-01-16 16:16:39
  */
 
 import _ from 'lodash'
@@ -421,7 +421,13 @@ class List extends Component {
         )
       ) {
         return [
-          <img src={icon.src} alt={icon.alt || ''} style={iconStyle} key={Math.random()} />,
+          <img
+            src={icon.src}
+            alt={icon.alt || ''}
+            style={iconStyle}
+            key={Math.random()}
+            className={icon.className}
+          />,
           <span key={Math.random()}>{icon.text || ''}</span>
         ]
       }
@@ -495,10 +501,11 @@ class List extends Component {
         return (
           <label key={Math.random()}>
             <input
-              type={cr.type}
               data-id={cr.uid}
               data-index={rowIndex}
+              type={cr.type}
               name={cr.type === 'radio' ? `${cr.name}-${container}` : cr.name}
+              className={cr.className}
               defaultChecked={selectedCur[rowIndex]}
               onInput={this.checkCR}
             />
@@ -507,13 +514,14 @@ class List extends Component {
         )
       }
 
-      // button 等会执行以下代码
+      // button 等标签会执行以下代码
       return (
         <input
-          type={cr.type}
           data-id={cr.uid}
           data-index={rowIndex}
+          type={cr.type}
           value={cr.value}
+          className={cr.className}
           onClick={cr.callback.bind(this, cr)}
         />
       )
@@ -612,7 +620,7 @@ class List extends Component {
                   ...listBorder
                 }}
               >
-                {show && !index ? '序号' : this.parsing(cell, 0)}
+                {show && !index ? 'number' : this.parsing(cell, 0)}
               </div>
             ))
           }
@@ -700,8 +708,8 @@ class List extends Component {
                   key={`${rowIndex}${index}`}
                 >
                   {
-                    serialNumberShow && index === 0
-                      ? typeof cellData === 'string' ? cellData : cellData.text.replace('{index}', rowIndex + 1)
+                    serialNumberShow && index === 0 && typeof cellData === 'string'
+                      ? cellData.replace('{index}', rowIndex + 1)
                       : this.parsing(cellData, rowIndex + 1, container)
                   }
                 </div>
@@ -741,9 +749,9 @@ class List extends Component {
     let headerData
     let bodyData
     if(showHeader && data.length) {
-      [headerData, ...bodyData] = data
+      [headerData, ...bodyData] = this.fillRow(data)
     } else {
-      bodyData = data
+      bodyData = this.fillRow(data)
     }
 
     const listClass = !Number.isNaN(parseInt(spacing)) && parseInt(spacing) > 0 ? '' : 'list-no-spacing'

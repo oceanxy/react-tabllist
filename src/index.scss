@@ -3,6 +3,9 @@
 }
 
 .list {
+  display: block;
+  overflow: hidden;
+
   .list-cont {
     margin: 0;
     padding: 0;
@@ -28,44 +31,20 @@
         transform: scale(1);
       }
 
-      input[type=button] {
-        width: 97px;
-        height: 30px;
-        border: none;
-        outline: none;
-        cursor: pointer;
-        transition: all 400ms;
-
-        &:hover {
-        }
-      }
-
-      &.active input[type=button] {
-      }
-
       .list-cell {
         display: table-cell;
         text-align: center;
         vertical-align: middle;
+        word-break: break-all;
         border-left: none !important;
-        box-sizing: border-box;
         @include background;
 
         & * {
           vertical-align: middle;
         }
 
-        img {
-          margin: 0 5px;
-        }
-
         &:last-child {
           border-right: none !important;
-        }
-
-        a {
-          color: currentColor;
-          text-decoration: none;
         }
       }
     }

@@ -1,0 +1,19 @@
+.test-link {
+  color: blue;
+}
+
+.test-btn {
+  height: 30px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: all 400ms;
+  width: 200px;
+  font-size: 18px;
+  color: #ffffff;
+  background: url(./images/btn-normal.png) no-repeat center / 100% 100%;
+
+  &:hover {
+    background: url(./images/btn-hover.png) no-repeat center / 100% 100%;
+  }
+}
