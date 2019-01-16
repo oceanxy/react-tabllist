@@ -12,7 +12,7 @@ import React, { Component } from 'react'
 import './index.scss'
 import * as util from './util'
 
-export default class List extends Component {
+class List extends Component {
   constructor(props) {
     super(props)
 
@@ -794,3 +794,5 @@ export default class List extends Component {
     )
   }
 }
+
+export default List

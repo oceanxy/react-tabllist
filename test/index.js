@@ -9,9 +9,18 @@
 
 import React from 'react'
 import ReactDOM from 'react-dom'
-import ReactTabllist from '../src'
+import Tabllist from '../src'
+
+const Demo = () => {
+  return (
+    <div>
+      <h1>demo：</h1>
+      <Tabllist />
+    </div>
+  )
+}
 
 ReactDOM.render(
-  <ReactTabllist />,
+  <Demo />,
   document.getElementById('root')
 )

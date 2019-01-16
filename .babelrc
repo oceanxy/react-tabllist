@@ -3,24 +3,16 @@
     [
       "env",
       {
-        "modules": false,
-        "targets": {
-          "browsers": [
-            "ie >= 10",
-            "Chrome >= 40"
-          ]
-        }
+        "targets": "> 0.25%, not dead"
       }
     ],
     [
       "stage-0"
     ],
-    [
-      "react"
-    ]
+    "react"
   ],
   "plugins": [
     "syntax-dynamic-import",
-    "transform-runtime"
+    "babel-plugin-transform-runtime"
   ]
 }
