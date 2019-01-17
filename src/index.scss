@@ -46,6 +46,15 @@
         &:last-child {
           border-right: none !important;
         }
+
+        label {
+          vertical-align: middle;
+
+          span, input {
+            vertical-align: middle;
+            padding: 0 5px;
+          }
+        }
       }
     }
   }

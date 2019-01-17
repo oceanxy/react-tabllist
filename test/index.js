@@ -7,9 +7,12 @@
  * @LastModifiedTime: 2019-01-15 09:39:55
  */
 
+import _ from 'lodash'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Tabllist from '../src'
+
+import rowBg from './images/row-bg.png'
 import './index.scss'
 
 const Demo = () => {
@@ -151,7 +154,7 @@ const Demo = () => {
               style: {
                 backgroundColor: '#1693ff',
                 color: '#ffffff',
-                width: 60
+                width: 80
               }
             },
             style: {
@@ -246,8 +249,48 @@ const Demo = () => {
           }
         }, 'row 4; column 3', 'row 4; column 4'
       ],
-      ['row 5; column 1', 'row 5; column 2', 'row 5; column 3', 'row 5; column 4'],
-      ['row 6; column 1', 'row 6; column 2', 'row 6; column 3', 'row 6; column 4'],
+      [
+        [
+          {
+            type: 'radio',
+            uid: '',
+            name: 'group1',
+            text: 'radio group 1-1',
+            className: 'test-radio'
+          },
+          {
+            type: 'radio',
+            uid: '',
+            name: 'group1',
+            text: 'radio group 2-1',
+            className: 'test-radio'
+          }
+        ],
+        'row 5; column 2',
+        'row 5; column 3',
+        'row 5; column 4'
+      ],
+      [
+        [
+          {
+            type: 'radio',
+            uid: '',
+            name: 'group2',
+            text: 'radio group 2-1',
+            className: 'test-radio'
+          },
+          {
+            type: 'radio',
+            uid: '',
+            name: 'group2',
+            text: 'radio group 2-2',
+            className: 'test-radio'
+          }
+        ],
+        'row 6; column 2',
+        'row 6; column 3',
+        'row 6; column 4'
+      ],
       [
         'row 7; column 1', 'row 7; column 2',
         {
@@ -299,15 +342,6 @@ const Demo = () => {
         },
         body: {
           row: {
-            serialNumber: {
-              show: true,
-              formatter: 'No.{index}',
-              style: {
-                backgroundColor: '#1693ff',
-                color: '#ffffff',
-                width: 60
-              }
-            },
             rowCheckBox: true,
             style: {
               height: 34
@@ -340,6 +374,72 @@ const Demo = () => {
       }
     }
   }
+  const option5 = {
+    data: _.range(10).map((i) => {
+      return [
+        {
+          type: 'link',
+          uid: '',
+          text: `test title ${i + 1}`,
+          event: 'onClick',
+          className: 'demo5-link',
+          data: {
+            datetime: '2019-01-17 17:58',
+            author: 'Oceanxy'
+          },
+          callback: (data) => {
+            alert(` author: ${data.author},\n datetime: ${data.datetime}`)
+          }
+        },
+        {
+          type: 'button',
+          uid: '',
+          value: `test button ${i + 1}`,
+          className: 'demo5-btn',
+          data: {
+            message: `you clicked button ${i + 1} !`
+          },
+          callback: (data) => {
+            alert(`${data.message}`)
+          }
+        }
+      ]
+    }),
+    property: {
+      style: {
+        padding: 10,
+        border: 'none',
+        background: '#060719',
+        width: 450,
+        height: 410,
+        margin: 0
+      },
+      list: {
+        border: {
+          borderWidth: 0
+        },
+        header: {
+          show: false
+        },
+        body: {
+          row: {
+            style: {
+              height: 40,
+              background: `url(${rowBg}) no-repeat center / 100% 100%`
+            }
+          },
+          cell: {
+            style: {
+              width: ',28%'
+            }
+          },
+          cellOfColumn: {
+            style: [{ textIndent: '2em', textAlign: 'left' }, { textAlign: 'center' }]
+          }
+        }
+      }
+    }
+  }
 
   return (
     <div className='container'>
@@ -349,11 +449,14 @@ const Demo = () => {
       <h1>demo2：Cell border and row background color</h1>
       <Tabllist property={option2.property} data={option2.data} />
 
-      <h1>demo3：Header and line number</h1>
+      <h1>demo3：Serial number and scrollable list</h1>
       <Tabllist property={option3.property} data={option3.data} />
 
-      <h1>demo4：Add another tag to the cell and list scrolling automatically</h1>
+      <h1>demo4：Object cell: Add another tag to the cell</h1>
       <Tabllist property={option4.property} data={option4.data} />
+
+      <h1>demo5：Use in actual projects</h1>
+      <Tabllist property={option5.property} data={option5.data} />
     </div>
   )
 }

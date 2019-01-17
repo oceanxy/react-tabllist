@@ -12,7 +12,7 @@ import React, { Component } from 'react'
 import './index.scss'
 import * as util from './util'
 
-class List extends Component {
+export default class extends Component {
   constructor(props) {
     super(props)
 
@@ -121,7 +121,7 @@ class List extends Component {
    * @param {object} preProps prev props
    * @param {object} preState prev state
    */
-  componentDidUpdate = (preProps, preState) => {
+  componentDidUpdate(preProps, preState) {
     const colWidth = this.getColClientWidth()
 
     if(colWidth.length) {
@@ -138,15 +138,17 @@ class List extends Component {
           style: { width: conWidth, height },
           list: { header: { show }, body, isScroll }
         },
-        transitionName
+        transitionName,
+        selected
       } = this.state
       const {
         style: { width: preConWidth, height: preHeight },
         list: { body: preBody, header: { show: preShow } }
       } = preState.property
-      const { width: iconWidth } = body.cell.iconStyle
+      const { cell, row } = body
+      const { width: iconWidth } = cell.iconStyle
       const { width: preIconWidth } = preBody.cell.iconStyle
-      const { transition } = body.row
+      const { transition, rowCheckBox } = row
 
       // 当滚动条显示时，重新计算header的宽度，和列表主体对齐
       if(show && !isScroll) {
@@ -181,6 +183,23 @@ class List extends Component {
       // 缓动动画
       if(transition && transitionName === 'list-row-start') {
         this.setState({ transitionName: 'list-row-start list-row-transition' })
+      }
+
+      // 如果开启了行选择功能且显示表头，根据每行的选择情况设置标题栏多选框的 indeterminate 状态
+      if(show && rowCheckBox) {
+        const rowCheckBoxArr = selected['rowCheckBox']
+        if(rowCheckBoxArr && !_.isEmpty(rowCheckBoxArr)) {
+          for(let i = 1, j = rowCheckBoxArr.length; i < j; i++) {
+            // 当某一行的选中状态为false且存在选中行的时候，设置标题栏多选框的 indeterminate 状态为true
+            if(!rowCheckBoxArr[i] && rowCheckBoxArr.join(',').indexOf('true') > -1) {
+              this.scroll
+                .parentNode
+                .querySelector('.list-header input[name=rowCheckBox]')
+                .indeterminate = true
+              break
+            }
+          }
+        }
       }
 
       // 列表滚动相关逻辑入口
@@ -273,9 +292,9 @@ class List extends Component {
    * @param {object} target 点击的input对象
    */
   checkCR = ({ target }) => {
-    const { selected, data: { json }, property } = this.state
+    const { selected, data, property } = this.state
     const { show: showHeader } = property.list.header
-    const selectedCur = selected
+    const selectedCur = _.cloneDeep(selected)
     const index = target.getAttribute('data-index')
     let targetName = target.name
 
@@ -283,7 +302,7 @@ class List extends Component {
 
     // 检测是否点击的标题栏的checkbox 且是否开启显示表头
     if(target.name === 'rowCheckBox' && index === '0' && showHeader) {
-      selectedCur[targetName] = new Array(json.length).fill(target.checked)
+      selectedCur[targetName] = new Array(data.length).fill(target.checked)
     } else {
       // 检测是否是radio。radio需要处理一下this.state.selected里与之对应的name属性
       if(target.type === 'radio') {
@@ -302,13 +321,13 @@ class List extends Component {
       // 如果触发的是每一行的行选择框且header的状态为开启，则检测是否body里面的每行都选中了
       // 根据此状态来给header里面的复选框加状态（全选/全不选）
       if(targetName === 'rowCheckBox' && showHeader) {
-        if(json.length === selectedCur[targetName].length) {
+        if(data.length === selectedCur[targetName].length) {
           for(let i = 1, k = selectedCur[targetName].length; i < k; i++) {
             if(!selectedCur[targetName][i]) {
               selectedCur[targetName][0] = false
               break
             }
-            if(i === json.length - 1) {
+            if(i === data.length - 1) {
               selectedCur[targetName][0] = true
             }
           }
@@ -492,7 +511,7 @@ class List extends Component {
 
     if(cr.type === 'radio' && !container) {
       /* eslint-disable no-console */
-      console.error('当input为radio时，setCellInput()的第三个参数“container”为必需参数，否则radio功能将失效！')
+      console.error('When the type attribute of the input tag is radio, the third parameter "container" of setCellInput() is a required parameter, otherwise the function will be invalid!')
       return null
     }
 
@@ -522,7 +541,7 @@ class List extends Component {
           type={cr.type}
           value={cr.value}
           className={cr.className}
-          onClick={cr.callback.bind(this, cr)}
+          onClick={cr.callback.bind(this, cr.data, cr)}
         />
       )
     }
@@ -802,5 +821,3 @@ class List extends Component {
     )
   }
 }
-
-export default List

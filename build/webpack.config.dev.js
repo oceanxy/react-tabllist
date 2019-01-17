@@ -5,6 +5,7 @@ const htmlWebpackPlugin = require('html-webpack-plugin')
 
 let config = {
   mode: 'development',
+  devtool: 'inline-source-map',
   entry: {
     'react-tabllist.dev': './test/index.js'
   },
