@@ -6,6 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --config build/webpack.config.dev",
     "demo": "webpack --config build/webpack.config.demo",
+    "pushdemo": "git subtree push --prefix demo origin gh-pages",
     "build": "webpack --config build/webpack.config.prod",
     "prepublish": "npm run build"
   },
