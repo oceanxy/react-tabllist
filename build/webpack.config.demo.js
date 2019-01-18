@@ -1,7 +1,6 @@
 const path = require('path')
 const merge = require('webpack-merge')
 const baseConfig = require('./webpack.base')
-const nodeExternals = require('webpack-node-externals')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 const htmlWebpackPlugin = require('html-webpack-plugin')
 
@@ -58,7 +57,7 @@ let config = {
   },
   plugins: [
     new htmlWebpackPlugin({
-      template: path.join(__dirname, '../test/index.html'),
+      template: './index.html',
       filename: 'index.html'
     })
   ]

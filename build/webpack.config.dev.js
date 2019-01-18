@@ -50,13 +50,13 @@ let config = {
         ]
       }
     ]
-  }
-  // plugins: [
-  //   new htmlWebpackPlugin({
-  //     template: path.join(__dirname, '../test/index.html'),
-  //     filename: 'index.html'
-  //   })
-  // ]
+  },
+  plugins: [
+    new htmlWebpackPlugin({
+      template: './index.html',
+      filename: 'index.html'
+    })
+  ]
 }
 
 module.exports = merge(baseConfig, config)
