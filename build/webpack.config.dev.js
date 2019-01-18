@@ -7,14 +7,14 @@ let config = {
   mode: 'development',
   devtool: 'inline-source-map',
   entry: {
-    'react-tabllist.dev': './test/index.js'
+    'react-tabllist.dev': './app/index.js'
   },
   output: {
     filename: '[name].js',
-    path: path.resolve(__dirname, '../test')
+    path: path.resolve(__dirname, '../app')
   },
   devServer: {
-    contentBase: path.join(__dirname, '../test'),
+    contentBase: path.join(__dirname, '../app'),
     host: 'localhost',
     compress: true,
     // open: true,

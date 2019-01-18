@@ -8,8 +8,8 @@
     "demo": "webpack --config build/webpack.config.demo",
     "splitdemo": "git subtree split -P demo -b gh-pages && git subtree split -P demo -b coding-pages",
     "pushdemo": "git subtree push --prefix demo github gh-pages && git subtree push --prefix demo coding coding-pages",
-    "push": "git push github master && git push coding master",
     "build": "webpack --config build/webpack.config.prod",
+    "push": "git push github master && git push coding master",
     "prepublish": "npm run build"
   },
   "keywords": [
@@ -35,6 +35,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "clean-webpack-plugin": "^1.0.0",
+    "codecov": "^3.1.0",
     "css-loader": "^2.1.0",
     "es6-promise": "^4.2.5",
     "eslint": "^5.12.0",

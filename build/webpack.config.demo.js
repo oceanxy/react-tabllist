@@ -7,10 +7,10 @@ const htmlWebpackPlugin = require('html-webpack-plugin')
 let config = {
   mode: 'production',
   entry: {
-    'react-tabllist.demo.min': './test/index.js'
+    'react-tabllist.demo.min': './app/index.js'
   },
   output: {
-    path: path.resolve(__dirname, '../demo'),
+    path: path.resolve(__dirname, '../examples'),
     filename: '[name].js',
     library: 'react-tabllist',
     libraryTarget: 'umd',

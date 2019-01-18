@@ -1,9 +1,46 @@
-# React-tabllist
-React-based customizable style table or list components that support event and callback functions.
+<h1 align="center">React-tabllist</h1>
+<div style="text-align:center; color: #999999">React-based customizable style table or list components that support event and callback functions.</div>
 
-### How to use: To be updated
+[![GitHub license](https://img.shields.io/github/license/oceanxy/react-tabllist.svg?style=plastic)](https://github.com/oceanxy/react-tabllist/blob/master/LICENSE)
+[![](https://img.shields.io/npm/v/react-tabllist.svg?style=plastic)](https://www.npmjs.com/package/react-tabllist)
+[![Build Status](https://travis-ci.org/oceanxy/react-tabllist.svg?branch=master)](https://travis-ci.org/oceanxy/react-tabllist)
+[![](https://img.shields.io/npm/dw/react-tabllist.svg?style=plastic)](https://www.npmjs.com/package/react-tabllist)
+[![](https://img.shields.io/npm/dependency-version/react-tabllist/peer/react.svg?style=plastic)]()
+[![](https://img.shields.io/github/last-commit/oceanxy/react-tabllist.svg?style=plastic)]()
 
-### Configuration
+[![](https://img.shields.io/bundlephobia/min/react-tabllist.svg?style=plastic)]()
+[![dependencies Status](https://david-dm.org/oceanxy/react-tabllist/status.svg)](https://david-dm.org/oceanxy/react-tabllist)
+[![devDependencies Status](https://david-dm.org/oceanxy/react-tabllist/dev-status.svg)](https://david-dm.org/oceanxy/react-tabllist?type=dev)
+[![peerDependencies Status](https://david-dm.org/oceanxy/react-tabllist/peer-status.svg)](https://david-dm.org/oceanxy/react-tabllist?type=peer)
+[![](https://img.shields.io/lgtm/alerts/g/apache/cloudstack.svg?style=plastic)](https://github.com/oceanxy/react-tabllist)
+[![](https://img.shields.io/lgtm/grade/java/g/apache/cloudstack.svg?style=plastic)](https://github.com/oceanxy/react-tabllist)
+[![](https://img.shields.io/gitter/room/oceanxy/react-tabllist.svg?style=plastic)](https://gitter.im/react-tabllist/community?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
+
+### Install
+
+```bash
+npm install react-tabllist --save
+```
+
+### Usage
+
+```jsx harmony
+import ReactTabllist from 'react-tabllist';
+ReactDOM.render(<DatePicker />, mountNode);
+```
+
+### Development
+
+```bash
+$ git clone git@github.com:oceanxy/react-tabllist.git
+$ cd react-tabllist
+$ npm install
+$ npm start
+```
+
+Open your browser and visit http://localhost:3001 , see more at [Development]().
+
+#### Configuration
 
 ```json5
 {
