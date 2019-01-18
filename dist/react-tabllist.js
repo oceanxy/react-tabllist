@@ -243,13 +243,13 @@ exports.default = {
   data: [['1st column', '2nd column', '3rd column'], ['1st cell', '2nd cell', '3rd cell']],
   property: {
     style: {
-      width: '94%',
+      width: '100%',
       margin: '0 auto',
-      height: 200
+      height: 300
     },
     list: {
       border: {
-        borderWidth: 0,
+        borderWidth: 1,
         borderStyle: 'solid',
         borderColor: '#f4f4f4'
       },
@@ -276,7 +276,7 @@ exports.default = {
             },
             specialStyle: []
           },
-          spacing: 10,
+          spacing: 0,
           rowCheckBox: false,
           style: {
             height: 30
@@ -404,16 +404,16 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @Description: react-tabllist
  * @Date: 2018-10-08 17:56:19
  * @LastModified: Oceanxy（xieyang@hiynn.com）
- * @LastModifiedTime: 2019-01-02 14:52:40
+ * @LastModifiedTime: 2019-01-16 16:16:39
  */
 
-var List = function (_Component) {
-  (0, _inherits3.default)(List, _Component);
+var _class = function (_Component) {
+  (0, _inherits3.default)(_class, _Component);
 
-  function List(props) {
-    (0, _classCallCheck3.default)(this, List);
+  function _class(props) {
+    (0, _classCallCheck3.default)(this, _class);
 
-    var _this = (0, _possibleConstructorReturn3.default)(this, (List.__proto__ || (0, _getPrototypeOf2.default)(List)).call(this, props));
+    var _this = (0, _possibleConstructorReturn3.default)(this, (_class.__proto__ || (0, _getPrototypeOf2.default)(_class)).call(this, props));
 
     _initialiseProps.call(_this);
 
@@ -433,7 +433,7 @@ var List = function (_Component) {
     return _this;
   }
 
-  (0, _createClass3.default)(List, [{
+  (0, _createClass3.default)(_class, [{
     key: 'componentDidMount',
 
 
@@ -470,6 +470,94 @@ var List = function (_Component) {
      * @param {object} preState prev state
      */
 
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(preProps, preState) {
+      var _this2 = this;
+
+      var colWidth = this.getColClientWidth();
+
+      if (colWidth.length) {
+        var _props$property$list$ = this.props.property.list.body.cell.style,
+            colCellWidth = _props$property$list$.width,
+            cellMinWidth = _props$property$list$.minWidth;
+        var _preProps$property$li = preProps.property.list.body.cell.style,
+            preColCellWidth = _preProps$property$li.width,
+            preCellMinWidth = _preProps$property$li.minWidth;
+        var _state = this.state,
+            _state$property = _state.property,
+            _state$property$style = _state$property.style,
+            conWidth = _state$property$style.width,
+            height = _state$property$style.height,
+            _state$property$list = _state$property.list,
+            show = _state$property$list.header.show,
+            body = _state$property$list.body,
+            isScroll = _state$property$list.isScroll,
+            transitionName = _state.transitionName,
+            selected = _state.selected;
+        var _preState$property = preState.property,
+            _preState$property$st = _preState$property.style,
+            preConWidth = _preState$property$st.width,
+            preHeight = _preState$property$st.height,
+            _preState$property$li = _preState$property.list,
+            preBody = _preState$property$li.body,
+            preShow = _preState$property$li.header.show;
+        var cell = body.cell,
+            row = body.row;
+        var iconWidth = cell.iconStyle.width;
+        var preIconWidth = preBody.cell.iconStyle.width;
+        var transition = row.transition,
+            rowCheckBox = row.rowCheckBox;
+
+        // 当滚动条显示时，重新计算header的宽度，和列表主体对齐
+
+        if (show && !isScroll) {
+          this.setState({ headerWidth: this.list1.clientWidth });
+        }
+
+        // 适应单元格宽度，用于组件自身状态或从父级传递的props发生变化时
+        if (preConWidth !== conWidth || iconWidth !== preIconWidth || colCellWidth !== preColCellWidth || cellMinWidth !== preCellMinWidth) {
+          // 避免css动画未执行完时获取的列宽不正确，400为css动画的持续时间，见index.scss文件
+          setTimeout(function () {
+            /**
+             * 组件更新之后，DOM结构已更新，此时重新设置每个单元格宽度
+             * 设置规则以props里面的width字段为准
+             * 详情见width字段说明
+             */
+            _this2.setState({ colWidth: colWidth });
+          }, colCellWidth === 'avg' ? 400 : 0);
+        }
+
+        // 适应滚动区域高度
+        if (parseInt(preHeight) !== parseInt(height) || preShow !== show) {
+          this.setState({
+            scrollHeight: util.setScrollHeight(this.state)
+          });
+        }
+
+        // 缓动动画
+        if (transition && transitionName === 'list-row-start') {
+          this.setState({ transitionName: 'list-row-start list-row-transition' });
+        }
+
+        // 如果开启了行选择功能且显示表头，根据每行的选择情况设置标题栏多选框的 indeterminate 状态
+        if (show && rowCheckBox) {
+          var rowCheckBoxArr = selected['rowCheckBox'];
+          if (rowCheckBoxArr && !_lodash2.default.isEmpty(rowCheckBoxArr)) {
+            for (var i = 1, j = rowCheckBoxArr.length; i < j; i++) {
+              // 当某一行的选中状态为false且存在选中行的时候，设置标题栏多选框的 indeterminate 状态为true
+              if (!rowCheckBoxArr[i] && rowCheckBoxArr.join(',').indexOf('true') > -1) {
+                this.scroll.parentNode.querySelector('.list-header input[name=rowCheckBox]').indeterminate = true;
+                break;
+              }
+            }
+          }
+        }
+
+        // 列表滚动相关逻辑入口
+        this.scrollList();
+      }
+    }
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
@@ -569,7 +657,13 @@ var List = function (_Component) {
 
 
         if (icon.src && typeof icon.src === 'string' && (icon.src.indexOf('http://') !== -1 || icon.src.indexOf('https://') !== -1 || icon.src.indexOf('data:image/') !== -1)) {
-          return [_react2.default.createElement('img', { src: icon.src, alt: icon.alt || '', style: iconStyle, key: Math.random() }), _react2.default.createElement(
+          return [_react2.default.createElement('img', {
+            src: icon.src,
+            alt: icon.alt || '',
+            style: iconStyle,
+            key: Math.random(),
+            className: icon.className
+          }), _react2.default.createElement(
             'span',
             { key: Math.random() },
             icon.text || ''
@@ -604,7 +698,7 @@ var List = function (_Component) {
 
       if (cr.type === 'radio' && !container) {
         /* eslint-disable no-console */
-        console.error('当input为radio时，setCellInput()的第三个参数“container”为必需参数，否则radio功能将失效！');
+        console.error('When the type attribute of the input tag is radio, the third parameter "container" of setCellInput() is a required parameter, otherwise the function will be invalid!');
         return null;
       }
 
@@ -614,10 +708,11 @@ var List = function (_Component) {
             'label',
             { key: Math.random() },
             _react2.default.createElement('input', {
-              type: cr.type,
               'data-id': cr.uid,
               'data-index': rowIndex,
+              type: cr.type,
               name: cr.type === 'radio' ? cr.name + '-' + container : cr.name,
+              className: cr.className,
               defaultChecked: selectedCur[rowIndex],
               onInput: this.checkCR
             }),
@@ -629,13 +724,14 @@ var List = function (_Component) {
           );
         }
 
-        // button 等会执行以下代码
+        // button 等标签会执行以下代码
         return _react2.default.createElement('input', {
-          type: cr.type,
           'data-id': cr.uid,
           'data-index': rowIndex,
+          type: cr.type,
           value: cr.value,
-          onClick: cr.callback.bind(this, cr)
+          className: cr.className,
+          onClick: cr.callback.bind(this, cr.data, cr)
         });
       }
 
@@ -653,11 +749,11 @@ var List = function (_Component) {
   }, {
     key: 'parsing',
     value: function parsing(cellData, rowIndex, container) {
-      var _this2 = this;
+      var _this3 = this;
 
       if (Array.isArray(cellData)) {
         return cellData.map(function (o, i) {
-          return _this2.parsing(o, i, container);
+          return _this3.parsing(o, i, container);
         });
       }
 
@@ -721,11 +817,11 @@ var List = function (_Component) {
   }, {
     key: 'loadHeader',
     value: function loadHeader(data) {
-      var _this3 = this;
+      var _this4 = this;
 
-      var _state = this.state,
-          property = _state.property,
-          colWidth = _state.colWidth;
+      var _state2 = this.state,
+          property = _state2.property,
+          colWidth = _state2.colWidth;
       var _property$list$header = property.list.header,
           style = _property$list$header.style,
           cellStyle = _property$list$header.cellStyle;
@@ -752,7 +848,7 @@ var List = function (_Component) {
                   minWidth: minWidth
                 }, listBorder)
               },
-              show && !index ? '序号' : _this3.parsing(cell, 0)
+              show && !index ? 'number' : _this4.parsing(cell, 0)
             );
           })
         );
@@ -771,12 +867,12 @@ var List = function (_Component) {
   }, {
     key: 'loadBody',
     value: function loadBody(bodyData, container) {
-      var _this4 = this;
+      var _this5 = this;
 
-      var _state2 = this.state,
-          colWidth = _state2.colWidth,
-          property = _state2.property,
-          transitionName = _state2.transitionName;
+      var _state3 = this.state,
+          colWidth = _state3.colWidth,
+          property = _state3.property,
+          transitionName = _state3.transitionName;
       var body = property.list.body;
       var _body$row = body.row,
           transition = _body$row.transition,
@@ -812,8 +908,8 @@ var List = function (_Component) {
             className: 'list-row ' + (transition ? transitionName : ''),
             key: rowIndex,
             style: isVisual && rowIndex % (rowVisualInterval * 2) >= rowVisualInterval ? (0, _extends3.default)({}, rowVisualStyle, specialRowStyle[rowIndex]) : (0, _extends3.default)({}, rowStyle, specialRowStyle[rowIndex]),
-            onMouseEnter: _this4.hover,
-            onMouseLeave: _this4.hover
+            onMouseEnter: _this5.hover,
+            onMouseLeave: _this5.hover
           },
           rowData.map(function (cellData, index) {
             return _react2.default.createElement(
@@ -831,7 +927,7 @@ var List = function (_Component) {
                 }, specialStyle[rowIndex], cellOfColumnStyle[index], listBorder),
                 key: '' + rowIndex + index
               },
-              serialNumberShow && index === 0 ? typeof cellData === 'string' ? cellData : cellData.text.replace('{index}', rowIndex + 1) : _this4.parsing(cellData, rowIndex + 1, container)
+              serialNumberShow && index === 0 && typeof cellData === 'string' ? cellData.replace('{index}', rowIndex + 1) : _this5.parsing(cellData, rowIndex + 1, container)
             );
           })
         );
@@ -846,18 +942,18 @@ var List = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this5 = this;
+      var _this6 = this;
 
-      var _state3 = this.state,
-          scrollHeight = _state3.scrollHeight,
-          headerWidth = _state3.headerWidth,
-          _state3$property = _state3.property,
-          conStyle = _state3$property.style,
-          _state3$property$list = _state3$property.list,
-          header = _state3$property$list.header,
-          body = _state3$property$list.body,
-          isScroll = _state3$property$list.isScroll,
-          data = _state3.data;
+      var _state4 = this.state,
+          scrollHeight = _state4.scrollHeight,
+          headerWidth = _state4.headerWidth,
+          _state4$property = _state4.property,
+          conStyle = _state4$property.style,
+          _state4$property$list = _state4$property.list,
+          header = _state4$property$list.header,
+          body = _state4$property$list.body,
+          isScroll = _state4$property$list.isScroll,
+          data = _state4.data;
       var showHeader = header.show,
           headerStyle = header.style;
 
@@ -874,12 +970,14 @@ var List = function (_Component) {
       var headerData = void 0;
       var bodyData = void 0;
       if (showHeader && data.length) {
-        var _data = (0, _toArray3.default)(data);
+        var _fillRow = this.fillRow(data);
 
-        headerData = _data[0];
-        bodyData = _data.slice(1);
+        var _fillRow2 = (0, _toArray3.default)(_fillRow);
+
+        headerData = _fillRow2[0];
+        bodyData = _fillRow2.slice(1);
       } else {
-        bodyData = data;
+        bodyData = this.fillRow(data);
       }
 
       var listClass = !(0, _isNan2.default)(parseInt(spacing)) && parseInt(spacing) > 0 ? '' : 'list-no-spacing';
@@ -905,7 +1003,7 @@ var List = function (_Component) {
           {
             className: 'list-body',
             ref: function ref(ele) {
-              return _this5.scroll = ele;
+              return _this6.scroll = ele;
             },
             style: {
               height: scrollHeight,
@@ -918,7 +1016,7 @@ var List = function (_Component) {
               className: 'list-cont',
               style: { borderSpacing: borderSpacing },
               ref: function ref(ele) {
-                return _this5.list1 = ele;
+                return _this6.list1 = ele;
               }
             },
             this.loadBody(bodyData, 'main')
@@ -929,7 +1027,7 @@ var List = function (_Component) {
               className: 'list-cont',
               style: { borderSpacing: borderSpacing },
               ref: function ref(ele) {
-                return _this5.list2 = ele;
+                return _this6.list2 = ele;
               }
             },
             this.loadBody(bodyData, 'support')
@@ -999,83 +1097,16 @@ var List = function (_Component) {
       return stateUpdate;
     }
   }]);
-  return List;
+  return _class;
 }(_react.Component);
 
 var _initialiseProps = function _initialiseProps() {
-  var _this6 = this;
-
-  this.componentDidUpdate = function (preProps, preState) {
-    var colWidth = _this6.getColClientWidth();
-
-    if (colWidth.length) {
-      var _props$property$list$ = _this6.props.property.list.body.cell.style,
-          colCellWidth = _props$property$list$.width,
-          cellMinWidth = _props$property$list$.minWidth;
-      var _preProps$property$li = preProps.property.list.body.cell.style,
-          preColCellWidth = _preProps$property$li.width,
-          preCellMinWidth = _preProps$property$li.minWidth;
-      var _state4 = _this6.state,
-          _state4$property = _state4.property,
-          _state4$property$styl = _state4$property.style,
-          conWidth = _state4$property$styl.width,
-          height = _state4$property$styl.height,
-          _state4$property$list = _state4$property.list,
-          show = _state4$property$list.header.show,
-          body = _state4$property$list.body,
-          isScroll = _state4$property$list.isScroll,
-          transitionName = _state4.transitionName;
-      var _preState$property = preState.property,
-          _preState$property$st = _preState$property.style,
-          preConWidth = _preState$property$st.width,
-          preHeight = _preState$property$st.height,
-          _preState$property$li = _preState$property.list,
-          preBody = _preState$property$li.body,
-          preShow = _preState$property$li.header.show;
-      var iconWidth = body.cell.iconStyle.width;
-      var preIconWidth = preBody.cell.iconStyle.width;
-      var transition = body.row.transition;
-
-      // 当滚动条显示时，重新计算header的宽度，和列表主体对齐
-
-      if (show && !isScroll) {
-        _this6.setState({ headerWidth: _this6.list1.clientWidth });
-      }
-
-      // 适应单元格宽度，用于组件自身状态或从父级传递的props发生变化时
-      if (preConWidth !== conWidth || iconWidth !== preIconWidth || colCellWidth !== preColCellWidth || cellMinWidth !== preCellMinWidth) {
-        // 避免css动画未执行完时获取的列宽不正确，400为css动画的持续时间，见index.scss文件
-        setTimeout(function () {
-          /**
-           * 组件更新之后，DOM结构已更新，此时重新设置每个单元格宽度
-           * 设置规则以props里面的width字段为准
-           * 详情见width字段说明
-           */
-          _this6.setState({ colWidth: colWidth });
-        }, colCellWidth === 'avg' ? 400 : 0);
-      }
-
-      // 适应滚动区域高度
-      if (parseInt(preHeight) !== parseInt(height) || preShow !== show) {
-        _this6.setState({
-          scrollHeight: util.setScrollHeight(_this6.state)
-        });
-      }
-
-      // 缓动动画
-      if (transition && transitionName === 'list-row-start') {
-        _this6.setState({ transitionName: 'list-row-start list-row-transition' });
-      }
-
-      // 列表滚动相关逻辑入口
-      _this6.scrollList();
-    }
-  };
+  var _this7 = this;
 
   this.scrollList = function (isInnerScroll, e) {
-    var list1 = _this6.list1,
-        list2 = _this6.list2,
-        _state5 = _this6.state,
+    var list1 = _this7.list1,
+        list2 = _this7.list2,
+        _state5 = _this7.state,
         scrollHeight = _state5.scrollHeight,
         _state5$property$list = _state5.property.list,
         isScroll = _state5$property$list.isScroll,
@@ -1084,22 +1115,22 @@ var _initialiseProps = function _initialiseProps() {
 
     if (list1 && list2) {
       // 删除上一次定时器，后续根据状态来判定是否定义新的定时器
-      clearInterval(_this6.marqueeInterval);
+      clearInterval(_this7.marqueeInterval);
 
       if (isInnerScroll || isInnerScroll === undefined) {
         // 检测滚动条件
         // 根据滚动条件控制列表主体容器的辅助容器的显示状态
         if (isScroll && list1.clientHeight >= parseInt(scrollHeight)) {
           if (isInnerScroll !== undefined && e.type === 'mouseleave') {
-            _this6.pause = false;
+            _this7.pause = false;
           }
-          if (!_this6.pause) {
+          if (!_this7.pause) {
             for (var i = 0; i < list2.children.length; i++) {
               list2.children[i].style.display = 'table-row';
             }
 
             // 设置定时器，实现列表滚动
-            _this6.marqueeInterval = setInterval(_this6.marquee, speed);
+            _this7.marqueeInterval = setInterval(_this7.marquee, speed);
           }
         } else {
           for (var _i = 0; _i < list2.children.length; _i++) {
@@ -1111,7 +1142,7 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.hover = function (e) {
-    var _state$property$list$2 = _this6.state.property.list.body.row.silent,
+    var _state$property$list$2 = _this7.state.property.list.body.row.silent,
         show = _state$property$list$2.show,
         style = _state$property$list$2.style;
     var target = e.target;
@@ -1146,21 +1177,21 @@ var _initialiseProps = function _initialiseProps() {
 
   this.checkCR = function (_ref) {
     var target = _ref.target;
-    var _state6 = _this6.state,
+    var _state6 = _this7.state,
         selected = _state6.selected,
-        json = _state6.data.json,
+        data = _state6.data,
         property = _state6.property;
     var showHeader = property.list.header.show;
 
-    var selectedCur = selected;
+    var selectedCur = _lodash2.default.cloneDeep(selected);
     var index = target.getAttribute('data-index');
     var targetName = target.name;
 
-    _this6.pause = true;
+    _this7.pause = true;
 
     // 检测是否点击的标题栏的checkbox 且是否开启显示表头
     if (target.name === 'rowCheckBox' && index === '0' && showHeader) {
-      selectedCur[targetName] = new Array(json.length).fill(target.checked);
+      selectedCur[targetName] = new Array(data.length).fill(target.checked);
     } else {
       // 检测是否是radio。radio需要处理一下this.state.selected里与之对应的name属性
       if (target.type === 'radio') {
@@ -1179,13 +1210,13 @@ var _initialiseProps = function _initialiseProps() {
       // 如果触发的是每一行的行选择框且header的状态为开启，则检测是否body里面的每行都选中了
       // 根据此状态来给header里面的复选框加状态（全选/全不选）
       if (targetName === 'rowCheckBox' && showHeader) {
-        if (json.length === selectedCur[targetName].length) {
+        if (data.length === selectedCur[targetName].length) {
           for (var i = 1, k = selectedCur[targetName].length; i < k; i++) {
             if (!selectedCur[targetName][i]) {
               selectedCur[targetName][0] = false;
               break;
             }
-            if (i === json.length - 1) {
+            if (i === data.length - 1) {
               selectedCur[targetName][0] = true;
             }
           }
@@ -1195,14 +1226,14 @@ var _initialiseProps = function _initialiseProps() {
       }
     }
 
-    _this6.setState({
+    _this7.setState({
       selected: selectedCur
     });
   };
 
   this.getColClientWidth = function () {
-    var list1 = _this6.list1,
-        props = _this6.props;
+    var list1 = _this7.list1,
+        props = _this7.props;
     var borderWidth = props.property.list.border.borderWidth;
 
     var width = [];
@@ -1217,8 +1248,8 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.marquee = function () {
-    var list1 = _this6.list1,
-        scroll = _this6.scroll;
+    var list1 = _this7.list1,
+        scroll = _this7.scroll;
 
 
     if (list1 && scroll) {
@@ -1273,7 +1304,7 @@ var _initialiseProps = function _initialiseProps() {
   };
 };
 
-exports.default = List;
+exports.default = _class;
 
 /***/ }),
 /* 10 */
@@ -1348,7 +1379,7 @@ if(false) {}
 
 exports = module.exports = __webpack_require__(19)(false);
 // Module
-exports.push([module.i, ".list .list-cont {\n  margin: 0;\n  padding: 0;\n  display: table;\n  width: 100%;\n  height: auto;\n  transition: all 400ms; }\n  .list .list-cont .list-row {\n    display: table-row;\n    list-style: none;\n    height: 58px;\n    transition: all 300ms cubic-bezier(0, 0, 0.58, 1);\n    background: no-repeat center / 100% 100%; }\n    .list .list-cont .list-row.list-row-start {\n      transform: scale(0.8);\n      opacity: 0; }\n    .list .list-cont .list-row.list-row-transition {\n      opacity: 1;\n      transform: scale(1); }\n    .list .list-cont .list-row input[type=button] {\n      width: 97px;\n      height: 30px;\n      border: none;\n      outline: none;\n      cursor: pointer;\n      transition: all 400ms; }\n    .list .list-cont .list-row .list-cell {\n      display: table-cell;\n      text-align: center;\n      vertical-align: middle;\n      border-left: none !important;\n      box-sizing: border-box;\n      background: no-repeat center / 100% 100%; }\n      .list .list-cont .list-row .list-cell * {\n        vertical-align: middle; }\n      .list .list-cont .list-row .list-cell img {\n        margin: 0 5px; }\n      .list .list-cont .list-row .list-cell:last-child {\n        border-right: none !important; }\n      .list .list-cont .list-row .list-cell a {\n        color: currentColor;\n        text-decoration: none; }\n\n.list .list-header .list-row {\n  background: no-repeat center / 100% 100%; }\n  .list .list-header .list-row .list-cell {\n    border-bottom: none !important; }\n\n.list .list-body {\n  width: 100%; }\n  .list .list-body .list-cont {\n    border-collapse: separate; }\n  .list .list-body .list-cell {\n    color: #666666; }\n\n.list.list-no-spacing .list-cell {\n  border-top: none !important; }\n", ""]);
+exports.push([module.i, ".list {\n  display: block;\n  overflow: hidden; }\n  .list .list-cont {\n    margin: 0;\n    padding: 0;\n    display: table;\n    width: 100%;\n    height: auto;\n    transition: all 400ms; }\n    .list .list-cont .list-row {\n      display: table-row;\n      list-style: none;\n      height: 58px;\n      transition: all 300ms cubic-bezier(0, 0, 0.58, 1);\n      background: no-repeat center / 100% 100%; }\n      .list .list-cont .list-row.list-row-start {\n        transform: scale(0.8);\n        opacity: 0; }\n      .list .list-cont .list-row.list-row-transition {\n        opacity: 1;\n        transform: scale(1); }\n      .list .list-cont .list-row .list-cell {\n        display: table-cell;\n        text-align: center;\n        vertical-align: middle;\n        word-break: break-all;\n        border-left: none !important;\n        background: no-repeat center / 100% 100%; }\n        .list .list-cont .list-row .list-cell * {\n          vertical-align: middle; }\n        .list .list-cont .list-row .list-cell:last-child {\n          border-right: none !important; }\n        .list .list-cont .list-row .list-cell label {\n          vertical-align: middle; }\n          .list .list-cont .list-row .list-cell label span, .list .list-cont .list-row .list-cell label input {\n            vertical-align: middle;\n            padding: 0 5px; }\n  .list .list-header .list-row {\n    background: no-repeat center / 100% 100%; }\n    .list .list-header .list-row .list-cell {\n      border-bottom: none !important; }\n  .list .list-body {\n    width: 100%; }\n    .list .list-body .list-cont {\n      border-collapse: separate; }\n    .list .list-body .list-cell {\n      color: #666666; }\n  .list.list-no-spacing .list-cell {\n    border-top: none !important; }\n", ""]);
 
 
 
