@@ -18,6 +18,9 @@ jobs: # a collection of steps
       - run:
           name: demo
           command: npm run demo
+      - run:
+          name: test
+          command: npm start
       - run: # run coverage report
           name: code-coverage
           command: './node_modules/.bin/nyc report --reporter=text-lcov'
@@ -27,4 +30,4 @@ workflows:
     jobs:
       - build
       - demo
-      - code-coverage
+      - test
