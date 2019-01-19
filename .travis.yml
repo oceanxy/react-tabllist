@@ -7,9 +7,11 @@ env:
     - BUILD_TIMEOUT=10000
 
 install:
+  - npm install istanbul --save-dev
   - npm install codecov --save-dev
 
 script:
+  -
   - istanbul cover ./node_modules/mocha/bin/_mocha --reporter lcovonly -- -R spec
   - codecov
 
