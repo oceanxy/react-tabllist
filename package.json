@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --config build/webpack.config.dev",
-    "demo": "webpack --config build/webpack.config.demo",
+    "test": "webpack --config build/webpack.config.demo",
+    "demo": "npm run test",
     "splitdemo": "git subtree split -P demo -b gh-pages && git subtree split -P demo -b coding-pages",
     "pushdemo": "git subtree push --prefix demo github gh-pages && git subtree push --prefix demo coding coding-pages",
     "build": "webpack --config build/webpack.config.prod",

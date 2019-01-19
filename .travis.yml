@@ -32,7 +32,7 @@ install:
   - yarn
 
 scripts:
-  - npm run demo
+  - npm test
   - npm run build
 
 branches:
