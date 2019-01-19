@@ -20,21 +20,21 @@
 #  only:
 #    - master
 
-language: node_js
-node_js:
-  - 8.12.0
-
-env:
-  global:
-    - BUILD_TIMEOUT=10000
-
-install:
-  - yarn
-
-scripts:
-  - npm test
-  - npm run build
-
-branches:
-  only:
-    - master
+#language: node_js
+#node_js:
+#  - 8.12.0
+#
+#env:
+#  global:
+#    - BUILD_TIMEOUT=10000
+#
+#install:
+#  - yarn
+#
+#scripts:
+#  - npm test
+#  - npm run build
+#
+#branches:
+#  only:
+#    - master

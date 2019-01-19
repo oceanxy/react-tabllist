@@ -5,7 +5,8 @@
 
 [![GitHub License](https://img.shields.io/github/license/oceanxy/react-tabllist.svg?style=plastic)](https://github.com/oceanxy/react-tabllist/blob/master/LICENSE)
 [![NPM Version](https://img.shields.io/npm/v/react-tabllist.svg?style=plastic)](https://www.npmjs.com/package/react-tabllist)
-[![CircleCI Status](https://img.shields.io/circleci/project/github/oceanxy/react-tabllist/master.svg?style=plastic)](https://circleci.com/gh/oceanxy/react-tabllist/tree/master)
+<!--[![CircleCI Status](https://img.shields.io/circleci/project/github/oceanxy/react-tabllist/master.svg?style=plastic)](https://circleci.com/gh/oceanxy/react-tabllist/tree/master)-->
+[![TravisCI Status](https://img.shields.io/travis/oceanxy/react-tabllist/master.svg?style=plastic)](https://www.travis-ci.org/oceanxy/react-tabllist)
 [![NPM Download](https://img.shields.io/npm/dw/react-tabllist.svg?style=plastic)](https://www.npmjs.com/package/react-tabllist)
 [![Dependency React](https://img.shields.io/npm/dependency-version/react-tabllist/peer/react.svg?style=plastic)]()
 [![Last Commit](https://img.shields.io/github/last-commit/oceanxy/react-tabllist.svg?style=plastic)]()
