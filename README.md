@@ -3,20 +3,21 @@
 
 ---
 
-[![GitHub License](https://img.shields.io/github/license/oceanxy/react-tabllist.svg?style=plastic)](https://github.com/oceanxy/react-tabllist/blob/master/LICENSE)
-[![NPM Version](https://img.shields.io/npm/v/react-tabllist.svg?style=plastic)](https://www.npmjs.com/package/react-tabllist)
-<!--[![CircleCI Status](https://img.shields.io/circleci/project/github/oceanxy/react-tabllist/master.svg?style=plastic)](https://circleci.com/gh/oceanxy/react-tabllist/tree/master)-->
-[![TravisCI Status](https://img.shields.io/travis/oceanxy/react-tabllist/master.svg?style=plastic)](https://www.travis-ci.org/oceanxy/react-tabllist)
-[![NPM Download](https://img.shields.io/npm/dw/react-tabllist.svg?style=plastic)](https://www.npmjs.com/package/react-tabllist)
-[![Dependency React](https://img.shields.io/npm/dependency-version/react-tabllist/peer/react.svg?style=plastic)]()
-[![Last Commit](https://img.shields.io/github/last-commit/oceanxy/react-tabllist.svg?style=plastic)]()
+[![GitHub License](https://img.shields.io/github/license/oceanxy/react-tabllist.svg)](https://github.com/oceanxy/react-tabllist/blob/master/LICENSE)
+[![NPM Version](https://img.shields.io/npm/v/react-tabllist.svg)](https://www.npmjs.com/package/react-tabllist)
 
-[![Minified Size](https://img.shields.io/bundlephobia/min/react-tabllist.svg?style=plastic)]()
+<!--[![TravisCI Status](https://img.shields.io/travis/oceanxy/react-tabllist/master.svg)](https://www.travis-ci.org/oceanxy/react-tabllist)-->
+[![CircleCI Status](https://img.shields.io/circleci/project/github/oceanxy/react-tabllist/master.svg)](https://circleci.com/gh/oceanxy/react-tabllist)
+[![NPM Download](https://img.shields.io/npm/dw/react-tabllist.svg)](https://www.npmjs.com/package/react-tabllist)
+[![Dependency React](https://img.shields.io/npm/dependency-version/react-tabllist/peer/react.svg)]()
+[![Last Commit](https://img.shields.io/github/last-commit/oceanxy/react-tabllist.svg)]()
+
+[![Minified Size](https://img.shields.io/bundlephobia/min/react-tabllist.svg)]()
 [![Dependencies Status](https://david-dm.org/oceanxy/react-tabllist/status.svg)](https://david-dm.org/oceanxy/react-tabllist)
 [![DevDependencies Status](https://david-dm.org/oceanxy/react-tabllist/dev-status.svg)](https://david-dm.org/oceanxy/react-tabllist?type=dev)
 [![PeerDependencies Status](https://david-dm.org/oceanxy/react-tabllist/peer-status.svg)](https://david-dm.org/oceanxy/react-tabllist?type=peer)
-[![Code Qualite](https://img.shields.io/lgtm/grade/javascript/g/oceanxy/react-tabllist.svg?style=plastic)](https://lgtm.com/projects/g/oceanxy/react-tabllist/context:javascript)
-[![Gitter](https://img.shields.io/gitter/room/oceanxy/react-tabllist.svg?style=plastic)](https://gitter.im/react-tabllist/community?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
+[![Code Qualite](https://img.shields.io/lgtm/grade/javascript/g/oceanxy/react-tabllist.svg)](https://lgtm.com/projects/g/oceanxy/react-tabllist/context:javascript)
+[![Gitter](https://img.shields.io/gitter/room/oceanxy/react-tabllist.svg)](https://gitter.im/react-tabllist/community?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
 
 ### Install
 
