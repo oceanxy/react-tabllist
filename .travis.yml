@@ -7,8 +7,9 @@ env:
     - BUILD_TIMEOUT=10000
 
 install:
-  - npm install istanbul --save-dev
-  - npm install codecov --save-dev
+  - yarn add istanbul --dev
+  - yarn add codecov --dev
+  - yarn add mocha --dev
 
 script:
   -
