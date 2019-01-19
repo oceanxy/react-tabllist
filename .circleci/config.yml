@@ -13,6 +13,12 @@ jobs: # a collection of steps
           # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
+          name: install-yarn
+          command: 'sudo npm install -g yarn'
+#      - run:
+#          name: install-pkg
+#          command: 'sudo yarn global add codecov istanbul mocha'
+      - run:
           name: build
           command: npm run build
       - run:
