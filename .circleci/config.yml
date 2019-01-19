@@ -18,9 +18,9 @@ jobs: # a collection of steps
       - run:
           name: install-package
           command: 'sudo yarn'
-      #      - run:
-      #          name: install-other-pkg
-      #          command: 'sudo yarn global add codecov istanbul mocha'
+      - run:
+          name: install-other-pkg
+          command: 'sudo yarn global add git git-subtree codecov istanbul mocha'
       - run:
           name: build-demo
           command: npm run test
