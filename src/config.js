@@ -24,6 +24,8 @@ export default {
         borderStyle: 'solid',
         borderColor: '#f4f4f4'
       },
+      speed: 50,
+      isScroll: true,
       header: {
         show: true,
         style: {
@@ -85,9 +87,7 @@ export default {
             height: 'auto'
           }
         }
-      },
-      speed: 50,
-      isScroll: true
+      }
     }
   }
 }
