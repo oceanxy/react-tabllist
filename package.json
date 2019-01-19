@@ -7,8 +7,7 @@
     "start": "webpack-dev-server --config build/webpack.config.dev",
     "test": "webpack --config build/webpack.config.demo",
     "demo": "npm run test",
-    "splitdemo": "git subtree split -P examples -b gh-pages && git subtree split -P examples -b coding-pages",
-    "pushdemo": "git subtree push --prefix examples github gh-pages && git subtree push --prefix examples coding coding-pages",
+    "pushdemo": "git subtree push -P examples github gh-pages && git subtree push -P examples coding coding-pages",
     "build": "webpack --config build/webpack.config.prod",
     "push": "git push github master && git push coding master",
     "prepublish": "npm run build"
