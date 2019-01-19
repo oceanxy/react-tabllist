@@ -22,8 +22,11 @@ jobs: # a collection of steps
           name: install-other-pkg
           command: 'sudo yarn global add git git-subtree codecov istanbul mocha'
       - run:
+          name: delete-branch
+          command: npm run deletebranch
+      - run:
           name: build-demo
-          command: npm run test
+          command: npm run demo
       - run:
           name: split-demo
           command: npm run splitdemo
