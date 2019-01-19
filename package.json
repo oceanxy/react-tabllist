@@ -65,7 +65,6 @@
     "react-dom": "^16.7.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
-    "travis-ci": "^2.2.0",
     "uglifyjs-webpack-plugin": "^2.1.1",
     "url-loader": "^1.1.2",
     "webpack": "^4.28.4",
