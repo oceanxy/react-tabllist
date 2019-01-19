@@ -4,8 +4,7 @@
   "description": "React-based customizable style table or list components that support event and callback functions.",
   "main": "index.js",
   "scripts": {
-    "test": "webpack-dev-server --config build/webpack.config.dev",
-    "start": "npm test",
+    "start": "webpack-dev-server --config build/webpack.config.dev",
     "demo": "webpack --config build/webpack.config.demo",
     "splitdemo": "git subtree split -P demo -b gh-pages && git subtree split -P demo -b coding-pages",
     "pushdemo": "git subtree push --prefix demo github gh-pages && git subtree push --prefix demo coding coding-pages",

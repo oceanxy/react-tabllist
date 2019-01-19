@@ -22,11 +22,19 @@
 
 language: node_js
 node_js:
-  - "8"
+  - 8.12.0
 
 env:
   global:
     - BUILD_TIMEOUT=10000
 
 install:
-  - npm install
+  - yarn
+
+scripts:
+  - npm run demo
+  - npm run build
+
+branches:
+  only:
+    - master
