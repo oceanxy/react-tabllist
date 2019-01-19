@@ -25,6 +25,9 @@ jobs: # a collection of steps
           name: build-demo
           command: npm run test
       - run:
+          name: split-demo
+          command: npm run splitdemo
+      - run:
           name: push-demo-to-gh-pages
           command: npm run pushdemo
 #      - run: # run coverage report
