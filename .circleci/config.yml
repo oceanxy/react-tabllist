@@ -22,11 +22,11 @@ jobs: # a collection of steps
       #          name: install-other-pkg
       #          command: 'sudo yarn global add codecov istanbul mocha'
       - run:
-          name: build
-          command: npm run build
+          name: build-demo
+          command: npm run test
       - run:
-          name: test
-          command: npm test
+          name: push-demo-to-gh-pages
+          command: npm run pushdemo
 #      - run: # run coverage report
 #          name: code-coverage
 #          command: './node_modules/.bin/nyc report --reporter=text-lcov'
