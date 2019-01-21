@@ -1,25 +1,3 @@
-#language: node_js
-#node_js:
-#  - 8.12.0
-#
-#env:
-#  global:
-#    - BUILD_TIMEOUT=10000
-#
-#install:
-#  - yarn add istanbul --dev
-#  - yarn add codecov --dev
-#  - yarn add mocha --dev
-#
-#script:
-#  -
-#  - istanbul cover ./node_modules/mocha/bin/_mocha --reporter lcovonly -- -R spec
-#  - codecov
-#
-#branches:
-#  only:
-#    - master
-
 language: node_js
 node_js:
   - 8.12.0
@@ -31,8 +9,9 @@ env:
 install:
   - yarn
 
-scripts: true
-  - npm run build
+scripts:
+  - npm run demo
+  - npm run push-demo
 
 branches:
   only:

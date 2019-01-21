@@ -2,6 +2,7 @@ const path = require('path')
 const merge = require('webpack-merge')
 const baseConfig = require('./webpack.base')
 const htmlWebpackPlugin = require('html-webpack-plugin')
+const stylelintWebpackPlugin = require('stylelint-webpack-plugin')
 
 let config = {
   mode: 'development',
@@ -55,6 +56,13 @@ let config = {
     new htmlWebpackPlugin({
       template: './index.html',
       filename: 'index.html'
+    }),
+    new stylelintWebpackPlugin({
+      context: 'src',
+      files: 'style/css/*.scss',
+      failOnError: false,
+      quiet: true,
+      fix: true
     })
   ]
 }

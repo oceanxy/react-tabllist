@@ -1,7 +1,5 @@
 # react-tabllist change log
 
-React depends on v16.4+
-
 ---
 
 ### Alpha
@@ -19,3 +17,4 @@ React depends on v16.4+
 #### 1.0.6 Custom className attribute: The tags inside the cell (such as: button, a, input, etc.) can customize the className property.
 #### 1.0.7 [Unpublished]
 #### 1.0.8 Adjust the frame structure, add examples and app directories, and improve the README.md file.
+#### 1.0.9 Complete WebPack development framework;Add unit test;add codecov
