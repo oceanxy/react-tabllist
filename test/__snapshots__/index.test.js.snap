@@ -1,5 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`exports modules correctly 1`] = `
+Array [
+  "defaultProps",
+]
+`;
+
 exports[`react-tabllist dist files exports modules correctly 1`] = `
 Array [
   "default",
