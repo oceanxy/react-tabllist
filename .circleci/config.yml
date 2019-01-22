@@ -20,7 +20,7 @@ jobs:
       - save_cache:
           key: dependency-cache-{{ checksum "package.json" }}
           path:
-            - ./node_modules
+            - node_modules
       - run:
           name: test-stylelint
           command: yarn lint
