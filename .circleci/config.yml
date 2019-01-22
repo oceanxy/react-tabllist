@@ -19,8 +19,7 @@ jobs:
           command: yarn
       - save_cache:
           key: dependency-cache-{{ checksum "package.json" }}
-          path:
-            - ./node_modules
+          path: ~/react-tabllist/node_modules
       - run:
           name: test-stylelint
           command: yarn lint

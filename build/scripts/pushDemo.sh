@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 git remote remove origin git@github.com:oceanxy/react-tabllist.git
 git remote add github git@github.com:oceanxy/react-tabllist.git
