@@ -6,20 +6,24 @@ jobs:
       - image: circleci/node:8.12.0
     steps:
       - checkout
-      - restore_cache: # special step to restore the dependency cache
-          # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
-          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: update-npm
+          command: sudo npm install -g npm@latest
       - run:
           name: install-yarn
           command: sudo npm install -g yarn
-      - run:
-          name: install-package
-          command: sudo yarn
-      - save_cache:
+      - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
+          name: install-package
+          command: yarn
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          path:
+            - ./node_modules
+      - run:
           name: test-stylelint
-          command: sudo yarn lint
+          command: yarn lint
       - run:
           name: run-unit-test-and-uploading-reports
-          command: sudo yarn test
+          command: yarn test
