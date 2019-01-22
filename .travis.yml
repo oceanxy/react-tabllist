@@ -9,7 +9,9 @@ env:
 install:
   - yarn
 
-scripts: yarn demo && yarn push-demo
+scripts:
+  - skip yarn test
+  - yarn demo && yarn push-demo
 
 branches:
   only:
