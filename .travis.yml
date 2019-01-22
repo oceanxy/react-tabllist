@@ -6,6 +6,9 @@ env:
   global:
     - BUILD_TIMEOUT=10000
 
+before_install:
+  - chmod +x build/scripts/pushDemo.sh
+
 install:
   - yarn
 
