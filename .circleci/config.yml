@@ -8,10 +8,10 @@ jobs:
       - checkout
       - run:
           name: update-npm
-          command: sudo npm install -g npm@latest
+          command: 'sudo npm install -g npm@latest'
       - run:
           name: install-yarn
-          command: sudo npm install -g yarn
+          command: 'sudo npm install -g yarn'
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
       - run:

@@ -10,8 +10,7 @@ install:
   - yarn
 
 script:
-#  - skip yarn test
-  - yarn demo && yarn push-demo
+  - yarn ci-demo
 
 branches:
   only:

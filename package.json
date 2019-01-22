@@ -8,6 +8,7 @@
     "test": "jest && codecov",
     "demo": "webpack --config build/webpack.config.demo",
     "push-demo": "git subtree push -P examples github gh-pages && git subtree push -P examples coding coding-pages",
+    "ci-demo": "build/scripts/pushDemo.sh",
     "push": "git push github master && git push coding master",
     "build": "webpack --config build/webpack.config.prod",
     "prepublish": "npm run build",
