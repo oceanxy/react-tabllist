@@ -1,23 +1,26 @@
-version: 2 # use CircleCI 2.0
-jobs: # a collection of steps
-  build: # runs not using Workflows must have a `build` job as entry point
-    working_directory: ~/react-tabllist # directory where steps will run
-    docker: # run the steps with Docker
-      - image: circleci/node:8.12.0 # ...with this image as the primary container; this is where all `steps` will run
-    steps: # a collection of executable commands
-      - checkout # special step to check out source code to working directory
+version: 2
+jobs:
+  build:
+    working_directory: ~/react-tabllist
+    docker:
+      - image: circleci/node:8.12.0
+    steps:
+      - checkout
       - run:
           name: update-npm
-          command: 'sudo npm install -g npm@latest'
+          command: npm install -g npm@latest
       - restore_cache: # special step to restore the dependency cache
           # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
           name: install-yarn
-          command: 'sudo npm install -g yarn'
+          command: npm install -g yarn
       - run:
           name: install-package
-          command: 'sudo yarn'
+          command: yarn
+      - run:
+          name: test-stylelint
+          command: yarn lint
       - run:
           name: run-unit-test-and-uploading-reports
-          command: npm run test
+          command: yarn test

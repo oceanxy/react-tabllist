@@ -8,10 +8,10 @@
     "test": "jest && codecov",
     "demo": "webpack --config build/webpack.config.demo",
     "push-demo": "git subtree push -P examples github gh-pages && git subtree push -P examples coding coding-pages",
-    "build": "webpack --config build/webpack.config.prod",
     "push": "git push github master && git push coding master",
+    "build": "webpack --config build/webpack.config.prod",
     "prepublish": "npm run build",
-    "lint-check": "stylelint-config-prettier-check"
+    "lint": "stylelint-config-prettier-check"
   },
   "keywords": [
     "react",
@@ -52,7 +52,6 @@
     "babel-jest": "^23.6.0",
     "babel-loader": "^8.0.5",
     "clean-webpack-plugin": "^1.0.0",
-    "codecov": "^3.1.0",
     "css-loader": "^2.1.0",
     "es6-promise": "^4.2.5",
     "eslint": "^5.12.0",

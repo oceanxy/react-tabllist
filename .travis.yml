@@ -9,9 +9,7 @@ env:
 install:
   - yarn
 
-scripts:
-  - npm run demo
-  - npm run push-demo
+scripts: yarn demo && yarn push-demo
 
 branches:
   only:

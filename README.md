@@ -4,12 +4,12 @@
 ---
 
 <!--[![TravisCI Status](https://img.shields.io/travis/oceanxy/react-tabllist/master.svg)](https://www.travis-ci.org/oceanxy/react-tabllist)-->
-<!--[![codecov](https://codecov.io/gh/oceanxy/react-tabllist/branch/master/graph/badge.svg)](https://codecov.io/gh/oceanxy/react-tabllist)-->
 
 [![GitHub License](https://img.shields.io/github/license/oceanxy/react-tabllist.svg)](https://github.com/oceanxy/react-tabllist/blob/master/LICENSE)
 [![NPM Version](https://img.shields.io/npm/v/react-tabllist.svg)](https://www.npmjs.com/package/react-tabllist)
 [![Minified Size](https://img.shields.io/bundlephobia/min/react-tabllist.svg)](https://bundlephobia.com/result?p=react-tabllist)
 [![CircleCI Status](https://img.shields.io/circleci/project/github/oceanxy/react-tabllist/master.svg)](https://circleci.com/gh/oceanxy/react-tabllist)
+[![Codecov](https://img.shields.io/codecov/c/github/oceanxy/react-tabllist/master.svg)](https://codecov.io/gh/oceanxy/react-tabllist)
 [![NPM Download](https://img.shields.io/npm/dw/react-tabllist.svg)](https://www.npmjs.com/package/react-tabllist)
 [![Dependency React](https://img.shields.io/npm/dependency-version/react-tabllist/peer/react.svg)]()
 [![Last Commit](https://img.shields.io/github/last-commit/oceanxy/react-tabllist.svg)](https://github.com/oceanxy/react-tabllist)
@@ -30,7 +30,7 @@ npm install react-tabllist --save
 
 ```jsx harmony
 import ReactTabllist from 'react-tabllist';
-ReactDOM.render(<DatePicker />, mountNode);
+ReactDOM.render(<ReactTabllist />, mountNode);
 ```
 
 ### Development
