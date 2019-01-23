@@ -18,8 +18,8 @@ git remote -v
 
 yarn demo
 
-git pull github master
-
 git commit -m ''
+
+git pull github master
 
 yarn push-demo
