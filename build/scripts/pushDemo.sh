@@ -16,4 +16,10 @@ git remote -v
 #
 #git subtree pull -P examples github gh-pages --squash
 
-yarn demo && yarn push-demo
+yarn demo
+
+git pull github master
+
+git commit -m ''
+
+yarn push-demo
