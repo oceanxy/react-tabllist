@@ -9,6 +9,8 @@ git subtree add -P examples github gh-pages --squash
 
 git fetch github gh-pages
 
+git pull github master
+
 git subtree pull -P examples github gh-pages --squash
 
 yarn demo && yarn push-demo
