@@ -1,10 +1,10 @@
 /**
  * @Author: Oceanxy
- * @Email: xieyang@hiynn.com
+ * @Email: xyzsyx@163.com
  * @Description: 配置文件
  * @Date: 2018-10-08 17:56:19
- * @LastModified: Oceanxy（xieyang@hiynn.com）
- * @LastModifiedTime: 2019-01-15 11:50:26
+ * @LastModified: Oceanxy（xyzsyx@163.com）
+ * @LastModifiedTime: 2019-01-23 15:03:05
  */
 
 export default {
