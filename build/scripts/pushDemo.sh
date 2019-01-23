@@ -1,11 +1,5 @@
 #!/bin/sh
 
-git remote rm origin
-git remote add github "https://oceanxy:${GH_TOKEN}@github.com/oceanxy/react-tabllist.git"
-git remote add coding "https://oceanxy:${CODING_TOKEN}@git.dev.tencent.com/Oceanxy/react-tabllist.git"
-
-git remote -v
-
 #yarn demo
 #
 #git subtree add -P examples github gh-pages --squash
@@ -18,7 +12,10 @@ git remote -v
 
 yarn demo
 
-git commit -m ''
+git remote rm origin
+git remote add github "https://oceanxy:${GH_TOKEN}@github.com/oceanxy/react-tabllist.git"
+git remote add coding "https://oceanxy:${CODING_TOKEN}@git.dev.tencent.com/Oceanxy/react-tabllist.git"
+git remote -v
 
 git pull github master
 
