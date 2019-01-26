@@ -13,7 +13,6 @@ const mockApp = ({ data = config.data, property = config.property }) => {
     onClick: jest.fn()
   }
 
-  // 通过 enzyme 提供的 shallow(浅渲染) 创建组件
   const wrapper = Enzyme.mount(<ReactTabllist {...props} />)
   return {
     props,
@@ -21,13 +20,36 @@ const mockApp = ({ data = config.data, property = config.property }) => {
   }
 }
 
+const { wrapper } = mockApp({})
+
 it('exports modules correctly', () => {
   expect(ReactTabllist).toMatchSnapshot()
 })
 
-describe('test data', () => {
-  const { wrapper } = mockApp({})
+describe('display header', () => {
+  it('not display header', () => {
+    wrapper.setProps({
+      property: { list: { header: { show: false } } }
+    })
+    expect(wrapper.exists('.list-header')).toEqual(false)
+  })
 
+  it('change header row style', () => {
+    const headerHeight = wrapper.find('.list-header').getDOMNode().style.height
+    expect(headerHeight).toBe('30px')
+    wrapper.setProps({
+      property: { list: { header: { show: true, style: { height: 40 } } } }
+    })
+    expect(wrapper.exists('.list-header')).toEqual(true)
+    expect(wrapper.find('.list-header').getDOMNode().style.height).not.toBe(headerHeight)
+  })
+
+  it('change header cell style', () => {
+    expect(wrapper.find('.list-header .list-cell').at(0).getDOMNode().style.color).toBe('rgb(0, 0, 0)')
+  })
+})
+
+describe('test data', () => {
   it('data is null', () => {
     wrapper.setProps({ data: [] })
     expect(wrapper.find('.list-header .list-cell').length).toBe(0)
@@ -68,5 +90,71 @@ describe('change property', () => {
     wrapper.setProps({ property: { list: { speed: 60, isScroll: true } } })
     jest.setTimeout(1000)
     expect(wrapper.find('.list').getDOMNode().offsetTop).toBeGreaterThanOrEqual(0)
+  })
+})
+
+describe('change property of body', () => {
+  it('close row transition and display row serialNumber', () => {
+    expect(
+      wrapper
+        .find('.list-body .list-row').at(0)
+        .find('.list-cell').at(0).getDOMNode().style.width
+    ).toBe('-1px')
+
+    wrapper.setProps({
+      property: {
+        list: {
+          body: {
+            row: {
+              transition: false,
+              serialNumber: {
+                show: true,
+                formatter: 'test{index}',
+                style: {
+                  backgroundColor: 'red'
+                },
+                specialStyle: [
+                  {
+                    width: 100
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    })
+
+    expect(
+      wrapper
+        .find('.list-body .list-row').at(0)
+        .find('.list-cell').at(0).text()
+    ).toEqual('test1')
+
+    expect(
+      wrapper
+        .find('.list-body .list-row').at(0)
+        .find('.list-cell').at(0).getDOMNode().style.width
+    ).toEqual('100px')
+  })
+
+  it('row spacing', () => {
+    wrapper.setProps({
+      property: {
+        list: {
+          body: {
+            row: {
+              spacing: 10
+            }
+          }
+        }
+      }
+    })
+
+    expect(
+      wrapper
+        .find('.list-body .list-cont').at(0)
+        .getDOMNode().style.borderSpacing
+    ).toBe('0 10px')
   })
 })

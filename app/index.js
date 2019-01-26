@@ -375,7 +375,7 @@ const Demo = () => {
     }
   }
   const option5 = {
-    data: _.range(10).map((i) => {
+    data: _.range(5).map((i) => {
       return [
         {
           type: 'link',
@@ -426,7 +426,8 @@ const Demo = () => {
             style: {
               height: 40,
               background: `url(${rowBg}) no-repeat center / 100% 100%`
-            }
+            },
+            spacing: 10
           },
           cell: {
             style: {
