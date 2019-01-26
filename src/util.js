@@ -14,19 +14,23 @@
  * @return {Element} 按照选择器筛选后的元素
  */
 export function closest(el, selector) {
-  const matchesSelector = el.matches ||
-    el.webkitMatchesSelector ||
-    el.mozMatchesSelector ||
-    el.msMatchesSelector
+  if(el){
+    const matchesSelector = el.matches ||
+      el.webkitMatchesSelector ||
+      el.mozMatchesSelector ||
+      el.msMatchesSelector
 
-  while(el) {
-    if(matchesSelector.call(el, selector)) {
-      break
+    while(el) {
+      if(matchesSelector.call(el, selector)) {
+        break
+      }
+      el = el.parentNode || el.parentElement
     }
-    el = el.parentNode || el.parentElement
+
+    return el
   }
 
-  return el
+  return null
 }
 
 /**

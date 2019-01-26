@@ -845,11 +845,11 @@ var external_react_default = /*#__PURE__*/__webpack_require__.n(external_react_)
 // CONCATENATED MODULE: ./src/config.js
 /**
  * @Author: Oceanxy
- * @Email: xieyang@hiynn.com
+ * @Email: xyzsyx@163.com
  * @Description: 配置文件
  * @Date: 2018-10-08 17:56:19
- * @LastModified: Oceanxy（xieyang@hiynn.com）
- * @LastModifiedTime: 2019-01-15 11:50:26
+ * @LastModified: Oceanxy（xyzsyx@163.com）
+ * @LastModifiedTime: 2019-01-23 15:03:05
  */
 /* harmony default export */ var config = ({
   data: [['1st column', '2nd column', '3rd column'], ['1st cell', '2nd cell', '3rd cell']],
@@ -962,11 +962,11 @@ var src = __webpack_require__(14);
 // CONCATENATED MODULE: ./src/util.js
 /**
  * @Author: Oceanxy
- * @Email: xieyang@hiynn.com
+ * @Email: xyzsyx@163.com
  * @Description: util
  * @Date: 2018-10-08 17:56:19
- * @LastModified: Oceanxy（xieyang@hiynn.com）
- * @LastModifiedTime: 2018-12-18 10:00:07
+ * @LastModified: Oceanxy（xyzsyx@163.com）
+ * @LastModifiedTime: 2019-01-23 15:03:56
  */
 
 /**
@@ -976,17 +976,21 @@ var src = __webpack_require__(14);
  * @return {Element} 按照选择器筛选后的元素
  */
 function closest(el, selector) {
-  var matchesSelector = el.matches || el.webkitMatchesSelector || el.mozMatchesSelector || el.msMatchesSelector;
+  if (el) {
+    var matchesSelector = el.matches || el.webkitMatchesSelector || el.mozMatchesSelector || el.msMatchesSelector;
 
-  while (el) {
-    if (matchesSelector.call(el, selector)) {
-      break;
+    while (el) {
+      if (matchesSelector.call(el, selector)) {
+        break;
+      }
+
+      el = el.parentNode || el.parentElement;
     }
 
-    el = el.parentNode || el.parentElement;
+    return el;
   }
 
-  return el;
+  return null;
 }
 /**
  * 设置屏幕滚动区域可见高度
@@ -1061,11 +1065,11 @@ function setColWidth(width) {
 
 /**
  * @Author: Oceanxy
- * @Email: xieyang@hiynn.com
+ * @Email: xyzsyx@163.com
  * @Description: react-tabllist
  * @Date: 2018-10-08 17:56:19
- * @LastModified: Oceanxy（xieyang@hiynn.com）
- * @LastModifiedTime: 2019-01-16 16:16:39
+ * @LastModified: Oceanxy（xyzsyx@163.com）
+ * @LastModifiedTime: 2019-01-23 15:03:38
  */
 
 
@@ -1885,11 +1889,11 @@ function (_Component) {
 
 /**
  * @Author: Oceanxy
- * @Email: xieyang@hiynn.com
+ * @Email: xyzsyx@163.com
  * @Description: 组件入口
  * @Date: 2018-10-08 17:56:19
- * @LastModified: Oceanxy（xieyang@hiynn.com）
- * @LastModifiedTime: 2018-12-18 10:00:07
+ * @LastModified: Oceanxy（xyzsyx@163.com）
+ * @LastModifiedTime: 2019-01-23 15:03:17
  */
 
 

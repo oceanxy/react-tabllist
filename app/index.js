@@ -443,19 +443,22 @@ const Demo = () => {
 
   return (
     <div className='container'>
-      <h1>demo1：Basic use</h1>
+      <h1>demo1：default</h1>
+      <Tabllist />
+
+      <h1>demo2：Basic use</h1>
       <Tabllist property={option1.property} data={option1.data} />
 
-      <h1>demo2：Cell border and row background color</h1>
+      <h1>demo3：Cell border and row background color</h1>
       <Tabllist property={option2.property} data={option2.data} />
 
-      <h1>demo3：Serial number and scrollable list</h1>
+      <h1>demo4：Serial number and scrollable list</h1>
       <Tabllist property={option3.property} data={option3.data} />
 
-      <h1>demo4：Object cell: Add another tag to the cell</h1>
+      <h1>demo5：Object cell: Add another tag to the cell</h1>
       <Tabllist property={option4.property} data={option4.data} />
 
-      <h1>demo5：Use in actual projects</h1>
+      <h1>demo6：Use in actual projects</h1>
       <Tabllist property={option5.property} data={option5.data} />
     </div>
   )

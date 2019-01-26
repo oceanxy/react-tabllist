@@ -19,6 +19,11 @@ export default class extends Component {
     const { property, data } = this.props
     const newProperty = _.defaultsDeep({}, property, listConfig.property)
 
-    return <List property={newProperty} data={data} />
+    return (
+      <List
+        property={newProperty}
+        data={data}
+      />
+    )
   }
 }

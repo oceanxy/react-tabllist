@@ -18,4 +18,4 @@
 #### 1.0.7 [Unpublished]
 #### 1.0.8 Adjust the frame structure, add examples and app directories, and improve the README.md file.
 #### 1.0.9 Complete WebPack development framework;Add unit test;add codecov
-#### 1.0.10 Modify the error in the CI configuration file
+#### 1.0.10 Modify the error in the CI configuration file;Write unit test cases.
