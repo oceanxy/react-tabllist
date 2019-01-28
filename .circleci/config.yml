@@ -2,6 +2,9 @@ version: 2
 jobs:
   build:
     working_directory: ~/react-tabllist
+    branches:
+      only:
+        - master
     docker:
       - image: circleci/node:8.12.0
     steps:

@@ -34,17 +34,20 @@ describe('display header', () => {
     expect(wrapper.exists('.list-header')).toEqual(false)
   })
 
-  it('change header row style', () => {
+  it('change style for row of header', () => {
+    wrapper.setProps({
+      property: { list: { header: { show: true } } }
+    })
     const headerHeight = wrapper.find('.list-header').getDOMNode().style.height
     expect(headerHeight).toBe('30px')
     wrapper.setProps({
-      property: { list: { header: { show: true, style: { height: 40 } } } }
+      property: { list: { header: { style: { height: 40 } } } }
     })
     expect(wrapper.exists('.list-header')).toEqual(true)
     expect(wrapper.find('.list-header').getDOMNode().style.height).not.toBe(headerHeight)
   })
 
-  it('change header cell style', () => {
+  it('change style for cell of header', () => {
     expect(wrapper.find('.list-header .list-cell').at(0).getDOMNode().style.color).toBe('rgb(0, 0, 0)')
   })
 })
