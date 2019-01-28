@@ -26,6 +26,19 @@ it('exports modules correctly', () => {
   expect(ReactTabllist).toMatchSnapshot()
 })
 
+it('change height of container', () => {
+  wrapper.setProps({
+    property: {
+      style: {
+        width: 500,
+        height: 500
+      }
+    }
+  })
+  expect(wrapper.find('.list').getDOMNode().style.height).toBe('500px')
+  expect(wrapper.find('.list').getDOMNode().style.width).toBe('500px')
+})
+
 describe('display header', () => {
   it('not display header', () => {
     wrapper.setProps({
@@ -96,13 +109,161 @@ describe('change property', () => {
   })
 })
 
+describe('test cells', () => {
+  it('test style', () => {
+    wrapper.setProps({
+      property: {
+        list: {
+          body: {
+            cell: {
+              style: {
+                fontSize: 10
+              }
+            }
+          }
+        }
+      }
+    })
+
+    const rows = wrapper.find('.list-body .list-cont').at(0).find('.list-row')
+
+    expect(
+      rows.at(0)
+        .find('.list-cell').at(0)
+        .getDOMNode().style.fontSize)
+      .toBe('10px')
+  })
+
+  it('test width of cell when type of width is array', () => {
+    wrapper.setProps({
+      data: [
+        ['1st column', '2nd column', '3rd column'],
+        ['1st cell', '2nd cell', '3rd cell'],
+        ['1st cell', '2nd cell', '3rd cell']
+      ],
+      property: {
+        list: {
+          body: {
+            cell: {
+              style: {
+                width: [70, 80, 90]
+              }
+            }
+          }
+        }
+      }
+    })
+
+    const cells = wrapper
+      .find('.list-body .list-cont').at(0)
+      .find('.list-row').at(0)
+      .find('.list-cell')
+
+    expect(cells.at(0).getDOMNode().style.width).toBe('70px')
+    expect(cells.at(1).getDOMNode().style.width).toBe('80px')
+  })
+
+  it('test width of cell when type of width is string', () => {
+    wrapper.setProps({
+      property: {
+        list: {
+          body: {
+            cell: {
+              style: {
+                width: '70,, 90'
+              }
+            }
+          }
+        }
+      }
+    })
+
+    const cells = wrapper
+      .find('.list-body .list-cont').at(0)
+      .find('.list-row').at(0)
+      .find('.list-cell')
+
+    expect(cells.at(0).getDOMNode().style.width).toBe('70px')
+    expect(cells.at(1).getDOMNode().style.width).toBe('auto')
+    expect(cells.at(2).getDOMNode().style.width).toBe('90px')
+  })
+
+  it('test width of cell when type of width is number or invalid value', () => {
+    wrapper.setProps({
+      property: {
+        list: {
+          body: {
+            cell: {
+              style: {
+                width: 1
+              }
+            }
+          }
+        }
+      }
+    })
+
+    const cells = wrapper
+      .find('.list-body .list-cont').at(0)
+      .find('.list-row').at(0)
+      .find('.list-cell')
+
+    expect(cells.at(0).getDOMNode().style.width).toBe('auto')
+    expect(cells.at(1).getDOMNode().style.width).toBe('auto')
+    expect(cells.at(2).getDOMNode().style.width).toBe('auto')
+
+    wrapper.setProps({
+      property: {
+        list: {
+          body: {
+            cell: {
+              style: {
+                width: 'xxxx'
+              }
+            }
+          }
+        }
+      }
+    })
+
+    expect(cells.at(0).getDOMNode().style.width).toBe('auto')
+    expect(cells.at(1).getDOMNode().style.width).toBe('auto')
+    expect(cells.at(2).getDOMNode().style.width).toBe('auto')
+  })
+
+  it('test width of cell when type of width is string and its value is "avg"', () => {
+    wrapper.setProps({
+      property: {
+        list: {
+          body: {
+            cell: {
+              style: {
+                width: 'avg'
+              }
+            }
+          }
+        }
+      }
+    })
+
+    const cells = wrapper
+      .find('.list-body .list-cont').at(0)
+      .find('.list-row').at(0)
+      .find('.list-cell')
+
+    expect(cells.at(0).getDOMNode().style.width).toEqual('1px')
+    expect(cells.at(1).getDOMNode().style.width).toEqual('1px')
+    expect(cells.at(2).getDOMNode().style.width).toEqual('1px')
+  })
+})
+
 describe('change property of body', () => {
   it('close row transition and display row serialNumber', () => {
     expect(
       wrapper
         .find('.list-body .list-row').at(0)
         .find('.list-cell').at(0).getDOMNode().style.width
-    ).toBe('-1px')
+    ).toBe('1px')
 
     wrapper.setProps({
       property: {
@@ -159,5 +320,252 @@ describe('change property of body', () => {
         .find('.list-body .list-cont').at(0)
         .getDOMNode().style.borderSpacing
     ).toBe('0 10px')
+  })
+
+  it('row checkbox', () => {
+    wrapper.setProps({
+      property: {
+        list: {
+          body: {
+            row: {
+              rowCheckBox: true
+            }
+          }
+        }
+      }
+    })
+
+    expect(
+      wrapper
+        .find('.list-body .list-cont').at(0)
+        .find('.list-row .list-cell').at(0)
+        .find('input[name="rowCheckBox"]')
+        .exists()
+    ).toEqual(true)
+  })
+
+  it('change style for row of body', () => {
+    wrapper.setProps({
+      property: {
+        list: {
+          body: {
+            row: {
+              style: {
+                height: 55
+              },
+              specialStyle: [
+                {
+                  backgroundColor: 'red'
+                },
+                {
+                  backgroundColor: 'blue'
+                }
+              ]
+            }
+          }
+        }
+      }
+    })
+
+    const rows = wrapper.find('.list-body .list-cont').at(0).find('.list-row')
+
+    expect(rows.at(0).getDOMNode().style.backgroundColor).toBe('red')
+    expect(rows.at(1).getDOMNode().style.backgroundColor).toBe('blue')
+    expect(rows.at(0).getDOMNode().style.height).toBe('55px')
+  })
+
+  it('test visual of row', () => {
+    wrapper.setProps({
+      property: {
+        list: {
+          body: {
+            row: {
+              specialStyle: [
+                {
+                  backgroundColor: 'red'
+                }
+              ],
+              visual: {
+                show: true
+              }
+            }
+          }
+        }
+      }
+    })
+
+    const rows = wrapper.find('.list-body .list-cont').at(0).find('.list-row')
+    expect(rows.at(0).getDOMNode().style.backgroundColor).toBe('red')
+  })
+
+  it('test silent of row', () => {
+    wrapper.setProps({
+      property: {
+        list: {
+          body: {
+            row: {
+              silent: {
+                style: {
+                  backgroundColor: 'yellow'
+                }
+              }
+            }
+          }
+        }
+      }
+    })
+
+    const rows = wrapper.find('.list-body .list-cont').at(0).find('.list-row')
+
+    rows.at(0).simulate('mouseenter')
+
+    expect(rows.at(0).getDOMNode().style.backgroundColor).toBe('yellow')
+  })
+
+  it('test cells by column', () => {
+    wrapper.setProps({
+      property: {
+        list: {
+          body: {
+            cellOfColumn: {
+              style: [
+                {
+                  width: 100
+                },
+                {
+                  width: 200
+                }
+              ]
+            }
+          }
+        }
+      }
+    })
+
+    const rows = wrapper.find('.list-body .list-cont').at(0).find('.list-row')
+
+    expect(
+      rows.at(0)
+        .find('.list-cell').at(0)
+        .getDOMNode().style.width)
+      .toBe('100px')
+
+    expect(
+      rows.at(1)
+        .find('.list-cell').at(0)
+        .getDOMNode().style.width)
+      .toBe('100px')
+
+    expect(
+      rows.at(1)
+        .find('.list-cell').at(1)
+        .getDOMNode().style.width)
+      .toBe('200px')
+  })
+})
+
+describe('test object cell', () => {
+  it('test radio', () => {
+    wrapper.setProps({
+      data: [
+        ['t1', 't2'],
+        [
+          {
+            type: 'radio',
+            uid: '',
+            name: 'group1',
+            text: 'radio group 1-1',
+            className: 'test-radio'
+          },
+          'c2'
+        ]
+      ]
+    })
+
+    const radio = wrapper.find('.list-body .list-cont').at(0)
+      .find('.list-row').at(0)
+      .find('.list-cell').at(0)
+
+    expect(radio.find('input[name="group1-main"]').exists()).toEqual(true)
+    expect(radio.find('span').text()).toBe('radio group 1-1')
+  })
+
+  it('test checkbox', () => {
+    wrapper.setProps({
+      data: [
+        ['t1', 't2'],
+        [
+          {
+            type: 'checkbox',
+            uid: '',
+            name: 'group1',
+            text: 'checkbox group 1-1',
+            className: 'test-checkbox'
+          },
+          'c2'
+        ]
+      ]
+    })
+
+    const checkbox = wrapper.find('.list-body .list-cont').at(0)
+      .find('.list-row').at(0)
+      .find('.list-cell').at(0)
+
+    expect(checkbox.find('input[name="group1"]').exists()).toEqual(true)
+    expect(checkbox.find('span').text()).toBe('checkbox group 1-1')
+  })
+
+  it('test link', () => {
+    wrapper.setProps({
+      data: [
+        ['t1', 't2'],
+        [
+          {
+            type: 'link',
+            text: 'I am a link',
+            event: 'onClick',
+            href: 'https://github.com/oceanxy/react-tabllist',
+            className: 'test-link'
+          },
+          'c2'
+        ]
+      ]
+    })
+
+    const link = wrapper.find('.list-body .list-cont').at(0)
+      .find('.list-row').at(0)
+      .find('.list-cell').at(0)
+
+    expect(link.find('a[href="https://github.com/oceanxy/react-tabllist"]').exists()).toEqual(true)
+    expect(link.find('a').text()).toBe('I am a link')
+  })
+
+  it('test button', () => {
+    wrapper.setProps({
+      data: [
+        ['t1', 't2'],
+        [
+          {
+            type: 'button',
+            uid: '',
+            value: 'click me',
+            className: 'test-btn',
+            callback: (data, cellObject, obj) => {
+              obj.target.value = 'clicked'
+
+              const button = wrapper.find('.list-body .list-cont').at(0)
+                .find('.list-row').at(0)
+                .find('.list-cell').at(0)
+
+              expect(button.find('[type="button"]').exists()).toEqual(true)
+              button.find('input').simulate('click')
+
+              expect(button.find('input').getDOMNode().value).toBe('clicked')
+            }
+          },
+          'c2'
+        ]
+      ]
+    })
   })
 })

@@ -16,7 +16,8 @@ import rowBg from './images/row-bg.png'
 import './index.scss'
 
 const Demo = () => {
-  const option1 = {
+  const option1 = {}
+  const option2 = {
     data: [
       ['1st column title', '2nd column title', '3rd column title'],
       ['row 1; column 1', 'row 1; column 2', 'row 1; column 3'],
@@ -56,7 +57,7 @@ const Demo = () => {
       }
     }
   }
-  const option2 = {
+  const option3 = {
     data: [
       ['row 1; column 1', 'row 1; column 2', 'row 1; column 3'],
       ['row 2; column 1', 'row 2; column 2', 'row 2; column 3'],
@@ -106,7 +107,7 @@ const Demo = () => {
       }
     }
   }
-  const option3 = {
+  const option4 = {
     data: [
       ['1st column', '2nd column', '3rd column', '4rd column'],
       ['row 1; column 1', 'row 1; column 2', 'row 1; column 3', 'row 1; column 4'],
@@ -188,7 +189,7 @@ const Demo = () => {
       }
     }
   }
-  const option4 = {
+  const option5 = {
     data: [
       ['1st column', '2nd column', '3rd column', '4rd column'],
       [
@@ -305,8 +306,19 @@ const Demo = () => {
           uid: '',
           value: 'click me',
           className: 'test-btn',
-          callback: () => {
-            alert('hello react-tabllist')
+          callback: (data, cellObject, cellElement) => {
+            if(!data) {
+              data = 'data of button is undefined'
+            }
+
+            cellElement.target.value = 'you clicked me!!'
+            cellElement.target.style.width = '150px'
+
+            console.log(data)
+            console.log(cellObject)
+            console.log(cellElement)
+
+            alert('hello react-tabllist, Please check the console')
           }
         }
       ],
@@ -346,6 +358,14 @@ const Demo = () => {
             style: {
               height: 34
             },
+            specialStyle: [
+              { height: 60 },
+              { height: 40 },
+              { height: 80 },
+              { height: 100 },
+              { height: 50 },
+              { height: 80 }
+            ],
             visual: {
               show: true,
               style: {
@@ -365,7 +385,7 @@ const Demo = () => {
               color: '#000000',
               textAlign: 'center',
               border: '',
-              width: 'auto'
+              width: [60, '50%', '25%', '10%']
             }
           }
         },
@@ -374,7 +394,7 @@ const Demo = () => {
       }
     }
   }
-  const option5 = {
+  const option6 = {
     data: _.range(5).map((i) => {
       return [
         {
@@ -448,19 +468,19 @@ const Demo = () => {
       <Tabllist />
 
       <h1>demo2：Basic use</h1>
-      <Tabllist property={option1.property} data={option1.data} />
-
-      <h1>demo3：Cell border and row background color</h1>
       <Tabllist property={option2.property} data={option2.data} />
 
-      <h1>demo4：Serial number and scrollable list</h1>
+      <h1>demo3：Cell border and row background color</h1>
       <Tabllist property={option3.property} data={option3.data} />
 
-      <h1>demo5：Object cell: Add another tag to the cell</h1>
+      <h1>demo4：Serial number and scrollable list</h1>
       <Tabllist property={option4.property} data={option4.data} />
 
-      <h1>demo6：Use in actual projects</h1>
+      <h1>demo5：Object cell: Add another tag to the cell</h1>
       <Tabllist property={option5.property} data={option5.data} />
+
+      <h1>demo6：Use in actual projects</h1>
+      <Tabllist property={option6.property} data={option6.data} />
     </div>
   )
 }

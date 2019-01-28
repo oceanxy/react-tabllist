@@ -54,17 +54,17 @@ export default {
           style: {
             height: 30
           },
-          specialStyle: [],
           visual: {
             show: false,
             interval: 1,
             style: {
-              backgroundColor: '#E8F4FC',
-              backgroundImage: ''
+              backgroundColor: '#E8F4FC'
             }
           },
+          // 注意：单独指定每一行的样式的优先级高于visual.style的优先级
+          specialStyle: [],
           silent: {
-            show: false,
+            show: false, // false is open
             style: {
               opacity: 0.8
             }
