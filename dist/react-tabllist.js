@@ -116,13 +116,13 @@ module.exports = require("lodash");
 /* 3 */
 /***/ (function(module, exports) {
 
-module.exports = require("@babel/runtime/helpers/objectSpread");
+module.exports = require("@babel/runtime/helpers/defineProperty");
 
 /***/ }),
 /* 4 */
 /***/ (function(module, exports) {
 
-module.exports = require("@babel/runtime/helpers/defineProperty");
+module.exports = require("@babel/runtime/helpers/objectSpread");
 
 /***/ }),
 /* 5 */
@@ -831,7 +831,7 @@ var inherits_ = __webpack_require__(9);
 var inherits_default = /*#__PURE__*/__webpack_require__.n(inherits_);
 
 // EXTERNAL MODULE: external "@babel/runtime/helpers/defineProperty"
-var defineProperty_ = __webpack_require__(4);
+var defineProperty_ = __webpack_require__(3);
 var defineProperty_default = /*#__PURE__*/__webpack_require__.n(defineProperty_);
 
 // EXTERNAL MODULE: external "lodash"
@@ -895,17 +895,18 @@ var external_react_default = /*#__PURE__*/__webpack_require__.n(external_react_)
           style: {
             height: 30
           },
-          specialStyle: [],
           visual: {
             show: false,
             interval: 1,
             style: {
-              backgroundColor: '#E8F4FC',
-              backgroundImage: ''
+              backgroundColor: '#E8F4FC'
             }
           },
+          // 注意：单独指定每一行的样式的优先级高于visual.style的优先级
+          specialStyle: [],
           silent: {
             show: false,
+            // false is open
             style: {
               opacity: 0.8
             }
@@ -937,7 +938,7 @@ var toArray_ = __webpack_require__(11);
 var toArray_default = /*#__PURE__*/__webpack_require__.n(toArray_);
 
 // EXTERNAL MODULE: external "@babel/runtime/helpers/objectSpread"
-var objectSpread_ = __webpack_require__(3);
+var objectSpread_ = __webpack_require__(4);
 var objectSpread_default = /*#__PURE__*/__webpack_require__.n(objectSpread_);
 
 // EXTERNAL MODULE: external "@babel/runtime/helpers/typeof"
@@ -1716,7 +1717,7 @@ function (_Component) {
         return external_react_default.a.createElement("li", {
           className: "list-row ".concat(transition ? transitionName : ''),
           key: rowIndex,
-          style: isVisual && rowIndex % (rowVisualInterval * 2) >= rowVisualInterval ? objectSpread_default()({}, rowVisualStyle, specialRowStyle[rowIndex]) : objectSpread_default()({}, rowStyle, specialRowStyle[rowIndex]),
+          style: isVisual && rowIndex % (rowVisualInterval * 2) >= rowVisualInterval ? external_lodash_default.a.defaultsDeep({}, specialRowStyle[rowIndex], rowVisualStyle, rowStyle) : external_lodash_default.a.defaultsDeep({}, specialRowStyle[rowIndex], rowStyle),
           onMouseEnter: _this5.hover,
           onMouseLeave: _this5.hover
         }, rowData.map(function (cellData, index) {
