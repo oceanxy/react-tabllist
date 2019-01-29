@@ -1,6 +1,6 @@
 {
   "name": "react-tabllist",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "React-based customizable style table or list components that support event and callback functions.",
   "main": "index.js",
   "scripts": {
@@ -8,10 +8,11 @@
     "test": "jest --coverage && codecov",
     "test-jest": "jest",
     "clean-demo": "rm -rf examples/",
+    "clean-dist": "rm -rf dist/",
     "demo": "yarn clean-demo && webpack --config build/webpack.config.demo",
     "push-demo": "git subtree push -P examples github gh-pages && git subtree push -P examples coding coding-pages",
     "push": "git push github master && git push coding master",
-    "build": "webpack --config build/webpack.config.prod",
+    "build": "yarn clean-dist && webpack --config build/webpack.config.prod",
     "lint": "stylelint-config-prettier-check"
   },
   "keywords": [

@@ -16,7 +16,6 @@ import rowBg from './images/row-bg.png'
 import './index.scss'
 
 const Demo = () => {
-  const option1 = {}
   const option2 = {
     data: [
       ['1st column title', '2nd column title', '3rd column title'],

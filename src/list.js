@@ -692,13 +692,9 @@ export default class extends Component {
           className={`list-row ${transition ? transitionName : ''}`}
           key={rowIndex}
           style={
-            do {
-              if(isVisual && rowIndex % (rowVisualInterval * 2) >= rowVisualInterval) {
-                _.defaultsDeep({}, specialRowStyle[rowIndex], rowVisualStyle, rowStyle)
-              } else {
-                _.defaultsDeep({}, specialRowStyle[rowIndex], rowStyle)
-              }
-            }
+            isVisual && rowIndex % (rowVisualInterval * 2) >= rowVisualInterval
+              ? _.defaultsDeep({}, specialRowStyle[rowIndex], rowVisualStyle, rowStyle)
+              : _.defaultsDeep({}, specialRowStyle[rowIndex], rowStyle)
           }
           onMouseEnter={this.hover}
           onMouseLeave={this.hover}
