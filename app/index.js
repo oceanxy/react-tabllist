@@ -395,7 +395,7 @@ const Demo = () => {
     }
   }
   const option6 = {
-    data: _.range(6).map((i) => {
+    data: _.range(7).map((i) => {
       return [
         {
           type: 'link',

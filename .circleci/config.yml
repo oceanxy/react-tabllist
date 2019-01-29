@@ -34,9 +34,9 @@ jobs:
       - run:
           name: run-unit-test-and-uploading-reports
           command: yarn test
-#      - run:
-#          name: chmod
-#          command: chmod +x build/scripts/pushDemo.sh
-#      - run:
-#          name: build-demo
-#          command: build/scripts/pushDemo.sh
+      - run:
+          name: chmod
+          command: chmod +x build/scripts/pushDemo.sh
+      - run:
+          name: build-demo
+          command: build/scripts/pushDemo.sh
