@@ -7,9 +7,9 @@
     "start": "webpack-dev-server --config build/webpack.config.dev",
     "test": "jest --coverage && codecov",
     "test-jest": "jest",
-    "demo": "webpack --config build/webpack.config.demo",
+    "clean-demo": "rm -rf examples/",
+    "demo": "clean-demo && webpack --config build/webpack.config.demo",
     "push-demo": "git subtree push -P examples github gh-pages && git subtree push -P examples coding coding-pages",
-    "ci-demo": "build/scripts/pushDemo.sh",
     "push": "git push github master && git push coding master",
     "build": "webpack --config build/webpack.config.prod",
     "lint": "stylelint-config-prettier-check"

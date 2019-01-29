@@ -4,8 +4,10 @@ jobs:
     branches:
       only:
         - master
+        - /rc-.*/
       ignore:
         - gh-pages
+        - coding-pages
     working_directory: ~/react-tabllist
     docker:
       - image: circleci/node:8.12.0
@@ -32,9 +34,9 @@ jobs:
       - run:
           name: run-unit-test-and-uploading-reports
           command: yarn test
-#      - run:
-#          name: chmod
-#          command: chmod +x build/scripts/pushDemo.sh
-#      - run:
-#          name: build-demo
-#          command: yarn ci-demo
+      - run:
+          name: chmod
+          command: chmod +x build/scripts/pushDemo.sh
+      - run:
+          name: build-demo
+          command: yarn build/scripts/pushDemo.sh
