@@ -39,4 +39,4 @@ jobs:
           command: chmod +x build/scripts/pushDemo.sh
       - run:
           name: build-demo
-          command: yarn build/scripts/pushDemo.sh
+          command: yarn ./build/scripts/pushDemo.sh
