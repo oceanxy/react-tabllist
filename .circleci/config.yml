@@ -1,6 +1,11 @@
 version: 2
 jobs:
-  test:
+  build:
+    branches:
+      only:
+        - master
+      ignore:
+        - gh-pages
     working_directory: ~/react-tabllist
     docker:
       - image: circleci/node:8.12.0
@@ -27,15 +32,3 @@ jobs:
       - run:
           name: run-unit-test-and-uploading-reports
           command: yarn test
-
-workflows:
-  version: 2
-  test:
-    jobs:
-      - test:
-          filters:
-            branches:
-              only:
-                - master
-              ignore:
-                - gh-pages
