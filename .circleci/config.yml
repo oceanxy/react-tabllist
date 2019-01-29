@@ -9,7 +9,6 @@ jobs:
     working_directory: ~/react-tabllist
     docker:
       - image: circleci/node:8.12.0
-      - image: bash:4.4.19
     steps:
       - checkout
       - run:
@@ -33,9 +32,9 @@ jobs:
       - run:
           name: run-unit-test-and-uploading-reports
           command: yarn test
-      - run:
-          name: chmod
-          command: chmod +x build/scripts/pushDemo.sh
-      - run:
-          name: build-demo
-          command: yarn ci-demo
+#      - run:
+#          name: chmod
+#          command: chmod +x build/scripts/pushDemo.sh
+#      - run:
+#          name: build-demo
+#          command: yarn ci-demo
