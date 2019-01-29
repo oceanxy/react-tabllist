@@ -1,10 +1,11 @@
 version: 2
 jobs:
-  test:
+  build:
     working_directory: ~/react-tabllist
-    branches:
-      only:
-        - master
+    filters:
+      branches:
+        only:
+          - master
     docker:
       - image: circleci/node:8.12.0
     steps:
@@ -32,12 +33,3 @@ jobs:
       - run:
           name: run-unit-test-and-uploading-reports
           command: yarn test
-
-workflows:
-  version: 2
-  test:
-    jobs:
-      - test
-        branches:
-          only:
-            - master
