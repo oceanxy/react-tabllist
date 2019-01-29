@@ -33,8 +33,6 @@ workflows:
   test:
     jobs:
       - test:
-          requires:
-            - test
           filters:
             branches:
               only:
