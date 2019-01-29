@@ -8,5 +8,5 @@ git remote add coding "https://oceanxy:${CODING_TOKEN}@git.dev.tencent.com/Ocean
 
 git remote -v
 
-git push github `git subtree split --prefix examples master`:gh-pages --force
-git push coding `git subtree split --prefix examples master`:coding-pages --force
+#git push github `git subtree split --prefix examples master`:gh-pages --force
+#git push coding `git subtree split --prefix examples master`:coding-pages --force
