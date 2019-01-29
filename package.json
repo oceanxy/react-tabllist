@@ -8,7 +8,7 @@
     "test": "jest --coverage && codecov",
     "test-jest": "jest",
     "clean-demo": "rm -rf examples/",
-    "demo": "clean-demo && webpack --config build/webpack.config.demo",
+    "demo": "yarn clean-demo && webpack --config build/webpack.config.demo",
     "push-demo": "git subtree push -P examples github gh-pages && git subtree push -P examples coding coding-pages",
     "push": "git push github master && git push coding master",
     "build": "webpack --config build/webpack.config.prod",
