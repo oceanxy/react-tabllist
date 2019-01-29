@@ -37,3 +37,5 @@ workflows:
             branches:
               only:
                 - master
+              ignore:
+                - gh-pages
