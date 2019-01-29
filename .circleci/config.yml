@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  test:
     working_directory: ~/react-tabllist
     branches:
       only:
@@ -16,13 +16,29 @@ jobs:
           name: install-yarn
           command: 'sudo npm install -g yarn'
       - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          key:
+            - dependency-cache-{{ checksum "package.json" }}
+            - dependency-cache-
       - run:
           name: install-package
           command: yarn
+      - save_cache:
+        paths:
+          - ./node_modules
+        key: dependency-cache-{{ checksum "package.json" }}
       - run:
           name: test-stylelint
           command: yarn lint
       - run:
           name: run-unit-test-and-uploading-reports
           command: yarn test
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - test
+        filters:
+          branches:
+            only:
+              - master
