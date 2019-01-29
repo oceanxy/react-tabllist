@@ -17,9 +17,7 @@ jobs:
           name: install-yarn
           command: 'sudo npm install -g yarn'
       - restore_cache:
-          key:
-            - dependency-cache-{{ checksum "package.json" }}
-            - dependency-cache-
+          key: dependency-cache-{{ checksum "package.json" }}
       - run:
           name: install-package
           command: yarn
