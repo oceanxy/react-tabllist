@@ -38,5 +38,8 @@ jobs:
           name: chmod
           command: chmod +x build/scripts/pushDemo.sh
       - run:
+          name: ls
+          command: cd ~/react-tabllist && ls
+      - run:
           name: build-demo
           command: yarn ~/react-tabllist/build/scripts/pushDemo.sh
