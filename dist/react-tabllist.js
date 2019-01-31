@@ -91,7 +91,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 19);
+/******/ 	return __webpack_require__(__webpack_require__.s = 20);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -128,62 +128,68 @@ module.exports = require("@babel/runtime/helpers/objectSpread");
 /* 5 */
 /***/ (function(module, exports) {
 
-module.exports = require("@babel/runtime/helpers/classCallCheck");
+module.exports = require("@babel/runtime/helpers/objectWithoutProperties");
 
 /***/ }),
 /* 6 */
 /***/ (function(module, exports) {
 
-module.exports = require("@babel/runtime/helpers/createClass");
+module.exports = require("@babel/runtime/helpers/classCallCheck");
 
 /***/ }),
 /* 7 */
 /***/ (function(module, exports) {
 
-module.exports = require("@babel/runtime/helpers/possibleConstructorReturn");
+module.exports = require("@babel/runtime/helpers/createClass");
 
 /***/ }),
 /* 8 */
 /***/ (function(module, exports) {
 
-module.exports = require("@babel/runtime/helpers/getPrototypeOf");
+module.exports = require("@babel/runtime/helpers/possibleConstructorReturn");
 
 /***/ }),
 /* 9 */
 /***/ (function(module, exports) {
 
-module.exports = require("@babel/runtime/helpers/inherits");
+module.exports = require("@babel/runtime/helpers/getPrototypeOf");
 
 /***/ }),
 /* 10 */
 /***/ (function(module, exports) {
 
-module.exports = require("@babel/runtime/helpers/toConsumableArray");
+module.exports = require("@babel/runtime/helpers/inherits");
 
 /***/ }),
 /* 11 */
 /***/ (function(module, exports) {
 
-module.exports = require("@babel/runtime/helpers/toArray");
+module.exports = require("@babel/runtime/helpers/toConsumableArray");
 
 /***/ }),
 /* 12 */
 /***/ (function(module, exports) {
 
-module.exports = require("@babel/runtime/helpers/typeof");
+module.exports = require("@babel/runtime/helpers/extends");
 
 /***/ }),
 /* 13 */
 /***/ (function(module, exports) {
 
-module.exports = require("@babel/runtime/helpers/objectWithoutProperties");
+module.exports = require("@babel/runtime/helpers/toArray");
 
 /***/ }),
 /* 14 */
+/***/ (function(module, exports) {
+
+module.exports = require("@babel/runtime/helpers/typeof");
+
+/***/ }),
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(15);
+var content = __webpack_require__(16);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -197,24 +203,24 @@ var options = {"hmr":true}
 options.transform = transform
 options.insertInto = undefined;
 
-var update = __webpack_require__(17)(content, options);
+var update = __webpack_require__(18)(content, options);
 
 if(content.locals) module.exports = content.locals;
 
 if(false) {}
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(16)(false);
+exports = module.exports = __webpack_require__(17)(false);
 // Module
-exports.push([module.i, ".list {\n  display: block;\n  overflow: hidden; }\n  .list .list-cont {\n    margin: 0;\n    padding: 0;\n    display: table;\n    width: 100%;\n    height: auto;\n    transition: all 400ms; }\n    .list .list-cont .list-row {\n      display: table-row;\n      list-style: none;\n      height: 58px;\n      transition: all 300ms cubic-bezier(0, 0, 0.58, 1);\n      background: no-repeat center / 100% 100%; }\n      .list .list-cont .list-row.list-row-start {\n        transform: scale(0.8);\n        opacity: 0; }\n      .list .list-cont .list-row.list-row-transition {\n        opacity: 1;\n        transform: scale(1); }\n      .list .list-cont .list-row .list-cell {\n        display: table-cell;\n        text-align: center;\n        vertical-align: middle;\n        word-break: break-all;\n        border-left: none !important;\n        background: no-repeat center / 100% 100%; }\n        .list .list-cont .list-row .list-cell * {\n          vertical-align: middle; }\n        .list .list-cont .list-row .list-cell:last-child {\n          border-right: none !important; }\n        .list .list-cont .list-row .list-cell label {\n          vertical-align: middle; }\n          .list .list-cont .list-row .list-cell label span, .list .list-cont .list-row .list-cell label input {\n            vertical-align: middle;\n            padding: 0 5px; }\n  .list .list-header .list-row {\n    background: no-repeat center / 100% 100%; }\n    .list .list-header .list-row .list-cell {\n      border-bottom: none !important; }\n  .list .list-body {\n    width: 100%; }\n    .list .list-body .list-cont {\n      border-collapse: separate; }\n    .list .list-body .list-cell {\n      color: #666; }\n  .list.list-no-spacing .list-cell {\n    border-top: none !important; }\n", ""]);
+exports.push([module.i, ".list {\n  display: block;\n  overflow: hidden; }\n  .list .list-cont {\n    margin: 0;\n    padding: 0;\n    display: table;\n    width: 100%;\n    height: auto;\n    transition: all 400ms; }\n    .list .list-cont .list-row {\n      display: table-row;\n      list-style: none;\n      height: 58px;\n      transition: all 300ms cubic-bezier(0, 0, 0.58, 1);\n      background: no-repeat center / 100% 100%; }\n      .list .list-cont .list-row.list-row-start {\n        transform: scale(0.8);\n        opacity: 0; }\n      .list .list-cont .list-row.list-row-transition {\n        opacity: 1;\n        transform: scale(1); }\n      .list .list-cont .list-row .list-cell {\n        display: table-cell;\n        text-align: center;\n        vertical-align: middle;\n        word-break: break-all;\n        border-left: none !important;\n        background: no-repeat center / 100% 100%; }\n        .list .list-cont .list-row .list-cell * {\n          vertical-align: middle; }\n        .list .list-cont .list-row .list-cell:last-child {\n          border-right: none !important; }\n        .list .list-cont .list-row .list-cell a {\n          color: currentColor;\n          text-decoration: transparent; }\n        .list .list-cont .list-row .list-cell label {\n          vertical-align: middle; }\n          .list .list-cont .list-row .list-cell label span, .list .list-cont .list-row .list-cell label input {\n            vertical-align: middle;\n            padding: 0 5px; }\n  .list .list-header .list-row {\n    background: no-repeat center / 100% 100%; }\n    .list .list-header .list-row .list-cell {\n      border-bottom: none !important; }\n  .list .list-body {\n    width: 100%; }\n    .list .list-body .list-cont {\n      border-collapse: separate; }\n    .list .list-body .list-cell {\n      color: #666; }\n  .list.list-no-spacing .list-cell {\n    border-top: none !important; }\n", ""]);
 
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -305,7 +311,7 @@ function toComment(sourceMap) {
 }
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -374,7 +380,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(18);
+var	fixUrls = __webpack_require__(19);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -709,7 +715,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports) {
 
 
@@ -804,30 +810,38 @@ module.exports = function (css) {
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 
+// EXTERNAL MODULE: external "@babel/runtime/helpers/extends"
+var extends_ = __webpack_require__(12);
+var extends_default = /*#__PURE__*/__webpack_require__.n(extends_);
+
+// EXTERNAL MODULE: external "@babel/runtime/helpers/objectWithoutProperties"
+var objectWithoutProperties_ = __webpack_require__(5);
+var objectWithoutProperties_default = /*#__PURE__*/__webpack_require__.n(objectWithoutProperties_);
+
 // EXTERNAL MODULE: external "@babel/runtime/helpers/classCallCheck"
-var classCallCheck_ = __webpack_require__(5);
+var classCallCheck_ = __webpack_require__(6);
 var classCallCheck_default = /*#__PURE__*/__webpack_require__.n(classCallCheck_);
 
 // EXTERNAL MODULE: external "@babel/runtime/helpers/createClass"
-var createClass_ = __webpack_require__(6);
+var createClass_ = __webpack_require__(7);
 var createClass_default = /*#__PURE__*/__webpack_require__.n(createClass_);
 
 // EXTERNAL MODULE: external "@babel/runtime/helpers/possibleConstructorReturn"
-var possibleConstructorReturn_ = __webpack_require__(7);
+var possibleConstructorReturn_ = __webpack_require__(8);
 var possibleConstructorReturn_default = /*#__PURE__*/__webpack_require__.n(possibleConstructorReturn_);
 
 // EXTERNAL MODULE: external "@babel/runtime/helpers/getPrototypeOf"
-var getPrototypeOf_ = __webpack_require__(8);
+var getPrototypeOf_ = __webpack_require__(9);
 var getPrototypeOf_default = /*#__PURE__*/__webpack_require__.n(getPrototypeOf_);
 
 // EXTERNAL MODULE: external "@babel/runtime/helpers/inherits"
-var inherits_ = __webpack_require__(9);
+var inherits_ = __webpack_require__(10);
 var inherits_default = /*#__PURE__*/__webpack_require__.n(inherits_);
 
 // EXTERNAL MODULE: external "@babel/runtime/helpers/defineProperty"
@@ -859,82 +873,80 @@ var external_react_default = /*#__PURE__*/__webpack_require__.n(external_react_)
       margin: '0 auto',
       height: 300
     },
-    list: {
-      border: {
-        borderWidth: 1,
-        borderStyle: 'solid',
-        borderColor: '#f4f4f4'
+    border: {
+      borderWidth: 1,
+      borderStyle: 'solid',
+      borderColor: '#f4f4f4'
+    },
+    speed: 50,
+    isScroll: true,
+    header: {
+      show: true,
+      style: {
+        height: 30
       },
-      speed: 50,
-      isScroll: true,
-      header: {
-        show: true,
+      cellStyle: {
+        color: '#000000',
+        border: ''
+      }
+    },
+    body: {
+      row: {
+        transition: true,
+        serialNumber: {
+          show: false,
+          formatter: '{index}.',
+          style: {
+            backgroundColor: '',
+            backgroundImage: '',
+            color: '#ffffff'
+          },
+          specialStyle: []
+        },
+        spacing: 0,
+        rowCheckBox: false,
         style: {
           height: 30
         },
-        cellStyle: {
-          color: '#000000',
-          border: ''
+        visual: {
+          show: false,
+          interval: 1,
+          style: {
+            backgroundColor: '#E8F4FC'
+          }
+        },
+        // 注意：单独指定每一行的样式的优先级高于visual.style的优先级
+        specialStyle: [],
+        silent: {
+          show: false,
+          // false is open
+          style: {
+            opacity: 0.8
+          }
         }
       },
-      body: {
-        row: {
-          transition: true,
-          serialNumber: {
-            show: false,
-            formatter: '{index}.',
-            style: {
-              backgroundColor: '',
-              backgroundImage: '',
-              color: '#ffffff'
-            },
-            specialStyle: []
-          },
-          spacing: 0,
-          rowCheckBox: false,
-          style: {
-            height: 30
-          },
-          visual: {
-            show: false,
-            interval: 1,
-            style: {
-              backgroundColor: '#E8F4FC'
-            }
-          },
-          // 注意：单独指定每一行的样式的优先级高于visual.style的优先级
-          specialStyle: [],
-          silent: {
-            show: false,
-            // false is open
-            style: {
-              opacity: 0.8
-            }
-          }
+      cellOfColumn: {
+        style: []
+      },
+      cell: {
+        style: {
+          fontSize: 16,
+          minWidth: 50,
+          color: '#000000',
+          textAlign: 'center',
+          border: '',
+          width: 'auto'
         },
-        cellOfColumn: {
-          style: []
-        },
-        cell: {
-          style: {
-            fontSize: 16,
-            minWidth: 50,
-            color: '#000000',
-            textAlign: 'center',
-            border: '',
-            width: 'auto'
-          },
-          iconStyle: {
-            width: 24,
-            height: 'auto'
-          }
+        iconStyle: {
+          width: 24,
+          height: 'auto'
         }
       }
     }
   }
 });
 // EXTERNAL MODULE: external "@babel/runtime/helpers/toArray"
-var toArray_ = __webpack_require__(11);
+var toArray_ = __webpack_require__(13);
 var toArray_default = /*#__PURE__*/__webpack_require__.n(toArray_);
 
 // EXTERNAL MODULE: external "@babel/runtime/helpers/objectSpread"
@@ -942,23 +954,19 @@ var objectSpread_ = __webpack_require__(4);
 var objectSpread_default = /*#__PURE__*/__webpack_require__.n(objectSpread_);
 
 // EXTERNAL MODULE: external "@babel/runtime/helpers/typeof"
-var typeof_ = __webpack_require__(12);
+var typeof_ = __webpack_require__(14);
 var typeof_default = /*#__PURE__*/__webpack_require__.n(typeof_);
 
 // EXTERNAL MODULE: external "@babel/runtime/helpers/toConsumableArray"
-var toConsumableArray_ = __webpack_require__(10);
+var toConsumableArray_ = __webpack_require__(11);
 var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableArray_);
-
-// EXTERNAL MODULE: external "@babel/runtime/helpers/objectWithoutProperties"
-var objectWithoutProperties_ = __webpack_require__(13);
-var objectWithoutProperties_default = /*#__PURE__*/__webpack_require__.n(objectWithoutProperties_);
 
 // EXTERNAL MODULE: external "@babel/runtime/helpers/assertThisInitialized"
 var assertThisInitialized_ = __webpack_require__(1);
 var assertThisInitialized_default = /*#__PURE__*/__webpack_require__.n(assertThisInitialized_);
 
 // EXTERNAL MODULE: ./src/index.scss
-var src = __webpack_require__(14);
+var src = __webpack_require__(15);
 
 // CONCATENATED MODULE: ./src/util.js
 /**
@@ -1001,10 +1009,10 @@ function closest(el, selector) {
 
 function setScrollHeight(props) {
   var _props$property = props.property,
-      height = _props$property.style.height,
-      _props$property$list$ = _props$property.list.header,
-      show = _props$property$list$.show,
-      style = _props$property$list$.style; // 开启表头
+      _props$property$heade = _props$property.header,
+      show = _props$property$heade.show,
+      style = _props$property$heade.style,
+      height = _props$property.style.height; // 开启表头
 
   if (show) {
     return parseInt(height) - parseInt(style.height);
@@ -1095,7 +1103,7 @@ function (_Component) {
           list2 = _assertThisInitialize.list2,
           _assertThisInitialize2 = _assertThisInitialize.state,
           scrollHeight = _assertThisInitialize2.scrollHeight,
-          _assertThisInitialize3 = _assertThisInitialize2.property.list,
+          _assertThisInitialize3 = _assertThisInitialize2.property,
           isScroll = _assertThisInitialize3.isScroll,
           speed = _assertThisInitialize3.speed;
 
@@ -1129,7 +1137,7 @@ function (_Component) {
     });
 
     defineProperty_default()(assertThisInitialized_default()(assertThisInitialized_default()(_this)), "hover", function (e) {
-      var _this$state$property$ = _this.state.property.list.body.row.silent,
+      var _this$state$property$ = _this.state.property.body.row.silent,
           show = _this$state$property$.show,
           style = _this$state$property$.style;
       var target = e.target;
@@ -1166,7 +1174,7 @@ function (_Component) {
           selected = _this$state.selected,
           data = _this$state.data,
           property = _this$state.property;
-      var showHeader = property.list.header.show;
+      var showHeader = property.header.show;
 
       var selectedCur = external_lodash_default.a.cloneDeep(selected);
 
@@ -1220,7 +1228,7 @@ function (_Component) {
           list1 = _assertThisInitialize4.list1,
           props = _assertThisInitialize4.props;
 
-      var borderWidth = props.property.list.border.borderWidth;
+      var borderWidth = props.property.border.borderWidth;
       var width = [];
 
       if (list1 && list1.children.length) {
@@ -1281,7 +1289,7 @@ function (_Component) {
 
     _this.state = {
       // 每列单元格的宽度数组
-      colWidth: setColWidth(_props.property.list.body.cell.style.width),
+      colWidth: setColWidth(_props.property.body.cell.style.width),
       // body可见区域的高度
       scrollHeight: setScrollHeight(_props),
       // 复选框、单选框等标签的状态
@@ -1339,30 +1347,28 @@ function (_Component) {
       var colWidth = this.getColClientWidth();
 
       if (colWidth.length) {
-        var _this$props$property$ = this.props.property.list.body.cell.style,
+        var _this$props$property$ = this.props.property.body.cell.style,
             colCellWidth = _this$props$property$.width,
             cellMinWidth = _this$props$property$.minWidth;
-        var _preProps$property$li = preProps.property.list.body.cell.style,
-            preColCellWidth = _preProps$property$li.width,
-            preCellMinWidth = _preProps$property$li.minWidth;
+        var _preProps$property$bo = preProps.property.body.cell.style,
+            preColCellWidth = _preProps$property$bo.width,
+            preCellMinWidth = _preProps$property$bo.minWidth;
         var _this$state2 = this.state,
             _this$state2$property = _this$state2.property,
             _this$state2$property2 = _this$state2$property.style,
             conWidth = _this$state2$property2.width,
             height = _this$state2$property2.height,
-            _this$state2$property3 = _this$state2$property.list,
-            show = _this$state2$property3.header.show,
-            body = _this$state2$property3.body,
-            isScroll = _this$state2$property3.isScroll,
+            show = _this$state2$property.header.show,
+            body = _this$state2$property.body,
+            isScroll = _this$state2$property.isScroll,
             transitionName = _this$state2.transitionName,
             selected = _this$state2.selected;
         var _preState$property = preState.property,
+            preBody = _preState$property.body,
+            preShow = _preState$property.header.show,
             _preState$property$st = _preState$property.style,
             preConWidth = _preState$property$st.width,
-            preHeight = _preState$property$st.height,
-            _preState$property$li = _preState$property.list,
-            preBody = _preState$property$li.body,
-            preShow = _preState$property$li.header.show;
+            preHeight = _preState$property$st.height;
         var cell = body.cell,
             row = body.row;
         var iconWidth = cell.iconStyle.width;
@@ -1446,7 +1452,7 @@ function (_Component) {
      */
     value: function fillRow(data) {
       var cellsOfRow = [];
-      var _this$state$property$2 = this.state.property.list.body.row,
+      var _this$state$property$2 = this.state.property.body.row,
           rowCheckBox = _this$state$property$2.rowCheckBox,
           serialNumber = _this$state$property$2.serialNumber; // 获取每一行的数据量，存入数组 cellsOfRow 内
 
@@ -1487,7 +1493,7 @@ function (_Component) {
     key: "setCellIcon",
     value: function setCellIcon(icon) {
       if (icon) {
-        var iconStyle = this.state.property.list.body.cell.iconStyle;
+        var iconStyle = this.state.property.body.cell.iconStyle;
 
         if (icon.src && typeof icon.src === 'string' && (icon.src.indexOf('http://') !== -1 || icon.src.indexOf('https://') !== -1 || icon.src.indexOf('data:image/') !== -1)) {
           return [external_react_default.a.createElement("img", {
@@ -1603,7 +1609,7 @@ function (_Component) {
     }
     /**
      * 设置边框
-     * 检测空值则使用全局配置，而不是设置为无边框
+     * 检测到空值则使用全局配置，而不是设置为无边框
      * @param {object} borderStyle 含有边框属性的对象
      * @returns {object} 返回包含border及其相关属性的对象
      */
@@ -1611,7 +1617,7 @@ function (_Component) {
   }, {
     key: "setBorder",
     value: function setBorder(borderStyle) {
-      var border = this.state.property.list.border;
+      var border = this.state.property.border;
       var newBorder = {}; // borderStyle对象的border属性为空字符串
 
       if (borderStyle && borderStyle.border === '') {
@@ -1644,12 +1650,12 @@ function (_Component) {
       var _this$state3 = this.state,
           property = _this$state3.property,
           colWidth = _this$state3.colWidth;
-      var _property$list$header = property.list.header,
-          style = _property$list$header.style,
-          cellStyle = _property$list$header.cellStyle;
-      var _property$list$body = property.list.body,
-          minWidth = _property$list$body.cell.style.minWidth,
-          show = _property$list$body.row.serialNumber.show; // 处理border属性值
+      var _property$header = property.header,
+          style = _property$header.style,
+          cellStyle = _property$header.cellStyle;
+      var _property$body = property.body,
+          minWidth = _property$body.cell.style.minWidth,
+          show = _property$body.row.serialNumber.show; // 处理border属性值
 
       var listBorder = this.setBorder(cellStyle);
 
@@ -1688,7 +1694,7 @@ function (_Component) {
           colWidth = _this$state4.colWidth,
           property = _this$state4.property,
           transitionName = _this$state4.transitionName;
-      var body = property.list.body;
+      var body = property.body;
       var _body$row = body.row,
           transition = _body$row.transition,
           rowStyle = _body$row.style,
@@ -1749,12 +1755,12 @@ function (_Component) {
           scrollHeight = _this$state5.scrollHeight,
           headerWidth = _this$state5.headerWidth,
           _this$state5$property = _this$state5.property,
+          header = _this$state5$property.header,
+          body = _this$state5$property.body,
+          isScroll = _this$state5$property.isScroll,
           conStyle = _this$state5$property.style,
-          _this$state5$property2 = _this$state5$property.list,
-          header = _this$state5$property2.header,
-          body = _this$state5$property2.body,
-          isScroll = _this$state5$property2.isScroll,
-          data = _this$state5.data;
+          data = _this$state5.data,
+          className = _this$state5.className;
       var showHeader = header.show,
           headerStyle = header.style; // 处理行间距的值
 
@@ -1780,7 +1786,7 @@ function (_Component) {
       var listClass = !Number.isNaN(parseInt(spacing)) && parseInt(spacing) > 0 ? '' : 'list-no-spacing';
       return external_react_default.a.createElement("div", {
         style: objectSpread_default()({}, listBorder, conStyle),
-        className: "list ".concat(listClass),
+        className: "list ".concat(className, " ").concat(listClass),
         onMouseMove: this.scrollList.bind(this, false),
         onMouseLeave: this.scrollList.bind(this, true)
       }, showHeader ? external_react_default.a.createElement("ul", {
@@ -1820,13 +1826,19 @@ function (_Component) {
     value: function getDerivedStateFromProps(props, state) {
       // 以下值由props控制
       var data = props.data,
-          property = props.property;
-      var transition = property.list.body.row.transition;
-      var propsUpdate = {
-        data: data,
-        property: property // 以下值由list组件本身控制
+          property = props.property,
+          className = props.className,
+          option = objectWithoutProperties_default()(props, ["data", "property", "className"]);
 
-      };
+      var transition = property.body.row.transition;
+
+      var propsUpdate = objectSpread_default()({
+        data: data,
+        property: property,
+        className: className
+      }, option); // 以下值由组件本身控制
+
+
       var colWidth = state.colWidth,
           scrollHeight = state.scrollHeight,
           selected = state.selected,
@@ -1850,9 +1862,9 @@ function (_Component) {
         transitionName: transitionName,
         headerWidth: headerWidth
       };
-      var width = property.list.body.cell.style.width; // 由props和state同时控制的colWidth
+      var width = property.body.cell.style.width; // 由props和state同时控制的colWidth
 
-      if (stateProperty && width !== stateProperty.list.body.cell.style.width) {
+      if (stateProperty && width !== stateProperty.body.cell.style.width) {
         stateUpdate.colWidth = setColWidth(width);
       } // 检测props是否发生改变
 
@@ -1881,6 +1893,8 @@ function (_Component) {
 
 // CONCATENATED MODULE: ./src/index.js
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return src_default_0; });
+
+
 
 
 
@@ -1917,14 +1931,13 @@ function (_Component) {
     value: function render() {
       var _this$props = this.props,
           property = _this$props.property,
-          data = _this$props.data;
+          option = objectWithoutProperties_default()(_this$props, ["property"]);
 
       var newProperty = external_lodash_default.a.defaultsDeep({}, property, config.property);
 
-      return external_react_default.a.createElement(list_default, {
-        property: newProperty,
-        data: data
-      });
+      return external_react_default.a.createElement(list_default, extends_default()({
+        property: newProperty
+      }, option));
     }
   }]);
 

@@ -20,3 +20,6 @@
 #### 1.0.9 Complete WebPack development framework;Add unit test;add codecov
 #### 1.0.10 Modify the error in the CI configuration file;Write unit test cases.
 #### 1.0.11 Modify the CI configuration file; optimize some of the code.
+
+#### 1.1.0 Modify the configuration file structure;The outermost container can customize the className property.
+#### 1.1.1 Write configuration documents.

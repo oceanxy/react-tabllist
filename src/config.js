@@ -18,74 +18,72 @@ export default {
       margin: '0 auto',
       height: 300
     },
-    list: {
-      border: {
-        borderWidth: 1,
-        borderStyle: 'solid',
-        borderColor: '#f4f4f4'
+    border: {
+      borderWidth: 1,
+      borderStyle: 'solid',
+      borderColor: '#f4f4f4'
+    },
+    speed: 50,
+    isScroll: true,
+    header: {
+      show: true,
+      style: {
+        height: 30
       },
-      speed: 50,
-      isScroll: true,
-      header: {
-        show: true,
+      cellStyle: {
+        color: '#000000',
+        border: ''
+      }
+    },
+    body: {
+      row: {
+        transition: true,
+        serialNumber: {
+          show: false,
+          formatter: '{index}.',
+          style: {
+            backgroundColor: '',
+            backgroundImage: '',
+            color: '#ffffff'
+          },
+          specialStyle: []
+        },
+        spacing: 0,
+        rowCheckBox: false,
         style: {
           height: 30
         },
-        cellStyle: {
-          color: '#000000',
-          border: ''
+        visual: {
+          show: false,
+          interval: 1,
+          style: {
+            backgroundColor: '#E8F4FC'
+          }
+        },
+        // 注意：单独指定每一行的样式的优先级高于visual.style的优先级
+        specialStyle: [],
+        silent: {
+          show: false, // false is open
+          style: {
+            opacity: 0.8
+          }
         }
       },
-      body: {
-        row: {
-          transition: true,
-          serialNumber: {
-            show: false,
-            formatter: '{index}.',
-            style: {
-              backgroundColor: '',
-              backgroundImage: '',
-              color: '#ffffff'
-            },
-            specialStyle: []
-          },
-          spacing: 0,
-          rowCheckBox: false,
-          style: {
-            height: 30
-          },
-          visual: {
-            show: false,
-            interval: 1,
-            style: {
-              backgroundColor: '#E8F4FC'
-            }
-          },
-          // 注意：单独指定每一行的样式的优先级高于visual.style的优先级
-          specialStyle: [],
-          silent: {
-            show: false, // false is open
-            style: {
-              opacity: 0.8
-            }
-          }
+      cellOfColumn: {
+        style: []
+      },
+      cell: {
+        style: {
+          fontSize: 16,
+          minWidth: 50,
+          color: '#000000',
+          textAlign: 'center',
+          border: '',
+          width: 'auto'
         },
-        cellOfColumn: {
-          style: []
-        },
-        cell: {
-          style: {
-            fontSize: 16,
-            minWidth: 50,
-            color: '#000000',
-            textAlign: 'center',
-            border: '',
-            width: 'auto'
-          },
-          iconStyle: {
-            width: 24,
-            height: 'auto'
-          }
+        iconStyle: {
+          width: 24,
+          height: 'auto'
         }
       }
     }

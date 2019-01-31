@@ -18,7 +18,7 @@ export default class extends Component {
 
     this.state = {
       // 每列单元格的宽度数组
-      colWidth: util.setColWidth(props.property.list.body.cell.style.width),
+      colWidth: util.setColWidth(props.property.body.cell.style.width),
       // body可见区域的高度
       scrollHeight: util.setScrollHeight(props),
       // 复选框、单选框等标签的状态
@@ -33,11 +33,11 @@ export default class extends Component {
 
   static getDerivedStateFromProps(props, state) {
     // 以下值由props控制
-    const { data, property } = props
-    const { transition } = property.list.body.row
-    const propsUpdate = { data, property }
+    const { data, property, className, ...option } = props
+    const { transition } = property.body.row
+    const propsUpdate = { data, property, className, ...option }
 
-    // 以下值由list组件本身控制
+    // 以下值由组件本身控制
     const {
       colWidth,
       scrollHeight,
@@ -65,9 +65,9 @@ export default class extends Component {
       headerWidth
     }
 
-    const { width } = property.list.body.cell.style
+    const { width } = property.body.cell.style
     // 由props和state同时控制的colWidth
-    if(stateProperty && width !== stateProperty.list.body.cell.style.width) {
+    if(stateProperty && width !== stateProperty.body.cell.style.width) {
       stateUpdate.colWidth = util.setColWidth(width)
     }
 
@@ -128,22 +128,23 @@ export default class extends Component {
       const {
         width: colCellWidth,
         minWidth: cellMinWidth
-      } = this.props.property.list.body.cell.style
+      } = this.props.property.body.cell.style
       const {
         width: preColCellWidth,
         minWidth: preCellMinWidth
-      } = preProps.property.list.body.cell.style
+      } = preProps.property.body.cell.style
       const {
         property: {
           style: { width: conWidth, height },
-          list: { header: { show }, body, isScroll }
+          header: { show }, body, isScroll
         },
         transitionName,
         selected
       } = this.state
       const {
-        style: { width: preConWidth, height: preHeight },
-        list: { body: preBody, header: { show: preShow } }
+        body: preBody,
+        header: { show: preShow },
+        style: { width: preConWidth, height: preHeight }
       } = preState.property
       const { cell, row } = body
       const { width: iconWidth } = cell.iconStyle
@@ -220,7 +221,7 @@ export default class extends Component {
     const {
       list1,
       list2,
-      state: { scrollHeight, property: { list: { isScroll, speed } } }
+      state: { scrollHeight, property: { isScroll, speed } }
     } = this
 
     if(list1 && list2) {
@@ -257,7 +258,7 @@ export default class extends Component {
    * @param {object} e event
    */
   hover = (e) => {
-    const { silent: { show, style } } = this.state.property.list.body.row
+    const { silent: { show, style } } = this.state.property.body.row
     const { target } = e
     let row = target
 
@@ -293,7 +294,7 @@ export default class extends Component {
    */
   checkCR = ({ target }) => {
     const { selected, data, property } = this.state
-    const { show: showHeader } = property.list.header
+    const { show: showHeader } = property.header
     const selectedCur = _.cloneDeep(selected)
     const index = target.getAttribute('data-index')
     let targetName = target.name
@@ -348,7 +349,7 @@ export default class extends Component {
    */
   getColClientWidth = () => {
     const { list1, props } = this
-    const { borderWidth } = props.property.list.border
+    const { borderWidth } = props.property.border
     const width = []
 
     if(list1 && list1.children.length) {
@@ -384,7 +385,7 @@ export default class extends Component {
    */
   fillRow(data) {
     const cellsOfRow = []
-    const { row: { rowCheckBox, serialNumber } } = this.state.property.list.body
+    const { row: { rowCheckBox, serialNumber } } = this.state.property.body
 
     // 获取每一行的数据量，存入数组 cellsOfRow 内
     _.range(data.length).map(i => {
@@ -428,7 +429,7 @@ export default class extends Component {
    */
   setCellIcon(icon) {
     if(icon) {
-      const { iconStyle } = this.state.property.list.body.cell
+      const { iconStyle } = this.state.property.body.cell
 
       if(
         icon.src &&
@@ -583,12 +584,12 @@ export default class extends Component {
 
   /**
    * 设置边框
-   * 检测空值则使用全局配置，而不是设置为无边框
+   * 检测到空值则使用全局配置，而不是设置为无边框
    * @param {object} borderStyle 含有边框属性的对象
    * @returns {object} 返回包含border及其相关属性的对象
    */
   setBorder(borderStyle) {
-    const { border } = this.state.property.list
+    const { border } = this.state.property
     const newBorder = {}
 
     // borderStyle对象的border属性为空字符串
@@ -615,11 +616,11 @@ export default class extends Component {
    */
   loadHeader(data) {
     const { property, colWidth } = this.state
-    const { style, cellStyle } = property.list.header
+    const { style, cellStyle } = property.header
     const {
       cell: { style: { minWidth } },
       row: { serialNumber: { show } }
-    } = property.list.body
+    } = property.body
 
     // 处理border属性值
     const listBorder = this.setBorder(cellStyle)
@@ -658,7 +659,7 @@ export default class extends Component {
    */
   loadBody(bodyData, container) {
     const { colWidth, property, transitionName } = this.state
-    const { body } = property.list
+    const { body } = property
 
     const {
       row: {
@@ -749,10 +750,13 @@ export default class extends Component {
       scrollHeight,
       headerWidth,
       property: {
-        style: conStyle,
-        list: { header, body, isScroll }
+        header,
+        body,
+        isScroll,
+        style: conStyle
       },
-      data
+      data,
+      className
     } = this.state
 
     const { show: showHeader, style: headerStyle } = header
@@ -778,7 +782,7 @@ export default class extends Component {
     return (
       <div
         style={{ ...listBorder, ...conStyle }}
-        className={`list ${listClass}`}
+        className={`list ${className} ${listClass}`}
         onMouseMove={this.scrollList.bind(this, false)}
         onMouseLeave={this.scrollList.bind(this, true)}
       >

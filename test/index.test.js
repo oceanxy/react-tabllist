@@ -42,19 +42,19 @@ it('change height of container', () => {
 describe('display header', () => {
   it('not display header', () => {
     wrapper.setProps({
-      property: { list: { header: { show: false } } }
+      property: { header: { show: false } }
     })
     expect(wrapper.exists('.list-header')).toEqual(false)
   })
 
   it('change style for row of header', () => {
     wrapper.setProps({
-      property: { list: { header: { show: true } } }
+      property: { header: { show: true } }
     })
     const headerHeight = wrapper.find('.list-header').getDOMNode().style.height
     expect(headerHeight).toBe('30px')
     wrapper.setProps({
-      property: { list: { header: { style: { height: 40 } } } }
+      property: { header: { style: { height: 40 } } }
     })
     expect(wrapper.exists('.list-header')).toEqual(true)
     expect(wrapper.find('.list-header').getDOMNode().style.height).not.toBe(headerHeight)
@@ -93,17 +93,17 @@ describe('change property', () => {
   })
 
   it('change property.list.border', () => {
-    wrapper.setProps({ property: { list: { border: { borderWidth: 2 } } } })
+    wrapper.setProps({ property: { border: { borderWidth: 2 } } })
     expect(wrapper.find('.list').getDOMNode().style.borderWidth).toBe('2px')
   })
 
   it('close scroll', () => {
-    wrapper.setProps({ property: { list: { isScroll: false } } })
+    wrapper.setProps({ property: { isScroll: false } })
     expect(wrapper.find('.list').getDOMNode().offsetTop).toBe(0)
   })
 
   it('open scroll', () => {
-    wrapper.setProps({ property: { list: { speed: 60, isScroll: true } } })
+    wrapper.setProps({ property: { speed: 60, isScroll: true } })
     jest.setTimeout(1000)
     expect(wrapper.find('.list').getDOMNode().offsetTop).toBeGreaterThanOrEqual(0)
   })
@@ -113,12 +113,10 @@ describe('test cells', () => {
   it('test style', () => {
     wrapper.setProps({
       property: {
-        list: {
-          body: {
-            cell: {
-              style: {
-                fontSize: 10
-              }
+        body: {
+          cell: {
+            style: {
+              fontSize: 10
             }
           }
         }
@@ -142,12 +140,10 @@ describe('test cells', () => {
         ['1st cell', '2nd cell', '3rd cell']
       ],
       property: {
-        list: {
-          body: {
-            cell: {
-              style: {
-                width: [70, 80, 90]
-              }
+        body: {
+          cell: {
+            style: {
+              width: [70, 80, 90]
             }
           }
         }
@@ -166,12 +162,10 @@ describe('test cells', () => {
   it('test width of cell when type of width is string', () => {
     wrapper.setProps({
       property: {
-        list: {
-          body: {
-            cell: {
-              style: {
-                width: '70,, 90'
-              }
+        body: {
+          cell: {
+            style: {
+              width: '70,, 90'
             }
           }
         }
@@ -191,12 +185,10 @@ describe('test cells', () => {
   it('test width of cell when type of width is number or invalid value', () => {
     wrapper.setProps({
       property: {
-        list: {
-          body: {
-            cell: {
-              style: {
-                width: 1
-              }
+        body: {
+          cell: {
+            style: {
+              width: 1
             }
           }
         }
@@ -214,12 +206,10 @@ describe('test cells', () => {
 
     wrapper.setProps({
       property: {
-        list: {
-          body: {
-            cell: {
-              style: {
-                width: 'xxxx'
-              }
+        body: {
+          cell: {
+            style: {
+              width: 'xxxx'
             }
           }
         }
@@ -234,12 +224,10 @@ describe('test cells', () => {
   it('test width of cell when type of width is string and its value is "avg"', () => {
     wrapper.setProps({
       property: {
-        list: {
-          body: {
-            cell: {
-              style: {
-                width: 'avg'
-              }
+        body: {
+          cell: {
+            style: {
+              width: 'avg'
             }
           }
         }
@@ -267,22 +255,20 @@ describe('change property of body', () => {
 
     wrapper.setProps({
       property: {
-        list: {
-          body: {
-            row: {
-              transition: false,
-              serialNumber: {
-                show: true,
-                formatter: 'test{index}',
-                style: {
-                  backgroundColor: 'red'
-                },
-                specialStyle: [
-                  {
-                    width: 100
-                  }
-                ]
-              }
+        body: {
+          row: {
+            transition: false,
+            serialNumber: {
+              show: true,
+              formatter: 'test{index}',
+              style: {
+                backgroundColor: 'red'
+              },
+              specialStyle: [
+                {
+                  width: 100
+                }
+              ]
             }
           }
         }
@@ -305,11 +291,9 @@ describe('change property of body', () => {
   it('row spacing', () => {
     wrapper.setProps({
       property: {
-        list: {
-          body: {
-            row: {
-              spacing: 10
-            }
+        body: {
+          row: {
+            spacing: 10
           }
         }
       }
@@ -325,11 +309,9 @@ describe('change property of body', () => {
   it('row checkbox', () => {
     wrapper.setProps({
       property: {
-        list: {
-          body: {
-            row: {
-              rowCheckBox: true
-            }
+        body: {
+          row: {
+            rowCheckBox: true
           }
         }
       }
@@ -347,21 +329,19 @@ describe('change property of body', () => {
   it('change style for row of body', () => {
     wrapper.setProps({
       property: {
-        list: {
-          body: {
-            row: {
-              style: {
-                height: 55
+        body: {
+          row: {
+            style: {
+              height: 55
+            },
+            specialStyle: [
+              {
+                backgroundColor: 'red'
               },
-              specialStyle: [
-                {
-                  backgroundColor: 'red'
-                },
-                {
-                  backgroundColor: 'blue'
-                }
-              ]
-            }
+              {
+                backgroundColor: 'blue'
+              }
+            ]
           }
         }
       }
@@ -377,17 +357,15 @@ describe('change property of body', () => {
   it('test visual of row', () => {
     wrapper.setProps({
       property: {
-        list: {
-          body: {
-            row: {
-              specialStyle: [
-                {
-                  backgroundColor: 'red'
-                }
-              ],
-              visual: {
-                show: true
+        body: {
+          row: {
+            specialStyle: [
+              {
+                backgroundColor: 'red'
               }
+            ],
+            visual: {
+              show: true
             }
           }
         }
@@ -401,13 +379,11 @@ describe('change property of body', () => {
   it('test silent of row', () => {
     wrapper.setProps({
       property: {
-        list: {
-          body: {
-            row: {
-              silent: {
-                style: {
-                  backgroundColor: 'yellow'
-                }
+        body: {
+          row: {
+            silent: {
+              style: {
+                backgroundColor: 'yellow'
               }
             }
           }
@@ -425,18 +401,16 @@ describe('change property of body', () => {
   it('test cells by column', () => {
     wrapper.setProps({
       property: {
-        list: {
-          body: {
-            cellOfColumn: {
-              style: [
-                {
-                  width: 100
-                },
-                {
-                  width: 200
-                }
-              ]
-            }
+        body: {
+          cellOfColumn: {
+            style: [
+              {
+                width: 100
+              },
+              {
+                width: 200
+              }
+            ]
           }
         }
       }

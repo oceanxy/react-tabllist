@@ -16,14 +16,11 @@ export default class extends Component {
   static defaultProps = listConfig
 
   render() {
-    const { property, data } = this.props
+    const { property, ...option } = this.props
     const newProperty = _.defaultsDeep({}, property, listConfig.property)
 
     return (
-      <List
-        property={newProperty}
-        data={data}
-      />
+      <List property={newProperty} {...option} />
     )
   }
 }

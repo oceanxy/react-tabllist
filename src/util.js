@@ -14,7 +14,7 @@
  * @return {Element} 按照选择器筛选后的元素
  */
 export function closest(el, selector) {
-  if(el){
+  if(el) {
     const matchesSelector = el.matches ||
       el.webkitMatchesSelector ||
       el.mozMatchesSelector ||
@@ -40,11 +40,9 @@ export function closest(el, selector) {
  */
 export function setScrollHeight(props) {
   const {
-    property: {
-      style: { height },
-      list: { header: { show, style } }
-    }
-  } = props
+    header: { show, style },
+    style: { height }
+  } = props.property
 
   // 开启表头
   if(show) {

@@ -37,23 +37,21 @@ const Demo = () => {
         height: 200,
         border: '1px solid #999999'
       },
-      list: {
-        border: {
-          borderWidth: 0
+      border: {
+        borderWidth: 0
+      },
+      header: {
+        show: true,
+        style: {
+          borderBottom: '1px solid #999999'
         },
-        header: {
-          show: true,
-          style: {
-            borderBottom: '1px solid #999999'
-          },
-          cellStyle: {
-            fontWeight: 'bolder',
-            fontSize: 20,
-            color: '#333333'
-          }
-        },
-        isScroll: false
-      }
+        cellStyle: {
+          fontWeight: 'bolder',
+          fontSize: 20,
+          color: '#333333'
+        }
+      },
+      isScroll: false
     }
   }
   const option3 = {
@@ -75,35 +73,33 @@ const Demo = () => {
         height: 300,
         border: '1px solid #999999'
       },
-      list: {
-        border: {
-          borderWidth: 1,
-          borderStyle: 'solid',
-          borderColor: '#999999'
-        },
-        header: {
-          show: false
-        },
-        body: {
-          row: {
-            visual: {
-              show: true,
-              interval: 1,
-              style: {
-                backgroundColor: '#E8F4FC'
-              }
-            },
-            silent: {
-              show: false,
-              style: {
-                backgroundColor: '#bcf0fc'
-              }
+      border: {
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderColor: '#999999'
+      },
+      header: {
+        show: false
+      },
+      body: {
+        row: {
+          visual: {
+            show: true,
+            interval: 1,
+            style: {
+              backgroundColor: '#E8F4FC'
+            }
+          },
+          silent: {
+            show: false,
+            style: {
+              backgroundColor: '#bcf0fc'
             }
           }
-        },
-        speed: 50,
-        isScroll: true
-      }
+        }
+      },
+      speed: 50,
+      isScroll: true
     }
   }
   const option4 = {
@@ -127,65 +123,63 @@ const Demo = () => {
         height: 300,
         border: '1px solid #999999'
       },
-      list: {
-        border: {
-          borderWidth: 1,
-          borderStyle: 'solid',
-          borderColor: '#ededed'
+      border: {
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderColor: '#ededed'
+      },
+      header: {
+        show: true,
+        style: {
+          backgroundColor: '#1693ff',
+          height: 40,
+          borderBottom: '1px solid #999999'
         },
-        header: {
-          show: true,
+        cellStyle: {
+          color: '#ffffff',
+          fontWeight: 'bolder',
+          fontSize: 20
+        }
+      },
+      body: {
+        row: {
+          serialNumber: {
+            show: true,
+            formatter: 'No.{index}',
+            style: {
+              backgroundColor: '#1693ff',
+              color: '#ffffff',
+              width: 80
+            }
+          },
           style: {
-            backgroundColor: '#1693ff',
-            height: 40,
-            borderBottom: '1px solid #999999'
+            height: 34
           },
-          cellStyle: {
-            color: '#ffffff',
-            fontWeight: 'bolder',
-            fontSize: 20
-          }
-        },
-        body: {
-          row: {
-            serialNumber: {
-              show: true,
-              formatter: 'No.{index}',
-              style: {
-                backgroundColor: '#1693ff',
-                color: '#ffffff',
-                width: 80
-              }
-            },
+          visual: {
+            show: true,
             style: {
-              height: 34
-            },
-            visual: {
-              show: true,
-              style: {
-                backgroundColor: '#E8F4FC'
-              }
-            },
-            silent: {
-              style: {
-                backgroundColor: '#bcf0fc'
-              }
+              backgroundColor: '#E8F4FC'
             }
           },
-          cell: {
+          silent: {
             style: {
-              fontSize: 16,
-              minWidth: 50,
-              color: '#000000',
-              textAlign: 'center',
-              border: '',
-              width: 'auto'
+              backgroundColor: '#bcf0fc'
             }
           }
         },
-        speed: 40,
-        isScroll: true
-      }
+        cell: {
+          style: {
+            fontSize: 16,
+            minWidth: 50,
+            color: '#000000',
+            textAlign: 'center',
+            border: '',
+            width: 'auto'
+          }
+        }
+      },
+      speed: 40,
+      isScroll: true
     }
   }
   const option5 = {
@@ -332,68 +326,67 @@ const Demo = () => {
         height: 300,
         border: '1px solid #999999'
       },
-      list: {
-        border: {
-          borderWidth: 1,
-          borderStyle: 'solid',
-          borderColor: '#ededed'
+      border: {
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderColor: '#ededed'
+      },
+      header: {
+        show: true,
+        style: {
+          backgroundColor: '#1693ff',
+          height: 40,
+          borderBottom: '1px solid #999999'
         },
-        header: {
-          show: true,
+        cellStyle: {
+          color: '#ffffff',
+          fontWeight: 'bolder',
+          fontSize: 20
+        }
+      },
+      body: {
+        row: {
+          rowCheckBox: true,
           style: {
-            backgroundColor: '#1693ff',
-            height: 40,
-            borderBottom: '1px solid #999999'
+            height: 34
           },
-          cellStyle: {
-            color: '#ffffff',
-            fontWeight: 'bolder',
-            fontSize: 20
-          }
-        },
-        body: {
-          row: {
-            rowCheckBox: true,
+          specialStyle: [
+            { height: 60 },
+            { height: 40 },
+            { height: 80 },
+            { height: 100 },
+            { height: 50 },
+            { height: 80 }
+          ],
+          visual: {
+            show: true,
             style: {
-              height: 34
-            },
-            specialStyle: [
-              { height: 60 },
-              { height: 40 },
-              { height: 80 },
-              { height: 100 },
-              { height: 50 },
-              { height: 80 }
-            ],
-            visual: {
-              show: true,
-              style: {
-                backgroundColor: '#E8F4FC'
-              }
-            },
-            silent: {
-              style: {
-                backgroundColor: '#bcf0fc'
-              }
+              backgroundColor: '#E8F4FC'
             }
           },
-          cell: {
+          silent: {
             style: {
-              fontSize: 16,
-              minWidth: 50,
-              color: '#000000',
-              textAlign: 'center',
-              border: '',
-              width: [60, '50%', '25%', '10%']
+              backgroundColor: '#bcf0fc'
             }
           }
         },
-        speed: 40,
-        isScroll: true
-      }
+        cell: {
+          style: {
+            fontSize: 16,
+            minWidth: 50,
+            color: '#000000',
+            textAlign: 'center',
+            border: '',
+            width: [60, '50%', '25%', '10%']
+          }
+        }
+      },
+      speed: 40,
+      isScroll: true
     }
   }
   const option6 = {
+    className: 'demo6',
     data: _.range(7).map((i) => {
       return [
         {
@@ -401,7 +394,7 @@ const Demo = () => {
           uid: '',
           text: `test title ${i + 1}`,
           event: 'onClick',
-          className: 'demo5-link',
+          className: 'link',
           data: {
             datetime: '2019-01-17 17:58',
             author: 'Oceanxy'
@@ -414,7 +407,7 @@ const Demo = () => {
           type: 'button',
           uid: '',
           value: `test button ${i + 1}`,
-          className: 'demo5-btn',
+          className: 'btn',
           data: {
             message: `you clicked button ${i + 1} !`
           },
@@ -433,29 +426,29 @@ const Demo = () => {
         height: 410,
         margin: 0
       },
-      list: {
-        border: {
-          borderWidth: 0
-        },
-        header: {
-          show: false
-        },
-        body: {
-          row: {
-            style: {
-              height: 40,
-              background: `url(${rowBg}) no-repeat center / 100% 100%`
-            },
-            spacing: 10
+      border: {
+        borderWidth: 0
+      },
+      header: {
+        show: false
+      },
+      body: {
+        row: {
+          style: {
+            height: 40,
+            background: `url(${rowBg}) no-repeat center / 100% 100%`
           },
-          cell: {
-            style: {
-              width: ',28%'
-            }
-          },
-          cellOfColumn: {
-            style: [{ textIndent: '2em', textAlign: 'left' }, { textAlign: 'center' }]
+          spacing: 10
+        },
+        cell: {
+          style: {
+            textDecoration: 'none',
+            color: '#ffffff',
+            width: ',28%'
           }
+        },
+        cellOfColumn: {
+          style: [{ textIndent: '2em', textAlign: 'left' }, { textAlign: 'center' }]
         }
       }
     }
@@ -479,7 +472,7 @@ const Demo = () => {
       <Tabllist property={option5.property} data={option5.data} />
 
       <h1>demo6：Use in actual projects</h1>
-      <Tabllist property={option6.property} data={option6.data} />
+      <Tabllist {...option6} />
     </div>
   )
 }

@@ -28,6 +28,7 @@
     "value-list-max-empty-lines": null,
     "font-family-no-missing-generic-family-keyword": null,
     "no-descending-specificity": null,
-    "at-rule-no-unknown": null
+    "at-rule-no-unknown": null,
+    "color-hex-length": null
   }
 }
