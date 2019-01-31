@@ -782,7 +782,7 @@ export default class extends Component {
     return (
       <div
         style={{ ...listBorder, ...conStyle }}
-        className={`list ${className} ${listClass}`}
+        className={`list ${className || ''} ${listClass}`}
         onMouseMove={this.scrollList.bind(this, false)}
         onMouseLeave={this.scrollList.bind(this, true)}
       >
