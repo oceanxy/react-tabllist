@@ -1786,7 +1786,7 @@ function (_Component) {
       var listClass = !Number.isNaN(parseInt(spacing)) && parseInt(spacing) > 0 ? '' : 'list-no-spacing';
       return external_react_default.a.createElement("div", {
         style: objectSpread_default()({}, listBorder, conStyle),
-        className: "list ".concat(className, " ").concat(listClass),
+        className: "list ".concat(className || '', " ").concat(listClass),
         onMouseMove: this.scrollList.bind(this, false),
         onMouseLeave: this.scrollList.bind(this, true)
       }, showHeader ? external_react_default.a.createElement("ul", {
