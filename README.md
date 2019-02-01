@@ -90,10 +90,10 @@ data数据格式为一个二维数组，数组内每一个子数组元素代表�
 |-------------|---------------------------------------------------------------------|------------------------------------------------------|
 |type \| `{string}`             |要在单元格内生成的节点类型                                   | `button` `link` `radio` `checkbox`    |
 |uid \| `{string}`              |要在单元格内生成的节点的唯一标识，可用来保存id等                | `button` `link` `radio` `checkbox`    |
-|name \| `{string}`             |radio和checkbox必须设置的属性，同HTML标签的name属性           | `radio` `checkbox`    |
-|text \| `{string`              |文本                                                       | `link` `radio` `checkbox`    |
-|value \| `{number|string}`     |值、文本（input类标签需要设置此属性，同HTML标签的value）        | `button`    |
-|href \| `{string}`             |link类型的超链接地址（同HTML a标签的href）                    | `link`    |
+|name \| `{string}`             |radio和checkbox必须设置的属性，同HTML标签的name属性           | button link `radio` `checkbox`    |
+|text \| `{string`              |文本                                                       | button `link` `radio` `checkbox`    |
+|value \| `{number|string}`     |值、文本（input类标签需要设置此属性，同HTML标签的value）        | `button` link radio checkbox    |
+|href \| `{string}`             |link类型的超链接地址（同HTML a标签的href）                    | button `link` radio checkbox    |
 |className \| `{string}`        |样式表名                                                   | `button` `link` `radio` `checkbox`    |
 |event \| `{string}`            |触发事件，需和`callback`配合使用                             | `button` `link` `radio` `checkbox`    |
 |callback \| `{function}`       |触发事件后的回调函数，需和`event`配合使用，详细见`回调函数`介绍  | `button` `link` `radio` `checkbox`    |
