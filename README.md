@@ -38,7 +38,7 @@ const data = [
 
 const property = {}
 
-ReactDOM.render(<ReactTabllist className='demo' data={data]} property={property} />, mountNode);
+ReactDOM.render(<ReactTabllist className='demo' data={data} property={property} />, mountNode);
 ```
 
 ### Development
@@ -58,11 +58,11 @@ Open your browser and visit http://localhost:3001 , see more at [Development]().
 
 #### props
 
-|props \| type                             |description               |details                           |
-|------------------------------------------|--------------------------|----------------------------------|
-|data \| `{[Array, Array, Array,...]}`     |生成表格需要的数据          |[props.data](#props.data)         |
-|className \| `{string}`                   |自定义样式表名称            |''                                |
-|property \| `{Object}`                    |属性                       |[props.property](#props.property) |
+|**props** type                                  |description               |details                           |
+|------------------------------------------------|--------------------------|----------------------------------|
+|**data** <br> `{[Array, Array, Array,...]}`     |生成表格需要的数据          |[props.data](#props.data)         |
+|**className** <br> `{string}`                   |自定义样式表名称            |''                                |
+|**property** <br> `{Object}`                    |属性                       |[props.property](#props.property) |
 
 #### props.data
 
@@ -70,6 +70,7 @@ data数据格式为一个二维数组，数组内每一个子数组元素代表�
 单元格的显示顺序为数组下标顺序，所以在重构数据时应当确定每一个单元格的显示内容。
 
 单元格可解析的数据格式分为四类：
+
 - 字符串
 - 数组，数组内可以再次嵌套此四种数据格式
 - jsx，如 `<button className='test-button' onclick='()=>{return null}'>click</button>`
@@ -128,15 +129,15 @@ data数据格式为一个二维数组，数组内每一个子数组元素代表�
 
 |**key** `{type}`                |description                                        |use                                             |
 |-------------|----------------------------------------------------------------------|------------------------------------------------|
-|**type** `{string}`             |要在单元格内生成的节点类型                             | `button` `link` `radio` `checkbox`            |
-|**uid** `{string}`              |要在单元格内生成的节点的唯一标识，可用来保存id等         | `button` `link` `radio` `checkbox`            |
-|**name** `{string}`             |radio和checkbox必须设置的属性，同HTML标签的name属性    | ~~`button`~~ ~~`link`~~ `radio` `checkbox`    |
-|**text** `{string}`             |文本                                               | ~~`button`~~ `link` `radio` `checkbox`         |
-|**value** `{number\|string}`    |值、文本（input类标签需要设置此属性，同HTML标签的value）| `button` ~~`link`~~ ~~`radio`~~ ~~`checkbox`~~ |
-|**href** `{string}`             |link类型的超链接地址（同HTML a标签的href），也可不传此属性而使用event和callback的组合自定义事件回调          | ~~`button`~~ `link` ~~`radio`~~ ~~`checkbox`~~ |
-|**className** `{string}`        |样式表名                                            | `button` `link` `radio` `checkbox`             |
-|**event** `{string}`            |触发事件，需和`callback`配合使用                      | `button` `link` `radio` `checkbox`            |
-|**callback** `{function}`       |触发事件后的回调函数，详细见`回调函数`介绍              | `button` `link` `radio` `checkbox`             |
+|**type** <br> `{string}`             |要在单元格内生成的节点类型                             | `button` `link` `radio` `checkbox`            |
+|**uid** <br> `{string}`              |要在单元格内生成的节点的唯一标识，可用来保存id等         | `button` `link` `radio` `checkbox`            |
+|**name** <br>`{string}`             |radio和checkbox必须设置的属性，同HTML标签的name属性    | ~~`button`~~ ~~`link`~~ `radio` `checkbox`    |
+|**text** <br> `{string}`             |文本                                               | ~~`button`~~ `link` `radio` `checkbox`         |
+|**value** <br> `{number\|string}`    |值、文本（input类标签需要设置此属性，同HTML标签的value）| `button` ~~`link`~~ ~~`radio`~~ ~~`checkbox`~~ |
+|**href** <br> `{string}`             |link类型的超链接地址（同HTML a标签的href），也可不传此属性而使用event和callback的组合自定义事件回调          | ~~`button`~~ `link` ~~`radio`~~ ~~`checkbox`~~ |
+|**className** <br> `{string}`        |样式表名                                            | `button` `link` `radio` `checkbox`             |
+|**event** <br> `{string}`            |触发事件，需和`callback`配合使用                      | `button` `link` `radio` `checkbox`            |
+|**callback** <br> `{function}`       |触发事件后的回调函数，详细见`回调函数`介绍              | `button` `link` `radio` `checkbox`             |
 
 **回调函数**
 
