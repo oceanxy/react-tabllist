@@ -90,8 +90,8 @@ data数据格式为一个二维数组，数组内每一个子数组元素代表�
 |-------------|---------------------------------------------------------------------|------------------------------------------------------|
 |type \| `{string}`             |要在单元格内生成的节点类型                                   | `button` `link` `radio` `checkbox`    |
 |uid \| `{string}`              |要在单元格内生成的节点的唯一标识，可用来保存id等                | `button` `link` `radio` `checkbox`    |
-|name \| `{string}`             |radio和checkbox必须设置的属性，同HTML标签的name属性           | <kbd>button</kbd> link `radio` `checkbox`    |
-|text \| `{string}`              |文本                                                       | <kbd>button</kbd>`button` `link` `radio` `checkbox`    |
+|name \| `{string}`             |radio和checkbox必须设置的属性，同HTML标签的name属性           | <b>button</b> link `radio` `checkbox`    |
+|text \| `{string}`             |文本                                                       | button `link` `radio` `checkbox`    |
 |value \| `{number\|string}`    |值、文本（input类标签需要设置此属性，同HTML标签的value）        | `button` link radio checkbox    |
 |href \| `{string}`             |link类型的超链接地址（同HTML a标签的href）                    | button `link` radio checkbox    |
 |className \| `{string}`        |样式表名                                                   | `button` `link` `radio` `checkbox`    |
