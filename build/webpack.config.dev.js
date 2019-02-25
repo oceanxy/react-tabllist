@@ -43,11 +43,16 @@ let config = {
       },
       {
         test: /\.css$/,
-        exclude: /node_modules/,
         use: [
-          'style-loader',
-          'css-loader',
-          'postcss-loader'
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader'
+          },
+          {
+            loader: 'postcss-loader'
+          }
         ]
       }
     ]
