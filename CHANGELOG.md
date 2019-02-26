@@ -24,3 +24,4 @@
 #### 1.1.0 Modify the configuration file structure;The outermost container can customize the className property.
 #### 1.1.1 Write configuration documents.
 #### 1.1.2 Display the specific configuration of each demo.
+#### 1.1.3 Update the README document: Add 'img' to the object cell type. The 'img' type can also be used in previous versions, just to supplement the documentation.
