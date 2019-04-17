@@ -26,6 +26,31 @@ npm install react-tabllist --save
 
 ### Usage
 
+#### Use in browser
+
+```html
+<script src="https://cdn.bootcss.com/react/16.8.6/umd/react.development.js"></script>
+<script src="https://cdn.bootcss.com/react-dom/16.8.6/umd/react-dom.development.js"></script>
+<script src="https://cdn.bootcss.com/babel-standalone/7.0.0-beta.3/babel.min.js"></script>
+<script src='https://cdn.bootcss.com/lodash.js/4.17.11/lodash.core.js'></script>
+<script src='./react-tabllist.min.js'></script>
+
+<div id='example'></div>
+<script type='text/javascript'>
+  var option = {
+    data: [],
+    property: {}
+  }
+
+  ReactDOM.render(
+    React.createElement(ReactTabllist, option),
+    document.getElementById('example')
+  )
+</script>
+```
+
+#### Use in ES6 & jsx
+
 ```jsx harmony
 import ReactTabllist from 'react-tabllist';
 
@@ -85,6 +110,8 @@ props.data数据格式为一个二维数组，数组内每一个子数组元素�
 |link         |在单元格内生成一个连接（a标签）  |
 |radio        |在单元格内生成一个单选按钮      |
 |checkbox     |在单元格内生成一个复选框        |
+
+代码如下：
 
 ```json5
 // button
@@ -183,7 +210,7 @@ props.data数据格式为一个二维数组，数组内每一个子数组元素�
 |**body.row.spacing** <br> `{boolean}`                    |0          |行间距                                                                                                                                      |
 |**body.row.rowCheckBox** <br> `{boolean}`                |false      |是否开启body内行选择功能                                                                                                                      |
 |**body.row.style** <br> `{object}`                       |{...}      |行样式                                                                                                                                       |
-|**body.row.specialStyle** <br> `{[object, object, ...]}` |\[]        |按照数组索引依次设置每一行的样式，如要跳过某个索引，直接使用1个逗号占位即可                                                                          |
+|**body.row.specialStyle** <br> `{[object, object, ...]}` |\[]        |按照数组索引依次设置每一行的样式，如要跳过某个索引，直接使用一个逗号占位即可                                                                          |
 |**body.row.visual** <br> `{object}`                      |{...}      |提升行的视觉：每隔N行设置另外一种行样式                                                                                                          |
 |**body.row.visual.show** <br> `{boolean}`                |true       |是否开启视觉提升                                                                                                                              |
 |**...interval** <br> `{number}`                          |1          |每隔N行交替一次                                                                                                                               |
@@ -195,12 +222,12 @@ props.data数据格式为一个二维数组，数组内每一个子数组元素�
 |**body.row.serialNumber.show** <br> `{boolean}`          |false      |是否显示行号                                                                                                                                  |
 |**...formatter** <br> `{string}`                         |'{index}.' |行号格式化。`{index}`解析为从0依次递增的数字                                                                                                     |
 |**...style** <br> `{object}`                             |{...}      |显示行号的单元格（每行第一个单元格）的样式配置                                                                                                     |
-|**...specialStyle** <br> `{[object, object, ...]}`       |\[]        |按照数组索引依次设置每一行的行号所在单元格的样式，如要跳过某个索引，直接使用1个逗号占位即可                                                             |
+|**...specialStyle** <br> `{[object, object, ...]}`       |\[]        |按照数组索引依次设置每一行的行号所在单元格的样式，如要跳过某个索引，直接使用一个逗号占位即可                                                             |
 |**body.cellOfColumn** <br> `{object}`                    |{...}      |按照列来配置单元格样式                                                                                                                          |
-|**...cellOfColumn.style** <br> `{[object, object, ...]}` |\[]        |按照数组索引依次设置每一列内所有单元格的样式，如要跳过某个索引，直接使用1个逗号占位即可                                                                 |
+|**...cellOfColumn.style** <br> `{[object, object, ...]}` |\[]        |按照数组索引依次设置每一列内所有单元格的样式，如要跳过某个索引，直接使用一个逗号占位即可                                                                 |
 |**body.cell** <br> `{object}`                            |{...}      |每一行内的单元格的属性配置                                                                                                                       |
 |**body.cell.style** <br> `{object}`                      |{...}      |行内所有单元格的样式配置表                                                                                                                       |
-|**body.cell.style.width** <br> `{string\|Array\|number}` |'auto'     |宽度值是style的属性之一，这里单独提出来是因为它有不同于css里面的width定义的特性，详见[cellWidth](#cellWidth)                                           |
+|**body.cell.style.width** <br> `{string\|Array\|number}` |'auto'     |width是style的属性之一，这里需要特别注意：它的用法不同于css的width，详见[cellWidth](#cellWidth)                                           |
 |**~~body.cell.iconStyle~~** <br> `{object}`              |{...}      |单元格内的图标样式统一设置，需要配合对象单元格的img类型使用。这个特性可能在后面版本被移除。                                                              |
 
 #### cellWidth
@@ -210,7 +237,7 @@ props.data数据格式为一个二维数组，数组内每一个子数组元素�
 cellWidth可选值：
 - 'auto'：完全根据单元格内的具体数据自动设置单元格宽度；
 - 'avg'：每个单元格宽度趋近于相等，但会根据单元格内的具体数据适当调整宽度；
-- \[10, 20, 10]：行内每一个单元格依次取数组的值。如果数组某索引的值为占位符（即“,”），则该单元格的宽度江北设置为“auto”；当数组长度小于列数时，其余的列默认设置为“auto”。
+- \[10, 20, 10]：行内每一个单元格依次取数组的值。如果数组某索引的值为占位符（即“,”），则该单元格的宽度将被设置为“auto”；当数组长度小于列数时，其余的列默认设置为“auto”。
 - '10,20,10'：根据逗号分隔值，每一列依次取值。详细规则同数组形式。
 
 

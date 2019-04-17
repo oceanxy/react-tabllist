@@ -2,8 +2,6 @@ const path = require('path')
 const merge = require('webpack-merge')
 const baseConfig = require('./webpack.base')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
-const nodeExternals = require('webpack-node-externals')
-// const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const config = {
   mode: 'production',
@@ -14,27 +12,36 @@ const config = {
   output: {
     path: path.resolve(__dirname, '../dist'),
     filename: '[name].js',
-    library: 'react-tabllist',
+    library: 'ReactTabllist',
     libraryTarget: 'umd',
     libraryExport: 'default'
   },
-  externals: [
-    nodeExternals()
-  ],
-  // {
-  // react: {
-  //   root: 'React',
-  //   commonjs2: 'react',
-  //   commonjs: 'react',
-  //   amd: 'react'
-  // },
-  // 'react-dom': {
-  //   root: 'ReactDOM',
-  //   commonjs2: 'react-dom',
-  //   commonjs: 'react-dom',
-  //   amd: 'react-dom'
-  // }
-  // },
+  externals: {
+    babel: {
+      root: 'Babel',
+      commonjs2: 'babel',
+      commonjs: 'babel',
+      amd: 'babel'
+    },
+    lodash: {
+      commonjs: 'lodash',
+      commonjs2: 'lodash',
+      amd: 'lodash',
+      root: '_'
+    },
+    react: {
+      commonjs: 'react',
+      commonjs2: 'react',
+      amd: 'react',
+      root: 'React'
+    },
+    'react-dom': {
+      commonjs: 'react-dom',
+      commonjs2: 'react-dom',
+      amd: 'react-dom',
+      root: 'ReactDOM'
+    }
+  },
   module: {
     rules: [
       {

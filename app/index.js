@@ -14,6 +14,10 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Tabllist from '../src'
 import rowBg from './images/row-bg.png'
+import demo7_header_bg from './images/demo7_header_bg.png'
+import demo7_row_bg from './images/demo7_row_bg.png'
+import demo8_header_bg from './images/demo8_row_bg.png'
+import demo8_row_bg from './images/demo8_row_bg.png'
 import './index.scss'
 
 hljs.initHighlightingOnLoad()
@@ -90,7 +94,7 @@ const Demo = () => {
             show: true,
             interval: 1,
             style: {
-              backgroundColor: '#E8F4FC'
+              backgroundColor: '#e8f4fc'
             }
           },
           silent: {
@@ -161,7 +165,7 @@ const Demo = () => {
           visual: {
             show: true,
             style: {
-              backgroundColor: '#E8F4FC'
+              backgroundColor: '#e8f4fc'
             }
           },
           silent: {
@@ -364,7 +368,7 @@ const Demo = () => {
           visual: {
             show: true,
             style: {
-              backgroundColor: '#E8F4FC'
+              backgroundColor: '#e8f4fc'
             }
           },
           silent: {
@@ -452,6 +456,108 @@ const Demo = () => {
         },
         cellOfColumn: {
           style: [{ textIndent: '2em', textAlign: 'left' }, { textAlign: 'center' }]
+        }
+      }
+    }
+  }
+  const option7 = {
+    className: 'demo7',
+    data: (() => {
+      const arr = _.range(7).map((i) => {
+        return ['企业名称' + i, '积分' + i, '车牌' + i]
+      })
+
+      arr.unshift(['企业名称', '积分', '车牌'])
+
+      return arr
+    })(),
+    property: {
+      style: {
+        padding: 10,
+        border: 'none',
+        background: '#060719',
+        width: 558,
+        height: 350,
+        margin: 0
+      },
+      border: {
+        borderWidth: 0
+      },
+      header: {
+        show: true,
+        style: {
+          height: 50,
+          background: `url(${demo7_header_bg}) no-repeat center / 100% 100%`
+        },
+        cellStyle: {
+          color: '#ffffff'
+        }
+      },
+      body: {
+        row: {
+          style: {
+            height: 44,
+            background: `url(${demo7_row_bg}) no-repeat center / 100% 100%`
+          },
+          spacing: 10
+        },
+        cell: {
+          style: {
+            color: '#ffffff',
+            width: '35%,35%',
+            textAlign: 'center'
+          }
+        }
+      }
+    }
+  }
+  const option8 = {
+    className: 'demo8',
+    data: (() => {
+      const arr = _.range(7).map((i) => {
+        return [Math.random() * 1000, '种类' + i, '车牌' + i, '归属地' + i, '行驶地' + i, '预警时间' + i]
+      })
+
+      arr.unshift(['序号', '种类', '车牌号', '归属地', '行驶地', '预警时间'])
+
+      return arr
+    })(),
+    property: {
+      style: {
+        padding: 10,
+        border: 'none',
+        background: '#060719',
+        width: 1180,
+        height: 350,
+        margin: 0
+      },
+      border: {
+        borderWidth: 0
+      },
+      header: {
+        show: true,
+        style: {
+          height: 50,
+          background: `url(${demo8_header_bg}) no-repeat center / 100% 100%`
+        },
+        cellStyle: {
+          color: '#ffffff'
+        }
+      },
+      body: {
+        row: {
+          style: {
+            height: 44,
+            background: `url(${demo8_row_bg}) no-repeat center / 100% 100%`
+          },
+          spacing: 10
+        },
+        cell: {
+          style: {
+            color: '#ffffff',
+            width: '16.6%, 16.6%, 16.6%, 16.6%, 16.6%',
+            textAlign: 'center'
+          }
         }
       }
     }
@@ -877,7 +983,8 @@ const Demo = () => {
         </code>
       </pre>
 
-      <h1>demo6：Use in actual projects</h1>
+      <h1 style={{ color: 'blue', textAlign: 'center', margin: '4em 0 2em' }}>Use in actual projects</h1>
+      <h2>demo6</h2>
       <Tabllist {...option6} />
       <pre>
         <code className='javascript'>
@@ -946,6 +1053,126 @@ const Demo = () => {
             '      },\n' +
             '      cellOfColumn: {\n' +
             '        style: [{ textIndent: \'2em\', textAlign: \'left\' }, { textAlign: \'center\' }]\n' +
+            '      }\n' +
+            '    }\n' +
+            '  }\n' +
+            '}'
+          }
+        </code>
+      </pre>
+
+      <h2>demo7</h2>
+      <Tabllist {...option7} />
+      <pre>
+        <code className='javascript'>
+          {
+            'const option7 = {\n' +
+            '  className: \'demo7\',\n' +
+            '  data: (() => {\n' +
+            '    const arr = _.range(7).map((i) => {\n' +
+            '      return [\'企业名称\' + i, \'积分\' + i, \'车牌\' + i]\n' +
+            '    })\n' +
+            '\n' +
+            '    arr.unshift([\'企业名称\', \'积分\', \'车牌\'])\n' +
+            '\n' +
+            '    return arr\n' +
+            '  })(),\n' +
+            '  property: {\n' +
+            '    style: {\n' +
+            '      padding: 10,\n' +
+            '      border: \'none\',\n' +
+            '      background: \'#060719\',\n' +
+            '      width: 558,\n' +
+            '      height: 350,\n' +
+            '      margin: 0\n' +
+            '    },\n' +
+            '    border: {\n' +
+            '      borderWidth: 0\n' +
+            '    },\n' +
+            '    header: {\n' +
+            '      show: true,\n' +
+            '      style: {\n' +
+            '        height: 50,\n' +
+            '        background: `url(${demo7_header_bg}) no-repeat center / 100% 100%`\n' +
+            '      },\n' +
+            '      cellStyle: {\n' +
+            '        color: \'#ffffff\'\n' +
+            '      }\n' +
+            '    },\n' +
+            '    body: {\n' +
+            '      row: {\n' +
+            '        style: {\n' +
+            '          height: 44,\n' +
+            '          background: `url(${demo7_row_bg}) no-repeat center / 100% 100%`\n' +
+            '        },\n' +
+            '        spacing: 10\n' +
+            '      },\n' +
+            '      cell: {\n' +
+            '        style: {\n' +
+            '          color: \'#ffffff\',\n' +
+            '          width: \'35%,35%\',\n' +
+            '          textAlign: \'center\'\n' +
+            '        }\n' +
+            '      }\n' +
+            '    }\n' +
+            '  }\n' +
+            '}'
+          }
+        </code>
+      </pre>
+
+      <h2>demo8</h2>
+      <Tabllist {...option8} />
+      <pre>
+        <code className='javascript'>
+          {
+            'const option8 = {\n' +
+            '  className: \'demo8\',\n' +
+            '  data: (() => {\n' +
+            '    const arr = _.range(7).map((i) => {\n' +
+            '      return [Math.random() * 1000, \'种类\' + i, \'车牌\' + i, \'归属地\' + i, \'行驶地\' + i, \'预警时间\' + i]\n' +
+            '    })\n' +
+            '\n' +
+            '    arr.unshift([\'序号\', \'种类\', \'车牌号\', \'归属地\', \'行驶地\', \'预警时间\'])\n' +
+            '\n' +
+            '    return arr\n' +
+            '  })(),\n' +
+            '  property: {\n' +
+            '    style: {\n' +
+            '      padding: 10,\n' +
+            '      border: \'none\',\n' +
+            '      background: \'#060719\',\n' +
+            '      width: 1180,\n' +
+            '      height: 350,\n' +
+            '      margin: 0\n' +
+            '    },\n' +
+            '    border: {\n' +
+            '      borderWidth: 0\n' +
+            '    },\n' +
+            '    header: {\n' +
+            '      show: true,\n' +
+            '      style: {\n' +
+            '        height: 50,\n' +
+            '        background: `url(${demo8_header_bg}) no-repeat center / 100% 100%`\n' +
+            '      },\n' +
+            '      cellStyle: {\n' +
+            '        color: \'#ffffff\'\n' +
+            '      }\n' +
+            '    },\n' +
+            '    body: {\n' +
+            '      row: {\n' +
+            '        style: {\n' +
+            '          height: 44,\n' +
+            '          background: `url(${demo8_row_bg}) no-repeat center / 100% 100%`\n' +
+            '        },\n' +
+            '        spacing: 10\n' +
+            '      },\n' +
+            '      cell: {\n' +
+            '        style: {\n' +
+            '          color: \'#ffffff\',\n' +
+            '          width: \'16.6%, 16.6%, 16.6%, 16.6%, 16.6%\',\n' +
+            '          textAlign: \'center\'\n' +
+            '        }\n' +
             '      }\n' +
             '    }\n' +
             '  }\n' +

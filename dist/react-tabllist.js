@@ -1,13 +1,13 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory();
+		module.exports = factory(require("react"), require("lodash"));
 	else if(typeof define === 'function' && define.amd)
-		define([], factory);
+		define(["react", "lodash"], factory);
 	else if(typeof exports === 'object')
-		exports["react-tabllist"] = factory();
+		exports["ReactTabllist"] = factory(require("react"), require("lodash"));
 	else
-		root["react-tabllist"] = factory();
-})(window, function() {
+		root["ReactTabllist"] = factory(root["React"], root["_"]);
+})(window, function(__WEBPACK_EXTERNAL_MODULE__0__, __WEBPACK_EXTERNAL_MODULE__1__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -91,105 +91,374 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 20);
+/******/ 	return __webpack_require__(__webpack_require__.s = 27);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
 /***/ (function(module, exports) {
 
-module.exports = require("react");
+module.exports = __WEBPACK_EXTERNAL_MODULE__0__;
 
 /***/ }),
 /* 1 */
 /***/ (function(module, exports) {
 
-module.exports = require("@babel/runtime/helpers/assertThisInitialized");
+module.exports = __WEBPACK_EXTERNAL_MODULE__1__;
 
 /***/ }),
 /* 2 */
 /***/ (function(module, exports) {
 
-module.exports = require("lodash");
+function _assertThisInitialized(self) {
+  if (self === void 0) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return self;
+}
+
+module.exports = _assertThisInitialized;
 
 /***/ }),
 /* 3 */
 /***/ (function(module, exports) {
 
-module.exports = require("@babel/runtime/helpers/defineProperty");
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+module.exports = _defineProperty;
 
 /***/ }),
 /* 4 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = require("@babel/runtime/helpers/objectSpread");
+var defineProperty = __webpack_require__(3);
+
+function _objectSpread(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+    var ownKeys = Object.keys(source);
+
+    if (typeof Object.getOwnPropertySymbols === 'function') {
+      ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(source, sym).enumerable;
+      }));
+    }
+
+    ownKeys.forEach(function (key) {
+      defineProperty(target, key, source[key]);
+    });
+  }
+
+  return target;
+}
+
+module.exports = _objectSpread;
 
 /***/ }),
 /* 5 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = require("@babel/runtime/helpers/objectWithoutProperties");
+var objectWithoutPropertiesLoose = __webpack_require__(16);
+
+function _objectWithoutProperties(source, excluded) {
+  if (source == null) return {};
+  var target = objectWithoutPropertiesLoose(source, excluded);
+  var key, i;
+
+  if (Object.getOwnPropertySymbols) {
+    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+
+    for (i = 0; i < sourceSymbolKeys.length; i++) {
+      key = sourceSymbolKeys[i];
+      if (excluded.indexOf(key) >= 0) continue;
+      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
+      target[key] = source[key];
+    }
+  }
+
+  return target;
+}
+
+module.exports = _objectWithoutProperties;
 
 /***/ }),
 /* 6 */
 /***/ (function(module, exports) {
 
-module.exports = require("@babel/runtime/helpers/classCallCheck");
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+module.exports = _classCallCheck;
 
 /***/ }),
 /* 7 */
 /***/ (function(module, exports) {
 
-module.exports = require("@babel/runtime/helpers/createClass");
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+module.exports = _createClass;
 
 /***/ }),
 /* 8 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = require("@babel/runtime/helpers/possibleConstructorReturn");
+var _typeof = __webpack_require__(11);
+
+var assertThisInitialized = __webpack_require__(2);
+
+function _possibleConstructorReturn(self, call) {
+  if (call && (_typeof(call) === "object" || typeof call === "function")) {
+    return call;
+  }
+
+  return assertThisInitialized(self);
+}
+
+module.exports = _possibleConstructorReturn;
 
 /***/ }),
 /* 9 */
 /***/ (function(module, exports) {
 
-module.exports = require("@babel/runtime/helpers/getPrototypeOf");
+function _getPrototypeOf(o) {
+  module.exports = _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+    return o.__proto__ || Object.getPrototypeOf(o);
+  };
+  return _getPrototypeOf(o);
+}
+
+module.exports = _getPrototypeOf;
 
 /***/ }),
 /* 10 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = require("@babel/runtime/helpers/inherits");
+var setPrototypeOf = __webpack_require__(17);
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function");
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) setPrototypeOf(subClass, superClass);
+}
+
+module.exports = _inherits;
 
 /***/ }),
 /* 11 */
 /***/ (function(module, exports) {
 
-module.exports = require("@babel/runtime/helpers/toConsumableArray");
+function _typeof2(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof2 = function _typeof2(obj) { return typeof obj; }; } else { _typeof2 = function _typeof2(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof2(obj); }
+
+function _typeof(obj) {
+  if (typeof Symbol === "function" && _typeof2(Symbol.iterator) === "symbol") {
+    module.exports = _typeof = function _typeof(obj) {
+      return _typeof2(obj);
+    };
+  } else {
+    module.exports = _typeof = function _typeof(obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : _typeof2(obj);
+    };
+  }
+
+  return _typeof(obj);
+}
+
+module.exports = _typeof;
 
 /***/ }),
 /* 12 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = require("@babel/runtime/helpers/extends");
+var arrayWithoutHoles = __webpack_require__(20);
+
+var iterableToArray = __webpack_require__(13);
+
+var nonIterableSpread = __webpack_require__(21);
+
+function _toConsumableArray(arr) {
+  return arrayWithoutHoles(arr) || iterableToArray(arr) || nonIterableSpread();
+}
+
+module.exports = _toConsumableArray;
 
 /***/ }),
 /* 13 */
 /***/ (function(module, exports) {
 
-module.exports = require("@babel/runtime/helpers/toArray");
+function _iterableToArray(iter) {
+  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+}
+
+module.exports = _iterableToArray;
 
 /***/ }),
 /* 14 */
 /***/ (function(module, exports) {
 
-module.exports = require("@babel/runtime/helpers/typeof");
+function _extends() {
+  module.exports = _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
+module.exports = _extends;
 
 /***/ }),
 /* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var arrayWithHoles = __webpack_require__(18);
 
-var content = __webpack_require__(16);
+var iterableToArray = __webpack_require__(13);
+
+var nonIterableRest = __webpack_require__(19);
+
+function _toArray(arr) {
+  return arrayWithHoles(arr) || iterableToArray(arr) || nonIterableRest();
+}
+
+module.exports = _toArray;
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports) {
+
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+
+  return target;
+}
+
+module.exports = _objectWithoutPropertiesLoose;
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports) {
+
+function _setPrototypeOf(o, p) {
+  module.exports = _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+    o.__proto__ = p;
+    return o;
+  };
+
+  return _setPrototypeOf(o, p);
+}
+
+module.exports = _setPrototypeOf;
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports) {
+
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
+module.exports = _arrayWithHoles;
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports) {
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance");
+}
+
+module.exports = _nonIterableRest;
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports) {
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
+      arr2[i] = arr[i];
+    }
+
+    return arr2;
+  }
+}
+
+module.exports = _arrayWithoutHoles;
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports) {
+
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance");
+}
+
+module.exports = _nonIterableSpread;
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(23);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -203,24 +472,24 @@ var options = {"hmr":true}
 options.transform = transform
 options.insertInto = undefined;
 
-var update = __webpack_require__(18)(content, options);
+var update = __webpack_require__(25)(content, options);
 
 if(content.locals) module.exports = content.locals;
 
 if(false) {}
 
 /***/ }),
-/* 16 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(17)(false);
+exports = module.exports = __webpack_require__(24)(false);
 // Module
-exports.push([module.i, ".list {\n  display: block;\n  overflow: hidden; }\n  .list .list-cont {\n    margin: 0;\n    padding: 0;\n    display: table;\n    width: 100%;\n    height: auto;\n    transition: all 400ms; }\n    .list .list-cont .list-row {\n      display: table-row;\n      list-style: none;\n      height: 58px;\n      transition: all 300ms cubic-bezier(0, 0, 0.58, 1);\n      background: no-repeat center / 100% 100%; }\n      .list .list-cont .list-row.list-row-start {\n        transform: scale(0.8);\n        opacity: 0; }\n      .list .list-cont .list-row.list-row-transition {\n        opacity: 1;\n        transform: scale(1); }\n      .list .list-cont .list-row .list-cell {\n        display: table-cell;\n        text-align: center;\n        vertical-align: middle;\n        word-break: break-all;\n        border-left: none !important;\n        background: no-repeat center / 100% 100%; }\n        .list .list-cont .list-row .list-cell * {\n          vertical-align: middle; }\n        .list .list-cont .list-row .list-cell:last-child {\n          border-right: none !important; }\n        .list .list-cont .list-row .list-cell a {\n          color: currentColor;\n          text-decoration: transparent; }\n        .list .list-cont .list-row .list-cell label {\n          vertical-align: middle; }\n          .list .list-cont .list-row .list-cell label span, .list .list-cont .list-row .list-cell label input {\n            vertical-align: middle;\n            padding: 0 5px; }\n  .list .list-header .list-row {\n    background: no-repeat center / 100% 100%; }\n    .list .list-header .list-row .list-cell {\n      border-bottom: none !important; }\n  .list .list-body {\n    width: 100%; }\n    .list .list-body .list-cont {\n      border-collapse: separate; }\n    .list .list-body .list-cell {\n      color: #666; }\n  .list.list-no-spacing .list-cell {\n    border-top: none !important; }\n", ""]);
+exports.push([module.i, ".list {\n  display: block;\n  overflow: hidden; }\n  .list .list-cont {\n    margin: 0;\n    padding: 0;\n    display: table;\n    width: 100%;\n    height: auto;\n    transition: all 400ms; }\n    .list .list-cont .list-row {\n      display: table-row;\n      list-style: none;\n      height: 58px;\n      transition: all 300ms cubic-bezier(0, 0, 0.58, 1);\n      background: no-repeat center / 100% 100%; }\n      .list .list-cont .list-row.list-row-start {\n        -webkit-transform: scale(0.8);\n                transform: scale(0.8);\n        opacity: 0; }\n      .list .list-cont .list-row.list-row-transition {\n        opacity: 1;\n        -webkit-transform: scale(1);\n                transform: scale(1); }\n      .list .list-cont .list-row .list-cell {\n        display: table-cell;\n        text-align: center;\n        vertical-align: middle;\n        word-break: break-all;\n        border-left: none !important;\n        background: no-repeat center / 100% 100%; }\n        .list .list-cont .list-row .list-cell * {\n          vertical-align: middle; }\n        .list .list-cont .list-row .list-cell:last-child {\n          border-right: none !important; }\n        .list .list-cont .list-row .list-cell a {\n          color: currentColor;\n          -webkit-text-decoration: transparent;\n                  text-decoration: transparent; }\n        .list .list-cont .list-row .list-cell label {\n          vertical-align: middle; }\n          .list .list-cont .list-row .list-cell label span, .list .list-cont .list-row .list-cell label input {\n            vertical-align: middle;\n            padding: 0 5px; }\n  .list .list-header .list-row {\n    background: no-repeat center / 100% 100%; }\n    .list .list-header .list-row .list-cell {\n      border-bottom: none !important; }\n  .list .list-body {\n    width: 100%; }\n    .list .list-body .list-cont {\n      border-collapse: separate; }\n    .list .list-body .list-cell {\n      color: #666; }\n  .list.list-no-spacing .list-cell {\n    border-top: none !important; }\n", ""]);
 
 
 
 /***/ }),
-/* 17 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -311,7 +580,7 @@ function toComment(sourceMap) {
 }
 
 /***/ }),
-/* 18 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -380,7 +649,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(19);
+var	fixUrls = __webpack_require__(26);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -715,7 +984,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 19 */
+/* 26 */
 /***/ (function(module, exports) {
 
 
@@ -810,51 +1079,51 @@ module.exports = function (css) {
 
 
 /***/ }),
-/* 20 */
+/* 27 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 
-// EXTERNAL MODULE: external "@babel/runtime/helpers/extends"
-var extends_ = __webpack_require__(12);
-var extends_default = /*#__PURE__*/__webpack_require__.n(extends_);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/extends.js
+var helpers_extends = __webpack_require__(14);
+var extends_default = /*#__PURE__*/__webpack_require__.n(helpers_extends);
 
-// EXTERNAL MODULE: external "@babel/runtime/helpers/objectWithoutProperties"
-var objectWithoutProperties_ = __webpack_require__(5);
-var objectWithoutProperties_default = /*#__PURE__*/__webpack_require__.n(objectWithoutProperties_);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/objectWithoutProperties.js
+var objectWithoutProperties = __webpack_require__(5);
+var objectWithoutProperties_default = /*#__PURE__*/__webpack_require__.n(objectWithoutProperties);
 
-// EXTERNAL MODULE: external "@babel/runtime/helpers/classCallCheck"
-var classCallCheck_ = __webpack_require__(6);
-var classCallCheck_default = /*#__PURE__*/__webpack_require__.n(classCallCheck_);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/classCallCheck.js
+var classCallCheck = __webpack_require__(6);
+var classCallCheck_default = /*#__PURE__*/__webpack_require__.n(classCallCheck);
 
-// EXTERNAL MODULE: external "@babel/runtime/helpers/createClass"
-var createClass_ = __webpack_require__(7);
-var createClass_default = /*#__PURE__*/__webpack_require__.n(createClass_);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/createClass.js
+var createClass = __webpack_require__(7);
+var createClass_default = /*#__PURE__*/__webpack_require__.n(createClass);
 
-// EXTERNAL MODULE: external "@babel/runtime/helpers/possibleConstructorReturn"
-var possibleConstructorReturn_ = __webpack_require__(8);
-var possibleConstructorReturn_default = /*#__PURE__*/__webpack_require__.n(possibleConstructorReturn_);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js
+var possibleConstructorReturn = __webpack_require__(8);
+var possibleConstructorReturn_default = /*#__PURE__*/__webpack_require__.n(possibleConstructorReturn);
 
-// EXTERNAL MODULE: external "@babel/runtime/helpers/getPrototypeOf"
-var getPrototypeOf_ = __webpack_require__(9);
-var getPrototypeOf_default = /*#__PURE__*/__webpack_require__.n(getPrototypeOf_);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/getPrototypeOf.js
+var getPrototypeOf = __webpack_require__(9);
+var getPrototypeOf_default = /*#__PURE__*/__webpack_require__.n(getPrototypeOf);
 
-// EXTERNAL MODULE: external "@babel/runtime/helpers/inherits"
-var inherits_ = __webpack_require__(10);
-var inherits_default = /*#__PURE__*/__webpack_require__.n(inherits_);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/inherits.js
+var inherits = __webpack_require__(10);
+var inherits_default = /*#__PURE__*/__webpack_require__.n(inherits);
 
-// EXTERNAL MODULE: external "@babel/runtime/helpers/defineProperty"
-var defineProperty_ = __webpack_require__(3);
-var defineProperty_default = /*#__PURE__*/__webpack_require__.n(defineProperty_);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/defineProperty.js
+var defineProperty = __webpack_require__(3);
+var defineProperty_default = /*#__PURE__*/__webpack_require__.n(defineProperty);
 
-// EXTERNAL MODULE: external "lodash"
-var external_lodash_ = __webpack_require__(2);
-var external_lodash_default = /*#__PURE__*/__webpack_require__.n(external_lodash_);
+// EXTERNAL MODULE: external {"commonjs":"lodash","commonjs2":"lodash","amd":"lodash","root":"_"}
+var external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_ = __webpack_require__(1);
+var external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default = /*#__PURE__*/__webpack_require__.n(external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_);
 
-// EXTERNAL MODULE: external "react"
-var external_react_ = __webpack_require__(0);
-var external_react_default = /*#__PURE__*/__webpack_require__.n(external_react_);
+// EXTERNAL MODULE: external {"commonjs":"react","commonjs2":"react","amd":"react","root":"React"}
+var external_commonjs_react_commonjs2_react_amd_react_root_React_ = __webpack_require__(0);
+var external_commonjs_react_commonjs2_react_amd_react_root_React_default = /*#__PURE__*/__webpack_require__.n(external_commonjs_react_commonjs2_react_amd_react_root_React_);
 
 // CONCATENATED MODULE: ./src/config.js
 /**
@@ -945,28 +1214,28 @@ var external_react_default = /*#__PURE__*/__webpack_require__.n(external_react_)
     }
   }
 });
-// EXTERNAL MODULE: external "@babel/runtime/helpers/toArray"
-var toArray_ = __webpack_require__(13);
-var toArray_default = /*#__PURE__*/__webpack_require__.n(toArray_);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/toArray.js
+var toArray = __webpack_require__(15);
+var toArray_default = /*#__PURE__*/__webpack_require__.n(toArray);
 
-// EXTERNAL MODULE: external "@babel/runtime/helpers/objectSpread"
-var objectSpread_ = __webpack_require__(4);
-var objectSpread_default = /*#__PURE__*/__webpack_require__.n(objectSpread_);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/objectSpread.js
+var objectSpread = __webpack_require__(4);
+var objectSpread_default = /*#__PURE__*/__webpack_require__.n(objectSpread);
 
-// EXTERNAL MODULE: external "@babel/runtime/helpers/typeof"
-var typeof_ = __webpack_require__(14);
-var typeof_default = /*#__PURE__*/__webpack_require__.n(typeof_);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/typeof.js
+var helpers_typeof = __webpack_require__(11);
+var typeof_default = /*#__PURE__*/__webpack_require__.n(helpers_typeof);
 
-// EXTERNAL MODULE: external "@babel/runtime/helpers/toConsumableArray"
-var toConsumableArray_ = __webpack_require__(11);
-var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableArray_);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/toConsumableArray.js
+var toConsumableArray = __webpack_require__(12);
+var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableArray);
 
-// EXTERNAL MODULE: external "@babel/runtime/helpers/assertThisInitialized"
-var assertThisInitialized_ = __webpack_require__(1);
-var assertThisInitialized_default = /*#__PURE__*/__webpack_require__.n(assertThisInitialized_);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/assertThisInitialized.js
+var assertThisInitialized = __webpack_require__(2);
+var assertThisInitialized_default = /*#__PURE__*/__webpack_require__.n(assertThisInitialized);
 
 // EXTERNAL MODULE: ./src/index.scss
-var src = __webpack_require__(15);
+var src = __webpack_require__(22);
 
 // CONCATENATED MODULE: ./src/util.js
 /**
@@ -1097,8 +1366,8 @@ function (_Component) {
 
     _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(_default).call(this, _props));
 
-    defineProperty_default()(assertThisInitialized_default()(assertThisInitialized_default()(_this)), "scrollList", function (isInnerScroll, e) {
-      var _assertThisInitialize = assertThisInitialized_default()(assertThisInitialized_default()(_this)),
+    defineProperty_default()(assertThisInitialized_default()(_this), "scrollList", function (isInnerScroll, e) {
+      var _assertThisInitialize = assertThisInitialized_default()(_this),
           list1 = _assertThisInitialize.list1,
           list2 = _assertThisInitialize.list2,
           _assertThisInitialize2 = _assertThisInitialize.state,
@@ -1136,7 +1405,7 @@ function (_Component) {
       }
     });
 
-    defineProperty_default()(assertThisInitialized_default()(assertThisInitialized_default()(_this)), "hover", function (e) {
+    defineProperty_default()(assertThisInitialized_default()(_this), "hover", function (e) {
       var _this$state$property$ = _this.state.property.body.row.silent,
           show = _this$state$property$.show,
           style = _this$state$property$.style;
@@ -1168,7 +1437,7 @@ function (_Component) {
       }
     });
 
-    defineProperty_default()(assertThisInitialized_default()(assertThisInitialized_default()(_this)), "checkCR", function (_ref) {
+    defineProperty_default()(assertThisInitialized_default()(_this), "checkCR", function (_ref) {
       var target = _ref.target;
       var _this$state = _this.state,
           selected = _this$state.selected,
@@ -1176,7 +1445,7 @@ function (_Component) {
           property = _this$state.property;
       var showHeader = property.header.show;
 
-      var selectedCur = external_lodash_default.a.cloneDeep(selected);
+      var selectedCur = external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.cloneDeep(selected);
 
       var index = target.getAttribute('data-index');
       var targetName = target.name;
@@ -1223,8 +1492,8 @@ function (_Component) {
       });
     });
 
-    defineProperty_default()(assertThisInitialized_default()(assertThisInitialized_default()(_this)), "getColClientWidth", function () {
-      var _assertThisInitialize4 = assertThisInitialized_default()(assertThisInitialized_default()(_this)),
+    defineProperty_default()(assertThisInitialized_default()(_this), "getColClientWidth", function () {
+      var _assertThisInitialize4 = assertThisInitialized_default()(_this),
           list1 = _assertThisInitialize4.list1,
           props = _assertThisInitialize4.props;
 
@@ -1240,8 +1509,8 @@ function (_Component) {
       return width;
     });
 
-    defineProperty_default()(assertThisInitialized_default()(assertThisInitialized_default()(_this)), "marquee", function () {
-      var _assertThisInitialize5 = assertThisInitialized_default()(assertThisInitialized_default()(_this)),
+    defineProperty_default()(assertThisInitialized_default()(_this), "marquee", function () {
+      var _assertThisInitialize5 = assertThisInitialized_default()(_this),
           list1 = _assertThisInitialize5.list1,
           scroll = _assertThisInitialize5.scroll;
 
@@ -1254,7 +1523,7 @@ function (_Component) {
       }
     });
 
-    defineProperty_default()(assertThisInitialized_default()(assertThisInitialized_default()(_this)), "setCellLink", function (link) {
+    defineProperty_default()(assertThisInitialized_default()(_this), "setCellLink", function (link) {
       var text = link.text,
           callback = link.callback,
           data = link.data,
@@ -1264,7 +1533,7 @@ function (_Component) {
 
       if (link) {
         if (props.href) {
-          return external_react_default.a.createElement("a", props, text);
+          return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("a", props, text);
         }
 
         props.href = 'javascript: void(0)';
@@ -1273,7 +1542,7 @@ function (_Component) {
           props[props.event] = function (event) {
             var list = closest(event.target, '.list');
 
-            if (external_lodash_default.a.isFunction(callback)) {
+            if (external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isFunction(callback)) {
               callback(data, list, event);
             }
           };
@@ -1281,7 +1550,7 @@ function (_Component) {
           delete props.event;
         }
 
-        return external_react_default.a.createElement("a", props, text);
+        return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("a", props, text);
       }
 
       return null;
@@ -1331,7 +1600,7 @@ function (_Component) {
     key: "shouldComponentUpdate",
     value: function shouldComponentUpdate(nextProps, nextState) {
       // 避免闪动
-      return !external_lodash_default.a.isEqual(this.props, nextProps) || !external_lodash_default.a.isEqualWith(this.state, nextState);
+      return !external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqual(this.props, nextProps) || !external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqualWith(this.state, nextState);
     }
     /**
      * 组件每次更新后执行
@@ -1415,7 +1684,7 @@ function (_Component) {
         if (show && rowCheckBox) {
           var rowCheckBoxArr = selected['rowCheckBox'];
 
-          if (rowCheckBoxArr && !external_lodash_default.a.isEmpty(rowCheckBoxArr)) {
+          if (rowCheckBoxArr && !external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEmpty(rowCheckBoxArr)) {
             for (var i = 1, j = rowCheckBoxArr.length; i < j; i++) {
               // 当某一行的选中状态为false且存在选中行的时候，设置标题栏多选框的 indeterminate 状态为true
               if (!rowCheckBoxArr[i] && rowCheckBoxArr.join(',').indexOf('true') > -1) {
@@ -1456,7 +1725,7 @@ function (_Component) {
           rowCheckBox = _this$state$property$2.rowCheckBox,
           serialNumber = _this$state$property$2.serialNumber; // 获取每一行的数据量，存入数组 cellsOfRow 内
 
-      external_lodash_default.a.range(data.length).map(function (i) {
+      external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.range(data.length).map(function (i) {
         cellsOfRow.push(data[i].length);
       }); // 获取数据量最多的一行的数值
 
@@ -1496,13 +1765,13 @@ function (_Component) {
         var iconStyle = this.state.property.body.cell.iconStyle;
 
         if (icon.src && typeof icon.src === 'string' && (icon.src.indexOf('http://') !== -1 || icon.src.indexOf('https://') !== -1 || icon.src.indexOf('data:image/') !== -1)) {
-          return [external_react_default.a.createElement("img", {
+          return [external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("img", {
             src: icon.src,
             alt: icon.alt || '',
             style: iconStyle,
             key: Math.random(),
             className: icon.className
-          }), external_react_default.a.createElement("span", {
+          }), external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("span", {
             key: Math.random()
           }, icon.text || '')];
         }
@@ -1538,9 +1807,9 @@ function (_Component) {
 
       if (cr) {
         if (cr.type === 'radio' || cr.type === 'checkbox') {
-          return external_react_default.a.createElement("label", {
+          return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("label", {
             key: Math.random()
-          }, external_react_default.a.createElement("input", {
+          }, external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("input", {
             "data-id": cr.uid,
             "data-index": rowIndex,
             type: cr.type,
@@ -1548,11 +1817,11 @@ function (_Component) {
             className: cr.className,
             defaultChecked: selectedCur[rowIndex],
             onInput: this.checkCR
-          }), cr.text ? external_react_default.a.createElement("span", null, cr.text) : null);
+          }), cr.text ? external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("span", null, cr.text) : null);
         } // button 等标签会执行以下代码
 
 
-        return external_react_default.a.createElement("input", {
+        return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("input", {
           "data-id": cr.uid,
           "data-index": rowIndex,
           type: cr.type,
@@ -1660,12 +1929,12 @@ function (_Component) {
       var listBorder = this.setBorder(cellStyle);
 
       if (data && data.length) {
-        return external_react_default.a.createElement("li", {
+        return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("li", {
           key: "list-row",
           className: "list-row",
           style: style
         }, data.map(function (cell, index) {
-          return external_react_default.a.createElement("div", {
+          return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("div", {
             className: "list-cell",
             key: index,
             style: objectSpread_default()({}, cellStyle, {
@@ -1720,14 +1989,14 @@ function (_Component) {
       }
 
       return bodyData.map(function (rowData, rowIndex) {
-        return external_react_default.a.createElement("li", {
+        return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("li", {
           className: "list-row ".concat(transition ? transitionName : ''),
           key: rowIndex,
-          style: isVisual && rowIndex % (rowVisualInterval * 2) >= rowVisualInterval ? external_lodash_default.a.defaultsDeep({}, specialRowStyle[rowIndex], rowVisualStyle, rowStyle) : external_lodash_default.a.defaultsDeep({}, specialRowStyle[rowIndex], rowStyle),
+          style: isVisual && rowIndex % (rowVisualInterval * 2) >= rowVisualInterval ? external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.defaultsDeep({}, specialRowStyle[rowIndex], rowVisualStyle, rowStyle) : external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.defaultsDeep({}, specialRowStyle[rowIndex], rowStyle),
           onMouseEnter: _this5.hover,
           onMouseLeave: _this5.hover
         }, rowData.map(function (cellData, index) {
-          return external_react_default.a.createElement("div", {
+          return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("div", {
             className: "list-cell",
             style: serialNumberShow && !index // 如果开启行序号，且为每行第一个单元格
             ? objectSpread_default()({}, style, {
@@ -1784,17 +2053,17 @@ function (_Component) {
       }
 
       var listClass = !Number.isNaN(parseInt(spacing)) && parseInt(spacing) > 0 ? '' : 'list-no-spacing';
-      return external_react_default.a.createElement("div", {
+      return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("div", {
         style: objectSpread_default()({}, listBorder, conStyle),
         className: "list ".concat(className || '', " ").concat(listClass),
         onMouseMove: this.scrollList.bind(this, false),
         onMouseLeave: this.scrollList.bind(this, true)
-      }, showHeader ? external_react_default.a.createElement("ul", {
+      }, showHeader ? external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("ul", {
         className: "list-header list-cont",
         style: !isScroll && headerWidth ? objectSpread_default()({}, headerStyle, {
           width: headerWidth
         }) : headerStyle
-      }, this.loadHeader(headerData)) : null, external_react_default.a.createElement("div", {
+      }, this.loadHeader(headerData)) : null, external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("div", {
         className: "list-body",
         ref: function ref(ele) {
           return _this6.scroll = ele;
@@ -1803,7 +2072,7 @@ function (_Component) {
           height: scrollHeight,
           overflow: isScroll ? 'hidden' : 'auto'
         }
-      }, external_react_default.a.createElement("ul", {
+      }, external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("ul", {
         className: "list-cont",
         style: {
           borderSpacing: borderSpacing
@@ -1811,7 +2080,7 @@ function (_Component) {
         ref: function ref(ele) {
           return _this6.list1 = ele;
         }
-      }, this.loadBody(bodyData, 'main')), external_react_default.a.createElement("ul", {
+      }, this.loadBody(bodyData, 'main')), external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("ul", {
         className: "list-cont",
         style: {
           borderSpacing: borderSpacing
@@ -1848,7 +2117,7 @@ function (_Component) {
       var transitionName = state.transitionName;
 
       if (transition) {
-        if (!external_lodash_default.a.isEqual(data, stateData)) {
+        if (!external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqual(data, stateData)) {
           transitionName = 'list-row-start';
         }
       } else {
@@ -1874,7 +2143,7 @@ function (_Component) {
         if (propsUpdate[prop] === state[prop]) {
           delete propsUpdate[prop];
         } else if (prop === 'property') {
-          external_lodash_default.a.defaultsDeep(propsUpdate[prop], state[prop]);
+          external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.defaultsDeep(propsUpdate[prop], state[prop]);
         }
       }); // 如果props更新了属性，则返回props和state合并的配置项
 
@@ -1888,7 +2157,7 @@ function (_Component) {
   }]);
 
   return _default;
-}(external_react_["Component"]);
+}(external_commonjs_react_commonjs2_react_amd_react_root_React_["Component"]);
 
 
 // CONCATENATED MODULE: ./src/index.js
@@ -1933,16 +2202,16 @@ function (_Component) {
           property = _this$props.property,
           option = objectWithoutProperties_default()(_this$props, ["property"]);
 
-      var newProperty = external_lodash_default.a.defaultsDeep({}, property, config.property);
+      var newProperty = external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.defaultsDeep({}, property, config.property);
 
-      return external_react_default.a.createElement(list_default, extends_default()({
+      return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement(list_default, extends_default()({
         property: newProperty
       }, option));
     }
   }]);
 
   return _default;
-}(external_react_["Component"]);
+}(external_commonjs_react_commonjs2_react_amd_react_root_React_["Component"]);
 
 defineProperty_default()(src_default_0, "defaultProps", config);
 
