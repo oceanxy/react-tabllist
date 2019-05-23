@@ -7,7 +7,7 @@ const htmlWebpackPlugin = require('html-webpack-plugin')
 let config = {
   mode: 'production',
   entry: {
-    'react-tabllist.demo.min': './app/index.js'
+    'react-tabllist.demo.min': './app/examples/index.js'
   },
   output: {
     path: path.resolve(__dirname, '../examples'),

@@ -36,6 +36,9 @@ export default {
       }
     },
     body: {
+      style: {
+        padding: '10px'
+      },
       row: {
         transition: true,
         serialNumber: {
@@ -57,7 +60,7 @@ export default {
           show: false,
           interval: 1,
           style: {
-            backgroundColor: '#E8F4FC'
+            backgroundColor: '#e8f4fc'
           }
         },
         // 注意：单独指定每一行的样式的优先级高于visual.style的优先级
@@ -67,7 +70,8 @@ export default {
           style: {
             opacity: 0.8
           }
-        }
+        },
+        onClick: ''
       },
       cellOfColumn: {
         style: []

@@ -153,7 +153,7 @@ export default class extends Component {
 
       // 当滚动条显示时，重新计算header的宽度，和列表主体对齐
       if(show && !isScroll) {
-        this.setState({ headerWidth: this.list1.clientWidth })
+        this.setState({ headerWidth: this.listContMain.clientWidth })
       }
 
       // 适应单元格宽度，用于组件自身状态或从父级传递的props发生变化时
@@ -219,33 +219,33 @@ export default class extends Component {
    */
   scrollList = (isInnerScroll, e) => {
     const {
-      list1,
-      list2,
+      listContMain,
+      listContSupport,
       state: { scrollHeight, property: { isScroll, speed } }
     } = this
 
-    if(list1 && list2) {
+    if(listContMain && listContSupport) {
       // 删除上一次定时器，后续根据状态来判定是否定义新的定时器
       clearInterval(this.marqueeInterval)
 
       if(isInnerScroll || isInnerScroll === undefined) {
         // 检测滚动条件
         // 根据滚动条件控制列表主体容器的辅助容器的显示状态
-        if(isScroll && list1.clientHeight >= parseInt(scrollHeight)) {
+        if(isScroll && listContMain.clientHeight >= parseInt(scrollHeight)) {
           if(isInnerScroll !== undefined && e.type === 'mouseleave') {
             this.pause = false
           }
           if(!this.pause) {
-            for(let i = 0; i < list2.children.length; i++) {
-              list2.children[i].style.display = 'table-row'
+            for(let i = 0; i < listContSupport.children.length; i++) {
+              listContSupport.children[i].style.display = 'table-row'
             }
 
             // 设置定时器，实现列表滚动
             this.marqueeInterval = setInterval(this.marquee, speed)
           }
         } else {
-          for(let i = 0; i < list2.children.length; i++) {
-            list2.children[i].style.display = 'none'
+          for(let i = 0; i < listContSupport.children.length; i++) {
+            listContSupport.children[i].style.display = 'none'
           }
         }
       }
@@ -253,11 +253,10 @@ export default class extends Component {
   }
 
   /**
-   * 鼠标事件
-   * 目前只实现了hover效果
+   * 行hover事件
    * @param {object} e event
    */
-  hover = (e) => {
+  rowHover = (e) => {
     const { silent: { show, style } } = this.state.property.body.row
     const { target } = e
     let row = target
@@ -289,10 +288,40 @@ export default class extends Component {
   }
 
   /**
-   * 复选框和单选按钮事件
-   * @param {object} target 点击的input对象
+   * 行点击事件
+   * @param rowData
+   * @param rowIndex
+   * @param event
    */
-  checkCR = ({ target }) => {
+  rowClick = (rowData, rowIndex, event) => {
+    const { onClick } = this.state.property.body.row
+
+    if(_.isFunction(onClick)) {
+      onClick(rowData, rowIndex, event)
+    }
+
+    event.stopPropagation()
+  }
+
+  /**
+   * 按钮点击事件
+   * @param cr
+   * @param event
+   */
+  btnClick = (cr, event) => {
+    if(_.isFunction(cr.callback)) {
+      cr.callback(cr.data, cr, event)
+    }
+
+    event.stopPropagation()
+  }
+
+  /**
+   * 复选框和单选按钮事件
+   * @param {object} event 点击的input对象
+   */
+  checkCR = (event) => {
+    const { target } = event
     const { selected, data, property } = this.state
     const { show: showHeader } = property.header
     const selectedCur = _.cloneDeep(selected)
@@ -341,6 +370,8 @@ export default class extends Component {
     this.setState({
       selected: selectedCur
     })
+
+    event.stopPropagation()
   }
 
   /**
@@ -348,12 +379,12 @@ export default class extends Component {
    * @returns {Array} 列表每列的宽度值，数组长度代表列数
    */
   getColClientWidth = () => {
-    const { list1, props } = this
+    const { listContMain, props } = this
     const { borderWidth } = props.property.border
     const width = []
 
-    if(list1 && list1.children.length) {
-      for(let i = 0, l = list1.children[0].children; i < l.length; i++) {
+    if(listContMain && listContMain.children.length) {
+      for(let i = 0, l = listContMain.children[0].children; i < l.length; i++) {
         width.push(l[i].clientWidth - parseInt(borderWidth) || 0)
       }
     }
@@ -365,13 +396,13 @@ export default class extends Component {
    * 列表滚动实现
    */
   marquee = () => {
-    const { list1, scroll } = this
+    const { listContMain, scroll } = this
 
-    if(list1 && scroll) {
+    if(listContMain && scroll) {
       scroll.scrollTop++
 
       // 滚动完一个完整周期后立即重置滚动区域的scrollTop值为0
-      if(list1.clientHeight <= scroll.scrollTop) {
+      if(listContMain.clientHeight <= scroll.scrollTop) {
         scroll.scrollTop = 0
       }
     }
@@ -473,22 +504,31 @@ export default class extends Component {
 
     if(link) {
       if(props.href) {
+        // 防止事件冒泡
+        props.onClick = event => event.stopPropagation()
+
         return (
           <a {...props} >{text}</a>
         )
       }
 
-      props.href = 'javascript: void(0)'
-
       if(props.event) {
         props[props.event] = event => {
+          event.preventDefault()
           const list = util.closest(event.target, '.list')
           if(_.isFunction(callback)) {
             callback(data, list, event)
           }
+
+          event.stopPropagation()
         }
 
         delete props.event
+      }
+
+      // 防止未传入自定义事件而导致点击事件冒泡
+      if(!props.event || props.event !== 'onClick') {
+        props.onClick = event => event.stopPropagation()
       }
 
       return (
@@ -527,7 +567,7 @@ export default class extends Component {
               name={cr.type === 'radio' ? `${cr.name}-${container}` : cr.name}
               className={cr.className}
               defaultChecked={selectedCur[rowIndex]}
-              onInput={this.checkCR}
+              onClick={this.checkCR}
             />
             {cr.text ? <span>{cr.text}</span> : null}
           </label>
@@ -542,7 +582,7 @@ export default class extends Component {
           type={cr.type}
           value={cr.value}
           className={cr.className}
-          onClick={cr.callback.bind(this, cr.data, cr)}
+          onClick={this.btnClick.bind(null, cr)}
         />
       )
     }
@@ -551,10 +591,65 @@ export default class extends Component {
   }
 
   /**
+   * 设置单元格
+   * @param rowData {Array} 行数据
+   * @param rowIndex {number} 行索引
+   * @param container {string} 当前所在容器的名称
+   */
+  setCell(rowData, rowIndex, container) {
+    const { colWidth, property } = this.state
+    const { body } = property
+    const {
+      row: {
+        serialNumber: { show: serialNumberShow, style: serialNumberStyle, specialStyle }
+      },
+      cellOfColumn: { style: cellOfColumnStyle },
+      cell: { style }
+    } = body
+
+    // 处理border属性值
+    const listBorder = this.setBorder(style)
+
+    return rowData.map((cellData, cellIndex) => {
+      return (
+        <div
+          className='list-cell'
+          style={
+            serialNumberShow && !cellIndex
+              // 如果开启行序号，且为每行第一个单元格
+              ? {
+                ...style,
+                width: typeof colWidth === 'string' ? colWidth : (colWidth[cellIndex] || 'auto'),
+                ...serialNumberStyle,
+                ...specialStyle[rowIndex],
+                ...cellOfColumnStyle[cellIndex],
+                ...listBorder
+              }
+              // 未开启行序号或不为行内第一个单元格
+              : {
+                ...style,
+                width: typeof colWidth === 'string' ? colWidth : (colWidth[cellIndex] || 'auto'),
+                ...cellOfColumnStyle[cellIndex],
+                ...listBorder
+              }
+          }
+          key={`${rowIndex}${cellIndex}`}
+        >
+          {
+            serialNumberShow && cellIndex === 0 && typeof cellData === 'string'
+              ? cellData.replace('{index}', rowIndex + 1)
+              : this.parsing(cellData, rowIndex + 1, container)
+          }
+        </div>
+      )
+    })
+  }
+
+  /**
    * 解析数据里面的对象
    * @param {object} cellData 需要解析的单元格数据
    * @param {number} rowIndex 需要解析的单元格数据所在行的索引
-   * @param {string?} container 当前渲染单元格所在的容器
+   * @param {string?} container 当前渲染单元格所在的容器（此参数目前只在type为radio时生效）
    * @returns {*} 单元格数据或DOM
    */
   parsing(cellData, rowIndex, container) {
@@ -562,7 +657,7 @@ export default class extends Component {
       return cellData.map((o, i) => this.parsing(o, i, container))
     }
 
-    if(typeof cellData === 'object') {
+    if(_.isObject(cellData)) {
       switch (cellData.type) {
         case 'img':
           return this.setCellIcon(cellData)
@@ -579,6 +674,7 @@ export default class extends Component {
       }
     }
 
+    // 不是对象，返回源数据
     return cellData
   }
 
@@ -610,55 +706,13 @@ export default class extends Component {
   }
 
   /**
-   * 加载列表头
-   * @param {array} data 列表头数据
-   * @returns {*} 列表头DOM
-   */
-  loadHeader(data) {
-    const { property, colWidth } = this.state
-    const { style, cellStyle } = property.header
-    const {
-      cell: { style: { minWidth } },
-      row: { serialNumber: { show } }
-    } = property.body
-
-    // 处理border属性值
-    const listBorder = this.setBorder(cellStyle)
-
-    if(data && data.length) {
-      return (
-        <li key='list-row' className='list-row' style={style}>
-          {
-            data.map((cell, index) => (
-              <div
-                className='list-cell'
-                key={index}
-                style={{
-                  ...cellStyle,
-                  width: typeof colWidth === 'string' ? colWidth : (colWidth[index] || 'auto'),
-                  minWidth,
-                  ...listBorder
-                }}
-              >
-                {show && !index ? 'number' : this.parsing(cell, 0)}
-              </div>
-            ))
-          }
-        </li>
-      )
-    }
-
-    return null
-  }
-
-  /**
-   * 加载列表主体
+   * 设置行
    * @param {array} bodyData 列表主体数据
    * @param {string} container 当前所在容器的名称
    * @returns {*} 列表主体DOM
    */
-  loadBody(bodyData, container) {
-    const { colWidth, property, transitionName } = this.state
+  setRow(bodyData, container) {
+    const { property, transitionName } = this.state
     const { body } = property
 
     const {
@@ -666,15 +720,9 @@ export default class extends Component {
         transition,
         style: rowStyle,
         specialStyle: specialRowStyle,
-        visual: { show: rowVisualShow, interval: rowVisualInterval },
-        serialNumber: { show: serialNumberShow, style: serialNumberStyle, specialStyle }
-      },
-      cellOfColumn: { style: cellOfColumnStyle },
-      cell: { style }
+        visual: { show: rowVisualShow, interval: rowVisualInterval }
+      }
     } = body
-
-    // 处理border属性值
-    const listBorder = this.setBorder(style)
 
     // 处理间隔行样式
     let isVisual = false
@@ -697,48 +745,104 @@ export default class extends Component {
               ? _.defaultsDeep({}, specialRowStyle[rowIndex], rowVisualStyle, rowStyle)
               : _.defaultsDeep({}, specialRowStyle[rowIndex], rowStyle)
           }
-          onMouseEnter={this.hover}
-          onMouseLeave={this.hover}
+          onMouseEnter={this.rowHover}
+          onMouseLeave={this.rowHover}
+          onClick={this.rowClick.bind(null, rowData, rowIndex)}
         >
-          {
-            rowData.map((cellData, index) => {
-              return (
-                <div
-                  className='list-cell'
-                  style={
-                    serialNumberShow && !index
-                      // 如果开启行序号，且为每行第一个单元格
-                      ? {
-                        ...style,
-                        width: typeof colWidth === 'string' ? colWidth : (colWidth[index] || 'auto'),
-                        ...serialNumberStyle,
-                        ...specialStyle[rowIndex],
-                        ...cellOfColumnStyle[index],
-                        ...listBorder
-                      }
-                      // 未开启行序号或不为行内第一个单元格
-                      : {
-                        ...style,
-                        width: typeof colWidth === 'string' ? colWidth : (colWidth[index] || 'auto'),
-                        ...specialStyle[rowIndex],
-                        ...cellOfColumnStyle[index],
-                        ...listBorder
-                      }
-                  }
-                  key={`${rowIndex}${index}`}
-                >
-                  {
-                    serialNumberShow && index === 0 && typeof cellData === 'string'
-                      ? cellData.replace('{index}', rowIndex + 1)
-                      : this.parsing(cellData, rowIndex + 1, container)
-                  }
-                </div>
-              )
-            })
-          }
+          {this.setCell(rowData, rowIndex, container)}
         </li>
       )
     })
+  }
+
+  /**
+   * 加载列表头
+   * @param {array} data 列表头数据
+   * @returns {*} 列表头DOM
+   */
+  loadHeader(data) {
+    const { property, colWidth, headerWidth } = this.state
+    const { isScroll, header: { style, cellStyle, show: showHeader } } = property
+    const {
+      cell: { style: { minWidth } },
+      row: { serialNumber: { show } }
+    } = property.body
+
+    // 处理border属性值
+    const listBorder = this.setBorder(cellStyle)
+
+    if(showHeader && data && data.length) {
+      return (
+        <ul
+          className='list-header list-cont'
+          style={!isScroll && headerWidth ? { ...style, width: headerWidth } : style}
+        >
+          <li key='list-row' className='list-row' style={style}>
+            {
+              data.map((cell, index) => (
+                <div
+                  className='list-cell'
+                  key={index}
+                  style={{
+                    ...cellStyle,
+                    width: typeof colWidth === 'string' ? colWidth : (colWidth[index] || 'auto'),
+                    minWidth,
+                    ...listBorder
+                  }}
+                >
+                  {show && !index ? 'number' : this.parsing(cell, 0)}
+                </div>
+              ))
+            }
+          </li>
+        </ul>
+      )
+    }
+
+    return null
+  }
+
+  /**
+   * 加载列表主体
+   * @param bodyData
+   * @returns {*}
+   */
+  loadBody(bodyData) {
+    const {
+      scrollHeight,
+      property: {
+        body: { row: { spacing } },
+        isScroll
+      }
+    } = this.state
+    // 处理行间距的值
+    const borderSpacing = (`${spacing}`).indexOf('px') === -1 ? `0 ${spacing}px` : `0 ${spacing}`
+
+    return (
+      <div
+        className='list-body'
+        ref={ele => this.scroll = ele}
+        style={{
+          height: scrollHeight,
+          overflow: isScroll ? 'hidden' : 'auto'
+        }}
+      >
+        <ul
+          className='list-cont'
+          style={{ borderSpacing }}
+          ref={ele => this.listContMain = ele}
+        >
+          {this.setRow(bodyData, 'main')}
+        </ul>
+        <ul
+          className='list-cont'
+          style={{ borderSpacing }}
+          ref={ele => this.listContSupport = ele}
+        >
+          {this.setRow(bodyData, 'support')}
+        </ul>
+      </div>
+    )
   }
 
   /**
@@ -747,23 +851,16 @@ export default class extends Component {
    */
   render() {
     const {
-      scrollHeight,
-      headerWidth,
       property: {
         header,
-        body,
-        isScroll,
+        body: { row: { spacing } },
         style: conStyle
       },
       data,
       className
     } = this.state
 
-    const { show: showHeader, style: headerStyle } = header
-
-    // 处理行间距的值
-    const { spacing } = body.row
-    const borderSpacing = (`${spacing}`).indexOf('px') === -1 ? `0 ${spacing}px` : `0 ${spacing}`
+    const { show: showHeader } = header
 
     // 处理border属性值
     const listBorder = this.setBorder(conStyle)
@@ -786,41 +883,8 @@ export default class extends Component {
         onMouseMove={this.scrollList.bind(this, false)}
         onMouseLeave={this.scrollList.bind(this, true)}
       >
-        {
-          showHeader
-            ? (
-              <ul
-                className='list-header list-cont'
-                style={!isScroll && headerWidth ? { ...headerStyle, width: headerWidth } : headerStyle}
-              >
-                {this.loadHeader(headerData)}
-              </ul>
-            )
-            : null
-        }
-        <div
-          className='list-body'
-          ref={ele => this.scroll = ele}
-          style={{
-            height: scrollHeight,
-            overflow: isScroll ? 'hidden' : 'auto'
-          }}
-        >
-          <ul
-            className='list-cont'
-            style={{ borderSpacing }}
-            ref={ele => this.list1 = ele}
-          >
-            {this.loadBody(bodyData, 'main')}
-          </ul>
-          <ul
-            className='list-cont'
-            style={{ borderSpacing }}
-            ref={ele => this.list2 = ele}
-          >
-            {this.loadBody(bodyData, 'support')}
-          </ul>
-        </div>
+        {this.loadHeader(headerData)}
+        {this.loadBody(bodyData)}
       </div>
     )
   }

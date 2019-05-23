@@ -192,43 +192,42 @@ props.data数据格式为一个二维数组，数组内每一个子数组元素�
 
 #### property
 
-> 以下表格中的`...property`写法表示相对于上一个属性的同级属性
-
-|**props.property** `{type}`                                    |default    |description                                                                                                                         |
-|---------------------------------------------------------|-----------|------------------------------------------------------------------------------------------------------------------------------------------|
-|**border** <br> `{object}`                               |{...}      |`边框`样式`全局配置`，包括组件内部的`行`和`单元格`（如果行/单元格未设置边框样式，则默认使用此全局配置)                                                |
-|**style** <br> `{object}`                                |{...}      |组件`最外层容器`的样式                                                                                                                       |
-|**speed** <br> `{number}`                                |50         |组件滚动速度                                                                                                                                |
-|**isScroll** <br> `{boolean}`                            |true       |是否开启组件滚动(当所有行的高度超过组件可视区域高度时生效)                                                                                                           |
-|**header** <br> `{object}`                               |{...}      |header设置                                                                                                                                 |
-|**header.show** <br> `{boolean}`                         |true       |是否显示header。为true时，`props.data`的第一个数据集为列表头数据                                                                                |
-|**header.style** <br> `{object}`                         |{...}      |header内`行样式`                                                                                                                            |
-|**header.cellStyle** <br> `{object}`                     |{...}      |header内`单元格的样式`。`注意`：此style里面的width将失效，因本组件的header单元格宽度自动根据body内单元格宽度进行适配                                  |
-|**body** <br> `{object}`                                 |{...}      |body设置                                                                                                                                    |
-|**body.row** <br> `{object}`                             |{...}      |body内`行设置`                                                                                                                              |
-|**body.row.transition** <br> `{boolean}`                 |true       |是否开启body内`行的加载动画`                                                                                                                  |
-|**body.row.spacing** <br> `{boolean}`                    |0          |行间距                                                                                                                                      |
-|**body.row.rowCheckBox** <br> `{boolean}`                |false      |是否开启body内行选择功能                                                                                                                      |
-|**body.row.style** <br> `{object}`                       |{...}      |行样式                                                                                                                                       |
-|**body.row.specialStyle** <br> `{[object, object, ...]}` |\[]        |按照数组索引依次设置每一行的样式，如要跳过某个索引，直接使用一个逗号占位即可                                                                          |
-|**body.row.visual** <br> `{object}`                      |{...}      |提升行的视觉：每隔N行设置另外一种行样式                                                                                                          |
-|**body.row.visual.show** <br> `{boolean}`                |true       |是否开启视觉提升                                                                                                                              |
-|**...interval** <br> `{number}`                          |1          |每隔N行交替一次                                                                                                                               |
-|**...style** <br> `{object}`                             |{...}      |交替的行样式配置表                                                                                                                            |
-|**body.row.silent** <br> `{object}`                      |{...}      |行与鼠标事件之间的交互配置                                                                                                                     |
-|**body.row.silent.show** <br> `{boolean}`                |false      |行是否不响应鼠标事件，如hover效果等。默认为false，即响应鼠标事件                                                                                   |
-|**body.row.silent.style** <br> `{object}`                |{...}      |响应鼠标事件时的样式配置                                                                                                                       |
-|**body.row.serialNumber** <br> `{object}`                |{...}      |行号相关配置                                                                                                                                  |
-|**body.row.serialNumber.show** <br> `{boolean}`          |false      |是否显示行号                                                                                                                                  |
-|**...formatter** <br> `{string}`                         |'{index}.' |行号格式化。`{index}`解析为从0依次递增的数字                                                                                                     |
-|**...style** <br> `{object}`                             |{...}      |显示行号的单元格（每行第一个单元格）的样式配置                                                                                                     |
-|**...specialStyle** <br> `{[object, object, ...]}`       |\[]        |按照数组索引依次设置每一行的行号所在单元格的样式，如要跳过某个索引，直接使用一个逗号占位即可                                                             |
-|**body.cellOfColumn** <br> `{object}`                    |{...}      |按照列来配置单元格样式                                                                                                                          |
-|**...cellOfColumn.style** <br> `{[object, object, ...]}` |\[]        |按照数组索引依次设置每一列内所有单元格的样式，如要跳过某个索引，直接使用一个逗号占位即可                                                                 |
-|**body.cell** <br> `{object}`                            |{...}      |每一行内的单元格的属性配置                                                                                                                       |
-|**body.cell.style** <br> `{object}`                      |{...}      |行内所有单元格的样式配置表                                                                                                                       |
-|**body.cell.style.width** <br> `{string\|Array\|number}` |'auto'     |width是style的属性之一，这里需要特别注意：它的用法不同于css的width，详见[cellWidth](#cellWidth)                                           |
-|**~~body.cell.iconStyle~~** <br> `{object}`              |{...}      |单元格内的图标样式统一设置，需要配合对象单元格的img类型使用。这个特性可能在后面版本被移除。                                                              |
+|**props.property** `{type}`                                           |default    |description                                                                                                                         |
+|----------------------------------------------------------------------|-----------|------------------------------------------------------------------------------------------------------------------------------------------|
+|**border** <br> `{object}`                                            |{...}      |`边框`样式`全局配置`，包括组件内部的`行`和`单元格`（如果行/单元格未设置边框样式，则默认使用此全局配置)                                                |
+|**style** <br> `{object}`                                             |{...}      |组件`最外层容器`的样式                                                                                                                       |
+|**speed** <br> `{number}`                                             |50         |组件滚动速度                                                                                                                                |
+|**isScroll** <br> `{boolean}`                                         |true       |是否开启组件滚动(当所有行的高度超过组件可视区域高度时生效)                                                                                                           |
+|**header** <br> `{object}`                                            |{...}      |header设置                                                                                                                                 |
+|**header.show** <br> `{boolean}`                                      |true       |是否显示header。为true时，`props.data`的第一个数据集为列表头数据                                                                                |
+|**header.style** <br> `{object}`                                      |{...}      |header内`行样式`                                                                                                                            |
+|**header.cellStyle** <br> `{object}`                                  |{...}      |header内`单元格的样式`。`注意`：此style里面的width将失效，因本组件的header单元格宽度自动根据body内单元格宽度进行适配                                  |
+|**body** <br> `{object}`                                              |{...}      |body设置                                                                                                                                    |
+|**body.row** <br> `{object}`                                          |{...}      |body内`行设置`                                                                                                                              |
+|**body.row.onClick <sup>^1.2.0</sup>** <br> `{()=>{}\|string}`        |null       |触发body内，行的点击事件。                                                                                                                              |
+|**body.row.transition** <br> `{boolean}`                              |true       |是否开启body内`行的加载动画`                                                                                                                  |
+|**body.row.spacing** <br> `{boolean}`                                 |0          |行间距                                                                                                                                      |
+|**body.row.rowCheckBox** <br> `{boolean}`                             |false      |是否开启body内行选择功能                                                                                                                      |
+|**body.row.style** <br> `{object}`                                    |{...}      |行样式                                                                                                                                       |
+|**body.row.specialStyle** <br> `{[object, object, ...]}`              |\[]        |按照数组索引依次设置每一行的样式，如要跳过某个索引，直接使用一个逗号占位即可                                                                          |
+|**body.row.visual** <br> `{object}`                                   |{...}      |提升行的视觉：每隔N行设置另外一种行样式                                                                                                          |
+|**body.row.visual.show** <br> `{boolean}`                             |true       |是否开启视觉提升                                                                                                                              |
+|**body.row.visual.interval** <br> `{number}`                          |1          |每隔N行交替一次                                                                                                                               |
+|**body.row.visual.style** <br> `{object}`                             |{...}      |交替的行样式配置表                                                                                                                            |
+|**body.row.silent** <br> `{object}`                                   |{...}      |行与鼠标事件之间的交互配置                                                                                                                     |
+|**body.row.silent.show** <br> `{boolean}`                             |false      |行是否不响应鼠标事件，如hover效果等。默认为false，即响应鼠标事件                                                                                   |
+|**body.row.silent.style** <br> `{object}`                             |{...}      |响应鼠标事件时的样式配置                                                                                                                       |
+|**body.row.serialNumber** <br> `{object}`                             |{...}      |行号相关配置                                                                                                                                  |
+|**body.row.serialNumber.show** <br> `{boolean}`                       |false      |是否显示行号                                                                                                                                  |
+|**body.row.serialNumber.formatter** <br> `{string}`                   |'{index}.' |行号格式化。`{index}`解析为从0依次递增的数字                                                                                                     |
+|**body.row.serialNumber.style** <br> `{object}`                       |{...}      |显示行号的单元格（每行第一个单元格）的样式配置                                                                                                     |
+|**body.row.serialNumber.specialStyle** <br> `{[object, object, ...]}` |\[]        |按照数组索引依次设置每一行的行号所在单元格的样式，如要跳过某个索引，直接使用一个逗号占位即可                                                             |
+|**body.cellOfColumn** <br> `{object}`                                 |{...}      |按照列来配置单元格样式                                                                                                                          |
+|**body.cellOfColumn.style** <br> `{[object, object, ...]}`            |\[]        |按照数组索引依次设置每一列内所有单元格的样式，如要跳过某个索引，直接使用一个逗号占位即可                                                                 |
+|**body.cell** <br> `{object}`                                         |{...}      |每一行内的单元格的属性配置                                                                                                                       |
+|**body.cell.style** <br> `{object}`                                   |{...}      |行内所有单元格的样式配置表                                                                                                                       |
+|**body.cell.style.width** <br> `{string\|Array\|number}`              |'auto'     |width是style的属性之一，这里需要特别注意：它的用法不同于css的width，详见[cellWidth](#cellWidth)                                           |
+|**~~body.cell.iconStyle~~** <br> `{object}`                           |{...}      |单元格内的图标样式统一设置，需要配合对象单元格的img类型使用。这个特性可能在后面版本被移除。                                                              |
 
 #### cellWidth
 

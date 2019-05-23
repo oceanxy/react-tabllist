@@ -172,7 +172,7 @@ module.exports = _objectSpread;
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var objectWithoutPropertiesLoose = __webpack_require__(16);
+var objectWithoutPropertiesLoose = __webpack_require__(15);
 
 function _objectWithoutProperties(source, excluded) {
   if (source == null) return {};
@@ -233,7 +233,7 @@ module.exports = _createClass;
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _typeof = __webpack_require__(11);
+var _typeof = __webpack_require__(16);
 
 var assertThisInitialized = __webpack_require__(2);
 
@@ -285,33 +285,11 @@ module.exports = _inherits;
 
 /***/ }),
 /* 11 */
-/***/ (function(module, exports) {
-
-function _typeof2(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof2 = function _typeof2(obj) { return typeof obj; }; } else { _typeof2 = function _typeof2(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof2(obj); }
-
-function _typeof(obj) {
-  if (typeof Symbol === "function" && _typeof2(Symbol.iterator) === "symbol") {
-    module.exports = _typeof = function _typeof(obj) {
-      return _typeof2(obj);
-    };
-  } else {
-    module.exports = _typeof = function _typeof(obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : _typeof2(obj);
-    };
-  }
-
-  return _typeof(obj);
-}
-
-module.exports = _typeof;
-
-/***/ }),
-/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var arrayWithoutHoles = __webpack_require__(20);
 
-var iterableToArray = __webpack_require__(13);
+var iterableToArray = __webpack_require__(12);
 
 var nonIterableSpread = __webpack_require__(21);
 
@@ -322,7 +300,7 @@ function _toConsumableArray(arr) {
 module.exports = _toConsumableArray;
 
 /***/ }),
-/* 13 */
+/* 12 */
 /***/ (function(module, exports) {
 
 function _iterableToArray(iter) {
@@ -332,7 +310,7 @@ function _iterableToArray(iter) {
 module.exports = _iterableToArray;
 
 /***/ }),
-/* 14 */
+/* 13 */
 /***/ (function(module, exports) {
 
 function _extends() {
@@ -356,12 +334,12 @@ function _extends() {
 module.exports = _extends;
 
 /***/ }),
-/* 15 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var arrayWithHoles = __webpack_require__(18);
 
-var iterableToArray = __webpack_require__(13);
+var iterableToArray = __webpack_require__(12);
 
 var nonIterableRest = __webpack_require__(19);
 
@@ -372,7 +350,7 @@ function _toArray(arr) {
 module.exports = _toArray;
 
 /***/ }),
-/* 16 */
+/* 15 */
 /***/ (function(module, exports) {
 
 function _objectWithoutPropertiesLoose(source, excluded) {
@@ -391,6 +369,28 @@ function _objectWithoutPropertiesLoose(source, excluded) {
 }
 
 module.exports = _objectWithoutPropertiesLoose;
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports) {
+
+function _typeof2(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof2 = function _typeof2(obj) { return typeof obj; }; } else { _typeof2 = function _typeof2(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof2(obj); }
+
+function _typeof(obj) {
+  if (typeof Symbol === "function" && _typeof2(Symbol.iterator) === "symbol") {
+    module.exports = _typeof = function _typeof(obj) {
+      return _typeof2(obj);
+    };
+  } else {
+    module.exports = _typeof = function _typeof(obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : _typeof2(obj);
+    };
+  }
+
+  return _typeof(obj);
+}
+
+module.exports = _typeof;
 
 /***/ }),
 /* 17 */
@@ -484,7 +484,7 @@ if(false) {}
 
 exports = module.exports = __webpack_require__(24)(false);
 // Module
-exports.push([module.i, ".list {\n  display: block;\n  overflow: hidden; }\n  .list .list-cont {\n    margin: 0;\n    padding: 0;\n    display: table;\n    width: 100%;\n    height: auto;\n    transition: all 400ms; }\n    .list .list-cont .list-row {\n      display: table-row;\n      list-style: none;\n      height: 58px;\n      transition: all 300ms cubic-bezier(0, 0, 0.58, 1);\n      background: no-repeat center / 100% 100%; }\n      .list .list-cont .list-row.list-row-start {\n        -webkit-transform: scale(0.8);\n                transform: scale(0.8);\n        opacity: 0; }\n      .list .list-cont .list-row.list-row-transition {\n        opacity: 1;\n        -webkit-transform: scale(1);\n                transform: scale(1); }\n      .list .list-cont .list-row .list-cell {\n        display: table-cell;\n        text-align: center;\n        vertical-align: middle;\n        word-break: break-all;\n        border-left: none !important;\n        background: no-repeat center / 100% 100%; }\n        .list .list-cont .list-row .list-cell * {\n          vertical-align: middle; }\n        .list .list-cont .list-row .list-cell:last-child {\n          border-right: none !important; }\n        .list .list-cont .list-row .list-cell a {\n          color: currentColor;\n          -webkit-text-decoration: transparent;\n                  text-decoration: transparent; }\n        .list .list-cont .list-row .list-cell label {\n          vertical-align: middle; }\n          .list .list-cont .list-row .list-cell label span, .list .list-cont .list-row .list-cell label input {\n            vertical-align: middle;\n            padding: 0 5px; }\n  .list .list-header .list-row {\n    background: no-repeat center / 100% 100%; }\n    .list .list-header .list-row .list-cell {\n      border-bottom: none !important; }\n  .list .list-body {\n    width: 100%; }\n    .list .list-body .list-cont {\n      border-collapse: separate; }\n    .list .list-body .list-cell {\n      color: #666; }\n  .list.list-no-spacing .list-cell {\n    border-top: none !important; }\n", ""]);
+exports.push([module.i, ".list {\n  display: block;\n  overflow: hidden; }\n  .list .list-cont {\n    margin: 0;\n    padding: 0;\n    display: table;\n    width: 100%;\n    height: auto;\n    transition: all 400ms; }\n    .list .list-cont .list-row {\n      display: table-row;\n      list-style: none;\n      height: 58px;\n      transition: all 300ms cubic-bezier(0, 0, 0.58, 1);\n      background: no-repeat center / 100% 100%; }\n      .list .list-cont .list-row.list-row-start {\n        -webkit-transform: scale(0.8);\n                transform: scale(0.8);\n        opacity: 0; }\n      .list .list-cont .list-row.list-row-transition {\n        opacity: 1;\n        -webkit-transform: scale(1);\n                transform: scale(1); }\n      .list .list-cont .list-row .list-cell {\n        display: table-cell;\n        text-align: center;\n        vertical-align: middle;\n        word-break: break-all;\n        border-left: none !important;\n        background: no-repeat center / 100% 100%; }\n        .list .list-cont .list-row .list-cell * {\n          vertical-align: middle; }\n        .list .list-cont .list-row .list-cell:last-child {\n          border-right: none !important; }\n        .list .list-cont .list-row .list-cell a {\n          color: currentColor;\n          -webkit-text-decoration: transparent;\n                  text-decoration: transparent; }\n        .list .list-cont .list-row .list-cell label {\n          vertical-align: middle; }\n          .list .list-cont .list-row .list-cell label span, .list .list-cont .list-row .list-cell label input {\n            vertical-align: middle;\n            padding: 0 5px; }\n  .list .list-header .list-row {\n    background: no-repeat center / 100% 100%; }\n    .list .list-header .list-row .list-cell {\n      border-bottom: none !important; }\n  .list .list-body .list-cont {\n    border-collapse: separate; }\n  .list .list-body .list-cell {\n    color: #666; }\n  .list.list-no-spacing .list-cell {\n    border-top: none !important; }\n", ""]);
 
 
 
@@ -1086,7 +1086,7 @@ module.exports = function (css) {
 __webpack_require__.r(__webpack_exports__);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/extends.js
-var helpers_extends = __webpack_require__(14);
+var helpers_extends = __webpack_require__(13);
 var extends_default = /*#__PURE__*/__webpack_require__.n(helpers_extends);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/objectWithoutProperties.js
@@ -1160,6 +1160,9 @@ var external_commonjs_react_commonjs2_react_amd_react_root_React_default = /*#__
       }
     },
     body: {
+      style: {
+        padding: '10px'
+      },
       row: {
         transition: true,
         serialNumber: {
@@ -1181,7 +1184,7 @@ var external_commonjs_react_commonjs2_react_amd_react_root_React_default = /*#__
           show: false,
           interval: 1,
           style: {
-            backgroundColor: '#E8F4FC'
+            backgroundColor: '#e8f4fc'
           }
         },
         // 注意：单独指定每一行的样式的优先级高于visual.style的优先级
@@ -1192,7 +1195,8 @@ var external_commonjs_react_commonjs2_react_amd_react_root_React_default = /*#__
           style: {
             opacity: 0.8
           }
-        }
+        },
+        onClick: ''
       },
       cellOfColumn: {
         style: []
@@ -1215,19 +1219,15 @@ var external_commonjs_react_commonjs2_react_amd_react_root_React_default = /*#__
   }
 });
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/toArray.js
-var toArray = __webpack_require__(15);
+var toArray = __webpack_require__(14);
 var toArray_default = /*#__PURE__*/__webpack_require__.n(toArray);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/objectSpread.js
 var objectSpread = __webpack_require__(4);
 var objectSpread_default = /*#__PURE__*/__webpack_require__.n(objectSpread);
 
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/typeof.js
-var helpers_typeof = __webpack_require__(11);
-var typeof_default = /*#__PURE__*/__webpack_require__.n(helpers_typeof);
-
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/toConsumableArray.js
-var toConsumableArray = __webpack_require__(12);
+var toConsumableArray = __webpack_require__(11);
 var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableArray);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/assertThisInitialized.js
@@ -1340,7 +1340,6 @@ function setColWidth(width) {
 
 
 
-
 /**
  * @Author: Oceanxy
  * @Email: xyzsyx@163.com
@@ -1368,44 +1367,44 @@ function (_Component) {
 
     defineProperty_default()(assertThisInitialized_default()(_this), "scrollList", function (isInnerScroll, e) {
       var _assertThisInitialize = assertThisInitialized_default()(_this),
-          list1 = _assertThisInitialize.list1,
-          list2 = _assertThisInitialize.list2,
+          listContMain = _assertThisInitialize.listContMain,
+          listContSupport = _assertThisInitialize.listContSupport,
           _assertThisInitialize2 = _assertThisInitialize.state,
           scrollHeight = _assertThisInitialize2.scrollHeight,
           _assertThisInitialize3 = _assertThisInitialize2.property,
           isScroll = _assertThisInitialize3.isScroll,
           speed = _assertThisInitialize3.speed;
 
-      if (list1 && list2) {
+      if (listContMain && listContSupport) {
         // 删除上一次定时器，后续根据状态来判定是否定义新的定时器
         clearInterval(_this.marqueeInterval);
 
         if (isInnerScroll || isInnerScroll === undefined) {
           // 检测滚动条件
           // 根据滚动条件控制列表主体容器的辅助容器的显示状态
-          if (isScroll && list1.clientHeight >= parseInt(scrollHeight)) {
+          if (isScroll && listContMain.clientHeight >= parseInt(scrollHeight)) {
             if (isInnerScroll !== undefined && e.type === 'mouseleave') {
               _this.pause = false;
             }
 
             if (!_this.pause) {
-              for (var i = 0; i < list2.children.length; i++) {
-                list2.children[i].style.display = 'table-row';
+              for (var i = 0; i < listContSupport.children.length; i++) {
+                listContSupport.children[i].style.display = 'table-row';
               } // 设置定时器，实现列表滚动
 
 
               _this.marqueeInterval = setInterval(_this.marquee, speed);
             }
           } else {
-            for (var _i = 0; _i < list2.children.length; _i++) {
-              list2.children[_i].style.display = 'none';
+            for (var _i = 0; _i < listContSupport.children.length; _i++) {
+              listContSupport.children[_i].style.display = 'none';
             }
           }
         }
       }
     });
 
-    defineProperty_default()(assertThisInitialized_default()(_this), "hover", function (e) {
+    defineProperty_default()(assertThisInitialized_default()(_this), "rowHover", function (e) {
       var _this$state$property$ = _this.state.property.body.row.silent,
           show = _this$state$property$.show,
           style = _this$state$property$.style;
@@ -1437,8 +1436,26 @@ function (_Component) {
       }
     });
 
-    defineProperty_default()(assertThisInitialized_default()(_this), "checkCR", function (_ref) {
-      var target = _ref.target;
+    defineProperty_default()(assertThisInitialized_default()(_this), "rowClick", function (rowData, rowIndex, event) {
+      var onClick = _this.state.property.body.row.onClick;
+
+      if (external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isFunction(onClick)) {
+        onClick(rowData, rowIndex, event);
+      }
+
+      event.stopPropagation();
+    });
+
+    defineProperty_default()(assertThisInitialized_default()(_this), "btnClick", function (cr, event) {
+      if (external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isFunction(cr.callback)) {
+        cr.callback(cr.data, cr, event);
+      }
+
+      event.stopPropagation();
+    });
+
+    defineProperty_default()(assertThisInitialized_default()(_this), "checkCR", function (event) {
+      var target = event.target;
       var _this$state = _this.state,
           selected = _this$state.selected,
           data = _this$state.data,
@@ -1490,18 +1507,20 @@ function (_Component) {
       _this.setState({
         selected: selectedCur
       });
+
+      event.stopPropagation();
     });
 
     defineProperty_default()(assertThisInitialized_default()(_this), "getColClientWidth", function () {
       var _assertThisInitialize4 = assertThisInitialized_default()(_this),
-          list1 = _assertThisInitialize4.list1,
+          listContMain = _assertThisInitialize4.listContMain,
           props = _assertThisInitialize4.props;
 
       var borderWidth = props.property.border.borderWidth;
       var width = [];
 
-      if (list1 && list1.children.length) {
-        for (var i = 0, l = list1.children[0].children; i < l.length; i++) {
+      if (listContMain && listContMain.children.length) {
+        for (var i = 0, l = listContMain.children[0].children; i < l.length; i++) {
           width.push(l[i].clientWidth - parseInt(borderWidth) || 0);
         }
       }
@@ -1511,13 +1530,13 @@ function (_Component) {
 
     defineProperty_default()(assertThisInitialized_default()(_this), "marquee", function () {
       var _assertThisInitialize5 = assertThisInitialized_default()(_this),
-          list1 = _assertThisInitialize5.list1,
+          listContMain = _assertThisInitialize5.listContMain,
           scroll = _assertThisInitialize5.scroll;
 
-      if (list1 && scroll) {
+      if (listContMain && scroll) {
         scroll.scrollTop++; // 滚动完一个完整周期后立即重置滚动区域的scrollTop值为0
 
-        if (list1.clientHeight <= scroll.scrollTop) {
+        if (listContMain.clientHeight <= scroll.scrollTop) {
           scroll.scrollTop = 0;
         }
       }
@@ -1533,21 +1552,34 @@ function (_Component) {
 
       if (link) {
         if (props.href) {
+          // 防止事件冒泡
+          props.onClick = function (event) {
+            return event.stopPropagation();
+          };
+
           return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("a", props, text);
         }
 
-        props.href = 'javascript: void(0)';
-
         if (props.event) {
           props[props.event] = function (event) {
+            event.preventDefault();
             var list = closest(event.target, '.list');
 
             if (external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isFunction(callback)) {
               callback(data, list, event);
             }
+
+            event.stopPropagation();
           };
 
           delete props.event;
+        } // 防止未传入自定义事件而导致点击事件冒泡
+
+
+        if (!props.event || props.event !== 'onClick') {
+          props.onClick = function (event) {
+            return event.stopPropagation();
+          };
         }
 
         return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("a", props, text);
@@ -1647,7 +1679,7 @@ function (_Component) {
 
         if (show && !isScroll) {
           this.setState({
-            headerWidth: this.list1.clientWidth
+            headerWidth: this.listContMain.clientWidth
           });
         } // 适应单元格宽度，用于组件自身状态或从父级传递的props发生变化时
 
@@ -1816,7 +1848,7 @@ function (_Component) {
             name: cr.type === 'radio' ? "".concat(cr.name, "-").concat(container) : cr.name,
             className: cr.className,
             defaultChecked: selectedCur[rowIndex],
-            onInput: this.checkCR
+            onClick: this.checkCR
           }), cr.text ? external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("span", null, cr.text) : null);
         } // button 等标签会执行以下代码
 
@@ -1827,32 +1859,70 @@ function (_Component) {
           type: cr.type,
           value: cr.value,
           className: cr.className,
-          onClick: cr.callback.bind(this, cr.data, cr)
+          onClick: this.btnClick.bind(null, cr)
         });
       }
 
       return null;
     }
     /**
+     * 设置单元格
+     * @param rowData {Array} 行数据
+     * @param rowIndex {number} 行索引
+     * @param container {string} 当前所在容器的名称
+     */
+
+  }, {
+    key: "setCell",
+    value: function setCell(rowData, rowIndex, container) {
+      var _this3 = this;
+
+      var _this$state3 = this.state,
+          colWidth = _this$state3.colWidth,
+          property = _this$state3.property;
+      var body = property.body;
+      var _body$row$serialNumbe = body.row.serialNumber,
+          serialNumberShow = _body$row$serialNumbe.show,
+          serialNumberStyle = _body$row$serialNumbe.style,
+          specialStyle = _body$row$serialNumbe.specialStyle,
+          cellOfColumnStyle = body.cellOfColumn.style,
+          style = body.cell.style; // 处理border属性值
+
+      var listBorder = this.setBorder(style);
+      return rowData.map(function (cellData, cellIndex) {
+        return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("div", {
+          className: "list-cell",
+          style: serialNumberShow && !cellIndex // 如果开启行序号，且为每行第一个单元格
+          ? objectSpread_default()({}, style, {
+            width: typeof colWidth === 'string' ? colWidth : colWidth[cellIndex] || 'auto'
+          }, serialNumberStyle, specialStyle[rowIndex], cellOfColumnStyle[cellIndex], listBorder) // 未开启行序号或不为行内第一个单元格
+          : objectSpread_default()({}, style, {
+            width: typeof colWidth === 'string' ? colWidth : colWidth[cellIndex] || 'auto'
+          }, cellOfColumnStyle[cellIndex], listBorder),
+          key: "".concat(rowIndex).concat(cellIndex)
+        }, serialNumberShow && cellIndex === 0 && typeof cellData === 'string' ? cellData.replace('{index}', rowIndex + 1) : _this3.parsing(cellData, rowIndex + 1, container));
+      });
+    }
+    /**
      * 解析数据里面的对象
      * @param {object} cellData 需要解析的单元格数据
      * @param {number} rowIndex 需要解析的单元格数据所在行的索引
-     * @param {string?} container 当前渲染单元格所在的容器
+     * @param {string?} container 当前渲染单元格所在的容器（此参数目前只在type为radio时生效）
      * @returns {*} 单元格数据或DOM
      */
 
   }, {
     key: "parsing",
     value: function parsing(cellData, rowIndex, container) {
-      var _this3 = this;
+      var _this4 = this;
 
       if (Array.isArray(cellData)) {
         return cellData.map(function (o, i) {
-          return _this3.parsing(o, i, container);
+          return _this4.parsing(o, i, container);
         });
       }
 
-      if (typeof_default()(cellData) === 'object') {
+      if (external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isObject(cellData)) {
         switch (cellData.type) {
           case 'img':
             return this.setCellIcon(cellData);
@@ -1872,7 +1942,8 @@ function (_Component) {
           default:
             return null;
         }
-      }
+      } // 不是对象，返回源数据
+
 
       return cellData;
     }
@@ -1906,61 +1977,18 @@ function (_Component) {
       };
     }
     /**
-     * 加载列表头
-     * @param {array} data 列表头数据
-     * @returns {*} 列表头DOM
-     */
-
-  }, {
-    key: "loadHeader",
-    value: function loadHeader(data) {
-      var _this4 = this;
-
-      var _this$state3 = this.state,
-          property = _this$state3.property,
-          colWidth = _this$state3.colWidth;
-      var _property$header = property.header,
-          style = _property$header.style,
-          cellStyle = _property$header.cellStyle;
-      var _property$body = property.body,
-          minWidth = _property$body.cell.style.minWidth,
-          show = _property$body.row.serialNumber.show; // 处理border属性值
-
-      var listBorder = this.setBorder(cellStyle);
-
-      if (data && data.length) {
-        return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("li", {
-          key: "list-row",
-          className: "list-row",
-          style: style
-        }, data.map(function (cell, index) {
-          return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("div", {
-            className: "list-cell",
-            key: index,
-            style: objectSpread_default()({}, cellStyle, {
-              width: typeof colWidth === 'string' ? colWidth : colWidth[index] || 'auto',
-              minWidth: minWidth
-            }, listBorder)
-          }, show && !index ? 'number' : _this4.parsing(cell, 0));
-        }));
-      }
-
-      return null;
-    }
-    /**
-     * 加载列表主体
+     * 设置行
      * @param {array} bodyData 列表主体数据
      * @param {string} container 当前所在容器的名称
      * @returns {*} 列表主体DOM
      */
 
   }, {
-    key: "loadBody",
-    value: function loadBody(bodyData, container) {
+    key: "setRow",
+    value: function setRow(bodyData, container) {
       var _this5 = this;
 
       var _this$state4 = this.state,
-          colWidth = _this$state4.colWidth,
           property = _this$state4.property,
           transitionName = _this$state4.transitionName;
       var body = property.body;
@@ -1970,15 +1998,7 @@ function (_Component) {
           specialRowStyle = _body$row.specialStyle,
           _body$row$visual = _body$row.visual,
           rowVisualShow = _body$row$visual.show,
-          rowVisualInterval = _body$row$visual.interval,
-          _body$row$serialNumbe = _body$row.serialNumber,
-          serialNumberShow = _body$row$serialNumbe.show,
-          serialNumberStyle = _body$row$serialNumbe.style,
-          specialStyle = _body$row$serialNumbe.specialStyle,
-          cellOfColumnStyle = body.cellOfColumn.style,
-          style = body.cell.style; // 处理border属性值
-
-      var listBorder = this.setBorder(style); // 处理间隔行样式
+          rowVisualInterval = _body$row$visual.interval; // 处理间隔行样式
 
       var isVisual = false;
       var rowVisualStyle = body.row.visual.style;
@@ -1993,22 +2013,106 @@ function (_Component) {
           className: "list-row ".concat(transition ? transitionName : ''),
           key: rowIndex,
           style: isVisual && rowIndex % (rowVisualInterval * 2) >= rowVisualInterval ? external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.defaultsDeep({}, specialRowStyle[rowIndex], rowVisualStyle, rowStyle) : external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.defaultsDeep({}, specialRowStyle[rowIndex], rowStyle),
-          onMouseEnter: _this5.hover,
-          onMouseLeave: _this5.hover
-        }, rowData.map(function (cellData, index) {
+          onMouseEnter: _this5.rowHover,
+          onMouseLeave: _this5.rowHover,
+          onClick: _this5.rowClick.bind(null, rowData, rowIndex)
+        }, _this5.setCell(rowData, rowIndex, container));
+      });
+    }
+    /**
+     * 加载列表头
+     * @param {array} data 列表头数据
+     * @returns {*} 列表头DOM
+     */
+
+  }, {
+    key: "loadHeader",
+    value: function loadHeader(data) {
+      var _this6 = this;
+
+      var _this$state5 = this.state,
+          property = _this$state5.property,
+          colWidth = _this$state5.colWidth,
+          headerWidth = _this$state5.headerWidth;
+      var isScroll = property.isScroll,
+          _property$header = property.header,
+          style = _property$header.style,
+          cellStyle = _property$header.cellStyle,
+          showHeader = _property$header.show;
+      var _property$body = property.body,
+          minWidth = _property$body.cell.style.minWidth,
+          show = _property$body.row.serialNumber.show; // 处理border属性值
+
+      var listBorder = this.setBorder(cellStyle);
+
+      if (showHeader && data && data.length) {
+        return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("ul", {
+          className: "list-header list-cont",
+          style: !isScroll && headerWidth ? objectSpread_default()({}, style, {
+            width: headerWidth
+          }) : style
+        }, external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("li", {
+          key: "list-row",
+          className: "list-row",
+          style: style
+        }, data.map(function (cell, index) {
           return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("div", {
             className: "list-cell",
-            style: serialNumberShow && !index // 如果开启行序号，且为每行第一个单元格
-            ? objectSpread_default()({}, style, {
-              width: typeof colWidth === 'string' ? colWidth : colWidth[index] || 'auto'
-            }, serialNumberStyle, specialStyle[rowIndex], cellOfColumnStyle[index], listBorder) // 未开启行序号或不为行内第一个单元格
-            : objectSpread_default()({}, style, {
-              width: typeof colWidth === 'string' ? colWidth : colWidth[index] || 'auto'
-            }, specialStyle[rowIndex], cellOfColumnStyle[index], listBorder),
-            key: "".concat(rowIndex).concat(index)
-          }, serialNumberShow && index === 0 && typeof cellData === 'string' ? cellData.replace('{index}', rowIndex + 1) : _this5.parsing(cellData, rowIndex + 1, container));
-        }));
-      });
+            key: index,
+            style: objectSpread_default()({}, cellStyle, {
+              width: typeof colWidth === 'string' ? colWidth : colWidth[index] || 'auto',
+              minWidth: minWidth
+            }, listBorder)
+          }, show && !index ? 'number' : _this6.parsing(cell, 0));
+        })));
+      }
+
+      return null;
+    }
+    /**
+     * 加载列表主体
+     * @param bodyData
+     * @returns {*}
+     */
+
+  }, {
+    key: "loadBody",
+    value: function loadBody(bodyData) {
+      var _this7 = this;
+
+      var _this$state6 = this.state,
+          scrollHeight = _this$state6.scrollHeight,
+          _this$state6$property = _this$state6.property,
+          spacing = _this$state6$property.body.row.spacing,
+          isScroll = _this$state6$property.isScroll; // 处理行间距的值
+
+      var borderSpacing = "".concat(spacing).indexOf('px') === -1 ? "0 ".concat(spacing, "px") : "0 ".concat(spacing);
+      return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("div", {
+        className: "list-body",
+        ref: function ref(ele) {
+          return _this7.scroll = ele;
+        },
+        style: {
+          height: scrollHeight,
+          overflow: isScroll ? 'hidden' : 'auto'
+        }
+      }, external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("ul", {
+        className: "list-cont",
+        style: {
+          borderSpacing: borderSpacing
+        },
+        ref: function ref(ele) {
+          return _this7.listContMain = ele;
+        }
+      }, this.setRow(bodyData, 'main')), external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("ul", {
+        className: "list-cont",
+        style: {
+          borderSpacing: borderSpacing
+        },
+        ref: function ref(ele) {
+          return _this7.listContSupport = ele;
+        }
+      }, this.setRow(bodyData, 'support')));
     }
     /**
      * 渲染 DOM 结构
@@ -2018,23 +2122,14 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this6 = this;
-
-      var _this$state5 = this.state,
-          scrollHeight = _this$state5.scrollHeight,
-          headerWidth = _this$state5.headerWidth,
-          _this$state5$property = _this$state5.property,
-          header = _this$state5$property.header,
-          body = _this$state5$property.body,
-          isScroll = _this$state5$property.isScroll,
-          conStyle = _this$state5$property.style,
-          data = _this$state5.data,
-          className = _this$state5.className;
-      var showHeader = header.show,
-          headerStyle = header.style; // 处理行间距的值
-
-      var spacing = body.row.spacing;
-      var borderSpacing = "".concat(spacing).indexOf('px') === -1 ? "0 ".concat(spacing, "px") : "0 ".concat(spacing); // 处理border属性值
+      var _this$state7 = this.state,
+          _this$state7$property = _this$state7.property,
+          header = _this$state7$property.header,
+          spacing = _this$state7$property.body.row.spacing,
+          conStyle = _this$state7$property.style,
+          data = _this$state7.data,
+          className = _this$state7.className;
+      var showHeader = header.show; // 处理border属性值
 
       var listBorder = this.setBorder(conStyle); // 当存在表头数据且表头是开启时处理数据
 
@@ -2058,37 +2153,7 @@ function (_Component) {
         className: "list ".concat(className || '', " ").concat(listClass),
         onMouseMove: this.scrollList.bind(this, false),
         onMouseLeave: this.scrollList.bind(this, true)
-      }, showHeader ? external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("ul", {
-        className: "list-header list-cont",
-        style: !isScroll && headerWidth ? objectSpread_default()({}, headerStyle, {
-          width: headerWidth
-        }) : headerStyle
-      }, this.loadHeader(headerData)) : null, external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("div", {
-        className: "list-body",
-        ref: function ref(ele) {
-          return _this6.scroll = ele;
-        },
-        style: {
-          height: scrollHeight,
-          overflow: isScroll ? 'hidden' : 'auto'
-        }
-      }, external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("ul", {
-        className: "list-cont",
-        style: {
-          borderSpacing: borderSpacing
-        },
-        ref: function ref(ele) {
-          return _this6.list1 = ele;
-        }
-      }, this.loadBody(bodyData, 'main')), external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("ul", {
-        className: "list-cont",
-        style: {
-          borderSpacing: borderSpacing
-        },
-        ref: function ref(ele) {
-          return _this6.list2 = ele;
-        }
-      }, this.loadBody(bodyData, 'support'))));
+      }, this.loadHeader(headerData), this.loadBody(bodyData));
     }
   }], [{
     key: "getDerivedStateFromProps",

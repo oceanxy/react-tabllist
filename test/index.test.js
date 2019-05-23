@@ -116,7 +116,7 @@ describe('test cells', () => {
         body: {
           cell: {
             style: {
-              fontSize: 10
+              fontSize: 12
             }
           }
         }
@@ -129,7 +129,7 @@ describe('test cells', () => {
       rows.at(0)
         .find('.list-cell').at(0)
         .getDOMNode().style.fontSize)
-      .toBe('10px')
+      .toBe('12px')
   })
 
   it('test width of cell when type of width is array', () => {
