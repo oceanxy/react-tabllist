@@ -197,6 +197,22 @@ module.exports = _objectWithoutProperties;
 
 /***/ }),
 /* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var arrayWithoutHoles = __webpack_require__(20);
+
+var iterableToArray = __webpack_require__(12);
+
+var nonIterableSpread = __webpack_require__(21);
+
+function _toConsumableArray(arr) {
+  return arrayWithoutHoles(arr) || iterableToArray(arr) || nonIterableSpread();
+}
+
+module.exports = _toConsumableArray;
+
+/***/ }),
+/* 7 */
 /***/ (function(module, exports) {
 
 function _classCallCheck(instance, Constructor) {
@@ -208,7 +224,7 @@ function _classCallCheck(instance, Constructor) {
 module.exports = _classCallCheck;
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports) {
 
 function _defineProperties(target, props) {
@@ -230,7 +246,7 @@ function _createClass(Constructor, protoProps, staticProps) {
 module.exports = _createClass;
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var _typeof = __webpack_require__(16);
@@ -248,7 +264,7 @@ function _possibleConstructorReturn(self, call) {
 module.exports = _possibleConstructorReturn;
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports) {
 
 function _getPrototypeOf(o) {
@@ -261,7 +277,7 @@ function _getPrototypeOf(o) {
 module.exports = _getPrototypeOf;
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var setPrototypeOf = __webpack_require__(17);
@@ -282,22 +298,6 @@ function _inherits(subClass, superClass) {
 }
 
 module.exports = _inherits;
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var arrayWithoutHoles = __webpack_require__(20);
-
-var iterableToArray = __webpack_require__(12);
-
-var nonIterableSpread = __webpack_require__(21);
-
-function _toConsumableArray(arr) {
-  return arrayWithoutHoles(arr) || iterableToArray(arr) || nonIterableSpread();
-}
-
-module.exports = _toConsumableArray;
 
 /***/ }),
 /* 12 */
@@ -1094,23 +1094,23 @@ var objectWithoutProperties = __webpack_require__(5);
 var objectWithoutProperties_default = /*#__PURE__*/__webpack_require__.n(objectWithoutProperties);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/classCallCheck.js
-var classCallCheck = __webpack_require__(6);
+var classCallCheck = __webpack_require__(7);
 var classCallCheck_default = /*#__PURE__*/__webpack_require__.n(classCallCheck);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/createClass.js
-var createClass = __webpack_require__(7);
+var createClass = __webpack_require__(8);
 var createClass_default = /*#__PURE__*/__webpack_require__.n(createClass);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js
-var possibleConstructorReturn = __webpack_require__(8);
+var possibleConstructorReturn = __webpack_require__(9);
 var possibleConstructorReturn_default = /*#__PURE__*/__webpack_require__.n(possibleConstructorReturn);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/getPrototypeOf.js
-var getPrototypeOf = __webpack_require__(9);
+var getPrototypeOf = __webpack_require__(10);
 var getPrototypeOf_default = /*#__PURE__*/__webpack_require__.n(getPrototypeOf);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/inherits.js
-var inherits = __webpack_require__(10);
+var inherits = __webpack_require__(11);
 var inherits_default = /*#__PURE__*/__webpack_require__.n(inherits);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/defineProperty.js
@@ -1227,7 +1227,7 @@ var objectSpread = __webpack_require__(4);
 var objectSpread_default = /*#__PURE__*/__webpack_require__.n(objectSpread);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/toConsumableArray.js
-var toConsumableArray = __webpack_require__(11);
+var toConsumableArray = __webpack_require__(6);
 var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableArray);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/assertThisInitialized.js
@@ -1436,19 +1436,9 @@ function (_Component) {
       }
     });
 
-    defineProperty_default()(assertThisInitialized_default()(_this), "rowClick", function (rowData, rowIndex, event) {
-      var onClick = _this.state.property.body.row.onClick;
-
-      if (external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isFunction(onClick)) {
-        onClick(rowData, rowIndex, event);
-      }
-
-      event.stopPropagation();
-    });
-
-    defineProperty_default()(assertThisInitialized_default()(_this), "btnClick", function (cr, event) {
-      if (external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isFunction(cr.callback)) {
-        cr.callback(cr.data, cr, event);
+    defineProperty_default()(assertThisInitialized_default()(_this), "handleEvent", function (_elementData, event) {
+      if (external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isFunction(_elementData.callback)) {
+        _elementData.callback(_elementData.data, _elementData, event);
       }
 
       event.stopPropagation();
@@ -1758,7 +1748,12 @@ function (_Component) {
           serialNumber = _this$state$property$2.serialNumber; // 获取每一行的数据量，存入数组 cellsOfRow 内
 
       external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.range(data.length).map(function (i) {
-        cellsOfRow.push(data[i].length);
+        // 如果行数据是一个对象，保证该对象内一定有一个cells字段
+        if (!data[i].cells) {
+          data[i].cells = [];
+        }
+
+        cellsOfRow.push(external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isArray(data[i]) ? data[i].length : data[i].cells.length);
       }); // 获取数据量最多的一行的数值
 
 
@@ -1766,20 +1761,36 @@ function (_Component) {
       var newData = []; // 补齐空数据到缺失的行
 
       data.forEach(function (row, ind) {
-        newData[ind] = [].concat(toConsumableArray_default()(data[ind]), toConsumableArray_default()(new Array(maxCellValue - data[ind].length).fill(''))); // 检测是否开启行选择功能
+        var rowCheck = {
+          type: 'checkbox',
+          text: '',
+          uid: "ck".concat(ind),
+          name: 'rowCheckBox'
+        };
 
-        if (rowCheckBox) {
-          newData[ind].unshift({
-            type: 'checkbox',
-            text: '',
-            uid: "ck".concat(ind),
-            name: 'rowCheckBox'
-          });
-        } // 检测是否开启行序号功能
+        if (external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isArray(data[ind])) {
+          newData[ind] = [].concat(toConsumableArray_default()(data[ind]), toConsumableArray_default()(new Array(maxCellValue - data[ind].length).fill(''))); // 检测是否开启行选择功能
+
+          if (rowCheckBox) {
+            newData[ind].unshift(rowCheck);
+          } // 检测是否开启行序号功能
 
 
-        if (serialNumber.show) {
-          newData[ind].unshift(serialNumber.formatter);
+          if (serialNumber.show) {
+            newData[ind].unshift(serialNumber.formatter);
+          }
+        } else {
+          newData[ind] = objectSpread_default()({}, data[ind]);
+          newData[ind].cells = [].concat(toConsumableArray_default()(data[ind].cells), toConsumableArray_default()(new Array(maxCellValue - data[ind].cells.length).fill(''))); // 检测是否开启行选择功能
+
+          if (rowCheckBox) {
+            newData[ind].cells.unshift(rowCheck);
+          } // 检测是否开启行序号功能
+
+
+          if (serialNumber.show) {
+            newData[ind].cells.unshift(serialNumber.formatter);
+          }
         }
       });
       return newData;
@@ -1859,7 +1870,7 @@ function (_Component) {
           type: cr.type,
           value: cr.value,
           className: cr.className,
-          onClick: this.btnClick.bind(null, cr)
+          onClick: this.handleEvent.bind(null, cr)
         });
       }
 
@@ -2009,14 +2020,21 @@ function (_Component) {
       }
 
       return bodyData.map(function (rowData, rowIndex) {
-        return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("li", {
-          className: "list-row ".concat(transition ? transitionName : ''),
+        var LIElementProps = {
           key: rowIndex,
+          className: "list-row ".concat(transition ? transitionName : ''),
           style: isVisual && rowIndex % (rowVisualInterval * 2) >= rowVisualInterval ? external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.defaultsDeep({}, specialRowStyle[rowIndex], rowVisualStyle, rowStyle) : external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.defaultsDeep({}, specialRowStyle[rowIndex], rowStyle),
           onMouseEnter: _this5.rowHover,
-          onMouseLeave: _this5.rowHover,
-          onClick: _this5.rowClick.bind(null, rowData, rowIndex)
-        }, _this5.setCell(rowData, rowIndex, container));
+          onMouseLeave: _this5.rowHover // 检测行数据是一个对象还是一个数组
+          // 如果是对象，则需要对行做一些处理，比如添加自定义事件等（目前只支持添加事件）
+
+        };
+
+        if (external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isObject(rowData) && rowData.type === 'row') {
+          LIElementProps[rowData.event] = _this5.handleEvent.bind(null, rowData);
+        }
+
+        return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("li", LIElementProps, external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isArray(rowData) ? _this5.setCell(rowData, rowIndex, container) : _this5.setCell(rowData.cells, rowIndex, container));
       });
     }
     /**

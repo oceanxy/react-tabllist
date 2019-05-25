@@ -16,25 +16,34 @@ const Dev = () => {
   const option = {
     data: [
       ['1st column', '2nd column', '3rd column', '4rd column'],
-      [
-        'row 1; column 1',
-        'row 1; column 2',
-        {
-          type: 'link',
-          text: 'I am a link',
-          href: 'https://github.com/oceanxy/react-tabllist',
-          className: 'test-link'
+      {
+        type: 'row',
+        data: 123,
+        event: 'onClick',
+        callback: (restData, elementData, event) => {
+          alert(111)
+          console.log(restData, elementData, event)
         },
-        {
-          type: 'button',
-          uid: '',
-          value: 'click me',
-          className: 'test-btn',
-          callback: () => {
-            alert('hello react-tabllist')
+        cells: [
+          'row 1; column 1',
+          'row 1; column 2',
+          {
+            type: 'link',
+            text: 'I am a first link',
+            href: 'https://github.com/oceanxy/react-tabllist',
+            className: 'test-link'
+          },
+          {
+            type: 'button',
+            uid: '',
+            value: 'click me',
+            className: 'test-btn',
+            callback: () => {
+              alert('hello react-tabllist')
+            }
           }
-        }
-      ],
+        ]
+      },
       [
         'row 2; column 1', 'row 2; column 2',
         {
@@ -219,9 +228,6 @@ const Dev = () => {
             style: {
               backgroundColor: '#bcf0fc'
             }
-          },
-          onClick: (rowData, rowIndex, cellElement) => {
-            console.log(rowData, rowIndex, cellElement)
           }
         },
         cell: {

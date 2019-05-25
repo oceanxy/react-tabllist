@@ -67,3 +67,6 @@
 #### 1.2.0
 1. Events can be added to rows, and previous versions can only add events to cells.
 2. Fix bug: When the line number feature is enabled, the style of the row number cell is applied to all cells in the row.
+
+#### 1.2.1
+1. Cancel the definition of the click event of the row in the property in the 1.2.0 version, instead of defining it in the data property, just like other object cells.

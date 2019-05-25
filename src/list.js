@@ -288,29 +288,13 @@ export default class extends Component {
   }
 
   /**
-   * 行点击事件
-   * @param rowData
-   * @param rowIndex
-   * @param event
+   * 组件内部元素的事件处理
+   * @param _elementData 渲染组件内部结构的数据
+   * @param event event对象
    */
-  rowClick = (rowData, rowIndex, event) => {
-    const { onClick } = this.state.property.body.row
-
-    if(_.isFunction(onClick)) {
-      onClick(rowData, rowIndex, event)
-    }
-
-    event.stopPropagation()
-  }
-
-  /**
-   * 按钮点击事件
-   * @param cr
-   * @param event
-   */
-  btnClick = (cr, event) => {
-    if(_.isFunction(cr.callback)) {
-      cr.callback(cr.data, cr, event)
+  handleEvent = (_elementData, event) => {
+    if(_.isFunction(_elementData.callback)) {
+      _elementData.callback(_elementData.data, _elementData, event)
     }
 
     event.stopPropagation()
@@ -420,7 +404,12 @@ export default class extends Component {
 
     // 获取每一行的数据量，存入数组 cellsOfRow 内
     _.range(data.length).map(i => {
-      cellsOfRow.push(data[i].length)
+      // 如果行数据是一个对象，保证该对象内一定有一个cells字段
+      if(!data[i].cells) {
+        data[i].cells = []
+      }
+
+      cellsOfRow.push(_.isArray(data[i]) ? data[i].length : data[i].cells.length)
     })
 
     // 获取数据量最多的一行的数值
@@ -429,24 +418,44 @@ export default class extends Component {
 
     // 补齐空数据到缺失的行
     data.forEach((row, ind) => {
-      newData[ind] = [
-        ...data[ind],
-        ...new Array(maxCellValue - data[ind].length).fill('')
-      ]
-
-      // 检测是否开启行选择功能
-      if(rowCheckBox) {
-        newData[ind].unshift({
-          type: 'checkbox',
-          text: '',
-          uid: `ck${ind}`,
-          name: 'rowCheckBox'
-        })
+      const rowCheck = {
+        type: 'checkbox',
+        text: '',
+        uid: `ck${ind}`,
+        name: 'rowCheckBox'
       }
 
-      // 检测是否开启行序号功能
-      if(serialNumber.show) {
-        newData[ind].unshift(serialNumber.formatter)
+      if(_.isArray(data[ind])) {
+        newData[ind] = [
+          ...data[ind],
+          ...new Array(maxCellValue - data[ind].length).fill('')
+        ]
+
+        // 检测是否开启行选择功能
+        if(rowCheckBox) {
+          newData[ind].unshift(rowCheck)
+        }
+
+        // 检测是否开启行序号功能
+        if(serialNumber.show) {
+          newData[ind].unshift(serialNumber.formatter)
+        }
+      } else {
+        newData[ind] = { ...data[ind] }
+        newData[ind].cells = [
+          ...data[ind].cells,
+          ...new Array(maxCellValue - data[ind].cells.length).fill('')
+        ]
+
+        // 检测是否开启行选择功能
+        if(rowCheckBox) {
+          newData[ind].cells.unshift(rowCheck)
+        }
+
+        // 检测是否开启行序号功能
+        if(serialNumber.show) {
+          newData[ind].cells.unshift(serialNumber.formatter)
+        }
       }
     })
 
@@ -582,7 +591,7 @@ export default class extends Component {
           type={cr.type}
           value={cr.value}
           className={cr.className}
-          onClick={this.btnClick.bind(null, cr)}
+          onClick={this.handleEvent.bind(null, cr)}
         />
       )
     }
@@ -736,20 +745,29 @@ export default class extends Component {
     }
 
     return bodyData.map((rowData, rowIndex) => {
+      const LIElementProps = {
+        key: rowIndex,
+        className: `list-row ${transition ? transitionName : ''}`,
+        style: isVisual && rowIndex % (rowVisualInterval * 2) >= rowVisualInterval
+          ? _.defaultsDeep({}, specialRowStyle[rowIndex], rowVisualStyle, rowStyle)
+          : _.defaultsDeep({}, specialRowStyle[rowIndex], rowStyle),
+        onMouseEnter: this.rowHover,
+        onMouseLeave: this.rowHover
+      }
+
+      // 检测行数据是一个对象还是一个数组
+      // 如果是对象，则需要对行做一些处理，比如添加自定义事件等（目前只支持添加事件）
+      if(_.isObject(rowData) && rowData.type === 'row') {
+        LIElementProps[rowData.event] = this.handleEvent.bind(null, rowData)
+      }
+
       return (
-        <li
-          className={`list-row ${transition ? transitionName : ''}`}
-          key={rowIndex}
-          style={
-            isVisual && rowIndex % (rowVisualInterval * 2) >= rowVisualInterval
-              ? _.defaultsDeep({}, specialRowStyle[rowIndex], rowVisualStyle, rowStyle)
-              : _.defaultsDeep({}, specialRowStyle[rowIndex], rowStyle)
+        <li {...LIElementProps}>
+          {
+            _.isArray(rowData)
+              ? this.setCell(rowData, rowIndex, container)
+              : this.setCell(rowData.cells, rowIndex, container)
           }
-          onMouseEnter={this.rowHover}
-          onMouseLeave={this.rowHover}
-          onClick={this.rowClick.bind(null, rowData, rowIndex)}
-        >
-          {this.setCell(rowData, rowIndex, container)}
         </li>
       )
     })
