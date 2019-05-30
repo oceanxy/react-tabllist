@@ -3,8 +3,8 @@
  * @Email: xyzsyx@163.com
  * @Description: 配置文件
  * @Date: 2018-10-08 17:56:19
- * @LastModified: Oceanxy（xyzsyx@163.com）
- * @LastModifiedTime: 2019-01-23 15:03:05
+ * @LastModified: Oceanxy（xieyang@hiynn.com）
+ * @LastModifiedTime: 2019-05-30 15:34:24
  */
 
 export default {
@@ -52,7 +52,7 @@ export default {
           specialStyle: []
         },
         spacing: 0,
-        rowCheckBox: false,
+        rowCheckbox: false,
         style: {
           height: 30
         },
@@ -92,4 +92,29 @@ export default {
       }
     }
   }
+}
+
+/**
+ * 为过时的属性配置警告信息
+ * @returns {{discard: string, version: string, replacement: string}[]}
+ */
+export function getWaringProperty() {
+  return [
+    {
+      version: '-',
+      discard: 'property.body.cell.iconStyle',
+      warn: 'Used obsolete configuration in React-tabllist: \'property.body.cell.iconStyle\' will be completely removed in future releases.Please use the object unit ({type: img, ...}) instead'
+    },
+    {
+      version: '1.2.0',
+      discard: 'property.body.row.onClick',
+      warn: 'Used obsolete configuration in React-tabllist: \'property.body.row.onClick\' can only be used in version 1.2.0.Please use the object unit ({type: row, ...}) instead'
+    },
+    {
+      version: '1.2.2',
+      discard: 'property.body.row.rowCheckBox',
+      replacement: 'property.body.row.rowCheckbox',
+      warn: 'Used obsolete configuration in React-tabllist: \'property.body.row.rowCheckBox\' has been deprecated in version 1.2.2 and will be completely removed in future releases. You should use \'property.body.row.rowCheckbox\' instead.'
+    }
+  ]
 }

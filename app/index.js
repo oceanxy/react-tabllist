@@ -4,7 +4,7 @@
  * @Description: dev
  * @Date: 2019-05-23 11:41:43
  * @LastModified: Oceanxy（xieyang@hiynn.com）
- * @LastModifiedTime: 2019-05-23 11:41:43
+ * @LastModifiedTime: 2019-05-30 15:46:57
  */
 
 import React from 'react'
@@ -16,26 +16,36 @@ const Dev = () => {
   const option = {
     data: [
       ['1st column', '2nd column', '3rd column', '4rd column'],
+      [
+        <span>span</span>,
+        <div onClick={() => alert('测试事件')}>测试事件</div>,
+        <a href='http://www.xieyangogo.cn/react-tabllist/'>demo</a>,
+        <div>div</div>
+      ],
       {
         type: 'row',
         data: 123,
         event: 'onClick',
         callback: (restData, elementData, event) => {
-          alert(111)
+          alert('测试行点击事件')
           console.log(restData, elementData, event)
         },
         cells: [
           'row 1; column 1',
-          'row 1; column 2',
           {
             type: 'link',
             text: 'I am a first link',
+            className: 'test-link',
+            callback: () => {console.log('I am a first link')}
+          },
+          {
+            type: 'link',
+            text: 'I am a second link',
             href: 'https://github.com/oceanxy/react-tabllist',
             className: 'test-link'
           },
           {
             type: 'button',
-            uid: '',
             value: 'click me',
             className: 'test-btn',
             callback: () => {
@@ -54,7 +64,6 @@ const Dev = () => {
         },
         {
           type: 'button',
-          uid: '',
           value: 'click me',
           className: 'test-btn',
           callback: () => {
@@ -72,7 +81,6 @@ const Dev = () => {
         },
         {
           type: 'button',
-          uid: '',
           value: 'click me',
           className: 'test-btn',
           callback: () => {
@@ -84,14 +92,12 @@ const Dev = () => {
         [
           {
             type: 'radio',
-            uid: '',
             name: 'group1',
             text: 'radio group 1-1',
             className: 'test-radio'
           },
           {
             type: 'radio',
-            uid: '',
             name: 'group1',
             text: 'radio group 2-1',
             className: 'test-radio'
@@ -105,14 +111,12 @@ const Dev = () => {
         [
           {
             type: 'radio',
-            uid: '',
             name: 'group2',
             text: 'radio group 2-1',
             className: 'test-radio'
           },
           {
             type: 'radio',
-            uid: '',
             name: 'group2',
             text: 'radio group 2-2',
             className: 'test-radio'
@@ -123,7 +127,23 @@ const Dev = () => {
         'row 6; column 4'
       ],
       [
-        'row 7; column 1', 'row 7; column 2',
+        [
+          {
+            type: 'checkbox',
+            name: 'chkxxx',
+            text: 'chk1'
+          },
+          {
+            type: 'checkbox',
+            name: 'chkxxx',
+            text: 'chk2'
+          },
+          {
+            type: 'checkbox',
+            name: 'chkxxx',
+            text: 'chk3'
+          }
+        ],
         {
           type: 'link',
           text: 'I am a link',
@@ -135,7 +155,6 @@ const Dev = () => {
         },
         {
           type: 'button',
-          uid: '',
           value: 'click me',
           className: 'test-btn',
           callback: (data, cellObject, cellElement) => {
@@ -186,6 +205,7 @@ const Dev = () => {
       body: {
         row: {
           rowCheckBox: true,
+          onClick: () => {}, // 仅在1.2.0版本生效，此处用于测试控制台打印警告信息
           style: {
             height: 34
           },

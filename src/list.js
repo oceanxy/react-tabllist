@@ -3,8 +3,8 @@
  * @Email: xyzsyx@163.com
  * @Description: react-tabllist
  * @Date: 2018-10-08 17:56:19
- * @LastModified: Oceanxy（xyzsyx@163.com）
- * @LastModifiedTime: 2019-01-23 15:03:38
+ * @LastModified: Oceanxy（xieyang@hiynn.com）
+ * @LastModifiedTime: 2019-05-30 15:47:31
  */
 
 import _ from 'lodash'
@@ -21,8 +21,11 @@ export default class extends Component {
       colWidth: util.setColWidth(props.property.body.cell.style.width),
       // body可见区域的高度
       scrollHeight: util.setScrollHeight(props),
-      // 复选框、单选框等标签的状态
-      selected: {},
+      // 复选框、单选框等标签的默认状态
+      defaultSelected: false,
+      // 行选择框的indeterminate状态
+      indeterminate: false,
+      selected: { rowCheckbox: [] },
       // 列表行缓动动画的样式名
       transitionName: '',
       // 当停用列表滚动且表头开启时，会自动计算这个值，以使表头的总宽度和列表主体相同
@@ -42,6 +45,8 @@ export default class extends Component {
       colWidth,
       scrollHeight,
       selected,
+      defaultSelected,
+      indeterminate,
       property: stateProperty,
       data: stateData,
       headerWidth
@@ -60,6 +65,8 @@ export default class extends Component {
     const stateUpdate = {
       colWidth,
       scrollHeight,
+      defaultSelected,
+      indeterminate,
       selected,
       transitionName,
       headerWidth
@@ -139,7 +146,7 @@ export default class extends Component {
           header: { show }, body, isScroll
         },
         transitionName,
-        selected
+        indeterminate
       } = this.state
       const {
         body: preBody,
@@ -149,7 +156,7 @@ export default class extends Component {
       const { cell, row } = body
       const { width: iconWidth } = cell.iconStyle
       const { width: preIconWidth } = preBody.cell.iconStyle
-      const { transition, rowCheckBox } = row
+      const { transition, rowCheckbox } = row
 
       // 当滚动条显示时，重新计算header的宽度，和列表主体对齐
       if(show && !isScroll) {
@@ -186,21 +193,13 @@ export default class extends Component {
         this.setState({ transitionName: 'list-row-start list-row-transition' })
       }
 
+      // 设置列表头行选择框的indeterminate
       // 如果开启了行选择功能且显示表头，根据每行的选择情况设置标题栏多选框的 indeterminate 状态
-      if(show && rowCheckBox) {
-        const rowCheckBoxArr = selected['rowCheckBox']
-        if(rowCheckBoxArr && !_.isEmpty(rowCheckBoxArr)) {
-          for(let i = 1, j = rowCheckBoxArr.length; i < j; i++) {
-            // 当某一行的选中状态为false且存在选中行的时候，设置标题栏多选框的 indeterminate 状态为true
-            if(!rowCheckBoxArr[i] && rowCheckBoxArr.join(',').indexOf('true') > -1) {
-              this.scroll
-                .parentNode
-                .querySelector('.list-header input[name=rowCheckBox]')
-                .indeterminate = true
-              break
-            }
-          }
-        }
+      if(show && rowCheckbox) {
+        this.scroll
+          .parentNode
+          .querySelector('.list-header input[name=rowCheckbox]')
+          .indeterminate = indeterminate
       }
 
       // 列表滚动相关逻辑入口
@@ -288,74 +287,69 @@ export default class extends Component {
   }
 
   /**
-   * 组件内部元素的事件处理
-   * @param _elementData 渲染组件内部结构的数据
-   * @param event event对象
-   */
-  handleEvent = (_elementData, event) => {
-    if(_.isFunction(_elementData.callback)) {
-      _elementData.callback(_elementData.data, _elementData, event)
-    }
-
-    event.stopPropagation()
-  }
-
-  /**
    * 复选框和单选按钮事件
    * @param {object} event 点击的input对象
    */
-  checkCR = (event) => {
+  checkCR = event => {
     const { target } = event
     const { selected, data, property } = this.state
+    let { indeterminate } = this.state
     const { show: showHeader } = property.header
     const selectedCur = _.cloneDeep(selected)
-    const index = target.getAttribute('data-index')
     let targetName = target.name
-
+    // 获取主容器和副容器内所有的行选择框
+    const rowCheckboxes = document.querySelectorAll('[name=\'rowCheckbox\']')
+    // 列表滚动控制
     this.pause = true
 
     // 检测是否点击的标题栏的checkbox 且是否开启显示表头
-    if(target.name === 'rowCheckBox' && index === '0' && showHeader) {
+    if(target.name === 'rowCheckbox' && _.isEqual(rowCheckboxes[0], target) && showHeader) {
       selectedCur[targetName] = new Array(data.length).fill(target.checked)
     } else {
-      // 检测是否是radio。radio需要处理一下this.state.selected里与之对应的name属性
-      if(target.type === 'radio') {
-        targetName = targetName.substring(0, targetName.indexOf('-'))
-      }
-
       // 检测this.state.selected里与之对应的数组是否存在，否则初始化一个空数组
       // 而radio因为是单选按钮，决定了state数组里面有且仅有一个值为true，所以每次都初始化为空数组
-      if(!selectedCur[targetName] || target.type === 'radio') {
-        selectedCur[targetName] = []
-      }
+      if(target.type === 'radio') {
+        // 检测是否是radio。radio需要处理一下this.state.selected里与之对应的name属性
+        targetName = targetName.substring(0, targetName.indexOf('-'))
 
-      // 将处理后的state数组赋值
-      selectedCur[targetName][index] = target.checked
+        if(!selectedCur[targetName]) {
+          selectedCur[targetName] = []
+        }
+      } else {
+        // 获取触发的行选择框的索引
+        let clickedIndex = _.findIndex(rowCheckboxes, target)
+        // 如果点击的是辅助容器内的行选择框，则对应到主容器内的行选择框的索引
+        clickedIndex = clickedIndex > data.length - 1 ? clickedIndex - data.length : clickedIndex
+        // 将处理后的state数组赋值
+        selectedCur[targetName][clickedIndex] = target.checked
 
-      // 如果触发的是每一行的行选择框且header的状态为开启，则检测是否body里面的每行都选中了
-      // 根据此状态来给header里面的复选框加状态（全选/全不选）
-      if(targetName === 'rowCheckBox' && showHeader) {
-        if(data.length === selectedCur[targetName].length) {
-          for(let i = 1, k = selectedCur[targetName].length; i < k; i++) {
-            if(!selectedCur[targetName][i]) {
-              selectedCur[targetName][0] = false
-              break
+        // 触发行选择框且header的状态为开启
+        if(targetName === 'rowCheckbox' && showHeader) {
+          // 检测是否body里面的每行都选中了，根据此状态来给header里面的复选框加状态（全选/全不选）
+          if(data.length === selectedCur[targetName].length) {
+            for(let i = 1, k = selectedCur[targetName].length; i < k; i++) {
+              if(!selectedCur[targetName][i]) {
+                selectedCur[targetName][0] = false
+                indeterminate = selectedCur[targetName].join(',').indexOf('true') > -1
+                break
+              }
+              if(i === data.length - 1) {
+                indeterminate = false
+                selectedCur[targetName][0] = true
+              }
             }
-            if(i === data.length - 1) {
-              selectedCur[targetName][0] = true
-            }
+          } else {
+            selectedCur[targetName][0] = false
+            indeterminate = selectedCur[targetName].join(',').indexOf('true') > -1
           }
-        } else {
-          selectedCur[targetName][0] = false
         }
       }
     }
 
     this.setState({
+      indeterminate,
       selected: selectedCur
     })
-
-    event.stopPropagation()
   }
 
   /**
@@ -400,7 +394,7 @@ export default class extends Component {
    */
   fillRow(data) {
     const cellsOfRow = []
-    const { row: { rowCheckBox, serialNumber } } = this.state.property.body
+    const { row: { rowCheckbox, serialNumber } } = this.state.property.body
 
     // 获取每一行的数据量，存入数组 cellsOfRow 内
     _.range(data.length).map(i => {
@@ -421,8 +415,8 @@ export default class extends Component {
       const rowCheck = {
         type: 'checkbox',
         text: '',
-        uid: `ck${ind}`,
-        name: 'rowCheckBox'
+        key: `rowCheck${ind}`,
+        name: 'rowCheckbox'
       }
 
       if(_.isArray(data[ind])) {
@@ -432,7 +426,7 @@ export default class extends Component {
         ]
 
         // 检测是否开启行选择功能
-        if(rowCheckBox) {
+        if(rowCheckbox) {
           newData[ind].unshift(rowCheck)
         }
 
@@ -448,7 +442,7 @@ export default class extends Component {
         ]
 
         // 检测是否开启行选择功能
-        if(rowCheckBox) {
+        if(rowCheckbox) {
           newData[ind].cells.unshift(rowCheck)
         }
 
@@ -467,33 +461,29 @@ export default class extends Component {
    * @param {object} icon icon对象
    * @returns {*} 单元格图标DOM || null
    */
-  setCellIcon(icon) {
-    if(icon) {
-      const { iconStyle } = this.state.property.body.cell
+  setCellIcon(icon, { rowIndex, cellIndex }) {
+    const { iconStyle } = this.state.property.body.cell
 
-      if(
-        icon.src &&
-        typeof icon.src === 'string' &&
-        (
-          icon.src.indexOf('http://') !== -1 ||
-          icon.src.indexOf('https://') !== -1 ||
-          icon.src.indexOf('data:image/') !== -1
-        )
-      ) {
-        return [
-          <img
-            src={icon.src}
-            alt={icon.alt || ''}
-            style={iconStyle}
-            key={Math.random()}
-            className={icon.className}
-          />,
-          <span key={Math.random()}>{icon.text || ''}</span>
-        ]
-      }
+    if(
+      icon.src &&
+      typeof icon.src === 'string' &&
+      (
+        icon.src.indexOf('http://') !== -1 ||
+        icon.src.indexOf('https://') !== -1 ||
+        icon.src.indexOf('data:image/') !== -1
+      )
+    ) {
+      return [
+        <img
+          src={icon.src}
+          alt={icon.alt || ''}
+          style={iconStyle}
+          key={icon.key || `icon-${rowIndex}-${cellIndex}`}
+          className={icon.className}
+        />,
+        <span key={`text${-icon.key}` || `icon-text-${rowIndex}-${cellIndex}`}>{icon.text || ''}</span>
+      ]
     }
-
-    return null
   }
 
   /**
@@ -501,63 +491,77 @@ export default class extends Component {
    * @param {object} link link对象
    * @returns {*} 单元格link DOM || null
    */
-  setCellLink = (link) => {
+  setCellLink = link => {
     const {
+      type,
       text,
+      event,
       callback,
       data,
+      href,
       ...props
     } = link
 
-    delete props.type
-
-    if(link) {
-      if(props.href) {
-        // 防止事件冒泡
-        props.onClick = event => event.stopPropagation()
-
-        return (
-          <a {...props} >{text}</a>
-        )
-      }
-
-      if(props.event) {
-        props[props.event] = event => {
-          event.preventDefault()
-          const list = util.closest(event.target, '.list')
-          if(_.isFunction(callback)) {
-            callback(data, list, event)
-          }
-
-          event.stopPropagation()
-        }
-
-        delete props.event
-      }
-
-      // 防止未传入自定义事件而导致点击事件冒泡
-      if(!props.event || props.event !== 'onClick') {
-        props.onClick = event => event.stopPropagation()
-      }
+    if(href) {
+      // 防止事件冒泡
+      props.onClick = util.handleEvent.bind(null, [{}])
 
       return (
-        <a {...props} >{text}</a>
+        <a href={href} {...props} >{text}</a>
       )
     }
 
-    return null
+    const tagProps = {
+      ...props,
+      [event ? event : 'onClick']: util.handleEvent.bind(null, [link])
+    }
+
+    return (
+      <a {...tagProps} >{text}</a>
+    )
   }
 
   /**
    * 设置单元格checkbox或radio
    * @param {object} cr cr对象
    * @param {number} rowIndex 所在行的索引
+   * @param {number?} cellIndex 所在单元格的索引
+   * @param {number?} index 当前索引
    * @param {string?} container 当前渲染元素所在的容器
    * @returns {*} 单元格checkbox或radio || null
    */
-  setCellInput(cr, rowIndex, container) {
-    const { selected } = this.state
+  setCellInput(cr, { rowIndex, cellIndex, index }, container) {
+    const { selected, defaultSelected } = this.state
     const selectedCur = selected[cr.name] || []
+    let tagProps = {}
+
+    // 处理事件
+    if(cr.type === 'button') {
+      tagProps = {
+        [cr.event ? cr.event : 'onClick']: util.handleEvent.bind(null, [cr]),
+        key: cr.key,
+        type: cr.type,
+        value: cr.value,
+        className: cr.className
+      }
+    } else {
+      tagProps = {
+        type: cr.type,
+        name: cr.type === 'radio' ? `${cr.name}-${container}` : cr.name,
+        className: cr.className,
+        checked: selectedCur[rowIndex] ? selectedCur[rowIndex] : defaultSelected
+      }
+
+      if(!cr.event || cr.event === 'onClick' || cr.event === 'onChange') {
+        tagProps.onChange = util.handleEvent.bind(null, [cr, this.checkCR])
+        tagProps.onClick = util.handleEvent.bind(null, [{}])
+      } else {
+        // 当自定义事件不为‘onClick’或‘onChange’时，为radio或checkbox添加默认的点击事件
+        tagProps[cr.event] = util.handleEvent.bind(null, [cr])
+        tagProps.onChange = this.checkCR
+        tagProps.onClick = util.handleEvent.bind(null, [{}])
+      }
+    }
 
     if(cr.type === 'radio' && !container) {
       /* eslint-disable no-console */
@@ -565,38 +569,19 @@ export default class extends Component {
       return null
     }
 
-    if(cr) {
-      if(cr.type === 'radio' || cr.type === 'checkbox') {
-        return (
-          <label key={Math.random()}>
-            <input
-              data-id={cr.uid}
-              data-index={rowIndex}
-              type={cr.type}
-              name={cr.type === 'radio' ? `${cr.name}-${container}` : cr.name}
-              className={cr.className}
-              defaultChecked={selectedCur[rowIndex]}
-              onClick={this.checkCR}
-            />
-            {cr.text ? <span>{cr.text}</span> : null}
-          </label>
-        )
-      }
-
-      // button 等标签会执行以下代码
+    if(cr.type === 'radio' || cr.type === 'checkbox') {
       return (
-        <input
-          data-id={cr.uid}
-          data-index={rowIndex}
-          type={cr.type}
-          value={cr.value}
-          className={cr.className}
-          onClick={this.handleEvent.bind(null, cr)}
-        />
+        <label key={`${cr.key || `chk-${rowIndex}-${cellIndex}-${index}`}`}>
+          <input{...tagProps} />
+          {cr.text ? <span>{cr.text}</span> : null}
+        </label>
       )
     }
 
-    return null
+    // button 等标签会执行以下代码
+    return (
+      <input{...tagProps} />
+    )
   }
 
   /**
@@ -622,6 +607,7 @@ export default class extends Component {
     return rowData.map((cellData, cellIndex) => {
       return (
         <div
+          key={`${container}-cell-r${rowIndex}-c${cellIndex}`}
           className='list-cell'
           style={
             serialNumberShow && !cellIndex
@@ -642,12 +628,12 @@ export default class extends Component {
                 ...listBorder
               }
           }
-          key={`${rowIndex}${cellIndex}`}
         >
           {
+            // 检测是否启用行号功能，并且为行内第一个单元格
             serialNumberShow && cellIndex === 0 && typeof cellData === 'string'
               ? cellData.replace('{index}', rowIndex + 1)
-              : this.parsing(cellData, rowIndex + 1, container)
+              : this.parsing(cellData, { rowIndex: rowIndex + 1, cellIndex }, container)
           }
         </div>
       )
@@ -658,28 +644,28 @@ export default class extends Component {
    * 解析数据里面的对象
    * @param {object} cellData 需要解析的单元格数据
    * @param {number} rowIndex 需要解析的单元格数据所在行的索引
+   * @param {number} cellIndex 需要解析的单元格数据所在行的索引
+   * @param {number?} index 当前循环遍历的index
    * @param {string?} container 当前渲染单元格所在的容器（此参数目前只在type为radio时生效）
    * @returns {*} 单元格数据或DOM
    */
-  parsing(cellData, rowIndex, container) {
+  parsing(cellData, { rowIndex, cellIndex, index }, container) {
     if(Array.isArray(cellData)) {
-      return cellData.map((o, i) => this.parsing(o, i, container))
+      return cellData.map((o, i) => this.parsing(o, { rowIndex, cellIndex, index: i }, container))
     }
 
     if(_.isObject(cellData)) {
       switch (cellData.type) {
         case 'img':
-          return this.setCellIcon(cellData)
+          return this.setCellIcon(cellData, { rowIndex, cellIndex })
         case 'link':
           return this.setCellLink(cellData)
         case 'radio':
-          return this.setCellInput(cellData, rowIndex, container)
+          return this.setCellInput(cellData, { rowIndex, cellIndex, index }, container)
         case 'checkbox':
-          return this.setCellInput(cellData, rowIndex)
+          return this.setCellInput(cellData, { rowIndex, cellIndex, index })
         case 'button':
-          return this.setCellInput(cellData, rowIndex)
-        default:
-          return null
+          return this.setCellInput(cellData, { rowIndex, cellIndex, index })
       }
     }
 
@@ -746,8 +732,16 @@ export default class extends Component {
 
     return bodyData.map((rowData, rowIndex) => {
       const LIElementProps = {
-        key: rowIndex,
-        className: `list-row ${transition ? transitionName : ''}`,
+        key: `${container}-list-row${rowData.key ? rowData.key : rowIndex}`,
+        className: `list-row${
+          rowData.className
+            ? ` ${rowData.className}`
+            : ''
+          }${
+          transition
+            ? ` ${transitionName}`
+            : ''
+          }`,
         style: isVisual && rowIndex % (rowVisualInterval * 2) >= rowVisualInterval
           ? _.defaultsDeep({}, specialRowStyle[rowIndex], rowVisualStyle, rowStyle)
           : _.defaultsDeep({}, specialRowStyle[rowIndex], rowStyle),
@@ -758,7 +752,7 @@ export default class extends Component {
       // 检测行数据是一个对象还是一个数组
       // 如果是对象，则需要对行做一些处理，比如添加自定义事件等（目前只支持添加事件）
       if(_.isObject(rowData) && rowData.type === 'row') {
-        LIElementProps[rowData.event] = this.handleEvent.bind(null, rowData)
+        LIElementProps[rowData.event] = util.handleEvent.bind(null, [rowData])
       }
 
       return (
@@ -800,7 +794,7 @@ export default class extends Component {
               data.map((cell, index) => (
                 <div
                   className='list-cell'
-                  key={index}
+                  key={`list-header-${index}`}
                   style={{
                     ...cellStyle,
                     width: typeof colWidth === 'string' ? colWidth : (colWidth[index] || 'auto'),
@@ -808,7 +802,7 @@ export default class extends Component {
                     ...listBorder
                   }}
                 >
-                  {show && !index ? 'number' : this.parsing(cell, 0)}
+                  {show && !index ? 'number' : this.parsing(cell, { rowIndex: 0, cellIndex: 0 })}
                 </div>
               ))
             }

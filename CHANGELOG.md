@@ -70,3 +70,10 @@
 
 #### 1.2.1
 1. Cancel the definition of the click event of the row in the property in the 1.2.0 version, instead of defining it in the data property, just like other object cells.
+
+#### 1.2.2
+1. Added a description of modifying the data structure in the readme file: a new way of writing about row. (This feature is already available in version 1.2.1, but not in the readme file)
+2. Fix bug: jsx is invalid in data.
+3. Modify custom event implementation logic for buttons, checkboxes, and radios.
+4. Readme file can be switched to Chinese or English.
+5. A warning will be printed on the console when using the obsolete property.

@@ -1,6 +1,6 @@
 {
   "name": "react-tabllist",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "React-based customizable style table or list components that support event and callback functions.",
   "main": "index.js",
   "scripts": {
