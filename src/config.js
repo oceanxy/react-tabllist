@@ -101,7 +101,7 @@ export default {
 export function getWaringProperty() {
   return [
     {
-      version: '-',
+      version: '1.0.0',
       discard: 'property.body.cell.iconStyle',
       warn: 'Used obsolete configuration in React-tabllist: \'property.body.cell.iconStyle\' will be completely removed in future releases.Please use the object unit ({type: img, ...}) instead'
     },
@@ -111,10 +111,10 @@ export function getWaringProperty() {
       warn: 'Used obsolete configuration in React-tabllist: \'property.body.row.onClick\' can only be used in version 1.2.0.Please use the object unit ({type: row, ...}) instead'
     },
     {
-      version: '1.2.2',
+      version: '1.3.0',
       discard: 'property.body.row.rowCheckBox',
       replacement: 'property.body.row.rowCheckbox',
-      warn: 'Used obsolete configuration in React-tabllist: \'property.body.row.rowCheckBox\' has been deprecated in version 1.2.2 and will be completely removed in future releases. You should use \'property.body.row.rowCheckbox\' instead.'
+      warn: 'Used obsolete configuration in React-tabllist: \'property.body.row.rowCheckBox\' has been deprecated in version 1.3.0 and will be completely removed in future releases. You should use \'property.body.row.rowCheckbox\' instead.'
     }
   ]
 }

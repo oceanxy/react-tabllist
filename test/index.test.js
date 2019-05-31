@@ -321,7 +321,7 @@ describe('change property of body', () => {
       wrapper
         .find('.list-body .list-cont').at(0)
         .find('.list-row .list-cell').at(0)
-        .find('input[name="rowCheckBox"]')
+        .find('input[name="rowCheckbox"]')
         .exists()
     ).toEqual(true)
   })

@@ -4,7 +4,7 @@
  * @Description: react-tabllist
  * @Date: 2018-10-08 17:56:19
  * @LastModified: Oceanxy（xieyang@hiynn.com）
- * @LastModifiedTime: 2019-05-30 15:47:31
+ * @LastModifiedTime: 2019-05-31 09:10:45
  */
 
 import _ from 'lodash'
@@ -288,61 +288,82 @@ export default class extends Component {
 
   /**
    * 复选框和单选按钮事件
+   * @param {object} cr 生成DOM的数据
+   * @param {number} rowIndex 使用cr生成的DOM所在行的索引
+   * @param {number} cellIndex 使用cr生成的DOM所在列的索引
+   * @param {number} index 使用cr生成的DOM在当前单元格内的索引
    * @param {object} event 点击的input对象
    */
-  checkCR = event => {
+  checkCR = ([cr, { rowIndex, cellIndex, index }], event) => {
     const { target } = event
     const { selected, data, property } = this.state
-    let { indeterminate } = this.state
-    const { show: showHeader } = property.header
     const selectedCur = _.cloneDeep(selected)
     let targetName = target.name
-    // 获取主容器和副容器内所有的行选择框
-    const rowCheckboxes = document.querySelectorAll('[name=\'rowCheckbox\']')
+    let { indeterminate } = this.state
+
     // 列表滚动控制
     this.pause = true
 
-    // 检测是否点击的标题栏的checkbox 且是否开启显示表头
-    if(target.name === 'rowCheckbox' && _.isEqual(rowCheckboxes[0], target) && showHeader) {
-      selectedCur[targetName] = new Array(data.length).fill(target.checked)
-    } else {
-      // 检测this.state.selected里与之对应的数组是否存在，否则初始化一个空数组
-      // 而radio因为是单选按钮，决定了state数组里面有且仅有一个值为true，所以每次都初始化为空数组
-      if(target.type === 'radio') {
-        // 检测是否是radio。radio需要处理一下this.state.selected里与之对应的name属性
-        targetName = targetName.substring(0, targetName.indexOf('-'))
+    // 检测this.state.selected里与之对应的数组是否存在，否则初始化一个空数组
+    // 而radio因为是单选按钮，决定了state数组里面有且仅有一个值为true，所以每次都初始化为空数组
+    if(target.type === 'radio') {
+      // 检测是否是radio，radio需要处理一下this.state.selected里与之对应的name属性
+      targetName = targetName.substring(0, targetName.indexOf('-'))
+      if(!selectedCur[targetName]) {
+        selectedCur[targetName] = []
+      }
+      // 将处理后结果赋值给state
+      selectedCur[targetName][0] = `${cr.key || `cr-${rowIndex}-${cellIndex}-${index}`}`
+    }
+    // 检测是否点击的是表头的checkbox，且是否启用表头
+    else if(target.type === 'checkbox') {
+      // 检测是否是行选择框
+      if(target.name === 'rowCheckbox') {
+        const { show: showHeader } = property.header
+        // 获取列表最外层容器
+        const listContainer = util.closest(target, '.list')
+        // 获取列表内所有的行选择框
+        const rowCheckboxes = listContainer.querySelectorAll('[name=\'rowCheckbox\']')
 
+        // 当启用表头时，点击表头的行选择框
+        if(showHeader && _.isEqual(rowCheckboxes[0], target)) {
+          indeterminate = false
+          selectedCur[targetName] = new Array(data.length).fill(target.checked)
+        } else {
+          /* 触发非表头的行选择框 */
+          // 获取触发的行选择框的索引
+          const clickedActualIndex = _.findIndex(rowCheckboxes, target)
+          // 如果点击的是辅助容器内的行选择框，则对应到主容器内的行选择框的索引。
+          const mainIndex = clickedActualIndex >= data.length
+            ? clickedActualIndex - data.length + (showHeader ? 1 : 0) // 处理显示表头和不显示表头的情况
+            : clickedActualIndex
+          // 将处理后结果赋值给state
+          selectedCur[targetName][mainIndex] = target.checked
+
+          // 每次触发body被行选择框时都检查一次所有行选择框的状态
+          const rowCheckboxSelected = _.compact(selectedCur[targetName].slice(1)).length
+          if(rowCheckboxSelected !== data.length - 1) {
+            selectedCur[targetName][0] = false
+            indeterminate = rowCheckboxSelected > 0
+          } else {
+            selectedCur[targetName][0] = true
+            indeterminate = false
+          }
+        }
+      } else {
+        /* 非行选择框 */
         if(!selectedCur[targetName]) {
           selectedCur[targetName] = []
         }
-      } else {
-        // 获取触发的行选择框的索引
-        let clickedIndex = _.findIndex(rowCheckboxes, target)
-        // 如果点击的是辅助容器内的行选择框，则对应到主容器内的行选择框的索引
-        clickedIndex = clickedIndex > data.length - 1 ? clickedIndex - data.length : clickedIndex
-        // 将处理后的state数组赋值
-        selectedCur[targetName][clickedIndex] = target.checked
 
-        // 触发行选择框且header的状态为开启
-        if(targetName === 'rowCheckbox' && showHeader) {
-          // 检测是否body里面的每行都选中了，根据此状态来给header里面的复选框加状态（全选/全不选）
-          if(data.length === selectedCur[targetName].length) {
-            for(let i = 1, k = selectedCur[targetName].length; i < k; i++) {
-              if(!selectedCur[targetName][i]) {
-                selectedCur[targetName][0] = false
-                indeterminate = selectedCur[targetName].join(',').indexOf('true') > -1
-                break
-              }
-              if(i === data.length - 1) {
-                indeterminate = false
-                selectedCur[targetName][0] = true
-              }
-            }
-          } else {
-            selectedCur[targetName][0] = false
-            indeterminate = selectedCur[targetName].join(',').indexOf('true') > -1
-          }
-        }
+        // 获取复选框所在单元格元素
+        const listCell = util.closest(target, '.list-cell')
+        // 获取同一单元格内相同name的复选框
+        const checkboxes = listCell.querySelectorAll(`[name='${targetName}']`)
+        // 获取触发的radio的索引
+        const clickedIndex = _.findIndex(checkboxes, target)
+        // 将处理后结果赋值给state
+        selectedCur[targetName][clickedIndex] = target.checked
       }
     }
 
@@ -459,7 +480,9 @@ export default class extends Component {
   /**
    * 设置单元格图标
    * @param {object} icon icon对象
-   * @returns {*} 单元格图标DOM || null
+   * @param rowIndex {number} 行索引
+   * @param cellIndex {number} 列索引
+   * @returns {*[]} 单元格图标DOM || null
    */
   setCellIcon(icon, { rowIndex, cellIndex }) {
     const { iconStyle } = this.state.property.body.cell
@@ -531,8 +554,6 @@ export default class extends Component {
    * @returns {*} 单元格checkbox或radio || null
    */
   setCellInput(cr, { rowIndex, cellIndex, index }, container) {
-    const { selected, defaultSelected } = this.state
-    const selectedCur = selected[cr.name] || []
     let tagProps = {}
 
     // 处理事件
@@ -545,20 +566,37 @@ export default class extends Component {
         className: cr.className
       }
     } else {
+      const { selected, defaultSelected } = this.state
+      const selectedCur = selected[cr.name] || []
+
       tagProps = {
         type: cr.type,
         name: cr.type === 'radio' ? `${cr.name}-${container}` : cr.name,
-        className: cr.className,
-        checked: selectedCur[rowIndex] ? selectedCur[rowIndex] : defaultSelected
+        className: cr.className
+      }
+
+      if(cr.type === 'checkbox') {
+        if(cr.name === 'rowCheckbox') {
+          tagProps.checked = selectedCur[rowIndex] ? selectedCur[rowIndex] : defaultSelected
+        } else {
+          tagProps.checked = selectedCur[index] ? selectedCur[index] : defaultSelected
+        }
+      } else if(cr.type === 'radio') {
+        tagProps.checked = selectedCur[0] === `${cr.key || `cr-${rowIndex}-${cellIndex}-${index}`}`
+          ? true
+          : defaultSelected
       }
 
       if(!cr.event || cr.event === 'onClick' || cr.event === 'onChange') {
-        tagProps.onChange = util.handleEvent.bind(null, [cr, this.checkCR])
+        tagProps.onChange = util.handleEvent.bind(null, [
+          cr,
+          this.checkCR.bind(null, [cr, { rowIndex, cellIndex, index }])
+        ])
         tagProps.onClick = util.handleEvent.bind(null, [{}])
       } else {
         // 当自定义事件不为‘onClick’或‘onChange’时，为radio或checkbox添加默认的点击事件
         tagProps[cr.event] = util.handleEvent.bind(null, [cr])
-        tagProps.onChange = this.checkCR
+        tagProps.onChange = this.checkCR.bind(null, [cr, { rowIndex, cellIndex, index }])
         tagProps.onClick = util.handleEvent.bind(null, [{}])
       }
     }
@@ -571,8 +609,8 @@ export default class extends Component {
 
     if(cr.type === 'radio' || cr.type === 'checkbox') {
       return (
-        <label key={`${cr.key || `chk-${rowIndex}-${cellIndex}-${index}`}`}>
-          <input{...tagProps} />
+        <label key={`${cr.key || `cr-${rowIndex}-${cellIndex}-${index}`}`} onClick={util.handleEvent.bind(null, [{}])}>
+          <input {...tagProps} />
           {cr.text ? <span>{cr.text}</span> : null}
         </label>
       )
@@ -734,13 +772,9 @@ export default class extends Component {
       const LIElementProps = {
         key: `${container}-list-row${rowData.key ? rowData.key : rowIndex}`,
         className: `list-row${
-          rowData.className
-            ? ` ${rowData.className}`
-            : ''
+          rowData.className ? ` ${rowData.className}` : ''
           }${
-          transition
-            ? ` ${transitionName}`
-            : ''
+          transition ? ` ${transitionName}` : ''
           }`,
         style: isVisual && rowIndex % (rowVisualInterval * 2) >= rowVisualInterval
           ? _.defaultsDeep({}, specialRowStyle[rowIndex], rowVisualStyle, rowStyle)

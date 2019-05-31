@@ -17,19 +17,20 @@ const Dev = () => {
     data: [
       ['1st column', '2nd column', '3rd column', '4rd column'],
       [
-        <span>span</span>,
-        <div onClick={() => alert('测试事件')}>测试事件</div>,
-        <a href='http://www.xieyangogo.cn/react-tabllist/'>demo</a>,
-        <div>div</div>
+        <span>I am span</span>,
+        <div onClick={() => alert('test JSX event')}>test JSX event</div>,
+        <a href='http://www.xieyangogo.cn/react-tabllist/'>I am link</a>,
+        <div>I am div</div>
       ],
       {
         type: 'row',
         data: 123,
         event: 'onClick',
         callback: (restData, elementData, event) => {
-          alert('测试行点击事件')
+          alert('test event of row')
           console.log(restData, elementData, event)
         },
+        className: 'click-row',
         cells: [
           'row 1; column 1',
           {

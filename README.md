@@ -18,6 +18,8 @@
 [![DevDependencies Status](https://david-dm.org/oceanxy/react-tabllist/dev-status.svg)](https://david-dm.org/oceanxy/react-tabllist?type=dev)
 [![PeerDependencies Status](https://david-dm.org/oceanxy/react-tabllist/peer-status.svg)](https://david-dm.org/oceanxy/react-tabllist?type=peer)
 
+English | [简体中文](./README_zh-CN.md)
+
 ### Install
 
 ```bash
@@ -83,22 +85,22 @@ Open your browser and visit http://localhost:3001 , see more at [Development]().
 
 #### props
 
-|**props** type                                  |description               |details                           |
-|------------------------------------------------|--------------------------|----------------------------------|
-|**data** <br> `{[Array, Array, Array,...]}`     |生成表格需要的数据          |[props.data](#data)         |
-|**className** <br> `{string}`                   |自定义样式表名称            |''                                |
-|**property** <br> `{Object}`                    |属性                      |[props.property](#property) |
+|**props** type                                  |description                                     |details                           |
+|------------------------------------------------|------------------------------------------------|----------------------------------|
+|**data** <br> `{[Array, Array, Array,...]}`     |Render table data                               |[props.data](#data)               |
+|**className** <br> `{string}`                   |Table outermost container style sheet name      |''                                |
+|**property** <br> `{Object}`                    |Wrapper table properties                        |[props.property](#property)       |
 
 ##### data
 
-`props.data`数据格式为一个类似二维数组。
-- 数组内每一个子数组代表一行，子数组内每一个元素代表一个单元格。单元格的显示顺序为数组下标顺序，所以在重构数据时应当确定每一个单元格的顺序及显示内容。
+- The 'data' data format is very similar to a two-dimensional array。
+- Each subarray in the array represents a row, and each element in the subarray represents a cell. The order in which cells are displayed is the order in which the arrays are indexed, so the order and display of each cell should be determined when reconstructing the data.
 
 ```
 [
-    [cell, cell, cell],   // 单元行
+    [cell, cell, cell],   // row
     [
-        cell, // 单元格
+        cell, // cell
         cell, 
         cell
     ], 
@@ -106,47 +108,49 @@ Open your browser and visit http://localhost:3001 , see more at [Development]().
     ...
 ]
 ```
-- 数组内也可用对象表示一行，这个对象拥有两个必需属性：`type='row'`和`cells=[]`，分别表示标识该对象为单元行以及这个单元行内所包含的单元格：
+
+- An object can also represent a row in a two-dimensional array. This object has two required attributes: `type='row'` and `cells=[]`, which respectively identify the object as a row and the cells contained in the row:
+
 ```
 [
-    {  // 以对象的方式展示行，行内单元格为cells字段
+    {  // The rows are displayed as objects, and the in-row cells are contained in the cells field as an array.
         type: 'row',
         cells: [cell, cell, cell],
         ...
     }, 
-    [  // 以数组的形式展示行，每一个元素代表一个单元格
-        {type: 'button', ...},   // 在单元格内生成一个按钮
-        cell,  // 单元格
+    [  // Display rows as an array, each element representing a cell
+        {type: 'button', ...},   // Generate a button in the cell
+        cell,  // cell
         cell
     ], 
     [
         cell, 
         cell, 
-        [{type: 'radio'}, {type: 'radio'}, ...]  // 同一个单元格内生成两个或以上单选按钮
+        [{type: 'radio'}, {type: 'radio'}, ...]  // Generate two or more radios in the same cell
     ], 
     ...
 ]
 ```
 
-单元格可解析的数据格式分为四类：
+The data format that cells can parse is divided into the following four categories:
 
-- 字符串
-- 数组，数组内可以再次嵌套此四种数据格式
-- jsx，如 `<button className='test-button' onclick='()=>{return null}'>click</button>`
-- 对象（对象单元格），详细介绍如下：
+- String
+- Array，These four data formats can be nested inside the array again.
+- jsx,Such as: `<button className='test-button' onclick='()=>{return null}'>click</button>`
+- Object（Object cell），Details are as follows：
 
-**对象单元格**
+**Object cell**
 
-|type         | description                                                      |
-|-------------|------------------------------------------------------------------|
-|row          |生成一个单元行，`单元行对象`只可写在body内，其他地方无效                |
-|img          |在单元格内生成一个img标签                                            |
-|button       |在单元格内生成一个按钮                                               |
-|link         |在单元格内生成一个连接（a标签）                                       |
-|radio        |在单元格内生成一个单选按钮                                           |
-|checkbox     |在单元格内生成一个复选框                                             |
+|type         | description                                                                                             |
+|-------------|---------------------------------------------------------------------------------------------------------|
+|row          |Generate a unit row, `unit row object` can only be written in the body, invalid elsewhere                |
+|img          |Generate an img tag inside the cell                                                                      |
+|button       |Generate a button in the cell                                                                            |
+|link         |Generate a link in the cell (a tag)                                                                      |
+|radio        |Generate a radio in the cell                                                                             |
+|checkbox     |Generate a checkbox in the cell                                                                          |
 
-代码如下：
+Here are some examples：
 
 ```
 // row
@@ -181,7 +185,7 @@ Open your browser and visit http://localhost:3001 , see more at [Development]().
   key: ''
 }
 
-// link (二选一即可)
+// link (Choose one of the two)
 {
   type: 'link',
   text: 'I am a link, I use the href attribute',
@@ -218,82 +222,82 @@ Open your browser and visit http://localhost:3001 , see more at [Development]().
 }
 ```
 
-**对象单元格属性**
+**Object cell attribute**
 
-|**key** `{type}`                            |description                                                                                                              |use                                                      |
-|--------------------------------------------|-------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|
-|**type** <br> `{string}`                    |要在单元格内生成的节点类型                                                                                                  | `row` `button` `link` `img` `radio` `checkbox`                |
-|~~**uid**~~ <br> `{string}` **1.2.2之前可用**|`已废弃` 单元格的唯一标识，可用来保存id等。该字段功能与key相似，也可以使用`data`代替，故决定在1.2.2版本废弃该字段。                  | ~~`row`~~ `button` `link` `img` `radio` `checkbox`                 |
-|**name** <br>`{string}`                     |radio和checkbox必须设置的属性，同HTML标签的name属性                                                                          | ~~`row`~~ ~~`button`~~ ~~`link`~~ ~~`img`~~ `radio` `checkbox`      |
-|**text** <br> `{string}`                    |传递给对象单元的文本                                                                                                        | ~~`row`~~ ~~`button`~~ `link` `img` `radio` `checkbox`             |
-|**value** <br> `{number\|string}`           |单标签需要的值或文本（input类标签需要设置此属性，同HTML标签的value）                                                            | ~~`row`~~ `button` ~~`link`~~ ~~`img`~~ ~~`radio`~~ ~~`checkbox`~~ |
-|**src** <br> `{string}`                     |图片链接，如：'http(s)://xxx' 或 'data:image/xxx'                                                                          | ~~`row`~~ ~~`button`~~ ~~`link`~~ `img` ~~`radio`~~ ~~`checkbox`~~ |
-|**alt** <br> `{string}`                     |图片的alt属性                                                                                                             | ~~`row`~~ ~~`button`~~ ~~`link`~~ `img` ~~`radio`~~ ~~`checkbox`~~ |
-|**href** <br> `{string}`                    |link类型的超链接地址（同HTML a标签的href），也可不传此属性而使用event和callback的组合自定义事件回调                               | ~~`row`~~ ~~`button`~~ `link` ~~`img`~~ ~~`radio`~~ ~~`checkbox`~~ |
-|**className** <br> `{string}`               |自定义样式表名                                                                                                             | `row` `button` `link` `img` `radio` `checkbox`                 |
-|**event** <br> `{string}`                   |触发事件，需和`callback`配合使用                                                                                            | `row` `button` `link` ~~`img`~~ `radio` `checkbox`             |
-|**callback** <br> `{function}`              |触发事件后的回调函数，详细见`回调函数`介绍                                                                                    | `row` `button` `link` ~~`img`~~ `radio` `checkbox`             |
-|**data** <br>`{*}`                          |自定义属性，理论上可以传任何值。这个值在组件内部并不会使用，您可以在`回调函数`的第一个参数得到这个值                                 | `row` `button` `link` `img` `radio` `checkbox`   |
-|REACT attributes may be required            |-                                                                                                                        | -                                                        |
-|**key** <br> `{string}`                     |jsx循环或数组需要用到的key属性，`请确保key的唯一性`                                                                           | `row` `button` `link` `img` `radio` `checkbox`                 |
+|**key** `{type}`                                                       |description                                                                                                                                                                                                                                                                      |use                                                                   |
+|-----------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------|
+|**type** <br> `{string}`                                               |The type of HTML tag to be generated in the cell                                                                                                                                                                                                                                 | `row` `button` `link` `img` `radio` `checkbox`                       |
+|~~**uid**~~ <br> `{string}` **Available before version 1.2.2**         |`Deprecated` A unique identifier for a cell that can be used to save ids, and so on. This field function is similar to the key, and can also be replaced with a data field in conjunction with a callback function, so it is decided to discard this field in version 1.2.2.     | ~~`row`~~ `button` `link` `img` `radio` `checkbox`                   |
+|**name** <br>`{string}`                                                |The attributes that the radio and checkbox must set, the same as the name attribute of the HTML-like tag.                                                                                                                                                                        | ~~`row`~~ ~~`button`~~ ~~`link`~~ ~~`img`~~ `radio` `checkbox`       |
+|**text** <br> `{string}`                                               |The text of the rendered HTML tag                                                                                                                                                                                                                                                | ~~`row`~~ ~~`button`~~ `link` `img` `radio` `checkbox`               |
+|**value** <br> `{number\|string}`                                      |The value required for a single tag (the input class tag needs to set this property, the value of the same tag as the HTML)                                                                                                                                                      | ~~`row`~~ `button` ~~`link`~~ ~~`img`~~ ~~`radio`~~ ~~`checkbox`~~   |
+|**src** <br> `{string}`                                                |Image link, such as: 'http(s)://xxx' or 'data:image/xxx'                                                                                                                                                                                                                         | ~~`row`~~ ~~`button`~~ ~~`link`~~ `img` ~~`radio`~~ ~~`checkbox`~~   |
+|**alt** <br> `{string}`                                                |The alt attribute of the image                                                                                                                                                                                                                                                   | ~~`row`~~ ~~`button`~~ ~~`link`~~ `img` ~~`radio`~~ ~~`checkbox`~~   |
+|**href** <br> `{string}`                                               |The hyperlink type of the link type (the same as the href of the HTML a tag), or you can use this combination of event and callback to customize the event callback without passing this attribute.                                                                              | ~~`row`~~ ~~`button`~~ `link` ~~`img`~~ ~~`radio`~~ ~~`checkbox`~~   |
+|**className** <br> `{string}`                                          |Custom style sheet name                                                                                                                                                                                                                                                          | `row` `button` `link` `img` `radio` `checkbox`                       |
+|**event** <br> `{string}`                                              |The way to trigger an event needs to be used with `callback`                                                                                                                                                                                                                     | `row` `button` `link` ~~`img`~~ `radio` `checkbox`                   |
+|**callback** <br> `{function}`                                         |The callback function after the trigger event, see the `callback function` for details.                                                                                                                                                                                          | `row` `button` `link` ~~`img`~~ `radio` `checkbox`                   |
+|**data** <br>`{*}`                                                     |Custom attributes can theoretically pass any value. This value is not used inside the component, you can get this value in the first parameter of the `callback function`                                                                                                        | -                                                                    |
+|**key** <br> `{string}`                                                |Jsx loop or array need to use the key attribute, `Please ensure the uniqueness of the key`                                                                                                                                                                                       | `row` `button` `link` `img` `radio` `checkbox`                       |
 
-**回调函数**
+**Callback**
 
-|callback(data, cellData, event) |自定义事件的回调函数，可以配合`event`使用。若event未定义，则默认单击事件触发后回调此函数  |
-|--------------------------------|---------------------------------------------------------------------------------|
-|data                            |`对象单元格`属性中自定义的data属性，一般用来保存该单元格独一无二的信息。这是一个预留的属性 |
-|cellData                        |用于渲染该单元格的对象，即data里面定义的`对象单元格`对象                                    |
-|event                           |触发单元格绑定的事件后返回的event对象                                               |
+|callback(data, cellData, event) |Custom event callback function, can be used with `event`. If the event is undefined, the default click event is triggered after the callback.           |
+|--------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
+|data                            |Custom data attribute in `object cell`                                                                                                                  |
+|cellData                        |The object used to render the cell, ie the `object cell` object defined in data                                                                         |
+|event                           |Event Object                                                                                                                                            |
 
 ##### property
 
-|**props.property** `{type}`                                           |default    |description                                                                                                                         |
-|----------------------------------------------------------------------|-----------|------------------------------------------------------------------------------------------------------------------------------------------|
-|**border** <br> `{object}`                                            |{...}      |`边框`样式`全局配置`，包括组件内部的`行`和`单元格`（如果行/单元格未设置边框样式，则默认使用此全局配置)                                                |
-|**style** <br> `{object}`                                             |{...}      |组件`最外层容器`的样式                                                                                                                       |
-|**speed** <br> `{number}`                                             |50         |组件滚动速度                                                                                                                                |
-|**isScroll** <br> `{boolean}`                                         |true       |是否开启组件滚动(当所有行的高度超过组件可视区域高度时生效)                                                                                        |
-|**header** <br> `{object}`                                            |{...}      |header设置                                                                                                                                 |
-|**header.show** <br> `{boolean}`                                      |true       |是否显示header。为true时，`props.data`的第一个数据集为列表头数据                                                                                |
-|**header.style** <br> `{object}`                                      |{...}      |header内`行样式`                                                                                                                            |
-|**header.cellStyle** <br> `{object}`                                  |{...}      |header内`单元格的样式`。`注意`：此style里面的width将失效，因本组件的header单元格宽度自动根据body内单元格宽度进行适配                                  |
-|**body** <br> `{object}`                                              |{...}      |body设置                                                                                                                                    |
-|**body.row** <br> `{object}`                                          |{...}      |body内`行设置`                                                                                                                              |
-|**~~body.row.onClick <sup>1.2.0</sup>~~** <br> `()=>{}`               |null       |触发body内，行的点击事件。`注意：该属性只在1.2.0版本可用`                                                                                        |
-|**body.row.transition** <br> `{boolean}`                              |true       |是否开启body内`行的加载动画`                                                                                                                  |
-|**body.row.spacing** <br> `{boolean}`                                 |0          |行间距                                                                                                                                      |
-|**~~body.row.rowCheckBox~~** <br> `{boolean}`                         |false      |是否开启body内行选择功能                                                                                                                      |
-|**body.row.rowCheckbox <sup>^1.2.2</sup>** <br> `{boolean}`           |false      |是否开启body内行选择功能(同`rowCheckBox`，1.2.2版本后使用本属性代替)                                                                              |
-|**body.row.style** <br> `{object}`                                    |{...}      |行样式                                                                                                                                       |
-|**body.row.specialStyle** <br> `{[object, object, ...]}`              |\[]        |按照数组索引依次设置每一行的样式，如要跳过某个索引，直接使用一个逗号占位即可                                                                          |
-|**body.row.visual** <br> `{object}`                                   |{...}      |提升行的视觉：每隔N行设置另外一种行样式                                                                                                          |
-|**body.row.visual.show** <br> `{boolean}`                             |true       |是否开启视觉提升                                                                                                                              |
-|**body.row.visual.interval** <br> `{number}`                          |1          |每隔N行交替一次                                                                                                                               |
-|**body.row.visual.style** <br> `{object}`                             |{...}      |交替的行样式配置表                                                                                                                            |
-|**body.row.silent** <br> `{object}`                                   |{...}      |行与鼠标事件之间的交互配置                                                                                                                     |
-|**body.row.silent.show** <br> `{boolean}`                             |false      |行是否不响应鼠标事件，如hover效果等。默认为false，即响应鼠标事件                                                                                   |
-|**body.row.silent.style** <br> `{object}`                             |{...}      |响应鼠标事件时的样式配置                                                                                                                       |
-|**body.row.serialNumber** <br> `{object}`                             |{...}      |行号相关配置                                                                                                                                  |
-|**body.row.serialNumber.show** <br> `{boolean}`                       |false      |是否显示行号                                                                                                                                  |
-|**body.row.serialNumber.formatter** <br> `{string}`                   |'{index}.' |行号格式化。`{index}`解析为从0依次递增的数字                                                                                                     |
-|**body.row.serialNumber.style** <br> `{object}`                       |{...}      |显示行号的单元格（每行第一个单元格）的样式配置                                                                                                     |
-|**body.row.serialNumber.specialStyle** <br> `{[object, object, ...]}` |\[]        |按照数组索引依次设置每一行的行号所在单元格的样式，如要跳过某个索引，直接使用一个逗号占位即可                                                             |
-|**body.cellOfColumn** <br> `{object}`                                 |{...}      |按照列来配置单元格样式                                                                                                                          |
-|**body.cellOfColumn.style** <br> `{[object, object, ...]}`            |\[]        |按照数组索引依次设置每一列内所有单元格的样式，如要跳过某个索引，直接使用一个逗号占位即可                                                                 |
-|**body.cell** <br> `{object}`                                         |{...}      |每一行内的单元格的属性配置                                                                                                                       |
-|**body.cell.style** <br> `{object}`                                   |{...}      |行内所有单元格的样式配置表                                                                                                                       |
-|**body.cell.style.width** <br> `{string\|Array\|number}`              |'auto'     |width是style的属性之一，这里需要特别注意：它的用法不同于css的width，详见[cellWidth](#cellWidth)                                                      |
-|**~~body.cell.iconStyle~~** <br> `{object}`                           |{...}      |单元格内的图标样式统一设置，需要配合对象单元格的img类型使用。这个特性可能在后面版本被移除。                                                              |
+|**props.property** `{type}`                                           |default    |description                                                                                                                                                                                                                                                  |
+|----------------------------------------------------------------------|-----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|**border** <br> `{object}`                                            |{...}      |The border configuration of the table, including the `row` and `cell` inside the component (if the row or cell does not have a border style, this global configuration is used by default)                                                                   |
+|**style** <br> `{object}`                                             |{...}      |The style of the outermost container of the component                                                                                                                                                                                                        |
+|**speed** <br> `{number}`                                             |50         |The scrolling speed of the component list when scrolling is enabled                                                                                                                                                                                          |
+|**isScroll** <br> `{boolean}`                                         |true       |Whether to enable component scrolling (valid when the height of all rows exceeds the height of the component's viewable area)                                                                                                                                |
+|**header** <br> `{object}`                                            |{...}      |Header related settings                                                                                                                                                                                                                                      |
+|**header.show** <br> `{boolean}`                                      |true       |Whether to display the header. When true, the first subarray of data is the header data.                                                                                                                                                                     |
+|**header.style** <br> `{object}`                                      |{...}      |Header style                                                                                                                                                                                                                                                 |
+|**header.cellStyle** <br> `{object}`                                  |{...}      |The style of the cell inside the header. `Note`: The width value in this style will be invalid, because the header cell width of this component is automatically adapted according to the cell width in the body.                                            |
+|**body** <br> `{object}`                                              |{...}      |Body related configuration                                                                                                                                                                                                                                   |
+|**body.row** <br> `{object}`                                          |{...}      |Row configuration in the body                                                                                                                                                                                                                                |
+|**~~body.row.onClick <sup>1.2.0</sup>~~** <br> `()=>{}`               |null       |`Deprecated` Row click event, `Note: This property is only available in version 1.2.0.`                                                                                                                                                                      |
+|**body.row.transition** <br> `{boolean}`                              |true       |Whether to enable the loading animation of the row inside the body                                                                                                                                                                                           |
+|**body.row.spacing** <br> `{boolean}`                                 |0          |Row spacing                                                                                                                                                                                                                                                  |
+|**~~body.row.rowCheckBox~~** <br> `{boolean}`                         |false      |`Deprecated` Whether to enable row selection                                                                                                                                                                                                                 |
+|**body.row.rowCheckbox <sup>^1.2.2</sup>** <br> `{boolean}`           |false      |Whether to enable row selection.(same as `rowCheckBox`, use this property instead of version 1.2.2)                                                                                                                                                          |
+|**body.row.style** <br> `{object}`                                    |{...}      |The style of the row inside the body                                                                                                                                                                                                                         |
+|**body.row.specialStyle** <br> `{[object, object, ...]}`              |\[]        |Set the style of each row according to the array index. If you want to skip an index, you can use a comma placeholder.                                                                                                                                       |
+|**body.row.visual** <br> `{object}`                                   |{...}      |Improve the visual of the line: set another line style every N lines                                                                                                                                                                                         |
+|**body.row.visual.show** <br> `{boolean}`                             |true       |Whether to turn on visual enhancement                                                                                                                                                                                                                        |
+|**body.row.visual.interval** <br> `{number}`                          |1          |Alternate every N lines                                                                                                                                                                                                                                      |
+|**body.row.visual.style** <br> `{object}`                             |{...}      |Alternate row style configuration                                                                                                                                                                                                                            |
+|**body.row.silent** <br> `{object}`                                   |{...}      |Whether to respond to mouse interaction                                                                                                                                                                                                                      |
+|**body.row.silent.show** <br> `{boolean}`                             |false      |Whether row does not respond to mouse events, such as hover events. The default is false, that is, respond to mouse events                                                                                                                                   |
+|**body.row.silent.style** <br> `{object}`                             |{...}      |Style when responding to mouse events                                                                                                                                                                                                                        |
+|**body.row.serialNumber** <br> `{object}`                             |{...}      |Line number related configuration                                                                                                                                                                                                                            |
+|**body.row.serialNumber.show** <br> `{boolean}`                       |false      |Whether to display the line number                                                                                                                                                                                                                           |
+|**body.row.serialNumber.formatter** <br> `{string}`                   |'{index}.' |Line number formatting. `{index}` resolves to a number that increments from 0                                                                                                                                                                                |
+|**body.row.serialNumber.style** <br> `{object}`                       |{...}      |The style of the cell showing the line number (the first cell in each row)                                                                                                                                                                                   |
+|**body.row.serialNumber.specialStyle** <br> `{[object, object, ...]}` |\[]        |According to the array index, set the style of the cell where each row has the row number. If you want to skip an index, you can use a comma placeholder.                                                                                                    |
+|**body.cellOfColumn** <br> `{object}`                                 |{...}      |Configure cell styles by column                                                                                                                                                                                                                              |
+|**body.cellOfColumn.style** <br> `{[object, object, ...]}`            |\[]        |According to the array index, set the style of all the cells in each column. If you want to skip an index, you can use a comma placeholder.                                                                                                                  |
+|**body.cell** <br> `{object}`                                         |{...}      |Cell related configuration                                                                                                                                                                                                                                   |
+|**body.cell.style** <br> `{object}`                                   |{...}      |Cell style                                                                                                                                                                                                                                                   |
+|**body.cell.style.width** <br> `{string\|Array\|number}`              |'auto'     |`width` is one of the properties of style, here you need to pay special attention: its usage is different from the width of css, see `cellWidth`                                                                                                             |
+|**~~body.cell.iconStyle~~** <br> `{object}`                           |{...}      |`Deprecated` The icon style inside the cell needs to match the img of the object cell. In fact, you only need to use className instead of it in the object cell, so it looks a lot more, so it will be completely removed in a later version.                |
 
 **cellWidth**
 
-注意：无论通过何种方式，如果最终渲染出来的单元格宽度值小于style.minWidth，则使用style.minWidth值。
+Note: Regardless of the method, if the final rendered cell width value is less than style.minWidth, the style.minWidth value is used.
 
-cellWidth可选值：
-- 'auto'：完全根据单元格内的具体数据自动设置单元格宽度；
-- 'avg'：每个单元格宽度趋近于相等，但会根据单元格内的具体数据适当调整宽度；
-- \[10, 20, 10]：行内每一个单元格依次取数组的值。如果数组某索引的值为占位符（即“,”），则该单元格的宽度将被设置为“auto”；当数组长度小于列数时，其余的列默认设置为“auto”。
-- '10,20,10'：根据逗号分隔值，每一列依次取值。详细规则同数组形式。
+Optional value for cellWidth：
+
+- 'auto'：Automatically set the cell width based on the specific data in the cell.
+- 'avg'：Each cell width approaches equal, but the width is appropriately adjusted based on the specific data in the cell.
+- \[10, 20, 10]：Each cell in the row takes the value of the array in turn. If the value of an array index is a placeholder (ie ","), the width of the cell will be set to "auto"; when the length of the array is less than the number of columns, the remaining columns are set to "auto" by default.
+- '10,20,10'：Each column takes values in turn, based on comma-separated values. The detailed rules are the same as the array form.
 
 
 ### Configuration Demonstration

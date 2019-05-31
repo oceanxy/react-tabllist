@@ -1,12 +1,12 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("react"), require("lodash"));
+		module.exports = factory(require("lodash"), require("react"));
 	else if(typeof define === 'function' && define.amd)
-		define(["react", "lodash"], factory);
+		define(["lodash", "react"], factory);
 	else if(typeof exports === 'object')
-		exports["ReactTabllist"] = factory(require("react"), require("lodash"));
+		exports["ReactTabllist"] = factory(require("lodash"), require("react"));
 	else
-		root["ReactTabllist"] = factory(root["React"], root["_"]);
+		root["ReactTabllist"] = factory(root["_"], root["React"]);
 })(window, function(__WEBPACK_EXTERNAL_MODULE__0__, __WEBPACK_EXTERNAL_MODULE__1__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -91,7 +91,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 27);
+/******/ 	return __webpack_require__(__webpack_require__.s = 29);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -108,20 +108,6 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__1__;
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports) {
-
-function _assertThisInitialized(self) {
-  if (self === void 0) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-
-  return self;
-}
-
-module.exports = _assertThisInitialized;
-
-/***/ }),
-/* 3 */
 /***/ (function(module, exports) {
 
 function _defineProperty(obj, key, value) {
@@ -142,10 +128,24 @@ function _defineProperty(obj, key, value) {
 module.exports = _defineProperty;
 
 /***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
+function _assertThisInitialized(self) {
+  if (self === void 0) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return self;
+}
+
+module.exports = _assertThisInitialized;
+
+/***/ }),
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var defineProperty = __webpack_require__(3);
+var defineProperty = __webpack_require__(2);
 
 function _objectSpread(target) {
   for (var i = 1; i < arguments.length; i++) {
@@ -172,7 +172,7 @@ module.exports = _objectSpread;
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var objectWithoutPropertiesLoose = __webpack_require__(15);
+var objectWithoutPropertiesLoose = __webpack_require__(18);
 
 function _objectWithoutProperties(source, excluded) {
   if (source == null) return {};
@@ -199,11 +199,11 @@ module.exports = _objectWithoutProperties;
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayWithoutHoles = __webpack_require__(20);
+var arrayWithoutHoles = __webpack_require__(21);
 
-var iterableToArray = __webpack_require__(12);
+var iterableToArray = __webpack_require__(15);
 
-var nonIterableSpread = __webpack_require__(21);
+var nonIterableSpread = __webpack_require__(22);
 
 function _toConsumableArray(arr) {
   return arrayWithoutHoles(arr) || iterableToArray(arr) || nonIterableSpread();
@@ -213,104 +213,6 @@ module.exports = _toConsumableArray;
 
 /***/ }),
 /* 7 */
-/***/ (function(module, exports) {
-
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
-
-module.exports = _classCallCheck;
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports) {
-
-function _defineProperties(target, props) {
-  for (var i = 0; i < props.length; i++) {
-    var descriptor = props[i];
-    descriptor.enumerable = descriptor.enumerable || false;
-    descriptor.configurable = true;
-    if ("value" in descriptor) descriptor.writable = true;
-    Object.defineProperty(target, descriptor.key, descriptor);
-  }
-}
-
-function _createClass(Constructor, protoProps, staticProps) {
-  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-  if (staticProps) _defineProperties(Constructor, staticProps);
-  return Constructor;
-}
-
-module.exports = _createClass;
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var _typeof = __webpack_require__(16);
-
-var assertThisInitialized = __webpack_require__(2);
-
-function _possibleConstructorReturn(self, call) {
-  if (call && (_typeof(call) === "object" || typeof call === "function")) {
-    return call;
-  }
-
-  return assertThisInitialized(self);
-}
-
-module.exports = _possibleConstructorReturn;
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports) {
-
-function _getPrototypeOf(o) {
-  module.exports = _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
-    return o.__proto__ || Object.getPrototypeOf(o);
-  };
-  return _getPrototypeOf(o);
-}
-
-module.exports = _getPrototypeOf;
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var setPrototypeOf = __webpack_require__(17);
-
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function");
-  }
-
-  subClass.prototype = Object.create(superClass && superClass.prototype, {
-    constructor: {
-      value: subClass,
-      writable: true,
-      configurable: true
-    }
-  });
-  if (superClass) setPrototypeOf(subClass, superClass);
-}
-
-module.exports = _inherits;
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports) {
-
-function _iterableToArray(iter) {
-  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
-}
-
-module.exports = _iterableToArray;
-
-/***/ }),
-/* 13 */
 /***/ (function(module, exports) {
 
 function _extends() {
@@ -334,14 +236,148 @@ function _extends() {
 module.exports = _extends;
 
 /***/ }),
-/* 14 */
+/* 8 */
+/***/ (function(module, exports) {
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+module.exports = _classCallCheck;
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports) {
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+module.exports = _createClass;
+
+/***/ }),
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayWithHoles = __webpack_require__(18);
+var _typeof = __webpack_require__(19);
 
-var iterableToArray = __webpack_require__(12);
+var assertThisInitialized = __webpack_require__(3);
 
-var nonIterableRest = __webpack_require__(19);
+function _possibleConstructorReturn(self, call) {
+  if (call && (_typeof(call) === "object" || typeof call === "function")) {
+    return call;
+  }
+
+  return assertThisInitialized(self);
+}
+
+module.exports = _possibleConstructorReturn;
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports) {
+
+function _getPrototypeOf(o) {
+  module.exports = _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+    return o.__proto__ || Object.getPrototypeOf(o);
+  };
+  return _getPrototypeOf(o);
+}
+
+module.exports = _getPrototypeOf;
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var setPrototypeOf = __webpack_require__(20);
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function");
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) setPrototypeOf(subClass, superClass);
+}
+
+module.exports = _inherits;
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var arrayWithHoles = __webpack_require__(14);
+
+var iterableToArrayLimit = __webpack_require__(23);
+
+var nonIterableRest = __webpack_require__(16);
+
+function _slicedToArray(arr, i) {
+  return arrayWithHoles(arr) || iterableToArrayLimit(arr, i) || nonIterableRest();
+}
+
+module.exports = _slicedToArray;
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports) {
+
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
+module.exports = _arrayWithHoles;
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports) {
+
+function _iterableToArray(iter) {
+  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+}
+
+module.exports = _iterableToArray;
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports) {
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance");
+}
+
+module.exports = _nonIterableRest;
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var arrayWithHoles = __webpack_require__(14);
+
+var iterableToArray = __webpack_require__(15);
+
+var nonIterableRest = __webpack_require__(16);
 
 function _toArray(arr) {
   return arrayWithHoles(arr) || iterableToArray(arr) || nonIterableRest();
@@ -350,7 +386,7 @@ function _toArray(arr) {
 module.exports = _toArray;
 
 /***/ }),
-/* 15 */
+/* 18 */
 /***/ (function(module, exports) {
 
 function _objectWithoutPropertiesLoose(source, excluded) {
@@ -371,7 +407,7 @@ function _objectWithoutPropertiesLoose(source, excluded) {
 module.exports = _objectWithoutPropertiesLoose;
 
 /***/ }),
-/* 16 */
+/* 19 */
 /***/ (function(module, exports) {
 
 function _typeof2(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof2 = function _typeof2(obj) { return typeof obj; }; } else { _typeof2 = function _typeof2(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof2(obj); }
@@ -393,7 +429,7 @@ function _typeof(obj) {
 module.exports = _typeof;
 
 /***/ }),
-/* 17 */
+/* 20 */
 /***/ (function(module, exports) {
 
 function _setPrototypeOf(o, p) {
@@ -408,27 +444,7 @@ function _setPrototypeOf(o, p) {
 module.exports = _setPrototypeOf;
 
 /***/ }),
-/* 18 */
-/***/ (function(module, exports) {
-
-function _arrayWithHoles(arr) {
-  if (Array.isArray(arr)) return arr;
-}
-
-module.exports = _arrayWithHoles;
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports) {
-
-function _nonIterableRest() {
-  throw new TypeError("Invalid attempt to destructure non-iterable instance");
-}
-
-module.exports = _nonIterableRest;
-
-/***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports) {
 
 function _arrayWithoutHoles(arr) {
@@ -444,7 +460,7 @@ function _arrayWithoutHoles(arr) {
 module.exports = _arrayWithoutHoles;
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports) {
 
 function _nonIterableSpread() {
@@ -454,11 +470,43 @@ function _nonIterableSpread() {
 module.exports = _nonIterableSpread;
 
 /***/ }),
-/* 22 */
+/* 23 */
+/***/ (function(module, exports) {
+
+function _iterableToArrayLimit(arr, i) {
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _e = undefined;
+
+  try {
+    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+
+module.exports = _iterableToArrayLimit;
+
+/***/ }),
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(23);
+var content = __webpack_require__(25);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -472,24 +520,24 @@ var options = {"hmr":true}
 options.transform = transform
 options.insertInto = undefined;
 
-var update = __webpack_require__(25)(content, options);
+var update = __webpack_require__(27)(content, options);
 
 if(content.locals) module.exports = content.locals;
 
 if(false) {}
 
 /***/ }),
-/* 23 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(24)(false);
+exports = module.exports = __webpack_require__(26)(false);
 // Module
-exports.push([module.i, ".list {\n  display: block;\n  overflow: hidden; }\n  .list .list-cont {\n    margin: 0;\n    padding: 0;\n    display: table;\n    width: 100%;\n    height: auto;\n    transition: all 400ms; }\n    .list .list-cont .list-row {\n      display: table-row;\n      list-style: none;\n      height: 58px;\n      transition: all 300ms cubic-bezier(0, 0, 0.58, 1);\n      background: no-repeat center / 100% 100%; }\n      .list .list-cont .list-row.list-row-start {\n        -webkit-transform: scale(0.8);\n                transform: scale(0.8);\n        opacity: 0; }\n      .list .list-cont .list-row.list-row-transition {\n        opacity: 1;\n        -webkit-transform: scale(1);\n                transform: scale(1); }\n      .list .list-cont .list-row .list-cell {\n        display: table-cell;\n        text-align: center;\n        vertical-align: middle;\n        word-break: break-all;\n        border-left: none !important;\n        background: no-repeat center / 100% 100%; }\n        .list .list-cont .list-row .list-cell * {\n          vertical-align: middle; }\n        .list .list-cont .list-row .list-cell:last-child {\n          border-right: none !important; }\n        .list .list-cont .list-row .list-cell a {\n          color: currentColor;\n          -webkit-text-decoration: transparent;\n                  text-decoration: transparent; }\n        .list .list-cont .list-row .list-cell label {\n          vertical-align: middle; }\n          .list .list-cont .list-row .list-cell label span, .list .list-cont .list-row .list-cell label input {\n            vertical-align: middle;\n            padding: 0 5px; }\n  .list .list-header .list-row {\n    background: no-repeat center / 100% 100%; }\n    .list .list-header .list-row .list-cell {\n      border-bottom: none !important; }\n  .list .list-body .list-cont {\n    border-collapse: separate; }\n  .list .list-body .list-cell {\n    color: #666; }\n  .list.list-no-spacing .list-cell {\n    border-top: none !important; }\n", ""]);
+exports.push([module.i, ".list {\n  display: block;\n  overflow: hidden; }\n  .list .list-cont {\n    margin: 0;\n    padding: 0;\n    display: table;\n    width: 100%;\n    height: auto;\n    transition: all 400ms; }\n    .list .list-cont .list-row {\n      display: table-row;\n      list-style: none;\n      height: 58px;\n      transition: all 300ms cubic-bezier(0, 0, 0.58, 1);\n      background: no-repeat center / 100% 100%; }\n      .list .list-cont .list-row.list-row-start {\n        -webkit-transform: scale(0.8);\n                transform: scale(0.8);\n        opacity: 0; }\n      .list .list-cont .list-row.list-row-transition {\n        opacity: 1;\n        -webkit-transform: scale(1);\n                transform: scale(1); }\n      .list .list-cont .list-row.click-row {\n        cursor: pointer; }\n      .list .list-cont .list-row .list-cell {\n        display: table-cell;\n        text-align: center;\n        vertical-align: middle;\n        word-break: break-all;\n        border-left: none !important;\n        background: no-repeat center / 100% 100%; }\n        .list .list-cont .list-row .list-cell * {\n          vertical-align: middle; }\n        .list .list-cont .list-row .list-cell:last-child {\n          border-right: none !important; }\n        .list .list-cont .list-row .list-cell a {\n          color: currentColor;\n          -webkit-text-decoration: transparent;\n                  text-decoration: transparent; }\n        .list .list-cont .list-row .list-cell label {\n          vertical-align: middle; }\n          .list .list-cont .list-row .list-cell label span, .list .list-cont .list-row .list-cell label input {\n            vertical-align: middle;\n            padding: 0 5px; }\n  .list .list-header .list-row {\n    background: no-repeat center / 100% 100%; }\n    .list .list-header .list-row .list-cell {\n      border-bottom: none !important; }\n  .list .list-body .list-cont {\n    border-collapse: separate; }\n  .list .list-body .list-cell {\n    color: #666; }\n  .list.list-no-spacing .list-cell {\n    border-top: none !important; }\n", ""]);
 
 
 
 /***/ }),
-/* 24 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -580,7 +628,7 @@ function toComment(sourceMap) {
 }
 
 /***/ }),
-/* 25 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -649,7 +697,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(26);
+var	fixUrls = __webpack_require__(28);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -984,7 +1032,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 26 */
+/* 28 */
 /***/ (function(module, exports) {
 
 
@@ -1079,14 +1127,14 @@ module.exports = function (css) {
 
 
 /***/ }),
-/* 27 */
+/* 29 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/extends.js
-var helpers_extends = __webpack_require__(13);
+var helpers_extends = __webpack_require__(7);
 var extends_default = /*#__PURE__*/__webpack_require__.n(helpers_extends);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/objectWithoutProperties.js
@@ -1094,35 +1142,35 @@ var objectWithoutProperties = __webpack_require__(5);
 var objectWithoutProperties_default = /*#__PURE__*/__webpack_require__.n(objectWithoutProperties);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/classCallCheck.js
-var classCallCheck = __webpack_require__(7);
+var classCallCheck = __webpack_require__(8);
 var classCallCheck_default = /*#__PURE__*/__webpack_require__.n(classCallCheck);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/createClass.js
-var createClass = __webpack_require__(8);
+var createClass = __webpack_require__(9);
 var createClass_default = /*#__PURE__*/__webpack_require__.n(createClass);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js
-var possibleConstructorReturn = __webpack_require__(9);
+var possibleConstructorReturn = __webpack_require__(10);
 var possibleConstructorReturn_default = /*#__PURE__*/__webpack_require__.n(possibleConstructorReturn);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/getPrototypeOf.js
-var getPrototypeOf = __webpack_require__(10);
+var getPrototypeOf = __webpack_require__(11);
 var getPrototypeOf_default = /*#__PURE__*/__webpack_require__.n(getPrototypeOf);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/inherits.js
-var inherits = __webpack_require__(11);
+var inherits = __webpack_require__(12);
 var inherits_default = /*#__PURE__*/__webpack_require__.n(inherits);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/defineProperty.js
-var defineProperty = __webpack_require__(3);
+var defineProperty = __webpack_require__(2);
 var defineProperty_default = /*#__PURE__*/__webpack_require__.n(defineProperty);
 
 // EXTERNAL MODULE: external {"commonjs":"lodash","commonjs2":"lodash","amd":"lodash","root":"_"}
-var external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_ = __webpack_require__(1);
+var external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_ = __webpack_require__(0);
 var external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default = /*#__PURE__*/__webpack_require__.n(external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_);
 
 // EXTERNAL MODULE: external {"commonjs":"react","commonjs2":"react","amd":"react","root":"React"}
-var external_commonjs_react_commonjs2_react_amd_react_root_React_ = __webpack_require__(0);
+var external_commonjs_react_commonjs2_react_amd_react_root_React_ = __webpack_require__(1);
 var external_commonjs_react_commonjs2_react_amd_react_root_React_default = /*#__PURE__*/__webpack_require__.n(external_commonjs_react_commonjs2_react_amd_react_root_React_);
 
 // CONCATENATED MODULE: ./src/config.js
@@ -1131,8 +1179,8 @@ var external_commonjs_react_commonjs2_react_amd_react_root_React_default = /*#__
  * @Email: xyzsyx@163.com
  * @Description: 配置文件
  * @Date: 2018-10-08 17:56:19
- * @LastModified: Oceanxy（xyzsyx@163.com）
- * @LastModifiedTime: 2019-01-23 15:03:05
+ * @LastModified: Oceanxy（xieyang@hiynn.com）
+ * @LastModifiedTime: 2019-05-30 15:34:24
  */
 /* harmony default export */ var config = ({
   data: [['1st column', '2nd column', '3rd column'], ['1st cell', '2nd cell', '3rd cell']],
@@ -1176,7 +1224,7 @@ var external_commonjs_react_commonjs2_react_amd_react_root_React_default = /*#__
           specialStyle: []
         },
         spacing: 0,
-        rowCheckBox: false,
+        rowCheckbox: false,
         style: {
           height: 30
         },
@@ -1217,35 +1265,63 @@ var external_commonjs_react_commonjs2_react_amd_react_root_React_default = /*#__
       }
     }
   }
-});
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/toArray.js
-var toArray = __webpack_require__(14);
-var toArray_default = /*#__PURE__*/__webpack_require__.n(toArray);
+  /**
+   * 为过时的属性配置警告信息
+   * @returns {{discard: string, version: string, replacement: string}[]}
+   */
 
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/objectSpread.js
-var objectSpread = __webpack_require__(4);
-var objectSpread_default = /*#__PURE__*/__webpack_require__.n(objectSpread);
+});
+function getWaringProperty() {
+  return [{
+    version: '1.0.0',
+    discard: 'property.body.cell.iconStyle',
+    warn: 'Used obsolete configuration in React-tabllist: \'property.body.cell.iconStyle\' will be completely removed in future releases.Please use the object unit ({type: img, ...}) instead'
+  }, {
+    version: '1.2.0',
+    discard: 'property.body.row.onClick',
+    warn: 'Used obsolete configuration in React-tabllist: \'property.body.row.onClick\' can only be used in version 1.2.0.Please use the object unit ({type: row, ...}) instead'
+  }, {
+    version: '1.3.0',
+    discard: 'property.body.row.rowCheckBox',
+    replacement: 'property.body.row.rowCheckbox',
+    warn: 'Used obsolete configuration in React-tabllist: \'property.body.row.rowCheckBox\' has been deprecated in version 1.3.0 and will be completely removed in future releases. You should use \'property.body.row.rowCheckbox\' instead.'
+  }];
+}
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/toArray.js
+var toArray = __webpack_require__(17);
+var toArray_default = /*#__PURE__*/__webpack_require__.n(toArray);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/toConsumableArray.js
 var toConsumableArray = __webpack_require__(6);
 var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableArray);
 
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/objectSpread.js
+var objectSpread = __webpack_require__(4);
+var objectSpread_default = /*#__PURE__*/__webpack_require__.n(objectSpread);
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/slicedToArray.js
+var slicedToArray = __webpack_require__(13);
+var slicedToArray_default = /*#__PURE__*/__webpack_require__.n(slicedToArray);
+
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/assertThisInitialized.js
-var assertThisInitialized = __webpack_require__(2);
+var assertThisInitialized = __webpack_require__(3);
 var assertThisInitialized_default = /*#__PURE__*/__webpack_require__.n(assertThisInitialized);
 
 // EXTERNAL MODULE: ./src/index.scss
-var src = __webpack_require__(22);
+var src = __webpack_require__(24);
 
 // CONCATENATED MODULE: ./src/util.js
+
+
 /**
  * @Author: Oceanxy
  * @Email: xyzsyx@163.com
  * @Description: util
  * @Date: 2018-10-08 17:56:19
- * @LastModified: Oceanxy（xyzsyx@163.com）
- * @LastModifiedTime: 2019-01-23 15:03:56
+ * @LastModified: Oceanxy（xieyang@hiynn.com）
+ * @LastModifiedTime: 2019-05-30 15:47:23
  */
+
 
 /**
  * 从el元素向上选取第一个selector选择器匹配的元素
@@ -1253,6 +1329,7 @@ var src = __webpack_require__(22);
  * @param {string} selector 选择器
  * @return {Element} 按照选择器筛选后的元素
  */
+
 function closest(el, selector) {
   if (el) {
     var matchesSelector = el.matches || el.webkitMatchesSelector || el.mozMatchesSelector || el.msMatchesSelector;
@@ -1327,7 +1404,108 @@ function setColWidth(width) {
 
   return 'auto';
 }
+/**
+ * 组件内部元素的事件处理
+ * @param _elementData {object} 渲染组件内部结构的数据
+ * @param _func {function} 内部逻辑函数
+ * @param event event对象
+ */
+
+function handleEvent(_ref, event) {
+  var _ref2 = slicedToArray_default()(_ref, 2),
+      _elementData = _ref2[0],
+      _func = _ref2[1];
+
+  event.stopPropagation();
+
+  if (_func && external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isFunction(_func)) {
+    _func(event);
+  }
+
+  if (_elementData && _elementData.callback && external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isFunction(_elementData.callback)) {
+    _elementData.callback(_elementData.data, _elementData, event);
+  }
+}
+/**
+ * 在控制台打印警告
+ * @param property 用户的配置属性对象
+ * @returns {*} 新的property
+ */
+
+function waring(property) {
+  /**
+   * 检测指定key是否被用户定义
+   * @param discard 被定义的过时属性
+   * @param property 用户定义的整个配置对象
+   * @returns {boolean|*} false: 未检测到过时属性或调用参数不合法 property：用户定义的过时属性的值
+   */
+  function isKeyExists(discard, property) {
+    if (!property || !discard) {
+      return false;
+    } // 将传入的对象路径字符串拆分为数组
+
+
+    var pathList = discard.split('.'); // 检测用户的配置对象是否存在警告
+
+    for (var i = 1; i < pathList.length; i++) {
+      if (!property[pathList[i]]) {
+        return false;
+      }
+
+      if (i === pathList.length - 1) {
+        property = pathList[i];
+      } else {
+        property = property[pathList[i]];
+      }
+    }
+
+    return property;
+  }
+  /**
+   * 将用户使用的过时key替换为正确的key
+   * @param replacement 正确的key
+   * @param property 用户定义的整个配置对象
+   * @param discard 用户使用的过时key
+   */
+
+
+  function createNewProperty(replacement, property, discard) {
+    if (!replacement) {
+      return;
+    } // 将传入的对象路径字符串拆分为数组
+
+
+    var pathList = replacement.split('.'); // 检测用户的配置对象是否存在警告使用
+
+    for (var i = 1; i < pathList.length; i++) {
+      if (i === pathList.length - 1) {
+        property[pathList[i]] = property[discard];
+        delete property[discard];
+      } else {
+        property = property[pathList[i]];
+      }
+    }
+  }
+
+  var waringProperty = getWaringProperty();
+  waringProperty.map(function (_obj) {
+    var discard = isKeyExists(_obj.discard, property);
+
+    if (discard) {
+      createNewProperty(_obj.replacement, property, discard);
+
+      if (_obj.warn) {
+        console.warn(_obj.warn);
+      } else {
+        console.warn('Used obsolete configuration in React-tabllist');
+      }
+    }
+  });
+  return property;
+}
 // CONCATENATED MODULE: ./src/list.js
+
+
 
 
 
@@ -1345,8 +1523,8 @@ function setColWidth(width) {
  * @Email: xyzsyx@163.com
  * @Description: react-tabllist
  * @Date: 2018-10-08 17:56:19
- * @LastModified: Oceanxy（xyzsyx@163.com）
- * @LastModifiedTime: 2019-01-23 15:03:38
+ * @LastModified: Oceanxy（xieyang@hiynn.com）
+ * @LastModifiedTime: 2019-05-31 09:10:45
  */
 
 
@@ -1436,69 +1614,94 @@ function (_Component) {
       }
     });
 
-    defineProperty_default()(assertThisInitialized_default()(_this), "handleEvent", function (_elementData, event) {
-      if (external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isFunction(_elementData.callback)) {
-        _elementData.callback(_elementData.data, _elementData, event);
-      }
+    defineProperty_default()(assertThisInitialized_default()(_this), "checkCR", function (_ref, event) {
+      var _ref2 = slicedToArray_default()(_ref, 2),
+          cr = _ref2[0],
+          _ref2$ = _ref2[1],
+          rowIndex = _ref2$.rowIndex,
+          cellIndex = _ref2$.cellIndex,
+          index = _ref2$.index;
 
-      event.stopPropagation();
-    });
-
-    defineProperty_default()(assertThisInitialized_default()(_this), "checkCR", function (event) {
       var target = event.target;
       var _this$state = _this.state,
           selected = _this$state.selected,
           data = _this$state.data,
           property = _this$state.property;
-      var showHeader = property.header.show;
 
       var selectedCur = external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.cloneDeep(selected);
 
-      var index = target.getAttribute('data-index');
       var targetName = target.name;
-      _this.pause = true; // 检测是否点击的标题栏的checkbox 且是否开启显示表头
+      var indeterminate = _this.state.indeterminate; // 列表滚动控制
 
-      if (target.name === 'rowCheckBox' && index === '0' && showHeader) {
-        selectedCur[targetName] = new Array(data.length).fill(target.checked);
-      } else {
-        // 检测是否是radio。radio需要处理一下this.state.selected里与之对应的name属性
-        if (target.type === 'radio') {
-          targetName = targetName.substring(0, targetName.indexOf('-'));
-        } // 检测this.state.selected里与之对应的数组是否存在，否则初始化一个空数组
-        // 而radio因为是单选按钮，决定了state数组里面有且仅有一个值为true，所以每次都初始化为空数组
+      _this.pause = true; // 检测this.state.selected里与之对应的数组是否存在，否则初始化一个空数组
+      // 而radio因为是单选按钮，决定了state数组里面有且仅有一个值为true，所以每次都初始化为空数组
 
+      if (target.type === 'radio') {
+        // 检测是否是radio，radio需要处理一下this.state.selected里与之对应的name属性
+        targetName = targetName.substring(0, targetName.indexOf('-'));
 
-        if (!selectedCur[targetName] || target.type === 'radio') {
+        if (!selectedCur[targetName]) {
           selectedCur[targetName] = [];
-        } // 将处理后的state数组赋值
+        } // 将处理后结果赋值给state
 
 
-        selectedCur[targetName][index] = target.checked; // 如果触发的是每一行的行选择框且header的状态为开启，则检测是否body里面的每行都选中了
-        // 根据此状态来给header里面的复选框加状态（全选/全不选）
+        selectedCur[targetName][0] = "".concat(cr.key || "cr-".concat(rowIndex, "-").concat(cellIndex, "-").concat(index));
+      } // 检测是否点击的是表头的checkbox，且是否启用表头
+      else if (target.type === 'checkbox') {
+          // 检测是否是行选择框
+          if (target.name === 'rowCheckbox') {
+            var showHeader = property.header.show; // 获取列表最外层容器
 
-        if (targetName === 'rowCheckBox' && showHeader) {
-          if (data.length === selectedCur[targetName].length) {
-            for (var i = 1, k = selectedCur[targetName].length; i < k; i++) {
-              if (!selectedCur[targetName][i]) {
+            var listContainer = closest(target, '.list'); // 获取列表内所有的行选择框
+
+            var rowCheckboxes = listContainer.querySelectorAll('[name=\'rowCheckbox\']'); // 当启用表头时，点击表头的行选择框
+
+            if (showHeader && external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqual(rowCheckboxes[0], target)) {
+              indeterminate = false;
+              selectedCur[targetName] = new Array(data.length).fill(target.checked);
+            } else {
+              /* 触发非表头的行选择框 */
+              // 获取触发的行选择框的索引
+              var clickedActualIndex = external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.findIndex(rowCheckboxes, target); // 如果点击的是辅助容器内的行选择框，则对应到主容器内的行选择框的索引。
+
+
+              var mainIndex = clickedActualIndex >= data.length ? clickedActualIndex - data.length + (showHeader ? 1 : 0) // 处理显示表头和不显示表头的情况
+              : clickedActualIndex; // 将处理后结果赋值给state
+
+              selectedCur[targetName][mainIndex] = target.checked; // 每次触发body被行选择框时都检查一次所有行选择框的状态
+
+              var rowCheckboxSelected = external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.compact(selectedCur[targetName].slice(1)).length;
+
+              if (rowCheckboxSelected !== data.length - 1) {
                 selectedCur[targetName][0] = false;
-                break;
-              }
-
-              if (i === data.length - 1) {
+                indeterminate = rowCheckboxSelected > 0;
+              } else {
                 selectedCur[targetName][0] = true;
+                indeterminate = false;
               }
             }
           } else {
-            selectedCur[targetName][0] = false;
+            /* 非行选择框 */
+            if (!selectedCur[targetName]) {
+              selectedCur[targetName] = [];
+            } // 获取复选框所在单元格元素
+
+
+            var listCell = closest(target, '.list-cell'); // 获取同一单元格内相同name的复选框
+
+            var checkboxes = listCell.querySelectorAll("[name='".concat(targetName, "']")); // 获取触发的radio的索引
+
+            var clickedIndex = external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.findIndex(checkboxes, target); // 将处理后结果赋值给state
+
+
+            selectedCur[targetName][clickedIndex] = target.checked;
           }
         }
-      }
 
       _this.setState({
+        indeterminate: indeterminate,
         selected: selectedCur
       });
-
-      event.stopPropagation();
     });
 
     defineProperty_default()(assertThisInitialized_default()(_this), "getColClientWidth", function () {
@@ -1533,49 +1736,25 @@ function (_Component) {
     });
 
     defineProperty_default()(assertThisInitialized_default()(_this), "setCellLink", function (link) {
-      var text = link.text,
+      var type = link.type,
+          text = link.text,
+          event = link.event,
           callback = link.callback,
           data = link.data,
-          props = objectWithoutProperties_default()(link, ["text", "callback", "data"]);
+          href = link.href,
+          props = objectWithoutProperties_default()(link, ["type", "text", "event", "callback", "data", "href"]);
 
-      delete props.type;
-
-      if (link) {
-        if (props.href) {
-          // 防止事件冒泡
-          props.onClick = function (event) {
-            return event.stopPropagation();
-          };
-
-          return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("a", props, text);
-        }
-
-        if (props.event) {
-          props[props.event] = function (event) {
-            event.preventDefault();
-            var list = closest(event.target, '.list');
-
-            if (external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isFunction(callback)) {
-              callback(data, list, event);
-            }
-
-            event.stopPropagation();
-          };
-
-          delete props.event;
-        } // 防止未传入自定义事件而导致点击事件冒泡
-
-
-        if (!props.event || props.event !== 'onClick') {
-          props.onClick = function (event) {
-            return event.stopPropagation();
-          };
-        }
-
-        return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("a", props, text);
+      if (href) {
+        // 防止事件冒泡
+        props.onClick = handleEvent.bind(null, [{}]);
+        return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("a", extends_default()({
+          href: href
+        }, props), text);
       }
 
-      return null;
+      var tagProps = objectSpread_default()({}, props, defineProperty_default()({}, event ? event : 'onClick', handleEvent.bind(null, [link])));
+
+      return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("a", tagProps, text);
     });
 
     _this.state = {
@@ -1583,8 +1762,13 @@ function (_Component) {
       colWidth: setColWidth(_props.property.body.cell.style.width),
       // body可见区域的高度
       scrollHeight: setScrollHeight(_props),
-      // 复选框、单选框等标签的状态
-      selected: {},
+      // 复选框、单选框等标签的默认状态
+      defaultSelected: false,
+      // 行选择框的indeterminate状态
+      indeterminate: false,
+      selected: {
+        rowCheckbox: []
+      },
       // 列表行缓动动画的样式名
       transitionName: '',
       // 当停用列表滚动且表头开启时，会自动计算这个值，以使表头的总宽度和列表主体相同
@@ -1653,7 +1837,7 @@ function (_Component) {
             body = _this$state2$property.body,
             isScroll = _this$state2$property.isScroll,
             transitionName = _this$state2.transitionName,
-            selected = _this$state2.selected;
+            indeterminate = _this$state2.indeterminate;
         var _preState$property = preState.property,
             preBody = _preState$property.body,
             preShow = _preState$property.header.show,
@@ -1665,7 +1849,7 @@ function (_Component) {
         var iconWidth = cell.iconStyle.width;
         var preIconWidth = preBody.cell.iconStyle.width;
         var transition = row.transition,
-            rowCheckBox = row.rowCheckBox; // 当滚动条显示时，重新计算header的宽度，和列表主体对齐
+            rowCheckbox = row.rowCheckbox; // 当滚动条显示时，重新计算header的宽度，和列表主体对齐
 
         if (show && !isScroll) {
           this.setState({
@@ -1700,21 +1884,12 @@ function (_Component) {
           this.setState({
             transitionName: 'list-row-start list-row-transition'
           });
-        } // 如果开启了行选择功能且显示表头，根据每行的选择情况设置标题栏多选框的 indeterminate 状态
+        } // 设置列表头行选择框的indeterminate
+        // 如果开启了行选择功能且显示表头，根据每行的选择情况设置标题栏多选框的 indeterminate 状态
 
 
-        if (show && rowCheckBox) {
-          var rowCheckBoxArr = selected['rowCheckBox'];
-
-          if (rowCheckBoxArr && !external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEmpty(rowCheckBoxArr)) {
-            for (var i = 1, j = rowCheckBoxArr.length; i < j; i++) {
-              // 当某一行的选中状态为false且存在选中行的时候，设置标题栏多选框的 indeterminate 状态为true
-              if (!rowCheckBoxArr[i] && rowCheckBoxArr.join(',').indexOf('true') > -1) {
-                this.scroll.parentNode.querySelector('.list-header input[name=rowCheckBox]').indeterminate = true;
-                break;
-              }
-            }
-          }
+        if (show && rowCheckbox) {
+          this.scroll.parentNode.querySelector('.list-header input[name=rowCheckbox]').indeterminate = indeterminate;
         } // 列表滚动相关逻辑入口
 
 
@@ -1744,7 +1919,7 @@ function (_Component) {
     value: function fillRow(data) {
       var cellsOfRow = [];
       var _this$state$property$2 = this.state.property.body.row,
-          rowCheckBox = _this$state$property$2.rowCheckBox,
+          rowCheckbox = _this$state$property$2.rowCheckbox,
           serialNumber = _this$state$property$2.serialNumber; // 获取每一行的数据量，存入数组 cellsOfRow 内
 
       external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.range(data.length).map(function (i) {
@@ -1764,14 +1939,14 @@ function (_Component) {
         var rowCheck = {
           type: 'checkbox',
           text: '',
-          uid: "ck".concat(ind),
-          name: 'rowCheckBox'
+          key: "rowCheck".concat(ind),
+          name: 'rowCheckbox'
         };
 
         if (external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isArray(data[ind])) {
           newData[ind] = [].concat(toConsumableArray_default()(data[ind]), toConsumableArray_default()(new Array(maxCellValue - data[ind].length).fill(''))); // 检测是否开启行选择功能
 
-          if (rowCheckBox) {
+          if (rowCheckbox) {
             newData[ind].unshift(rowCheck);
           } // 检测是否开启行序号功能
 
@@ -1783,7 +1958,7 @@ function (_Component) {
           newData[ind] = objectSpread_default()({}, data[ind]);
           newData[ind].cells = [].concat(toConsumableArray_default()(data[ind].cells), toConsumableArray_default()(new Array(maxCellValue - data[ind].cells.length).fill(''))); // 检测是否开启行选择功能
 
-          if (rowCheckBox) {
+          if (rowCheckbox) {
             newData[ind].cells.unshift(rowCheck);
           } // 检测是否开启行序号功能
 
@@ -1798,29 +1973,29 @@ function (_Component) {
     /**
      * 设置单元格图标
      * @param {object} icon icon对象
-     * @returns {*} 单元格图标DOM || null
+     * @param rowIndex {number} 行索引
+     * @param cellIndex {number} 列索引
+     * @returns {*[]} 单元格图标DOM || null
      */
 
   }, {
     key: "setCellIcon",
-    value: function setCellIcon(icon) {
-      if (icon) {
-        var iconStyle = this.state.property.body.cell.iconStyle;
+    value: function setCellIcon(icon, _ref3) {
+      var rowIndex = _ref3.rowIndex,
+          cellIndex = _ref3.cellIndex;
+      var iconStyle = this.state.property.body.cell.iconStyle;
 
-        if (icon.src && typeof icon.src === 'string' && (icon.src.indexOf('http://') !== -1 || icon.src.indexOf('https://') !== -1 || icon.src.indexOf('data:image/') !== -1)) {
-          return [external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("img", {
-            src: icon.src,
-            alt: icon.alt || '',
-            style: iconStyle,
-            key: Math.random(),
-            className: icon.className
-          }), external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("span", {
-            key: Math.random()
-          }, icon.text || '')];
-        }
+      if (icon.src && typeof icon.src === 'string' && (icon.src.indexOf('http://') !== -1 || icon.src.indexOf('https://') !== -1 || icon.src.indexOf('data:image/') !== -1)) {
+        return [external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("img", {
+          src: icon.src,
+          alt: icon.alt || '',
+          style: iconStyle,
+          key: icon.key || "icon-".concat(rowIndex, "-").concat(cellIndex),
+          className: icon.className
+        }), external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("span", {
+          key: "text".concat(-icon.key) || false
+        }, icon.text || '')];
       }
-
-      return null;
     }
     /**
      * 设置单元格link(链接)
@@ -1835,12 +2010,60 @@ function (_Component) {
      * 设置单元格checkbox或radio
      * @param {object} cr cr对象
      * @param {number} rowIndex 所在行的索引
+     * @param {number?} cellIndex 所在单元格的索引
+     * @param {number?} index 当前索引
      * @param {string?} container 当前渲染元素所在的容器
      * @returns {*} 单元格checkbox或radio || null
      */
-    value: function setCellInput(cr, rowIndex, container) {
-      var selected = this.state.selected;
-      var selectedCur = selected[cr.name] || [];
+    value: function setCellInput(cr, _ref4, container) {
+      var rowIndex = _ref4.rowIndex,
+          cellIndex = _ref4.cellIndex,
+          index = _ref4.index;
+      var tagProps = {}; // 处理事件
+
+      if (cr.type === 'button') {
+        var _tagProps;
+
+        tagProps = (_tagProps = {}, defineProperty_default()(_tagProps, cr.event ? cr.event : 'onClick', handleEvent.bind(null, [cr])), defineProperty_default()(_tagProps, "key", cr.key), defineProperty_default()(_tagProps, "type", cr.type), defineProperty_default()(_tagProps, "value", cr.value), defineProperty_default()(_tagProps, "className", cr.className), _tagProps);
+      } else {
+        var _this$state3 = this.state,
+            selected = _this$state3.selected,
+            defaultSelected = _this$state3.defaultSelected;
+        var selectedCur = selected[cr.name] || [];
+        tagProps = {
+          type: cr.type,
+          name: cr.type === 'radio' ? "".concat(cr.name, "-").concat(container) : cr.name,
+          className: cr.className
+        };
+
+        if (cr.type === 'checkbox') {
+          if (cr.name === 'rowCheckbox') {
+            tagProps.checked = selectedCur[rowIndex] ? selectedCur[rowIndex] : defaultSelected;
+          } else {
+            tagProps.checked = selectedCur[index] ? selectedCur[index] : defaultSelected;
+          }
+        } else if (cr.type === 'radio') {
+          tagProps.checked = selectedCur[0] === "".concat(cr.key || "cr-".concat(rowIndex, "-").concat(cellIndex, "-").concat(index)) ? true : defaultSelected;
+        }
+
+        if (!cr.event || cr.event === 'onClick' || cr.event === 'onChange') {
+          tagProps.onChange = handleEvent.bind(null, [cr, this.checkCR.bind(null, [cr, {
+            rowIndex: rowIndex,
+            cellIndex: cellIndex,
+            index: index
+          }])]);
+          tagProps.onClick = handleEvent.bind(null, [{}]);
+        } else {
+          // 当自定义事件不为‘onClick’或‘onChange’时，为radio或checkbox添加默认的点击事件
+          tagProps[cr.event] = handleEvent.bind(null, [cr]);
+          tagProps.onChange = this.checkCR.bind(null, [cr, {
+            rowIndex: rowIndex,
+            cellIndex: cellIndex,
+            index: index
+          }]);
+          tagProps.onClick = handleEvent.bind(null, [{}]);
+        }
+      }
 
       if (cr.type === 'radio' && !container) {
         /* eslint-disable no-console */
@@ -1848,33 +2071,15 @@ function (_Component) {
         return null;
       }
 
-      if (cr) {
-        if (cr.type === 'radio' || cr.type === 'checkbox') {
-          return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("label", {
-            key: Math.random()
-          }, external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("input", {
-            "data-id": cr.uid,
-            "data-index": rowIndex,
-            type: cr.type,
-            name: cr.type === 'radio' ? "".concat(cr.name, "-").concat(container) : cr.name,
-            className: cr.className,
-            defaultChecked: selectedCur[rowIndex],
-            onClick: this.checkCR
-          }), cr.text ? external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("span", null, cr.text) : null);
-        } // button 等标签会执行以下代码
+      if (cr.type === 'radio' || cr.type === 'checkbox') {
+        return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("label", {
+          key: "".concat(cr.key || "cr-".concat(rowIndex, "-").concat(cellIndex, "-").concat(index)),
+          onClick: handleEvent.bind(null, [{}])
+        }, external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("input", tagProps), cr.text ? external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("span", null, cr.text) : null);
+      } // button 等标签会执行以下代码
 
 
-        return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("input", {
-          "data-id": cr.uid,
-          "data-index": rowIndex,
-          type: cr.type,
-          value: cr.value,
-          className: cr.className,
-          onClick: this.handleEvent.bind(null, cr)
-        });
-      }
-
-      return null;
+      return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("input", tagProps);
     }
     /**
      * 设置单元格
@@ -1888,9 +2093,9 @@ function (_Component) {
     value: function setCell(rowData, rowIndex, container) {
       var _this3 = this;
 
-      var _this$state3 = this.state,
-          colWidth = _this$state3.colWidth,
-          property = _this$state3.property;
+      var _this$state4 = this.state,
+          colWidth = _this$state4.colWidth,
+          property = _this$state4.property;
       var body = property.body;
       var _body$row$serialNumbe = body.row.serialNumber,
           serialNumberShow = _body$row$serialNumbe.show,
@@ -1902,6 +2107,7 @@ function (_Component) {
       var listBorder = this.setBorder(style);
       return rowData.map(function (cellData, cellIndex) {
         return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("div", {
+          key: "".concat(container, "-cell-r").concat(rowIndex, "-c").concat(cellIndex),
           className: "list-cell",
           style: serialNumberShow && !cellIndex // 如果开启行序号，且为每行第一个单元格
           ? objectSpread_default()({}, style, {
@@ -1909,49 +2115,74 @@ function (_Component) {
           }, serialNumberStyle, specialStyle[rowIndex], cellOfColumnStyle[cellIndex], listBorder) // 未开启行序号或不为行内第一个单元格
           : objectSpread_default()({}, style, {
             width: typeof colWidth === 'string' ? colWidth : colWidth[cellIndex] || 'auto'
-          }, cellOfColumnStyle[cellIndex], listBorder),
-          key: "".concat(rowIndex).concat(cellIndex)
-        }, serialNumberShow && cellIndex === 0 && typeof cellData === 'string' ? cellData.replace('{index}', rowIndex + 1) : _this3.parsing(cellData, rowIndex + 1, container));
+          }, cellOfColumnStyle[cellIndex], listBorder)
+        }, // 检测是否启用行号功能，并且为行内第一个单元格
+        serialNumberShow && cellIndex === 0 && typeof cellData === 'string' ? cellData.replace('{index}', rowIndex + 1) : _this3.parsing(cellData, {
+          rowIndex: rowIndex + 1,
+          cellIndex: cellIndex
+        }, container));
       });
     }
     /**
      * 解析数据里面的对象
      * @param {object} cellData 需要解析的单元格数据
      * @param {number} rowIndex 需要解析的单元格数据所在行的索引
+     * @param {number} cellIndex 需要解析的单元格数据所在行的索引
+     * @param {number?} index 当前循环遍历的index
      * @param {string?} container 当前渲染单元格所在的容器（此参数目前只在type为radio时生效）
      * @returns {*} 单元格数据或DOM
      */
 
   }, {
     key: "parsing",
-    value: function parsing(cellData, rowIndex, container) {
+    value: function parsing(cellData, _ref5, container) {
       var _this4 = this;
+
+      var rowIndex = _ref5.rowIndex,
+          cellIndex = _ref5.cellIndex,
+          index = _ref5.index;
 
       if (Array.isArray(cellData)) {
         return cellData.map(function (o, i) {
-          return _this4.parsing(o, i, container);
+          return _this4.parsing(o, {
+            rowIndex: rowIndex,
+            cellIndex: cellIndex,
+            index: i
+          }, container);
         });
       }
 
       if (external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isObject(cellData)) {
         switch (cellData.type) {
           case 'img':
-            return this.setCellIcon(cellData);
+            return this.setCellIcon(cellData, {
+              rowIndex: rowIndex,
+              cellIndex: cellIndex
+            });
 
           case 'link':
             return this.setCellLink(cellData);
 
           case 'radio':
-            return this.setCellInput(cellData, rowIndex, container);
+            return this.setCellInput(cellData, {
+              rowIndex: rowIndex,
+              cellIndex: cellIndex,
+              index: index
+            }, container);
 
           case 'checkbox':
-            return this.setCellInput(cellData, rowIndex);
+            return this.setCellInput(cellData, {
+              rowIndex: rowIndex,
+              cellIndex: cellIndex,
+              index: index
+            });
 
           case 'button':
-            return this.setCellInput(cellData, rowIndex);
-
-          default:
-            return null;
+            return this.setCellInput(cellData, {
+              rowIndex: rowIndex,
+              cellIndex: cellIndex,
+              index: index
+            });
         }
       } // 不是对象，返回源数据
 
@@ -1999,9 +2230,9 @@ function (_Component) {
     value: function setRow(bodyData, container) {
       var _this5 = this;
 
-      var _this$state4 = this.state,
-          property = _this$state4.property,
-          transitionName = _this$state4.transitionName;
+      var _this$state5 = this.state,
+          property = _this$state5.property,
+          transitionName = _this$state5.transitionName;
       var body = property.body;
       var _body$row = body.row,
           transition = _body$row.transition,
@@ -2021,8 +2252,8 @@ function (_Component) {
 
       return bodyData.map(function (rowData, rowIndex) {
         var LIElementProps = {
-          key: rowIndex,
-          className: "list-row ".concat(transition ? transitionName : ''),
+          key: "".concat(container, "-list-row").concat(rowData.key ? rowData.key : rowIndex),
+          className: "list-row".concat(rowData.className ? " ".concat(rowData.className) : '').concat(transition ? " ".concat(transitionName) : ''),
           style: isVisual && rowIndex % (rowVisualInterval * 2) >= rowVisualInterval ? external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.defaultsDeep({}, specialRowStyle[rowIndex], rowVisualStyle, rowStyle) : external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.defaultsDeep({}, specialRowStyle[rowIndex], rowStyle),
           onMouseEnter: _this5.rowHover,
           onMouseLeave: _this5.rowHover // 检测行数据是一个对象还是一个数组
@@ -2031,7 +2262,7 @@ function (_Component) {
         };
 
         if (external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isObject(rowData) && rowData.type === 'row') {
-          LIElementProps[rowData.event] = _this5.handleEvent.bind(null, rowData);
+          LIElementProps[rowData.event] = handleEvent.bind(null, [rowData]);
         }
 
         return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("li", LIElementProps, external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isArray(rowData) ? _this5.setCell(rowData, rowIndex, container) : _this5.setCell(rowData.cells, rowIndex, container));
@@ -2048,10 +2279,10 @@ function (_Component) {
     value: function loadHeader(data) {
       var _this6 = this;
 
-      var _this$state5 = this.state,
-          property = _this$state5.property,
-          colWidth = _this$state5.colWidth,
-          headerWidth = _this$state5.headerWidth;
+      var _this$state6 = this.state,
+          property = _this$state6.property,
+          colWidth = _this$state6.colWidth,
+          headerWidth = _this$state6.headerWidth;
       var isScroll = property.isScroll,
           _property$header = property.header,
           style = _property$header.style,
@@ -2076,12 +2307,15 @@ function (_Component) {
         }, data.map(function (cell, index) {
           return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("div", {
             className: "list-cell",
-            key: index,
+            key: "list-header-".concat(index),
             style: objectSpread_default()({}, cellStyle, {
               width: typeof colWidth === 'string' ? colWidth : colWidth[index] || 'auto',
               minWidth: minWidth
             }, listBorder)
-          }, show && !index ? 'number' : _this6.parsing(cell, 0));
+          }, show && !index ? 'number' : _this6.parsing(cell, {
+            rowIndex: 0,
+            cellIndex: 0
+          }));
         })));
       }
 
@@ -2098,11 +2332,11 @@ function (_Component) {
     value: function loadBody(bodyData) {
       var _this7 = this;
 
-      var _this$state6 = this.state,
-          scrollHeight = _this$state6.scrollHeight,
-          _this$state6$property = _this$state6.property,
-          spacing = _this$state6$property.body.row.spacing,
-          isScroll = _this$state6$property.isScroll; // 处理行间距的值
+      var _this$state7 = this.state,
+          scrollHeight = _this$state7.scrollHeight,
+          _this$state7$property = _this$state7.property,
+          spacing = _this$state7$property.body.row.spacing,
+          isScroll = _this$state7$property.isScroll; // 处理行间距的值
 
       var borderSpacing = "".concat(spacing).indexOf('px') === -1 ? "0 ".concat(spacing, "px") : "0 ".concat(spacing);
       return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("div", {
@@ -2140,13 +2374,13 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this$state7 = this.state,
-          _this$state7$property = _this$state7.property,
-          header = _this$state7$property.header,
-          spacing = _this$state7$property.body.row.spacing,
-          conStyle = _this$state7$property.style,
-          data = _this$state7.data,
-          className = _this$state7.className;
+      var _this$state8 = this.state,
+          _this$state8$property = _this$state8.property,
+          header = _this$state8$property.header,
+          spacing = _this$state8$property.body.row.spacing,
+          conStyle = _this$state8$property.style,
+          data = _this$state8.data,
+          className = _this$state8.className;
       var showHeader = header.show; // 处理border属性值
 
       var listBorder = this.setBorder(conStyle); // 当存在表头数据且表头是开启时处理数据
@@ -2194,6 +2428,8 @@ function (_Component) {
       var colWidth = state.colWidth,
           scrollHeight = state.scrollHeight,
           selected = state.selected,
+          defaultSelected = state.defaultSelected,
+          indeterminate = state.indeterminate,
           stateProperty = state.property,
           stateData = state.data,
           headerWidth = state.headerWidth;
@@ -2210,6 +2446,8 @@ function (_Component) {
       var stateUpdate = {
         colWidth: colWidth,
         scrollHeight: scrollHeight,
+        defaultSelected: defaultSelected,
+        indeterminate: indeterminate,
         selected: selected,
         transitionName: transitionName,
         headerWidth: headerWidth
@@ -2259,9 +2497,10 @@ function (_Component) {
  * @Email: xyzsyx@163.com
  * @Description: 组件入口
  * @Date: 2018-10-08 17:56:19
- * @LastModified: Oceanxy（xyzsyx@163.com）
- * @LastModifiedTime: 2019-01-23 15:03:17
+ * @LastModified: Oceanxy（xieyang@hiynn.com）
+ * @LastModifiedTime: 2019-05-30 15:47:10
  */
+
 
 
 
@@ -2285,7 +2524,7 @@ function (_Component) {
           property = _this$props.property,
           option = objectWithoutProperties_default()(_this$props, ["property"]);
 
-      var newProperty = external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.defaultsDeep({}, property, config.property);
+      var newProperty = external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.defaultsDeep({}, waring(property), config.property);
 
       return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement(list_default, extends_default()({
         property: newProperty

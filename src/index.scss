@@ -31,6 +31,10 @@
         transform: scale(1);
       }
 
+      &.click-row {
+        cursor: pointer;
+      }
+
       .list-cell {
         display: table-cell;
         text-align: center;

@@ -353,7 +353,7 @@ const Demo = () => {
       },
       body: {
         row: {
-          rowCheckBox: true,
+          rowCheckbox: true,
           style: {
             height: 34
           },
@@ -942,7 +942,7 @@ const Demo = () => {
             '    },\n' +
             '    body: {\n' +
             '      row: {\n' +
-            '        rowCheckBox: true,\n' +
+            '        rowCheckbox: true,\n' +
             '        style: {\n' +
             '          height: 34\n' +
             '        },\n' +
