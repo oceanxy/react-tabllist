@@ -77,3 +77,7 @@
 3. Rewrite button, radio, and checkbox custom events; Rewrite the logic of radio and checkbox.
 4. Readme file can be switched to Chinese or English.
 5. A warning will be printed on the console when using the obsolete property.
+
+#### 1.3.1
+1. Fix bug: When obsolete properties are used, the program is terminated when the obsolete property and the new substitution property (if any) do not belong to the child of the same object.
+2. Print outdated property warnings only in the development environment.

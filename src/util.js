@@ -113,43 +113,48 @@ export function handleEvent([_elementData, _func], event) {
  * @returns {*} 新的property
  */
 export function waring(property) {
+  const waringProperty = getWaringProperty()
+
   /**
    * 检测指定key是否被用户定义
    * @param discard 被定义的过时属性
    * @param property 用户定义的整个配置对象
-   * @returns {boolean|*} false: 未检测到过时属性或调用参数不合法 property：用户定义的过时属性的值
+   * @returns {{isExist: boolean}|{isExist: boolean, value: *}} isExist:是否使用了过时属性 value:过时属性的值
    */
   function isKeyExists(discard, property) {
     if(!property || !discard) {
-      return false
+      return { isExist: false }
     }
 
     // 将传入的对象路径字符串拆分为数组
     const pathList = discard.split('.')
+    // 如果使用了过时的属性，则这边变量用来保存用户设置的属性的值
+    let value
 
     // 检测用户的配置对象是否存在警告
     for(let i = 1; i < pathList.length; i++) {
-      if(!property[pathList[i]]) {
-        return false
+      if(typeof property[pathList[i]] === 'undefined') {
+        return { isExist: false }
       }
 
       if(i === pathList.length - 1) {
+        value = property[pathList[i]]
         property = pathList[i]
       } else {
         property = property[pathList[i]]
       }
     }
 
-    return property
+    return { isExist: true, value }
   }
 
   /**
-   * 将用户使用的过时key替换为正确的key
+   * 将用户使用的过时key赋值到正确的key
    * @param replacement 正确的key
    * @param property 用户定义的整个配置对象
-   * @param discard 用户使用的过时key
+   * @param valueOfDiscard 用户使用的过时key的值
    */
-  function createNewProperty(replacement, property, discard) {
+  function createNewProperty(replacement, property, valueOfDiscard) {
     if(!replacement) {
       return
     }
@@ -157,27 +162,31 @@ export function waring(property) {
     // 将传入的对象路径字符串拆分为数组
     const pathList = replacement.split('.')
 
-    // 检测用户的配置对象是否存在警告使用
+    // 替换过时属性，同时配置相对应的属性（如果存在）
     for(let i = 1; i < pathList.length; i++) {
       if(i === pathList.length - 1) {
-        property[pathList[i]] = property[discard]
-        delete property[discard]
+        property[pathList[i]] = valueOfDiscard
       } else {
+        if(!property[pathList[i]] || _.isPlainObject(pathList[i])) {
+          property[pathList[i]] = {}
+        }
+
         property = property[pathList[i]]
       }
     }
   }
 
-  const waringProperty = getWaringProperty()
-
   waringProperty.map((_obj) => {
-    const discard = isKeyExists(_obj.discard, property)
-    if(discard) {
-      createNewProperty(_obj.replacement, property, discard)
-      if(_obj.warn) {
-        console.warn(_obj.warn)
-      } else {
-        console.warn('Used obsolete configuration in React-tabllist')
+    const result = isKeyExists(_obj.discard, property)
+    if(result.isExist) {
+      createNewProperty(_obj.replacement, property, result.value)
+
+      if(process.env.NODE_ENV === 'development') {
+        if(_obj.warn) {
+          console.warn(_obj.warn)
+        } else {
+          console.warn('Used obsolete configuration in React-tabllist')
+        }
       }
     }
   })
