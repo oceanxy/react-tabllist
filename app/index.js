@@ -4,7 +4,7 @@
  * @Description: dev
  * @Date: 2019-05-23 11:41:43
  * @LastModified: Oceanxy（xieyang@hiynn.com）
- * @LastModifiedTime: 2019-05-30 15:46:57
+ * @LastModifiedTime: 2019-06-03 14:57:48
  */
 
 import React from 'react'
@@ -262,8 +262,10 @@ const Dev = () => {
           }
         }
       },
-      speed: 40,
-      isScroll: true
+      scroll: {
+        enable: true,
+        speed: 40
+      }
     }
   }
 

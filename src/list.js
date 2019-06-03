@@ -4,7 +4,7 @@
  * @Description: react-tabllist
  * @Date: 2018-10-08 17:56:19
  * @LastModified: Oceanxy（xieyang@hiynn.com）
- * @LastModifiedTime: 2019-05-31 09:10:45
+ * @LastModifiedTime: 2019-06-03 14:55:24
  */
 
 import _ from 'lodash'
@@ -143,7 +143,8 @@ export default class extends Component {
       const {
         property: {
           style: { width: conWidth, height },
-          header: { show }, body, isScroll
+          scroll: { enable },
+          header: { show }, body
         },
         transitionName,
         indeterminate
@@ -159,7 +160,7 @@ export default class extends Component {
       const { transition, rowCheckbox } = row
 
       // 当滚动条显示时，重新计算header的宽度，和列表主体对齐
-      if(show && !isScroll) {
+      if(show && !enable) {
         this.setState({ headerWidth: this.listContMain.clientWidth })
       }
 
@@ -220,7 +221,7 @@ export default class extends Component {
     const {
       listContMain,
       listContSupport,
-      state: { scrollHeight, property: { isScroll, speed } }
+      state: { scrollHeight, property: { scroll: { enable, speed } } }
     } = this
 
     if(listContMain && listContSupport) {
@@ -230,7 +231,7 @@ export default class extends Component {
       if(isInnerScroll || isInnerScroll === undefined) {
         // 检测滚动条件
         // 根据滚动条件控制列表主体容器的辅助容器的显示状态
-        if(isScroll && listContMain.clientHeight >= parseInt(scrollHeight)) {
+        if(enable && listContMain.clientHeight >= parseInt(scrollHeight)) {
           if(isInnerScroll !== undefined && e.type === 'mouseleave') {
             this.pause = false
           }
@@ -808,7 +809,7 @@ export default class extends Component {
    */
   loadHeader(data) {
     const { property, colWidth, headerWidth } = this.state
-    const { isScroll, header: { style, cellStyle, show: showHeader } } = property
+    const { scroll: { enable }, header: { style, cellStyle, show: showHeader } } = property
     const {
       cell: { style: { minWidth } },
       row: { serialNumber: { show } }
@@ -821,7 +822,7 @@ export default class extends Component {
       return (
         <ul
           className='list-header list-cont'
-          style={!isScroll && headerWidth ? { ...style, width: headerWidth } : style}
+          style={!enable && headerWidth ? { ...style, width: headerWidth } : style}
         >
           <li key='list-row' className='list-row' style={style}>
             {
@@ -858,7 +859,7 @@ export default class extends Component {
       scrollHeight,
       property: {
         body: { row: { spacing } },
-        isScroll
+        scroll: { enable }
       }
     } = this.state
     // 处理行间距的值
@@ -870,7 +871,7 @@ export default class extends Component {
         ref={ele => this.scroll = ele}
         style={{
           height: scrollHeight,
-          overflow: isScroll ? 'hidden' : 'auto'
+          overflow: enable ? 'hidden' : 'auto'
         }}
       >
         <ul

@@ -4,7 +4,7 @@
  * @Description: 配置文件
  * @Date: 2018-10-08 17:56:19
  * @LastModified: Oceanxy（xieyang@hiynn.com）
- * @LastModifiedTime: 2019-05-30 15:34:24
+ * @LastModifiedTime: 2019-06-03 14:54:38
  */
 
 export default {
@@ -23,8 +23,10 @@ export default {
       borderStyle: 'solid',
       borderColor: '#f4f4f4'
     },
-    speed: 50,
-    isScroll: true,
+    scroll: {
+      enable: true,
+      speed: 50
+    },
     header: {
       show: true,
       style: {
@@ -115,6 +117,18 @@ export function getWaringProperty() {
       discard: 'property.body.row.rowCheckBox',
       replacement: 'property.body.row.rowCheckbox',
       warn: 'Used obsolete configuration in React-tabllist: \'property.body.row.rowCheckBox\' has been deprecated in version 1.3.0 and will be completely removed in future releases. You should use \'property.body.row.rowCheckbox\' instead.'
+    },
+    {
+      version: '1.4.0',
+      discard: 'property.isScroll',
+      replacement: 'property.scroll.enable',
+      warn: 'Used obsolete configuration in React-tabllist: \'property.isScroll\' has been deprecated in version 1.4.0 and will be completely removed in future releases. You should use \'property.scroll.enable\' instead.'
+    },
+    {
+      version: '1.4.0',
+      discard: 'property.speed',
+      replacement: 'property.scroll.speed',
+      warn: 'Used obsolete configuration in React-tabllist: \'property.speed\' has been deprecated in version 1.4.0 and will be completely removed in future releases. You should use \'property.scroll.speed\' instead.'
     }
   ]
 }
