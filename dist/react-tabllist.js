@@ -129,20 +129,6 @@ module.exports = _defineProperty;
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports) {
-
-function _assertThisInitialized(self) {
-  if (self === void 0) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-
-  return self;
-}
-
-module.exports = _assertThisInitialized;
-
-/***/ }),
-/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var defineProperty = __webpack_require__(2);
@@ -169,7 +155,45 @@ function _objectSpread(target) {
 module.exports = _objectSpread;
 
 /***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
+function _assertThisInitialized(self) {
+  if (self === void 0) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return self;
+}
+
+module.exports = _assertThisInitialized;
+
+/***/ }),
 /* 5 */
+/***/ (function(module, exports) {
+
+function _extends() {
+  module.exports = _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
+module.exports = _extends;
+
+/***/ }),
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var objectWithoutPropertiesLoose = __webpack_require__(18);
@@ -196,7 +220,7 @@ function _objectWithoutProperties(source, excluded) {
 module.exports = _objectWithoutProperties;
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var arrayWithoutHoles = __webpack_require__(21);
@@ -210,30 +234,6 @@ function _toConsumableArray(arr) {
 }
 
 module.exports = _toConsumableArray;
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports) {
-
-function _extends() {
-  module.exports = _extends = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-
-    return target;
-  };
-
-  return _extends.apply(this, arguments);
-}
-
-module.exports = _extends;
 
 /***/ }),
 /* 8 */
@@ -275,7 +275,7 @@ module.exports = _createClass;
 
 var _typeof = __webpack_require__(19);
 
-var assertThisInitialized = __webpack_require__(3);
+var assertThisInitialized = __webpack_require__(4);
 
 function _possibleConstructorReturn(self, call) {
   if (call && (_typeof(call) === "object" || typeof call === "function")) {
@@ -1134,11 +1134,11 @@ module.exports = function (css) {
 __webpack_require__.r(__webpack_exports__);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/extends.js
-var helpers_extends = __webpack_require__(7);
+var helpers_extends = __webpack_require__(5);
 var extends_default = /*#__PURE__*/__webpack_require__.n(helpers_extends);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/objectWithoutProperties.js
-var objectWithoutProperties = __webpack_require__(5);
+var objectWithoutProperties = __webpack_require__(6);
 var objectWithoutProperties_default = /*#__PURE__*/__webpack_require__.n(objectWithoutProperties);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/classCallCheck.js
@@ -1291,20 +1291,20 @@ function getWaringProperty() {
 var toArray = __webpack_require__(17);
 var toArray_default = /*#__PURE__*/__webpack_require__.n(toArray);
 
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/toConsumableArray.js
-var toConsumableArray = __webpack_require__(6);
-var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableArray);
-
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/objectSpread.js
-var objectSpread = __webpack_require__(4);
+var objectSpread = __webpack_require__(3);
 var objectSpread_default = /*#__PURE__*/__webpack_require__.n(objectSpread);
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/toConsumableArray.js
+var toConsumableArray = __webpack_require__(7);
+var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableArray);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/slicedToArray.js
 var slicedToArray = __webpack_require__(13);
 var slicedToArray_default = /*#__PURE__*/__webpack_require__.n(slicedToArray);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/assertThisInitialized.js
-var assertThisInitialized = __webpack_require__(3);
+var assertThisInitialized = __webpack_require__(4);
 var assertThisInitialized_default = /*#__PURE__*/__webpack_require__.n(assertThisInitialized);
 
 // EXTERNAL MODULE: ./src/index.scss
@@ -1433,72 +1433,82 @@ function handleEvent(_ref, event) {
  */
 
 function waring(property) {
+  var waringProperty = getWaringProperty();
   /**
    * 检测指定key是否被用户定义
    * @param discard 被定义的过时属性
    * @param property 用户定义的整个配置对象
-   * @returns {boolean|*} false: 未检测到过时属性或调用参数不合法 property：用户定义的过时属性的值
+   * @returns {{isExist: boolean}|{isExist: boolean, value: *}} isExist:是否使用了过时属性 value:过时属性的值
    */
+
   function isKeyExists(discard, property) {
     if (!property || !discard) {
-      return false;
+      return {
+        isExist: false
+      };
     } // 将传入的对象路径字符串拆分为数组
 
 
-    var pathList = discard.split('.'); // 检测用户的配置对象是否存在警告
+    var pathList = discard.split('.'); // 如果使用了过时的属性，则这边变量用来保存用户设置的属性的值
+
+    var value; // 检测用户的配置对象是否存在警告
 
     for (var i = 1; i < pathList.length; i++) {
-      if (!property[pathList[i]]) {
-        return false;
+      if (typeof property[pathList[i]] === 'undefined') {
+        return {
+          isExist: false
+        };
       }
 
       if (i === pathList.length - 1) {
+        value = property[pathList[i]];
         property = pathList[i];
       } else {
         property = property[pathList[i]];
       }
     }
 
-    return property;
+    return {
+      isExist: true,
+      value: value
+    };
   }
   /**
-   * 将用户使用的过时key替换为正确的key
+   * 将用户使用的过时key赋值到正确的key
    * @param replacement 正确的key
    * @param property 用户定义的整个配置对象
-   * @param discard 用户使用的过时key
+   * @param valueOfDiscard 用户使用的过时key的值
    */
 
 
-  function createNewProperty(replacement, property, discard) {
+  function createNewProperty(replacement, property, valueOfDiscard) {
     if (!replacement) {
       return;
     } // 将传入的对象路径字符串拆分为数组
 
 
-    var pathList = replacement.split('.'); // 检测用户的配置对象是否存在警告使用
+    var pathList = replacement.split('.'); // 替换过时属性，同时配置相对应的属性（如果存在）
 
     for (var i = 1; i < pathList.length; i++) {
       if (i === pathList.length - 1) {
-        property[pathList[i]] = property[discard];
-        delete property[discard];
+        property[pathList[i]] = valueOfDiscard;
       } else {
+        if (!property[pathList[i]] || external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isPlainObject(pathList[i])) {
+          property[pathList[i]] = {};
+        }
+
         property = property[pathList[i]];
       }
     }
   }
 
-  var waringProperty = getWaringProperty();
   waringProperty.map(function (_obj) {
-    var discard = isKeyExists(_obj.discard, property);
+    var result = isKeyExists(_obj.discard, property);
 
-    if (discard) {
-      createNewProperty(_obj.replacement, property, discard);
+    if (result.isExist) {
+      createNewProperty(_obj.replacement, property, result.value);
 
-      if (_obj.warn) {
-        console.warn(_obj.warn);
-      } else {
-        console.warn('Used obsolete configuration in React-tabllist');
-      }
+      if (false) {}
     }
   });
   return property;
@@ -1524,7 +1534,7 @@ function waring(property) {
  * @Description: react-tabllist
  * @Date: 2018-10-08 17:56:19
  * @LastModified: Oceanxy（xieyang@hiynn.com）
- * @LastModifiedTime: 2019-05-31 09:10:45
+ * @LastModifiedTime: 2019-06-09 00:15:00
  */
 
 
@@ -1533,8 +1543,8 @@ function waring(property) {
 
 var list_default =
 /*#__PURE__*/
-function (_Component) {
-  inherits_default()(_default, _Component);
+function (_React$Component) {
+  inherits_default()(_default, _React$Component);
 
   function _default(_props) {
     var _this;
@@ -1735,28 +1745,6 @@ function (_Component) {
       }
     });
 
-    defineProperty_default()(assertThisInitialized_default()(_this), "setCellLink", function (link) {
-      var type = link.type,
-          text = link.text,
-          event = link.event,
-          callback = link.callback,
-          data = link.data,
-          href = link.href,
-          props = objectWithoutProperties_default()(link, ["type", "text", "event", "callback", "data", "href"]);
-
-      if (href) {
-        // 防止事件冒泡
-        props.onClick = handleEvent.bind(null, [{}]);
-        return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("a", extends_default()({
-          href: href
-        }, props), text);
-      }
-
-      var tagProps = objectSpread_default()({}, props, defineProperty_default()({}, event ? event : 'onClick', handleEvent.bind(null, [link])));
-
-      return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("a", tagProps, text);
-    });
-
     _this.state = {
       // 每列单元格的宽度数组
       colWidth: setColWidth(_props.property.body.cell.style.width),
@@ -1793,8 +1781,6 @@ function (_Component) {
          * 设置规则以props里面的width字段为准
          * 详情见width字段说明
          */
-
-        /* eslint-disable react/no-did-mount-set-state  */
         this.setState({
           colWidth: colWidth
         }); // 列表滚动相关逻辑入口
@@ -2004,8 +1990,27 @@ function (_Component) {
      */
 
   }, {
-    key: "setCellInput",
+    key: "setCellLink",
+    value: function setCellLink(link) {
+      var text = link.text,
+          event = link.event,
+          callback = link.callback,
+          data = link.data,
+          href = link.href,
+          props = objectWithoutProperties_default()(link, ["text", "event", "callback", "data", "href"]);
 
+      if (href) {
+        // 防止事件冒泡
+        props.onClick = handleEvent.bind(null, [{}]);
+        return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("a", extends_default()({
+          href: href
+        }, props), text);
+      }
+
+      var tagProps = objectSpread_default()({}, props, defineProperty_default()({}, event ? event : 'onClick', handleEvent.bind(null, [link])));
+
+      return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("a", tagProps, text);
+    }
     /**
      * 设置单元格checkbox或radio
      * @param {object} cr cr对象
@@ -2015,6 +2020,9 @@ function (_Component) {
      * @param {string?} container 当前渲染元素所在的容器
      * @returns {*} 单元格checkbox或radio || null
      */
+
+  }, {
+    key: "setCellInput",
     value: function setCellInput(cr, _ref4, container) {
       var rowIndex = _ref4.rowIndex,
           cellIndex = _ref4.cellIndex,
@@ -2066,8 +2074,10 @@ function (_Component) {
       }
 
       if (cr.type === 'radio' && !container) {
-        /* eslint-disable no-console */
+        /* eslint-disable no-console, no-undef */
         console.error('When the type attribute of the input tag is radio, the third parameter "container" of setCellInput() is a required parameter, otherwise the function will be invalid!');
+        /* eslint-enable no-console, no-undef */
+
         return null;
       }
 
@@ -2248,12 +2258,14 @@ function (_Component) {
       if (rowVisualShow && rowVisualInterval && !Number.isNaN(rowVisualInterval)) {
         isVisual = true;
         rowVisualStyle = objectSpread_default()({}, rowStyle, rowVisualStyle);
-      }
+      } // 处理行动画的样式
 
+
+      var transitionClassName = transition ? " ".concat(transitionName) : '';
       return bodyData.map(function (rowData, rowIndex) {
+        var customClassName = rowData.className ? " ".concat(rowData.className) : '';
         var LIElementProps = {
-          key: "".concat(container, "-list-row").concat(rowData.key ? rowData.key : rowIndex),
-          className: "list-row".concat(rowData.className ? " ".concat(rowData.className) : '').concat(transition ? " ".concat(transitionName) : ''),
+          className: "list-row".concat(customClassName).concat(transitionClassName),
           style: isVisual && rowIndex % (rowVisualInterval * 2) >= rowVisualInterval ? external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.defaultsDeep({}, specialRowStyle[rowIndex], rowVisualStyle, rowStyle) : external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.defaultsDeep({}, specialRowStyle[rowIndex], rowStyle),
           onMouseEnter: _this5.rowHover,
           onMouseLeave: _this5.rowHover // 检测行数据是一个对象还是一个数组
@@ -2265,7 +2277,9 @@ function (_Component) {
           LIElementProps[rowData.event] = handleEvent.bind(null, [rowData]);
         }
 
-        return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("li", LIElementProps, external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isArray(rowData) ? _this5.setCell(rowData, rowIndex, container) : _this5.setCell(rowData.cells, rowIndex, container));
+        return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("li", extends_default()({
+          key: "".concat(container, "-list-row").concat(rowData.key ? rowData.key : rowIndex)
+        }, LIElementProps), external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isArray(rowData) ? _this5.setCell(rowData, rowIndex, container) : _this5.setCell(rowData.cells, rowIndex, container));
       });
     }
     /**
@@ -2478,7 +2492,7 @@ function (_Component) {
   }]);
 
   return _default;
-}(external_commonjs_react_commonjs2_react_amd_react_root_React_["Component"]);
+}(external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.Component);
 
 
 // CONCATENATED MODULE: ./src/index.js
