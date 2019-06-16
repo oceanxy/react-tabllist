@@ -81,3 +81,7 @@
 #### 1.3.1
 1. Fix bug: When obsolete properties are used, the program is terminated when the obsolete property and the new substitution property (if any) do not belong to the child of the same object.
 2. Print outdated property warnings only in the development environment.
+
+#### 1.4.0
+1. Integrate the original scrolling function related components of the component and add some new scrolling configuration. You can configure it in ‘property.scroll’
+2. New object unit: drop-down list

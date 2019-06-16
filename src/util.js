@@ -4,7 +4,7 @@
  * @Description: util
  * @Date: 2018-10-08 17:56:19
  * @LastModified: Oceanxy（xieyang@hiynn.com）
- * @LastModifiedTime: 2019-05-30 15:47:23
+ * @LastModifiedTime: 2019-06-14 16:00:10
  */
 
 import _ from 'lodash'
@@ -17,23 +17,23 @@ import { getWaringProperty } from './config'
  * @return {Element} 按照选择器筛选后的元素
  */
 export function closest(el, selector) {
-  if(el) {
-    const matchesSelector = el.matches ||
-      el.webkitMatchesSelector ||
-      el.mozMatchesSelector ||
-      el.msMatchesSelector
+	if(el) {
+		const matchesSelector = el.matches ||
+			el.webkitMatchesSelector ||
+			el.mozMatchesSelector ||
+			el.msMatchesSelector
 
-    while(el) {
-      if(matchesSelector.call(el, selector)) {
-        break
-      }
-      el = el.parentNode || el.parentElement
-    }
+		while(el) {
+			if(matchesSelector.call(el, selector)) {
+				break
+			}
+			el = el.parentNode || el.parentElement
+		}
 
-    return el
-  }
+		return el
+	}
 
-  return null
+	return null
 }
 
 /**
@@ -42,18 +42,18 @@ export function closest(el, selector) {
  * @returns {*} 列表滚动区域可见高度
  */
 export function setScrollHeight(props) {
-  const {
-    header: { show, style },
-    style: { height }
-  } = props.property
+	const {
+		header: { show, style },
+		style: { height }
+	} = props.property
 
-  // 开启表头
-  if(show) {
-    return parseInt(height) - parseInt(style.height)
-  }
+	// 开启表头
+	if(show) {
+		return parseInt(height) - parseInt(style.height)
+	}
 
-  // 隐藏表头
-  return height
+	// 隐藏表头
+	return height
 }
 
 /**
@@ -62,31 +62,31 @@ export function setScrollHeight(props) {
  * @returns {*} 用于渲染每列单元格的宽度值
  */
 export function setColWidth(width) {
-  // 处理字符串形式的多列宽度数值
-  if(Array.isArray(width)) {
-    return width.map(o => (!o ? 'auto' : o))
-  }
+	// 处理字符串形式的多列宽度数值
+	if(Array.isArray(width)) {
+		return width.map(o => (!o ? 'auto' : o))
+	}
 
-  // 处理字符串形式的多列宽度数值
-  if(typeof width === 'string') {
-    if(width.indexOf(',') >= 0) {
-      return width.split(',').map(o => {
-        if(o.indexOf('px') > -1) {
-          return `${parseFloat(o)}px`
-        } else if(o.indexOf('%') > -1) {
-          return `${parseFloat(o)}%`
-        } else if(o * 1) {
-          return parseFloat(o)
-        }
-        return 'auto'
-      })
-    }
-    if(width === 'avg') {
-      return new Array(100).fill(1)
-    }
-  }
+	// 处理字符串形式的多列宽度数值
+	if(typeof width === 'string') {
+		if(width.indexOf(',') >= 0) {
+			return width.split(',').map(o => {
+				if(o.indexOf('px') > -1) {
+					return `${parseFloat(o)}px`
+				} else if(o.indexOf('%') > -1) {
+					return `${parseFloat(o)}%`
+				} else if(o * 1) {
+					return parseFloat(o)
+				}
+				return 'auto'
+			})
+		}
+		if(width === 'avg') {
+			return new Array(100).fill(1)
+		}
+	}
 
-  return 'auto'
+	return 'auto'
 }
 
 /**
@@ -96,15 +96,15 @@ export function setColWidth(width) {
  * @param event event对象
  */
 export function handleEvent([_elementData, _func], event) {
-  event.stopPropagation()
+	event.stopPropagation()
 
-  if(_func && _.isFunction(_func)) {
-    _func(event)
-  }
+	if(_func && _.isFunction(_func)) {
+		_func(event)
+	}
 
-  if(_elementData && _elementData.callback && _.isFunction(_elementData.callback)) {
-    _elementData.callback(_elementData.data, _elementData, event)
-  }
+	if(_elementData && _elementData.callback && _.isFunction(_elementData.callback)) {
+		_elementData.callback(_elementData.data, _elementData, event)
+	}
 }
 
 /**
@@ -113,83 +113,112 @@ export function handleEvent([_elementData, _func], event) {
  * @returns {*} 新的property
  */
 export function waring(property) {
-  const waringProperty = getWaringProperty()
+	const waringProperty = getWaringProperty()
 
-  /**
-   * 检测指定key是否被用户定义
-   * @param discard 被定义的过时属性
-   * @param property 用户定义的整个配置对象
-   * @returns {{isExist: boolean}|{isExist: boolean, value: *}} isExist:是否使用了过时属性 value:过时属性的值
-   */
-  function isKeyExists(discard, property) {
-    if(!property || !discard) {
-      return { isExist: false }
-    }
+	/**
+	 * 检测指定key是否被用户定义
+	 * @param discard 被定义的过时属性
+	 * @param property 用户定义的整个配置对象
+	 * @returns {{isExist: boolean}|{isExist: boolean, value: *}} isExist:是否使用了过时属性 value:过时属性的值
+	 */
+	function isKeyExists(discard, property) {
+		if(!property || !discard) {
+			return { isExist: false }
+		}
 
-    // 将传入的对象路径字符串拆分为数组
-    const pathList = discard.split('.')
-    // 如果使用了过时的属性，则这边变量用来保存用户设置的属性的值
-    let value
+		// 将传入的对象路径字符串拆分为数组
+		const pathList = discard.split('.')
+		// 如果使用了过时的属性，则这边变量用来保存用户设置的属性的值
+		let value
 
-    // 检测用户的配置对象是否存在警告
-    for(let i = 1; i < pathList.length; i++) {
-      if(typeof property[pathList[i]] === 'undefined') {
-        return { isExist: false }
-      }
+		// 检测用户的配置对象是否存在警告
+		for(let i = 1; i < pathList.length; i++) {
+			if(typeof property[pathList[i]] === 'undefined') {
+				return { isExist: false }
+			}
 
-      if(i === pathList.length - 1) {
-        value = property[pathList[i]]
-        property = pathList[i]
-      } else {
-        property = property[pathList[i]]
-      }
-    }
+			if(i === pathList.length - 1) {
+				value = property[pathList[i]]
+				property = pathList[i]
+			} else {
+				property = property[pathList[i]]
+			}
+		}
 
-    return { isExist: true, value }
-  }
+		return { isExist: true, value }
+	}
 
-  /**
-   * 将用户使用的过时key赋值到正确的key
-   * @param replacement 正确的key
-   * @param property 用户定义的整个配置对象
-   * @param valueOfDiscard 用户使用的过时key的值
-   */
-  function createNewProperty(replacement, property, valueOfDiscard) {
-    if(!replacement) {
-      return
-    }
+	/**
+	 * 将用户使用的过时key赋值到正确的key
+	 * @param replacement 正确的key
+	 * @param property 用户定义的整个配置对象
+	 * @param valueOfDiscard 用户使用的过时key的值
+	 */
+	function createNewProperty(replacement, property, valueOfDiscard) {
+		if(!replacement) {
+			return
+		}
 
-    // 将传入的对象路径字符串拆分为数组
-    const pathList = replacement.split('.')
+		// 将传入的对象路径字符串拆分为数组
+		const pathList = replacement.split('.')
 
-    // 替换过时属性，同时配置相对应的属性（如果存在）
-    for(let i = 1; i < pathList.length; i++) {
-      if(i === pathList.length - 1) {
-        property[pathList[i]] = valueOfDiscard
-      } else {
-        if(!property[pathList[i]] || _.isPlainObject(pathList[i])) {
-          property[pathList[i]] = {}
-        }
+		// 替换过时属性，同时配置相对应的属性（如果存在）
+		for(let i = 1; i < pathList.length; i++) {
+			if(i === pathList.length - 1) {
+				property[pathList[i]] = valueOfDiscard
+			} else {
+				if(!property[pathList[i]] || _.isPlainObject(pathList[i])) {
+					property[pathList[i]] = {}
+				}
 
-        property = property[pathList[i]]
-      }
-    }
-  }
+				property = property[pathList[i]]
+			}
+		}
+	}
 
-  waringProperty.map((_obj) => {
-    const result = isKeyExists(_obj.discard, property)
-    if(result.isExist) {
-      createNewProperty(_obj.replacement, property, result.value)
+	waringProperty.map((_obj) => {
+		const result = isKeyExists(_obj.discard, property)
+		if(result.isExist) {
+			createNewProperty(_obj.replacement, property, result.value)
 
-      if(process.env.NODE_ENV === 'development') {
-        if(_obj.warn) {
-          console.warn(_obj.warn)
-        } else {
-          console.warn('Used obsolete configuration in React-tabllist')
-        }
-      }
-    }
-  })
+			if(process.env.NODE_ENV === 'development') {
+				if(_obj.warn) {
+					console.warn(_obj.warn)
+				} else {
+					console.warn('Used obsolete configuration in React-tabllist')
+				}
+			}
+		}
+	})
 
-  return property
+	return property
+}
+
+/**
+ * @desc 获取组件每次滚动的距离。
+ - 如果值为正整数，单位为`像素`；
+ - 为`0`，表示停用滚动，同`scroll.enable:false`；
+ - 如果为负整数，一次滚动一行的距离，单位为像素。计算方式为：当前可视区域内列表第一行的高度值乘以`distance`的绝对值。
+ - 如果为正小数，则向上取整。
+ - 如果为负小数，则向下取整。
+ - 如果为非数字，则取`0`；
+ * @param distanceConfig {number} 用户设置的滚动距离
+ * @param rows {number} 包含所有行的数组
+ * @param counter {number} 当前可视区域第一行的索引
+ * @param rowSpace {number} 行间距
+ * @returns {*} 处理后的滚动距离
+ */
+export function getDistance(distanceConfig, rows, counter, rowSpace = 0) {
+	if(isNaN(distanceConfig)) {
+		return 0
+	} else {
+		if(distanceConfig > 0) {
+			return Math.ceil(distanceConfig)
+		} else if(distanceConfig < 0) {
+			return Array.prototype.slice.call(rows, counter * -distanceConfig, (counter + 1) * -distanceConfig)
+				.reduce((total, row) => total + row.clientHeight, 0)
+		}
+
+		return distanceConfig
+	}
 }

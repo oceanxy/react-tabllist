@@ -255,19 +255,23 @@ $ npm start
 |----------------------------------------------------------------------|-----------|-------------------------------------------------------------------------------------------------------------------------------------------|
 |**border** <br> `{object}`                                            |{...}      |`边框`样式`全局配置`，包括组件内部的`行`和`单元格`（如果行/单元格未设置边框样式，则默认使用此全局配置)                                                |
 |**style** <br> `{object}`                                             |{...}      |组件`最外层容器`的样式                                                                                                                       |
-|**speed** <br> `{number}`                                             |50         |组件滚动速度                                                                                                                                |
-|**isScroll** <br> `{boolean}`                                         |true       |是否开启组件滚动(当所有行的高度超过组件可视区域高度时生效)                                                                                        |
+|**~~isScroll~~** <br> `{boolean}` &#9888;                             |true       |是否开启组件滚动(当所有行的高度超过组件可视区域高度时生效) &#9888; 此属性在1.4.0版本被弃用，请使用`scroll.enable`代替                                |
+|**~~speed~~** <br> `{number}` &#9888;                                 |50         |组件滚动速度 &#9888; 此属性在1.4.0版本被弃用，请使用`scroll.speed`代替                                                                          |
+|**scroll <sup>^1.4.0</sup>** <br> `{object}`                          |{...}      |组件`滚动功能`相关的设置项，`speed`毫秒滚动`distance`的距离                                                                                     |
+|**scroll.enable <sup>^1.4.0</sup>** <br> `{boolean}`                  |true       |是否开启组件滚动(当所有行的高度超过组件可视区域高度时生效)                                                                                        |
+|**scroll.speed <sup>^1.4.0</sup>** <br> `{number}`                    |50         |组件滚动一次的时间间隔，单位为`毫秒`。提示：设置较小的时间间隔即可实现连续滚动动画效果                                                                |
+|**scroll.distance <sup>^1.4.0</sup>** <br> `{number\|any}`            |1          |组件每次滚动的距离。如果值为正整数，单位为`像素`；为`0`，表示停用滚动，同`scroll.enable:false`；如果为负整数，一次滚动一行的距离，单位为像素。计算方式为：当前可视区域内列表第一行的高度值乘以`distance`的绝对值。如果为非数字，则取`0`；如果为小数，则向上取整。 |
 |**header** <br> `{object}`                                            |{...}      |header相关设置                                                                                                                              |
 |**header.show** <br> `{boolean}`                                      |true       |是否显示header。为true时，`props.data`的第一个数据集为列表头数据                                                                                |
 |**header.style** <br> `{object}`                                      |{...}      |header内`行样式`                                                                                                                            |
-|**header.cellStyle** <br> `{object}`                                  |{...}      |header内`单元格的样式`。`注意`：此style里面的width将失效，因本组件的header单元格宽度自动根据body内单元格宽度进行适配                                  |
+|**header.cellStyle** <br> `{object}`                                  |{...}      |header内`单元格的样式` &#9888; 此样式表里面的`width`将失效，因本组件的header单元格宽度自动根据body内单元格宽度进行适配                                |
 |**body** <br> `{object}`                                              |{...}      |body相关配置                                                                                                                                |
 |**body.row** <br> `{object}`                                          |{...}      |body中的行的相关配置                                                                                                                         |
-|**~~body.row.onClick <sup>1.2.0</sup>~~** <br> `()=>{}`               |null       |body中行的点击事件。`注意：该属性只在1.2.0版本可用`                                                                                             |
+|**body.row.onClick <sup>1.2.0</sup>** <br> `()=>{}` &#9888;           |null       |body中行的点击事件。&#9888; `此属性只在1.2.0版本可用`                                                                                           |
 |**body.row.transition** <br> `{boolean}`                              |true       |是否开启行的加载动画                                                                                                                          |
 |**body.row.spacing** <br> `{boolean}`                                 |0          |行间距                                                                                                                                      |
-|**~~body.row.rowCheckBox~~** <br> `{boolean}`                         |false      |是否开启body内行选择功能                                                                                                                      |
-|**body.row.rowCheckbox <sup>^1.2.2</sup>** <br> `{boolean}`           |false      |是否开启body内行选择功能(同`rowCheckBox`，1.2.2版本后使用本属性代替)                                                                             |
+|**~~body.row.rowCheckBox~~** <br> `{boolean}` &#9888;                 |false      |是否开启body内行选择功能 &#9888; 此属性在1.2.2版本被弃用，请使用`body.row.rowCheckbox`代替                                                        |
+|**body.row.rowCheckbox <sup>^1.2.2</sup>** <br> `{boolean}`           |false      |是否开启body内行选择功能                                                                                                                       |
 |**body.row.style** <br> `{object}`                                    |{...}      |行的样式                                                                                                                                     |
 |**body.row.specialStyle** <br> `{[object, object, ...]}`              |\[]        |按照数组索引依次设置每一行的样式，如要跳过某个索引，直接使用一个逗号占位即可                                                                          |
 |**body.row.visual** <br> `{object}`                                   |{...}      |提升行的视觉：每隔N行设置另外一种行样式                                                                                                          |
@@ -287,7 +291,7 @@ $ npm start
 |**body.cell** <br> `{object}`                                         |{...}      |单元格相关配置                                                                                                                                 |
 |**body.cell.style** <br> `{object}`                                   |{...}      |单元格的样式                                                                                                                                   |
 |**body.cell.style.width** <br> `{string\|Array\|number}`              |'auto'     |`width`是style的属性之一，这里需要特别注意：它的用法不同于css的width，详见`cellWidth`                                                               |
-|**~~body.cell.iconStyle~~** <br> `{object}`                           |{...}      |单元格内的图标样式统一设置，需要配合对象单元格的img类型使用。其实您只需在对象单元格内使用className即可，这个属性显示很多余，所以它可能在后面某个版本被完全移除。|
+|**~~body.cell.iconStyle~~** <br> `{object}`                           |{...}      |单元格内的图标样式统一设置，需要配合对象单元格的img类型使用。其实您只需在对象单元格内使用className即可。 &#9888; 这个属性显得很多余，所以它可能在后面某个版本被完全移除。|
 
 **cellWidth**
 
@@ -320,8 +324,10 @@ cellWidth可选值：
       borderStyle: 'solid',
       borderColor: '#f4f4f4'
     },
-    speed: 50,
-    isScroll: true,
+    scroll: {
+      enable: true,
+      speed: 50
+    },
     header: {
       show: true,
       style: {
