@@ -1,22 +1,32 @@
-module.exports = {
+{
   "env": {
-    "es6": true
+    "es6": true,
+    "browser": true
   },
-  "extends": "eslint:recommended",
+  "parser": "babel-eslint",
   "parserOptions": {
     "ecmaFeatures": {
-      "jsx": true
+      "jsx": true,
+      "modules": true,
+      "experimentalObjectRestSpread": true
     },
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
   "plugins": [
     "react"
   ],
   "rules": {
     "indent": [
       "error",
-      "tab"
+      "tab",
+      {
+        "SwitchCase": 1
+      }
     ],
     "linebreak-style": [
       "error",
@@ -29,6 +39,8 @@ module.exports = {
     "semi": [
       "error",
       "never"
-    ]
+    ],
+    "react/display-name": 0,
+    "react/prop-types": 0
   }
-};
+}

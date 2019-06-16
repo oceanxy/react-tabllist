@@ -261,8 +261,7 @@ export default class extends Component {
 		const {
 			state: {
 				property: {
-					scroll: { speed, distance },
-					body: { row: { spacing } }
+					scroll: { speed, distance }
 				}
 			}
 		} = this
@@ -277,15 +276,18 @@ export default class extends Component {
 			const { listContMain, scroll } = this
 
 			if(listContMain && scroll) {
-				let actualDistance = util.getDistance(distance, listContMain.children, this.counter, spacing)
+				let actualDistance = util.getDistance(distance, listContMain.children, this.counter)
 
 				if(distance < 0) {
-					this.marqueeIntervalRow = setInterval(() => {
-						if(actualDistance > 0) {
-							scroll.scrollTop += 2
-							actualDistance -= 2
+					const marqueeIntervalRow = setInterval(() => {
+						if(actualDistance > scroll.scrollTop) {
+							scroll.scrollTop += 3
 						} else {
-							clearInterval(this.marqueeIntervalRow)
+							if(++this.counter >= (listContMain.children.length - 1) / -distance) {
+								this.counter = 0
+							}
+
+							clearInterval(marqueeIntervalRow)
 						}
 					}, 0)
 				} else {
@@ -295,10 +297,6 @@ export default class extends Component {
 				// 滚动完一个完整周期后立即重置滚动区域的scrollTop值为0
 				if(listContMain.clientHeight <= scroll.scrollTop) {
 					scroll.scrollTop = 0
-				}
-
-				if(!isNaN(distance) && distance < 0) {
-					this.counter >= (listContMain.children.length - 1) / -distance ? this.counter = 0 : this.counter++
 				}
 			}
 		}, speed)
@@ -553,11 +551,12 @@ export default class extends Component {
 	 */
 	setCellLink = link => {
 		const {
-			type,
 			text,
 			event,
+			/* eslint-disable no-unused-vars */
 			callback,
 			data,
+			/* eslint-enable no-unused-vars */
 			href,
 			...props
 		} = link
@@ -730,7 +729,7 @@ export default class extends Component {
 		}
 
 		if(_.isObject(cellData)) {
-			switch (cellData.type) {
+			switch(cellData.type) {
 				case 'img':
 					return this.setCellIcon(cellData, { rowIndex, cellIndex })
 				case 'link':
@@ -805,14 +804,13 @@ export default class extends Component {
 			}
 		}
 
+		// 处理行动画的样式
+		const transitionClassName = transition ? ` ${transitionName}` : ''
+
 		return bodyData.map((rowData, rowIndex) => {
+			const customClassName = rowData.className ? ` ${rowData.className}` : ''
 			const LIElementProps = {
-				key: `${container}-list-row${rowData.key ? rowData.key : rowIndex}`,
-				className: `list-row${
-					rowData.className ? ` ${rowData.className}` : ''
-					}${
-					transition ? ` ${transitionName}` : ''
-					}`,
+				className: `list-row${customClassName}${transitionClassName}`,
 				style: isVisual && rowIndex % (rowVisualInterval * 2) >= rowVisualInterval
 					? _.defaultsDeep({}, specialRowStyle[rowIndex], rowVisualStyle, rowStyle)
 					: _.defaultsDeep({}, specialRowStyle[rowIndex], rowStyle),
@@ -827,7 +825,7 @@ export default class extends Component {
 			}
 
 			return (
-				<li {...LIElementProps}>
+				<li key={`${container}-list-row${rowData.key ? rowData.key : rowIndex}`} {...LIElementProps}>
 					{
 						_.isArray(rowData)
 							? this.setCell(rowData, rowIndex, container)

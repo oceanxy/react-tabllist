@@ -84,4 +84,6 @@
 
 #### 1.4.0
 1. Integrate the original scrolling function related components of the component and add some new scrolling configuration. You can configure it in ‘property.scroll’
-2. New object unit: drop-down list
+
+#### 1.4.1
+1. New object unit: drop-down list
