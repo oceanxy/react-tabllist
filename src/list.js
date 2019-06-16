@@ -4,15 +4,15 @@
  * @Description: react-tabllist
  * @Date: 2018-10-08 17:56:19
  * @LastModified: Oceanxy（xieyang@hiynn.com）
- * @LastModifiedTime: 2019-06-03 14:55:24
+ * @LastModifiedTime: 2019-06-16 23:17:01
  */
 
 import _ from 'lodash'
-import React, { Component } from 'react'
+import React from 'react'
 import './index.scss'
 import * as util from './util'
 
-export default class extends Component {
+export default class extends React.Component {
 	constructor(props) {
 		super(props)
 
@@ -105,11 +105,9 @@ export default class extends Component {
 
 		// 如果列数为0，则停止后续操作
 		if(colWidth.length) {
-			/**
-			 * 组件第一次render之后，DOM结构已经生成，此时开始设置每个单元格宽度
-			 * 设置规则以props里面的width字段为准
-			 * 详情见width字段说明
-			 */
+			// 组件第一次render之后，DOM结构已经生成，此时开始设置每个单元格宽度
+			// 设置规则以props里面的width字段为准
+			// 详情见width字段说明
 			/* eslint-disable react/no-did-mount-set-state  */
 			this.setState({ colWidth })
 
@@ -638,8 +636,9 @@ export default class extends Component {
 		}
 
 		if(cr.type === 'radio' && !container) {
-			/* eslint-disable no-console */
+			/* eslint-disable no-console, no-undef */
 			console.error('When the type attribute of the input tag is radio, the third parameter "container" of setCellInput() is a required parameter, otherwise the function will be invalid!')
+			/* eslint-enable no-console, no-undef */
 			return null
 		}
 

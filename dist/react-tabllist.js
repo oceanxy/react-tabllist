@@ -170,6 +170,30 @@ module.exports = _objectSpread;
 
 /***/ }),
 /* 5 */
+/***/ (function(module, exports) {
+
+function _extends() {
+  module.exports = _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
+module.exports = _extends;
+
+/***/ }),
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var objectWithoutPropertiesLoose = __webpack_require__(18);
@@ -196,7 +220,7 @@ function _objectWithoutProperties(source, excluded) {
 module.exports = _objectWithoutProperties;
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var arrayWithoutHoles = __webpack_require__(21);
@@ -210,30 +234,6 @@ function _toConsumableArray(arr) {
 }
 
 module.exports = _toConsumableArray;
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports) {
-
-function _extends() {
-  module.exports = _extends = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-
-    return target;
-  };
-
-  return _extends.apply(this, arguments);
-}
-
-module.exports = _extends;
 
 /***/ }),
 /* 8 */
@@ -1134,11 +1134,11 @@ module.exports = function (css) {
 __webpack_require__.r(__webpack_exports__);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/extends.js
-var helpers_extends = __webpack_require__(7);
+var helpers_extends = __webpack_require__(5);
 var extends_default = /*#__PURE__*/__webpack_require__.n(helpers_extends);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/objectWithoutProperties.js
-var objectWithoutProperties = __webpack_require__(5);
+var objectWithoutProperties = __webpack_require__(6);
 var objectWithoutProperties_default = /*#__PURE__*/__webpack_require__.n(objectWithoutProperties);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/classCallCheck.js
@@ -1180,7 +1180,7 @@ var external_commonjs_react_commonjs2_react_amd_react_root_React_default = /*#__
  * @Description: 配置文件
  * @Date: 2018-10-08 17:56:19
  * @LastModified: Oceanxy（xieyang@hiynn.com）
- * @LastModifiedTime: 2019-05-30 15:34:24
+ * @LastModifiedTime: 2019-06-14 15:18:52
  */
 /* harmony default export */ var config = ({
   data: [['1st column', '2nd column', '3rd column'], ['1st cell', '2nd cell', '3rd cell']],
@@ -1195,8 +1195,11 @@ var external_commonjs_react_commonjs2_react_amd_react_root_React_default = /*#__
       borderStyle: 'solid',
       borderColor: '#f4f4f4'
     },
-    speed: 50,
-    isScroll: true,
+    scroll: {
+      enable: true,
+      speed: 50,
+      distance: 1
+    },
     header: {
       show: true,
       style: {
@@ -1285,6 +1288,16 @@ function getWaringProperty() {
     discard: 'property.body.row.rowCheckBox',
     replacement: 'property.body.row.rowCheckbox',
     warn: 'Used obsolete configuration in React-tabllist: \'property.body.row.rowCheckBox\' has been deprecated in version 1.3.0 and will be completely removed in future releases. You should use \'property.body.row.rowCheckbox\' instead.'
+  }, {
+    version: '1.4.0',
+    discard: 'property.isScroll',
+    replacement: 'property.scroll.enable',
+    warn: 'Used obsolete configuration in React-tabllist: \'property.isScroll\' has been deprecated in version 1.4.0 and will be completely removed in future releases. You should use \'property.scroll.enable\' instead.'
+  }, {
+    version: '1.4.0',
+    discard: 'property.speed',
+    replacement: 'property.scroll.speed',
+    warn: 'Used obsolete configuration in React-tabllist: \'property.speed\' has been deprecated in version 1.4.0 and will be completely removed in future releases. You should use \'property.scroll.speed\' instead.'
   }];
 }
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/toArray.js
@@ -1292,7 +1305,7 @@ var toArray = __webpack_require__(17);
 var toArray_default = /*#__PURE__*/__webpack_require__.n(toArray);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/toConsumableArray.js
-var toConsumableArray = __webpack_require__(6);
+var toConsumableArray = __webpack_require__(7);
 var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableArray);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/objectSpread.js
@@ -1319,7 +1332,7 @@ var src = __webpack_require__(24);
  * @Description: util
  * @Date: 2018-10-08 17:56:19
  * @LastModified: Oceanxy（xieyang@hiynn.com）
- * @LastModifiedTime: 2019-05-30 15:47:23
+ * @LastModifiedTime: 2019-06-14 16:00:10
  */
 
 
@@ -1433,75 +1446,119 @@ function handleEvent(_ref, event) {
  */
 
 function waring(property) {
+  var waringProperty = getWaringProperty();
   /**
    * 检测指定key是否被用户定义
    * @param discard 被定义的过时属性
    * @param property 用户定义的整个配置对象
-   * @returns {boolean|*} false: 未检测到过时属性或调用参数不合法 property：用户定义的过时属性的值
+   * @returns {{isExist: boolean}|{isExist: boolean, value: *}} isExist:是否使用了过时属性 value:过时属性的值
    */
+
   function isKeyExists(discard, property) {
     if (!property || !discard) {
-      return false;
+      return {
+        isExist: false
+      };
     } // 将传入的对象路径字符串拆分为数组
 
 
-    var pathList = discard.split('.'); // 检测用户的配置对象是否存在警告
+    var pathList = discard.split('.'); // 如果使用了过时的属性，则这边变量用来保存用户设置的属性的值
+
+    var value; // 检测用户的配置对象是否存在警告
 
     for (var i = 1; i < pathList.length; i++) {
-      if (!property[pathList[i]]) {
-        return false;
+      if (typeof property[pathList[i]] === 'undefined') {
+        return {
+          isExist: false
+        };
       }
 
       if (i === pathList.length - 1) {
+        value = property[pathList[i]];
         property = pathList[i];
       } else {
         property = property[pathList[i]];
       }
     }
 
-    return property;
+    return {
+      isExist: true,
+      value: value
+    };
   }
   /**
-   * 将用户使用的过时key替换为正确的key
+   * 将用户使用的过时key赋值到正确的key
    * @param replacement 正确的key
    * @param property 用户定义的整个配置对象
-   * @param discard 用户使用的过时key
+   * @param valueOfDiscard 用户使用的过时key的值
    */
 
 
-  function createNewProperty(replacement, property, discard) {
+  function createNewProperty(replacement, property, valueOfDiscard) {
     if (!replacement) {
       return;
     } // 将传入的对象路径字符串拆分为数组
 
 
-    var pathList = replacement.split('.'); // 检测用户的配置对象是否存在警告使用
+    var pathList = replacement.split('.'); // 替换过时属性，同时配置相对应的属性（如果存在）
 
     for (var i = 1; i < pathList.length; i++) {
       if (i === pathList.length - 1) {
-        property[pathList[i]] = property[discard];
-        delete property[discard];
+        property[pathList[i]] = valueOfDiscard;
       } else {
+        if (!property[pathList[i]] || external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isPlainObject(pathList[i])) {
+          property[pathList[i]] = {};
+        }
+
         property = property[pathList[i]];
       }
     }
   }
 
-  var waringProperty = getWaringProperty();
   waringProperty.map(function (_obj) {
-    var discard = isKeyExists(_obj.discard, property);
+    var result = isKeyExists(_obj.discard, property);
 
-    if (discard) {
-      createNewProperty(_obj.replacement, property, discard);
+    if (result.isExist) {
+      createNewProperty(_obj.replacement, property, result.value);
 
-      if (_obj.warn) {
-        console.warn(_obj.warn);
-      } else {
-        console.warn('Used obsolete configuration in React-tabllist');
-      }
+      if (false) {}
     }
   });
   return property;
+}
+/**
+ * @desc 获取组件每次滚动的距离。
+ - 如果值为正整数，单位为`像素`；
+ - 为`0`，表示停用滚动，同`scroll.enable:false`；
+ - 如果为负整数，则以行为单位进行滚动，行数等于该值的绝对值。
+ - 如果为正小数，则向上取整。
+ - 如果为负小数，则向下取整。
+ - 如果为非数字或，则取`0`。
+ * @param distanceConfig {number} 用户设置的滚动距离
+ * @param rows {Array} 包含所有行的数组
+ * @param counter {number} 当前可视区域第一行的索引
+ * @returns {*} 处理后的滚动距离
+ */
+
+function getDistance(distanceConfig, rows, counter) {
+  if (isNaN(distanceConfig)) {
+    return 0;
+  } else {
+    if (distanceConfig > 0) {
+      return Math.ceil(distanceConfig);
+    } else if (distanceConfig < 0) {
+      var nextRow = (counter + 1) * -distanceConfig; // 当设置一次滚动多行后，如果某一次递增的索引大于了总行数，则直接返回父容器的高度
+      // 即接下来的一次滚动直接滚动到主容器最后的位置
+
+      if (nextRow > rows.length - 1) {
+        return rows[0].parentElement.offsetHeight;
+      }
+
+      return rows[nextRow].offsetTop - rows[0].offsetTop;
+    }
+
+    return distanceConfig;
+  }
 }
 // CONCATENATED MODULE: ./src/list.js
 
@@ -1524,7 +1581,7 @@ function waring(property) {
  * @Description: react-tabllist
  * @Date: 2018-10-08 17:56:19
  * @LastModified: Oceanxy（xieyang@hiynn.com）
- * @LastModifiedTime: 2019-05-31 09:10:45
+ * @LastModifiedTime: 2019-06-16 23:17:01
  */
 
 
@@ -1533,8 +1590,8 @@ function waring(property) {
 
 var list_default =
 /*#__PURE__*/
-function (_Component) {
-  inherits_default()(_default, _Component);
+function (_React$Component) {
+  inherits_default()(_default, _React$Component);
 
   function _default(_props) {
     var _this;
@@ -1549,9 +1606,8 @@ function (_Component) {
           listContSupport = _assertThisInitialize.listContSupport,
           _assertThisInitialize2 = _assertThisInitialize.state,
           scrollHeight = _assertThisInitialize2.scrollHeight,
-          _assertThisInitialize3 = _assertThisInitialize2.property,
-          isScroll = _assertThisInitialize3.isScroll,
-          speed = _assertThisInitialize3.speed;
+          enable = _assertThisInitialize2.property.scroll.enable; // 检测用于滚动的主容器和辅助容器是否存在
+
 
       if (listContMain && listContSupport) {
         // 删除上一次定时器，后续根据状态来判定是否定义新的定时器
@@ -1560,18 +1616,19 @@ function (_Component) {
         if (isInnerScroll || isInnerScroll === undefined) {
           // 检测滚动条件
           // 根据滚动条件控制列表主体容器的辅助容器的显示状态
-          if (isScroll && listContMain.clientHeight >= parseInt(scrollHeight)) {
+          if (enable && listContMain.clientHeight >= parseInt(scrollHeight)) {
             if (isInnerScroll !== undefined && e.type === 'mouseleave') {
+              // 鼠标移除组件，恢复滚动
               _this.pause = false;
             }
 
             if (!_this.pause) {
               for (var i = 0; i < listContSupport.children.length; i++) {
                 listContSupport.children[i].style.display = 'table-row';
-              } // 设置定时器，实现列表滚动
+              } // 调用滚动逻辑
 
 
-              _this.marqueeInterval = setInterval(_this.marquee, speed);
+              _this.marquee();
             }
           } else {
             for (var _i = 0; _i < listContSupport.children.length; _i++) {
@@ -1580,6 +1637,50 @@ function (_Component) {
           }
         }
       }
+    });
+
+    defineProperty_default()(assertThisInitialized_default()(_this), "marquee", function () {
+      var _assertThisInitialize3 = assertThisInitialized_default()(_this),
+          _assertThisInitialize4 = _assertThisInitialize3.state.property.scroll,
+          speed = _assertThisInitialize4.speed,
+          distance = _assertThisInitialize4.distance;
+
+      if (typeof _this.counter === 'undefined') {
+        _this.counter = 0;
+      } // 设置定时器，实现列表滚动
+      // this.marqueeInterval = setInterval(this.marquee, speed)
+
+
+      _this.marqueeInterval = setInterval(function () {
+        var _assertThisInitialize5 = assertThisInitialized_default()(_this),
+            listContMain = _assertThisInitialize5.listContMain,
+            scroll = _assertThisInitialize5.scroll;
+
+        if (listContMain && scroll) {
+          var actualDistance = getDistance(distance, listContMain.children, _this.counter);
+
+          if (distance < 0) {
+            var marqueeIntervalRow = setInterval(function () {
+              if (actualDistance > scroll.scrollTop) {
+                scroll.scrollTop += 3;
+              } else {
+                if (++_this.counter >= (listContMain.children.length - 1) / -distance) {
+                  _this.counter = 0;
+                }
+
+                clearInterval(marqueeIntervalRow);
+              }
+            }, 0);
+          } else {
+            scroll.scrollTop += actualDistance;
+          } // 滚动完一个完整周期后立即重置滚动区域的scrollTop值为0
+
+
+          if (listContMain.clientHeight <= scroll.scrollTop) {
+            scroll.scrollTop = 0;
+          }
+        }
+      }, speed);
     });
 
     defineProperty_default()(assertThisInitialized_default()(_this), "rowHover", function (e) {
@@ -1631,7 +1732,7 @@ function (_Component) {
       var selectedCur = external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.cloneDeep(selected);
 
       var targetName = target.name;
-      var indeterminate = _this.state.indeterminate; // 列表滚动控制
+      var indeterminate = _this.state.indeterminate; // 列表滚动控制（暂停/继续滚动）
 
       _this.pause = true; // 检测this.state.selected里与之对应的数组是否存在，否则初始化一个空数组
       // 而radio因为是单选按钮，决定了state数组里面有且仅有一个值为true，所以每次都初始化为空数组
@@ -1705,9 +1806,9 @@ function (_Component) {
     });
 
     defineProperty_default()(assertThisInitialized_default()(_this), "getColClientWidth", function () {
-      var _assertThisInitialize4 = assertThisInitialized_default()(_this),
-          listContMain = _assertThisInitialize4.listContMain,
-          props = _assertThisInitialize4.props;
+      var _assertThisInitialize6 = assertThisInitialized_default()(_this),
+          listContMain = _assertThisInitialize6.listContMain,
+          props = _assertThisInitialize6.props;
 
       var borderWidth = props.property.border.borderWidth;
       var width = [];
@@ -1721,28 +1822,13 @@ function (_Component) {
       return width;
     });
 
-    defineProperty_default()(assertThisInitialized_default()(_this), "marquee", function () {
-      var _assertThisInitialize5 = assertThisInitialized_default()(_this),
-          listContMain = _assertThisInitialize5.listContMain,
-          scroll = _assertThisInitialize5.scroll;
-
-      if (listContMain && scroll) {
-        scroll.scrollTop++; // 滚动完一个完整周期后立即重置滚动区域的scrollTop值为0
-
-        if (listContMain.clientHeight <= scroll.scrollTop) {
-          scroll.scrollTop = 0;
-        }
-      }
-    });
-
     defineProperty_default()(assertThisInitialized_default()(_this), "setCellLink", function (link) {
-      var type = link.type,
-          text = link.text,
+      var text = link.text,
           event = link.event,
           callback = link.callback,
           data = link.data,
           href = link.href,
-          props = objectWithoutProperties_default()(link, ["type", "text", "event", "callback", "data", "href"]);
+          props = objectWithoutProperties_default()(link, ["text", "event", "callback", "data", "href"]);
 
       if (href) {
         // 防止事件冒泡
@@ -1788,11 +1874,9 @@ function (_Component) {
       var colWidth = this.getColClientWidth(); // 如果列数为0，则停止后续操作
 
       if (colWidth.length) {
-        /**
-         * 组件第一次render之后，DOM结构已经生成，此时开始设置每个单元格宽度
-         * 设置规则以props里面的width字段为准
-         * 详情见width字段说明
-         */
+        // 组件第一次render之后，DOM结构已经生成，此时开始设置每个单元格宽度
+        // 设置规则以props里面的width字段为准
+        // 详情见width字段说明
 
         /* eslint-disable react/no-did-mount-set-state  */
         this.setState({
@@ -1833,9 +1917,9 @@ function (_Component) {
             _this$state2$property2 = _this$state2$property.style,
             conWidth = _this$state2$property2.width,
             height = _this$state2$property2.height,
+            enable = _this$state2$property.scroll.enable,
             show = _this$state2$property.header.show,
             body = _this$state2$property.body,
-            isScroll = _this$state2$property.isScroll,
             transitionName = _this$state2.transitionName,
             indeterminate = _this$state2.indeterminate;
         var _preState$property = preState.property,
@@ -1851,7 +1935,7 @@ function (_Component) {
         var transition = row.transition,
             rowCheckbox = row.rowCheckbox; // 当滚动条显示时，重新计算header的宽度，和列表主体对齐
 
-        if (show && !isScroll) {
+        if (show && !enable) {
           this.setState({
             headerWidth: this.listContMain.clientWidth
           });
@@ -1902,7 +1986,7 @@ function (_Component) {
       clearInterval(this.marqueeInterval);
     }
     /**
-     * 列表滚动逻辑
+     * 列表滚动处理
      * @param {boolean?} isInnerScroll 内部滚动变量（用于事件控制）
      * @param {object?} e 事件回调参数
      */
@@ -2066,8 +2150,10 @@ function (_Component) {
       }
 
       if (cr.type === 'radio' && !container) {
-        /* eslint-disable no-console */
+        /* eslint-disable no-console, no-undef */
         console.error('When the type attribute of the input tag is radio, the third parameter "container" of setCellInput() is a required parameter, otherwise the function will be invalid!');
+        /* eslint-enable no-console, no-undef */
+
         return null;
       }
 
@@ -2248,12 +2334,14 @@ function (_Component) {
       if (rowVisualShow && rowVisualInterval && !Number.isNaN(rowVisualInterval)) {
         isVisual = true;
         rowVisualStyle = objectSpread_default()({}, rowStyle, rowVisualStyle);
-      }
+      } // 处理行动画的样式
 
+
+      var transitionClassName = transition ? " ".concat(transitionName) : '';
       return bodyData.map(function (rowData, rowIndex) {
+        var customClassName = rowData.className ? " ".concat(rowData.className) : '';
         var LIElementProps = {
-          key: "".concat(container, "-list-row").concat(rowData.key ? rowData.key : rowIndex),
-          className: "list-row".concat(rowData.className ? " ".concat(rowData.className) : '').concat(transition ? " ".concat(transitionName) : ''),
+          className: "list-row".concat(customClassName).concat(transitionClassName),
           style: isVisual && rowIndex % (rowVisualInterval * 2) >= rowVisualInterval ? external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.defaultsDeep({}, specialRowStyle[rowIndex], rowVisualStyle, rowStyle) : external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.defaultsDeep({}, specialRowStyle[rowIndex], rowStyle),
           onMouseEnter: _this5.rowHover,
           onMouseLeave: _this5.rowHover // 检测行数据是一个对象还是一个数组
@@ -2265,7 +2353,9 @@ function (_Component) {
           LIElementProps[rowData.event] = handleEvent.bind(null, [rowData]);
         }
 
-        return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("li", LIElementProps, external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isArray(rowData) ? _this5.setCell(rowData, rowIndex, container) : _this5.setCell(rowData.cells, rowIndex, container));
+        return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("li", extends_default()({
+          key: "".concat(container, "-list-row").concat(rowData.key ? rowData.key : rowIndex)
+        }, LIElementProps), external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isArray(rowData) ? _this5.setCell(rowData, rowIndex, container) : _this5.setCell(rowData.cells, rowIndex, container));
       });
     }
     /**
@@ -2283,7 +2373,7 @@ function (_Component) {
           property = _this$state6.property,
           colWidth = _this$state6.colWidth,
           headerWidth = _this$state6.headerWidth;
-      var isScroll = property.isScroll,
+      var enable = property.scroll.enable,
           _property$header = property.header,
           style = _property$header.style,
           cellStyle = _property$header.cellStyle,
@@ -2297,7 +2387,7 @@ function (_Component) {
       if (showHeader && data && data.length) {
         return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("ul", {
           className: "list-header list-cont",
-          style: !isScroll && headerWidth ? objectSpread_default()({}, style, {
+          style: !enable && headerWidth ? objectSpread_default()({}, style, {
             width: headerWidth
           }) : style
         }, external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("li", {
@@ -2336,7 +2426,7 @@ function (_Component) {
           scrollHeight = _this$state7.scrollHeight,
           _this$state7$property = _this$state7.property,
           spacing = _this$state7$property.body.row.spacing,
-          isScroll = _this$state7$property.isScroll; // 处理行间距的值
+          enable = _this$state7$property.scroll.enable; // 处理行间距的值
 
       var borderSpacing = "".concat(spacing).indexOf('px') === -1 ? "0 ".concat(spacing, "px") : "0 ".concat(spacing);
       return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("div", {
@@ -2346,7 +2436,7 @@ function (_Component) {
         },
         style: {
           height: scrollHeight,
-          overflow: isScroll ? 'hidden' : 'auto'
+          overflow: enable ? 'hidden' : 'auto'
         }
       }, external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("ul", {
         className: "list-cont",
@@ -2478,7 +2568,7 @@ function (_Component) {
   }]);
 
   return _default;
-}(external_commonjs_react_commonjs2_react_amd_react_root_React_["Component"]);
+}(external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.Component);
 
 
 // CONCATENATED MODULE: ./src/index.js
