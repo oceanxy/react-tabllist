@@ -259,7 +259,7 @@ Here are some examples：
 |**scroll <sup>^1.4.0</sup>** <br> `{object}`                          |{...}      |Component scrolling related settings. `speed` milliseconds scrolling `distance` distance.                                                                                                                                                                    |
 |**scroll.enable <sup>^1.4.0</sup>** <br> `{boolean}`                  |true       |Whether to enable component scrolling (valid when the height of all rows exceeds the height of the component's viewable area)                                                                                                                                |
 |**scroll.speed <sup>^1.4.0</sup>** <br> `{number}`                    |50         |The interval at which the component scrolls once, in milliseconds. Tip: Set a small time interval to achieve continuous scrolling animation                                                                                                                  |
-|**scroll.distance <sup>^1.4.0</sup>** <br> `{number}`                 |1          |The distance at which the component scrolls each time. If the value is a positive integer, the unit is `pixel'; if `0', it means stop scrolling, the same as `scroll. enable: false'; if it is a negative integer, it scrolls in the unit of `row', and the number of rows equals the absolute value of the value. If it is a non-numeric, take `0'; if it is a positive decimal, take an integral upward. If it is a negative decimal, it is rounded down.  |
+|**scroll.distance <sup>^1.4.0</sup>** <br> `{number}`                 |1          |The distance at which the component scrolls each time. If the value is a positive integer, the unit is `pixel`; if `0`, it means stop scrolling, the same as `scroll. enable: false`; if it is a negative integer, it scrolls in the unit of `row`, and the number of rows equals the absolute value of the value. If it is a non-numeric, take `0`; if it is a positive decimal, take an integral upward. If it is a negative decimal, it is rounded down.  |
 |**header** <br> `{object}`                                            |{...}      |Header related settings                                                                                                                                                                                                                                      |
 |**header.show** <br> `{boolean}`                                      |true       |Whether to display the header. When true, the first subarray of data is the header data.                                                                                                                                                                     |
 |**header.style** <br> `{object}`                                      |{...}      |Header style                                                                                                                                                                                                                                                 |
@@ -326,7 +326,8 @@ Optional value for cellWidth：
     },
     scroll: {
       enable: true,
-      speed: 50
+      speed: 50,
+      distance: 1
     },
     header: {
       show: true,

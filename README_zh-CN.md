@@ -326,7 +326,8 @@ cellWidth可选值：
     },
     scroll: {
       enable: true,
-      speed: 50
+      speed: 50,
+      distance: 1
     },
     header: {
       show: true,
