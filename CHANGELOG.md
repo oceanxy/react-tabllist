@@ -83,7 +83,8 @@
 2. Print outdated property warnings only in the development environment.
 
 #### 1.4.0
-1. Integrate the original scrolling function related components of the component and add some new scrolling configuration. You can configure it in ‘property.scroll’
+1. Integrate the original scrolling function related components of the component and add some new scrolling configuration. You can configure it in ‘property.scroll’.
 
 #### 1.4.1
-1. New object unit: drop-down list
+1. Fix bug: when scrolling by row and scrolling to the last row, the component will stop scrolling.
+2. New object unit: drop-down list

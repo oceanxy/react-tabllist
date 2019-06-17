@@ -256,48 +256,14 @@ export default class extends React.Component {
 	 * 列表滚动实现
 	 */
 	marquee = () => {
-		const {
-			state: {
-				property: {
-					scroll: { speed, distance }
-				}
-			}
-		} = this
+		const { state: { property: { scroll } } } = this
 
 		if(typeof this.counter === 'undefined') {
 			this.counter = 0
 		}
 
+		util._scrollTo.bind(this, [scroll])()
 		// 设置定时器，实现列表滚动
-		// this.marqueeInterval = setInterval(this.marquee, speed)
-		this.marqueeInterval = setInterval(() => {
-			const { listContMain, scroll } = this
-
-			if(listContMain && scroll) {
-				let actualDistance = util.getDistance(distance, listContMain.children, this.counter)
-
-				if(distance < 0) {
-					const marqueeIntervalRow = setInterval(() => {
-						if(actualDistance > scroll.scrollTop) {
-							scroll.scrollTop += 3
-						} else {
-							if(++this.counter >= (listContMain.children.length - 1) / -distance) {
-								this.counter = 0
-							}
-
-							clearInterval(marqueeIntervalRow)
-						}
-					}, 0)
-				} else {
-					scroll.scrollTop += actualDistance
-				}
-
-				// 滚动完一个完整周期后立即重置滚动区域的scrollTop值为0
-				if(listContMain.clientHeight <= scroll.scrollTop) {
-					scroll.scrollTop = 0
-				}
-			}
-		}, speed)
 	}
 
 	/**
@@ -658,6 +624,30 @@ export default class extends React.Component {
 	}
 
 	/**
+	 * 设置单元格的下拉列表
+	 * @param cs {object} 对象单元
+	 */
+	setCellSelect(cs) {
+		const { type, text, option, data, className, event, callback, ...props } = cs
+
+		const tagProps = {
+			...props,
+			[event ? event : 'onChange']: util.handleEvent.bind(null, [cs])
+		}
+
+		return (
+			<label className={className}>
+				{text ? <span>{text}</span> : null}
+				<select {...tagProps}>
+					{
+						option && option.map((item, index) => <option key={index} value={item.value}>{item.name}</option>)
+					}
+				</select>
+			</label>
+		)
+	}
+
+	/**
 	 * 设置单元格
 	 * @param rowData {Array} 行数据
 	 * @param rowIndex {number} 行索引
@@ -728,7 +718,7 @@ export default class extends React.Component {
 		}
 
 		if(_.isObject(cellData)) {
-			switch(cellData.type) {
+			switch (cellData.type) {
 				case 'img':
 					return this.setCellIcon(cellData, { rowIndex, cellIndex })
 				case 'link':
@@ -739,6 +729,8 @@ export default class extends React.Component {
 					return this.setCellInput(cellData, { rowIndex, cellIndex, index })
 				case 'button':
 					return this.setCellInput(cellData, { rowIndex, cellIndex, index })
+				case 'select':
+					return this.setCellSelect(cellData)
 			}
 		}
 
@@ -948,10 +940,11 @@ export default class extends React.Component {
 		// 当存在表头数据且表头是开启时处理数据
 		let headerData
 		let bodyData
+		this.renderData = this.fillRow(data)
 		if(showHeader && data.length) {
-			[headerData, ...bodyData] = this.fillRow(data)
+			[headerData, ...bodyData] = this.renderData
 		} else {
-			bodyData = this.fillRow(data)
+			bodyData = this.renderData
 		}
 
 		const listClass = !Number.isNaN(parseInt(spacing)) && parseInt(spacing) > 0 ? '' : 'list-no-spacing'

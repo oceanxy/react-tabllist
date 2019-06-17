@@ -15,7 +15,41 @@ import './index.scss'
 const Dev = () => {
 	const option = {
 		data: [
-			['1st column', '2nd column', '3rd column', '4rd column'],
+			[
+				'1st column',
+				'2nd column',
+				'3rd column',
+				{
+					type: 'select',
+					text: '4rd column',
+					data: 123,
+					className: '',
+					option: [
+						{
+							id: '1',
+							name: 'item 1',
+							value: 1
+						},
+						{
+							id: '2',
+							name: 'item 2',
+							value: 2
+						},
+						{
+							id: '3',
+							name: 'item 3',
+							value: 3
+						}
+					],
+					event: 'onChange',
+					callback: (restData, elementData, event)=>{
+						debugger
+						console.log(restData, elementData, event)
+
+						elementData.scrollTo(12300)
+					}
+				}
+			],
 			[
 				<span>I am span</span>,
 				<div onClick={() => alert('test JSX event')}>test JSX event</div>,

@@ -25,8 +25,8 @@ export default {
 		},
 		scroll: {
 			enable: true,
-			speed: 50,
-			distance: 1
+			speed: 2000,
+			distance: -1
 		},
 		header: {
 			show: true,

@@ -103,7 +103,7 @@ export function handleEvent([_elementData, _func], event) {
 	}
 
 	if(_elementData && _elementData.callback && _.isFunction(_elementData.callback)) {
-		_elementData.callback(_elementData.data, _elementData, event)
+		_elementData.callback(_elementData.data, { ..._elementData, ...method }, event)
 	}
 }
 
@@ -227,4 +227,50 @@ export function getDistance(distanceConfig, rows, counter) {
 
 		return distanceConfig
 	}
+}
+
+/**
+ * 滚动到指定的行
+ */
+export function _scrollTo([{ distance, speed, rowIndex }]) {
+	const oldCounter = this.counter
+	const { listContMain, scroll } = this
+	if(rowIndex){
+
+	} else {
+		this.marqueeInterval = setInterval(() => {
+			if(listContMain && scroll) {
+				let actualDistance = getDistance(distance, listContMain.children, this.counter)
+
+				if(distance < 0) {
+					const marqueeIntervalRow = setInterval(() => {
+						if(actualDistance > scroll.scrollTop) {
+							scroll.scrollTop += 3
+						} else {
+							if(++this.counter > (listContMain.children.length - 1) / -distance) {
+								this.counter = 0
+							}
+
+							clearInterval(marqueeIntervalRow)
+						}
+					}, 0)
+				} else {
+					scroll.scrollTop += actualDistance
+				}
+
+				// 滚动完一个完整周期后立即重置滚动区域的scrollTop值为0
+				if(listContMain.clientHeight <= scroll.scrollTop) {
+					scroll.scrollTop = 0
+				}
+			}
+		}, speed)
+	}
+}
+
+/**
+ * 提供给用户的方法
+ * @type {{scrollTo: void}}
+ */
+const method = {
+	scrollTo: _scrollTo
 }
