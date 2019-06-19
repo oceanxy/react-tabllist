@@ -42,11 +42,8 @@ const Dev = () => {
 						}
 					],
 					event: 'onChange',
-					callback: (restData, elementData, event)=>{
-						debugger
-						console.log(restData, elementData, event)
-
-						elementData.scrollTo(12300)
+					callback: (restData, elementData, event) => {
+						elementData.listComponent.scrollTo(7)
 					}
 				}
 			],

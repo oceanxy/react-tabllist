@@ -88,3 +88,4 @@
 #### 1.4.1
 1. Fix bug: when scrolling by row and scrolling to the last row, the component will stop scrolling.
 2. New object unit: drop-down list
+3. Some methods of the component can be used to manipulate the component in the object unit's callback function. For example: `scrollTo(9)` can scroll the list to a row with index 9.

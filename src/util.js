@@ -4,7 +4,7 @@
  * @Description: util
  * @Date: 2018-10-08 17:56:19
  * @LastModified: Oceanxy（xieyang@hiynn.com）
- * @LastModifiedTime: 2019-06-14 16:00:10
+ * @LastModifiedTime: 2019-06-19 17:35:16
  */
 
 import _ from 'lodash'
@@ -102,8 +102,11 @@ export function handleEvent([_elementData, _func], event) {
 		_func(event)
 	}
 
+	// 开放方法
+	_elementData = { ..._elementData, listComponent: this }
+
 	if(_elementData && _elementData.callback && _.isFunction(_elementData.callback)) {
-		_elementData.callback(_elementData.data, { ..._elementData, ...method }, event)
+		_elementData.callback(_elementData.data, _elementData, event)
 	}
 }
 
@@ -207,7 +210,7 @@ export function waring(property) {
  * @param counter {number} 当前可视区域第一行的索引
  * @returns {*} 处理后的滚动距离
  */
-export function getDistance(distanceConfig, rows, counter) {
+export function getOffsetTopOfScroll(distanceConfig, rows, counter) {
 	if(isNaN(distanceConfig)) {
 		return 0
 	} else {
@@ -227,50 +230,4 @@ export function getDistance(distanceConfig, rows, counter) {
 
 		return distanceConfig
 	}
-}
-
-/**
- * 滚动到指定的行
- */
-export function _scrollTo([{ distance, speed, rowIndex }]) {
-	const oldCounter = this.counter
-	const { listContMain, scroll } = this
-	if(rowIndex){
-
-	} else {
-		this.marqueeInterval = setInterval(() => {
-			if(listContMain && scroll) {
-				let actualDistance = getDistance(distance, listContMain.children, this.counter)
-
-				if(distance < 0) {
-					const marqueeIntervalRow = setInterval(() => {
-						if(actualDistance > scroll.scrollTop) {
-							scroll.scrollTop += 3
-						} else {
-							if(++this.counter > (listContMain.children.length - 1) / -distance) {
-								this.counter = 0
-							}
-
-							clearInterval(marqueeIntervalRow)
-						}
-					}, 0)
-				} else {
-					scroll.scrollTop += actualDistance
-				}
-
-				// 滚动完一个完整周期后立即重置滚动区域的scrollTop值为0
-				if(listContMain.clientHeight <= scroll.scrollTop) {
-					scroll.scrollTop = 0
-				}
-			}
-		}, speed)
-	}
-}
-
-/**
- * 提供给用户的方法
- * @type {{scrollTo: void}}
- */
-const method = {
-	scrollTo: _scrollTo
 }

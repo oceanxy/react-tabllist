@@ -11,8 +11,11 @@ import _ from 'lodash'
 import React from 'react'
 import './index.scss'
 import * as util from './util'
+import { getOffsetTopOfScroll } from './util'
 
 export default class extends React.Component {
+	function
+
 	constructor(props) {
 		super(props)
 
@@ -256,14 +259,98 @@ export default class extends React.Component {
 	 * 列表滚动实现
 	 */
 	marquee = () => {
-		const { state: { property: { scroll } } } = this
+		const {
+			state: {
+				property: { scroll: { enable, speed, distance } }
+			},
+			listContMain,
+			scroll
+		} = this
 
-		if(typeof this.counter === 'undefined') {
-			this.counter = 0
+		// 设置定时器，实现列表滚动
+		if(listContMain && enable) {
+			if(typeof this.counter === 'undefined') {
+				this.counter = 0
+			}
+
+			this.marqueeInterval = setInterval(() => {
+				let scrollOffsetTop = getOffsetTopOfScroll(distance, listContMain.children, this.counter)
+
+				if(distance < 0) {
+					this.scrollTo(NaN, scrollOffsetTop)
+				} else {
+					scroll.scrollTop += scrollOffsetTop
+					this.checkScrollDistance()
+				}
+			}, speed)
+		}
+	}
+
+	/**
+	 * 滚动到{rowIndex}行
+	 * @param rowIndex {number} 行索引
+	 * @param targetScrollTop {number} 滚动到的值
+	 */
+	scrollTo = (rowIndex, targetScrollTop) => {
+		const {
+			state: {
+				property: { scroll: { distance } }
+			},
+			listContMain,
+			scroll
+		} = this
+
+		if(rowIndex) {
+			targetScrollTop = getOffsetTopOfScroll(-1, listContMain.children, rowIndex)
 		}
 
-		util._scrollTo.bind(this, [scroll])()
-		// 设置定时器，实现列表滚动
+		const marqueeIntervalRow = setInterval(() => {
+			// 组件移动一次
+			if(targetScrollTop !== scroll.scrollTop) {
+				// 检测滚动目标值与当前的scrollTop值的差距是否大于每次累加的值3（当其余条件不变，累加值越大，速度越快）
+				// 否则本次累加值按二者之间的差值计算
+				if(targetScrollTop > scroll.scrollTop) {
+					if(targetScrollTop - scroll.scrollTop >= 3) {
+						scroll.scrollTop += 3
+					} else {
+						scroll.scrollTop += targetScrollTop - scroll.scrollTop
+					}
+				}
+
+				// 当滚动目标值小于当前的scrollTop值时
+				// 检测scrollTop值是否达到临界值
+				// 如果是则当到达主容器高度临界值时重置scrollTop值并进入下一次滚动
+				// 直到滚动到目标值为止
+				if(targetScrollTop < scroll.scrollTop) {
+					scroll.scrollTop += 3
+					this.checkScrollDistance()
+				}
+			}
+
+			if(targetScrollTop === scroll.scrollTop) {
+				if(!isNaN(rowIndex) && rowIndex >= 0) {
+					this.counter = rowIndex
+				} else {
+					if(++this.counter > (listContMain.children.length - 1) / -distance) {
+						this.counter = 0
+					}
+				}
+
+				this.checkScrollDistance()
+				clearInterval(marqueeIntervalRow)
+			}
+		}, 0)
+	}
+
+	/**
+	 * 检测主容器是否滚动完一个周期立即重置scrollTop值
+	 */
+	checkScrollDistance() {
+		const { listContMain, scroll } = this
+
+		if(listContMain.clientHeight <= scroll.scrollTop) {
+			scroll.scrollTop = scroll.scrollTop - listContMain.clientHeight
+		}
 	}
 
 	/**
@@ -527,7 +614,7 @@ export default class extends React.Component {
 
 		if(href) {
 			// 防止事件冒泡
-			props.onClick = util.handleEvent.bind(null, [{}])
+			props.onClick = util.handleEvent.bind(this, [{}])
 
 			return (
 				<a href={href} {...props} >{text}</a>
@@ -536,7 +623,7 @@ export default class extends React.Component {
 
 		const tagProps = {
 			...props,
-			[event ? event : 'onClick']: util.handleEvent.bind(null, [link])
+			[event ? event : 'onClick']: util.handleEvent.bind(this, [link])
 		}
 
 		return (
@@ -559,7 +646,7 @@ export default class extends React.Component {
 		// 处理事件
 		if(cr.type === 'button') {
 			tagProps = {
-				[cr.event ? cr.event : 'onClick']: util.handleEvent.bind(null, [cr]),
+				[cr.event ? cr.event : 'onClick']: util.handleEvent.bind(this, [cr]),
 				key: cr.key,
 				type: cr.type,
 				value: cr.value,
@@ -588,16 +675,16 @@ export default class extends React.Component {
 			}
 
 			if(!cr.event || cr.event === 'onClick' || cr.event === 'onChange') {
-				tagProps.onChange = util.handleEvent.bind(null, [
+				tagProps.onChange = util.handleEvent.bind(this, [
 					cr,
 					this.checkCR.bind(null, [cr, { rowIndex, cellIndex, index }])
 				])
-				tagProps.onClick = util.handleEvent.bind(null, [{}])
+				tagProps.onClick = util.handleEvent.bind(this, [{}])
 			} else {
 				// 当自定义事件不为‘onClick’或‘onChange’时，为radio或checkbox添加默认的点击事件
-				tagProps[cr.event] = util.handleEvent.bind(null, [cr])
+				tagProps[cr.event] = util.handleEvent.bind(this, [cr])
 				tagProps.onChange = this.checkCR.bind(null, [cr, { rowIndex, cellIndex, index }])
-				tagProps.onClick = util.handleEvent.bind(null, [{}])
+				tagProps.onClick = util.handleEvent.bind(this, [{}])
 			}
 		}
 
@@ -610,7 +697,7 @@ export default class extends React.Component {
 
 		if(cr.type === 'radio' || cr.type === 'checkbox') {
 			return (
-				<label key={`${cr.key || `cr-${rowIndex}-${cellIndex}-${index}`}`} onClick={util.handleEvent.bind(null, [{}])}>
+				<label key={`${cr.key || `cr-${rowIndex}-${cellIndex}-${index}`}`} onClick={util.handleEvent.bind(this, [{}])}>
 					<input {...tagProps} />
 					{cr.text ? <span>{cr.text}</span> : null}
 				</label>
@@ -632,7 +719,7 @@ export default class extends React.Component {
 
 		const tagProps = {
 			...props,
-			[event ? event : 'onChange']: util.handleEvent.bind(null, [cs])
+			[event ? event : 'onChange']: util.handleEvent.bind(this, [cs])
 		}
 
 		return (
@@ -812,7 +899,7 @@ export default class extends React.Component {
 			// 检测行数据是一个对象还是一个数组
 			// 如果是对象，则需要对行做一些处理，比如添加自定义事件等（目前只支持添加事件）
 			if(_.isObject(rowData) && rowData.type === 'row') {
-				LIElementProps[rowData.event] = util.handleEvent.bind(null, [rowData])
+				LIElementProps[rowData.event] = util.handleEvent.bind(this, [rowData])
 			}
 
 			return (
