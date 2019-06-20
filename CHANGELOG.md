@@ -90,3 +90,6 @@
 2. New object unit: drop-down list.
 3. Some methods of the component can be used to manipulate the component in the object unit's callback function. For example: `scrollTo(9)` can scroll the list to a row with index 9.
 4. update README document.
+
+#### 1.4.2
+1. Fix default parameters of property.scroll, consistent with previous versions

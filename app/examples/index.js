@@ -878,7 +878,9 @@ const Demo = () => {
 				}
 			},
 			scroll: {
-				enable: true
+				enable: true,
+				speed: 2000,
+				distance: -1
 			}
 		}
 	}
@@ -1624,7 +1626,9 @@ const Demo = () => {
 						'    }\n' +
 						'   },\n' +
 						'   scroll: {\n' +
-						'    enable: true\n' +
+						'    enable: true,\n' +
+						'    speed: 50,\n' +
+						'    distance: -1\n' +
 						'   }\n' +
 						'  }\n' +
 						' }'

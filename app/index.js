@@ -328,7 +328,9 @@ const Dev = () => {
 				}
 			},
 			scroll: {
-				enable: true
+				enable: true,
+				speed: 2000,
+				distance: -1
 			}
 		}
 	}

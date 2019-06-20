@@ -1197,8 +1197,8 @@ var external_commonjs_react_commonjs2_react_amd_react_root_React_default = /*#__
     },
     scroll: {
       enable: true,
-      speed: 2000,
-      distance: -1
+      speed: 50,
+      distance: 1
     },
     header: {
       show: true,
