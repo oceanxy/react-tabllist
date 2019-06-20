@@ -829,20 +829,20 @@ const Demo = () => {
 						show: true,
 						formatter: 'No.{index}',
 						style: {
-							backgroundColor: 'red',
+							backgroundColor: '#3991ff',
 							width: 80,
 							fontSize: 20,
 							color: '#2cff41'
 						},
 						specialStyle: [
 							{
-								backgroundColor: 'blue'
+								backgroundColor: '#203d7b'
 							},
 							{
-								backgroundColor: 'black'
+								backgroundColor: '#2f4c99'
 							},
 							{
-								backgroundColor: 'yellow'
+								backgroundColor: '#3960c0'
 							}
 						]
 					},
