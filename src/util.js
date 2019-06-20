@@ -91,11 +91,11 @@ export function setColWidth(width) {
 
 /**
  * 组件内部元素的事件处理
- * @param _elementData {object} 渲染组件内部结构的数据
+ * @param _objectUnit {object} 渲染组件结构的对象单元
  * @param _func {function} 内部逻辑函数
  * @param event event对象
  */
-export function handleEvent([_elementData, _func], event) {
+export function handleEvent([_objectUnit, _func], event) {
 	event.stopPropagation()
 
 	if(_func && _.isFunction(_func)) {
@@ -103,10 +103,10 @@ export function handleEvent([_elementData, _func], event) {
 	}
 
 	// 开放方法
-	_elementData = { ..._elementData, listComponent: this }
+	_objectUnit = { ..._objectUnit, instanceObject: this }
 
-	if(_elementData && _elementData.callback && _.isFunction(_elementData.callback)) {
-		_elementData.callback(_elementData.data, _elementData, event)
+	if(_objectUnit && _objectUnit.callback && _.isFunction(_objectUnit.callback)) {
+		_objectUnit.callback(_objectUnit.data, _objectUnit, event)
 	}
 }
 
@@ -211,23 +211,45 @@ export function waring(property) {
  * @returns {*} 处理后的滚动距离
  */
 export function getOffsetTopOfScroll(distanceConfig, rows, counter) {
-	if(isNaN(distanceConfig)) {
-		return 0
+	if(this === 'switch') {
+		if(!counter) {
+			// 如果手动切换到第一行，则直接让列表滚动到末尾，通过checkScrollDistance方法让列表自动循环到第一行
+			return rows[0].parentElement.offsetHeight
+		}
+		return rows[counter].offsetTop - rows[0].offsetTop
 	} else {
-		if(distanceConfig > 0) {
-			return Math.ceil(distanceConfig)
-		} else if(distanceConfig < 0) {
-			let nextRow = (counter + 1) * -distanceConfig
+		if(isNaN(distanceConfig)) {
+			return 0
+		} else {
+			if(distanceConfig > 0) {
+				return Math.ceil(distanceConfig)
+			} else if(distanceConfig < 0) {
+				let nextRow = (counter + 1) * -distanceConfig
 
-			// 当设置一次滚动多行后，如果某一次递增的索引大于了总行数，则直接返回父容器的高度
-			// 即接下来的一次滚动直接滚动到主容器最后的位置
-			if(nextRow > rows.length - 1) {
-				return rows[0].parentElement.offsetHeight
+				// 当设置一次滚动多行后，如果某一次递增的索引大于了总行数，则直接返回父容器的高度
+				// 即接下来的一次滚动直接滚动到主容器最后的位置
+				if(nextRow > rows.length - 1) {
+					return rows[0].parentElement.offsetHeight
+				}
+
+				return rows[nextRow].offsetTop - rows[0].offsetTop
 			}
 
-			return rows[nextRow].offsetTop - rows[0].offsetTop
+			return distanceConfig
 		}
-
-		return distanceConfig
 	}
+}
+
+/**
+ * 获取下一次滚动的速度
+ * @param targetScrollTop {number} 滚动目标值
+ * @param scroll {object} 滚动容器对象
+ * @returns {number}
+ */
+export function getSpeed(targetScrollTop, scroll) {
+	if(targetScrollTop < scroll.scrollTop) {
+		return (scroll.offsetHeight - scroll.scrollTop + targetScrollTop) / 30
+	}
+
+	return targetScrollTop / 30
 }

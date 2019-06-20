@@ -27,23 +27,34 @@ const Dev = () => {
 					option: [
 						{
 							id: '1',
-							name: 'item 1',
-							value: 1
+							label: 'Scroll to the 2nd row',
+							value: 0
 						},
 						{
 							id: '2',
-							name: 'item 2',
-							value: 2
+							label: 'Scroll to the 5rd row',
+							value: 1
 						},
 						{
 							id: '3',
-							name: 'item 3',
-							value: 3
+							label: 'Scroll to the 7rd row',
+							value: 2
 						}
 					],
 					event: 'onChange',
-					callback: (restData, elementData, event) => {
-						elementData.listComponent.scrollTo(7)
+					callback: (restData, objectUnit, event) => {
+						// step 1: Get the value of select
+						const value = event.target.value
+						// step 2: According to the value of select to match the value of the corresponding row in the data,
+						// 				 and then get the index of the row
+						const data = objectUnit.instanceObject.props.data
+						for(let i = 0, k = data; i < k.length; i++) {
+							if(_.isPlainObject(data[i]) && parseInt(data[i].value) === parseInt(value)) {
+								// step 3: Call method scrolling list
+								objectUnit.instanceObject.scrollTo(i - 1)
+								break
+							}
+						}
 					}
 				}
 			],
@@ -55,11 +66,12 @@ const Dev = () => {
 			],
 			{
 				type: 'row',
-				data: 123,
+				data: 1,
+				value: 0,
 				event: 'onClick',
-				callback: (restData, elementData, event) => {
+				callback: (restData, objectUnit, event) => {
 					alert('test event of row')
-					console.log(restData, elementData, event)
+					console.log(restData, objectUnit, event)
 				},
 				className: 'click-row',
 				cells: [
@@ -104,22 +116,33 @@ const Dev = () => {
 				}
 			],
 			['row 3; column 1', 'row 3; column 2', 'row 3; column 3', 'row 3; column 4'],
-			[
-				{
-					type: 'link',
-					text: 'I am a link',
-					href: 'https://github.com/oceanxy/react-tabllist',
-					className: 'test-link'
+			{
+				type: 'row',
+				data: 1,
+				value: 1,
+				event: 'onClick',
+				callback: (restData, objectUnit, event) => {
+					alert('test event of row')
+					console.log(restData, objectUnit, event)
 				},
-				{
-					type: 'button',
-					value: 'click me',
-					className: 'test-btn',
-					callback: () => {
-						alert('hello react-tabllist')
-					}
-				}, 'row 4; column 3', 'row 4; column 4'
-			],
+				className: 'click-row',
+				cells: [
+					{
+						type: 'link',
+						text: 'I am a link',
+						href: 'https://github.com/oceanxy/react-tabllist',
+						className: 'test-link'
+					},
+					{
+						type: 'button',
+						value: 'click me',
+						className: 'test-btn',
+						callback: () => {
+							alert('hello react-tabllist')
+						}
+					}, 'row 4; column 3', 'row 4; column 4'
+				]
+			},
 			[
 				[
 					{
@@ -139,25 +162,36 @@ const Dev = () => {
 				'row 5; column 3',
 				'row 5; column 4'
 			],
-			[
-				[
-					{
-						type: 'radio',
-						name: 'group2',
-						text: 'radio group 2-1',
-						className: 'test-radio'
-					},
-					{
-						type: 'radio',
-						name: 'group2',
-						text: 'radio group 2-2',
-						className: 'test-radio'
-					}
-				],
-				'row 6; column 2',
-				'row 6; column 3',
-				'row 6; column 4'
-			],
+			{
+				type: 'row',
+				data: 1,
+				value: 2,
+				event: 'onClick',
+				callback: (restData, objectUnit, event) => {
+					alert('test event of row')
+					console.log(restData, objectUnit, event)
+				},
+				className: 'click-row',
+				cells: [
+					[
+						{
+							type: 'radio',
+							name: 'group2',
+							text: 'radio group 2-1',
+							className: 'test-radio'
+						},
+						{
+							type: 'radio',
+							name: 'group2',
+							text: 'radio group 2-2',
+							className: 'test-radio'
+						}
+					],
+					'row 6; column 2',
+					'row 6; column 3',
+					'row 6; column 4'
+				]
+			},
 			[
 				[
 					{
@@ -245,20 +279,20 @@ const Dev = () => {
 						show: true,
 						formatter: 'No.{index}',
 						style: {
-							backgroundColor: 'red',
+							backgroundColor: '#3991ff',
 							width: 80,
 							fontSize: 20,
 							color: '#2cff41'
 						},
 						specialStyle: [
 							{
-								backgroundColor: 'blue'
+								backgroundColor: '#203d7b'
 							},
 							{
-								backgroundColor: 'black'
+								backgroundColor: '#2f4c99'
 							},
 							{
-								backgroundColor: 'yellow'
+								backgroundColor: '#3960c0'
 							}
 						]
 					},

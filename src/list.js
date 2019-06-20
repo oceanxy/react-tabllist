@@ -300,18 +300,21 @@ export default class extends React.Component {
 			scroll
 		} = this
 
-		if(rowIndex) {
-			targetScrollTop = getOffsetTopOfScroll(-1, listContMain.children, rowIndex)
+		if(!isNaN(rowIndex) && rowIndex >= 0) {
+			targetScrollTop = getOffsetTopOfScroll.bind('switch', null, listContMain.children, rowIndex)()
 		}
+
+		// 时间恒定 根据需要移动的总距离求速度
+		const perIntervalMoveDistance = util.getSpeed(targetScrollTop, scroll)
 
 		const marqueeIntervalRow = setInterval(() => {
 			// 组件移动一次
 			if(targetScrollTop !== scroll.scrollTop) {
-				// 检测滚动目标值与当前的scrollTop值的差距是否大于每次累加的值3（当其余条件不变，累加值越大，速度越快）
-				// 否则本次累加值按二者之间的差值计算
+				// 检测滚动目标值与当前的scrollTop值的差距是否大于每次速度值
+				// 否则本次速度值按二者之间的差值计算
 				if(targetScrollTop > scroll.scrollTop) {
-					if(targetScrollTop - scroll.scrollTop >= 3) {
-						scroll.scrollTop += 3
+					if(targetScrollTop - scroll.scrollTop >= perIntervalMoveDistance) {
+						scroll.scrollTop += perIntervalMoveDistance
 					} else {
 						scroll.scrollTop += targetScrollTop - scroll.scrollTop
 					}
@@ -322,14 +325,18 @@ export default class extends React.Component {
 				// 如果是则当到达主容器高度临界值时重置scrollTop值并进入下一次滚动
 				// 直到滚动到目标值为止
 				if(targetScrollTop < scroll.scrollTop) {
-					scroll.scrollTop += 3
+					scroll.scrollTop += perIntervalMoveDistance
 					this.checkScrollDistance()
 				}
 			}
 
 			if(targetScrollTop === scroll.scrollTop) {
 				if(!isNaN(rowIndex) && rowIndex >= 0) {
-					this.counter = rowIndex
+					if(++rowIndex > (listContMain.children.length - 1) / -distance) {
+						this.counter = 0
+					} else {
+						this.counter = rowIndex - 1
+					}
 				} else {
 					if(++this.counter > (listContMain.children.length - 1) / -distance) {
 						this.counter = 0
@@ -727,7 +734,7 @@ export default class extends React.Component {
 				{text ? <span>{text}</span> : null}
 				<select {...tagProps}>
 					{
-						option && option.map((item, index) => <option key={index} value={item.value}>{item.name}</option>)
+						option && option.map((item, index) => <option key={index} {...item} />)
 					}
 				</select>
 			</label>
@@ -887,7 +894,7 @@ export default class extends React.Component {
 
 		return bodyData.map((rowData, rowIndex) => {
 			const customClassName = rowData.className ? ` ${rowData.className}` : ''
-			const LIElementProps = {
+			let LIElementProps = {
 				className: `list-row${customClassName}${transitionClassName}`,
 				style: isVisual && rowIndex % (rowVisualInterval * 2) >= rowVisualInterval
 					? _.defaultsDeep({}, specialRowStyle[rowIndex], rowVisualStyle, rowStyle)
@@ -898,8 +905,11 @@ export default class extends React.Component {
 
 			// 检测行数据是一个对象还是一个数组
 			// 如果是对象，则需要对行做一些处理，比如添加自定义事件等（目前只支持添加事件）
-			if(_.isObject(rowData) && rowData.type === 'row') {
+			if(_.isPlainObject(rowData) && rowData.type === 'row') {
 				LIElementProps[rowData.event] = util.handleEvent.bind(this, [rowData])
+				LIElementProps.value = rowData.value
+			} else {
+				LIElementProps = { ...LIElementProps, type: 'row' }
 			}
 
 			return (

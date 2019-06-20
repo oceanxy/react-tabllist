@@ -1,12 +1,12 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("lodash"), require("react"));
+		module.exports = factory(require("react"), require("lodash"));
 	else if(typeof define === 'function' && define.amd)
-		define(["lodash", "react"], factory);
+		define(["react", "lodash"], factory);
 	else if(typeof exports === 'object')
-		exports["ReactTabllist"] = factory(require("lodash"), require("react"));
+		exports["ReactTabllist"] = factory(require("react"), require("lodash"));
 	else
-		root["ReactTabllist"] = factory(root["_"], root["React"]);
+		root["ReactTabllist"] = factory(root["React"], root["_"]);
 })(window, function(__WEBPACK_EXTERNAL_MODULE__0__, __WEBPACK_EXTERNAL_MODULE__1__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -1166,11 +1166,11 @@ var defineProperty = __webpack_require__(2);
 var defineProperty_default = /*#__PURE__*/__webpack_require__.n(defineProperty);
 
 // EXTERNAL MODULE: external {"commonjs":"lodash","commonjs2":"lodash","amd":"lodash","root":"_"}
-var external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_ = __webpack_require__(0);
+var external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_ = __webpack_require__(1);
 var external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default = /*#__PURE__*/__webpack_require__.n(external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_);
 
 // EXTERNAL MODULE: external {"commonjs":"react","commonjs2":"react","amd":"react","root":"React"}
-var external_commonjs_react_commonjs2_react_amd_react_root_React_ = __webpack_require__(1);
+var external_commonjs_react_commonjs2_react_amd_react_root_React_ = __webpack_require__(0);
 var external_commonjs_react_commonjs2_react_amd_react_root_React_default = /*#__PURE__*/__webpack_require__.n(external_commonjs_react_commonjs2_react_amd_react_root_React_);
 
 // CONCATENATED MODULE: ./src/config.js
@@ -1197,8 +1197,8 @@ var external_commonjs_react_commonjs2_react_amd_react_root_React_default = /*#__
     },
     scroll: {
       enable: true,
-      speed: 50,
-      distance: 1
+      speed: 2000,
+      distance: -1
     },
     header: {
       show: true,
@@ -1326,13 +1326,14 @@ var src = __webpack_require__(24);
 // CONCATENATED MODULE: ./src/util.js
 
 
+
 /**
  * @Author: Oceanxy
  * @Email: xyzsyx@163.com
  * @Description: util
  * @Date: 2018-10-08 17:56:19
  * @LastModified: Oceanxy（xieyang@hiynn.com）
- * @LastModifiedTime: 2019-06-14 16:00:10
+ * @LastModifiedTime: 2019-06-19 17:35:16
  */
 
 
@@ -1419,24 +1420,29 @@ function setColWidth(width) {
 }
 /**
  * 组件内部元素的事件处理
- * @param _elementData {object} 渲染组件内部结构的数据
+ * @param _objectUnit {object} 渲染组件结构的对象单元
  * @param _func {function} 内部逻辑函数
  * @param event event对象
  */
 
 function handleEvent(_ref, event) {
   var _ref2 = slicedToArray_default()(_ref, 2),
-      _elementData = _ref2[0],
+      _objectUnit = _ref2[0],
       _func = _ref2[1];
 
   event.stopPropagation();
 
   if (_func && external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isFunction(_func)) {
     _func(event);
-  }
+  } // 开放方法
 
-  if (_elementData && _elementData.callback && external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isFunction(_elementData.callback)) {
-    _elementData.callback(_elementData.data, _elementData, event);
+
+  _objectUnit = objectSpread_default()({}, _objectUnit, {
+    instanceObject: this
+  });
+
+  if (_objectUnit && _objectUnit.callback && external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isFunction(_objectUnit.callback)) {
+    _objectUnit.callback(_objectUnit.data, _objectUnit, event);
   }
 }
 /**
@@ -1540,25 +1546,48 @@ function waring(property) {
  * @returns {*} 处理后的滚动距离
  */
 
-function getDistance(distanceConfig, rows, counter) {
-  if (isNaN(distanceConfig)) {
-    return 0;
-  } else {
-    if (distanceConfig > 0) {
-      return Math.ceil(distanceConfig);
-    } else if (distanceConfig < 0) {
-      var nextRow = (counter + 1) * -distanceConfig; // 当设置一次滚动多行后，如果某一次递增的索引大于了总行数，则直接返回父容器的高度
-      // 即接下来的一次滚动直接滚动到主容器最后的位置
-
-      if (nextRow > rows.length - 1) {
-        return rows[0].parentElement.offsetHeight;
-      }
-
-      return rows[nextRow].offsetTop - rows[0].offsetTop;
+function getOffsetTopOfScroll(distanceConfig, rows, counter) {
+  if (this === 'switch') {
+    if (!counter) {
+      // 如果手动切换到第一行，则直接让列表滚动到末尾，通过checkScrollDistance方法让列表自动循环到第一行
+      return rows[0].parentElement.offsetHeight;
     }
 
-    return distanceConfig;
+    return rows[counter].offsetTop - rows[0].offsetTop;
+  } else {
+    if (isNaN(distanceConfig)) {
+      return 0;
+    } else {
+      if (distanceConfig > 0) {
+        return Math.ceil(distanceConfig);
+      } else if (distanceConfig < 0) {
+        var nextRow = (counter + 1) * -distanceConfig; // 当设置一次滚动多行后，如果某一次递增的索引大于了总行数，则直接返回父容器的高度
+        // 即接下来的一次滚动直接滚动到主容器最后的位置
+
+        if (nextRow > rows.length - 1) {
+          return rows[0].parentElement.offsetHeight;
+        }
+
+        return rows[nextRow].offsetTop - rows[0].offsetTop;
+      }
+
+      return distanceConfig;
+    }
   }
+}
+/**
+ * 获取下一次滚动的速度
+ * @param targetScrollTop {number} 滚动目标值
+ * @param scroll {object} 滚动容器对象
+ * @returns {number}
+ */
+
+function getSpeed(targetScrollTop, scroll) {
+  if (targetScrollTop < scroll.scrollTop) {
+    return (scroll.offsetHeight - scroll.scrollTop + targetScrollTop) / 30;
+  }
+
+  return targetScrollTop / 30;
 }
 // CONCATENATED MODULE: ./src/list.js
 
@@ -1588,6 +1617,7 @@ function getDistance(distanceConfig, rows, counter) {
 
 
 
+
 var list_default =
 /*#__PURE__*/
 function (_React$Component) {
@@ -1599,6 +1629,8 @@ function (_React$Component) {
     classCallCheck_default()(this, _default);
 
     _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(_default).call(this, _props));
+
+    defineProperty_default()(assertThisInitialized_default()(_this), "function", void 0);
 
     defineProperty_default()(assertThisInitialized_default()(_this), "scrollList", function (isInnerScroll, e) {
       var _assertThisInitialize = assertThisInitialized_default()(_this),
@@ -1642,45 +1674,86 @@ function (_React$Component) {
     defineProperty_default()(assertThisInitialized_default()(_this), "marquee", function () {
       var _assertThisInitialize3 = assertThisInitialized_default()(_this),
           _assertThisInitialize4 = _assertThisInitialize3.state.property.scroll,
+          enable = _assertThisInitialize4.enable,
           speed = _assertThisInitialize4.speed,
-          distance = _assertThisInitialize4.distance;
-
-      if (typeof _this.counter === 'undefined') {
-        _this.counter = 0;
-      } // 设置定时器，实现列表滚动
-      // this.marqueeInterval = setInterval(this.marquee, speed)
+          distance = _assertThisInitialize4.distance,
+          listContMain = _assertThisInitialize3.listContMain,
+          scroll = _assertThisInitialize3.scroll; // 设置定时器，实现列表滚动
 
 
-      _this.marqueeInterval = setInterval(function () {
-        var _assertThisInitialize5 = assertThisInitialized_default()(_this),
-            listContMain = _assertThisInitialize5.listContMain,
-            scroll = _assertThisInitialize5.scroll;
+      if (listContMain && enable) {
+        if (typeof _this.counter === 'undefined') {
+          _this.counter = 0;
+        }
 
-        if (listContMain && scroll) {
-          var actualDistance = getDistance(distance, listContMain.children, _this.counter);
+        _this.marqueeInterval = setInterval(function () {
+          var scrollOffsetTop = getOffsetTopOfScroll(distance, listContMain.children, _this.counter);
 
           if (distance < 0) {
-            var marqueeIntervalRow = setInterval(function () {
-              if (actualDistance > scroll.scrollTop) {
-                scroll.scrollTop += 3;
-              } else {
-                if (++_this.counter >= (listContMain.children.length - 1) / -distance) {
-                  _this.counter = 0;
-                }
-
-                clearInterval(marqueeIntervalRow);
-              }
-            }, 0);
+            _this.scrollTo(NaN, scrollOffsetTop);
           } else {
-            scroll.scrollTop += actualDistance;
-          } // 滚动完一个完整周期后立即重置滚动区域的scrollTop值为0
+            scroll.scrollTop += scrollOffsetTop;
+
+            _this.checkScrollDistance();
+          }
+        }, speed);
+      }
+    });
+
+    defineProperty_default()(assertThisInitialized_default()(_this), "scrollTo", function (rowIndex, targetScrollTop) {
+      var _assertThisInitialize5 = assertThisInitialized_default()(_this),
+          distance = _assertThisInitialize5.state.property.scroll.distance,
+          listContMain = _assertThisInitialize5.listContMain,
+          scroll = _assertThisInitialize5.scroll;
+
+      if (!isNaN(rowIndex) && rowIndex >= 0) {
+        targetScrollTop = getOffsetTopOfScroll.bind('switch', null, listContMain.children, rowIndex)();
+      } // 时间恒定 根据需要移动的总距离求速度
 
 
-          if (listContMain.clientHeight <= scroll.scrollTop) {
-            scroll.scrollTop = 0;
+      var perIntervalMoveDistance = getSpeed(targetScrollTop, scroll);
+      var marqueeIntervalRow = setInterval(function () {
+        // 组件移动一次
+        if (targetScrollTop !== scroll.scrollTop) {
+          // 检测滚动目标值与当前的scrollTop值的差距是否大于每次速度值
+          // 否则本次速度值按二者之间的差值计算
+          if (targetScrollTop > scroll.scrollTop) {
+            if (targetScrollTop - scroll.scrollTop >= perIntervalMoveDistance) {
+              scroll.scrollTop += perIntervalMoveDistance;
+            } else {
+              scroll.scrollTop += targetScrollTop - scroll.scrollTop;
+            }
+          } // 当滚动目标值小于当前的scrollTop值时
+          // 检测scrollTop值是否达到临界值
+          // 如果是则当到达主容器高度临界值时重置scrollTop值并进入下一次滚动
+          // 直到滚动到目标值为止
+
+
+          if (targetScrollTop < scroll.scrollTop) {
+            scroll.scrollTop += perIntervalMoveDistance;
+
+            _this.checkScrollDistance();
           }
         }
-      }, speed);
+
+        if (targetScrollTop === scroll.scrollTop) {
+          if (!isNaN(rowIndex) && rowIndex >= 0) {
+            if (++rowIndex > (listContMain.children.length - 1) / -distance) {
+              _this.counter = 0;
+            } else {
+              _this.counter = rowIndex - 1;
+            }
+          } else {
+            if (++_this.counter > (listContMain.children.length - 1) / -distance) {
+              _this.counter = 0;
+            }
+          }
+
+          _this.checkScrollDistance();
+
+          clearInterval(marqueeIntervalRow);
+        }
+      }, 0);
     });
 
     defineProperty_default()(assertThisInitialized_default()(_this), "rowHover", function (e) {
@@ -1832,13 +1905,13 @@ function (_React$Component) {
 
       if (href) {
         // 防止事件冒泡
-        props.onClick = handleEvent.bind(null, [{}]);
+        props.onClick = handleEvent.bind(assertThisInitialized_default()(_this), [{}]);
         return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("a", extends_default()({
           href: href
         }, props), text);
       }
 
-      var tagProps = objectSpread_default()({}, props, defineProperty_default()({}, event ? event : 'onClick', handleEvent.bind(null, [link])));
+      var tagProps = objectSpread_default()({}, props, defineProperty_default()({}, event ? event : 'onClick', handleEvent.bind(assertThisInitialized_default()(_this), [link])));
 
       return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("a", tagProps, text);
     });
@@ -1992,6 +2065,25 @@ function (_React$Component) {
      */
 
   }, {
+    key: "checkScrollDistance",
+
+    /**
+     * 检测主容器是否滚动完一个周期立即重置scrollTop值
+     */
+    value: function checkScrollDistance() {
+      var listContMain = this.listContMain,
+          scroll = this.scroll;
+
+      if (listContMain.clientHeight <= scroll.scrollTop) {
+        scroll.scrollTop = scroll.scrollTop - listContMain.clientHeight;
+      }
+    }
+    /**
+     * 行hover事件
+     * @param {object} e event
+     */
+
+  }, {
     key: "fillRow",
 
     /**
@@ -2108,7 +2200,7 @@ function (_React$Component) {
       if (cr.type === 'button') {
         var _tagProps;
 
-        tagProps = (_tagProps = {}, defineProperty_default()(_tagProps, cr.event ? cr.event : 'onClick', handleEvent.bind(null, [cr])), defineProperty_default()(_tagProps, "key", cr.key), defineProperty_default()(_tagProps, "type", cr.type), defineProperty_default()(_tagProps, "value", cr.value), defineProperty_default()(_tagProps, "className", cr.className), _tagProps);
+        tagProps = (_tagProps = {}, defineProperty_default()(_tagProps, cr.event ? cr.event : 'onClick', handleEvent.bind(this, [cr])), defineProperty_default()(_tagProps, "key", cr.key), defineProperty_default()(_tagProps, "type", cr.type), defineProperty_default()(_tagProps, "value", cr.value), defineProperty_default()(_tagProps, "className", cr.className), _tagProps);
       } else {
         var _this$state3 = this.state,
             selected = _this$state3.selected,
@@ -2131,21 +2223,21 @@ function (_React$Component) {
         }
 
         if (!cr.event || cr.event === 'onClick' || cr.event === 'onChange') {
-          tagProps.onChange = handleEvent.bind(null, [cr, this.checkCR.bind(null, [cr, {
+          tagProps.onChange = handleEvent.bind(this, [cr, this.checkCR.bind(null, [cr, {
             rowIndex: rowIndex,
             cellIndex: cellIndex,
             index: index
           }])]);
-          tagProps.onClick = handleEvent.bind(null, [{}]);
+          tagProps.onClick = handleEvent.bind(this, [{}]);
         } else {
           // 当自定义事件不为‘onClick’或‘onChange’时，为radio或checkbox添加默认的点击事件
-          tagProps[cr.event] = handleEvent.bind(null, [cr]);
+          tagProps[cr.event] = handleEvent.bind(this, [cr]);
           tagProps.onChange = this.checkCR.bind(null, [cr, {
             rowIndex: rowIndex,
             cellIndex: cellIndex,
             index: index
           }]);
-          tagProps.onClick = handleEvent.bind(null, [{}]);
+          tagProps.onClick = handleEvent.bind(this, [{}]);
         }
       }
 
@@ -2160,12 +2252,39 @@ function (_React$Component) {
       if (cr.type === 'radio' || cr.type === 'checkbox') {
         return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("label", {
           key: "".concat(cr.key || "cr-".concat(rowIndex, "-").concat(cellIndex, "-").concat(index)),
-          onClick: handleEvent.bind(null, [{}])
+          onClick: handleEvent.bind(this, [{}])
         }, external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("input", tagProps), cr.text ? external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("span", null, cr.text) : null);
       } // button 等标签会执行以下代码
 
 
       return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("input", tagProps);
+    }
+    /**
+     * 设置单元格的下拉列表
+     * @param cs {object} 对象单元
+     */
+
+  }, {
+    key: "setCellSelect",
+    value: function setCellSelect(cs) {
+      var type = cs.type,
+          text = cs.text,
+          option = cs.option,
+          data = cs.data,
+          className = cs.className,
+          event = cs.event,
+          callback = cs.callback,
+          props = objectWithoutProperties_default()(cs, ["type", "text", "option", "data", "className", "event", "callback"]);
+
+      var tagProps = objectSpread_default()({}, props, defineProperty_default()({}, event ? event : 'onChange', handleEvent.bind(this, [cs])));
+
+      return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("label", {
+        className: className
+      }, text ? external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("span", null, text) : null, external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("select", tagProps, option && option.map(function (item, index) {
+        return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("option", extends_default()({
+          key: index
+        }, item));
+      })));
     }
     /**
      * 设置单元格
@@ -2269,6 +2388,9 @@ function (_React$Component) {
               cellIndex: cellIndex,
               index: index
             });
+
+          case 'select':
+            return this.setCellSelect(cellData);
         }
       } // 不是对象，返回源数据
 
@@ -2349,8 +2471,13 @@ function (_React$Component) {
 
         };
 
-        if (external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isObject(rowData) && rowData.type === 'row') {
-          LIElementProps[rowData.event] = handleEvent.bind(null, [rowData]);
+        if (external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isPlainObject(rowData) && rowData.type === 'row') {
+          LIElementProps[rowData.event] = handleEvent.bind(_this5, [rowData]);
+          LIElementProps.value = rowData.value;
+        } else {
+          LIElementProps = objectSpread_default()({}, LIElementProps, {
+            type: 'row'
+          });
         }
 
         return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("li", extends_default()({
@@ -2477,16 +2604,15 @@ function (_React$Component) {
 
       var headerData;
       var bodyData;
+      this.renderData = this.fillRow(data);
 
       if (showHeader && data.length) {
-        var _this$fillRow = this.fillRow(data);
+        var _this$renderData = toArray_default()(this.renderData);
 
-        var _this$fillRow2 = toArray_default()(_this$fillRow);
-
-        headerData = _this$fillRow2[0];
-        bodyData = _this$fillRow2.slice(1);
+        headerData = _this$renderData[0];
+        bodyData = _this$renderData.slice(1);
       } else {
-        bodyData = this.fillRow(data);
+        bodyData = this.renderData;
       }
 
       var listClass = !Number.isNaN(parseInt(spacing)) && parseInt(spacing) > 0 ? '' : 'list-no-spacing';
