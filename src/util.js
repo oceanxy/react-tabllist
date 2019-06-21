@@ -210,32 +210,30 @@ export function waring(property) {
  * @param counter {number} 当前可视区域第一行的索引
  * @returns {*} 处理后的滚动距离
  */
-export function getOffsetTopOfScroll(distanceConfig, rows, counter) {
+export function getScrollTop(distanceConfig, rows, counter) {
 	if(this === 'switch') {
 		if(!counter) {
-			// 如果手动切换到第一行，则直接让列表滚动到末尾，通过checkScrollDistance方法让列表自动循环到第一行
-			return rows[0].parentElement.offsetHeight
+			return 0
 		}
-		return rows[counter].offsetTop - rows[0].offsetTop
+
+		return rows[counter].offsetTop - rows[0].parentElement.offsetTop
 	} else {
 		if(isNaN(distanceConfig)) {
 			return 0
 		} else {
-			if(distanceConfig > 0) {
+			if(distanceConfig >= 0) {
 				return Math.ceil(distanceConfig)
-			} else if(distanceConfig < 0) {
-				let nextRow = (counter + 1) * -distanceConfig
-
-				// 当设置一次滚动多行后，如果某一次递增的索引大于了总行数，则直接返回父容器的高度
-				// 即接下来的一次滚动直接滚动到主容器最后的位置
-				if(nextRow > rows.length - 1) {
-					return rows[0].parentElement.offsetHeight
-				}
-
-				return rows[nextRow].offsetTop - rows[0].offsetTop
 			}
 
-			return distanceConfig
+			let nextRow = (counter + 1) * -distanceConfig
+
+			// 当设置一次滚动多行后，如果某一次递增的索引大于了总行数，则直接返回父容器的高度
+			// 即接下来的一次滚动直接滚动到主容器最后的位置
+			if(nextRow > rows.length - 1) {
+				return rows[0].parentElement.offsetHeight
+			}
+
+			return rows[nextRow].offsetTop - rows[0].offsetTop
 		}
 	}
 }

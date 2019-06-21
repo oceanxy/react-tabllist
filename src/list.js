@@ -11,7 +11,6 @@ import _ from 'lodash'
 import React from 'react'
 import './index.scss'
 import * as util from './util'
-import { getOffsetTopOfScroll } from './util'
 
 export default class extends React.Component {
 	function
@@ -274,7 +273,7 @@ export default class extends React.Component {
 			}
 
 			this.marqueeInterval = setInterval(() => {
-				let scrollOffsetTop = getOffsetTopOfScroll(distance, listContMain.children, this.counter)
+				let scrollOffsetTop = util.getScrollTop(distance, listContMain.children, this.counter)
 
 				if(distance < 0) {
 					this.scrollTo(NaN, scrollOffsetTop)
@@ -288,7 +287,7 @@ export default class extends React.Component {
 
 	/**
 	 * 滚动到{rowIndex}行
-	 * @param rowIndex {number} 行索引
+	 * @param rowIndex {number} 行索引。如果此值为假值，则使用第二个参数targetScrollTop
 	 * @param targetScrollTop {number} 滚动到的值
 	 */
 	scrollTo = (rowIndex, targetScrollTop) => {
@@ -301,7 +300,7 @@ export default class extends React.Component {
 		} = this
 
 		if(!isNaN(rowIndex) && rowIndex >= 0) {
-			targetScrollTop = getOffsetTopOfScroll.bind('switch', null, listContMain.children, rowIndex)()
+			targetScrollTop = getScrollTop.bind('switch', null, listContMain.children, rowIndex)()
 		}
 
 		// 时间恒定 根据需要移动的总距离求速度

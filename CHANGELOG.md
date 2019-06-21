@@ -93,3 +93,6 @@
 
 #### 1.4.2
 1. Fix default parameters of property.scroll, consistent with previous versions
+
+#### 1.4.3
+1. Modify the logic of scrolling
