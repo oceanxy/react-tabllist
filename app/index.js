@@ -247,6 +247,7 @@ const Dev = () => {
 			style: {
 				width: '100%',
 				margin: '0 auto',
+				padding: '10px',
 				height: 550,
 				border: '1px solid #999999'
 			},

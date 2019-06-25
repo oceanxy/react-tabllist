@@ -532,8 +532,7 @@ if(false) {}
 
 exports = module.exports = __webpack_require__(26)(false);
 // Module
-exports.push([module.i, ".list {\n  display: block;\n  overflow: hidden; }\n  .list .list-cont {\n    margin: 0;\n    padding: 0;\n    display: table;\n    width: 100%;\n    height: auto;\n    transition: all 400ms; }\n    .list .list-cont .list-row {\n      display: table-row;\n      list-style: none;\n      height: 58px;\n      transition: all 300ms cubic-bezier(0, 0, 0.58, 1);\n      background: no-repeat center / 100% 100%; }\n      .list .list-cont .list-row.list-row-start {\n        -webkit-transform: scale(0.8);\n                transform: scale(0.8);\n        opacity: 0; }\n      .list .list-cont .list-row.list-row-transition {\n        opacity: 1;\n        -webkit-transform: scale(1);\n                transform: scale(1); }\n      .list .list-cont .list-row.click-row {\n        cursor: pointer; }\n      .list .list-cont .list-row .list-cell {\n        display: table-cell;\n        text-align: center;\n        vertical-align: middle;\n        word-break: break-all;\n        border-left: none !important;\n        background: no-repeat center / 100% 100%; }\n        .list .list-cont .list-row .list-cell * {\n          vertical-align: middle; }\n        .list .list-cont .list-row .list-cell:last-child {\n          border-right: none !important; }\n        .list .list-cont .list-row .list-cell a {\n          color: currentColor;\n          -webkit-text-decoration: transparent;\n                  text-decoration: transparent; }\n        .list .list-cont .list-row .list-cell label {\n          vertical-align: middle; }\n          .list .list-cont .list-row .list-cell label span, .list .list-cont .list-row .list-cell label input {\n            vertical-align: middle;\n            padding: 0 5px; }\n  .list .list-header .list-row {\n    background: no-repeat center / 100% 100%; }\n    .list .list-header .list-row .list-cell {\n      border-bottom: none !important; }\n  .list .list-body .list-cont {\n    border-collapse: separate; }\n  .list .list-body .list-cell {\n    color: #666; }\n  .list.list-no-spacing .list-cell {\n    border-top: none !important; }\n", ""]);
-
+exports.push([module.i, ".list {\n  display: block;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  overflow: hidden; }\n  .list .list-cont {\n    margin: 0;\n    padding: 0;\n    display: table;\n    width: 100%;\n    height: auto;\n    -webkit-transition: all 400ms;\n    transition: all 400ms; }\n    .list .list-cont .list-row {\n      display: table-row;\n      list-style: none;\n      height: 58px;\n      -webkit-transition: all 300ms cubic-bezier(0, 0, 0.58, 1);\n      transition: all 300ms cubic-bezier(0, 0, 0.58, 1);\n      background: no-repeat center / 100% 100%; }\n      .list .list-cont .list-row.list-row-start {\n        -webkit-transform: scale(0.8);\n                transform: scale(0.8);\n        opacity: 0; }\n      .list .list-cont .list-row.list-row-transition {\n        opacity: 1;\n        -webkit-transform: scale(1);\n                transform: scale(1); }\n      .list .list-cont .list-row.click-row {\n        cursor: pointer; }\n      .list .list-cont .list-row .list-cell {\n        display: table-cell;\n        text-align: center;\n        vertical-align: middle;\n        word-break: break-all;\n        border-left: none !important;\n        background: no-repeat center / 100% 100%; }\n        .list .list-cont .list-row .list-cell * {\n          vertical-align: middle; }\n        .list .list-cont .list-row .list-cell:last-child {\n          border-right: none !important; }\n        .list .list-cont .list-row .list-cell a {\n          color: currentColor;\n          -webkit-text-decoration: transparent;\n                  text-decoration: transparent; }\n        .list .list-cont .list-row .list-cell label {\n          vertical-align: middle; }\n          .list .list-cont .list-row .list-cell label span, .list .list-cont .list-row .list-cell label input {\n            vertical-align: middle;\n            padding: 0 5px; }\n  .list .list-header .list-row {\n    background: no-repeat center / 100% 100%; }\n    .list .list-header .list-row .list-cell {\n      border-bottom: none !important; }\n  .list .list-body .list-cont {\n    border-collapse: separate; }\n  .list .list-body .list-cell {\n    color: #666; }\n  .list.list-no-spacing .list-cell {\n    border-top: none !important; }\n", ""]);
 
 
 /***/ }),
@@ -548,6 +547,7 @@ exports.push([module.i, ".list {\n  display: block;\n  overflow: hidden; }\n  .l
   Author Tobias Koppers @sokra
 */
 // css base code, injected by the css-loader
+// eslint-disable-next-line func-names
 module.exports = function (useSourceMap) {
   var list = []; // return the list of modules as css string
 
@@ -556,22 +556,25 @@ module.exports = function (useSourceMap) {
       var content = cssWithMappingToString(item, useSourceMap);
 
       if (item[2]) {
-        return '@media ' + item[2] + '{' + content + '}';
-      } else {
-        return content;
+        return "@media ".concat(item[2], "{").concat(content, "}");
       }
+
+      return content;
     }).join('');
   }; // import a list of modules into the list
+  // eslint-disable-next-line func-names
 
 
   list.i = function (modules, mediaQuery) {
     if (typeof modules === 'string') {
+      // eslint-disable-next-line no-param-reassign
       modules = [[null, modules, '']];
     }
 
     var alreadyImportedModules = {};
 
     for (var i = 0; i < this.length; i++) {
+      // eslint-disable-next-line prefer-destructuring
       var id = this[i][0];
 
       if (id != null) {
@@ -579,8 +582,8 @@ module.exports = function (useSourceMap) {
       }
     }
 
-    for (i = 0; i < modules.length; i++) {
-      var item = modules[i]; // skip already imported module
+    for (var _i = 0; _i < modules.length; _i++) {
+      var item = modules[_i]; // skip already imported module
       // this implementation is not 100% perfect for weird media query combinations
       // when a module is imported multiple times with different media queries.
       // I hope this will never occur (Hey this way we have smaller bundles)
@@ -589,7 +592,7 @@ module.exports = function (useSourceMap) {
         if (mediaQuery && !item[2]) {
           item[2] = mediaQuery;
         } else if (mediaQuery) {
-          item[2] = '(' + item[2] + ') and (' + mediaQuery + ')';
+          item[2] = "(".concat(item[2], ") and (").concat(mediaQuery, ")");
         }
 
         list.push(item);
@@ -601,7 +604,8 @@ module.exports = function (useSourceMap) {
 };
 
 function cssWithMappingToString(item, useSourceMap) {
-  var content = item[1] || '';
+  var content = item[1] || ''; // eslint-disable-next-line prefer-destructuring
+
   var cssMapping = item[3];
 
   if (!cssMapping) {
@@ -611,7 +615,7 @@ function cssWithMappingToString(item, useSourceMap) {
   if (useSourceMap && typeof btoa === 'function') {
     var sourceMapping = toComment(cssMapping);
     var sourceURLs = cssMapping.sources.map(function (source) {
-      return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */';
+      return "/*# sourceURL=".concat(cssMapping.sourceRoot).concat(source, " */");
     });
     return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
   }
@@ -623,8 +627,8 @@ function cssWithMappingToString(item, useSourceMap) {
 function toComment(sourceMap) {
   // eslint-disable-next-line no-undef
   var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-  var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
-  return '/*# ' + data + ' */';
+  var data = "sourceMappingURL=data:application/json;charset=utf-8;base64,".concat(base64);
+  return "/*# ".concat(data, " */");
 }
 
 /***/ }),
@@ -1364,22 +1368,39 @@ function closest(el, selector) {
 /**
  * 设置屏幕滚动区域可见高度
  * @param {object} props props
+ * @param {=} listComponent 列表组件实例对象
  * @returns {*} 列表滚动区域可见高度
  */
 
-function setScrollHeight(props) {
+function getScrollHeight(props, listComponent) {
   var _props$property = props.property,
       _props$property$heade = _props$property.header,
       show = _props$property$heade.show,
       style = _props$property$heade.style,
-      height = _props$property.style.height; // 开启表头
+      height = _props$property.style.height;
+
+  if (listComponent) {
+    var _getComputedStyle = getComputedStyle(listComponent, null),
+        paddingTop = _getComputedStyle.paddingTop,
+        paddingBottom = _getComputedStyle.paddingBottom,
+        borderTopWidth = _getComputedStyle.borderTopWidth,
+        borderBottomWidth = _getComputedStyle.borderBottomWidth;
+
+    var result = parseInt(height) - parseInt(paddingTop) - parseInt(paddingBottom) - parseInt(borderTopWidth) - parseInt(borderBottomWidth);
+
+    if (show) {
+      return result - parseInt(style.height);
+    }
+
+    return result;
+  } // 如果启用了表头
+
 
   if (show) {
     return parseInt(height) - parseInt(style.height);
-  } // 隐藏表头
+  }
 
-
-  return height;
+  return parseInt(height);
 }
 /**
  * 将用户设置的每一列单元格宽度值解析为组件程序需要的值，同时处理不合法数据
@@ -1546,48 +1567,49 @@ function waring(property) {
  * @returns {*} 处理后的滚动距离
  */
 
-function getOffsetTopOfScroll(distanceConfig, rows, counter) {
+function getScrollTop(distanceConfig, rows, counter) {
   if (this === 'switch') {
     if (!counter) {
-      // 如果手动切换到第一行，则直接让列表滚动到末尾，通过checkScrollDistance方法让列表自动循环到第一行
-      return rows[0].parentElement.offsetHeight;
+      return 0;
     }
 
-    return rows[counter].offsetTop - rows[0].offsetTop;
+    return rows[counter].offsetTop - rows[counter].parentElement.offsetTop;
   } else {
     if (isNaN(distanceConfig)) {
       return 0;
     } else {
-      if (distanceConfig > 0) {
+      if (distanceConfig >= 0) {
         return Math.ceil(distanceConfig);
-      } else if (distanceConfig < 0) {
-        var nextRow = (counter + 1) * -distanceConfig; // 当设置一次滚动多行后，如果某一次递增的索引大于了总行数，则直接返回父容器的高度
-        // 即接下来的一次滚动直接滚动到主容器最后的位置
-
-        if (nextRow > rows.length - 1) {
-          return rows[0].parentElement.offsetHeight;
-        }
-
-        return rows[nextRow].offsetTop - rows[0].offsetTop;
       }
 
-      return distanceConfig;
+      var nextRow = (counter + 1) * -distanceConfig; // 当设置一次滚动多行后，如果某一次递增的索引大于了总行数，则直接返回父容器的高度
+      // 即接下来的一次滚动直接滚动到主容器最后的位置
+
+      if (nextRow > rows.length - 1) {
+        return rows[0].parentElement.offsetHeight;
+      }
+
+      return rows[nextRow].offsetTop - rows[0].offsetTop;
     }
   }
 }
 /**
- * 获取下一次滚动的速度
+ * 获取下一次滚动的速度(px/ms)
  * @param targetScrollTop {number} 滚动目标值
  * @param scroll {object} 滚动容器对象
  * @returns {number}
  */
 
 function getSpeed(targetScrollTop, scroll) {
-  if (targetScrollTop < scroll.scrollTop) {
-    return (scroll.offsetHeight - scroll.scrollTop + targetScrollTop) / 30;
+  var distance = targetScrollTop - scroll.scrollTop;
+
+  if (distance > 0) {
+    return Math.ceil(distance / 30);
+  } else if (distance < 0) {
+    return Math.floor(distance / 30);
   }
 
-  return targetScrollTop / 30;
+  return 1;
 }
 // CONCATENATED MODULE: ./src/list.js
 
@@ -1617,7 +1639,6 @@ function getSpeed(targetScrollTop, scroll) {
 
 
 
-
 var list_default =
 /*#__PURE__*/
 function (_React$Component) {
@@ -1629,8 +1650,6 @@ function (_React$Component) {
     classCallCheck_default()(this, _default);
 
     _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(_default).call(this, _props));
-
-    defineProperty_default()(assertThisInitialized_default()(_this), "function", void 0);
 
     defineProperty_default()(assertThisInitialized_default()(_this), "scrollList", function (isInnerScroll, e) {
       var _assertThisInitialize = assertThisInitialized_default()(_this),
@@ -1682,12 +1701,8 @@ function (_React$Component) {
 
 
       if (listContMain && enable) {
-        if (typeof _this.counter === 'undefined') {
-          _this.counter = 0;
-        }
-
         _this.marqueeInterval = setInterval(function () {
-          var scrollOffsetTop = getOffsetTopOfScroll(distance, listContMain.children, _this.counter);
+          var scrollOffsetTop = getScrollTop(distance, listContMain.children, _this.rowIndex);
 
           if (distance < 0) {
             _this.scrollTo(NaN, scrollOffsetTop);
@@ -1707,53 +1722,49 @@ function (_React$Component) {
           scroll = _assertThisInitialize5.scroll;
 
       if (!isNaN(rowIndex) && rowIndex >= 0) {
-        targetScrollTop = getOffsetTopOfScroll.bind('switch', null, listContMain.children, rowIndex)();
-      } // 时间恒定 根据需要移动的总距离求速度
+        targetScrollTop = getScrollTop.bind('switch', null, listContMain.children, rowIndex)();
+      } // 时间恒定，根据需要移动的总距离求速度
 
 
-      var perIntervalMoveDistance = getSpeed(targetScrollTop, scroll);
+      var perIntervalMoveDistance = getSpeed(targetScrollTop, scroll); // 设置按次滚动定时器
+
       var marqueeIntervalRow = setInterval(function () {
         // 组件移动一次
         if (targetScrollTop !== scroll.scrollTop) {
-          // 检测滚动目标值与当前的scrollTop值的差距是否大于每次速度值
+          var nextScrollDistance; // 检测滚动目标值与当前的scrollTop值的差距是否大于每次速度值
           // 否则本次速度值按二者之间的差值计算
-          if (targetScrollTop > scroll.scrollTop) {
-            if (targetScrollTop - scroll.scrollTop >= perIntervalMoveDistance) {
-              scroll.scrollTop += perIntervalMoveDistance;
-            } else {
-              scroll.scrollTop += targetScrollTop - scroll.scrollTop;
-            }
+
+          if (Math.abs(targetScrollTop - scroll.scrollTop) >= Math.abs(perIntervalMoveDistance)) {
+            nextScrollDistance = perIntervalMoveDistance;
+          } else {
+            nextScrollDistance = targetScrollTop - scroll.scrollTop;
           } // 当滚动目标值小于当前的scrollTop值时
           // 检测scrollTop值是否达到临界值
           // 如果是则当到达主容器高度临界值时重置scrollTop值并进入下一次滚动
           // 直到滚动到目标值为止
 
 
-          if (targetScrollTop < scroll.scrollTop) {
-            scroll.scrollTop += perIntervalMoveDistance;
-
-            _this.checkScrollDistance();
-          }
-        }
-
-        if (targetScrollTop === scroll.scrollTop) {
+          scroll.scrollTop += nextScrollDistance;
+        } else {
           if (!isNaN(rowIndex) && rowIndex >= 0) {
             if (++rowIndex > (listContMain.children.length - 1) / -distance) {
-              _this.counter = 0;
+              _this.rowIndex = 0;
             } else {
-              _this.counter = rowIndex - 1;
+              _this.rowIndex = rowIndex - 1;
             }
           } else {
-            if (++_this.counter > (listContMain.children.length - 1) / -distance) {
-              _this.counter = 0;
+            if (++_this.rowIndex > (listContMain.children.length - 1) / -distance) {
+              _this.rowIndex = 0;
             }
-          }
+          } // 检测滚动边界
 
-          _this.checkScrollDistance();
+
+          _this.checkScrollDistance(); // 当次滚动结束
+
 
           clearInterval(marqueeIntervalRow);
         }
-      }, 0);
+      }, 1);
     });
 
     defineProperty_default()(assertThisInitialized_default()(_this), "rowHover", function (e) {
@@ -1920,7 +1931,7 @@ function (_React$Component) {
       // 每列单元格的宽度数组
       colWidth: setColWidth(_props.property.body.cell.style.width),
       // body可见区域的高度
-      scrollHeight: setScrollHeight(_props),
+      scrollHeight: getScrollHeight(_props),
       // 复选框、单选框等标签的默认状态
       defaultSelected: false,
       // 行选择框的indeterminate状态
@@ -1932,8 +1943,11 @@ function (_React$Component) {
       transitionName: '',
       // 当停用列表滚动且表头开启时，会自动计算这个值，以使表头的总宽度和列表主体相同
       // 主要目的是为了消除因滚动条占用部分位置使表头和列表主体形成的宽度差
-      headerWidth: 0
+      headerWidth: 0 // 不受控属性
+      // 当一次滚动多行时可用，组件可视区域第一行的索引
+
     };
+    _this.rowIndex = 0;
     return _this;
   }
 
@@ -1944,19 +1958,34 @@ function (_React$Component) {
      * 组件挂载后执行组件的滚动操作和设置表头单元格和主体单元格宽度对应
      */
     value: function componentDidMount() {
+      var _this2 = this;
+
+      var scroll = this.scroll,
+          props = this.props;
       var colWidth = this.getColClientWidth(); // 如果列数为0，则停止后续操作
 
       if (colWidth.length) {
-        // 组件第一次render之后，DOM结构已经生成，此时开始设置每个单元格宽度
-        // 设置规则以props里面的width字段为准
-        // 详情见width字段说明
-
+        // 组件第一次render之后，DOM结构已经生成，此时开始设置每个单元格宽度以及组件滚动区域高度
+        // width设置规则以props里面的width字段为准，详情见width字段说明
+        var scrollHeight = getScrollHeight(props, closest(scroll, '.list'));
         /* eslint-disable react/no-did-mount-set-state  */
+
         this.setState({
-          colWidth: colWidth
+          colWidth: colWidth,
+          scrollHeight: scrollHeight
         }); // 列表滚动相关逻辑入口
 
-        this.scrollList();
+        this.scrollList(); // 检测浏览器当前标签页是否被激活，否则暂停滚动动画（如果启用了组件滚动）
+
+        document.addEventListener('visibilitychange', function () {
+          if (document.hidden) {
+            _this2.scrollList(false);
+          } else {
+            _this2.scrollList(true, {
+              type: 'mouseleave'
+            });
+          }
+        });
       }
     }
   }, {
@@ -1974,7 +2003,7 @@ function (_React$Component) {
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(preProps, preState) {
-      var _this2 = this;
+      var _this3 = this;
 
       var colWidth = this.getColClientWidth();
 
@@ -2023,7 +2052,7 @@ function (_React$Component) {
              * 设置规则以props里面的width字段为准
              * 详情见width字段说明
              */
-            _this2.setState({
+            _this3.setState({
               colWidth: colWidth
             });
           }, colCellWidth === 'avg' ? 400 : 0);
@@ -2032,7 +2061,7 @@ function (_React$Component) {
 
         if (parseInt(preHeight) !== parseInt(height) || preShow !== show) {
           this.setState({
-            scrollHeight: setScrollHeight(this.state)
+            scrollHeight: getScrollHeight(this.state)
           });
         } // 缓动动画
 
@@ -2296,7 +2325,7 @@ function (_React$Component) {
   }, {
     key: "setCell",
     value: function setCell(rowData, rowIndex, container) {
-      var _this3 = this;
+      var _this4 = this;
 
       var _this$state4 = this.state,
           colWidth = _this$state4.colWidth,
@@ -2322,7 +2351,7 @@ function (_React$Component) {
             width: typeof colWidth === 'string' ? colWidth : colWidth[cellIndex] || 'auto'
           }, cellOfColumnStyle[cellIndex], listBorder)
         }, // 检测是否启用行号功能，并且为行内第一个单元格
-        serialNumberShow && cellIndex === 0 && typeof cellData === 'string' ? cellData.replace('{index}', rowIndex + 1) : _this3.parsing(cellData, {
+        serialNumberShow && cellIndex === 0 && typeof cellData === 'string' ? cellData.replace('{index}', rowIndex + 1) : _this4.parsing(cellData, {
           rowIndex: rowIndex + 1,
           cellIndex: cellIndex
         }, container));
@@ -2341,7 +2370,7 @@ function (_React$Component) {
   }, {
     key: "parsing",
     value: function parsing(cellData, _ref5, container) {
-      var _this4 = this;
+      var _this5 = this;
 
       var rowIndex = _ref5.rowIndex,
           cellIndex = _ref5.cellIndex,
@@ -2349,7 +2378,7 @@ function (_React$Component) {
 
       if (Array.isArray(cellData)) {
         return cellData.map(function (o, i) {
-          return _this4.parsing(o, {
+          return _this5.parsing(o, {
             rowIndex: rowIndex,
             cellIndex: cellIndex,
             index: i
@@ -2436,7 +2465,7 @@ function (_React$Component) {
   }, {
     key: "setRow",
     value: function setRow(bodyData, container) {
-      var _this5 = this;
+      var _this6 = this;
 
       var _this$state5 = this.state,
           property = _this$state5.property,
@@ -2465,14 +2494,14 @@ function (_React$Component) {
         var LIElementProps = {
           className: "list-row".concat(customClassName).concat(transitionClassName),
           style: isVisual && rowIndex % (rowVisualInterval * 2) >= rowVisualInterval ? external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.defaultsDeep({}, specialRowStyle[rowIndex], rowVisualStyle, rowStyle) : external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.defaultsDeep({}, specialRowStyle[rowIndex], rowStyle),
-          onMouseEnter: _this5.rowHover,
-          onMouseLeave: _this5.rowHover // 检测行数据是一个对象还是一个数组
+          onMouseEnter: _this6.rowHover,
+          onMouseLeave: _this6.rowHover // 检测行数据是一个对象还是一个数组
           // 如果是对象，则需要对行做一些处理，比如添加自定义事件等（目前只支持添加事件）
 
         };
 
         if (external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isPlainObject(rowData) && rowData.type === 'row') {
-          LIElementProps[rowData.event] = handleEvent.bind(_this5, [rowData]);
+          LIElementProps[rowData.event] = handleEvent.bind(_this6, [rowData]);
           LIElementProps.value = rowData.value;
         } else {
           LIElementProps = objectSpread_default()({}, LIElementProps, {
@@ -2482,7 +2511,7 @@ function (_React$Component) {
 
         return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("li", extends_default()({
           key: "".concat(container, "-list-row").concat(rowData.key ? rowData.key : rowIndex)
-        }, LIElementProps), external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isArray(rowData) ? _this5.setCell(rowData, rowIndex, container) : _this5.setCell(rowData.cells, rowIndex, container));
+        }, LIElementProps), external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isArray(rowData) ? _this6.setCell(rowData, rowIndex, container) : _this6.setCell(rowData.cells, rowIndex, container));
       });
     }
     /**
@@ -2494,7 +2523,7 @@ function (_React$Component) {
   }, {
     key: "loadHeader",
     value: function loadHeader(data) {
-      var _this6 = this;
+      var _this7 = this;
 
       var _this$state6 = this.state,
           property = _this$state6.property,
@@ -2529,7 +2558,7 @@ function (_React$Component) {
               width: typeof colWidth === 'string' ? colWidth : colWidth[index] || 'auto',
               minWidth: minWidth
             }, listBorder)
-          }, show && !index ? 'number' : _this6.parsing(cell, {
+          }, show && !index ? 'number' : _this7.parsing(cell, {
             rowIndex: 0,
             cellIndex: 0
           }));
@@ -2547,7 +2576,7 @@ function (_React$Component) {
   }, {
     key: "loadBody",
     value: function loadBody(bodyData) {
-      var _this7 = this;
+      var _this8 = this;
 
       var _this$state7 = this.state,
           scrollHeight = _this$state7.scrollHeight,
@@ -2559,7 +2588,7 @@ function (_React$Component) {
       return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("div", {
         className: "list-body",
         ref: function ref(ele) {
-          return _this7.scroll = ele;
+          return _this8.scroll = ele;
         },
         style: {
           height: scrollHeight,
@@ -2571,7 +2600,7 @@ function (_React$Component) {
           borderSpacing: borderSpacing
         },
         ref: function ref(ele) {
-          return _this7.listContMain = ele;
+          return _this8.listContMain = ele;
         }
       }, this.setRow(bodyData, 'main')), external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("ul", {
         className: "list-cont",
@@ -2579,7 +2608,7 @@ function (_React$Component) {
           borderSpacing: borderSpacing
         },
         ref: function ref(ele) {
-          return _this7.listContSupport = ele;
+          return _this8.listContSupport = ele;
         }
       }, this.setRow(bodyData, 'support')));
     }

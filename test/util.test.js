@@ -1,13 +1,13 @@
 import { closest } from '../src/util'
-// import { closest, setColWidth, setScrollHeight } from '../src/util'
+// import { closest, setColWidth, getScrollHeight } from '../src/util'
 
 it('closest func return expected value', () => {
   expect(closest()).toBe(null)
 })
 
-// describe('setScrollHeight func return expected value', () => {
+// describe('getScrollHeight func return expected value', () => {
 //   it('show header', () => {
-//     expect(setScrollHeight({
+//     expect(getScrollHeight({
 //       property: {
 //         style: { height: 300 },
 //         list: {
@@ -18,7 +18,7 @@ it('closest func return expected value', () => {
 //   })
 //
 //   it('do not show header', () => {
-//     expect(setScrollHeight({
+//     expect(getScrollHeight({
 //       property: {
 //         style: { height: 300 },
 //         list: {

@@ -39,21 +39,32 @@ export function closest(el, selector) {
 /**
  * 设置屏幕滚动区域可见高度
  * @param {object} props props
+ * @param {=} listComponent 列表组件实例对象
  * @returns {*} 列表滚动区域可见高度
  */
-export function setScrollHeight(props) {
+export function getScrollHeight(props, listComponent) {
 	const {
 		header: { show, style },
 		style: { height }
 	} = props.property
 
-	// 开启表头
+	if(listComponent) {
+		const { paddingTop, paddingBottom, borderTopWidth, borderBottomWidth } = getComputedStyle(listComponent, null)
+		const result = parseInt(height) - parseInt(paddingTop) - parseInt(paddingBottom) - parseInt(borderTopWidth) - parseInt(borderBottomWidth)
+
+		if(show) {
+			return result - parseInt(style.height)
+		}
+
+		return result
+	}
+
+	// 如果启用了表头
 	if(show) {
 		return parseInt(height) - parseInt(style.height)
 	}
 
-	// 隐藏表头
-	return height
+	return parseInt(height)
 }
 
 /**
@@ -216,7 +227,7 @@ export function getScrollTop(distanceConfig, rows, counter) {
 			return 0
 		}
 
-		return rows[counter].offsetTop - rows[0].parentElement.offsetTop
+		return rows[counter].offsetTop - rows[counter].parentElement.offsetTop
 	} else {
 		if(isNaN(distanceConfig)) {
 			return 0
@@ -239,15 +250,19 @@ export function getScrollTop(distanceConfig, rows, counter) {
 }
 
 /**
- * 获取下一次滚动的速度
+ * 获取下一次滚动的速度(px/ms)
  * @param targetScrollTop {number} 滚动目标值
  * @param scroll {object} 滚动容器对象
  * @returns {number}
  */
 export function getSpeed(targetScrollTop, scroll) {
-	if(targetScrollTop < scroll.scrollTop) {
-		return (scroll.offsetHeight - scroll.scrollTop + targetScrollTop) / 30
+	const distance = targetScrollTop - scroll.scrollTop
+
+	if(distance > 0) {
+		return Math.ceil(distance / 30)
+	} else if(distance < 0) {
+		return Math.floor(distance / 30)
 	}
 
-	return targetScrollTop / 30
+	return 1
 }

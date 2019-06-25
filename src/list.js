@@ -13,8 +13,6 @@ import './index.scss'
 import * as util from './util'
 
 export default class extends React.Component {
-	function
-
 	constructor(props) {
 		super(props)
 
@@ -22,7 +20,7 @@ export default class extends React.Component {
 			// 每列单元格的宽度数组
 			colWidth: util.setColWidth(props.property.body.cell.style.width),
 			// body可见区域的高度
-			scrollHeight: util.setScrollHeight(props),
+			scrollHeight: util.getScrollHeight(props),
 			// 复选框、单选框等标签的默认状态
 			defaultSelected: false,
 			// 行选择框的indeterminate状态
@@ -34,6 +32,10 @@ export default class extends React.Component {
 			// 主要目的是为了消除因滚动条占用部分位置使表头和列表主体形成的宽度差
 			headerWidth: 0
 		}
+
+		// 不受控属性
+		// 当一次滚动多行时可用，组件可视区域第一行的索引
+		this.rowIndex = 0
 	}
 
 	static getDerivedStateFromProps(props, state) {
@@ -103,18 +105,29 @@ export default class extends React.Component {
 	 * 组件挂载后执行组件的滚动操作和设置表头单元格和主体单元格宽度对应
 	 */
 	componentDidMount() {
+		const { scroll, props } = this
 		const colWidth = this.getColClientWidth()
 
 		// 如果列数为0，则停止后续操作
 		if(colWidth.length) {
-			// 组件第一次render之后，DOM结构已经生成，此时开始设置每个单元格宽度
-			// 设置规则以props里面的width字段为准
-			// 详情见width字段说明
+			// 组件第一次render之后，DOM结构已经生成，此时开始设置每个单元格宽度以及组件滚动区域高度
+			// width设置规则以props里面的width字段为准，详情见width字段说明
+			const scrollHeight = util.getScrollHeight(props, util.closest(scroll, '.list'))
+
 			/* eslint-disable react/no-did-mount-set-state  */
-			this.setState({ colWidth })
+			this.setState({ colWidth, scrollHeight })
 
 			// 列表滚动相关逻辑入口
 			this.scrollList()
+
+			// 检测浏览器当前标签页是否被激活，否则暂停滚动动画（如果启用了组件滚动）
+			document.addEventListener('visibilitychange', () => {
+				if(document.hidden) {
+					this.scrollList(false)
+				} else {
+					this.scrollList(true, { type: 'mouseleave' })
+				}
+			})
 		}
 	}
 
@@ -185,7 +198,7 @@ export default class extends React.Component {
 			// 适应滚动区域高度
 			if(parseInt(preHeight) !== parseInt(height) || preShow !== show) {
 				this.setState({
-					scrollHeight: util.setScrollHeight(this.state)
+					scrollHeight: util.getScrollHeight(this.state)
 				})
 			}
 
@@ -237,6 +250,7 @@ export default class extends React.Component {
 						// 鼠标移除组件，恢复滚动
 						this.pause = false
 					}
+
 					if(!this.pause) {
 						for(let i = 0; i < listContSupport.children.length; i++) {
 							listContSupport.children[i].style.display = 'table-row'
@@ -268,12 +282,8 @@ export default class extends React.Component {
 
 		// 设置定时器，实现列表滚动
 		if(listContMain && enable) {
-			if(typeof this.counter === 'undefined') {
-				this.counter = 0
-			}
-
 			this.marqueeInterval = setInterval(() => {
-				let scrollOffsetTop = util.getScrollTop(distance, listContMain.children, this.counter)
+				let scrollOffsetTop = util.getScrollTop(distance, listContMain.children, this.rowIndex)
 
 				if(distance < 0) {
 					this.scrollTo(NaN, scrollOffsetTop)
@@ -300,52 +310,51 @@ export default class extends React.Component {
 		} = this
 
 		if(!isNaN(rowIndex) && rowIndex >= 0) {
-			targetScrollTop = getScrollTop.bind('switch', null, listContMain.children, rowIndex)()
+			targetScrollTop = util.getScrollTop.bind('switch', null, listContMain.children, rowIndex)()
 		}
 
-		// 时间恒定 根据需要移动的总距离求速度
+		// 时间恒定，根据需要移动的总距离求速度
 		const perIntervalMoveDistance = util.getSpeed(targetScrollTop, scroll)
 
+		// 设置按次滚动定时器
 		const marqueeIntervalRow = setInterval(() => {
 			// 组件移动一次
 			if(targetScrollTop !== scroll.scrollTop) {
+				let nextScrollDistance
+
 				// 检测滚动目标值与当前的scrollTop值的差距是否大于每次速度值
 				// 否则本次速度值按二者之间的差值计算
-				if(targetScrollTop > scroll.scrollTop) {
-					if(targetScrollTop - scroll.scrollTop >= perIntervalMoveDistance) {
-						scroll.scrollTop += perIntervalMoveDistance
-					} else {
-						scroll.scrollTop += targetScrollTop - scroll.scrollTop
-					}
+				if(Math.abs(targetScrollTop - scroll.scrollTop) >= Math.abs(perIntervalMoveDistance)) {
+					nextScrollDistance = perIntervalMoveDistance
+				} else {
+					nextScrollDistance = targetScrollTop - scroll.scrollTop
 				}
 
 				// 当滚动目标值小于当前的scrollTop值时
 				// 检测scrollTop值是否达到临界值
 				// 如果是则当到达主容器高度临界值时重置scrollTop值并进入下一次滚动
 				// 直到滚动到目标值为止
-				if(targetScrollTop < scroll.scrollTop) {
-					scroll.scrollTop += perIntervalMoveDistance
-					this.checkScrollDistance()
-				}
-			}
-
-			if(targetScrollTop === scroll.scrollTop) {
+				scroll.scrollTop += nextScrollDistance
+			} else {
 				if(!isNaN(rowIndex) && rowIndex >= 0) {
 					if(++rowIndex > (listContMain.children.length - 1) / -distance) {
-						this.counter = 0
+						this.rowIndex = 0
 					} else {
-						this.counter = rowIndex - 1
+						this.rowIndex = rowIndex - 1
 					}
 				} else {
-					if(++this.counter > (listContMain.children.length - 1) / -distance) {
-						this.counter = 0
+					if(++this.rowIndex > (listContMain.children.length - 1) / -distance) {
+						this.rowIndex = 0
 					}
 				}
 
+				// 检测滚动边界
 				this.checkScrollDistance()
+
+				// 当次滚动结束
 				clearInterval(marqueeIntervalRow)
 			}
-		}, 0)
+		}, 1)
 	}
 
 	/**

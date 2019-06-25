@@ -4,6 +4,7 @@
 
 .list {
   display: block;
+  box-sizing: border-box;
   overflow: hidden;
 
   .list-cont {

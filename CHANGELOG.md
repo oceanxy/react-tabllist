@@ -92,7 +92,12 @@
 4. update README document.
 
 #### 1.4.2
-1. Fix default parameters of property.scroll, consistent with previous versions
+1. Fix default parameters of property.scroll, consistent with previous versions.
 
 #### 1.4.3
-1. Modify the logic of scrolling
+1. Modify the logic of scrolling.
+2. The height calculation method of the scroll area is updated: the padding of the component and the width of the border are now subtracted.
+3. Performance optimization: Pause component scrolling when switching to other tabbed pages in the browser.
+
+#### 1.5.0
+1. Increase event
