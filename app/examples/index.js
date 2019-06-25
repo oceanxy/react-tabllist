@@ -13,6 +13,7 @@ import _ from 'lodash'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Tabllist from '../../src'
+import demo10_listHeaderBg from './images/demo10_header_bg.png'
 import demo7_header_bg from './images/demo7_header_bg.png'
 import demo7_row_bg from './images/demo7_row_bg.png'
 import demo8_header_bg from './images/demo8_row_bg.png'
@@ -21,6 +22,149 @@ import rowBg from './images/row-bg.png'
 import './index.scss'
 
 hljs.initHighlightingOnLoad()
+
+function listDataset() {
+	let data = [
+		{
+			name: '方娜',
+			tel: '18484784543',
+			avatar: '',
+			group: '第一组',
+			groupId: 1,
+			operator: [
+				{ id: 3985, name: '谢超' },
+				{ id: 3881, name: '雷强' },
+				{ id: 1041, name: '崔刚' },
+				{ id: 3827, name: '邱芳' },
+				{ id: 7939, name: '朱平' }
+			]
+		},
+		{
+			name: '唐平',
+			tel: '13275647322',
+			avatar: '',
+			group: '第二组',
+			groupId: 2,
+			operator: [
+				{ id: 3014, name: '顾静' },
+				{ id: 5308, name: '方平' },
+				{ id: 1782, name: '孟杰' },
+				{ id: 2748, name: '顾静' },
+				{ id: 9714, name: '石敏' }
+			]
+		},
+		{
+			name: '万静',
+			tel: '19847859400',
+			avatar: '',
+			group: '第三组',
+			groupId: 3,
+			operator: [
+				{ id: 8773, name: '梁平' },
+				{ id: 1138, name: '姜桂英' },
+				{ id: 6874, name: '许强' },
+				{ id: 9581, name: '梁霞' },
+				{ id: 7084, name: '黎丽' }
+			]
+		},
+		{
+			name: '林超',
+			tel: '15638574857',
+			avatar: '',
+			group: '第四组',
+			groupId: 4,
+			operator: [
+				{ id: 7123, name: '薛洋' },
+				{ id: 7536, name: '赵军' },
+				{ id: 7049, name: '石艳' },
+				{ id: 3993, name: '孟刚' },
+				{ id: 5374, name: '魏洋' }
+			]
+		},
+		{
+			name: '贺平',
+			tel: '13984657487',
+			avatar: '',
+			group: '第五组',
+			groupId: 5,
+			operator: [
+				{ id: 7491, name: '史静' },
+				{ id: 6634, name: '于娜' },
+				{ id: 6801, name: '江静' },
+				{ id: 4349, name: '郝勇' },
+				{ id: 7141, name: '马艳' }
+			]
+		}
+	]
+	const type = [
+		{ id: 1, name: '第一组' },
+		{ id: 2, name: '第二组' },
+		{ id: 3, name: '第三组' },
+		{ id: 4, name: '第四组' },
+		{ id: 5, name: '第五组' }
+	]
+
+	data = data.map(d => {
+		return {
+			type: 'row',
+			value: d.groupId,
+			cells: [
+				<div className='group_info'>
+					<div className='avatar'>
+						<img src={d.avatar} alt='' />
+					</div>
+					<div className='group_h'>
+						<p>小组：{d.group}</p>
+						<p>小组长：{d.name}</p>
+						<p>联系电话：{d.tel}</p>
+					</div>
+				</div>,
+				<div className='group_p'>
+					<p>组员：</p>
+					<p>
+						{d.operator.reduce((str, pn) => ` ${str + pn.name} `, '')}
+					</p>
+				</div>
+			]
+		}
+	})
+
+	data.unshift([
+		'',
+		{
+			type: 'select',
+			text: '切换小组：',
+			className: 'group_select',
+			option: (() => {
+				return type.map((item) => {
+					return {
+						id: item.id,
+						label: item.name,
+						value: item.id
+					}
+				})
+			})(),
+			event: 'onChange',
+			callback: (restData, objectUnit, event) => {
+				// step 1: Get the value of select
+				const { value } = event.target
+				// step 2: According to the value of select to match the value of the corresponding row in the data,
+				//      and then get the index of the row
+				const propsData = objectUnit.instanceObject.props.data
+
+				for(let i = 0, k = propsData; i < k.length; i++) {
+					if(_.isPlainObject(propsData[i]) && parseInt(propsData[i].value) === parseInt(value)) {
+						// step 3: Call method scrolling list
+						objectUnit.instanceObject.scrollTo(i - 1)
+						break
+					}
+				}
+			}
+		}
+	])
+
+	return data
+}
 
 const Demo = () => {
 	const option2 = {
@@ -881,6 +1025,59 @@ const Demo = () => {
 				enable: true,
 				speed: 2000,
 				distance: -1
+			}
+		}
+	}
+	const option10 = {
+		className: 'pt',
+		data: listDataset(),
+		property: {
+			scroll: {
+				enable: true,
+				speed: 2000,
+				distance: -1
+			},
+			style: {
+				width: '100%',
+				height: 234,
+				padding: '10px 20px'
+			},
+			border: {
+				borderWidth: 0
+			},
+			header: {
+				show: true,
+				style: {
+					height: 54,
+					background: `url(${demo10_listHeaderBg}) no-repeat center / 100% 100%`
+				},
+				cellStyle: {
+					color: '#81b8e2',
+					fontSize: '28px'
+				}
+			},
+			body: {
+				row: {
+					spacing: 0,
+					visual: {
+						show: true,
+						style: {
+							backgroundColor: 'none'
+						}
+					},
+					style: {
+						height: 138
+					}
+				},
+				cell: {
+					style: {
+						color: '#ffffff',
+						width: [188, 400, 180, 180, 180],
+						textAlign: 'left',
+						padding: '10px 0',
+						fontSize: '24px'
+					}
+				}
 			}
 		}
 	}
@@ -1830,6 +2027,216 @@ const Demo = () => {
 						'    }\n' +
 						'  }\n' +
 						'}'
+					}
+				</code>
+			</pre>
+
+			<h2>Case 4</h2>
+			<div className='demo10'>
+				<Tabllist {...option10} />
+			</div>
+			<pre>
+				<code className='javascript'>
+					{
+						'function listDataset() {\n' +
+						'  let data = [\n' +
+						'    {\n' +
+						'      name: \'方娜\',\n' +
+						'      tel: \'18484784543\',\n' +
+						'      avatar: \'\',\n' +
+						'      group: \'第一组\',\n' +
+						'      groupId: 1,\n' +
+						'      operator: [\n' +
+						'        { id: 3985, name: \'谢超\' },\n' +
+						'        { id: 3881, name: \'雷强\' },\n' +
+						'        { id: 1041, name: \'崔刚\' },\n' +
+						'        { id: 3827, name: \'邱芳\' },\n' +
+						'        { id: 7939, name: \'朱平\' }\n' +
+						'      ]\n' +
+						'    },\n' +
+						'    {\n' +
+						'      name: \'唐平\',\n' +
+						'      tel: \'13275647322\',\n' +
+						'      avatar: \'\',\n' +
+						'      group: \'第二组\',\n' +
+						'      groupId: 2,\n' +
+						'      operator: [\n' +
+						'        { id: 3014, name: \'顾静\' },\n' +
+						'        { id: 5308, name: \'方平\' },\n' +
+						'        { id: 1782, name: \'孟杰\' },\n' +
+						'        { id: 2748, name: \'顾静\' },\n' +
+						'        { id: 9714, name: \'石敏\' }\n' +
+						'      ]\n' +
+						'    },\n' +
+						'    {\n' +
+						'      name: \'万静\',\n' +
+						'      tel: \'19847859400\',\n' +
+						'      avatar: \'\',\n' +
+						'      group: \'第三组\',\n' +
+						'      groupId: 3,\n' +
+						'      operator: [\n' +
+						'        { id: 8773, name: \'梁平\' },\n' +
+						'        { id: 1138, name: \'姜桂英\' },\n' +
+						'        { id: 6874, name: \'许强\' },\n' +
+						'        { id: 9581, name: \'梁霞\' },\n' +
+						'        { id: 7084, name: \'黎丽\' }\n' +
+						'      ]\n' +
+						'    },\n' +
+						'    {\n' +
+						'      name: \'林超\',\n' +
+						'      tel: \'15638574857\',\n' +
+						'      avatar: \'\',\n' +
+						'      group: \'第四组\',\n' +
+						'      groupId: 4,\n' +
+						'      operator: [\n' +
+						'        { id: 7123, name: \'薛洋\' },\n' +
+						'        { id: 7536, name: \'赵军\' },\n' +
+						'        { id: 7049, name: \'石艳\' },\n' +
+						'        { id: 3993, name: \'孟刚\' },\n' +
+						'        { id: 5374, name: \'魏洋\' }\n' +
+						'      ]\n' +
+						'    },\n' +
+						'    {\n' +
+						'      name: \'贺平\',\n' +
+						'      tel: \'13984657487\',\n' +
+						'      avatar: \'\',\n' +
+						'      group: \'第五组\',\n' +
+						'      groupId: 5,\n' +
+						'      operator: [\n' +
+						'        { id: 7491, name: \'史静\' },\n' +
+						'        { id: 6634, name: \'于娜\' },\n' +
+						'        { id: 6801, name: \'江静\' },\n' +
+						'        { id: 4349, name: \'郝勇\' },\n' +
+						'        { id: 7141, name: \'马艳\' }\n' +
+						'      ]\n' +
+						'    }\n' +
+						'  ]' +
+						'\n' +
+						'\n' +
+						'  const type = [\n' +
+						'    { id: 1, name: \'第一组\' },\n' +
+						'    { id: 2, name: \'第二组\' },\n' +
+						'    { id: 3, name: \'第三组\' },\n' +
+						'    { id: 4, name: \'第四组\' },\n' +
+						'    { id: 5, name: \'第五组\' }\n' +
+						'  ]\n' +
+						'\n' +
+						'  data = data.map(d => {\n' +
+						'    return {\n' +
+						'      type: \'row\',\n' +
+						'      value: d.groupId,\n' +
+						'      cells: [\n' +
+						'        <div className=\'group_info\'>\n' +
+						'          <div className=\'avatar\'>\n' +
+						'            <img src={d.avatar} alt=\'\' />\n' +
+						'          </div>\n' +
+						'          <div className=\'group_h\'>\n' +
+						'            <p>小组：{d.group}</p>\n' +
+						'            <p>小组长：{d.name}</p>\n' +
+						'            <p>联系电话：{d.tel}</p>\n' +
+						'          </div>\n' +
+						'        </div>,\n' +
+						'        <div className=\'group_p\'>\n' +
+						'          <p>组员：</p>\n' +
+						'          <p>\n' +
+						'            {d.operator.reduce((str, pn) => ` ${str + pn.name} `, \'\')}\n' +
+						'          </p>\n' +
+						'        </div>\n' +
+						'      ]\n' +
+						'    }\n' +
+						'  })\n' +
+						'\n' +
+						'  data.unshift([\n' +
+						'    \'\',\n' +
+						'    {\n' +
+						'      type: \'select\',\n' +
+						'      text: \'切换小组：\',\n' +
+						'      className: \'group_select\',\n' +
+						'      option: (() => {\n' +
+						'        return type.map((item) => {\n' +
+						'          return {\n' +
+						'            id: item.id,\n' +
+						'            label: item.name,\n' +
+						'            value: item.id\n' +
+						'          }\n' +
+						'        })\n' +
+						'      })(),\n' +
+						'      event: \'onChange\',\n' +
+						'      callback: (restData, objectUnit, event) => {\n' +
+						'        // step 1: Get the value of select\n' +
+						'        const { value } = event.target\n' +
+						'        // step 2: According to the value of select to match the value of the corresponding row in the data,\n' +
+						'        //      and then get the index of the row\n' +
+						'        const propsData = objectUnit.instanceObject.props.data\n' +
+						'\n' +
+						'        for(let i = 0, k = propsData; i < k.length; i++) {\n' +
+						'          if(_.isPlainObject(propsData[i]) && parseInt(propsData[i].value) === parseInt(value)) {\n' +
+						'            // step 3: Call method scrolling list\n' +
+						'            objectUnit.instanceObject.scrollTo(i - 1)\n' +
+						'            break\n' +
+						'          }\n' +
+						'        }\n' +
+						'      }\n' +
+						'    }\n' +
+						'  ])\n' +
+						'\n' +
+						'  return data\n' +
+						'}' +
+						'\n' +
+						'\n' +
+						'const option10 = {\n' +
+						'    className: \'pt\',\n' +
+						'    data: listDataset(),\n' +
+						'    property: {\n' +
+						'      scroll: {\n' +
+						'        enable: true,\n' +
+						'        speed: 2000,\n' +
+						'        distance: -1\n' +
+						'      },\n' +
+						'      style: {\n' +
+						'        width: \'100%\',\n' +
+						'        height: 234,\n' +
+						'        padding: \'10px 20px\'\n' +
+						'      },\n' +
+						'      border: {\n' +
+						'        borderWidth: 0\n' +
+						'      },\n' +
+						'      header: {\n' +
+						'        show: true,\n' +
+						'        style: {\n' +
+						'          height: 54,\n' +
+						'          background: `url(${demo10_listHeaderBg}) no-repeat center / 100% 100%`\n' +
+						'        },\n' +
+						'        cellStyle: {\n' +
+						'          color: \'#81b8e2\',\n' +
+						'          fontSize: \'28px\'\n' +
+						'        }\n' +
+						'      },\n' +
+						'      body: {\n' +
+						'        row: {\n' +
+						'          spacing: 0,\n' +
+						'          visual: {\n' +
+						'            show: true,\n' +
+						'            style: {\n' +
+						'              backgroundColor: \'none\'\n' +
+						'            }\n' +
+						'          },\n' +
+						'          style: {\n' +
+						'            height: 138\n' +
+						'          }\n' +
+						'        },\n' +
+						'        cell: {\n' +
+						'          style: {\n' +
+						'            color: \'#ffffff\',\n' +
+						'            width: [188, 400, 180, 180, 180],\n' +
+						'            textAlign: \'left\',\n' +
+						'            padding: \'10px 0\',\n' +
+						'            fontSize: \'24px\'\n' +
+						'          }\n' +
+						'        }\n' +
+						'      }\n' +
+						'    }\n' +
+						'  }'
 					}
 				</code>
 			</pre>

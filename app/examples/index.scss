@@ -37,3 +37,82 @@
     background: url(./images/btn-hover.png) no-repeat center / 100% 100%;
   }
 }
+
+.demo10 {
+  width: 100%;
+  height: 100%;
+  background: #000000 url(./images/demo10_bg.png) no-repeat center / 100% 100%;
+
+  .pt {
+    select {
+      height: 30px;
+      line-height: 30px;
+      font-size: 20px;
+      background: url(./images/demo10_body-bg.png) no-repeat center/ 100% 100%, url(./images/demo10_bg.png) no-repeat center/ 100% 100%;
+      border: none;
+      outline: none;
+      color: #ffffff;
+
+      option {
+        background: #102b72;
+        font-size: 12px;
+      }
+    }
+
+    .group_select {
+      display: block;
+      text-align: right;
+    }
+
+    .list-body {
+      background: url(./images/demo10_body-bg.png) no-repeat center / 100% 100%;
+      height: 160px !important;
+    }
+  }
+
+  .group_info {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+
+    .avatar {
+      width: 110px;
+      height: 140px;
+      background: url(./images/demo10_avatar_border.png) no-repeat center / 100% 100%;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .group_h {
+      padding: 0 20px;
+
+      p {
+        height: 44px;
+        line-height: 40px;
+        margin-bottom: 0;
+        background: url(./images/demo10_boeder-line.png) no-repeat center bottom / 100% 1px;
+      }
+    }
+  }
+
+  .group_p {
+    width: 100%;
+    height: 137px;
+    padding: 0 20px;
+    background: url(./images/demo10_group_p.png) no-repeat center / 100% 100%;
+
+    p {
+      margin-bottom: 0;
+      height: 60px;
+      line-height: 60px;
+
+      &:last-child {
+        color: #00ffff;
+      }
+    }
+  }
+}
