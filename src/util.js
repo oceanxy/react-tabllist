@@ -266,3 +266,21 @@ export function getSpeed(targetScrollTop, scroll) {
 
 	return 1
 }
+
+/**
+ * 根据props及data获取过渡动画的样式表名
+ * @param transition {boolean} 是否开启了过渡动画
+ * @param isEqual {boolean} props数据
+ * @returns {string}
+ */
+export function getTransitionName(transition, isEqual) {
+	if(transition) {
+		if(!isEqual) {
+			return 'list-row-start'
+		} else {
+			return 'list-row-end'
+		}
+	}
+
+	return ''
+}

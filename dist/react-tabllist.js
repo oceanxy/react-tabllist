@@ -1,12 +1,12 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("react"), require("lodash"));
+		module.exports = factory(require("lodash"), require("react"));
 	else if(typeof define === 'function' && define.amd)
-		define(["react", "lodash"], factory);
+		define(["lodash", "react"], factory);
 	else if(typeof exports === 'object')
-		exports["ReactTabllist"] = factory(require("react"), require("lodash"));
+		exports["ReactTabllist"] = factory(require("lodash"), require("react"));
 	else
-		root["ReactTabllist"] = factory(root["React"], root["_"]);
+		root["ReactTabllist"] = factory(root["_"], root["React"]);
 })(window, function(__WEBPACK_EXTERNAL_MODULE__0__, __WEBPACK_EXTERNAL_MODULE__1__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -532,7 +532,7 @@ if(false) {}
 
 exports = module.exports = __webpack_require__(26)(false);
 // Module
-exports.push([module.i, ".list {\n  display: block;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  overflow: hidden; }\n  .list .list-cont {\n    margin: 0;\n    padding: 0;\n    display: table;\n    width: 100%;\n    height: auto;\n    -webkit-transition: all 400ms;\n    transition: all 400ms; }\n    .list .list-cont .list-row {\n      display: table-row;\n      list-style: none;\n      height: 58px;\n      -webkit-transition: all 300ms cubic-bezier(0, 0, 0.58, 1);\n      transition: all 300ms cubic-bezier(0, 0, 0.58, 1);\n      background: no-repeat center / 100% 100%; }\n      .list .list-cont .list-row.list-row-start {\n        -webkit-transform: scale(0.8);\n                transform: scale(0.8);\n        opacity: 0; }\n      .list .list-cont .list-row.list-row-transition {\n        opacity: 1;\n        -webkit-transform: scale(1);\n                transform: scale(1); }\n      .list .list-cont .list-row.click-row {\n        cursor: pointer; }\n      .list .list-cont .list-row .list-cell {\n        display: table-cell;\n        text-align: center;\n        vertical-align: middle;\n        word-break: break-all;\n        border-left: none !important;\n        background: no-repeat center / 100% 100%; }\n        .list .list-cont .list-row .list-cell * {\n          vertical-align: middle; }\n        .list .list-cont .list-row .list-cell:last-child {\n          border-right: none !important; }\n        .list .list-cont .list-row .list-cell a {\n          color: currentColor;\n          -webkit-text-decoration: transparent;\n                  text-decoration: transparent; }\n        .list .list-cont .list-row .list-cell label {\n          vertical-align: middle; }\n          .list .list-cont .list-row .list-cell label span, .list .list-cont .list-row .list-cell label input {\n            vertical-align: middle;\n            padding: 0 5px; }\n  .list .list-header .list-row {\n    background: no-repeat center / 100% 100%; }\n    .list .list-header .list-row .list-cell {\n      border-bottom: none !important; }\n  .list .list-body .list-cont {\n    border-collapse: separate; }\n  .list .list-body .list-cell {\n    color: #666; }\n  .list.list-no-spacing .list-cell {\n    border-top: none !important; }\n", ""]);
+exports.push([module.i, ".list {\n  display: block;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  overflow: hidden; }\n  .list .list-cont {\n    margin: 0;\n    padding: 0;\n    display: table;\n    table-layout: fixed;\n    width: 100%;\n    height: auto;\n    -webkit-transition: all 400ms;\n    transition: all 400ms; }\n    .list .list-cont .list-row {\n      display: table-row;\n      list-style: none;\n      height: 58px;\n      -webkit-transition: all 300ms cubic-bezier(0, 0, 0.58, 1);\n      transition: all 300ms cubic-bezier(0, 0, 0.58, 1);\n      background: no-repeat center / 100% 100%; }\n      .list .list-cont .list-row.list-row-start {\n        -webkit-transform: scale(0.8);\n                transform: scale(0.8);\n        opacity: 0; }\n      .list .list-cont .list-row.list-row-end {\n        opacity: 1;\n        -webkit-transform: scale(1);\n                transform: scale(1); }\n      .list .list-cont .list-row.click-row {\n        cursor: pointer; }\n      .list .list-cont .list-row .list-cell {\n        display: table-cell;\n        text-align: center;\n        vertical-align: middle;\n        word-break: break-all;\n        border-left: none !important;\n        background: no-repeat center / 100% 100%; }\n        .list .list-cont .list-row .list-cell * {\n          vertical-align: middle; }\n        .list .list-cont .list-row .list-cell:last-child {\n          border-right: none !important; }\n        .list .list-cont .list-row .list-cell a {\n          color: currentColor;\n          -webkit-text-decoration: transparent;\n                  text-decoration: transparent; }\n        .list .list-cont .list-row .list-cell label {\n          vertical-align: middle; }\n          .list .list-cont .list-row .list-cell label span, .list .list-cont .list-row .list-cell label input {\n            vertical-align: middle;\n            padding: 0 5px; }\n  .list .list-header .list-row {\n    background: no-repeat center / 100% 100%; }\n    .list .list-header .list-row .list-cell {\n      overflow: hidden;\n      white-space: nowrap;\n      text-overflow: ellipsis;\n      border-bottom: none !important; }\n  .list .list-body .list-cont {\n    border-collapse: separate; }\n  .list .list-body .list-cell {\n    color: #666; }\n  .list.list-no-spacing .list-cell {\n    border-top: none !important; }\n", ""]);
 
 
 /***/ }),
@@ -1170,11 +1170,11 @@ var defineProperty = __webpack_require__(2);
 var defineProperty_default = /*#__PURE__*/__webpack_require__.n(defineProperty);
 
 // EXTERNAL MODULE: external {"commonjs":"lodash","commonjs2":"lodash","amd":"lodash","root":"_"}
-var external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_ = __webpack_require__(1);
+var external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_ = __webpack_require__(0);
 var external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default = /*#__PURE__*/__webpack_require__.n(external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_);
 
 // EXTERNAL MODULE: external {"commonjs":"react","commonjs2":"react","amd":"react","root":"React"}
-var external_commonjs_react_commonjs2_react_amd_react_root_React_ = __webpack_require__(0);
+var external_commonjs_react_commonjs2_react_amd_react_root_React_ = __webpack_require__(1);
 var external_commonjs_react_commonjs2_react_amd_react_root_React_default = /*#__PURE__*/__webpack_require__.n(external_commonjs_react_commonjs2_react_amd_react_root_React_);
 
 // CONCATENATED MODULE: ./src/config.js
@@ -1187,6 +1187,7 @@ var external_commonjs_react_commonjs2_react_amd_react_root_React_default = /*#__
  * @LastModifiedTime: 2019-06-14 15:18:52
  */
 /* harmony default export */ var config = ({
+  className: '',
   data: [['1st column', '2nd column', '3rd column'], ['1st cell', '2nd cell', '3rd cell']],
   property: {
     style: {
@@ -1216,14 +1217,17 @@ var external_commonjs_react_commonjs2_react_amd_react_root_React_default = /*#__
     },
     body: {
       style: {
-        padding: '10px'
+        backgroundImage: '',
+        backgroundColor: ''
       },
       row: {
         transition: true,
         serialNumber: {
           show: false,
+          columnName: 'SN',
           formatter: '{index}.',
           style: {
+            width: 80,
             backgroundColor: '',
             backgroundImage: '',
             color: '#ffffff'
@@ -1611,6 +1615,25 @@ function getSpeed(targetScrollTop, scroll) {
 
   return 1;
 }
+/**
+ * 根据props及data获取过渡动画的样式表名
+ * @param transition {boolean} 是否开启了过渡动画
+ * @param data {object} props数据
+ * @param stateData {object} state数据
+ * @returns {string}
+ */
+
+function getTransitionName(transition, data, stateData) {
+  if (transition) {
+    if (!external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqual(data, stateData)) {
+      return 'list-row-start';
+    } else {
+      return 'list-row-end';
+    }
+  }
+
+  return '';
+}
 // CONCATENATED MODULE: ./src/list.js
 
 
@@ -1632,8 +1655,9 @@ function getSpeed(targetScrollTop, scroll) {
  * @Description: react-tabllist
  * @Date: 2018-10-08 17:56:19
  * @LastModified: Oceanxy（xieyang@hiynn.com）
- * @LastModifiedTime: 2019-06-16 23:17:01
+ * @LastModifiedTime: 2019-08-01 11:15:17
  */
+
 
 
 
@@ -1934,17 +1958,23 @@ function (_React$Component) {
       scrollHeight: getScrollHeight(_props),
       // 复选框、单选框等标签的默认状态
       defaultSelected: false,
-      // 行选择框的indeterminate状态
-      indeterminate: false,
+      // 所有复选框和单选按钮的状态
       selected: {
         rowCheckbox: []
       },
-      // 列表行缓动动画的样式名
-      transitionName: '',
+      // 行选择框的indeterminate状态
+      indeterminate: false,
       // 当停用列表滚动且表头开启时，会自动计算这个值，以使表头的总宽度和列表主体相同
       // 主要目的是为了消除因滚动条占用部分位置使表头和列表主体形成的宽度差
-      headerWidth: 0 // 不受控属性
-      // 当一次滚动多行时可用，组件可视区域第一行的索引
+      headerWidth: 0,
+      // 列表行缓动动画的样式名
+      transitionName: '',
+      // 配置属性
+      property: config.property,
+      // 渲染数据
+      data: config.data,
+      // 列表的自定义样式表名
+      className: config.className // 当一次滚动多行时可用，组件可视区域第一行的索引
 
     };
     _this.rowIndex = 0;
@@ -2068,7 +2098,7 @@ function (_React$Component) {
 
         if (transition && transitionName === 'list-row-start') {
           this.setState({
-            transitionName: 'list-row-start list-row-transition'
+            transitionName: getTransitionName(transition, preState.data, this.state.data)
           });
         } // 设置列表头行选择框的indeterminate
         // 如果开启了行选择功能且显示表头，根据每行的选择情况设置标题栏多选框的 indeterminate 状态
@@ -2129,7 +2159,7 @@ function (_React$Component) {
 
       external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.range(data.length).map(function (i) {
         // 如果行数据是一个对象，保证该对象内一定有一个cells字段
-        if (!data[i].cells) {
+        if (external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isPlainObject(data[i]) && !data[i].cells) {
           data[i].cells = [];
         }
 
@@ -2421,7 +2451,7 @@ function (_React$Component) {
           case 'select':
             return this.setCellSelect(cellData);
         }
-      } // 不是对象，返回源数据
+      } // 不是对象，返回原数据
 
 
       return cellData;
@@ -2536,7 +2566,9 @@ function (_React$Component) {
           showHeader = _property$header.show;
       var _property$body = property.body,
           minWidth = _property$body.cell.style.minWidth,
-          show = _property$body.row.serialNumber.show; // 处理border属性值
+          _property$body$row$se = _property$body.row.serialNumber,
+          serialNumberShow = _property$body$row$se.show,
+          columnName = _property$body$row$se.columnName; // 处理border属性值
 
       var listBorder = this.setBorder(cellStyle);
 
@@ -2553,12 +2585,14 @@ function (_React$Component) {
         }, data.map(function (cell, index) {
           return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("div", {
             className: "list-cell",
+            title: serialNumberShow && !index ? columnName : external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isObject(cell) ? cell.text : cell,
             key: "list-header-".concat(index),
             style: objectSpread_default()({}, cellStyle, {
               width: typeof colWidth === 'string' ? colWidth : colWidth[index] || 'auto',
               minWidth: minWidth
             }, listBorder)
-          }, show && !index ? 'number' : _this7.parsing(cell, {
+          }, serialNumberShow && !index // index === 0
+          ? columnName : _this7.parsing(cell, {
             rowIndex: 0,
             cellIndex: 0
           }));
@@ -2581,7 +2615,9 @@ function (_React$Component) {
       var _this$state7 = this.state,
           scrollHeight = _this$state7.scrollHeight,
           _this$state7$property = _this$state7.property,
-          spacing = _this$state7$property.body.row.spacing,
+          _this$state7$property2 = _this$state7$property.body,
+          style = _this$state7$property2.style,
+          spacing = _this$state7$property2.row.spacing,
           enable = _this$state7$property.scroll.enable; // 处理行间距的值
 
       var borderSpacing = "".concat(spacing).indexOf('px') === -1 ? "0 ".concat(spacing, "px") : "0 ".concat(spacing);
@@ -2590,10 +2626,10 @@ function (_React$Component) {
         ref: function ref(ele) {
           return _this8.scroll = ele;
         },
-        style: {
+        style: objectSpread_default()({}, style, {
           height: scrollHeight,
           overflow: enable ? 'hidden' : 'auto'
-        }
+        })
       }, external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("ul", {
         className: "list-cont",
         style: {
@@ -2647,7 +2683,7 @@ function (_React$Component) {
       var listClass = !Number.isNaN(parseInt(spacing)) && parseInt(spacing) > 0 ? '' : 'list-no-spacing';
       return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("div", {
         style: objectSpread_default()({}, listBorder, conStyle),
-        className: "list ".concat(className || '', " ").concat(listClass),
+        className: "list".concat(className ? " ".concat(className) : '').concat(listClass ? " ".concat(listClass) : ''),
         onMouseMove: this.scrollList.bind(this, false),
         onMouseLeave: this.scrollList.bind(this, true)
       }, this.loadHeader(headerData), this.loadBody(bodyData));
@@ -2655,70 +2691,30 @@ function (_React$Component) {
   }], [{
     key: "getDerivedStateFromProps",
     value: function getDerivedStateFromProps(props, state) {
-      // 以下值由props控制
-      var data = props.data,
-          property = props.property,
-          className = props.className,
-          option = objectWithoutProperties_default()(props, ["data", "property", "className"]);
+      var property = state.property,
+          data = state.data,
+          className = state.className,
+          restState = objectWithoutProperties_default()(state, ["property", "data", "className"]); // 检测本次渲染的数据是否有变化
 
-      var transition = property.body.row.transition;
 
-      var propsUpdate = objectSpread_default()({
-        data: data,
+      if (!external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqual(props, {
         property: property,
+        data: data,
         className: className
-      }, option); // 以下值由组件本身控制
+      })) {
+        var propsHeight = props.property.style.height;
+        var stateHeight = property.style.height;
+        var propsCellWidth = props.property.body.cell.style.width;
+        var stateCellWidth = property.body.cell.style.width;
+        return objectSpread_default()({}, restState, props, {
+          transitionName: !external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqual(props.data, data) ? getTransitionName(props.property.body.row.transition, props.data, data) : state.transitionName,
+          colWidth: propsCellWidth !== stateCellWidth ? setColWidth(propsCellWidth) : state.colWidth,
+          scrollHeight: propsHeight !== stateHeight ? getScrollHeight(props) : state.scrollHeight
+        });
+      } // 如果props未更新属性，则返回state
 
 
-      var colWidth = state.colWidth,
-          scrollHeight = state.scrollHeight,
-          selected = state.selected,
-          defaultSelected = state.defaultSelected,
-          indeterminate = state.indeterminate,
-          stateProperty = state.property,
-          stateData = state.data,
-          headerWidth = state.headerWidth;
-      var transitionName = state.transitionName;
-
-      if (transition) {
-        if (!external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqual(data, stateData)) {
-          transitionName = 'list-row-start';
-        }
-      } else {
-        transitionName = '';
-      }
-
-      var stateUpdate = {
-        colWidth: colWidth,
-        scrollHeight: scrollHeight,
-        defaultSelected: defaultSelected,
-        indeterminate: indeterminate,
-        selected: selected,
-        transitionName: transitionName,
-        headerWidth: headerWidth
-      };
-      var width = property.body.cell.style.width; // 由props和state同时控制的colWidth
-
-      if (stateProperty && width !== stateProperty.body.cell.style.width) {
-        stateUpdate.colWidth = setColWidth(width);
-      } // 检测props是否发生改变
-
-
-      var propsUpdateArray = Object.keys(propsUpdate);
-      propsUpdateArray.map(function (prop) {
-        if (propsUpdate[prop] === state[prop]) {
-          delete propsUpdate[prop];
-        } else if (prop === 'property') {
-          external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.defaultsDeep(propsUpdate[prop], state[prop]);
-        }
-      }); // 如果props更新了属性，则返回props和state合并的配置项
-
-      if (propsUpdateArray.length) {
-        return objectSpread_default()({}, propsUpdate, stateUpdate);
-      } // 如果props未更新属性，则返回组件自身从setState通道更新的状态值
-
-
-      return stateUpdate;
+      return state;
     }
   }]);
 

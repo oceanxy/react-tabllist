@@ -91,7 +91,11 @@ Open your browser and visit http://localhost:3001 , see more at [Development]().
 |**className** <br> `{string}`                   |Table outermost container style sheet name      |''                                |
 |**property** <br> `{Object}`                    |Wrapper table properties                        |[props.property](#property)       |
 
-##### data
+##### props.classname
+
+You can customize the style by setting the props.classname property
+
+##### props.data
 
 - The 'data' data format is very similar to a two-dimensional array。
 - Each subarray in the array represents a row, and each element in the subarray represents a cell. The order in which cells are displayed is the order in which the arrays are indexed, so the order and display of each cell should be determined when reconstructing the data.
@@ -282,7 +286,7 @@ Here are some examples：
 |**label**              |option text    |
 |**value**              |option value   |
 
-##### property
+##### props.property
 
 |**props.property** `{type}`                                           |default    |description                                                                                                                                                                                                                                                  |
 |----------------------------------------------------------------------|-----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -299,6 +303,7 @@ Here are some examples：
 |**header.style** <br> `{object}`                                      |{...}      |Header style                                                                                                                                                                                                                                                 |
 |**header.cellStyle** <br> `{object}`                                  |{...}      |The style of the cell inside the header. `Note`: The width value in this style will be invalid, because the header cell width of this component is automatically adapted according to the cell width in the body.                                            |
 |**body** <br> `{object}`                                              |{...}      |Body related configuration                                                                                                                                                                                                                                   |
+|**body.style <sup>1.5.0</sup>** <br> `{object}`                       |{...}      |You can define partial styles for the body that usually do not affect the layout of the list. For example, you can use "backgroundColor", "backgroundImage" or "opacity", etc., but you can't use attributes such as "width", "height", "padding", and "margin" that change the size or position of the body. |
 |**body.row** <br> `{object}`                                          |{...}      |Row configuration in the body                                                                                                                                                                                                                                |
 |**body.row.onClick <sup>1.2.0</sup>** <br> `()=>{}` &#9888;           |null       |`Deprecated` Row click event, &#9888; `This property is only available in version 1.2.0.`                                                                                                                                                                    |
 |**body.row.transition** <br> `{boolean}`                              |true       |Whether to enable the loading animation of the row inside the body                                                                                                                                                                                           |
@@ -316,6 +321,7 @@ Here are some examples：
 |**body.row.silent.style** <br> `{object}`                             |{...}      |Style when responding to mouse events                                                                                                                                                                                                                        |
 |**body.row.serialNumber** <br> `{object}`                             |{...}      |Line number related configuration                                                                                                                                                                                                                            |
 |**body.row.serialNumber.show** <br> `{boolean}`                       |false      |Whether to display the line number                                                                                                                                                                                                                           |
+|**body.row.serialNumber.columnName <sup>^1.5.0</sup>** <br> `{string}`|'SN'       |The column name of the column                                                                                                                                                                                                                                |
 |**body.row.serialNumber.formatter** <br> `{string}`                   |'{index}.' |Line number formatting. `{index}` resolves to a number that increments from 0                                                                                                                                                                                |
 |**body.row.serialNumber.style** <br> `{object}`                       |{...}      |The style of the cell showing the line number (the first cell in each row)                                                                                                                                                                                   |
 |**body.row.serialNumber.specialStyle** <br> `{[object, object, ...]}` |\[]        |According to the array index, set the style of the cell where each row has the row number. If you want to skip an index, you can use a comma placeholder.                                                                                                    |
@@ -328,8 +334,6 @@ Here are some examples：
 
 **cellWidth**
 
-Note: Regardless of the method, if the final rendered cell width value is less than style.minWidth, the style.minWidth value is used.
-
 Optional value for cellWidth：
 
 - 'auto'：Automatically set the cell width based on the specific data in the cell.
@@ -337,6 +341,10 @@ Optional value for cellWidth：
 - \[10, 20, 10]：Each cell in the row takes the value of the array in turn. If the value of an array index is a placeholder (ie ","), the width of the cell will be set to "auto"; when the length of the array is less than the number of columns, the remaining columns are set to "auto" by default.
 - '10,20,10'：Each column takes values in turn, based on comma-separated values. The detailed rules are the same as the array form.
 
+Note:
+
+1. Regardless of the method, if the final rendered cell width value is less than style.minWidth, the style.minWidth value is used.
+2. When `props.property.style.width` or the width of the component after rendering is less than the width of the manually set width, these values will be converted to the corresponding percentage.
 
 ### Configuration Demonstration
 

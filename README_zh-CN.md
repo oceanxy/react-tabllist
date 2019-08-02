@@ -91,7 +91,11 @@ $ npm start
 |**className** <br> `{string}`                   |自定义样式表名称            |''                                |
 |**property** <br> `{Object}`                    |用于包装表格的属性          |[props.property](#property)       |
 
-##### data
+##### props.classname
+
+可以通过设置props.classname属性来自定义样式
+
+##### props.data
 
 - `data`数据格式为一个类似二维数组。
 - 数组内每一个子数组代表一行，子数组内每一个元素代表一个单元格。单元格的显示顺序为数组下标顺序，所以在重构数据时应当确定每一个单元格的顺序及显示内容。
@@ -282,7 +286,7 @@ $ npm start
 |**label**              |option的文本    |
 |**value**              |option的值      |
 
-##### property
+##### props.property
 
 |**属性** `{类型}`                                                      |默认值      |描述                                                                                                                                       |
 |----------------------------------------------------------------------|-----------|-------------------------------------------------------------------------------------------------------------------------------------------|
@@ -299,6 +303,7 @@ $ npm start
 |**header.style** <br> `{object}`                                      |{...}      |header内`行样式`                                                                                                                            |
 |**header.cellStyle** <br> `{object}`                                  |{...}      |header内`单元格的样式` &#9888; 此样式表里面的`width`将失效，因本组件的header单元格宽度自动根据body内单元格宽度进行适配                                |
 |**body** <br> `{object}`                                              |{...}      |body相关配置                                                                                                                                |
+|**body.style <sup>^1.5.0</sup>** <br> `{object}`                      |{...}      |可以定义body的部分样式，这些样式通常不会影响列表的布局。比如，你可以使用"backgroundColor"、“backgroundImage”或"opacity"等，但是不能使用"width"、"height"、"padding"以及"margin"等会使body的尺寸或位置发生变化的属性。 |
 |**body.row** <br> `{object}`                                          |{...}      |body中的行的相关配置                                                                                                                         |
 |**body.row.onClick <sup>1.2.0</sup>** <br> `()=>{}` &#9888;           |null       |body中行的点击事件。&#9888; `此属性只在1.2.0版本可用`                                                                                           |
 |**body.row.transition** <br> `{boolean}`                              |true       |是否开启行的加载动画                                                                                                                          |
@@ -316,6 +321,7 @@ $ npm start
 |**body.row.silent.style** <br> `{object}`                             |{...}      |响应鼠标事件时的样式                                                                                                                           |
 |**body.row.serialNumber** <br> `{object}`                             |{...}      |行号相关配置                                                                                                                                  |
 |**body.row.serialNumber.show** <br> `{boolean}`                       |false      |是否显示行号                                                                                                                                  |
+|**body.row.serialNumber.columnName <sup>^1.5.0</sup>** <br> `{string}`|'SN'       |该列的列名                                                                                                                                    |
 |**body.row.serialNumber.formatter** <br> `{string}`                   |'{index}.' |行号格式化。`{index}`解析为从0依次递增的数字                                                                                                     |
 |**body.row.serialNumber.style** <br> `{object}`                       |{...}      |显示行号的单元格（每行第一个单元格）的样式                                                                                                        |
 |**body.row.serialNumber.specialStyle** <br> `{[object, object, ...]}` |\[]        |按照数组索引依次设置每一行的行号所在单元格的样式，如要跳过某个索引，直接使用一个逗号占位即可                                                             |
@@ -328,14 +334,16 @@ $ npm start
 
 **cellWidth**
 
-注意：无论通过何种方式，如果最终渲染出来的单元格宽度值小于style.minWidth，则使用style.minWidth值。
-
 cellWidth可选值：
 - 'auto'：完全根据单元格内的具体数据自动设置单元格宽度；
 - 'avg'：每个单元格宽度趋近于相等，但会根据单元格内的具体数据适当调整宽度；
 - \[10, 20, 10]：行内每一个单元格依次取数组的值。如果数组某索引的值为占位符（即“,”），则该单元格的宽度将被设置为“auto”；当数组长度小于列数时，其余的列默认设置为“auto”。
 - '10,20,10'：根据逗号分隔值，每一列依次取值。详细规则同数组形式。
 
+注意：
+
+1. 无论通过何种方式，如果最终渲染出来的单元格宽度值小于style.minWidth，则使用style.minWidth值。
+2. 当`props.property.style.width`或渲染完成后组件的宽度值小于手动设置的宽度总和时，这些值会被转换成对应的百分比。
 
 ### 配置样例
 

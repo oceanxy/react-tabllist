@@ -8,6 +8,7 @@
  */
 
 export default {
+	className: '',
 	data: [
 		['1st column', '2nd column', '3rd column'],
 		['1st cell', '2nd cell', '3rd cell']
@@ -40,14 +41,17 @@ export default {
 		},
 		body: {
 			style: {
-				padding: '10px'
+				backgroundImage: '',
+				backgroundColor: ''
 			},
 			row: {
 				transition: true,
 				serialNumber: {
 					show: false,
+					columnName: 'SN',
 					formatter: '{index}.',
 					style: {
+						width: 80,
 						backgroundColor: '',
 						backgroundImage: '',
 						color: '#ffffff'

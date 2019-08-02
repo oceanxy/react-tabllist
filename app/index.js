@@ -21,7 +21,7 @@ const Dev = () => {
 				'3rd column',
 				{
 					type: 'select',
-					text: '4rd column',
+					text: '4 ',
 					data: 123,
 					className: '',
 					option: [
@@ -44,10 +44,10 @@ const Dev = () => {
 					event: 'onChange',
 					callback: (restData, objectUnit, event) => {
 						// step 1: Get the value of select
-						const value = event.target.value
+						const { value } = event.target
 						// step 2: According to the value of select to match the value of the corresponding row in the data,
 						// 				 and then get the index of the row
-						const data = objectUnit.instanceObject.props.data
+						const { data } = objectUnit.instanceObject.props
 						for(let i = 0, k = data; i < k.length; i++) {
 							if(_.isPlainObject(data[i]) && parseInt(data[i].value) === parseInt(value)) {
 								// step 3: Call method scrolling list
@@ -270,6 +270,9 @@ const Dev = () => {
 				}
 			},
 			body: {
+				style: {
+					padding: 0
+				},
 				row: {
 					rowCheckBox: true,
 					onClick: () => {}, // 仅在1.2.0版本生效，此处用于测试控制台打印警告信息
@@ -281,7 +284,7 @@ const Dev = () => {
 						formatter: 'No.{index}',
 						style: {
 							backgroundColor: '#3991ff',
-							width: 80,
+							// width: 80,
 							fontSize: 20,
 							color: '#2cff41'
 						},

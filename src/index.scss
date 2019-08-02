@@ -11,6 +11,7 @@
     margin: 0;
     padding: 0;
     display: table;
+    table-layout: fixed;
     width: 100%;
     height: auto;
     transition: all 400ms;
@@ -27,7 +28,7 @@
         opacity: 0;
       }
 
-      &.list-row-transition {
+      &.list-row-end {
         opacity: 1;
         transform: scale(1);
       }
@@ -74,6 +75,9 @@
       @include background;
 
       .list-cell {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
         border-bottom: none !important;
       }
     }

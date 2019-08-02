@@ -4,17 +4,19 @@
  * @Description: react-tabllist
  * @Date: 2018-10-08 17:56:19
  * @LastModified: Oceanxy（xieyang@hiynn.com）
- * @LastModifiedTime: 2019-06-16 23:17:01
+ * @LastModifiedTime: 2019-08-01 11:15:17
  */
 
 import _ from 'lodash'
 import React from 'react'
+import config from './config'
 import './index.scss'
 import * as util from './util'
 
 export default class extends React.Component {
 	constructor(props) {
 		super(props)
+		window.react = this
 
 		this.state = {
 			// 每列单元格的宽度数组
@@ -23,82 +25,53 @@ export default class extends React.Component {
 			scrollHeight: util.getScrollHeight(props),
 			// 复选框、单选框等标签的默认状态
 			defaultSelected: false,
+			// 所有复选框和单选按钮的状态
+			selected: { rowCheckbox: [] },
 			// 行选择框的indeterminate状态
 			indeterminate: false,
-			selected: { rowCheckbox: [] },
-			// 列表行缓动动画的样式名
-			transitionName: '',
 			// 当停用列表滚动且表头开启时，会自动计算这个值，以使表头的总宽度和列表主体相同
 			// 主要目的是为了消除因滚动条占用部分位置使表头和列表主体形成的宽度差
-			headerWidth: 0
+			headerWidth: 0,
+			// 列表行缓动动画的样式名
+			transitionName: '',
+			// 配置属性
+			property: config.property,
+			// 渲染数据
+			data: config.data,
+			// 列表的自定义样式表名
+			className: config.className
 		}
 
-		// 不受控属性
 		// 当一次滚动多行时可用，组件可视区域第一行的索引
 		this.rowIndex = 0
 	}
 
 	static getDerivedStateFromProps(props, state) {
-		// 以下值由props控制
-		const { data, property, className, ...option } = props
-		const { transition } = property.body.row
-		const propsUpdate = { data, property, className, ...option }
+		window.state = state
+		let { property, data, className, ...restState } = state
 
-		// 以下值由组件本身控制
-		const {
-			colWidth,
-			scrollHeight,
-			selected,
-			defaultSelected,
-			indeterminate,
-			property: stateProperty,
-			data: stateData,
-			headerWidth
-		} = state
+		// 检测本次渲染的数据是否有变化
+		if(!_.isEqual(props, { property, data, className })) {
+			const { height: propsHeight } = props.property.style
+			const { height: stateHeight } = property.style
+			const { width: propsCellWidth } = props.property.body.cell.style
+			const { width: stateCellWidth } = property.body.cell.style
 
-		let { transitionName } = state
-
-		if(transition) {
-			if(!_.isEqual(data, stateData)) {
-				transitionName = 'list-row-start'
+			debugger
+			return {
+				...restState,
+				...props,
+				transitionName: !_.isEqual(props.data, data)
+					? util.getTransitionName(props.property.body.row.transition, !_.isEqual(props.data, data))
+					: state.transitionName,
+				colWidth: propsCellWidth !== stateCellWidth ? util.setColWidth(propsCellWidth) : state.colWidth,
+				scrollHeight: propsHeight !== stateHeight ? util.getScrollHeight(props) : state.scrollHeight
 			}
-		} else {
-			transitionName = ''
 		}
 
-		const stateUpdate = {
-			colWidth,
-			scrollHeight,
-			defaultSelected,
-			indeterminate,
-			selected,
-			transitionName,
-			headerWidth
-		}
-
-		const { width } = property.body.cell.style
-		// 由props和state同时控制的colWidth
-		if(stateProperty && width !== stateProperty.body.cell.style.width) {
-			stateUpdate.colWidth = util.setColWidth(width)
-		}
-
-		// 检测props是否发生改变
-		const propsUpdateArray = Object.keys(propsUpdate)
-		propsUpdateArray.map(prop => {
-			if(propsUpdate[prop] === state[prop]) {
-				delete propsUpdate[prop]
-			} else if(prop === 'property') {
-				_.defaultsDeep(propsUpdate[prop], state[prop])
-			}
-		})
-
-		// 如果props更新了属性，则返回props和state合并的配置项
-		if(propsUpdateArray.length) {
-			return { ...propsUpdate, ...stateUpdate }
-		}
-
-		// 如果props未更新属性，则返回组件自身从setState通道更新的状态值
-		return stateUpdate
+		// 如果props未更新属性，则返回state
+		debugger
+		return state
 	}
 
 	/**
@@ -204,7 +177,7 @@ export default class extends React.Component {
 
 			// 缓动动画
 			if(transition && transitionName === 'list-row-start') {
-				this.setState({ transitionName: 'list-row-start list-row-transition' })
+				this.setState({ transitionName: util.getTransitionName(transition, preState.data, this.state.data) })
 			}
 
 			// 设置列表头行选择框的indeterminate
@@ -521,7 +494,7 @@ export default class extends React.Component {
 		// 获取每一行的数据量，存入数组 cellsOfRow 内
 		_.range(data.length).map(i => {
 			// 如果行数据是一个对象，保证该对象内一定有一个cells字段
-			if(!data[i].cells) {
+			if(_.isPlainObject(data[i]) && !data[i].cells) {
 				data[i].cells = []
 			}
 
@@ -836,7 +809,7 @@ export default class extends React.Component {
 			}
 		}
 
-		// 不是对象，返回源数据
+		// 不是对象，返回原数据
 		return cellData
 	}
 
@@ -942,7 +915,7 @@ export default class extends React.Component {
 		const { scroll: { enable }, header: { style, cellStyle, show: showHeader } } = property
 		const {
 			cell: { style: { minWidth } },
-			row: { serialNumber: { show } }
+			row: { serialNumber: { show: serialNumberShow, columnName } }
 		} = property.body
 
 		// 处理border属性值
@@ -959,6 +932,15 @@ export default class extends React.Component {
 							data.map((cell, index) => (
 								<div
 									className='list-cell'
+									title={
+										serialNumberShow && !index
+											? columnName
+											: (
+												_.isObject(cell)
+													? cell.text
+													: cell
+											)
+									}
 									key={`list-header-${index}`}
 									style={{
 										...cellStyle,
@@ -967,7 +949,11 @@ export default class extends React.Component {
 										...listBorder
 									}}
 								>
-									{show && !index ? 'number' : this.parsing(cell, { rowIndex: 0, cellIndex: 0 })}
+									{
+										serialNumberShow && !index // index === 0
+											? columnName
+											: this.parsing(cell, { rowIndex: 0, cellIndex: 0 })
+									}
 								</div>
 							))
 						}
@@ -988,7 +974,10 @@ export default class extends React.Component {
 		const {
 			scrollHeight,
 			property: {
-				body: { row: { spacing } },
+				body: {
+					style,
+					row: { spacing }
+				},
 				scroll: { enable }
 			}
 		} = this.state
@@ -999,10 +988,7 @@ export default class extends React.Component {
 			<div
 				className='list-body'
 				ref={ele => this.scroll = ele}
-				style={{
-					height: scrollHeight,
-					overflow: enable ? 'hidden' : 'auto'
-				}}
+				style={{ ...style, height: scrollHeight, overflow: enable ? 'hidden' : 'auto' }}
 			>
 				<ul
 					className='list-cont'
@@ -1057,7 +1043,7 @@ export default class extends React.Component {
 		return (
 			<div
 				style={{ ...listBorder, ...conStyle }}
-				className={`list ${className || ''} ${listClass}`}
+				className={`list${className ? ` ${className}` : ''}${listClass ? ` ${listClass}` : ''}`}
 				onMouseMove={this.scrollList.bind(this, false)}
 				onMouseLeave={this.scrollList.bind(this, true)}
 			>
