@@ -16,7 +16,6 @@ import * as util from './util'
 export default class extends React.Component {
 	constructor(props) {
 		super(props)
-		window.react = this
 
 		this.state = {
 			// 每列单元格的宽度数组
@@ -47,22 +46,21 @@ export default class extends React.Component {
 	}
 
 	static getDerivedStateFromProps(props, state) {
-		window.state = state
 		let { property, data, className, ...restState } = state
 
 		// 检测本次渲染的数据是否有变化
-		if(!_.isEqual(props, { property, data, className })) {
+		if(!_.isEqualWith(props, { property, data, className }, util.customizer)) {
 			const { height: propsHeight } = props.property.style
 			const { height: stateHeight } = property.style
 			const { width: propsCellWidth } = props.property.body.cell.style
 			const { width: stateCellWidth } = property.body.cell.style
+			const isDataChanged = _.isEqualWith(props.data, data, util.customizer)
 
-			debugger
 			return {
 				...restState,
 				...props,
-				transitionName: !_.isEqual(props.data, data)
-					? util.getTransitionName(props.property.body.row.transition, !_.isEqual(props.data, data))
+				transitionName: !isDataChanged
+					? util.getTransitionName(props.property.body.row.transition, isDataChanged)
 					: state.transitionName,
 				colWidth: propsCellWidth !== stateCellWidth ? util.setColWidth(propsCellWidth) : state.colWidth,
 				scrollHeight: propsHeight !== stateHeight ? util.getScrollHeight(props) : state.scrollHeight
@@ -70,7 +68,6 @@ export default class extends React.Component {
 		}
 
 		// 如果props未更新属性，则返回state
-		debugger
 		return state
 	}
 
@@ -106,7 +103,7 @@ export default class extends React.Component {
 
 	shouldComponentUpdate(nextProps, nextState) {
 		// 避免闪动
-		return !_.isEqual(this.props, nextProps) || !_.isEqualWith(this.state, nextState)
+		return !_.isEqualWith(this.props, nextProps, util.customizer) || !_.isEqualWith(this.state, nextState, util.customizer)
 	}
 
 	/**
@@ -177,7 +174,7 @@ export default class extends React.Component {
 
 			// 缓动动画
 			if(transition && transitionName === 'list-row-start') {
-				this.setState({ transitionName: util.getTransitionName(transition, preState.data, this.state.data) })
+				this.setState({ transitionName: util.getTransitionName(transition, _.isEqualWith(preState.data, this.state.data, util.customizer)) })
 			}
 
 			// 设置列表头行选择框的indeterminate

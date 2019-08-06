@@ -52,6 +52,7 @@ export default {
 					formatter: '{index}.',
 					style: {
 						width: 80,
+						height: 60,
 						backgroundColor: '',
 						backgroundImage: '',
 						color: '#ffffff'

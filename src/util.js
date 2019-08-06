@@ -284,3 +284,16 @@ export function getTransitionName(transition, isEqual) {
 
 	return ''
 }
+
+/**
+ * lodash.isEqualWith方法的第三个参数
+ * https://www.lodashjs.com/docs/latest#_isequalwithvalue-other-customizer
+ * @param objValue
+ * @param othValue
+ * @returns {boolean}
+ */
+export function customizer(objValue, othValue) {
+	if(typeof objValue === 'function' || typeof othValue === 'function') {
+		return true
+	}
+}

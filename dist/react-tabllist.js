@@ -532,7 +532,7 @@ if(false) {}
 
 exports = module.exports = __webpack_require__(26)(false);
 // Module
-exports.push([module.i, ".list {\n  display: block;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  overflow: hidden; }\n  .list .list-cont {\n    margin: 0;\n    padding: 0;\n    display: table;\n    table-layout: fixed;\n    width: 100%;\n    height: auto;\n    -webkit-transition: all 400ms;\n    transition: all 400ms; }\n    .list .list-cont .list-row {\n      display: table-row;\n      list-style: none;\n      height: 58px;\n      -webkit-transition: all 300ms cubic-bezier(0, 0, 0.58, 1);\n      transition: all 300ms cubic-bezier(0, 0, 0.58, 1);\n      background: no-repeat center / 100% 100%; }\n      .list .list-cont .list-row.list-row-start {\n        -webkit-transform: scale(0.8);\n                transform: scale(0.8);\n        opacity: 0; }\n      .list .list-cont .list-row.list-row-end {\n        opacity: 1;\n        -webkit-transform: scale(1);\n                transform: scale(1); }\n      .list .list-cont .list-row.click-row {\n        cursor: pointer; }\n      .list .list-cont .list-row .list-cell {\n        display: table-cell;\n        text-align: center;\n        vertical-align: middle;\n        word-break: break-all;\n        border-left: none !important;\n        background: no-repeat center / 100% 100%; }\n        .list .list-cont .list-row .list-cell * {\n          vertical-align: middle; }\n        .list .list-cont .list-row .list-cell:last-child {\n          border-right: none !important; }\n        .list .list-cont .list-row .list-cell a {\n          color: currentColor;\n          -webkit-text-decoration: transparent;\n                  text-decoration: transparent; }\n        .list .list-cont .list-row .list-cell label {\n          vertical-align: middle; }\n          .list .list-cont .list-row .list-cell label span, .list .list-cont .list-row .list-cell label input {\n            vertical-align: middle;\n            padding: 0 5px; }\n  .list .list-header .list-row {\n    background: no-repeat center / 100% 100%; }\n    .list .list-header .list-row .list-cell {\n      overflow: hidden;\n      white-space: nowrap;\n      text-overflow: ellipsis;\n      border-bottom: none !important; }\n  .list .list-body .list-cont {\n    border-collapse: separate; }\n  .list .list-body .list-cell {\n    color: #666; }\n  .list.list-no-spacing .list-cell {\n    border-top: none !important; }\n", ""]);
+exports.push([module.i, ".list {\n  display: block;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  overflow: hidden; }\n  .list .list-cont {\n    margin: 0;\n    padding: 0;\n    display: table;\n    width: 100%;\n    height: auto;\n    -webkit-transition: all 400ms;\n    transition: all 400ms; }\n    .list .list-cont .list-row {\n      display: table-row;\n      list-style: none;\n      height: 58px;\n      -webkit-transition: all 300ms cubic-bezier(0, 0, 0.58, 1);\n      transition: all 300ms cubic-bezier(0, 0, 0.58, 1);\n      background: no-repeat center / 100% 100%; }\n      .list .list-cont .list-row.list-row-start {\n        -webkit-transform: scale(0.8);\n                transform: scale(0.8);\n        opacity: 0; }\n      .list .list-cont .list-row.list-row-end {\n        opacity: 1;\n        -webkit-transform: scale(1);\n                transform: scale(1); }\n      .list .list-cont .list-row.click-row {\n        cursor: pointer; }\n      .list .list-cont .list-row .list-cell {\n        display: table-cell;\n        text-align: center;\n        vertical-align: middle;\n        word-break: break-all;\n        border-left: none !important;\n        background: no-repeat center / 100% 100%; }\n        .list .list-cont .list-row .list-cell * {\n          vertical-align: middle; }\n        .list .list-cont .list-row .list-cell:last-child {\n          border-right: none !important; }\n        .list .list-cont .list-row .list-cell a {\n          color: currentColor;\n          -webkit-text-decoration: transparent;\n                  text-decoration: transparent; }\n        .list .list-cont .list-row .list-cell label {\n          vertical-align: middle; }\n          .list .list-cont .list-row .list-cell label span, .list .list-cont .list-row .list-cell label input {\n            vertical-align: middle;\n            padding: 0 5px; }\n  .list .list-header .list-row {\n    background: no-repeat center / 100% 100%; }\n    .list .list-header .list-row .list-cell {\n      overflow: hidden;\n      white-space: nowrap;\n      text-overflow: ellipsis;\n      border-bottom: none !important; }\n  .list .list-body .list-cont {\n    border-collapse: separate; }\n  .list .list-body .list-cell {\n    color: #666; }\n  .list.list-no-spacing .list-cell {\n    border-top: none !important; }\n", ""]);
 
 
 /***/ }),
@@ -1618,14 +1618,13 @@ function getSpeed(targetScrollTop, scroll) {
 /**
  * 根据props及data获取过渡动画的样式表名
  * @param transition {boolean} 是否开启了过渡动画
- * @param data {object} props数据
- * @param stateData {object} state数据
+ * @param isEqual {boolean} props数据
  * @returns {string}
  */
 
-function getTransitionName(transition, data, stateData) {
+function getTransitionName(transition, isEqual) {
   if (transition) {
-    if (!external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqual(data, stateData)) {
+    if (!isEqual) {
       return 'list-row-start';
     } else {
       return 'list-row-end';
@@ -1633,6 +1632,19 @@ function getTransitionName(transition, data, stateData) {
   }
 
   return '';
+}
+/**
+ * lodash.isEqualWith方法的第三个参数
+ * https://www.lodashjs.com/docs/latest#_isequalwithvalue-other-customizer
+ * @param objValue
+ * @param othValue
+ * @returns {boolean}
+ */
+
+function customizer(objValue, othValue) {
+  if (typeof objValue === 'function' || typeof othValue === 'function') {
+    return true;
+  }
 }
 // CONCATENATED MODULE: ./src/list.js
 
@@ -2022,7 +2034,7 @@ function (_React$Component) {
     key: "shouldComponentUpdate",
     value: function shouldComponentUpdate(nextProps, nextState) {
       // 避免闪动
-      return !external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqual(this.props, nextProps) || !external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqualWith(this.state, nextState);
+      return !external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqualWith(this.props, nextProps, customizer) || !external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqualWith(this.state, nextState, customizer);
     }
     /**
      * 组件每次更新后执行
@@ -2098,7 +2110,7 @@ function (_React$Component) {
 
         if (transition && transitionName === 'list-row-start') {
           this.setState({
-            transitionName: getTransitionName(transition, preState.data, this.state.data)
+            transitionName: getTransitionName(transition, external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqualWith(preState.data, this.state.data, customizer))
           });
         } // 设置列表头行选择框的indeterminate
         // 如果开启了行选择功能且显示表头，根据每行的选择情况设置标题栏多选框的 indeterminate 状态
@@ -2697,17 +2709,20 @@ function (_React$Component) {
           restState = objectWithoutProperties_default()(state, ["property", "data", "className"]); // 检测本次渲染的数据是否有变化
 
 
-      if (!external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqual(props, {
+      if (!external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqualWith(props, {
         property: property,
         data: data,
         className: className
-      })) {
+      }, customizer)) {
         var propsHeight = props.property.style.height;
         var stateHeight = property.style.height;
         var propsCellWidth = props.property.body.cell.style.width;
         var stateCellWidth = property.body.cell.style.width;
+
+        var isDataChanged = external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqualWith(props.data, data, customizer);
+
         return objectSpread_default()({}, restState, props, {
-          transitionName: !external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqual(props.data, data) ? getTransitionName(props.property.body.row.transition, props.data, data) : state.transitionName,
+          transitionName: !isDataChanged ? getTransitionName(props.property.body.row.transition, isDataChanged) : state.transitionName,
           colWidth: propsCellWidth !== stateCellWidth ? setColWidth(propsCellWidth) : state.colWidth,
           scrollHeight: propsHeight !== stateHeight ? getScrollHeight(props) : state.scrollHeight
         });

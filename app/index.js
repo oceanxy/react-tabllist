@@ -333,8 +333,8 @@ const Dev = () => {
 			},
 			scroll: {
 				enable: true,
-				speed: 2000,
-				distance: -1
+				speed: 50,
+				distance: 1
 			}
 		}
 	}
