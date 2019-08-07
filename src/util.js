@@ -101,6 +101,77 @@ export function setColWidth(width) {
 }
 
 /**
+ * 补齐单元格
+ * 如果props数据不规范，则自动补齐单元格到缺少的行，直到每一行的单元格数量相等为止
+ * @param {object} data 新数据
+ * @param {object} state 组件当前状态
+ * @returns {Array} 补齐后的用于生成单元格的数据
+ */
+export function fillRow(data, state) {
+	const cellsOfRow = []
+	const { row: { rowCheckbox, serialNumber } } = state.property.body
+
+	// 获取每一行的数据量，存入数组 cellsOfRow 内
+	_.range(data.length).map(i => {
+		// 如果行数据是一个对象，保证该对象内一定有一个cells字段
+		if(_.isPlainObject(data[i]) && !data[i].cells) {
+			data[i].cells = []
+		}
+
+		cellsOfRow.push(_.isArray(data[i]) ? data[i].length : data[i].cells.length)
+	})
+
+	// 获取数据量最多的一行的数值
+	const maxCellValue = Math.max(...cellsOfRow)
+	const newData = []
+
+	// 补齐空数据到缺失的行
+	data.forEach((row, ind) => {
+		const rowCheck = {
+			type: 'checkbox',
+			text: '',
+			key: `rowCheck${ind}`,
+			name: 'rowCheckbox'
+		}
+
+		if(_.isArray(data[ind])) {
+			newData[ind] = [
+				...data[ind],
+				...new Array(maxCellValue - data[ind].length).fill('')
+			]
+
+			// 检测是否开启行选择功能
+			if(rowCheckbox) {
+				newData[ind].unshift(rowCheck)
+			}
+
+			// 检测是否开启行序号功能
+			if(serialNumber.show) {
+				newData[ind].unshift(serialNumber.formatter)
+			}
+		} else {
+			newData[ind] = { ...data[ind] }
+			newData[ind].cells = [
+				...data[ind].cells,
+				...new Array(maxCellValue - data[ind].cells.length).fill('')
+			]
+
+			// 检测是否开启行选择功能
+			if(rowCheckbox) {
+				newData[ind].cells.unshift(rowCheck)
+			}
+
+			// 检测是否开启行序号功能
+			if(serialNumber.show) {
+				newData[ind].cells.unshift(serialNumber.formatter)
+			}
+		}
+	})
+
+	return newData
+}
+
+/**
  * 组件内部元素的事件处理
  * @param _objectUnit {object} 渲染组件结构的对象单元
  * @param _func {function} 内部逻辑函数
@@ -296,4 +367,66 @@ export function customizer(objValue, othValue) {
 	if(typeof objValue === 'function' || typeof othValue === 'function') {
 		return true
 	}
+}
+
+/**
+ * 获取行的样式
+ * 行样式的优先级顺序：row.style < row.visual.style < row.specialStyle < silent.style
+ * @param rowState
+ * @param event
+ */
+export function getRowStyle(rowState, event) {
+	const { data, property } = rowState
+	const { body, header } = property
+	const { show: headerShow } = header
+	const { row } = body
+	const {
+		style,
+		visual: {
+			show: visualShow,
+			style: visualStyle,
+			interval
+		},
+		specialStyle,
+		silent: {
+			show: silentShow,
+			style: silentStyle
+		}
+	} = row
+
+	let rowStyle = []
+
+	_.range(headerShow ? data.length - 1 : data.length).map(index => {
+		let tempStyle = style
+
+		if(visualShow && interval && !Number.isNaN(interval) && index % (interval * 2) >= interval) {
+			tempStyle = {
+				...tempStyle,
+				...visualStyle
+			}
+		}
+
+		if(specialStyle && _.isArray(specialStyle)) {
+			tempStyle = {
+				...tempStyle,
+				...specialStyle[index]
+			}
+		}
+
+		if(event) {
+			const rowElement = closest(event.target, '.list-row')
+			const rowIndex = Array.prototype.indexOf.call(rowElement.parentNode.childNodes, rowElement)
+
+			if(!silentShow && index === rowIndex && event.type === 'mouseenter') {
+				tempStyle = {
+					...tempStyle,
+					...silentStyle
+				}
+			}
+		}
+
+		rowStyle.push(tempStyle)
+	})
+
+	return rowStyle
 }

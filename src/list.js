@@ -38,7 +38,9 @@ export default class extends React.Component {
 			// 渲染数据
 			data: config.data,
 			// 列表的自定义样式表名
-			className: config.className
+			className: config.className,
+			// 行样式
+			rowStyle: []
 		}
 
 		// 当一次滚动多行时可用，组件可视区域第一行的索引
@@ -46,28 +48,38 @@ export default class extends React.Component {
 	}
 
 	static getDerivedStateFromProps(props, state) {
-		let { property, data, className, ...restState } = state
+		let { property, data: stateData, className, ...restState } = state
+		const { property: propsProperty, data: propsData, className: propsClassName } = props
 
 		// 检测本次渲染的数据是否有变化
-		if(!_.isEqualWith(props, { property, data, className }, util.customizer)) {
+		if(
+			!_.isEqual(propsProperty, property) ||
+			!_.isEqual(propsData, stateData) ||
+			!_.isEqual(propsClassName, className)
+		) {
+			console.log(props.property.style.width)
 			const { height: propsHeight } = props.property.style
 			const { height: stateHeight } = property.style
 			const { width: propsCellWidth } = props.property.body.cell.style
 			const { width: stateCellWidth } = property.body.cell.style
-			const isDataChanged = _.isEqualWith(props.data, data, util.customizer)
+			const { row } = props.property.body
+
+			const isDataChanged = _.isEqualWith(props.data, stateData, util.customizer)
+			const transitionName = !isDataChanged
+				? util.getTransitionName(row.transition, isDataChanged)
+				: state.transitionName
 
 			return {
 				...restState,
 				...props,
-				transitionName: !isDataChanged
-					? util.getTransitionName(props.property.body.row.transition, isDataChanged)
-					: state.transitionName,
+				transitionName,
+				rowStyle: util.getRowStyle(props),
 				colWidth: propsCellWidth !== stateCellWidth ? util.setColWidth(propsCellWidth) : state.colWidth,
 				scrollHeight: propsHeight !== stateHeight ? util.getScrollHeight(props) : state.scrollHeight
 			}
 		}
 
-		// 如果props未更新属性，则返回state
+		// 如果props未更新属性，则返回state。此state已包含setState更新的值。
 		return state
 	}
 
@@ -324,7 +336,7 @@ export default class extends React.Component {
 				// 当次滚动结束
 				clearInterval(marqueeIntervalRow)
 			}
-		}, 1)
+		}, 4)
 	}
 
 	/**
@@ -342,35 +354,9 @@ export default class extends React.Component {
 	 * 行hover事件
 	 * @param {object} e event
 	 */
-	rowHover = (e) => {
-		const { silent: { show, style } } = this.state.property.body.row
-		const { target } = e
-		let row = target
-
-		if(!show) {
-			// 检测target是否是列表行元素，否则向上寻找，直到找到行元素为止
-			if(!target.classList.contains('list-row')) {
-				row = util.closest(target, '.list-row')
-			}
-
-			// 遍历style并依次赋值给元素
-
-			Object.keys(style).map(key => {
-				if(e.type === 'mouseenter') {
-					if(key.indexOf('old') === -1) {
-						style[`old${key}`] = row.style[key]
-						row.style[key] = style[key]
-					}
-				} else if(e.type === 'mouseleave') {
-					if(style[`old${key}`]) {
-						row.style[key] = style[`old${key}`]
-						delete style[`old${key}`]
-					} else {
-						row.style[key] = ''
-					}
-				}
-			})
-		}
+	rowHover = e => {
+		this.setState({ rowStyle: util.getRowStyle(this.state, e) })
+		e.stopPropagation()
 	}
 
 	/**
@@ -476,76 +462,6 @@ export default class extends React.Component {
 		}
 
 		return width
-	}
-
-	/**
-	 * 补齐单元格
-	 * 如果props数据不规范，则自动补齐单元格到缺少的行，直到每一行的单元格数量相等为止
-	 * @param {object} data 新数据
-	 * @returns {Array} 补齐后的用于生成单元格的数据
-	 */
-	fillRow(data) {
-		const cellsOfRow = []
-		const { row: { rowCheckbox, serialNumber } } = this.state.property.body
-
-		// 获取每一行的数据量，存入数组 cellsOfRow 内
-		_.range(data.length).map(i => {
-			// 如果行数据是一个对象，保证该对象内一定有一个cells字段
-			if(_.isPlainObject(data[i]) && !data[i].cells) {
-				data[i].cells = []
-			}
-
-			cellsOfRow.push(_.isArray(data[i]) ? data[i].length : data[i].cells.length)
-		})
-
-		// 获取数据量最多的一行的数值
-		const maxCellValue = Math.max(...cellsOfRow)
-		const newData = []
-
-		// 补齐空数据到缺失的行
-		data.forEach((row, ind) => {
-			const rowCheck = {
-				type: 'checkbox',
-				text: '',
-				key: `rowCheck${ind}`,
-				name: 'rowCheckbox'
-			}
-
-			if(_.isArray(data[ind])) {
-				newData[ind] = [
-					...data[ind],
-					...new Array(maxCellValue - data[ind].length).fill('')
-				]
-
-				// 检测是否开启行选择功能
-				if(rowCheckbox) {
-					newData[ind].unshift(rowCheck)
-				}
-
-				// 检测是否开启行序号功能
-				if(serialNumber.show) {
-					newData[ind].unshift(serialNumber.formatter)
-				}
-			} else {
-				newData[ind] = { ...data[ind] }
-				newData[ind].cells = [
-					...data[ind].cells,
-					...new Array(maxCellValue - data[ind].cells.length).fill('')
-				]
-
-				// 检测是否开启行选择功能
-				if(rowCheckbox) {
-					newData[ind].cells.unshift(rowCheck)
-				}
-
-				// 检测是否开启行序号功能
-				if(serialNumber.show) {
-					newData[ind].cells.unshift(serialNumber.formatter)
-				}
-			}
-		})
-
-		return newData
 	}
 
 	/**
@@ -844,28 +760,8 @@ export default class extends React.Component {
 	 * @returns {*} 列表主体DOM
 	 */
 	setRow(bodyData, container) {
-		const { property, transitionName } = this.state
-		const { body } = property
-
-		const {
-			row: {
-				transition,
-				style: rowStyle,
-				specialStyle: specialRowStyle,
-				visual: { show: rowVisualShow, interval: rowVisualInterval }
-			}
-		} = body
-
-		// 处理间隔行样式
-		let isVisual = false
-		let { style: rowVisualStyle } = body.row.visual
-		if(rowVisualShow && rowVisualInterval && !Number.isNaN(rowVisualInterval)) {
-			isVisual = true
-			rowVisualStyle = {
-				...rowStyle,
-				...rowVisualStyle
-			}
-		}
+		const { property, transitionName, rowStyle } = this.state
+		const { body: { row: { transition } } } = property
 
 		// 处理行动画的样式
 		const transitionClassName = transition ? ` ${transitionName}` : ''
@@ -874,15 +770,13 @@ export default class extends React.Component {
 			const customClassName = rowData.className ? ` ${rowData.className}` : ''
 			let LIElementProps = {
 				className: `list-row${customClassName}${transitionClassName}`,
-				style: isVisual && rowIndex % (rowVisualInterval * 2) >= rowVisualInterval
-					? _.defaultsDeep({}, specialRowStyle[rowIndex], rowVisualStyle, rowStyle)
-					: _.defaultsDeep({}, specialRowStyle[rowIndex], rowStyle),
+				style: rowStyle[rowIndex],
 				onMouseEnter: this.rowHover,
 				onMouseLeave: this.rowHover
 			}
 
 			// 检测行数据是一个对象还是一个数组
-			// 如果是对象，则需要对行做一些处理，比如添加自定义事件等（目前只支持添加事件）
+			// 如果是对象，则需要对行数据做一些处理，比如添加自定义事件等（目前只支持添加事件）
 			if(_.isPlainObject(rowData) && rowData.type === 'row') {
 				LIElementProps[rowData.event] = util.handleEvent.bind(this, [rowData])
 				LIElementProps.value = rowData.value
@@ -1028,7 +922,7 @@ export default class extends React.Component {
 		// 当存在表头数据且表头是开启时处理数据
 		let headerData
 		let bodyData
-		this.renderData = this.fillRow(data)
+		this.renderData = util.fillRow(data, this.state)
 		if(showHeader && data.length) {
 			[headerData, ...bodyData] = this.renderData
 		} else {

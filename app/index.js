@@ -245,7 +245,7 @@ const Dev = () => {
 		property: {
 			// The style of the outermost container
 			style: {
-				width: '100%',
+				width: '1000px',
 				margin: '0 auto',
 				padding: '10px',
 				height: 550,
@@ -284,7 +284,7 @@ const Dev = () => {
 						formatter: 'No.{index}',
 						style: {
 							backgroundColor: '#3991ff',
-							// width: 80,
+							width: 80,
 							fontSize: 20,
 							color: '#2cff41'
 						},
@@ -302,9 +302,9 @@ const Dev = () => {
 					},
 					specialStyle: [
 						{ height: 60 },
-						{ height: 40 },
-						{ height: 80 },
 						{ height: 100 },
+						{ height: 80 },
+						{ height: 30 },
 						{ height: 50 },
 						{ height: 80 }
 					],
@@ -315,6 +315,7 @@ const Dev = () => {
 						}
 					},
 					silent: {
+						show: false,
 						style: {
 							backgroundColor: '#bcf0fc'
 						}
@@ -329,6 +330,15 @@ const Dev = () => {
 						border: '',
 						width: [60, 60, '30%', '25%', '10%']
 					}
+				},
+				cellOfColumn: {
+					style: [
+						{},
+						{},
+						{color: 'red'},
+						{},
+						{ backgroundColor: '#f4f4f4' }
+					]
 				}
 			},
 			scroll: {

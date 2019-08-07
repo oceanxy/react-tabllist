@@ -64,6 +64,7 @@ export default {
 				style: {
 					height: 30
 				},
+				// visual样式高于style
 				visual: {
 					show: false,
 					interval: 1,
@@ -73,6 +74,7 @@ export default {
 				},
 				// 注意：单独指定每一行的样式的优先级高于visual.style的优先级
 				specialStyle: [],
+				// silent的样式优先级高于specialStyle
 				silent: {
 					show: false, // false is open
 					style: {

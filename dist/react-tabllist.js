@@ -129,20 +129,6 @@ module.exports = _defineProperty;
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports) {
-
-function _assertThisInitialized(self) {
-  if (self === void 0) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-
-  return self;
-}
-
-module.exports = _assertThisInitialized;
-
-/***/ }),
-/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var defineProperty = __webpack_require__(2);
@@ -167,6 +153,20 @@ function _objectSpread(target) {
 }
 
 module.exports = _objectSpread;
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
+function _assertThisInitialized(self) {
+  if (self === void 0) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return self;
+}
+
+module.exports = _assertThisInitialized;
 
 /***/ }),
 /* 5 */
@@ -275,7 +275,7 @@ module.exports = _createClass;
 
 var _typeof = __webpack_require__(19);
 
-var assertThisInitialized = __webpack_require__(3);
+var assertThisInitialized = __webpack_require__(4);
 
 function _possibleConstructorReturn(self, call) {
   if (call && (_typeof(call) === "object" || typeof call === "function")) {
@@ -532,7 +532,7 @@ if(false) {}
 
 exports = module.exports = __webpack_require__(26)(false);
 // Module
-exports.push([module.i, ".list {\n  display: block;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  overflow: hidden; }\n  .list .list-cont {\n    margin: 0;\n    padding: 0;\n    display: table;\n    width: 100%;\n    height: auto;\n    -webkit-transition: all 400ms;\n    transition: all 400ms; }\n    .list .list-cont .list-row {\n      display: table-row;\n      list-style: none;\n      height: 58px;\n      -webkit-transition: all 300ms cubic-bezier(0, 0, 0.58, 1);\n      transition: all 300ms cubic-bezier(0, 0, 0.58, 1);\n      background: no-repeat center / 100% 100%; }\n      .list .list-cont .list-row.list-row-start {\n        -webkit-transform: scale(0.8);\n                transform: scale(0.8);\n        opacity: 0; }\n      .list .list-cont .list-row.list-row-end {\n        opacity: 1;\n        -webkit-transform: scale(1);\n                transform: scale(1); }\n      .list .list-cont .list-row.click-row {\n        cursor: pointer; }\n      .list .list-cont .list-row .list-cell {\n        display: table-cell;\n        text-align: center;\n        vertical-align: middle;\n        word-break: break-all;\n        border-left: none !important;\n        background: no-repeat center / 100% 100%; }\n        .list .list-cont .list-row .list-cell * {\n          vertical-align: middle; }\n        .list .list-cont .list-row .list-cell:last-child {\n          border-right: none !important; }\n        .list .list-cont .list-row .list-cell a {\n          color: currentColor;\n          -webkit-text-decoration: transparent;\n                  text-decoration: transparent; }\n        .list .list-cont .list-row .list-cell label {\n          vertical-align: middle; }\n          .list .list-cont .list-row .list-cell label span, .list .list-cont .list-row .list-cell label input {\n            vertical-align: middle;\n            padding: 0 5px; }\n  .list .list-header .list-row {\n    background: no-repeat center / 100% 100%; }\n    .list .list-header .list-row .list-cell {\n      overflow: hidden;\n      white-space: nowrap;\n      text-overflow: ellipsis;\n      border-bottom: none !important; }\n  .list .list-body .list-cont {\n    border-collapse: separate; }\n  .list .list-body .list-cell {\n    color: #666; }\n  .list.list-no-spacing .list-cell {\n    border-top: none !important; }\n", ""]);
+exports.push([module.i, ".list {\n  display: block;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  overflow: hidden; }\n  .list .list-cont {\n    margin: 0;\n    padding: 0;\n    display: table;\n    width: 100%;\n    height: auto;\n    -webkit-transition: all 400ms;\n    transition: all 400ms; }\n    .list .list-cont .list-row {\n      display: table-row;\n      list-style: none;\n      -webkit-transition: all 300ms cubic-bezier(0, 0, 0.58, 1);\n      transition: all 300ms cubic-bezier(0, 0, 0.58, 1);\n      background: no-repeat center / 100% 100%; }\n      .list .list-cont .list-row.list-row-start {\n        -webkit-transform: scale(0.8);\n                transform: scale(0.8);\n        opacity: 0; }\n      .list .list-cont .list-row.list-row-end {\n        opacity: 1;\n        -webkit-transform: scale(1);\n                transform: scale(1); }\n      .list .list-cont .list-row.click-row {\n        cursor: pointer; }\n      .list .list-cont .list-row .list-cell {\n        display: table-cell;\n        text-align: center;\n        vertical-align: middle;\n        word-break: break-all;\n        border-left: none !important;\n        background: no-repeat center / 100% 100%; }\n        .list .list-cont .list-row .list-cell * {\n          vertical-align: middle; }\n        .list .list-cont .list-row .list-cell:last-child {\n          border-right: none !important; }\n        .list .list-cont .list-row .list-cell a {\n          color: currentColor;\n          -webkit-text-decoration: transparent;\n                  text-decoration: transparent; }\n        .list .list-cont .list-row .list-cell label {\n          vertical-align: middle; }\n          .list .list-cont .list-row .list-cell label span, .list .list-cont .list-row .list-cell label input {\n            vertical-align: middle;\n            padding: 0 5px; }\n  .list .list-header .list-row {\n    background: no-repeat center / 100% 100%; }\n    .list .list-header .list-row .list-cell {\n      overflow: hidden;\n      white-space: nowrap;\n      text-overflow: ellipsis;\n      border-bottom: none !important; }\n  .list .list-body .list-cont {\n    border-collapse: separate; }\n  .list .list-body .list-cell {\n    color: #666; }\n  .list.list-no-spacing .list-cell {\n    border-top: none !important; }\n", ""]);
 
 
 /***/ }),
@@ -1228,6 +1228,7 @@ var external_commonjs_react_commonjs2_react_amd_react_root_React_default = /*#__
           formatter: '{index}.',
           style: {
             width: 80,
+            height: 60,
             backgroundColor: '',
             backgroundImage: '',
             color: '#ffffff'
@@ -1239,6 +1240,7 @@ var external_commonjs_react_commonjs2_react_amd_react_root_React_default = /*#__
         style: {
           height: 30
         },
+        // visual样式高于style
         visual: {
           show: false,
           interval: 1,
@@ -1248,6 +1250,7 @@ var external_commonjs_react_commonjs2_react_amd_react_root_React_default = /*#__
         },
         // 注意：单独指定每一行的样式的优先级高于visual.style的优先级
         specialStyle: [],
+        // silent的样式优先级高于specialStyle
         silent: {
           show: false,
           // false is open
@@ -1317,7 +1320,7 @@ var toConsumableArray = __webpack_require__(7);
 var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableArray);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/objectSpread.js
-var objectSpread = __webpack_require__(4);
+var objectSpread = __webpack_require__(3);
 var objectSpread_default = /*#__PURE__*/__webpack_require__.n(objectSpread);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/slicedToArray.js
@@ -1325,7 +1328,7 @@ var slicedToArray = __webpack_require__(13);
 var slicedToArray_default = /*#__PURE__*/__webpack_require__.n(slicedToArray);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/assertThisInitialized.js
-var assertThisInitialized = __webpack_require__(3);
+var assertThisInitialized = __webpack_require__(4);
 var assertThisInitialized_default = /*#__PURE__*/__webpack_require__.n(assertThisInitialized);
 
 // EXTERNAL MODULE: ./src/index.scss
@@ -1646,6 +1649,56 @@ function customizer(objValue, othValue) {
     return true;
   }
 }
+/**
+ * 获取行的样式
+ * 行样式的优先级顺序：row.style < row.visual.style < row.specialStyle < silent.style
+ * @param rowState
+ * @param event
+ */
+
+function getRowStyle(rowState, event) {
+  var data = rowState.data,
+      property = rowState.property;
+  var body = property.body,
+      header = property.header;
+  var headerShow = header.show;
+  var row = body.row;
+  var style = row.style,
+      _row$visual = row.visual,
+      visualShow = _row$visual.show,
+      visualStyle = _row$visual.style,
+      interval = _row$visual.interval,
+      specialStyle = row.specialStyle,
+      _row$silent = row.silent,
+      silentShow = _row$silent.show,
+      silentStyle = _row$silent.style;
+  var rowStyle = [];
+
+  external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.range(headerShow ? data.length - 1 : data.length).map(function (index) {
+    var tempStyle = style;
+
+    if (visualShow && interval && !Number.isNaN(interval) && index % (interval * 2) >= interval) {
+      tempStyle = objectSpread_default()({}, tempStyle, visualStyle);
+    }
+
+    if (specialStyle && external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isArray(specialStyle)) {
+      tempStyle = objectSpread_default()({}, tempStyle, specialStyle[index]);
+    }
+
+    if (event) {
+      var rowElement = closest(event.target, '.list-row');
+      var rowIndex = Array.prototype.indexOf.call(rowElement.parentNode.childNodes, rowElement);
+
+      if (!silentShow && index === rowIndex && event.type === 'mouseenter') {
+        tempStyle = objectSpread_default()({}, tempStyle, silentStyle);
+      }
+    }
+
+    rowStyle.push(tempStyle);
+  });
+
+  return rowStyle;
+}
 // CONCATENATED MODULE: ./src/list.js
 
 
@@ -1804,35 +1857,11 @@ function (_React$Component) {
     });
 
     defineProperty_default()(assertThisInitialized_default()(_this), "rowHover", function (e) {
-      var _this$state$property$ = _this.state.property.body.row.silent,
-          show = _this$state$property$.show,
-          style = _this$state$property$.style;
-      var target = e.target;
-      var row = target;
+      _this.setState({
+        rowStyle: getRowStyle(_this.state, e)
+      });
 
-      if (!show) {
-        // 检测target是否是列表行元素，否则向上寻找，直到找到行元素为止
-        if (!target.classList.contains('list-row')) {
-          row = closest(target, '.list-row');
-        } // 遍历style并依次赋值给元素
-
-
-        Object.keys(style).map(function (key) {
-          if (e.type === 'mouseenter') {
-            if (key.indexOf('old') === -1) {
-              style["old".concat(key)] = row.style[key];
-              row.style[key] = style[key];
-            }
-          } else if (e.type === 'mouseleave') {
-            if (style["old".concat(key)]) {
-              row.style[key] = style["old".concat(key)];
-              delete style["old".concat(key)];
-            } else {
-              row.style[key] = '';
-            }
-          }
-        });
-      }
+      e.stopPropagation();
     });
 
     defineProperty_default()(assertThisInitialized_default()(_this), "checkCR", function (_ref, event) {
@@ -1986,7 +2015,9 @@ function (_React$Component) {
       // 渲染数据
       data: config.data,
       // 列表的自定义样式表名
-      className: config.className // 当一次滚动多行时可用，组件可视区域第一行的索引
+      className: config.className,
+      // 行样式
+      rowStyle: [] // 当一次滚动多行时可用，组件可视区域第一行的索引
 
     };
     _this.rowIndex = 0;
@@ -2165,9 +2196,9 @@ function (_React$Component) {
      */
     value: function fillRow(data) {
       var cellsOfRow = [];
-      var _this$state$property$2 = this.state.property.body.row,
-          rowCheckbox = _this$state$property$2.rowCheckbox,
-          serialNumber = _this$state$property$2.serialNumber; // 获取每一行的数据量，存入数组 cellsOfRow 内
+      var _this$state$property$ = this.state.property.body.row,
+          rowCheckbox = _this$state$property$.rowCheckbox,
+          serialNumber = _this$state$property$.serialNumber; // 获取每一行的数据量，存入数组 cellsOfRow 内
 
       external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.range(data.length).map(function (i) {
         // 如果行数据是一个对象，保证该对象内一定有一个cells字段
@@ -2511,34 +2542,19 @@ function (_React$Component) {
 
       var _this$state5 = this.state,
           property = _this$state5.property,
-          transitionName = _this$state5.transitionName;
-      var body = property.body;
-      var _body$row = body.row,
-          transition = _body$row.transition,
-          rowStyle = _body$row.style,
-          specialRowStyle = _body$row.specialStyle,
-          _body$row$visual = _body$row.visual,
-          rowVisualShow = _body$row$visual.show,
-          rowVisualInterval = _body$row$visual.interval; // 处理间隔行样式
-
-      var isVisual = false;
-      var rowVisualStyle = body.row.visual.style;
-
-      if (rowVisualShow && rowVisualInterval && !Number.isNaN(rowVisualInterval)) {
-        isVisual = true;
-        rowVisualStyle = objectSpread_default()({}, rowStyle, rowVisualStyle);
-      } // 处理行动画的样式
-
+          transitionName = _this$state5.transitionName,
+          rowStyle = _this$state5.rowStyle;
+      var transition = property.body.row.transition; // 处理行动画的样式
 
       var transitionClassName = transition ? " ".concat(transitionName) : '';
       return bodyData.map(function (rowData, rowIndex) {
         var customClassName = rowData.className ? " ".concat(rowData.className) : '';
         var LIElementProps = {
           className: "list-row".concat(customClassName).concat(transitionClassName),
-          style: isVisual && rowIndex % (rowVisualInterval * 2) >= rowVisualInterval ? external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.defaultsDeep({}, specialRowStyle[rowIndex], rowVisualStyle, rowStyle) : external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.defaultsDeep({}, specialRowStyle[rowIndex], rowStyle),
+          style: rowStyle[rowIndex],
           onMouseEnter: _this6.rowHover,
           onMouseLeave: _this6.rowHover // 检测行数据是一个对象还是一个数组
-          // 如果是对象，则需要对行做一些处理，比如添加自定义事件等（目前只支持添加事件）
+          // 如果是对象，则需要对行数据做一些处理，比如添加自定义事件等（目前只支持添加事件）
 
         };
 
@@ -2551,6 +2567,7 @@ function (_React$Component) {
           });
         }
 
+        console.log(rowStyle);
         return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("li", extends_default()({
           key: "".concat(container, "-list-row").concat(rowData.key ? rowData.key : rowIndex)
         }, LIElementProps), external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isArray(rowData) ? _this6.setCell(rowData, rowIndex, container) : _this6.setCell(rowData.cells, rowIndex, container));
@@ -2704,29 +2721,31 @@ function (_React$Component) {
     key: "getDerivedStateFromProps",
     value: function getDerivedStateFromProps(props, state) {
       var property = state.property,
-          data = state.data,
+          stateData = state.data,
           className = state.className,
-          restState = objectWithoutProperties_default()(state, ["property", "data", "className"]); // 检测本次渲染的数据是否有变化
+          restState = objectWithoutProperties_default()(state, ["property", "data", "className"]);
 
+      var propsProperty = props.property,
+          propsData = props.data,
+          propsClassName = props.className; // 检测本次渲染的数据是否有变化
 
-      if (!external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqualWith(props, {
-        property: property,
-        data: data,
-        className: className
-      }, customizer)) {
+      if (!external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqual(propsProperty, property) || !external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqual(propsData, stateData) || !external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqual(propsClassName, className)) {
         var propsHeight = props.property.style.height;
         var stateHeight = property.style.height;
         var propsCellWidth = props.property.body.cell.style.width;
         var stateCellWidth = property.body.cell.style.width;
+        var row = props.property.body.row;
 
-        var isDataChanged = external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqualWith(props.data, data, customizer);
+        var isDataChanged = external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqualWith(props.data, stateData, customizer);
 
+        var transitionName = !isDataChanged ? getTransitionName(row.transition, isDataChanged) : state.transitionName;
         return objectSpread_default()({}, restState, props, {
-          transitionName: !isDataChanged ? getTransitionName(props.property.body.row.transition, isDataChanged) : state.transitionName,
+          transitionName: transitionName,
+          rowStyle: getRowStyle(props),
           colWidth: propsCellWidth !== stateCellWidth ? setColWidth(propsCellWidth) : state.colWidth,
           scrollHeight: propsHeight !== stateHeight ? getScrollHeight(props) : state.scrollHeight
         });
-      } // 如果props未更新属性，则返回state
+      } // 如果props未更新属性，则返回state。此state已包含setState更新的值。
 
 
       return state;

@@ -104,9 +104,13 @@
 2. You can define partial styles of the body, which usually do not affect the layout of the list.
 3. Body height changes with list height whenever.
 4. Fixed a bug where the header and body were misplaced when the component width was less than the sum of the width of each column.
-5. Refactored part of the code.
+5. Refactoring the code logic for row hover effects.
+
+#### 1.5.1
+1. A unit can bind multiple events.
+2. Normal text can also be written as an object unit to increase the event.
+3. Refactored part of the code.
 
 #### 2.0.0
 1. Add a panel for dynamically adjusting properties in the development environment.
-2. A unit can bind multiple events.
-3. Normal text can also be written as an object unit to increase the event.
+2. Code refactoring
