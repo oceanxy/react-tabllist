@@ -50,9 +50,13 @@ export default {
 					show: false,
 					columnName: 'SN',
 					formatter: '{index}.',
+					column: 1,
 					style: {
-						width: 80,
-						height: 60,
+						width: '100%',
+						height: '100%',
+						display: 'flex',
+						justifyContent: 'center',
+						alignItems: 'center',
 						backgroundColor: '',
 						backgroundImage: '',
 						color: '#ffffff'
@@ -60,7 +64,12 @@ export default {
 					specialStyle: []
 				},
 				spacing: 0,
-				rowCheckbox: false,
+				rowCheckbox: {
+					show: false,
+					column: 0,
+					style: {},
+					specialStyle: []
+				},
 				style: {
 					height: 30
 				},
@@ -113,12 +122,12 @@ export function getWaringProperty() {
 		{
 			version: '1.0.0',
 			discard: 'property.body.cell.iconStyle',
-			warn: 'Used obsolete configuration in React-tabllist: \'property.body.cell.iconStyle\' will be completely removed in future releases.Please use the object unit ({type: img, ...}) instead'
+			warn: 'Used obsolete configuration in React-tabllist: \'property.body.cell.iconStyle\' will be completely removed in future releases.Please use the object unit ({type: img, ...}) instead.'
 		},
 		{
 			version: '1.2.0',
 			discard: 'property.body.row.onClick',
-			warn: 'Used obsolete configuration in React-tabllist: \'property.body.row.onClick\' can only be used in version 1.2.0.Please use the object unit ({type: row, ...}) instead'
+			warn: 'Used obsolete configuration in React-tabllist: \'property.body.row.onClick\' can only be used in version 1.2.0, Please use the object unit ({type: row, ...}) instead.'
 		},
 		{
 			version: '1.3.0',
@@ -137,6 +146,12 @@ export function getWaringProperty() {
 			discard: 'property.speed',
 			replacement: 'property.scroll.speed',
 			warn: 'Used obsolete configuration in React-tabllist: \'property.speed\' has been deprecated in version 1.4.0 and will be completely removed in future releases. You should use \'property.scroll.speed\' instead.'
+		},
+		{
+			version: '1.5.0',
+			discard: ['property.body.row.rowCheckbox', 'Object'],
+			replacement: 'property.body.row.rowCheckbox.show',
+			warn: 'Used obsolete configuration in React-tabllist: \'property.body.row.rowCheckbox\' is no longer directly set to a boolean value in version 1.5.0, but an object. For example: {show: boolean, style: cssProperties}.'
 		}
 	]
 }

@@ -70,46 +70,53 @@ export function getScrollHeight(props, listComponent) {
 /**
  * 将用户设置的每一列单元格宽度值解析为组件程序需要的值，同时处理不合法数据
  * @param {string|array|number} width props传入的宽度数据
+ * @param {array} data 用于渲染组件的数据
  * @returns {*} 用于渲染每列单元格的宽度值
  */
-export function setColWidth(width) {
-	// 处理字符串形式的多列宽度数值
-	if(Array.isArray(width)) {
-		return width.map(o => (!o ? 'auto' : o))
+export function handleColWidth(width, data) {
+	function isString(widthValue) {
+		if(widthValue.indexOf('px') > -1) {
+			return `${parseFloat(widthValue)}px`
+		} else if(widthValue.indexOf('%') > -1) {
+			return `${parseFloat(widthValue)}%`
+		} else if(widthValue * 1) {
+			return parseFloat(widthValue)
+		}
+
+		return 'auto'
 	}
 
-	// 处理字符串形式的多列宽度数值
-	if(typeof width === 'string') {
-		if(width.indexOf(',') >= 0) {
-			return width.split(',').map(o => {
-				if(o.indexOf('px') > -1) {
-					return `${parseFloat(o)}px`
-				} else if(o.indexOf('%') > -1) {
-					return `${parseFloat(o)}%`
-				} else if(o * 1) {
-					return parseFloat(o)
-				}
+	// 处理数组形式的多列宽度数值
+	if(Array.isArray(width)) {
+		return width.map(o => {
+			if(o === 0 || !o) {
 				return 'auto'
-			})
-		}
-		if(width === 'avg') {
-			return new Array(100).fill(1)
-		}
+			} else if(typeof o === 'string') {
+				if(width.indexOf(',') >= 0) {
+					return width.split(',').map(o => isString(o))
+				} else if(width === 'avg') {
+					return new Array(getMaxCellOfRow(data)).fill(1)
+				}
+			}
+
+			return o
+		})
+	}
+	// 处理字符串形式的多列宽度数值
+	else if(typeof width === 'string') {
+		return isString(width)
 	}
 
 	return 'auto'
 }
 
 /**
- * 补齐单元格
- * 如果props数据不规范，则自动补齐单元格到缺少的行，直到每一行的单元格数量相等为止
- * @param {object} data 新数据
- * @param {object} state 组件当前状态
- * @returns {Array} 补齐后的用于生成单元格的数据
+ * 从渲染数据中获取每行的单元格数量（以最多单元格的一行为准）
+ * @param data 用于渲染的数据
+ * @returns {number}
  */
-export function fillRow(data, state) {
+export function getMaxCellOfRow(data) {
 	const cellsOfRow = []
-	const { row: { rowCheckbox, serialNumber } } = state.property.body
 
 	// 获取每一行的数据量，存入数组 cellsOfRow 内
 	_.range(data.length).map(i => {
@@ -122,49 +129,62 @@ export function fillRow(data, state) {
 	})
 
 	// 获取数据量最多的一行的数值
-	const maxCellValue = Math.max(...cellsOfRow)
+	return Math.max(...cellsOfRow)
+}
+
+/**
+ * 补齐单元格
+ * 如果props数据不规范，则自动补齐单元格到缺少的行，直到每一行的单元格数量相等为止
+ * @param {object} data 新数据
+ * @param {object} state 组件当前状态
+ * @returns {Array} 补齐后的用于生成单元格的数据
+ */
+export function fillRow(data, state) {
+	const { row: { rowCheckbox, serialNumber } } = state.property.body
+	const cloneData = [...data]
+	// 获取数据量最多的一行的数值
+	const maxCellValue = getMaxCellOfRow(cloneData)
 	const newData = []
 
-	// 补齐空数据到缺失的行
-	data.forEach((row, ind) => {
+	function specifiedColumn(insertedRow, row, cloneRow) {
 		const rowCheck = {
 			type: 'checkbox',
 			text: '',
-			key: `rowCheck${ind}`,
+			key: `rowCheck${row}`,
 			name: 'rowCheckbox'
 		}
 
-		if(_.isArray(data[ind])) {
-			newData[ind] = [
-				...data[ind],
-				...new Array(maxCellValue - data[ind].length).fill('')
-			]
+		const SNCell = {
+			type: 'text',
+			text: serialNumber.formatter.replace('{index}', row),
+			key: `listSN${row}`
+		}
 
-			// 检测是否开启行选择功能
-			if(rowCheckbox) {
-				newData[ind].unshift(rowCheck)
-			}
+		insertedRow = [
+			...cloneRow,
+			...new Array(maxCellValue - cloneRow.length).fill('')
+		]
 
-			// 检测是否开启行序号功能
-			if(serialNumber.show) {
-				newData[ind].unshift(serialNumber.formatter)
-			}
+		// 检测是否开启行选择功能
+		if(rowCheckbox.show) {
+			insertedRow.unshift(rowCheck)
+		}
+
+		// 检测是否开启行序号功能
+		if(serialNumber.show) {
+			insertedRow.unshift(SNCell)
+		}
+
+		return insertedRow
+	}
+
+	// 补齐空数据到缺失的行
+	cloneData.forEach((row, ind) => {
+		if(_.isArray(cloneData[ind])) {
+			newData.push(specifiedColumn(newData[ind], ind, cloneData[ind]))
 		} else {
-			newData[ind] = { ...data[ind] }
-			newData[ind].cells = [
-				...data[ind].cells,
-				...new Array(maxCellValue - data[ind].cells.length).fill('')
-			]
-
-			// 检测是否开启行选择功能
-			if(rowCheckbox) {
-				newData[ind].cells.unshift(rowCheck)
-			}
-
-			// 检测是否开启行序号功能
-			if(serialNumber.show) {
-				newData[ind].cells.unshift(serialNumber.formatter)
-			}
+			newData[ind] = { ...cloneData[ind] }
+			newData[ind].cells = specifiedColumn(newData[ind].cells, ind, cloneData[ind].cells)
 		}
 	})
 
@@ -207,13 +227,14 @@ export function waring(property) {
 	 * @returns {{isExist: boolean}|{isExist: boolean, value: *}} isExist:是否使用了过时属性 value:过时属性的值
 	 */
 	function isKeyExists(discard, property) {
-		if(!property || !discard) {
+		if(!property || !discard || !discard[0]) {
 			return { isExist: false }
 		}
 
 		// 将传入的对象路径字符串拆分为数组
-		const pathList = discard.split('.')
-		// 如果使用了过时的属性，则这边变量用来保存用户设置的属性的值
+		const isDiscardArray = Array.isArray(discard)
+		const pathList = isDiscardArray ? discard[0].split('.') : discard.split('.')
+		// 如果使用了过时的属性，则此变量用来保存用户设置的属性值
 		let value
 
 		// 检测用户的配置对象是否存在警告
@@ -222,11 +243,16 @@ export function waring(property) {
 				return { isExist: false }
 			}
 
-			if(i === pathList.length - 1) {
-				value = property[pathList[i]]
-				property = pathList[i]
-			} else {
+			if(i !== pathList.length - 1) {
 				property = property[pathList[i]]
+			} else {
+				value = property[pathList[i]]
+
+				if(isDiscardArray && Object.prototype.toString.apply(value) === `[object ${discard[1]}]`) {
+					return { isExist: false }
+				} else {
+					property = pathList[i]
+				}
 			}
 		}
 
@@ -249,19 +275,20 @@ export function waring(property) {
 
 		// 替换过时属性，同时配置相对应的属性（如果存在）
 		for(let i = 1; i < pathList.length; i++) {
-			if(i === pathList.length - 1) {
-				property[pathList[i]] = valueOfDiscard
-			} else {
-				if(!property[pathList[i]] || _.isPlainObject(pathList[i])) {
+			if(i !== pathList.length - 1) {
+				// 确保给定的属性路径是对象的形式，防止报错：获取未定义的对象的属性
+				if(property[pathList[i]] === 'undefined' || !_.isPlainObject(property[pathList[i]])) {
 					property[pathList[i]] = {}
 				}
 
 				property = property[pathList[i]]
+			} else {
+				property[pathList[i]] = valueOfDiscard
 			}
 		}
 	}
 
-	waringProperty.map((_obj) => {
+	waringProperty.map(_obj => {
 		const result = isKeyExists(_obj.discard, property)
 		if(result.isExist) {
 			createNewProperty(_obj.replacement, property, result.value)

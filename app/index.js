@@ -269,12 +269,19 @@ const Dev = () => {
 					fontSize: 20
 				}
 			},
+			scroll: {
+				enable: false,
+				speed: 50,
+				distance: 1
+			},
 			body: {
 				style: {
 					padding: 0
 				},
 				row: {
-					rowCheckBox: true,
+					rowCheckbox: {
+						show: true
+					},
 					onClick: () => {}, // 仅在1.2.0版本生效，此处用于测试控制台打印警告信息
 					style: {
 						height: 34
@@ -340,11 +347,6 @@ const Dev = () => {
 						{ backgroundColor: '#f4f4f4' }
 					]
 				}
-			},
-			scroll: {
-				enable: true,
-				speed: 50,
-				distance: 1
 			}
 		}
 	}

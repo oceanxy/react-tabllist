@@ -101,16 +101,19 @@
 
 #### 1.5.0
 1. Customize the text of the header serial number.
-2. You can define partial styles of the body, which usually do not affect the layout of the list.
-3. Body height changes with list height whenever.
-4. Fixed a bug where the header and body were misplaced when the component width was less than the sum of the width of each column.
-5. Refactoring the code logic for row hover effects.
+2. Configuration item update: property.body.row.rowCheckbox is no longer set directly to a Boolean value, but an object.
+3. Custom row selection box or row serial number inserted into which column of the list.
+4. You can define partial styles of the body, which usually do not affect the layout of the list.
+5. Body height changes with list height whenever.
+6. Fix bug: When the line selection or line number function is enabled, the heading corresponds to the body column misalignment.
+7. Refactoring the code logic for row hover effects.
+8. Normal text can also be written as an object unit to increase the event.
 
 #### 1.5.1
 1. A unit can bind multiple events.
-2. Normal text can also be written as an object unit to increase the event.
-3. Refactored part of the code.
+2. Refactored part of the code.
+3. Fix bug: When deactivating list auto scrolling, you can't manually control the list to scroll to the specified row.
 
 #### 2.0.0
 1. Add a panel for dynamically adjusting properties in the development environment.
-2. Code refactoring
+2. Code refactoring.

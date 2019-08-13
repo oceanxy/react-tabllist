@@ -19,7 +19,7 @@ export default class extends React.Component {
 
 		this.state = {
 			// 每列单元格的宽度数组
-			colWidth: util.setColWidth(props.property.body.cell.style.width),
+			colWidth: null,
 			// body可见区域的高度
 			scrollHeight: util.getScrollHeight(props),
 			// 复选框、单选框等标签的默认状态
@@ -33,14 +33,14 @@ export default class extends React.Component {
 			headerWidth: 0,
 			// 列表行缓动动画的样式名
 			transitionName: '',
+			// 行样式
+			rowStyle: [],
 			// 配置属性
 			property: config.property,
 			// 渲染数据
 			data: config.data,
 			// 列表的自定义样式表名
-			className: config.className,
-			// 行样式
-			rowStyle: []
+			className: config.className
 		}
 
 		// 当一次滚动多行时可用，组件可视区域第一行的索引
@@ -50,21 +50,16 @@ export default class extends React.Component {
 	static getDerivedStateFromProps(props, state) {
 		let { property, data: stateData, className, ...restState } = state
 		const { property: propsProperty, data: propsData, className: propsClassName } = props
+		const isDataChanged = _.isEqualWith(propsData, stateData, util.customizer)
 
 		// 检测本次渲染的数据是否有变化
-		if(
-			!_.isEqual(propsProperty, property) ||
-			!_.isEqual(propsData, stateData) ||
-			!_.isEqual(propsClassName, className)
-		) {
-			console.log(props.property.style.width)
+		if(!_.isEqual(propsProperty, property) || !_.isEqual(propsClassName, className) || !isDataChanged) {
 			const { height: propsHeight } = props.property.style
 			const { height: stateHeight } = property.style
 			const { width: propsCellWidth } = props.property.body.cell.style
 			const { width: stateCellWidth } = property.body.cell.style
 			const { row } = props.property.body
 
-			const isDataChanged = _.isEqualWith(props.data, stateData, util.customizer)
 			const transitionName = !isDataChanged
 				? util.getTransitionName(row.transition, isDataChanged)
 				: state.transitionName
@@ -74,11 +69,12 @@ export default class extends React.Component {
 				...props,
 				transitionName,
 				rowStyle: util.getRowStyle(props),
-				colWidth: propsCellWidth !== stateCellWidth ? util.setColWidth(propsCellWidth) : state.colWidth,
+				colWidth: propsCellWidth !== stateCellWidth ? util.handleColWidth(propsCellWidth, propsData) : state.colWidth,
 				scrollHeight: propsHeight !== stateHeight ? util.getScrollHeight(props) : state.scrollHeight
 			}
 		}
 
+		// debugger
 		// 如果props未更新属性，则返回state。此state已包含setState更新的值。
 		return state
 	}
@@ -113,10 +109,10 @@ export default class extends React.Component {
 		}
 	}
 
-	shouldComponentUpdate(nextProps, nextState) {
-		// 避免闪动
-		return !_.isEqualWith(this.props, nextProps, util.customizer) || !_.isEqualWith(this.state, nextState, util.customizer)
-	}
+	// shouldComponentUpdate(nextProps, nextState) {
+	// 	// 避免闪动
+	// 	return !_.isEqualWith(this.state, nextState, util.customizer)
+	// }
 
 	/**
 	 * 组件每次更新后执行
@@ -152,10 +148,10 @@ export default class extends React.Component {
 			const { cell, row } = body
 			const { width: iconWidth } = cell.iconStyle
 			const { width: preIconWidth } = preBody.cell.iconStyle
-			const { transition, rowCheckbox } = row
+			const { transition, rowCheckbox: { show: rowCheckboxShow } } = row
 
 			// 当滚动条显示时，重新计算header的宽度，和列表主体对齐
-			if(show && !enable) {
+			if(show && !enable && !_.isEqualWith(this.state, preState, util.customizer)) {
 				this.setState({ headerWidth: this.listContMain.clientWidth })
 			}
 
@@ -191,7 +187,7 @@ export default class extends React.Component {
 
 			// 设置列表头行选择框的indeterminate
 			// 如果开启了行选择功能且显示表头，根据每行的选择情况设置标题栏多选框的 indeterminate 状态
-			if(show && rowCheckbox) {
+			if(show && rowCheckboxShow) {
 				this.scroll
 					.parentNode
 					.querySelector('.list-header input[name=rowCheckbox]')
@@ -355,8 +351,8 @@ export default class extends React.Component {
 	 * @param {object} e event
 	 */
 	rowHover = e => {
-		this.setState({ rowStyle: util.getRowStyle(this.state, e) })
 		e.stopPropagation()
+		this.setState({ rowStyle: util.getRowStyle(this.state, e) })
 	}
 
 	/**
@@ -597,8 +593,25 @@ export default class extends React.Component {
 		}
 
 		if(cr.type === 'radio' || cr.type === 'checkbox') {
+			const {
+				show: rowCheckboxShow,
+				style: rowCheckboxStyle,
+				specialStyle
+			} = this.state.property.body.row.rowCheckbox
+			const style = rowCheckboxShow && cr.key && cr.key.match(/^rowCheck\d+/)
+				? {
+					...rowCheckboxStyle,
+					...specialStyle[rowIndex - 1]
+				}
+				: {}
+
 			return (
-				<label key={`${cr.key || `cr-${rowIndex}-${cellIndex}-${index}`}`} onClick={util.handleEvent.bind(this, [{}])}>
+				<label
+					className={`list-cell-chk${cr.className ? ` ${cr.className}` : ''}`}
+					key={`${cr.key || `cr-${rowIndex}-${cellIndex}-${index}`}`}
+					onClick={util.handleEvent.bind(this, [{}])}
+					style={style}
+				>
 					<input {...tagProps} />
 					{cr.text ? <span>{cr.text}</span> : null}
 				</label>
@@ -607,7 +620,7 @@ export default class extends React.Component {
 
 		// button 等标签会执行以下代码
 		return (
-			<input{...tagProps} />
+			<input {...tagProps} />
 		)
 	}
 
@@ -636,21 +649,61 @@ export default class extends React.Component {
 	}
 
 	/**
+	 * 设置单元格内的对象单元文本
+	 * @param ct {object} 对象单元
+	 * @param rowIndex {number} 行索引
+	 * @returns {*}
+	 */
+	setCellText(ct, { rowIndex }) {
+		const {
+			show: serialNumberShow,
+			style: serialNumberStyle,
+			specialStyle
+		} = this.state.property.body.row.serialNumber
+		const { text, key, className, data, event, callback, ...restProps } = ct
+		const CTKey = key ? { key } : {}
+		let style = serialNumberShow && key && key.match(/^listSN\d+/)
+			? {
+				...serialNumberStyle,
+				...specialStyle[rowIndex - 1]
+			}
+			: {}
+
+		// 处理默认事件及回调函数
+		if(typeof callback === 'function') {
+			style = { ...style, cursor: 'pointer' }
+
+			if(event) {
+				restProps[event] = util.handleEvent.bind(this, [ct])
+			} else {
+				restProps['onClick'] = util.handleEvent.bind(this, [ct])
+			}
+		}
+
+		return (
+			<span
+				className={`list-cell-text${className ? ` ${className}` : ''}`}
+				style={style}
+				{...CTKey}
+				{...restProps}
+			>
+				{text}
+			</span>
+		)
+	}
+
+	/**
 	 * 设置单元格
 	 * @param rowData {Array} 行数据
 	 * @param rowIndex {number} 行索引
 	 * @param container {string} 当前所在容器的名称
 	 */
 	setCell(rowData, rowIndex, container) {
-		const { colWidth, property } = this.state
-		const { body } = property
+		const { colWidth, property, rowStyle } = this.state
 		const {
-			row: {
-				serialNumber: { show: serialNumberShow, style: serialNumberStyle, specialStyle }
-			},
 			cellOfColumn: { style: cellOfColumnStyle },
 			cell: { style }
-		} = body
+		} = property.body
 
 		// 处理border属性值
 		const listBorder = this.setBorder(style)
@@ -660,32 +713,15 @@ export default class extends React.Component {
 				<div
 					key={`${container}-cell-r${rowIndex}-c${cellIndex}`}
 					className='list-cell'
-					style={
-						serialNumberShow && !cellIndex
-							// 如果开启行序号，且为每行第一个单元格
-							? {
-								...style,
-								width: typeof colWidth === 'string' ? colWidth : (colWidth[cellIndex] || 'auto'),
-								...serialNumberStyle,
-								...specialStyle[rowIndex],
-								...cellOfColumnStyle[cellIndex],
-								...listBorder
-							}
-							// 未开启行序号或不为行内第一个单元格
-							: {
-								...style,
-								width: typeof colWidth === 'string' ? colWidth : (colWidth[cellIndex] || 'auto'),
-								...cellOfColumnStyle[cellIndex],
-								...listBorder
-							}
-					}
+					style={{
+						height: rowStyle[rowIndex].height,
+						...style,
+						width: typeof colWidth === 'string' ? colWidth : (colWidth[cellIndex] || 'auto'),
+						...cellOfColumnStyle[cellIndex],
+						...listBorder
+					}}
 				>
-					{
-						// 检测是否启用行号功能，并且为行内第一个单元格
-						serialNumberShow && cellIndex === 0 && typeof cellData === 'string'
-							? cellData.replace('{index}', rowIndex + 1)
-							: this.parsing(cellData, { rowIndex: rowIndex + 1, cellIndex }, container)
-					}
+					{this.parsing(cellData, { rowIndex: rowIndex + 1, cellIndex }, container)}
 				</div>
 			)
 		})
@@ -719,10 +755,12 @@ export default class extends React.Component {
 					return this.setCellInput(cellData, { rowIndex, cellIndex, index })
 				case 'select':
 					return this.setCellSelect(cellData)
+				case 'text':
+					return this.setCellText(cellData, { rowIndex })
 			}
 		}
 
-		// 不是对象，返回原数据
+		// 不是指定对象，返回原数据
 		return cellData
 	}
 
@@ -906,7 +944,7 @@ export default class extends React.Component {
 	render() {
 		const {
 			property: {
-				header,
+				header: { show: showHeader },
 				body: { row: { spacing } },
 				style: conStyle
 			},
@@ -914,15 +952,15 @@ export default class extends React.Component {
 			className
 		} = this.state
 
-		const { show: showHeader } = header
-
 		// 处理border属性值
 		const listBorder = this.setBorder(conStyle)
 
 		// 当存在表头数据且表头是开启时处理数据
 		let headerData
 		let bodyData
+
 		this.renderData = util.fillRow(data, this.state)
+
 		if(showHeader && data.length) {
 			[headerData, ...bodyData] = this.renderData
 		} else {

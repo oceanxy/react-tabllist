@@ -296,7 +296,7 @@ $ npm start
 |**~~speed~~** <br> `{number}` &#9888;                                 |50         |组件滚动速度 &#9888; 此属性在1.4.0版本被弃用，请使用`scroll.speed`代替                                                                          |
 |**scroll <sup>^1.4.0</sup>** <br> `{object}`                          |{...}      |组件`滚动功能`相关的设置项，`speed`毫秒滚动`distance`的距离                                                                                     |
 |**scroll.enable <sup>^1.4.0</sup>** <br> `{boolean}`                  |true       |是否开启组件滚动(当所有行的高度超过组件可视区域高度时生效)                                                                                        |
-|**scroll.speed <sup>^1.4.0</sup>** <br> `{number}`                    |50         |组件滚动一次的时间间隔，单位为`毫秒`。提示：设置较小的时间间隔即可实现连续滚动动画效果                                                                |
+|**scroll.speed <sup>^1.4.0</sup>** <br> `{number}`                    |50         |组件滚动一次的时间间隔，单位为`毫秒`。提示：设置较小的时间间隔即可实现连续滚动动画效果。如果与`scroll.distance`结合使用，则可以实现间隔滚动效果，并且可以一次滚动N行。  |
 |**scroll.distance <sup>^1.4.0</sup>** <br> `{number\|any}`            |1          |组件每次滚动的距离。如果值为正整数，单位为`像素`；为`0`，表示停用滚动，同`scroll.enable:false`；如果为负整数，则以行为单位进行滚动，行数等于该值的绝对值。如果为非数字，则取`0`；如果为正小数，则向上取整。如果为负小数，则向下取整。 |
 |**header** <br> `{object}`                                            |{...}      |header相关设置                                                                                                                              |
 |**header.show** <br> `{boolean}`                                      |true       |是否显示header。为true时，`props.data`的第一个数据集为列表头数据                                                                                |
