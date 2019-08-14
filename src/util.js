@@ -140,51 +140,77 @@ export function getMaxCellOfRow(data) {
  * @returns {Array} 补齐后的用于生成单元格的数据
  */
 export function fillRow(data, state) {
-	const { row: { rowCheckbox, serialNumber } } = state.property.body
-	const cloneData = [...data]
-	// 获取数据量最多的一行的数值
-	const maxCellValue = getMaxCellOfRow(cloneData)
-	const newData = []
-
-	function specifiedColumn(insertedRow, row, cloneRow) {
+	/**
+	 * 生成对象单元插入到行内
+	 * @param insertedRow 被插入的行
+	 * @param rowIndex 行索引
+	 * @returns {*}
+	 */
+	function insertCellToRow(insertedRow, rowIndex) {
 		const rowCheck = {
 			type: 'checkbox',
 			text: '',
-			key: `rowCheck${row}`,
+			key: `rowCheck${rowIndex}`,
 			name: 'rowCheckbox'
 		}
 
 		const SNCell = {
 			type: 'text',
-			text: serialNumber.formatter.replace('{index}', row),
-			key: `listSN${row}`
+			text: header.show && rowIndex === 0
+				? serialNumber.columnName
+				: serialNumber.formatter.replace('{index}', rowIndex),
+			key: `listSN${rowIndex}`
 		}
 
+		const insertList = []
+
+		if(rowCheckbox.column > serialNumber.column) {
+			insertList.push([SNCell, serialNumber])
+			insertList.push([rowCheck, rowCheckbox])
+		} else {
+			insertList.push([rowCheck, rowCheckbox])
+			insertList.push([SNCell, serialNumber])
+		}
+
+		insertList.forEach(list => {
+			if(list[1].show) {
+				insertedRow.splice(list[1].column - 1, 0, list[0])
+			}
+		})
+
+		return insertedRow
+	}
+
+	/**
+	 * 处理行数据
+	 * @param insertedRow 被处理的行
+	 * @param rowIndex 行索引
+	 * @param cloneRow 从源数据中克隆的行
+	 * @returns {*}
+	 */
+	function handleRow(insertedRow, rowIndex, cloneRow) {
 		insertedRow = [
 			...cloneRow,
 			...new Array(maxCellValue - cloneRow.length).fill('')
 		]
 
-		// 检测是否开启行选择功能
-		if(rowCheckbox.show) {
-			insertedRow.unshift(rowCheck)
-		}
-
-		// 检测是否开启行序号功能
-		if(serialNumber.show) {
-			insertedRow.unshift(SNCell)
-		}
-
-		return insertedRow
+		return insertCellToRow(insertedRow, rowIndex)
 	}
+
+	const { header, body } = state.property
+	const { row: { rowCheckbox, serialNumber } } = body
+	const cloneData = [...data]
+	// 获取数据量最多的一行的数值
+	const maxCellValue = getMaxCellOfRow(cloneData)
+	const newData = []
 
 	// 补齐空数据到缺失的行
 	cloneData.forEach((row, ind) => {
 		if(_.isArray(cloneData[ind])) {
-			newData.push(specifiedColumn(newData[ind], ind, cloneData[ind]))
+			newData.push(handleRow(newData[ind], ind, cloneData[ind]))
 		} else {
 			newData[ind] = { ...cloneData[ind] }
-			newData[ind].cells = specifiedColumn(newData[ind].cells, ind, cloneData[ind].cells)
+			newData[ind].cells = handleRow(newData[ind].cells, ind, cloneData[ind].cells)
 		}
 	})
 

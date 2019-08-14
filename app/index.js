@@ -280,7 +280,8 @@ const Dev = () => {
 				},
 				row: {
 					rowCheckbox: {
-						show: true
+						show: true,
+						column: 2,
 					},
 					onClick: () => {}, // 仅在1.2.0版本生效，此处用于测试控制台打印警告信息
 					style: {
@@ -289,6 +290,7 @@ const Dev = () => {
 					serialNumber: {
 						show: true,
 						formatter: 'No.{index}',
+						column: 1,
 						style: {
 							backgroundColor: '#3991ff',
 							width: 80,

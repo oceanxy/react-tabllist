@@ -655,16 +655,17 @@ export default class extends React.Component {
 	 * @returns {*}
 	 */
 	setCellText(ct, { rowIndex }) {
+		const { header, body } = this.state.property
 		const {
 			show: serialNumberShow,
 			style: serialNumberStyle,
 			specialStyle
-		} = this.state.property.body.row.serialNumber
+		} = body.row.serialNumber
 		const { text, key, className, data, event, callback, ...restProps } = ct
 		const CTKey = key ? { key } : {}
 		let style = serialNumberShow && key && key.match(/^listSN\d+/)
 			? {
-				...serialNumberStyle,
+				...(!header.show || rowIndex !== 0 ? serialNumberStyle : {}),
 				...specialStyle[rowIndex - 1]
 			}
 			: {}
@@ -843,8 +844,7 @@ export default class extends React.Component {
 		const { property, colWidth, headerWidth } = this.state
 		const { scroll: { enable }, header: { style, cellStyle, show: showHeader } } = property
 		const {
-			cell: { style: { minWidth } },
-			row: { serialNumber: { show: serialNumberShow, columnName } }
+			cell: { style: { minWidth } }
 		} = property.body
 
 		// 处理border属性值
@@ -861,15 +861,7 @@ export default class extends React.Component {
 							data.map((cell, index) => (
 								<div
 									className='list-cell'
-									title={
-										serialNumberShow && !index
-											? columnName
-											: (
-												_.isObject(cell)
-													? cell.text
-													: cell
-											)
-									}
+									title={_.isObject(cell) ? cell.text : cell}
 									key={`list-header-${index}`}
 									style={{
 										...cellStyle,
@@ -878,11 +870,7 @@ export default class extends React.Component {
 										...listBorder
 									}}
 								>
-									{
-										serialNumberShow && !index // index === 0
-											? columnName
-											: this.parsing(cell, { rowIndex: 0, cellIndex: 0 })
-									}
+									{this.parsing(cell, { rowIndex: 0, cellIndex: 0 })}
 								</div>
 							))
 						}

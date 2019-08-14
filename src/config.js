@@ -66,7 +66,7 @@ export default {
 				spacing: 0,
 				rowCheckbox: {
 					show: false,
-					column: 0,
+					column: 2,
 					style: {},
 					specialStyle: []
 				},
