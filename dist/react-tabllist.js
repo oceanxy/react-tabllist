@@ -91,7 +91,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 29);
+/******/ 	return __webpack_require__(__webpack_require__.s = 28);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -129,33 +129,6 @@ module.exports = _defineProperty;
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var defineProperty = __webpack_require__(2);
-
-function _objectSpread(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i] != null ? arguments[i] : {};
-    var ownKeys = Object.keys(source);
-
-    if (typeof Object.getOwnPropertySymbols === 'function') {
-      ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {
-        return Object.getOwnPropertyDescriptor(source, sym).enumerable;
-      }));
-    }
-
-    ownKeys.forEach(function (key) {
-      defineProperty(target, key, source[key]);
-    });
-  }
-
-  return target;
-}
-
-module.exports = _objectSpread;
-
-/***/ }),
-/* 4 */
 /***/ (function(module, exports) {
 
 function _assertThisInitialized(self) {
@@ -169,7 +142,7 @@ function _assertThisInitialized(self) {
 module.exports = _assertThisInitialized;
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports) {
 
 function _extends() {
@@ -193,10 +166,10 @@ function _extends() {
 module.exports = _extends;
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var objectWithoutPropertiesLoose = __webpack_require__(18);
+var objectWithoutPropertiesLoose = __webpack_require__(17);
 
 function _objectWithoutProperties(source, excluded) {
   if (source == null) return {};
@@ -220,23 +193,7 @@ function _objectWithoutProperties(source, excluded) {
 module.exports = _objectWithoutProperties;
 
 /***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var arrayWithoutHoles = __webpack_require__(21);
-
-var iterableToArray = __webpack_require__(15);
-
-var nonIterableSpread = __webpack_require__(22);
-
-function _toConsumableArray(arr) {
-  return arrayWithoutHoles(arr) || iterableToArray(arr) || nonIterableSpread();
-}
-
-module.exports = _toConsumableArray;
-
-/***/ }),
-/* 8 */
+/* 6 */
 /***/ (function(module, exports) {
 
 function _classCallCheck(instance, Constructor) {
@@ -248,7 +205,7 @@ function _classCallCheck(instance, Constructor) {
 module.exports = _classCallCheck;
 
 /***/ }),
-/* 9 */
+/* 7 */
 /***/ (function(module, exports) {
 
 function _defineProperties(target, props) {
@@ -270,12 +227,12 @@ function _createClass(Constructor, protoProps, staticProps) {
 module.exports = _createClass;
 
 /***/ }),
-/* 10 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _typeof = __webpack_require__(19);
+var _typeof = __webpack_require__(18);
 
-var assertThisInitialized = __webpack_require__(4);
+var assertThisInitialized = __webpack_require__(3);
 
 function _possibleConstructorReturn(self, call) {
   if (call && (_typeof(call) === "object" || typeof call === "function")) {
@@ -288,7 +245,7 @@ function _possibleConstructorReturn(self, call) {
 module.exports = _possibleConstructorReturn;
 
 /***/ }),
-/* 11 */
+/* 9 */
 /***/ (function(module, exports) {
 
 function _getPrototypeOf(o) {
@@ -301,10 +258,10 @@ function _getPrototypeOf(o) {
 module.exports = _getPrototypeOf;
 
 /***/ }),
-/* 12 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var setPrototypeOf = __webpack_require__(20);
+var setPrototypeOf = __webpack_require__(19);
 
 function _inherits(subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
@@ -324,14 +281,14 @@ function _inherits(subClass, superClass) {
 module.exports = _inherits;
 
 /***/ }),
-/* 13 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayWithHoles = __webpack_require__(14);
+var arrayWithHoles = __webpack_require__(13);
 
-var iterableToArrayLimit = __webpack_require__(23);
+var iterableToArrayLimit = __webpack_require__(20);
 
-var nonIterableRest = __webpack_require__(16);
+var nonIterableRest = __webpack_require__(15);
 
 function _slicedToArray(arr, i) {
   return arrayWithHoles(arr) || iterableToArrayLimit(arr, i) || nonIterableRest();
@@ -340,7 +297,23 @@ function _slicedToArray(arr, i) {
 module.exports = _slicedToArray;
 
 /***/ }),
-/* 14 */
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var arrayWithoutHoles = __webpack_require__(26);
+
+var iterableToArray = __webpack_require__(14);
+
+var nonIterableSpread = __webpack_require__(27);
+
+function _toConsumableArray(arr) {
+  return arrayWithoutHoles(arr) || iterableToArray(arr) || nonIterableSpread();
+}
+
+module.exports = _toConsumableArray;
+
+/***/ }),
+/* 13 */
 /***/ (function(module, exports) {
 
 function _arrayWithHoles(arr) {
@@ -350,7 +323,7 @@ function _arrayWithHoles(arr) {
 module.exports = _arrayWithHoles;
 
 /***/ }),
-/* 15 */
+/* 14 */
 /***/ (function(module, exports) {
 
 function _iterableToArray(iter) {
@@ -360,7 +333,7 @@ function _iterableToArray(iter) {
 module.exports = _iterableToArray;
 
 /***/ }),
-/* 16 */
+/* 15 */
 /***/ (function(module, exports) {
 
 function _nonIterableRest() {
@@ -370,14 +343,14 @@ function _nonIterableRest() {
 module.exports = _nonIterableRest;
 
 /***/ }),
-/* 17 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayWithHoles = __webpack_require__(14);
+var arrayWithHoles = __webpack_require__(13);
 
-var iterableToArray = __webpack_require__(15);
+var iterableToArray = __webpack_require__(14);
 
-var nonIterableRest = __webpack_require__(16);
+var nonIterableRest = __webpack_require__(15);
 
 function _toArray(arr) {
   return arrayWithHoles(arr) || iterableToArray(arr) || nonIterableRest();
@@ -386,7 +359,7 @@ function _toArray(arr) {
 module.exports = _toArray;
 
 /***/ }),
-/* 18 */
+/* 17 */
 /***/ (function(module, exports) {
 
 function _objectWithoutPropertiesLoose(source, excluded) {
@@ -407,7 +380,7 @@ function _objectWithoutPropertiesLoose(source, excluded) {
 module.exports = _objectWithoutPropertiesLoose;
 
 /***/ }),
-/* 19 */
+/* 18 */
 /***/ (function(module, exports) {
 
 function _typeof2(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof2 = function _typeof2(obj) { return typeof obj; }; } else { _typeof2 = function _typeof2(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof2(obj); }
@@ -429,7 +402,7 @@ function _typeof(obj) {
 module.exports = _typeof;
 
 /***/ }),
-/* 20 */
+/* 19 */
 /***/ (function(module, exports) {
 
 function _setPrototypeOf(o, p) {
@@ -444,33 +417,7 @@ function _setPrototypeOf(o, p) {
 module.exports = _setPrototypeOf;
 
 /***/ }),
-/* 21 */
-/***/ (function(module, exports) {
-
-function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) {
-    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
-      arr2[i] = arr[i];
-    }
-
-    return arr2;
-  }
-}
-
-module.exports = _arrayWithoutHoles;
-
-/***/ }),
-/* 22 */
-/***/ (function(module, exports) {
-
-function _nonIterableSpread() {
-  throw new TypeError("Invalid attempt to spread non-iterable instance");
-}
-
-module.exports = _nonIterableSpread;
-
-/***/ }),
-/* 23 */
+/* 20 */
 /***/ (function(module, exports) {
 
 function _iterableToArrayLimit(arr, i) {
@@ -502,11 +449,11 @@ function _iterableToArrayLimit(arr, i) {
 module.exports = _iterableToArrayLimit;
 
 /***/ }),
-/* 24 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(25);
+var content = __webpack_require__(22);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -520,23 +467,23 @@ var options = {"hmr":true}
 options.transform = transform
 options.insertInto = undefined;
 
-var update = __webpack_require__(27)(content, options);
+var update = __webpack_require__(24)(content, options);
 
 if(content.locals) module.exports = content.locals;
 
 if(false) {}
 
 /***/ }),
-/* 25 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(26)(false);
+exports = module.exports = __webpack_require__(23)(false);
 // Module
-exports.push([module.i, ".list {\n  display: block;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  overflow: hidden; }\n  .list .list-cont {\n    margin: 0;\n    padding: 0;\n    display: table;\n    width: 100%;\n    height: auto;\n    -webkit-transition: all 400ms;\n    transition: all 400ms; }\n    .list .list-cont .list-row {\n      display: table-row;\n      list-style: none;\n      -webkit-transition: all 300ms cubic-bezier(0, 0, 0.58, 1);\n      transition: all 300ms cubic-bezier(0, 0, 0.58, 1);\n      background: no-repeat center / 100% 100%; }\n      .list .list-cont .list-row.list-row-start {\n        -webkit-transform: scale(0.8);\n                transform: scale(0.8);\n        opacity: 0; }\n      .list .list-cont .list-row.list-row-end {\n        opacity: 1;\n        -webkit-transform: scale(1);\n                transform: scale(1); }\n      .list .list-cont .list-row.click-row {\n        cursor: pointer; }\n      .list .list-cont .list-row .list-cell {\n        display: table-cell;\n        text-align: center;\n        vertical-align: middle;\n        word-break: break-all;\n        border-left: none !important;\n        background: no-repeat center / 100% 100%; }\n        .list .list-cont .list-row .list-cell * {\n          vertical-align: middle; }\n        .list .list-cont .list-row .list-cell:last-child {\n          border-right: none !important; }\n        .list .list-cont .list-row .list-cell a {\n          color: currentColor;\n          -webkit-text-decoration: transparent;\n                  text-decoration: transparent; }\n        .list .list-cont .list-row .list-cell label {\n          vertical-align: middle; }\n          .list .list-cont .list-row .list-cell label span, .list .list-cont .list-row .list-cell label input {\n            vertical-align: middle;\n            padding: 0 5px; }\n  .list .list-header .list-row {\n    background: no-repeat center / 100% 100%; }\n    .list .list-header .list-row .list-cell {\n      overflow: hidden;\n      white-space: nowrap;\n      text-overflow: ellipsis;\n      border-bottom: none !important; }\n  .list .list-body .list-cont {\n    border-collapse: separate; }\n  .list .list-body .list-cell {\n    color: #666; }\n  .list.list-no-spacing .list-cell {\n    border-top: none !important; }\n", ""]);
+exports.push([module.i, ".list {\n  overflow: hidden;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box; }\n  .list .list-header .list-row {\n    background: no-repeat center / 100% 100%; }\n    .list .list-header .list-row .list-cell {\n      overflow: hidden;\n      white-space: nowrap;\n      text-overflow: ellipsis; }\n  .list .list-body {\n    overflow-x: hidden; }\n  .list .list-cont {\n    margin: 0;\n    padding: 0;\n    display: table;\n    border-collapse: collapse;\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n    table-layout: fixed;\n    width: 100%;\n    height: auto;\n    -webkit-transition: all 400ms;\n    transition: all 400ms; }\n    .list .list-cont .list-row {\n      display: table-row;\n      list-style: none;\n      border: none !important;\n      -webkit-transition: all 300ms cubic-bezier(0, 0, 0.58, 1);\n      transition: all 300ms cubic-bezier(0, 0, 0.58, 1);\n      background: no-repeat center / 100% 100%; }\n      .list .list-cont .list-row.list-row-start {\n        -webkit-transform: scale(0.8);\n                transform: scale(0.8);\n        opacity: 0; }\n      .list .list-cont .list-row.list-row-end {\n        opacity: 1;\n        -webkit-transform: scale(1);\n                transform: scale(1); }\n      .list .list-cont .list-row.click-row {\n        cursor: pointer; }\n      .list .list-cont .list-row .list-cell {\n        display: table-cell;\n        -webkit-box-sizing: border-box;\n                box-sizing: border-box;\n        text-align: center;\n        vertical-align: middle;\n        word-break: break-all;\n        overflow: hidden;\n        background: no-repeat center / 100% 100%; }\n        .list .list-cont .list-row .list-cell * {\n          vertical-align: middle; }\n        .list .list-cont .list-row .list-cell a {\n          color: currentColor;\n          -webkit-text-decoration: transparent;\n                  text-decoration: transparent; }\n        .list .list-cont .list-row .list-cell label {\n          vertical-align: middle; }\n          .list .list-cont .list-row .list-cell label span, .list .list-cont .list-row .list-cell label input {\n            vertical-align: middle;\n            padding: 0 5px; }\n", ""]);
 
 
 /***/ }),
-/* 26 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -632,7 +579,7 @@ function toComment(sourceMap) {
 }
 
 /***/ }),
-/* 27 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -701,7 +648,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(28);
+var	fixUrls = __webpack_require__(25);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -1036,7 +983,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 28 */
+/* 25 */
 /***/ (function(module, exports) {
 
 
@@ -1131,38 +1078,64 @@ module.exports = function (css) {
 
 
 /***/ }),
-/* 29 */
+/* 26 */
+/***/ (function(module, exports) {
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
+      arr2[i] = arr[i];
+    }
+
+    return arr2;
+  }
+}
+
+module.exports = _arrayWithoutHoles;
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports) {
+
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance");
+}
+
+module.exports = _nonIterableSpread;
+
+/***/ }),
+/* 28 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/extends.js
-var helpers_extends = __webpack_require__(5);
+var helpers_extends = __webpack_require__(4);
 var extends_default = /*#__PURE__*/__webpack_require__.n(helpers_extends);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/objectWithoutProperties.js
-var objectWithoutProperties = __webpack_require__(6);
+var objectWithoutProperties = __webpack_require__(5);
 var objectWithoutProperties_default = /*#__PURE__*/__webpack_require__.n(objectWithoutProperties);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/classCallCheck.js
-var classCallCheck = __webpack_require__(8);
+var classCallCheck = __webpack_require__(6);
 var classCallCheck_default = /*#__PURE__*/__webpack_require__.n(classCallCheck);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/createClass.js
-var createClass = __webpack_require__(9);
+var createClass = __webpack_require__(7);
 var createClass_default = /*#__PURE__*/__webpack_require__.n(createClass);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js
-var possibleConstructorReturn = __webpack_require__(10);
+var possibleConstructorReturn = __webpack_require__(8);
 var possibleConstructorReturn_default = /*#__PURE__*/__webpack_require__.n(possibleConstructorReturn);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/getPrototypeOf.js
-var getPrototypeOf = __webpack_require__(11);
+var getPrototypeOf = __webpack_require__(9);
 var getPrototypeOf_default = /*#__PURE__*/__webpack_require__.n(getPrototypeOf);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/inherits.js
-var inherits = __webpack_require__(12);
+var inherits = __webpack_require__(10);
 var inherits_default = /*#__PURE__*/__webpack_require__.n(inherits);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/defineProperty.js
@@ -1178,27 +1151,19 @@ var external_commonjs_react_commonjs2_react_amd_react_root_React_ = __webpack_re
 var external_commonjs_react_commonjs2_react_amd_react_root_React_default = /*#__PURE__*/__webpack_require__.n(external_commonjs_react_commonjs2_react_amd_react_root_React_);
 
 // CONCATENATED MODULE: ./src/config.js
-/**
- * @Author: Oceanxy
- * @Email: xyzsyx@163.com
- * @Description: 配置文件
- * @Date: 2018-10-08 17:56:19
- * @LastModified: Oceanxy（xieyang@hiynn.com）
- * @LastModifiedTime: 2019-06-14 15:18:52
- */
 /* harmony default export */ var config = ({
   className: '',
   data: [['1st column', '2nd column', '3rd column'], ['1st cell', '2nd cell', '3rd cell']],
   property: {
-    style: {
-      width: '100%',
-      margin: '0 auto',
-      height: 300
-    },
     border: {
       borderWidth: 1,
       borderStyle: 'solid',
       borderColor: '#f4f4f4'
+    },
+    style: {
+      width: '100%',
+      margin: '0 auto',
+      height: 300
     },
     scroll: {
       enable: true,
@@ -1222,25 +1187,34 @@ var external_commonjs_react_commonjs2_react_amd_react_root_React_default = /*#__
       },
       row: {
         transition: true,
+        spacing: 0,
+        style: {
+          height: 30
+        },
         serialNumber: {
           show: false,
           columnName: 'SN',
           formatter: '{index}.',
+          column: 1,
           style: {
-            width: 80,
-            height: 60,
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
             backgroundColor: '',
             backgroundImage: '',
             color: '#ffffff'
           },
           specialStyle: []
         },
-        spacing: 0,
-        rowCheckbox: false,
-        style: {
-          height: 30
+        rowCheckbox: {
+          show: false,
+          column: 1,
+          style: {},
+          specialStyle: []
         },
-        // visual样式高于style
+        // visual样式高于row.style
         visual: {
           show: false,
           interval: 1,
@@ -1257,8 +1231,7 @@ var external_commonjs_react_commonjs2_react_amd_react_root_React_default = /*#__
           style: {
             opacity: 0.8
           }
-        },
-        onClick: ''
+        }
       },
       cellOfColumn: {
         style: []
@@ -1289,11 +1262,11 @@ function getWaringProperty() {
   return [{
     version: '1.0.0',
     discard: 'property.body.cell.iconStyle',
-    warn: 'Used obsolete configuration in React-tabllist: \'property.body.cell.iconStyle\' will be completely removed in future releases.Please use the object unit ({type: img, ...}) instead'
+    warn: 'Used obsolete configuration in React-tabllist: \'property.body.cell.iconStyle\' will be completely removed in future releases.Please use the object unit ({type: img, ...}) instead.'
   }, {
     version: '1.2.0',
     discard: 'property.body.row.onClick',
-    warn: 'Used obsolete configuration in React-tabllist: \'property.body.row.onClick\' can only be used in version 1.2.0.Please use the object unit ({type: row, ...}) instead'
+    warn: 'Used obsolete configuration in React-tabllist: \'property.body.row.onClick\' can only be used in version 1.2.0, Please use the object unit ({type: row, ...}) instead.'
   }, {
     version: '1.3.0',
     discard: 'property.body.row.rowCheckBox',
@@ -1309,43 +1282,41 @@ function getWaringProperty() {
     discard: 'property.speed',
     replacement: 'property.scroll.speed',
     warn: 'Used obsolete configuration in React-tabllist: \'property.speed\' has been deprecated in version 1.4.0 and will be completely removed in future releases. You should use \'property.scroll.speed\' instead.'
+  }, {
+    version: '1.5.0',
+    discard: ['property.body.row.rowCheckbox', 'Object'],
+    replacement: 'property.body.row.rowCheckbox.show',
+    warn: 'Used obsolete configuration in React-tabllist: \'property.body.row.rowCheckbox\' is no longer directly set to a boolean value in version 1.5.0, but an object. For example: {show: boolean, style: cssProperties}.'
   }];
 }
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/toArray.js
-var toArray = __webpack_require__(17);
+var toArray = __webpack_require__(16);
 var toArray_default = /*#__PURE__*/__webpack_require__.n(toArray);
 
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/toConsumableArray.js
-var toConsumableArray = __webpack_require__(7);
-var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableArray);
-
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/objectSpread.js
-var objectSpread = __webpack_require__(3);
-var objectSpread_default = /*#__PURE__*/__webpack_require__.n(objectSpread);
-
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/slicedToArray.js
-var slicedToArray = __webpack_require__(13);
+var slicedToArray = __webpack_require__(11);
 var slicedToArray_default = /*#__PURE__*/__webpack_require__.n(slicedToArray);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/assertThisInitialized.js
-var assertThisInitialized = __webpack_require__(4);
+var assertThisInitialized = __webpack_require__(3);
 var assertThisInitialized_default = /*#__PURE__*/__webpack_require__.n(assertThisInitialized);
 
 // EXTERNAL MODULE: ./src/index.scss
-var src = __webpack_require__(24);
+var src = __webpack_require__(21);
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/toConsumableArray.js
+var toConsumableArray = __webpack_require__(12);
+var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableArray);
 
 // CONCATENATED MODULE: ./src/util.js
 
 
 
-/**
- * @Author: Oceanxy
- * @Email: xyzsyx@163.com
- * @Description: util
- * @Date: 2018-10-08 17:56:19
- * @LastModified: Oceanxy（xieyang@hiynn.com）
- * @LastModifiedTime: 2019-06-19 17:35:16
- */
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
 
 
 /**
@@ -1410,41 +1381,169 @@ function getScrollHeight(props, listComponent) {
   return parseInt(height);
 }
 /**
- * 将用户设置的每一列单元格宽度值解析为组件程序需要的值，同时处理不合法数据
- * @param {string|array|number} width props传入的宽度数据
- * @returns {*} 用于渲染每列单元格的宽度值
+ * 获取DOM内每一列单元格的实际宽度
+ * @param listContMain 滚动主容器对象
+ * @param props props
+ * @returns {Array} 列表每列的宽度值，数组长度代表列数
  */
 
-function setColWidth(width) {
-  // 处理字符串形式的多列宽度数值
-  if (Array.isArray(width)) {
-    return width.map(function (o) {
-      return !o ? 'auto' : o;
-    });
-  } // 处理字符串形式的多列宽度数值
+function getColClientWidth(listContMain, props) {
+  var borderWidth = props.property.border.borderWidth;
+  var widthArr = [];
 
-
-  if (typeof width === 'string') {
-    if (width.indexOf(',') >= 0) {
-      return width.split(',').map(function (o) {
-        if (o.indexOf('px') > -1) {
-          return "".concat(parseFloat(o), "px");
-        } else if (o.indexOf('%') > -1) {
-          return "".concat(parseFloat(o), "%");
-        } else if (o * 1) {
-          return parseFloat(o);
-        }
-
-        return 'auto';
-      });
-    }
-
-    if (width === 'avg') {
-      return new Array(100).fill(1);
+  if (listContMain && listContMain.children.length) {
+    for (var i = 0, l = listContMain.children[0].children; i < l.length; i++) {
+      widthArr.push(l[i].offsetWidth - parseInt(borderWidth) || 0);
     }
   }
 
+  return widthArr;
+}
+/**
+ * 将用户设置的每一列单元格宽度值解析为组件程序需要的值，同时处理不合法数据
+ * @param {string|array|number} width props传入的宽度数据
+ * @param {array} data 用于渲染组件的数据
+ * @returns {*} 用于渲染每列单元格的宽度值
+ */
+
+function handleColWidth(width, data) {
+  function isString(widthValue) {
+    if (widthValue.indexOf('px') > -1) {
+      return "".concat(parseFloat(widthValue), "px");
+    } else if (widthValue.indexOf('%') > -1) {
+      return "".concat(parseFloat(widthValue), "%");
+    } else if (widthValue * 1) {
+      return parseFloat(widthValue);
+    }
+
+    return 'auto';
+  } // 处理数组形式的多列宽度数值
+
+
+  if (Array.isArray(width)) {
+    return width.map(function (o) {
+      if (o === 0 || !o) {
+        return 'auto';
+      } else if (typeof o === 'string') {
+        if (width.indexOf(',') >= 0) {
+          return width.split(',').map(function (o) {
+            return isString(o);
+          });
+        } else if (width === 'avg') {
+          return new Array(getMaxCellOfRow(data)).fill(1);
+        }
+      }
+
+      return o;
+    });
+  } // 处理字符串形式的多列宽度数值
+  else if (typeof width === 'string') {
+      return isString(width);
+    }
+
   return 'auto';
+}
+/**
+ * 从渲染数据中获取每行的单元格数量（以最多单元格的一行为准）
+ * @param data 用于渲染的数据
+ * @returns {number}
+ */
+
+function getMaxCellOfRow(data) {
+  var cellsOfRow = []; // 获取每一行的数据量，存入数组 cellsOfRow 内
+
+  external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.range(data.length).map(function (i) {
+    // 如果行数据是一个对象，保证该对象内一定有一个cells字段
+    if (external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isPlainObject(data[i]) && !data[i].cells) {
+      data[i].cells = [];
+    }
+
+    cellsOfRow.push(external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isArray(data[i]) ? data[i].length : data[i].cells.length);
+  }); // 获取数据量最多的一行的数值
+
+
+  return Math.max.apply(Math, cellsOfRow);
+}
+/**
+ * 补齐单元格
+ * 如果props数据不规范，则自动补齐单元格到缺少的行，直到每一行的单元格数量相等为止
+ * @param {object} data 新数据
+ * @param {object} state 组件当前状态
+ * @returns {Array} 补齐后的用于生成单元格的数据
+ */
+
+function fillRow(data, state) {
+  /**
+   * 生成对象单元插入到行内
+   * @param insertedRow 被插入的行
+   * @param rowIndex 行索引
+   * @returns {*}
+   */
+  function insertCellToRow(insertedRow, rowIndex) {
+    var rowCheck = {
+      type: 'checkbox',
+      text: '',
+      key: "rowCheck".concat(rowIndex),
+      name: 'rowCheckbox'
+    };
+    var SNCell = {
+      type: 'text',
+      text: header.show && rowIndex === 0 ? serialNumber.columnName : serialNumber.formatter.replace('{index}', rowIndex),
+      key: "listSN".concat(rowIndex)
+    };
+    var insertList = [];
+
+    if (rowCheckbox.column > serialNumber.column) {
+      insertList.push([SNCell, serialNumber]);
+      insertList.push([rowCheck, rowCheckbox]);
+    } else {
+      insertList.push([rowCheck, rowCheckbox]);
+      insertList.push([SNCell, serialNumber]);
+    }
+
+    insertList.forEach(function (list) {
+      if (list[1].show) {
+        insertedRow.splice(list[1].column - 1, 0, list[0]);
+      }
+    });
+    return insertedRow;
+  }
+  /**
+   * 处理行数据
+   * @param insertedRow 被处理的行
+   * @param rowIndex 行索引
+   * @param cloneRow 从源数据中克隆的行
+   * @returns {*}
+   */
+
+
+  function handleRow(insertedRow, rowIndex, cloneRow) {
+    insertedRow = [].concat(toConsumableArray_default()(cloneRow), toConsumableArray_default()(new Array(maxCellValue - cloneRow.length).fill('')));
+    return insertCellToRow(insertedRow, rowIndex);
+  }
+
+  var _state$property = state.property,
+      header = _state$property.header,
+      body = _state$property.body;
+  var _body$row = body.row,
+      rowCheckbox = _body$row.rowCheckbox,
+      serialNumber = _body$row.serialNumber;
+
+  var cloneData = toConsumableArray_default()(data); // 获取数据量最多的一行的数值
+
+
+  var maxCellValue = getMaxCellOfRow(cloneData);
+  var newData = []; // 补齐空数据到缺失的行
+
+  cloneData.forEach(function (row, ind) {
+    if (external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isArray(cloneData[ind])) {
+      newData.push(handleRow(newData[ind], ind, cloneData[ind]));
+    } else {
+      newData[ind] = _objectSpread({}, cloneData[ind]);
+      newData[ind].cells = handleRow(newData[ind].cells, ind, cloneData[ind].cells);
+    }
+  });
+  return newData;
 }
 /**
  * 组件内部元素的事件处理
@@ -1465,7 +1564,7 @@ function handleEvent(_ref, event) {
   } // 开放方法
 
 
-  _objectUnit = objectSpread_default()({}, _objectUnit, {
+  _objectUnit = _objectSpread({}, _objectUnit, {
     instanceObject: this
   });
 
@@ -1489,14 +1588,15 @@ function waring(property) {
    */
 
   function isKeyExists(discard, property) {
-    if (!property || !discard) {
+    if (!property || !discard || !discard[0]) {
       return {
         isExist: false
       };
     } // 将传入的对象路径字符串拆分为数组
 
 
-    var pathList = discard.split('.'); // 如果使用了过时的属性，则这边变量用来保存用户设置的属性的值
+    var isDiscardArray = Array.isArray(discard);
+    var pathList = isDiscardArray ? discard[0].split('.') : discard.split('.'); // 如果使用了过时的属性，则此变量用来保存用户设置的属性值
 
     var value; // 检测用户的配置对象是否存在警告
 
@@ -1507,11 +1607,18 @@ function waring(property) {
         };
       }
 
-      if (i === pathList.length - 1) {
-        value = property[pathList[i]];
-        property = pathList[i];
-      } else {
+      if (i !== pathList.length - 1) {
         property = property[pathList[i]];
+      } else {
+        value = property[pathList[i]];
+
+        if (isDiscardArray && Object.prototype.toString.apply(value) === "[object ".concat(discard[1], "]")) {
+          return {
+            isExist: false
+          };
+        } else {
+          property = pathList[i];
+        }
       }
     }
 
@@ -1537,14 +1644,15 @@ function waring(property) {
     var pathList = replacement.split('.'); // 替换过时属性，同时配置相对应的属性（如果存在）
 
     for (var i = 1; i < pathList.length; i++) {
-      if (i === pathList.length - 1) {
-        property[pathList[i]] = valueOfDiscard;
-      } else {
-        if (!property[pathList[i]] || external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isPlainObject(pathList[i])) {
+      if (i !== pathList.length - 1) {
+        // 确保给定的属性路径是对象的形式，防止报错：获取未定义的对象的属性
+        if (property[pathList[i]] === 'undefined' || !external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isPlainObject(property[pathList[i]])) {
           property[pathList[i]] = {};
         }
 
         property = property[pathList[i]];
+      } else {
+        property[pathList[i]] = valueOfDiscard;
       }
     }
   }
@@ -1678,11 +1786,11 @@ function getRowStyle(rowState, event) {
     var tempStyle = style;
 
     if (visualShow && interval && !Number.isNaN(interval) && index % (interval * 2) >= interval) {
-      tempStyle = objectSpread_default()({}, tempStyle, visualStyle);
+      tempStyle = _objectSpread({}, tempStyle, {}, visualStyle);
     }
 
     if (specialStyle && external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isArray(specialStyle)) {
-      tempStyle = objectSpread_default()({}, tempStyle, specialStyle[index]);
+      tempStyle = _objectSpread({}, tempStyle, {}, specialStyle[index]);
     }
 
     if (event) {
@@ -1690,7 +1798,7 @@ function getRowStyle(rowState, event) {
       var rowIndex = Array.prototype.indexOf.call(rowElement.parentNode.childNodes, rowElement);
 
       if (!silentShow && index === rowIndex && event.type === 'mouseenter') {
-        tempStyle = objectSpread_default()({}, tempStyle, silentStyle);
+        tempStyle = _objectSpread({}, tempStyle, {}, silentStyle);
       }
     }
 
@@ -1712,16 +1820,10 @@ function getRowStyle(rowState, event) {
 
 
 
+function list_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
+function list_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { list_ownKeys(source, true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { list_ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
-/**
- * @Author: Oceanxy
- * @Email: xyzsyx@163.com
- * @Description: react-tabllist
- * @Date: 2018-10-08 17:56:19
- * @LastModified: Oceanxy（xieyang@hiynn.com）
- * @LastModifiedTime: 2019-08-01 11:15:17
- */
 
 
 
@@ -1853,15 +1955,15 @@ function (_React$Component) {
 
           clearInterval(marqueeIntervalRow);
         }
-      }, 1);
+      }, 4);
     });
 
     defineProperty_default()(assertThisInitialized_default()(_this), "rowHover", function (e) {
+      e.stopPropagation();
+
       _this.setState({
         rowStyle: getRowStyle(_this.state, e)
       });
-
-      e.stopPropagation();
     });
 
     defineProperty_default()(assertThisInitialized_default()(_this), "checkCR", function (_ref, event) {
@@ -1954,23 +2056,6 @@ function (_React$Component) {
       });
     });
 
-    defineProperty_default()(assertThisInitialized_default()(_this), "getColClientWidth", function () {
-      var _assertThisInitialize6 = assertThisInitialized_default()(_this),
-          listContMain = _assertThisInitialize6.listContMain,
-          props = _assertThisInitialize6.props;
-
-      var borderWidth = props.property.border.borderWidth;
-      var width = [];
-
-      if (listContMain && listContMain.children.length) {
-        for (var i = 0, l = listContMain.children[0].children; i < l.length; i++) {
-          width.push(l[i].clientWidth - parseInt(borderWidth) || 0);
-        }
-      }
-
-      return width;
-    });
-
     defineProperty_default()(assertThisInitialized_default()(_this), "setCellLink", function (link) {
       var text = link.text,
           event = link.event,
@@ -1987,14 +2072,14 @@ function (_React$Component) {
         }, props), text);
       }
 
-      var tagProps = objectSpread_default()({}, props, defineProperty_default()({}, event ? event : 'onClick', handleEvent.bind(assertThisInitialized_default()(_this), [link])));
+      var tagProps = list_objectSpread({}, props, defineProperty_default()({}, event ? event : 'onClick', handleEvent.bind(assertThisInitialized_default()(_this), [link])));
 
       return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("a", tagProps, text);
     });
 
     _this.state = {
       // 每列单元格的宽度数组
-      colWidth: setColWidth(_props.property.body.cell.style.width),
+      colWidth: [],
       // body可见区域的高度
       scrollHeight: getScrollHeight(_props),
       // 复选框、单选框等标签的默认状态
@@ -2010,14 +2095,14 @@ function (_React$Component) {
       headerWidth: 0,
       // 列表行缓动动画的样式名
       transitionName: '',
+      // 行样式
+      rowStyle: [],
       // 配置属性
       property: config.property,
       // 渲染数据
       data: config.data,
       // 列表的自定义样式表名
-      className: config.className,
-      // 行样式
-      rowStyle: [] // 当一次滚动多行时可用，组件可视区域第一行的索引
+      className: config.className // 当一次滚动多行时可用，组件可视区域第一行的索引
 
     };
     _this.rowIndex = 0;
@@ -2034,15 +2119,14 @@ function (_React$Component) {
       var _this2 = this;
 
       var scroll = this.scroll,
-          props = this.props;
-      var colWidth = this.getColClientWidth(); // 如果列数为0，则停止后续操作
+          props = this.props,
+          listContMain = this.listContMain;
+      var colWidth = getColClientWidth(listContMain, props); // 如果列数为0，则停止后续操作
 
       if (colWidth.length) {
         // 组件第一次render之后，DOM结构已经生成，此时开始设置每个单元格宽度以及组件滚动区域高度
         // width设置规则以props里面的width字段为准，详情见width字段说明
         var scrollHeight = getScrollHeight(props, closest(scroll, '.list'));
-        /* eslint-disable react/no-did-mount-set-state  */
-
         this.setState({
           colWidth: colWidth,
           scrollHeight: scrollHeight
@@ -2064,8 +2148,7 @@ function (_React$Component) {
   }, {
     key: "shouldComponentUpdate",
     value: function shouldComponentUpdate(nextProps, nextState) {
-      // 避免闪动
-      return !external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqualWith(this.props, nextProps, customizer) || !external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqualWith(this.state, nextState, customizer);
+      return !external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqualWith(this.state, nextState, customizer);
     }
     /**
      * 组件每次更新后执行
@@ -2078,12 +2161,14 @@ function (_React$Component) {
     value: function componentDidUpdate(preProps, preState) {
       var _this3 = this;
 
-      var colWidth = this.getColClientWidth();
+      var listContMain = this.listContMain,
+          props = this.props;
+      var colWidth = getColClientWidth(listContMain, props);
 
       if (colWidth.length) {
-        var _this$props$property$ = this.props.property.body.cell.style,
-            colCellWidth = _this$props$property$.width,
-            cellMinWidth = _this$props$property$.minWidth;
+        var _props$property$body$ = props.property.body.cell.style,
+            colCellWidth = _props$property$body$.width,
+            cellMinWidth = _props$property$body$.minWidth;
         var _preProps$property$bo = preProps.property.body.cell.style,
             preColCellWidth = _preProps$property$bo.width,
             preCellMinWidth = _preProps$property$bo.minWidth;
@@ -2108,9 +2193,9 @@ function (_React$Component) {
         var iconWidth = cell.iconStyle.width;
         var preIconWidth = preBody.cell.iconStyle.width;
         var transition = row.transition,
-            rowCheckbox = row.rowCheckbox; // 当滚动条显示时，重新计算header的宽度，和列表主体对齐
+            rowCheckboxShow = row.rowCheckbox.show; // 当滚动条显示时，重新计算header的宽度，和列表主体对齐
 
-        if (show && !enable) {
+        if (show && !enable && !external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqualWith(this.state, preState, customizer)) {
           this.setState({
             headerWidth: this.listContMain.clientWidth
           });
@@ -2147,7 +2232,7 @@ function (_React$Component) {
         // 如果开启了行选择功能且显示表头，根据每行的选择情况设置标题栏多选框的 indeterminate 状态
 
 
-        if (show && rowCheckbox) {
+        if (show && rowCheckboxShow) {
           this.scroll.parentNode.querySelector('.list-header input[name=rowCheckbox]').indeterminate = indeterminate;
         } // 列表滚动相关逻辑入口
 
@@ -2186,68 +2271,8 @@ function (_React$Component) {
      */
 
   }, {
-    key: "fillRow",
+    key: "setCellIcon",
 
-    /**
-     * 补齐单元格
-     * 如果props数据不规范，则自动补齐单元格到缺少的行，直到每一行的单元格数量相等为止
-     * @param {object} data 新数据
-     * @returns {Array} 补齐后的用于生成单元格的数据
-     */
-    value: function fillRow(data) {
-      var cellsOfRow = [];
-      var _this$state$property$ = this.state.property.body.row,
-          rowCheckbox = _this$state$property$.rowCheckbox,
-          serialNumber = _this$state$property$.serialNumber; // 获取每一行的数据量，存入数组 cellsOfRow 内
-
-      external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.range(data.length).map(function (i) {
-        // 如果行数据是一个对象，保证该对象内一定有一个cells字段
-        if (external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isPlainObject(data[i]) && !data[i].cells) {
-          data[i].cells = [];
-        }
-
-        cellsOfRow.push(external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isArray(data[i]) ? data[i].length : data[i].cells.length);
-      }); // 获取数据量最多的一行的数值
-
-
-      var maxCellValue = Math.max.apply(Math, cellsOfRow);
-      var newData = []; // 补齐空数据到缺失的行
-
-      data.forEach(function (row, ind) {
-        var rowCheck = {
-          type: 'checkbox',
-          text: '',
-          key: "rowCheck".concat(ind),
-          name: 'rowCheckbox'
-        };
-
-        if (external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isArray(data[ind])) {
-          newData[ind] = [].concat(toConsumableArray_default()(data[ind]), toConsumableArray_default()(new Array(maxCellValue - data[ind].length).fill(''))); // 检测是否开启行选择功能
-
-          if (rowCheckbox) {
-            newData[ind].unshift(rowCheck);
-          } // 检测是否开启行序号功能
-
-
-          if (serialNumber.show) {
-            newData[ind].unshift(serialNumber.formatter);
-          }
-        } else {
-          newData[ind] = objectSpread_default()({}, data[ind]);
-          newData[ind].cells = [].concat(toConsumableArray_default()(data[ind].cells), toConsumableArray_default()(new Array(maxCellValue - data[ind].cells.length).fill(''))); // 检测是否开启行选择功能
-
-          if (rowCheckbox) {
-            newData[ind].cells.unshift(rowCheck);
-          } // 检测是否开启行序号功能
-
-
-          if (serialNumber.show) {
-            newData[ind].cells.unshift(serialNumber.formatter);
-          }
-        }
-      });
-      return newData;
-    }
     /**
      * 设置单元格图标
      * @param {object} icon icon对象
@@ -2255,9 +2280,6 @@ function (_React$Component) {
      * @param cellIndex {number} 列索引
      * @returns {*[]} 单元格图标DOM || null
      */
-
-  }, {
-    key: "setCellIcon",
     value: function setCellIcon(icon, _ref3) {
       var rowIndex = _ref3.rowIndex,
           cellIndex = _ref3.cellIndex;
@@ -2344,17 +2366,21 @@ function (_React$Component) {
       }
 
       if (cr.type === 'radio' && !container) {
-        /* eslint-disable no-console, no-undef */
         console.error('When the type attribute of the input tag is radio, the third parameter "container" of setCellInput() is a required parameter, otherwise the function will be invalid!');
-        /* eslint-enable no-console, no-undef */
-
         return null;
       }
 
       if (cr.type === 'radio' || cr.type === 'checkbox') {
+        var _this$state$property$ = this.state.property.body.row.rowCheckbox,
+            rowCheckboxShow = _this$state$property$.show,
+            rowCheckboxStyle = _this$state$property$.style,
+            specialStyle = _this$state$property$.specialStyle;
+        var style = rowCheckboxShow && cr.key && cr.key.match(/^rowCheck\d+/) ? list_objectSpread({}, rowCheckboxStyle, {}, specialStyle[rowIndex - 1]) : {};
         return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("label", {
+          className: "list-cell-chk".concat(cr.className ? " ".concat(cr.className) : ''),
           key: "".concat(cr.key || "cr-".concat(rowIndex, "-").concat(cellIndex, "-").concat(index)),
-          onClick: handleEvent.bind(this, [{}])
+          onClick: handleEvent.bind(this, [{}]),
+          style: style
         }, external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("input", tagProps), cr.text ? external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("span", null, cr.text) : null);
       } // button 等标签会执行以下代码
 
@@ -2378,7 +2404,7 @@ function (_React$Component) {
           callback = cs.callback,
           props = objectWithoutProperties_default()(cs, ["type", "text", "option", "data", "className", "event", "callback"]);
 
-      var tagProps = objectSpread_default()({}, props, defineProperty_default()({}, event ? event : 'onChange', handleEvent.bind(this, [cs])));
+      var tagProps = list_objectSpread({}, props, defineProperty_default()({}, event ? event : 'onChange', handleEvent.bind(this, [cs])));
 
       return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("label", {
         className: className
@@ -2387,6 +2413,55 @@ function (_React$Component) {
           key: index
         }, item));
       })));
+    }
+    /**
+     * 设置单元格内的对象单元文本
+     * @param ct {object} 对象单元
+     * @param rowIndex {number} 行索引
+     * @returns {*}
+     */
+
+  }, {
+    key: "setCellText",
+    value: function setCellText(ct, _ref5) {
+      var rowIndex = _ref5.rowIndex;
+      var _this$state$property = this.state.property,
+          header = _this$state$property.header,
+          body = _this$state$property.body;
+      var _body$row$serialNumbe = body.row.serialNumber,
+          serialNumberShow = _body$row$serialNumbe.show,
+          serialNumberStyle = _body$row$serialNumbe.style,
+          specialStyle = _body$row$serialNumbe.specialStyle;
+
+      var text = ct.text,
+          key = ct.key,
+          className = ct.className,
+          data = ct.data,
+          event = ct.event,
+          callback = ct.callback,
+          restProps = objectWithoutProperties_default()(ct, ["text", "key", "className", "data", "event", "callback"]);
+
+      var CTKey = key ? {
+        key: key
+      } : {};
+      var style = serialNumberShow && key && key.match(/^listSN\d+/) ? list_objectSpread({}, !header.show || rowIndex !== 0 ? serialNumberStyle : {}, {}, specialStyle[rowIndex - 1]) : {}; // 处理默认事件及回调函数
+
+      if (typeof callback === 'function') {
+        style = list_objectSpread({}, style, {
+          cursor: 'pointer'
+        });
+
+        if (event) {
+          restProps[event] = handleEvent.bind(this, [ct]);
+        } else {
+          restProps['onClick'] = handleEvent.bind(this, [ct]);
+        }
+      }
+
+      return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("span", extends_default()({
+        className: "list-cell-text".concat(className ? " ".concat(className) : ''),
+        style: style
+      }, CTKey, restProps), text);
     }
     /**
      * 设置单元格
@@ -2402,29 +2477,23 @@ function (_React$Component) {
 
       var _this$state4 = this.state,
           colWidth = _this$state4.colWidth,
-          property = _this$state4.property;
-      var body = property.body;
-      var _body$row$serialNumbe = body.row.serialNumber,
-          serialNumberShow = _body$row$serialNumbe.show,
-          serialNumberStyle = _body$row$serialNumbe.style,
-          specialStyle = _body$row$serialNumbe.specialStyle,
-          cellOfColumnStyle = body.cellOfColumn.style,
-          style = body.cell.style; // 处理border属性值
+          property = _this$state4.property,
+          rowStyle = _this$state4.rowStyle;
+      var _property$body = property.body,
+          cellOfColumnStyle = _property$body.cellOfColumn.style,
+          style = _property$body.cell.style; // 处理border属性值
 
       var listBorder = this.setBorder(style);
       return rowData.map(function (cellData, cellIndex) {
         return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("div", {
           key: "".concat(container, "-cell-r").concat(rowIndex, "-c").concat(cellIndex),
           className: "list-cell",
-          style: serialNumberShow && !cellIndex // 如果开启行序号，且为每行第一个单元格
-          ? objectSpread_default()({}, style, {
+          style: list_objectSpread({
+            height: rowStyle[rowIndex] ? rowStyle[rowIndex].height : 'auto'
+          }, style, {
             width: typeof colWidth === 'string' ? colWidth : colWidth[cellIndex] || 'auto'
-          }, serialNumberStyle, specialStyle[rowIndex], cellOfColumnStyle[cellIndex], listBorder) // 未开启行序号或不为行内第一个单元格
-          : objectSpread_default()({}, style, {
-            width: typeof colWidth === 'string' ? colWidth : colWidth[cellIndex] || 'auto'
-          }, cellOfColumnStyle[cellIndex], listBorder)
-        }, // 检测是否启用行号功能，并且为行内第一个单元格
-        serialNumberShow && cellIndex === 0 && typeof cellData === 'string' ? cellData.replace('{index}', rowIndex + 1) : _this4.parsing(cellData, {
+          }, cellOfColumnStyle[cellIndex], {}, listBorder)
+        }, _this4.parsing(cellData, {
           rowIndex: rowIndex + 1,
           cellIndex: cellIndex
         }, container));
@@ -2442,12 +2511,12 @@ function (_React$Component) {
 
   }, {
     key: "parsing",
-    value: function parsing(cellData, _ref5, container) {
+    value: function parsing(cellData, _ref6, container) {
       var _this5 = this;
 
-      var rowIndex = _ref5.rowIndex,
-          cellIndex = _ref5.cellIndex,
-          index = _ref5.index;
+      var rowIndex = _ref6.rowIndex,
+          cellIndex = _ref6.cellIndex,
+          index = _ref6.index;
 
       if (Array.isArray(cellData)) {
         return cellData.map(function (o, i) {
@@ -2493,8 +2562,13 @@ function (_React$Component) {
 
           case 'select':
             return this.setCellSelect(cellData);
+
+          case 'text':
+            return this.setCellText(cellData, {
+              rowIndex: rowIndex
+            });
         }
-      } // 不是对象，返回原数据
+      } // 不是指定对象，返回原数据
 
 
       return cellData;
@@ -2562,12 +2636,11 @@ function (_React$Component) {
           LIElementProps[rowData.event] = handleEvent.bind(_this6, [rowData]);
           LIElementProps.value = rowData.value;
         } else {
-          LIElementProps = objectSpread_default()({}, LIElementProps, {
+          LIElementProps = list_objectSpread({}, LIElementProps, {
             type: 'row'
           });
         }
 
-        console.log(rowStyle);
         return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("li", extends_default()({
           key: "".concat(container, "-list-row").concat(rowData.key ? rowData.key : rowIndex)
         }, LIElementProps), external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isArray(rowData) ? _this6.setCell(rowData, rowIndex, container) : _this6.setCell(rowData.cells, rowIndex, container));
@@ -2593,18 +2666,14 @@ function (_React$Component) {
           style = _property$header.style,
           cellStyle = _property$header.cellStyle,
           showHeader = _property$header.show;
-      var _property$body = property.body,
-          minWidth = _property$body.cell.style.minWidth,
-          _property$body$row$se = _property$body.row.serialNumber,
-          serialNumberShow = _property$body$row$se.show,
-          columnName = _property$body$row$se.columnName; // 处理border属性值
+      var minWidth = property.body.cell.style.minWidth; // 处理border属性值
 
       var listBorder = this.setBorder(cellStyle);
 
       if (showHeader && data && data.length) {
         return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("ul", {
           className: "list-header list-cont",
-          style: !enable && headerWidth ? objectSpread_default()({}, style, {
+          style: !enable && headerWidth ? list_objectSpread({}, style, {
             width: headerWidth
           }) : style
         }, external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("li", {
@@ -2614,14 +2683,13 @@ function (_React$Component) {
         }, data.map(function (cell, index) {
           return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("div", {
             className: "list-cell",
-            title: serialNumberShow && !index ? columnName : external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isObject(cell) ? cell.text : cell,
+            title: external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isObject(cell) ? cell.text : cell,
             key: "list-header-".concat(index),
-            style: objectSpread_default()({}, cellStyle, {
+            style: list_objectSpread({}, cellStyle, {
               width: typeof colWidth === 'string' ? colWidth : colWidth[index] || 'auto',
               minWidth: minWidth
             }, listBorder)
-          }, serialNumberShow && !index // index === 0
-          ? columnName : _this7.parsing(cell, {
+          }, _this7.parsing(cell, {
             rowIndex: 0,
             cellIndex: 0
           }));
@@ -2655,9 +2723,9 @@ function (_React$Component) {
         ref: function ref(ele) {
           return _this8.scroll = ele;
         },
-        style: objectSpread_default()({}, style, {
+        style: list_objectSpread({}, style, {
           height: scrollHeight,
-          overflow: enable ? 'hidden' : 'auto'
+          overflowY: enable ? 'hidden' : 'auto'
         })
       }, external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("ul", {
         className: "list-cont",
@@ -2687,18 +2755,17 @@ function (_React$Component) {
     value: function render() {
       var _this$state8 = this.state,
           _this$state8$property = _this$state8.property,
-          header = _this$state8$property.header,
+          showHeader = _this$state8$property.header.show,
           spacing = _this$state8$property.body.row.spacing,
           conStyle = _this$state8$property.style,
           data = _this$state8.data,
-          className = _this$state8.className;
-      var showHeader = header.show; // 处理border属性值
+          className = _this$state8.className; // 处理border属性值
 
       var listBorder = this.setBorder(conStyle); // 当存在表头数据且表头是开启时处理数据
 
       var headerData;
       var bodyData;
-      this.renderData = this.fillRow(data);
+      this.renderData = fillRow(data, this.state);
 
       if (showHeader && data.length) {
         var _this$renderData = toArray_default()(this.renderData);
@@ -2711,7 +2778,7 @@ function (_React$Component) {
 
       var listClass = !Number.isNaN(parseInt(spacing)) && parseInt(spacing) > 0 ? '' : 'list-no-spacing';
       return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("div", {
-        style: objectSpread_default()({}, listBorder, conStyle),
+        style: list_objectSpread({}, listBorder, {}, conStyle),
         className: "list".concat(className ? " ".concat(className) : '').concat(listClass ? " ".concat(listClass) : ''),
         onMouseMove: this.scrollList.bind(this, false),
         onMouseLeave: this.scrollList.bind(this, true)
@@ -2727,22 +2794,22 @@ function (_React$Component) {
 
       var propsProperty = props.property,
           propsData = props.data,
-          propsClassName = props.className; // 检测本次渲染的数据是否有变化
+          propsClassName = props.className;
 
-      if (!external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqual(propsProperty, property) || !external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqual(propsData, stateData) || !external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqual(propsClassName, className)) {
+      var isDataChanged = external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqualWith(propsData, stateData, customizer); // 检测本次渲染的数据是否有变化
+
+
+      if (!external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqual(propsProperty, property) || !external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqual(propsClassName, className) || !isDataChanged) {
         var propsHeight = props.property.style.height;
         var stateHeight = property.style.height;
         var propsCellWidth = props.property.body.cell.style.width;
         var stateCellWidth = property.body.cell.style.width;
         var row = props.property.body.row;
-
-        var isDataChanged = external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqualWith(props.data, stateData, customizer);
-
         var transitionName = !isDataChanged ? getTransitionName(row.transition, isDataChanged) : state.transitionName;
-        return objectSpread_default()({}, restState, props, {
+        return list_objectSpread({}, restState, {}, props, {
           transitionName: transitionName,
           rowStyle: getRowStyle(props),
-          colWidth: propsCellWidth !== stateCellWidth ? setColWidth(propsCellWidth) : state.colWidth,
+          colWidth: propsCellWidth !== stateCellWidth ? handleColWidth(propsCellWidth, propsData) : state.colWidth,
           scrollHeight: propsHeight !== stateHeight ? getScrollHeight(props) : state.scrollHeight
         });
       } // 如果props未更新属性，则返回state。此state已包含setState更新的值。
@@ -2766,15 +2833,6 @@ function (_React$Component) {
 
 
 
-
-/**
- * @Author: Oceanxy
- * @Email: xyzsyx@163.com
- * @Description: 组件入口
- * @Date: 2018-10-08 17:56:19
- * @LastModified: Oceanxy（xieyang@hiynn.com）
- * @LastModifiedTime: 2019-05-30 15:47:10
- */
 
 
 

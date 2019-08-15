@@ -105,7 +105,7 @@
 3. Custom row selection box or row serial number inserted into which column of the list.
 4. You can define partial styles of the body, which usually do not affect the layout of the list.
 5. Body height changes with list height whenever.
-6. Fix bug: When the line selection or line number function is enabled, the heading corresponds to the body column misalignment.
+6. Fix bug: When the row selection or row number feature is enabled, the columns in the header are misaligned with the columns in the body.
 7. Refactoring the code logic for row hover effects.
 8. Normal text can also be written as an object unit to increase the event.
 

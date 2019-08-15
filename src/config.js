@@ -1,12 +1,3 @@
-/**
- * @Author: Oceanxy
- * @Email: xyzsyx@163.com
- * @Description: 配置文件
- * @Date: 2018-10-08 17:56:19
- * @LastModified: Oceanxy（xieyang@hiynn.com）
- * @LastModifiedTime: 2019-06-14 15:18:52
- */
-
 export default {
 	className: '',
 	data: [
@@ -14,15 +5,15 @@ export default {
 		['1st cell', '2nd cell', '3rd cell']
 	],
 	property: {
-		style: {
-			width: '100%',
-			margin: '0 auto',
-			height: 300
-		},
 		border: {
 			borderWidth: 1,
 			borderStyle: 'solid',
 			borderColor: '#f4f4f4'
+		},
+		style: {
+			width: '100%',
+			margin: '0 auto',
+			height: 300
 		},
 		scroll: {
 			enable: true,
@@ -46,6 +37,10 @@ export default {
 			},
 			row: {
 				transition: true,
+				spacing: 0,
+				style: {
+					height: 30
+				},
 				serialNumber: {
 					show: false,
 					columnName: 'SN',
@@ -63,17 +58,13 @@ export default {
 					},
 					specialStyle: []
 				},
-				spacing: 0,
 				rowCheckbox: {
 					show: false,
-					column: 2,
+					column: 1,
 					style: {},
 					specialStyle: []
 				},
-				style: {
-					height: 30
-				},
-				// visual样式高于style
+				// visual样式高于row.style
 				visual: {
 					show: false,
 					interval: 1,
@@ -89,8 +80,7 @@ export default {
 					style: {
 						opacity: 0.8
 					}
-				},
-				onClick: ''
+				}
 			},
 			cellOfColumn: {
 				style: []

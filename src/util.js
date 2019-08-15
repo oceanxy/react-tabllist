@@ -1,12 +1,3 @@
-/**
- * @Author: Oceanxy
- * @Email: xyzsyx@163.com
- * @Description: util
- * @Date: 2018-10-08 17:56:19
- * @LastModified: Oceanxy（xieyang@hiynn.com）
- * @LastModifiedTime: 2019-06-19 17:35:16
- */
-
 import _ from 'lodash'
 import { getWaringProperty } from './config'
 
@@ -65,6 +56,25 @@ export function getScrollHeight(props, listComponent) {
 	}
 
 	return parseInt(height)
+}
+
+/**
+ * 获取DOM内每一列单元格的实际宽度
+ * @param listContMain 滚动主容器对象
+ * @param props props
+ * @returns {Array} 列表每列的宽度值，数组长度代表列数
+ */
+export function getColClientWidth(listContMain, props) {
+	const { borderWidth } = props.property.border
+	const widthArr = []
+
+	if(listContMain && listContMain.children.length) {
+		for(let i = 0, l = listContMain.children[0].children; i < l.length; i++) {
+			widthArr.push(l[i].offsetWidth - parseInt(borderWidth) || 0)
+		}
+	}
+
+	return widthArr
 }
 
 /**

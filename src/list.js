@@ -1,12 +1,3 @@
-/**
- * @Author: Oceanxy
- * @Email: xyzsyx@163.com
- * @Description: react-tabllist
- * @Date: 2018-10-08 17:56:19
- * @LastModified: Oceanxy（xieyang@hiynn.com）
- * @LastModifiedTime: 2019-08-01 11:15:17
- */
-
 import _ from 'lodash'
 import React from 'react'
 import config from './config'
@@ -19,7 +10,7 @@ export default class extends React.Component {
 
 		this.state = {
 			// 每列单元格的宽度数组
-			colWidth: null,
+			colWidth: [],
 			// body可见区域的高度
 			scrollHeight: util.getScrollHeight(props),
 			// 复选框、单选框等标签的默认状态
@@ -74,7 +65,6 @@ export default class extends React.Component {
 			}
 		}
 
-		// debugger
 		// 如果props未更新属性，则返回state。此state已包含setState更新的值。
 		return state
 	}
@@ -83,8 +73,8 @@ export default class extends React.Component {
 	 * 组件挂载后执行组件的滚动操作和设置表头单元格和主体单元格宽度对应
 	 */
 	componentDidMount() {
-		const { scroll, props } = this
-		const colWidth = this.getColClientWidth()
+		const { scroll, props, listContMain } = this
+		const colWidth = util.getColClientWidth(listContMain, props)
 
 		// 如果列数为0，则停止后续操作
 		if(colWidth.length) {
@@ -92,7 +82,6 @@ export default class extends React.Component {
 			// width设置规则以props里面的width字段为准，详情见width字段说明
 			const scrollHeight = util.getScrollHeight(props, util.closest(scroll, '.list'))
 
-			/* eslint-disable react/no-did-mount-set-state  */
 			this.setState({ colWidth, scrollHeight })
 
 			// 列表滚动相关逻辑入口
@@ -109,10 +98,9 @@ export default class extends React.Component {
 		}
 	}
 
-	// shouldComponentUpdate(nextProps, nextState) {
-	// 	// 避免闪动
-	// 	return !_.isEqualWith(this.state, nextState, util.customizer)
-	// }
+	shouldComponentUpdate(nextProps, nextState) {
+		return !_.isEqualWith(this.state, nextState, util.customizer)
+	}
 
 	/**
 	 * 组件每次更新后执行
@@ -120,17 +108,12 @@ export default class extends React.Component {
 	 * @param {object} preState prev state
 	 */
 	componentDidUpdate(preProps, preState) {
-		const colWidth = this.getColClientWidth()
+		const { listContMain, props } = this
+		const colWidth = util.getColClientWidth(listContMain, props)
 
 		if(colWidth.length) {
-			const {
-				width: colCellWidth,
-				minWidth: cellMinWidth
-			} = this.props.property.body.cell.style
-			const {
-				width: preColCellWidth,
-				minWidth: preCellMinWidth
-			} = preProps.property.body.cell.style
+			const { width: colCellWidth, minWidth: cellMinWidth } = props.property.body.cell.style
+			const { width: preColCellWidth, minWidth: preCellMinWidth } = preProps.property.body.cell.style
 			const {
 				property: {
 					style: { width: conWidth, height },
@@ -443,24 +426,6 @@ export default class extends React.Component {
 	}
 
 	/**
-	 * 获取DOM内每一列单元格的实际宽度
-	 * @returns {Array} 列表每列的宽度值，数组长度代表列数
-	 */
-	getColClientWidth = () => {
-		const { listContMain, props } = this
-		const { borderWidth } = props.property.border
-		const width = []
-
-		if(listContMain && listContMain.children.length) {
-			for(let i = 0, l = listContMain.children[0].children; i < l.length; i++) {
-				width.push(l[i].clientWidth - parseInt(borderWidth) || 0)
-			}
-		}
-
-		return width
-	}
-
-	/**
 	 * 设置单元格图标
 	 * @param {object} icon icon对象
 	 * @param rowIndex {number} 行索引
@@ -501,10 +466,8 @@ export default class extends React.Component {
 		const {
 			text,
 			event,
-			/* eslint-disable no-unused-vars */
 			callback,
 			data,
-			/* eslint-enable no-unused-vars */
 			href,
 			...props
 		} = link
@@ -586,9 +549,7 @@ export default class extends React.Component {
 		}
 
 		if(cr.type === 'radio' && !container) {
-			/* eslint-disable no-console, no-undef */
 			console.error('When the type attribute of the input tag is radio, the third parameter "container" of setCellInput() is a required parameter, otherwise the function will be invalid!')
-			/* eslint-enable no-console, no-undef */
 			return null
 		}
 
@@ -715,7 +676,7 @@ export default class extends React.Component {
 					key={`${container}-cell-r${rowIndex}-c${cellIndex}`}
 					className='list-cell'
 					style={{
-						height: rowStyle[rowIndex].height,
+						height: rowStyle[rowIndex] ? rowStyle[rowIndex].height : 'auto',
 						...style,
 						width: typeof colWidth === 'string' ? colWidth : (colWidth[cellIndex] || 'auto'),
 						...cellOfColumnStyle[cellIndex],
@@ -905,7 +866,7 @@ export default class extends React.Component {
 			<div
 				className='list-body'
 				ref={ele => this.scroll = ele}
-				style={{ ...style, height: scrollHeight, overflow: enable ? 'hidden' : 'auto' }}
+				style={{ ...style, height: scrollHeight, overflowY: enable ? 'hidden' : 'auto' }}
 			>
 				<ul
 					className='list-cont'

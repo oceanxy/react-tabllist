@@ -1,12 +1,3 @@
-/**
- * @Author: Oceanxy
- * @Email: xieyang@hiynn.com
- * @Description: dev
- * @Date: 2019-05-23 11:41:43
- * @LastModified: Oceanxy（xieyang@hiynn.com）
- * @LastModifiedTime: 2019-06-03 14:57:48
- */
-
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Tabllist from '../src'
@@ -243,18 +234,22 @@ const Dev = () => {
 			['row 9; column 1', 'row 9; column 2', 'row 9; column 3', 'row 9; column 4']
 		],
 		property: {
-			// The style of the outermost container
+			border: {
+				borderWidth: 1,
+				borderStyle: 'solid',
+				borderColor: '#ededed'
+			},
 			style: {
-				width: '1000px',
+				width: '100%',
 				margin: '0 auto',
 				padding: '10px',
 				height: 550,
 				border: '1px solid #999999'
 			},
-			border: {
-				borderWidth: 1,
-				borderStyle: 'solid',
-				borderColor: '#ededed'
+			scroll: {
+				enable: false,
+				speed: 50,
+				distance: 1
 			},
 			header: {
 				show: true,
@@ -269,23 +264,17 @@ const Dev = () => {
 					fontSize: 20
 				}
 			},
-			scroll: {
-				enable: false,
-				speed: 50,
-				distance: 1
-			},
 			body: {
 				style: {
 					padding: 0
 				},
 				row: {
-					rowCheckbox: {
-						show: true,
-						column: 2,
-					},
-					onClick: () => {}, // 仅在1.2.0版本生效，此处用于测试控制台打印警告信息
 					style: {
 						height: 34
+					},
+					rowCheckbox: {
+						show: true,
+						column: 1
 					},
 					serialNumber: {
 						show: true,
@@ -298,15 +287,9 @@ const Dev = () => {
 							color: '#2cff41'
 						},
 						specialStyle: [
-							{
-								backgroundColor: '#203d7b'
-							},
-							{
-								backgroundColor: '#2f4c99'
-							},
-							{
-								backgroundColor: '#3960c0'
-							}
+							{ backgroundColor: '#203d7b' },
+							{ backgroundColor: '#2f4c99' },
+							{ backgroundColor: '#3960c0' }
 						]
 					},
 					specialStyle: [
@@ -333,20 +316,18 @@ const Dev = () => {
 				cell: {
 					style: {
 						fontSize: 16,
-						minWidth: 50,
+						minWidth: 0,
 						color: '#000000',
 						textAlign: 'center',
-						border: '',
-						width: [60, 60, '30%', '25%', '10%']
+						width: [80, 50, 400, 150, 150, 150]
 					}
 				},
 				cellOfColumn: {
 					style: [
 						{},
 						{},
-						{color: 'red'},
-						{},
-						{ backgroundColor: '#f4f4f4' }
+						{ color: 'red' },
+						{}
 					]
 				}
 			}

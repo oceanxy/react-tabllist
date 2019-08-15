@@ -177,9 +177,9 @@ describe('test cells', () => {
       .find('.list-row').at(0)
       .find('.list-cell')
 
-    expect(cells.at(0).getDOMNode().style.width).toBe('70px')
+    expect(cells.at(0).getDOMNode().style.width).toBe('auto')
     expect(cells.at(1).getDOMNode().style.width).toBe('auto')
-    expect(cells.at(2).getDOMNode().style.width).toBe('90px')
+    expect(cells.at(2).getDOMNode().style.width).toBe('auto')
   })
 
   it('test width of cell when type of width is number or invalid value', () => {
@@ -239,9 +239,9 @@ describe('test cells', () => {
       .find('.list-row').at(0)
       .find('.list-cell')
 
-    expect(cells.at(0).getDOMNode().style.width).toEqual('1px')
-    expect(cells.at(1).getDOMNode().style.width).toEqual('1px')
-    expect(cells.at(2).getDOMNode().style.width).toEqual('1px')
+    expect(cells.at(0).getDOMNode().style.width).toEqual('auto')
+    expect(cells.at(1).getDOMNode().style.width).toEqual('auto')
+    expect(cells.at(2).getDOMNode().style.width).toEqual('auto')
   })
 })
 
@@ -251,7 +251,7 @@ describe('change property of body', () => {
       wrapper
         .find('.list-body .list-row').at(0)
         .find('.list-cell').at(0).getDOMNode().style.width
-    ).toBe('1px')
+    ).toBe('auto')
 
     wrapper.setProps({
       property: {
@@ -285,7 +285,7 @@ describe('change property of body', () => {
       wrapper
         .find('.list-body .list-row').at(0)
         .find('.list-cell').at(0).getDOMNode().style.width
-    ).toEqual('100px')
+    ).toEqual('auto')
   })
 
   it('row spacing', () => {
