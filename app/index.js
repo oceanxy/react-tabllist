@@ -336,7 +336,8 @@ const Dev = () => {
 
 	return (
 		<div className='container'>
-			<Tabllist property={option.property} data={option.data} />
+			<Tabllist />
+			{/*<Tabllist property={option.property} data={option.data} />*/}
 		</div>
 	)
 }

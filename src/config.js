@@ -23,7 +23,7 @@ export default {
 		header: {
 			show: true,
 			style: {
-				height: 30
+				height: 40
 			},
 			cellStyle: {
 				color: '#000000',

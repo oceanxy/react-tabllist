@@ -83,7 +83,7 @@ $ npm install
 $ npm start
 ```
 
-在浏览器中打开http://localhost:3001，更多开发细节见[开发文档]()
+在浏览器中打开 http://localhost:3001 ，更多开发细节见[开发文档](./)
 
 ### 版本信息
 
@@ -376,104 +376,104 @@ cellWidth可选值：
 
 ```json5
 {
-	className: '',
-	data: [
-		['1st column', '2nd column', '3rd column'],
-		['1st cell', '2nd cell', '3rd cell']
-	],
-	property: {
-		border: {
-			borderWidth: 1,
-			borderStyle: 'solid',
-			borderColor: '#f4f4f4'
-		},
-		style: {
-			width: '100%',
-			margin: '0 auto',
-			height: 300
-		},
-		scroll: {
-			enable: true,
-			speed: 50,
-			distance: 1
-		},
-		header: {
-			show: true,
-			style: {
-				height: 30
-			},
-			cellStyle: {
-				color: '#000000',
-				border: ''
-			}
-		},
-		body: {
-			style: {
-				backgroundImage: '',
-				backgroundColor: ''
-			},
-			row: {
-				transition: true,
-				spacing: 0,
-				style: {
-					height: 30
-				},
-				serialNumber: {
-					show: false,
-					columnName: 'SN',
-					formatter: '{index}.',
-					column: 1,
-					style: {
-						width: '100%',
-						height: '100%',
-						display: 'flex',
-						justifyContent: 'center',
-						alignItems: 'center',
-						backgroundColor: '',
-						backgroundImage: '',
-						color: '#ffffff'
-					},
-					specialStyle: []
-				},
-				rowCheckbox: {
-					show: false,
-					column: 1,
-					style: {},
-					specialStyle: []
-				},
-				visual: {
-					show: false,
-					interval: 1,
-					style: {
-						backgroundColor: '#e8f4fc'
-					}
-				},
-				specialStyle: [],
-				silent: {
-					show: false, // false代表开启
-					style: {
-						opacity: 0.8
-					}
-				}
-			},
-			cellOfColumn: {
-				style: []
-			},
-			cell: {
-				style: {
-					fontSize: 16,
-					minWidth: 50,
-					color: '#000000',
-					textAlign: 'center',
-					border: '',
-					width: 'auto'
-				},
-				iconStyle: {
-					width: 24,
-					height: 'auto'
-				}
-			}
-		}
-	}
+  className: '',
+  data: [
+    ['1st column', '2nd column', '3rd column'],
+    ['1st cell', '2nd cell', '3rd cell']
+  ],
+  property: {
+    border: {
+      borderWidth: 1,
+      borderStyle: 'solid',
+      borderColor: '#f4f4f4'
+    },
+    style: {
+      width: '100%',
+      margin: '0 auto',
+      height: 300
+    },
+    scroll: {
+      enable: true,
+      speed: 50,
+      distance: 1
+    },
+    header: {
+      show: true,
+      style: {
+        height: 40
+      },
+      cellStyle: {
+        color: '#000000',
+        border: ''
+      }
+    },
+    body: {
+      style: {
+        backgroundImage: '',
+        backgroundColor: ''
+      },
+      row: {
+        transition: true,
+        spacing: 0,
+        style: {
+          height: 30
+        },
+        serialNumber: {
+          show: false,
+          columnName: 'SN',
+          formatter: '{index}.',
+          column: 1,
+          style: {
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: '',
+            backgroundImage: '',
+            color: '#ffffff'
+          },
+          specialStyle: []
+        },
+        rowCheckbox: {
+          show: false,
+          column: 1,
+          style: {},
+          specialStyle: []
+        },
+        visual: {
+          show: false,
+          interval: 1,
+          style: {
+            backgroundColor: '#e8f4fc'
+          }
+        },
+        specialStyle: [],
+        silent: {
+          show: false, // false代表开启
+          style: {
+              opacity: 0.8
+          }
+        }
+      },
+      cellOfColumn: {
+        style: []
+      },
+      cell: {
+        style: {
+          fontSize: 16,
+          minWidth: 50,
+          color: '#000000',
+          textAlign: 'center',
+          border: '',
+          width: 'auto'
+        },
+        iconStyle: {
+          width: 24,
+          height: 'auto'
+        }
+      }
+    }
+  }
 }
 ```

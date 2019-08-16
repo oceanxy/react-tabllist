@@ -39,9 +39,9 @@ export function getScrollHeight(props, listComponent) {
 		style: { height }
 	} = props.property
 
-	if(listComponent) {
+	if(listComponent && window) {
 		const { paddingTop, paddingBottom, borderTopWidth, borderBottomWidth } = getComputedStyle(listComponent, null)
-		const result = parseInt(height) - parseInt(paddingTop) - parseInt(paddingBottom) - parseInt(borderTopWidth) - parseInt(borderBottomWidth)
+		const result = parseInt(height) - parseInt(paddingTop || 0) - parseInt(paddingBottom || 0) - parseInt(borderTopWidth || 0) - parseInt(borderBottomWidth || 0)
 
 		if(show) {
 			return result - parseInt(style.height)
