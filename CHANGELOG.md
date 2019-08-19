@@ -110,9 +110,10 @@
 8. Normal text can also be written as an object unit to increase the event.
 
 #### 1.5.1
-1. A unit can bind multiple events.
-2. Refactored part of the code.
-3. Fix bug: When deactivating list auto scrolling, you can't manually control the list to scroll to the specified row.
+1. Fix bug: when setting css property {border-collapse: 'collapse'}, 'border-spacing' is invalid because it is ignored.
+2. A unit can bind multiple events.
+3. Refactored part of the code.
+4. Fix bug: When deactivating list auto scrolling, you can't manually control the list to scroll to the specified row.
 
 #### 2.0.0
 1. Add a panel for dynamically adjusting properties in the development environment.

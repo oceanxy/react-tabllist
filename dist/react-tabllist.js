@@ -479,7 +479,7 @@ if(false) {}
 
 exports = module.exports = __webpack_require__(23)(false);
 // Module
-exports.push([module.i, ".list {\n  overflow: hidden;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box; }\n  .list .list-header .list-row {\n    background: no-repeat center / 100% 100%; }\n    .list .list-header .list-row .list-cell {\n      overflow: hidden;\n      white-space: nowrap;\n      text-overflow: ellipsis; }\n  .list .list-body {\n    overflow-x: hidden; }\n  .list .list-cont {\n    margin: 0;\n    padding: 0;\n    display: table;\n    border-collapse: collapse;\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n    table-layout: fixed;\n    width: 100%;\n    height: auto;\n    -webkit-transition: all 400ms;\n    transition: all 400ms; }\n    .list .list-cont .list-row {\n      display: table-row;\n      list-style: none;\n      border: none !important;\n      -webkit-transition: all 300ms cubic-bezier(0, 0, 0.58, 1);\n      transition: all 300ms cubic-bezier(0, 0, 0.58, 1);\n      background: no-repeat center / 100% 100%; }\n      .list .list-cont .list-row.list-row-start {\n        -webkit-transform: scale(0.8);\n                transform: scale(0.8);\n        opacity: 0; }\n      .list .list-cont .list-row.list-row-end {\n        opacity: 1;\n        -webkit-transform: scale(1);\n                transform: scale(1); }\n      .list .list-cont .list-row.click-row {\n        cursor: pointer; }\n      .list .list-cont .list-row .list-cell {\n        display: table-cell;\n        -webkit-box-sizing: border-box;\n                box-sizing: border-box;\n        text-align: center;\n        vertical-align: middle;\n        word-break: break-all;\n        overflow: hidden;\n        background: no-repeat center / 100% 100%; }\n        .list .list-cont .list-row .list-cell * {\n          vertical-align: middle; }\n        .list .list-cont .list-row .list-cell a {\n          color: currentColor;\n          -webkit-text-decoration: transparent;\n                  text-decoration: transparent; }\n        .list .list-cont .list-row .list-cell label {\n          vertical-align: middle; }\n          .list .list-cont .list-row .list-cell label span, .list .list-cont .list-row .list-cell label input {\n            vertical-align: middle;\n            padding: 0 5px; }\n", ""]);
+exports.push([module.i, ".list {\n  overflow: hidden;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box; }\n  .list .list-header .list-cont {\n    border-collapse: collapse; }\n  .list .list-header .list-row {\n    background: no-repeat center / 100% 100%; }\n    .list .list-header .list-row .list-cell {\n      overflow: hidden;\n      white-space: nowrap;\n      text-overflow: ellipsis; }\n  .list .list-body {\n    overflow-x: hidden; }\n  .list .list-cont {\n    margin: 0;\n    padding: 0;\n    display: table;\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n    table-layout: fixed;\n    width: 100%;\n    height: auto;\n    -webkit-transition: all 400ms;\n    transition: all 400ms; }\n    .list .list-cont .list-row {\n      display: table-row;\n      list-style: none;\n      border: none !important;\n      -webkit-transition: all 300ms cubic-bezier(0, 0, 0.58, 1);\n      transition: all 300ms cubic-bezier(0, 0, 0.58, 1);\n      background: no-repeat center / 100% 100%; }\n      .list .list-cont .list-row.list-row-start {\n        -webkit-transform: scale(0.8);\n                transform: scale(0.8);\n        opacity: 0; }\n      .list .list-cont .list-row.list-row-end {\n        opacity: 1;\n        -webkit-transform: scale(1);\n                transform: scale(1); }\n      .list .list-cont .list-row.click-row {\n        cursor: pointer; }\n      .list .list-cont .list-row .list-cell {\n        display: table-cell;\n        -webkit-box-sizing: border-box;\n                box-sizing: border-box;\n        text-align: center;\n        vertical-align: middle;\n        word-break: break-all;\n        overflow: hidden;\n        background: no-repeat center / 100% 100%; }\n        .list .list-cont .list-row .list-cell * {\n          vertical-align: middle; }\n        .list .list-cont .list-row .list-cell a {\n          color: currentColor;\n          -webkit-text-decoration: transparent;\n                  text-decoration: transparent; }\n        .list .list-cont .list-row .list-cell label {\n          vertical-align: middle; }\n          .list .list-cont .list-row .list-cell label span, .list .list-cont .list-row .list-cell label input {\n            vertical-align: middle;\n            padding: 0 5px; }\n", ""]);
 
 
 /***/ }),
@@ -1173,7 +1173,7 @@ var external_commonjs_react_commonjs2_react_amd_react_root_React_default = /*#__
     header: {
       show: true,
       style: {
-        height: 30
+        height: 40
       },
       cellStyle: {
         color: '#000000',
@@ -1357,14 +1357,14 @@ function getScrollHeight(props, listComponent) {
       style = _props$property$heade.style,
       height = _props$property.style.height;
 
-  if (listComponent) {
+  if (listComponent && window) {
     var _getComputedStyle = getComputedStyle(listComponent, null),
         paddingTop = _getComputedStyle.paddingTop,
         paddingBottom = _getComputedStyle.paddingBottom,
         borderTopWidth = _getComputedStyle.borderTopWidth,
         borderBottomWidth = _getComputedStyle.borderBottomWidth;
 
-    var result = parseInt(height) - parseInt(paddingTop) - parseInt(paddingBottom) - parseInt(borderTopWidth) - parseInt(borderBottomWidth);
+    var result = parseInt(height) - parseInt(paddingTop || 0) - parseInt(paddingBottom || 0) - parseInt(borderTopWidth || 0) - parseInt(borderBottomWidth || 0);
 
     if (show) {
       return result - parseInt(style.height);
@@ -1806,6 +1806,23 @@ function getRowStyle(rowState, event) {
   });
 
   return rowStyle;
+}
+/**
+ * 处理css属性‘border-collapse’与‘border-spacing’的值
+ * @param spacing {number|string} 行间距
+ * @returns {{borderCollapse: string}|{borderSpacing: string}}
+ */
+
+function getListContStyle(spacing) {
+  if (!spacing || !parseInt(spacing)) {
+    return {
+      borderCollapse: 'collapse'
+    };
+  }
+
+  return {
+    borderSpacing: "".concat(spacing).indexOf('px') === -1 ? "0 ".concat(spacing, "px") : "0 ".concat(spacing)
+  };
 }
 // CONCATENATED MODULE: ./src/list.js
 
@@ -2715,9 +2732,9 @@ function (_React$Component) {
           _this$state7$property2 = _this$state7$property.body,
           style = _this$state7$property2.style,
           spacing = _this$state7$property2.row.spacing,
-          enable = _this$state7$property.scroll.enable; // 处理行间距的值
+          enable = _this$state7$property.scroll.enable; // 处理css属性‘border-collapse’与‘border-spacing’的值
 
-      var borderSpacing = "".concat(spacing).indexOf('px') === -1 ? "0 ".concat(spacing, "px") : "0 ".concat(spacing);
+      var listContStyle = getListContStyle(spacing);
       return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("div", {
         className: "list-body",
         ref: function ref(ele) {
@@ -2729,17 +2746,13 @@ function (_React$Component) {
         })
       }, external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("ul", {
         className: "list-cont",
-        style: {
-          borderSpacing: borderSpacing
-        },
+        style: listContStyle,
         ref: function ref(ele) {
           return _this8.listContMain = ele;
         }
       }, this.setRow(bodyData, 'main')), external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("ul", {
         className: "list-cont",
-        style: {
-          borderSpacing: borderSpacing
-        },
+        style: listContStyle,
         ref: function ref(ele) {
           return _this8.listContSupport = ele;
         }

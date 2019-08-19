@@ -815,7 +815,14 @@ export default class extends React.Component {
 			return (
 				<ul
 					className='list-header list-cont'
-					style={!enable && headerWidth ? { ...style, width: headerWidth } : style}
+					style={
+						!enable && headerWidth
+							? {
+								...style,
+								width: headerWidth
+							}
+							: style
+					}
 				>
 					<li key='list-row' className='list-row' style={style}>
 						{
@@ -859,8 +866,8 @@ export default class extends React.Component {
 				scroll: { enable }
 			}
 		} = this.state
-		// 处理行间距的值
-		const borderSpacing = (`${spacing}`).indexOf('px') === -1 ? `0 ${spacing}px` : `0 ${spacing}`
+		// 处理css属性‘border-collapse’与‘border-spacing’的值
+		const listContStyle = util.getListContStyle(spacing)
 
 		return (
 			<div
@@ -870,14 +877,14 @@ export default class extends React.Component {
 			>
 				<ul
 					className='list-cont'
-					style={{ borderSpacing }}
+					style={listContStyle}
 					ref={ele => this.listContMain = ele}
 				>
 					{this.setRow(bodyData, 'main')}
 				</ul>
 				<ul
 					className='list-cont'
-					style={{ borderSpacing }}
+					style={listContStyle}
 					ref={ele => this.listContSupport = ele}
 				>
 					{this.setRow(bodyData, 'support')}

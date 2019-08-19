@@ -493,3 +493,18 @@ export function getRowStyle(rowState, event) {
 
 	return rowStyle
 }
+
+/**
+ * 处理css属性‘border-collapse’与‘border-spacing’的值
+ * @param spacing {number|string} 行间距
+ * @returns {{borderCollapse: string}|{borderSpacing: string}}
+ */
+export function getListContStyle(spacing) {
+	if(!spacing || !parseInt(spacing)) {
+		return { borderCollapse: 'collapse' }
+	}
+
+	return {
+		borderSpacing: (`${spacing}`).indexOf('px') === -1 ? `0 ${spacing}px` : `0 ${spacing}`
+	}
+}

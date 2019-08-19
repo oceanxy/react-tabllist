@@ -247,7 +247,7 @@ const Dev = () => {
 				border: '1px solid #999999'
 			},
 			scroll: {
-				enable: false,
+				enable: true,
 				speed: 50,
 				distance: 1
 			},
@@ -269,6 +269,7 @@ const Dev = () => {
 					padding: 0
 				},
 				row: {
+					spacing: 1,
 					style: {
 						height: 34
 					},
@@ -336,8 +337,8 @@ const Dev = () => {
 
 	return (
 		<div className='container'>
-			<Tabllist />
-			{/*<Tabllist property={option.property} data={option.data} />*/}
+			{/*<Tabllist />*/}
+			<Tabllist property={option.property} data={option.data} />
 		</div>
 	)
 }

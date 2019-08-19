@@ -7,6 +7,10 @@
   box-sizing: border-box;
 
   .list-header {
+    .list-cont {
+      border-collapse: collapse;
+    }
+
     .list-row {
       @include background;
 
@@ -26,7 +30,6 @@
     margin: 0;
     padding: 0;
     display: table;
-    border-collapse: collapse;
     box-sizing: border-box;
     table-layout: fixed;
     width: 100%;
