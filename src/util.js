@@ -61,16 +61,14 @@ export function getScrollHeight(props, listComponent) {
 /**
  * 获取DOM内每一列单元格的实际宽度
  * @param listContMain 滚动主容器对象
- * @param props props
  * @returns {Array} 列表每列的宽度值，数组长度代表列数
  */
-export function getColClientWidth(listContMain, props) {
-	const { borderWidth } = props.property.border
+export function getColClientWidth(listContMain) {
 	const widthArr = []
 
 	if(listContMain && listContMain.children.length) {
 		for(let i = 0, l = listContMain.children[0].children; i < l.length; i++) {
-			widthArr.push(l[i].offsetWidth - parseInt(borderWidth) || 0)
+			widthArr.push(l[i].offsetWidth || 'auto')
 		}
 	}
 
@@ -79,11 +77,11 @@ export function getColClientWidth(listContMain, props) {
 
 /**
  * 将用户设置的每一列单元格宽度值解析为组件程序需要的值，同时处理不合法数据
- * @param {string|array|number} width props传入的宽度数据
+ * @param {object} props 组件的props
  * @param {array} data 用于渲染组件的数据
  * @returns {*} 用于渲染每列单元格的宽度值
  */
-export function handleColWidth(width, data) {
+export function handleColWidth(props, data) {
 	function isString(widthValue) {
 		if(widthValue.includes('px')) {
 			return `${parseFloat(widthValue)}px`
@@ -108,6 +106,8 @@ export function handleColWidth(width, data) {
 		})
 	}
 
+	const { width } = props.property.body.cell.style
+
 	// 处理数组形式的多列宽度数值
 	if(Array.isArray(width)) {
 		return isArray(width)
@@ -115,21 +115,23 @@ export function handleColWidth(width, data) {
 		if(width.includes(',')) {
 			return isArray(width.split(','))
 		} else if(width === 'avg') {
-			return new Array(getMaxCellOfRow(data)).fill(1)
-		}
+			const maxCellNumber = getMaxCellOfRow(data, props)
 
-		return isString(width)
+			if(maxCellNumber > 1) {
+				return new Array(maxCellNumber - 1).fill(`${1 / maxCellNumber * 100}%`)
+			}
+		}
 	}
 
 	return 'auto'
 }
 
 /**
- * 从渲染数据中获取每行的单元格数量（以最多单元格的一行为准）
+ * 从原始数据(配置的二维数组)中获取每行的单元格数量（以最多单元格的一行为准）
  * @param data 用于渲染的数据
  * @returns {number}
  */
-export function getMaxCellOfRow(data) {
+export function getMaxCellFromData(data) {
 	const cellsOfRow = []
 
 	// 获取每一行的数据量，存入数组 cellsOfRow 内
@@ -144,6 +146,27 @@ export function getMaxCellOfRow(data) {
 
 	// 获取数据量最多的一行的数值
 	return Math.max(...cellsOfRow)
+}
+
+/**
+ * 获取行的单元格数量
+ * @param data {array[]} 用于渲染的数据
+ * @param props {object} 组件的props
+ * @returns {number}
+ */
+export function getMaxCellOfRow(data, props) {
+	let maxCellFromData = getMaxCellFromData(data)
+	const { serialNumber, rowCheckbox } = props.property.body.row
+
+	if(serialNumber.show) {
+		maxCellFromData++
+	}
+
+	if(rowCheckbox.show) {
+		maxCellFromData++
+	}
+
+	return maxCellFromData
 }
 
 /**
@@ -215,7 +238,7 @@ export function fillRow(data, state) {
 	const { row: { rowCheckbox, serialNumber } } = body
 	const cloneData = [...data]
 	// 获取数据量最多的一行的数值
-	const maxCellValue = getMaxCellOfRow(cloneData)
+	const maxCellValue = getMaxCellFromData(cloneData)
 	const newData = []
 
 	// 补齐空数据到缺失的行

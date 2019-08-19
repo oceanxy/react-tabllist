@@ -1,255 +1,376 @@
 import 'jsdom-global/register'
+import _ from 'lodash'
 import React from 'react'
 import ReactTabllist from '../src'
 import Enzyme from './enzyme.config'
 
 const mockApp = (props) => {
 	const wrapper = Enzyme.mount(<ReactTabllist {...props} />)
-	// console.log(wrapper.debug())
 
 	return { props, wrapper }
 }
 
-const { wrapper } = mockApp({
-	// className: 'test',
-	// data: [
-	// 	['test1', 'test2', 'test3'],
-	// 	['1-1', '1-2', '1-3'],
-	// 	['2-1', '2-2', '2-3'],
-	// 	['3-1', '3-2', '3-3']
-	// ]
-})
+const { wrapper } = mockApp({})
 
 it('exports modules correctly', () => {
 	expect(ReactTabllist).toMatchSnapshot()
 })
 
-it('change height of container', () => {
+describe('# test className', function() {
+	it('use default className', function() {
+		expect(wrapper.find('.list').getDOMNode().className).toBe('list list-no-spacing')
+	})
+
+	it('add className', function() {
+		wrapper.setProps({ className: 'testClassName' })
+		expect(wrapper.find('.list').getDOMNode().className).toBe('list list-no-spacing testClassName')
+	})
+})
+
+describe('# test data', () => {
+	it('data is null', () => {
+		wrapper.setProps({ data: [] })
+		expect(wrapper.find('.list-header .list-cell').length).toBe(0)
+	})
+
+	it('only title', () => {
+		wrapper.setProps({ data: [['t1', 't2', 't3', 't4', 't5']] })
+		expect(wrapper.find('.list-body .list-cont').at(0).children().length).toBe(0)
+		expect(wrapper.find('.list-header .list-cell').length).toBe(5)
+	})
+
+	it('1 row and 2 column', () => {
+		wrapper.setProps({ data: [['t1', 't2'], ['c1', 'c2']] })
+		expect(wrapper.find('.list-header .list-cell')).toHaveLength(2)
+		expect(wrapper.find('.list-body').childAt(0).find('.list-row')).toHaveLength(1)
+	})
+
+	describe('## object unit', function() {
+		// TODO
+	})
+})
+
+describe('# change property', () => {
+	describe('## global border', function() {
+		it('use default border', function() {
+			expect(wrapper.find('.list').getDOMNode().style.border).toBe('1px solid #f4f4f4')
+		})
+
+		it('change border color', function() {
+			wrapper.setProps({ property: { border: { borderColor: '#ededed' } } })
+			expect(wrapper.find('.list').getDOMNode().style.border).toBe('1px solid #ededed')
+		})
+
+		it('change border style', function() {
+			wrapper.setProps({ property: { border: { borderStyle: 'dotted' } } })
+			expect(wrapper.find('.list').getDOMNode().style.border).toBe('1px dotted #f4f4f4')
+			expect(
+				wrapper.find('.list .list-body .list-cont').at(0)
+					.find('.list-row').at(0)
+					.find('.list-cell').at(0)
+					.getDOMNode().style.border
+			).toBe('1px dotted #f4f4f4')
+		})
+
+		it('change border width', () => {
+			wrapper.setProps({ property: { border: { borderWidth: 2 } } })
+			expect(wrapper.find('.list').getDOMNode().style.borderWidth).toBe('2px')
+		})
+	})
+
+	it('change style of container ', function() {
+		expect(wrapper.find('.list').getDOMNode().style.height).toBe('300px')
+
+		wrapper.setProps({
+			property: {
+				style: {
+					width: 500,
+					height: 500,
+					margin: '100px'
+				}
+			}
+		})
+
+		const { width, height, margin } = wrapper.find('.list').getDOMNode().style
+
+		expect(height).toBe('500px')
+		expect(width).toBe('500px')
+		expect(margin).toBe('100px')
+	})
+
+	describe('## change scroll', () => {
+		const data = _.range(20).map(i => {
+			return [`t-${i}-1`, `t-${i}-2`, `t-${i}-3`]
+		})
+
+		it('close scroll', () => {
+			wrapper.setProps({ data, property: { isScroll: false } })
+			expect(wrapper.find('.list .list-body').getDOMNode().scrollTop).toBe(0)
+		})
+
+		it('open scroll and continuous scrolling', done => {
+			wrapper.setProps({ property: { speed: 60, isScroll: true, distance: 2 } })
+
+			setTimeout(() => {
+				expect(wrapper.find('.list .list-body').getDOMNode().scrollTop).toBeGreaterThanOrEqual(0)
+				done()
+			}, 1000)
+		})
+
+		it('Scroll one row at a time', done => {
+			wrapper.setProps({ property: { speed: 2000, isScroll: true, distance: -1 } })
+			setTimeout(() => {
+				expect(wrapper.find('.list .list-body').getDOMNode().scrollTop).toBe(0)
+				done()
+			}, 1000)
+
+			setTimeout(() => {
+				expect(wrapper.find('.list .list-body').getDOMNode().scrollTop).toBeGreaterThanOrEqual(0)
+				done()
+			}, 1000)
+		})
+	})
+
+	describe('## test header', () => {
+		it('not display header', () => {
+			wrapper.setProps({
+				property: { header: { show: false } }
+			})
+
+			expect(wrapper.exists('.list-header')).toEqual(false)
+		})
+
+		describe('### display header', () => {
+			it('is exists header', () => {
+				wrapper.setProps({
+					property: { header: { show: true } }
+				})
+
+				expect(wrapper.exists('.list-header')).toEqual(true)
+			})
+
+			it('use default style of header', () => {
+				expect(wrapper.find('.list-header').getDOMNode().style.height).toBe('40px')
+			})
+
+			it('change style', function() {
+				wrapper.setProps({
+					property: { header: { style: { height: 60, backgroundColor: '#000000' } } }
+				})
+
+				const { height, backgroundColor } = wrapper.find('.list-header').getDOMNode().style
+
+				expect(height).toBe('60px')
+				expect(backgroundColor).toBe('rgb(0, 0, 0)')
+			})
+
+			it('change style for cell of header', () => {
+				wrapper.setProps({
+					property: {
+						header: {
+							cellStyle: {
+								height: 60,
+								backgroundColor: '#f4f4f4',
+								color: 'red'
+							}
+						}
+					}
+				})
+
+				const { color, backgroundColor, height } = wrapper.find('.list-header .list-cell').at(0).getDOMNode().style
+
+				expect(color).toBe('red')
+				expect(backgroundColor).toBe('rgb(244, 244, 244)')
+				expect(height).toBe('60px')
+			})
+		})
+	})
+})
+
+describe('# test cells of body', () => {
+	it('test style', () => {
+		wrapper.setProps({
+			property: {
+				body: {
+					cell: {
+						style: {
+							fontSize: 12,
+							minWidth: 80,
+							color: 'blue',
+							textAlign: 'left',
+							border: '1px solid blue',
+							width: 'auto'
+						}
+					}
+				}
+			}
+		})
+
+		const {
+			fontSize,
+			minWidth,
+			color,
+			textAlign,
+			borderColor,
+			width
+		} = wrapper.find('.list-body .list-cont').at(0).find('.list-row').at(0)
+			.find('.list-cell').at(2)
+			.getDOMNode().style
+
+		expect(fontSize).toBe('12px')
+		expect(minWidth).toBe('80px')
+		expect(color).toBe('blue')
+		expect(textAlign).toBe('left')
+		expect(borderColor).toBe('blue')
+		expect(width).toBe('auto')
+	})
+
+	it('test width of cell when width value is \'avg\'', function() {
+		wrapper.setProps({
+			property: {
+				body: {
+					cell: {
+						style: {
+							width: 'avg'
+						}
+					}
+				}
+			}
+		})
+
+		const cells = wrapper.find('.list-body .list-cont').at(0).find('.list-row').at(1)
+		const cell1 = cells.find('.list-cell').at(0).getDOMNode().style.width
+		const cell2 = cells.find('.list-cell').at(1).getDOMNode().style.width
+
+		expect(cell1).toBe(cell2)
+	})
+
+	it('test width of cell when type of width value is array', () => {
+		wrapper.setProps({
+			property: {
+				body: {
+					cell: {
+						style: {
+							width: [100, , 300]
+						}
+					}
+				}
+			}
+		})
+
+		const cells = wrapper
+			.find('.list-body .list-cont').at(0)
+			.find('.list-row').at(1)
+			.find('.list-cell')
+
+		expect(cells.at(0).getDOMNode().style.width).toBe('100px')
+		expect(cells.at(1).getDOMNode().style.width).toBe('auto')
+		expect(cells.at(2).getDOMNode().style.width).toBe('300px')
+	})
+
+	it('test width of cell when type of width is string', () => {
+		wrapper.setProps({
+			property: {
+				body: {
+					cell: {
+						style: {
+							width: '70,,90'
+						}
+					}
+				}
+			}
+		})
+
+		const cells = wrapper
+			.find('.list-body .list-cont').at(0)
+			.find('.list-row').at(0)
+			.find('.list-cell')
+
+		expect(cells.at(0).getDOMNode().style.width).toBe('70px')
+		expect(cells.at(1).getDOMNode().style.width).toBe('auto')
+		expect(cells.at(2).getDOMNode().style.width).toBe('90px')
+	})
+
+	it('test width of cell when type of width is number or invalid value', () => {
+		wrapper.setProps({
+			property: {
+				body: {
+					cell: {
+						style: {
+							width: 1
+						}
+					}
+				}
+			}
+		})
+
+		const cells = wrapper
+			.find('.list-body .list-cont').at(1)
+			.find('.list-row').at(0)
+			.find('.list-cell')
+
+		expect(cells.at(0).getDOMNode().style.width).toBe('auto')
+		expect(cells.at(1).getDOMNode().style.width).toBe('auto')
+		expect(cells.at(2).getDOMNode().style.width).toBe('auto')
+
+		wrapper.setProps({
+			property: {
+				body: {
+					cell: {
+						style: {
+							width: 'xxxx'
+						}
+					}
+				}
+			}
+		})
+
+		expect(cells.at(0).getDOMNode().style.width).toBe('auto')
+		expect(cells.at(1).getDOMNode().style.width).toBe('auto')
+		expect(cells.at(2).getDOMNode().style.width).toBe('auto')
+	})
+})
+
+it('test style of body', function() {
 	wrapper.setProps({
 		property: {
-			style: {
-				width: 500,
-				height: 500
+			body: {
+				style: {
+					backgroundColor: 'blue'
+				}
 			}
 		}
 	})
 
-	expect(wrapper.find('.list').getDOMNode().style.height).toBe('500px')
-	expect(wrapper.find('.list').getDOMNode().style.width).toBe('500px')
+	expect(wrapper.find('.list-body').getDOMNode().style.backgroundColor).toEqual('blue')
 })
 
-describe('display header', () => {
-  it('not display header', () => {
-    wrapper.setProps({
-      property: { header: { show: false } }
-    })
+it('test style of cellOfColumn', function() {
+	wrapper.setProps({
+		property: {
+			body: {
+				cellOfColumn: {
+					style: [
+						{ backgroundColor: 'red' },
+						{ backgroundColor: 'black' },
+						{ backgroundColor: 'green' }
+					]
+				}
+			}
+		}
+	})
 
-    expect(wrapper.exists('.list-header')).toEqual(false)
-  })
+	const cells = wrapper.find('.list-body .list-row').at(1).find('.list-cell')
+	const cell1 = cells.at(0).getDOMNode().style.backgroundColor
+	const cell2 = cells.at(1).getDOMNode().style.backgroundColor
+	const cell3 = cells.at(2).getDOMNode().style.backgroundColor
 
-  it('change style for row of header', () => {
-    wrapper.setProps({
-      property: { header: { show: true } }
-    })
-
-    const headerHeight = wrapper.find('.list-header').getDOMNode().style.height
-
-    expect(headerHeight).toBe('30px')
-
-    wrapper.setProps({
-      property: { header: { style: { height: 40 } } }
-    })
-
-    expect(wrapper.exists('.list-header')).toEqual(true)
-    expect(wrapper.find('.list-header').getDOMNode().style.height).not.toBe(headerHeight)
-  })
-
-  it('change style for cell of header', () => {
-    expect(wrapper.find('.list-header .list-cell').at(0).getDOMNode().style.color).toBe('rgb(0, 0, 0)')
-  })
+	expect(cell1).toBe('red')
+	expect(cell2).toBe('black')
+	expect(cell3).toBe('green')
 })
 
-// describe('test data', () => {
-//   it('data is null', () => {
-//     wrapper.setProps({ data: [] })
-//     expect(wrapper.find('.list-header .list-cell').length).toBe(0)
-//   })
-//
-//   it('only title', () => {
-//     wrapper.setProps({ data: [['t1', 't2', 't3', 't4', 't5']] })
-//     expect(wrapper.find('.list-header .list-cell').length).toBe(5)
-//   })
-//
-//   it('1 row and 2 column', () => {
-//     wrapper.setProps({ data: [['t1', 't2'], ['c1', 'c2']] })
-//     expect(wrapper.find('.list-header .list-cell')).toHaveLength(2)
-//     expect(wrapper.find('.list-body').childAt(0).find('.list-row')).toHaveLength(1)
-//   })
-// })
-//
-// describe('change property', () => {
-//   const { wrapper } = mockApp({ property: { style: { height: 300 } } })
-//
-//   it('change property.style', () => {
-//     expect(wrapper.find('.list').getDOMNode().style.height).toBe('300px')
-//     wrapper.setProps({ property: { style: { height: 400 } } })
-//     expect(wrapper.find('.list').getDOMNode().style.height).toBe('400px')
-//   })
-//
-//   it('change property.list.border', () => {
-//     wrapper.setProps({ property: { border: { borderWidth: 2 } } })
-//     expect(wrapper.find('.list').getDOMNode().style.borderWidth).toBe('2px')
-//   })
-//
-//   it('close scroll', () => {
-//     wrapper.setProps({ property: { isScroll: false } })
-//     expect(wrapper.find('.list').getDOMNode().offsetTop).toBe(0)
-//   })
-//
-//   it('open scroll', () => {
-//     wrapper.setProps({ property: { speed: 60, isScroll: true } })
-//     jest.setTimeout(1000)
-//     expect(wrapper.find('.list').getDOMNode().offsetTop).toBeGreaterThanOrEqual(0)
-//   })
-// })
-//
-// describe('test cells', () => {
-//   it('test style', () => {
-//     wrapper.setProps({
-//       property: {
-//         body: {
-//           cell: {
-//             style: {
-//               fontSize: 12
-//             }
-//           }
-//         }
-//       }
-//     })
-//
-//     const rows = wrapper.find('.list-body .list-cont').at(0).find('.list-row')
-//
-//     expect(
-//       rows.at(0)
-//         .find('.list-cell').at(0)
-//         .getDOMNode().style.fontSize)
-//       .toBe('12px')
-//   })
-//
-//   it('test width of cell when type of width is array', () => {
-//     wrapper.setProps({
-//       data: [
-//         ['1st column', '2nd column', '3rd column'],
-//         ['1st cell', '2nd cell', '3rd cell'],
-//         ['1st cell', '2nd cell', '3rd cell']
-//       ],
-//       property: {
-//         body: {
-//           cell: {
-//             style: {
-//               width: [70, 80, 90]
-//             }
-//           }
-//         }
-//       }
-//     })
-//
-//     const cells = wrapper
-//       .find('.list-body .list-cont').at(0)
-//       .find('.list-row').at(0)
-//       .find('.list-cell')
-//
-//     expect(cells.at(0).getDOMNode().style.width).toBe('70px')
-//     expect(cells.at(1).getDOMNode().style.width).toBe('80px')
-//   })
-//
-//   it('test width of cell when type of width is string', () => {
-//     wrapper.setProps({
-//       property: {
-//         body: {
-//           cell: {
-//             style: {
-//               width: '70,, 90'
-//             }
-//           }
-//         }
-//       }
-//     })
-//
-//     const cells = wrapper
-//       .find('.list-body .list-cont').at(0)
-//       .find('.list-row').at(0)
-//       .find('.list-cell')
-//
-//     expect(cells.at(0).getDOMNode().style.width).toBe('70px')
-//     expect(cells.at(1).getDOMNode().style.width).toBe('auto')
-//     expect(cells.at(2).getDOMNode().style.width).toBe('90px')
-//   })
-//
-//   it('test width of cell when type of width is number or invalid value', () => {
-//     wrapper.setProps({
-//       property: {
-//         body: {
-//           cell: {
-//             style: {
-//               width: 1
-//             }
-//           }
-//         }
-//       }
-//     })
-//
-//     const cells = wrapper
-//       .find('.list-body .list-cont').at(0)
-//       .find('.list-row').at(0)
-//       .find('.list-cell')
-//
-//     expect(cells.at(0).getDOMNode().style.width).toBe('auto')
-//     expect(cells.at(1).getDOMNode().style.width).toBe('auto')
-//     expect(cells.at(2).getDOMNode().style.width).toBe('auto')
-//
-//     wrapper.setProps({
-//       property: {
-//         body: {
-//           cell: {
-//             style: {
-//               width: 'xxxx'
-//             }
-//           }
-//         }
-//       }
-//     })
-//
-//     expect(cells.at(0).getDOMNode().style.width).toBe('auto')
-//     expect(cells.at(1).getDOMNode().style.width).toBe('auto')
-//     expect(cells.at(2).getDOMNode().style.width).toBe('auto')
-//   })
-//
-//   it('test width of cell when type of width is string and its value is "avg"', () => {
-//     wrapper.setProps({
-//       property: {
-//         body: {
-//           cell: {
-//             style: {
-//               width: 'avg'
-//             }
-//           }
-//         }
-//       }
-//     })
-//
-//     const cells = wrapper
-//       .find('.list-body .list-cont').at(0)
-//       .find('.list-row').at(0)
-//       .find('.list-cell')
-//
-//     expect(cells.at(0).getDOMNode().style.width).toEqual('1px')
-//     expect(cells.at(1).getDOMNode().style.width).toEqual('1px')
-//     expect(cells.at(2).getDOMNode().style.width).toEqual('1px')
-//   })
-// })
-//
-// describe('change property of body', () => {
+// describe('# change property of body', () => {
 //   it('close row transition and display row serialNumber', () => {
 //     expect(
 //       wrapper
@@ -441,7 +562,7 @@ describe('display header', () => {
 //       .toBe('200px')
 //   })
 // })
-//
+
 // describe('test object cell', () => {
 //   it('test radio', () => {
 //     wrapper.setProps({

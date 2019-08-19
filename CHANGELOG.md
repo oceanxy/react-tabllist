@@ -111,7 +111,7 @@
 
 #### 1.5.1
 1. Fix bug: when setting css property {border-collapse: 'collapse'}, 'border-spacing' is invalid because it is ignored.
-2. Fix bug: Numeric parsing error when custom cell width value is multiple values separated by commas.
+2. Fix bug: Numeric parsing error when custom cell width value is 'avg' or multiple values separated by commas.
 3. A unit can bind multiple events.
 4. Refactored part of the code.
 5. Fix bug: When deactivating list auto scrolling, you can't manually control the list to scroll to the specified row.

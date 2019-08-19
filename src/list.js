@@ -55,18 +55,14 @@ export default class extends React.Component {
 				? util.getTransitionName(row.transition, isDataChanged)
 				: state.transitionName
 
-			const t = {
+			return {
 				...restState,
 				...props,
 				transitionName,
 				rowStyle: util.getRowStyle(props),
-				colWidth: propsCellWidth !== stateCellWidth ? util.handleColWidth(propsCellWidth, propsData) : state.colWidth,
+				colWidth: propsCellWidth !== stateCellWidth ? util.handleColWidth(props, propsData) : state.colWidth,
 				scrollHeight: propsHeight !== stateHeight ? util.getScrollHeight(props) : state.scrollHeight
 			}
-			
-			console.log(t.colWidth)
-
-			return t
 		}
 
 		// 如果props未更新属性，则返回state。此state已包含setState更新的值。
@@ -78,7 +74,7 @@ export default class extends React.Component {
 	 */
 	componentDidMount() {
 		const { scroll, props, listContMain } = this
-		const colWidth = util.getColClientWidth(listContMain, props)
+		const colWidth = util.getColClientWidth(listContMain)
 
 		// 如果列数为0，则停止后续操作
 		if(colWidth.length) {
@@ -113,7 +109,7 @@ export default class extends React.Component {
 	 */
 	componentDidUpdate(preProps, preState) {
 		const { listContMain, props } = this
-		const colWidth = util.getColClientWidth(listContMain, props)
+		const colWidth = util.getColClientWidth(listContMain)
 
 		if(colWidth.length) {
 			const { width: colCellWidth, minWidth: cellMinWidth } = props.property.body.cell.style
@@ -932,7 +928,7 @@ export default class extends React.Component {
 		return (
 			<div
 				style={{ ...listBorder, ...conStyle }}
-				className={`list${className ? ` ${className}` : ''}${listClass ? ` ${listClass}` : ''}`}
+				className={`list${listClass ? ` ${listClass}` : ''}${className ? ` ${className}` : ''}`}
 				onMouseMove={this.scrollList.bind(this, false)}
 				onMouseLeave={this.scrollList.bind(this, true)}
 			>

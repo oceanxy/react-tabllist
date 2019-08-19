@@ -269,7 +269,7 @@ const Dev = () => {
 					padding: 0
 				},
 				row: {
-					spacing: 1,
+					spacing: 0,
 					style: {
 						height: 34
 					},
