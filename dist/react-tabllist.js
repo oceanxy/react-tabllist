@@ -1408,38 +1408,42 @@ function getColClientWidth(listContMain, props) {
 
 function handleColWidth(width, data) {
   function isString(widthValue) {
-    if (widthValue.indexOf('px') > -1) {
+    if (widthValue.includes('px')) {
       return "".concat(parseFloat(widthValue), "px");
-    } else if (widthValue.indexOf('%') > -1) {
+    } else if (widthValue.includes('%')) {
       return "".concat(parseFloat(widthValue), "%");
     } else if (widthValue * 1) {
       return parseFloat(widthValue);
     }
 
     return 'auto';
-  } // 处理数组形式的多列宽度数值
+  }
 
-
-  if (Array.isArray(width)) {
+  function isArray(width) {
     return width.map(function (o) {
       if (o === 0 || !o) {
         return 'auto';
       } else if (typeof o === 'string') {
-        if (width.indexOf(',') >= 0) {
-          return width.split(',').map(function (o) {
-            return isString(o);
-          });
-        } else if (width === 'avg') {
-          return new Array(getMaxCellOfRow(data)).fill(1);
-        }
+        return isString(o);
       }
 
       return o;
     });
-  } // 处理字符串形式的多列宽度数值
-  else if (typeof width === 'string') {
-      return isString(width);
+  } // 处理数组形式的多列宽度数值
+
+
+  if (Array.isArray(width)) {
+    return isArray(width);
+  } else if (typeof width === 'string') {
+    // 处理字符串形式的多列宽度数值
+    if (width.includes(',')) {
+      return isArray(width.split(','));
+    } else if (width === 'avg') {
+      return new Array(getMaxCellOfRow(data)).fill(1);
     }
+
+    return isString(width);
+  }
 
   return 'auto';
 }
@@ -2819,12 +2823,16 @@ function (_React$Component) {
         var stateCellWidth = property.body.cell.style.width;
         var row = props.property.body.row;
         var transitionName = !isDataChanged ? getTransitionName(row.transition, isDataChanged) : state.transitionName;
-        return list_objectSpread({}, restState, {}, props, {
+
+        var t = list_objectSpread({}, restState, {}, props, {
           transitionName: transitionName,
           rowStyle: getRowStyle(props),
           colWidth: propsCellWidth !== stateCellWidth ? handleColWidth(propsCellWidth, propsData) : state.colWidth,
           scrollHeight: propsHeight !== stateHeight ? getScrollHeight(props) : state.scrollHeight
         });
+
+        console.log(t.colWidth);
+        return t;
       } // 如果props未更新属性，则返回state。此state已包含setState更新的值。
 
 
