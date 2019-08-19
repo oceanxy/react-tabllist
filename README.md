@@ -369,7 +369,8 @@ Note:
 
 1. Regardless of the method, if the final rendered cell width value is less than `style.minWidth`, the `style.minWidth` value is used.
 2. The total width of the component cannot be less than the sum of the widths of each column, otherwise the columns that exceed the width portion will be hidden.
-3. The priority order of the cell styles.
+3. When customizing the width values of multiple columns, if each column defines a specific value, you should ensure that the sum of these values is equal to the width value of the component, otherwise the actual width of the column after rendering may not be the expected value. Under normal circumstances, we should ensure that the width of at least one column is automatically adapted, that is, no value is set or skipped with a comma.
+4. The priority order of the cell styles.
 
 ### Configuration Demonstration
 

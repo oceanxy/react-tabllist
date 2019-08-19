@@ -111,9 +111,10 @@
 
 #### 1.5.1
 1. Fix bug: when setting css property {border-collapse: 'collapse'}, 'border-spacing' is invalid because it is ignored.
-2. A unit can bind multiple events.
-3. Refactored part of the code.
-4. Fix bug: When deactivating list auto scrolling, you can't manually control the list to scroll to the specified row.
+2. Fix bug: Numeric parsing error when custom cell width value is multiple values separated by commas.
+3. A unit can bind multiple events.
+4. Refactored part of the code.
+5. Fix bug: When deactivating list auto scrolling, you can't manually control the list to scroll to the specified row.
 
 #### 2.0.0
 1. Add a panel for dynamically adjusting properties in the development environment.

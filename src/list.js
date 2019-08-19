@@ -55,7 +55,7 @@ export default class extends React.Component {
 				? util.getTransitionName(row.transition, isDataChanged)
 				: state.transitionName
 
-			return {
+			const t = {
 				...restState,
 				...props,
 				transitionName,
@@ -63,6 +63,10 @@ export default class extends React.Component {
 				colWidth: propsCellWidth !== stateCellWidth ? util.handleColWidth(propsCellWidth, propsData) : state.colWidth,
 				scrollHeight: propsHeight !== stateHeight ? util.getScrollHeight(props) : state.scrollHeight
 			}
+			
+			console.log(t.colWidth)
+
+			return t
 		}
 
 		// 如果props未更新属性，则返回state。此state已包含setState更新的值。

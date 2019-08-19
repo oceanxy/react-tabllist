@@ -285,7 +285,8 @@ const Dev = () => {
 							backgroundColor: '#3991ff',
 							width: 80,
 							fontSize: 20,
-							color: '#2cff41'
+							color: '#2cff41',
+							margin: '0 auto'
 						},
 						specialStyle: [
 							{ backgroundColor: '#203d7b' },
@@ -320,7 +321,7 @@ const Dev = () => {
 						minWidth: 0,
 						color: '#000000',
 						textAlign: 'center',
-						width: [80, 50, 400, 150, 150, 150]
+						width: '80, 50, 400, ,150'
 					}
 				},
 				cellOfColumn: {

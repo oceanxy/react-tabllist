@@ -85,9 +85,9 @@ export function getColClientWidth(listContMain, props) {
  */
 export function handleColWidth(width, data) {
 	function isString(widthValue) {
-		if(widthValue.indexOf('px') > -1) {
+		if(widthValue.includes('px')) {
 			return `${parseFloat(widthValue)}px`
-		} else if(widthValue.indexOf('%') > -1) {
+		} else if(widthValue.includes('%')) {
 			return `${parseFloat(widthValue)}%`
 		} else if(widthValue * 1) {
 			return parseFloat(widthValue)
@@ -96,24 +96,28 @@ export function handleColWidth(width, data) {
 		return 'auto'
 	}
 
-	// 处理数组形式的多列宽度数值
-	if(Array.isArray(width)) {
+	function isArray(width) {
 		return width.map(o => {
 			if(o === 0 || !o) {
 				return 'auto'
 			} else if(typeof o === 'string') {
-				if(width.indexOf(',') >= 0) {
-					return width.split(',').map(o => isString(o))
-				} else if(width === 'avg') {
-					return new Array(getMaxCellOfRow(data)).fill(1)
-				}
+				return isString(o)
 			}
 
 			return o
 		})
 	}
-	// 处理字符串形式的多列宽度数值
-	else if(typeof width === 'string') {
+
+	// 处理数组形式的多列宽度数值
+	if(Array.isArray(width)) {
+		return isArray(width)
+	} else if(typeof width === 'string') { // 处理字符串形式的多列宽度数值
+		if(width.includes(',')) {
+			return isArray(width.split(','))
+		} else if(width === 'avg') {
+			return new Array(getMaxCellOfRow(data)).fill(1)
+		}
+
 		return isString(width)
 	}
 
