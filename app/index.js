@@ -90,7 +90,18 @@ const Dev = () => {
 				]
 			},
 			[
-				'row 2; column 1', 'row 2; column 2',
+				'row 2; column 1',
+				{
+					type: 'link',
+					data: 10,
+					text: 'I am a link, I use event and callback to implement custom functions',
+					className: 'test-link2',
+					key: '',
+					event: 'onClick',
+					callback: (data, cellData, event) => {
+						window.open('https://github.com/oceanxy/react-tabllist')
+					}
+				},
 				{
 					type: 'link',
 					text: 'I am a link',
@@ -101,8 +112,9 @@ const Dev = () => {
 					type: 'button',
 					value: 'click me',
 					className: 'test-btn',
-					callback: () => {
-						alert('hello react-tabllist')
+					event: 'onClick',
+					callback: (data, cellObject, obj) => {
+						obj.target.value = 'clicked'
 					}
 				}
 			],
@@ -140,12 +152,14 @@ const Dev = () => {
 						type: 'radio',
 						name: 'group1',
 						text: 'radio group 1-1',
+						value: 0,
 						className: 'test-radio'
 					},
 					{
 						type: 'radio',
 						name: 'group1',
 						text: 'radio group 2-1',
+						value: 1,
 						className: 'test-radio'
 					}
 				],

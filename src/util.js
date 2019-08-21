@@ -108,13 +108,12 @@ export function handleColWidth(props, data) {
 
 	const { width } = props.property.body.cell.style
 
-	// 处理数组形式的多列宽度数值
-	if(Array.isArray(width)) {
+	if(Array.isArray(width)) { // 处理数组形式的多列宽度数值
 		return isArray(width)
-	} else if(typeof width === 'string') { // 处理字符串形式的多列宽度数值
+	} else if(typeof width === 'string') { // 处理字符串形式的宽度数值
 		if(width.includes(',')) {
-			return isArray(width.split(','))
-		} else if(width === 'avg') {
+			return isArray(width.split(',')) // 处理字符串形式的多列宽度数值
+		} else if(width === 'avg') { // 处理平均值
 			const maxCellNumber = getMaxCellOfRow(data, props)
 
 			if(maxCellNumber > 1) {
@@ -431,12 +430,12 @@ export function getSpeed(targetScrollTop, scroll) {
 /**
  * 根据props及data获取过渡动画的样式表名
  * @param transition {boolean} 是否开启了过渡动画
- * @param isEqual {boolean} props数据
- * @returns {string}
+ * @param isDataChanged {boolean} 渲染数据是否发生变化
+ * @returns {null|string}
  */
-export function getTransitionName(transition, isEqual) {
+export function getTransitionName(transition, isDataChanged) {
 	if(transition) {
-		if(!isEqual) {
+		if(isDataChanged) {
 			return 'list-row-start'
 		} else {
 			return 'list-row-end'
@@ -528,10 +527,14 @@ export function getRowStyle(rowState, event) {
  */
 export function getListContStyle(spacing) {
 	if(!spacing || !parseInt(spacing)) {
-		return { borderCollapse: 'collapse' }
+		return {
+			borderCollapse: 'collapse',
+			borderSpacing: '0px'
+		}
 	}
 
 	return {
-		borderSpacing: (`${spacing}`).indexOf('px') === -1 ? `0 ${spacing}px` : `0 ${spacing}`
+		borderSpacing: (`${spacing}`).indexOf('px') === -1 ? `0 ${spacing}px` : `0 ${spacing}`,
+		borderCollapse: 'separate'
 	}
 }

@@ -41,17 +41,17 @@ export default class extends React.Component {
 	static getDerivedStateFromProps(props, state) {
 		let { property, data: stateData, className, ...restState } = state
 		const { property: propsProperty, data: propsData, className: propsClassName } = props
-		const isDataChanged = _.isEqualWith(propsData, stateData, util.customizer)
+		const isDataChanged = !_.isEqualWith(propsData, stateData, util.customizer)
 
 		// 检测本次渲染的数据是否有变化
-		if(!_.isEqual(propsProperty, property) || !_.isEqual(propsClassName, className) || !isDataChanged) {
+		if(!_.isEqual(propsProperty, property) || !_.isEqual(propsClassName, className) || isDataChanged) {
 			const { height: propsHeight } = props.property.style
 			const { height: stateHeight } = property.style
 			const { width: propsCellWidth } = props.property.body.cell.style
 			const { width: stateCellWidth } = property.body.cell.style
 			const { row } = props.property.body
 
-			const transitionName = !isDataChanged
+			const transitionName = property.body.row.transition
 				? util.getTransitionName(row.transition, isDataChanged)
 				: state.transitionName
 
@@ -108,7 +108,7 @@ export default class extends React.Component {
 	 * @param {object} preState prev state
 	 */
 	componentDidUpdate(preProps, preState) {
-		const { listContMain, props } = this
+		const { listContMain, props, scroll } = this
 		const colWidth = util.getColClientWidth(listContMain)
 
 		if(colWidth.length) {
@@ -159,13 +159,17 @@ export default class extends React.Component {
 			// 适应滚动区域高度
 			if(parseInt(preHeight) !== parseInt(height) || preShow !== show) {
 				this.setState({
-					scrollHeight: util.getScrollHeight(this.state)
+					scrollHeight: util.getScrollHeight(this.state, util.closest(scroll, '.list'))
 				})
 			}
 
 			// 缓动动画
-			if(transition && transitionName === 'list-row-start') {
-				this.setState({ transitionName: util.getTransitionName(transition, _.isEqualWith(preState.data, this.state.data, util.customizer)) })
+			if(transition) {
+				if(!transitionName) {
+					this.setState({ transitionName: util.getTransitionName(transition, true) })
+				} else if(transitionName === 'list-row-start') {
+					this.setState({ transitionName: util.getTransitionName(transition, false) })
+				}
 			}
 
 			// 设置列表头行选择框的indeterminate
@@ -463,14 +467,7 @@ export default class extends React.Component {
 	 * @returns {*} 单元格link DOM || null
 	 */
 	setCellLink = link => {
-		const {
-			text,
-			event,
-			callback,
-			data,
-			href,
-			...props
-		} = link
+		const { type, text, event, callback, data, href, ...props } = link
 
 		if(href) {
 			// 防止事件冒泡
@@ -517,6 +514,8 @@ export default class extends React.Component {
 			const selectedCur = selected[cr.name] || []
 
 			tagProps = {
+				key: cr.key,
+				value: cr.value,
 				type: cr.type,
 				name: cr.type === 'radio' ? `${cr.name}-${container}` : cr.name,
 				className: cr.className

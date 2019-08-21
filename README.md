@@ -95,15 +95,17 @@ Open your browser and visit http://localhost:3001 , see more at [Development]().
 
 |**props** type                                  |description                                     |details                           |
 |------------------------------------------------|------------------------------------------------|----------------------------------|
-|**data** <br> `{[Array, Array, Array,...]}`     |Render table data                               |[props.data](#data)               |
+|**data** <br> `{[Array, Array, Array,...]}`     |Render table data                               |[props.data](#props.data)         |
 |**className** <br> `{string}`                   |Table outermost container style sheet name      |''                                |
-|**property** <br> `{Object}`                    |Wrapper table properties                        |[props.property](#property)       |
+|**property** <br> `{Object}`                    |Wrapper table properties                        |[props.property](#props.property) |
 
 ##### props.className
 
 You can customize the style by setting the `props.className` property
 
 ##### props.data
+
+###### Data Format
 
 The `data` data format is very similar to a two-dimensional array。
 
@@ -147,14 +149,14 @@ The `data` data format is very similar to a two-dimensional array。
 ]
 ```
 
+###### Object Unit
+
 The data format that cells can parse is divided into the following four categories:
 
 - String
 - Array，These four data formats can be nested inside the array again.
 - jsx,Such as: `<button className='test-button' onclick='()=>{return null}'>click</button>`
 - Object（Object cell），Details are as follows：
-
-**Object cell**
 
 |type                         | description                                                                                                                               |
 |-----------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
@@ -230,6 +232,7 @@ Here are some examples：
     name: 'group2',
     text: 'radio group 2-1',
     className: 'test-radio',
+    callback: (data, cellData, event) => {},
     key: '',
     value:''
 }
@@ -240,6 +243,7 @@ Here are some examples：
     name: 'checkbox1',
     text: 'checkbox',
     className: 'test-checkbox',
+    callback: (data, cellData, event) => {},
     key: '',
     value:''
 }
@@ -251,6 +255,7 @@ Here are some examples：
     value: '',
     data: '',
     className: '',
+    callback: (data, cellData, event) => {},
     option: [
         {
             id: '1',
@@ -263,11 +268,12 @@ Here are some examples：
 // text
 {
     type: 'text',
-    text: 'I am a normal text'
+    text: 'I am a normal text',
+    callback: (data, cellData, event) => {},
 }
 ```
 
-**Object cell attribute**
+###### Object Cell Attribute
 
 |**key** `{type}`                                                       |description                                                                                                                                                                                                                                                                      |use                                                                                               |
 |-----------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|
@@ -280,23 +286,25 @@ Here are some examples：
 |**alt** <br> `{string}`                                                |The alt attribute of the image                                                                                                                                                                                                                                                   | ~~`row`~~ ~~`button`~~ ~~`link`~~ `img` ~~`radio`~~ ~~`checkbox`~~ ~~`text`~~                    |
 |**href** <br> `{string}`                                               |The hyperlink type of the link type (the same as the href of the HTML a tag), or you can use this combination of event and callback to customize the event callback without passing this attribute.                                                                              | ~~`row`~~ ~~`button`~~ `link` ~~`img`~~ ~~`radio`~~ ~~`checkbox`~~ ~~`text`~~                    |
 |**className** <br> `{string}`                                          |Custom style sheet name                                                                                                                                                                                                                                                          | `row` `button` `link` `img` `radio` `checkbox` `text`                                            |
-|**event** <br> `{string}`                                              |The way to trigger an event needs to be used with `callback`                                                                                                                                                                                                                     | `row` `button` `link` ~~`img`~~ `radio` `checkbox` `text`                                        |
-|**callback** <br> `{function}`                                         |The callback function after the trigger event, see the `callback function` for details.                                                                                                                                                                                          | `row` `button` `link` ~~`img`~~ `radio` `checkbox` `text`                                        |
-|**option** <br> `{object[]}`                                           |Can only be used with the `select` type, see the `option` for details.                                                                                                                                                                                                           | ~~`row`~~ ~~`button`~~ ~~`link`~~ ~~`img`~~ ~~`radio`~~ ~~`checkbox`~~ `select` ~~`text`~~       |
-|**cells** <br> `{object[]}`                                            |Can only be used with the `row` type, see the [data](#data) for details.                                                                                                                                                                                                         | `row` ~~`button`~~ ~~`link`~~ ~~`img`~~ ~~`radio`~~ ~~`checkbox`~~ ~~`select`~~ ~~`text`~~       |
-|**data** <br>`{*}`                                                     |Custom attributes can theoretically pass any value. This value is not used inside the component, you can get this value in the first parameter of the `callback function`                                                                                                        | `row` `button` `link` `img` `radio` `checkbox` `select` `text`                                   |
+|**event** <br> `{string}`                                              |The way to trigger an event needs to be used with [callback](#Callback)                                                                                                                                                                                                          | `row` `button` `link` ~~`img`~~ `radio` `checkbox` `text`                                        |
+|**callback** <br> `{function}`                                         |The callback function after the trigger event, see the [callback](#Callback) for details.                                                                                                                                                                                        | `row` `button` `link` ~~`img`~~ `radio` `checkbox` `text`                                        |
+|**option** <br> `{object[]}`                                           |Can only be used with the `select` type, see the [option](#Option) for details.                                                                                                                                                                                                  | ~~`row`~~ ~~`button`~~ ~~`link`~~ ~~`img`~~ ~~`radio`~~ ~~`checkbox`~~ `select` ~~`text`~~       |
+|**cells** <br> `{object[]}`                                            |Can only be used with the `row` type, see the [data](#props.data) for details.                                                                                                                                                                                                   | `row` ~~`button`~~ ~~`link`~~ ~~`img`~~ ~~`radio`~~ ~~`checkbox`~~ ~~`select`~~ ~~`text`~~       |
+|**data** <br>`{*}`                                                     |Custom attributes can theoretically pass any value. This value is not used inside the component, you can get this value in the first parameter of the [callback](#Callback)                                                                                                      | `row` `button` `link` `img` `radio` `checkbox` `select` `text`                                   |
 |REACT attributes may be required                                       |-                                                                                                                                                                                                                                                                                | -                                                                                                |
 |**key** <br> `{string}`                                                |Jsx loop or array need to use the key attribute, `Please ensure the uniqueness of the key`                                                                                                                                                                                       | `row` `button` `link` `img` `radio` `checkbox` `text`                                            |
 
-**Callback**
+###### Callback
 
 |callback(data, objectUnit, event) |Custom event callback function, can be used with `event`. If the event is undefined, the default click event is triggered after the callback.           |
 |----------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
-|data                              |Custom data attribute in `object cell`                                                                                                                  |
+|data                              |Custom data attribute in [Object Unit](#Object\nUnit)                                                                                                                  |
 |objectUnit                        |The object used to render the cell, ie the `object unit` object defined in data                                                                         |
 |event                             |Event Object                                                                                                                                            |
 
-**Option**
+###### Option
+
+`{type='select'}`Object unit unique attribute.
 
 |**key** `{type}`       |description    |
 |-----------------------|---------------|
@@ -305,6 +313,8 @@ Here are some examples：
 |**value**              |option value   |
 
 ##### props.property
+
+###### Property
 
 |**props.property** `{type}`                                                     |default    |description                                                                                                                                                                                                                                                  |
 |--------------------------------------------------------------------------------|-----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -356,7 +366,7 @@ Here are some examples：
 |**body.cell.style.width** <br> `{string\|Array\|number}`                        |'auto'     |`width` is one of the properties of style, here you need to pay special attention: its usage is different from the width of css, see `cellWidth`                                                                                                             |
 |**~~body.cell.iconStyle~~** <br> `{cssProperties}`                              |{...}      |`Deprecated` The icon style inside the cell needs to match the img of the object cell. In fact, you only need to use className instead of it in the object cell. &#9888; it looks a lot more, so it will be completely removed in a later version            |
 
-**cellWidth**
+###### cellWidth
 
 Optional value for cellWidth：
 

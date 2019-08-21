@@ -93,17 +93,19 @@ $ npm start
 
 #### props
 
-|**props** type                                  |description               |details                           |
-|------------------------------------------------|--------------------------|----------------------------------|
-|**data** <br> `{[Array, Array, Array,...]}`     |渲染表格需要的数据          |[props.data](#data)               |
-|**className** <br> `{string}`                   |自定义样式表名称            |''                                |
-|**property** <br> `{Object}`                    |用于包装表格的属性          |[props.property](#property)       |
+|**props** type                                  |描述                      |详情                                     |
+|------------------------------------------------|--------------------------|----------------------------------------|
+|**data** <br> `{[Array, Array, Array,...]}`     |渲染表格需要的数据          |[props.data](#props.data)               |
+|**className** <br> `{string}`                   |自定义样式表名称            |''                                      |
+|**property** <br> `{Object}`                    |用于包装表格的属性          |[props.property](#props.property)       |
 
 ##### props.className
 
 可以通过设置`props.className`属性来自定义样式
 
 ##### props.data
+
+###### 数据格式
 
 `data`为一个类似二维数组。
 
@@ -147,14 +149,14 @@ $ npm start
 ]
 ```
 
+###### 对象单元
+
 单元格可解析的数据格式分为四类：
 
 - 字符串
 - 数组，数组内可以再次嵌套此四种数据格式
 - jsx，如 `<button className='test-button' onclick='()=>{return null}'>click</button>`
 - 对象（对象单元格），详细介绍如下：
-
-**对象单元格**
 
 |单元格类型                          | 描述                                                                |
 |-----------------------------------|--------------------------------------------------------------------|
@@ -230,6 +232,7 @@ $ npm start
     name: 'group2',
     text: 'radio group 2-1',
     className: 'test-radio',
+    callback: (data, cellData, event) => {},
     key: '',
     value:''
 }
@@ -240,6 +243,7 @@ $ npm start
     name: 'checkbox1',
     text: 'checkbox',
     className: 'test-checkbox',
+    callback: (data, cellData, event) => {},
     key: '',
     value:''
 }
@@ -251,6 +255,7 @@ $ npm start
     value: '',
     data: '',
     className: '',
+    callback: (data, cellData, event) => {},
     option: [
         {
             id: '1',
@@ -263,11 +268,12 @@ $ npm start
 // text
 {
     type: 'text',
-    text: '我是一个普通文本'
+    text: '我是一个普通文本',
+    callback: (data, cellData, event) => {},
 }
 ```
 
-**对象单元格属性**
+###### 对象单元的属性
 
 |**键** `{类型}`                                   |描述                                                                                                                     |use                                                                                               |
 |-------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|
@@ -280,23 +286,25 @@ $ npm start
 |**alt** <br> `{string}`                          |图片的alt属性                                                                                                             | ~~`row`~~ ~~`button`~~ ~~`link`~~ `img` ~~`radio`~~ ~~`checkbox`~~ ~~`select`~~ ~~`text`~~        |
 |**href** <br> `{string}`                         |link类型的超链接地址（同HTML a标签的href），也可不传此属性而使用event和callback的组合自定义事件回调                               | ~~`row`~~ ~~`button`~~ `link` ~~`img`~~ ~~`radio`~~ ~~`checkbox`~~ ~~`select`~~ ~~`text`~~        |
 |**className** <br> `{string}`                    |自定义样式表名称                                                                                                           | `row` `button` `link` `img` `radio` `checkbox` `select` `text`                                    |
-|**event** <br> `{string}`                        |触发事件的方式，需和`callback`配合使用                                                                                      | `row` `button` `link` ~~`img`~~ `radio` `checkbox` `select` `text`                                |
-|**callback** <br> `{function}`                   |触发事件后的回调函数，详细见`回调函数`介绍                                                                                    | `row` `button` `link` ~~`img`~~ `radio` `checkbox` `select` `text`                                |
-|**option** <br> `{object[]}`                     |`select`类型专属属性, 详情见`option`介绍                                                                                    | ~~`row`~~ ~~`button`~~ ~~`link`~~ ~~`img`~~ ~~`radio`~~ ~~`checkbox`~~ `select` ~~`text`~~        |
-|**cells** <br> `{object[]}`                      |`row`类型专属属性, 详情见[data](#data)介绍                                                                                  | `row` ~~`button`~~ ~~`link`~~ ~~`img`~~ ~~`radio`~~ ~~`checkbox`~~ ~~`select`~~ ~~`text`~~        |
-|**data** <br>`{*}`                               |自定义属性，理论上可以传任何值。这个值在组件内部并不会使用，您可以在`回调函数`的第一个参数得到这个值                                 | `row` `button` `link` `img` `radio` `checkbox` `select` `text`                                     |
+|**event** <br> `{string}`                        |触发事件的方式，需和[回调函数](#callback)配合使用                                                                             | `row` `button` `link` ~~`img`~~ `radio` `checkbox` `select` `text`                                |
+|**callback** <br> `{function}`                   |触发事件后的回调函数，详细见[回调函数](#callback)介绍                                                                         | `row` `button` `link` ~~`img`~~ `radio` `checkbox` `select` `text`                                |
+|**option** <br> `{object[]}`                     |`select`类型专属属性, 详情见[option](#Option)介绍                                                                           | ~~`row`~~ ~~`button`~~ ~~`link`~~ ~~`img`~~ ~~`radio`~~ ~~`checkbox`~~ `select` ~~`text`~~        |
+|**cells** <br> `{object[]}`                      |`row`类型专属属性, 详情见[data](#props.data)介绍                                                                            | `row` ~~`button`~~ ~~`link`~~ ~~`img`~~ ~~`radio`~~ ~~`checkbox`~~ ~~`select`~~ ~~`text`~~        |
+|**data** <br>`{*}`                               |自定义属性，理论上可以传任何值。这个值在组件内部并不会使用，您可以在[回调函数](#callback)的第一个参数得到这个值                       | `row` `button` `link` `img` `radio` `checkbox` `select` `text`                                     |
 |react的key属性                                    |-                                                                                                                        | -                                                                                                  |
 |**key** <br> `{string}`                          |jsx循环或数组需要用到的key属性，`请确保key的唯一性`                                                                           | `row` `button` `link` `img` `radio` `checkbox` `select` `text`                                     |
 
-**回调函数**
+###### callback 回调函数
 
 |callback(data, objectUnit, event) |自定义事件的回调函数，可以配合`event`使用。若event未定义，则默认单击事件触发后回调此函数  |
 |----------------------------------|---------------------------------------------------------------------------------|
 |data                              |`对象单元格`属性中自定义的data属性，一般用来保存该单元格独一无二的信息。这是一个预留的属性 |
-|objectUnit                        |用于渲染该单元格的对象，即data里面定义的`对象单元`对象                                 |
+|objectUnit                        |用于渲染该单元格的对象，即data里面定义的[对象单元](#对象单元)对象                                 |
 |event                             |触发单元格绑定的事件后返回的event对象                                                |
 
-**Option**
+###### Option
+
+`{type='select'}`对象单元特有属性。
 
 |**key** `{type}`       |description    |
 |-----------------------|---------------|
@@ -305,6 +313,8 @@ $ npm start
 |**value**              |option的值      |
 
 ##### props.property
+
+###### 属性
 
 |**属性** `{类型}`                                                               |默认值      |描述                                                                                                                                       |
 |-------------------------------------------------------------------------------|-----------|-------------------------------------------------------------------------------------------------------------------------------------------|
@@ -353,10 +363,10 @@ $ npm start
 |**body.cellOfColumn.style** <br> `{[cssProperties, ...]}`                      |\[]        |按照数组索引依次设置每一列内所有单元格的样式，如要跳过某个索引，直接使用一个逗号占位即可                                                                |
 |**body.cell** <br> `{object}`                                                  |{...}      |单元格相关配置                                                                                                                                 |
 |**body.cell.style** <br> `{cssProperties}`                                     |{...}      |单元格的样式                                                                                                                                   |
-|**body.cell.style.width** <br> `{string\|Array\|number}`                       |'auto'     |`width`是style的属性之一，这里需要特别注意：它的用法不同于css的width，详见`cellWidth`                                                               |
+|**body.cell.style.width** <br> `{string\|Array\|number}`                       |'auto'     |`width`是style的属性之一，这里需要特别注意：它的用法不同于css的width，详见[cellWidth](#cellWidth)                                                               |
 |**~~body.cell.iconStyle~~** <br> `{cssProperties}`                             |{...}      |单元格内的图标样式统一设置，需要配合对象单元格的img类型使用。其实您只需在对象单元格内使用className即可。 &#9888; 这个属性显得很多余，所以它可能在后面某个版本被完全移除。|
 
-**cellWidth**
+###### cellWidth
 
 cellWidth可选值：
 - 'auto'：完全根据单元格内的具体数据自动设置单元格宽度；

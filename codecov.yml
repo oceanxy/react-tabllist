@@ -1,6 +1,5 @@
 codecov:
   branch: master
-#  token:
 #  token: xxx  # 本地执行时需要将codecov还原
 
 coverage:
