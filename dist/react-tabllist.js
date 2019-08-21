@@ -1383,17 +1383,15 @@ function getScrollHeight(props, listComponent) {
 /**
  * 获取DOM内每一列单元格的实际宽度
  * @param listContMain 滚动主容器对象
- * @param props props
  * @returns {Array} 列表每列的宽度值，数组长度代表列数
  */
 
-function getColClientWidth(listContMain, props) {
-  var borderWidth = props.property.border.borderWidth;
+function getColClientWidth(listContMain) {
   var widthArr = [];
 
   if (listContMain && listContMain.children.length) {
     for (var i = 0, l = listContMain.children[0].children; i < l.length; i++) {
-      widthArr.push(l[i].offsetWidth - parseInt(borderWidth) || 0);
+      widthArr.push(l[i].offsetWidth || 'auto');
     }
   }
 
@@ -1401,12 +1399,12 @@ function getColClientWidth(listContMain, props) {
 }
 /**
  * 将用户设置的每一列单元格宽度值解析为组件程序需要的值，同时处理不合法数据
- * @param {string|array|number} width props传入的宽度数据
+ * @param {object} props 组件的props
  * @param {array} data 用于渲染组件的数据
  * @returns {*} 用于渲染每列单元格的宽度值
  */
 
-function handleColWidth(width, data) {
+function handleColWidth(props, data) {
   function isString(widthValue) {
     if (widthValue.includes('px')) {
       return "".concat(parseFloat(widthValue), "px");
@@ -1429,31 +1427,36 @@ function handleColWidth(width, data) {
 
       return o;
     });
-  } // 处理数组形式的多列宽度数值
+  }
 
+  var width = props.property.body.cell.style.width;
 
   if (Array.isArray(width)) {
+    // 处理数组形式的多列宽度数值
     return isArray(width);
   } else if (typeof width === 'string') {
-    // 处理字符串形式的多列宽度数值
+    // 处理字符串形式的宽度数值
     if (width.includes(',')) {
-      return isArray(width.split(','));
+      return isArray(width.split(',')); // 处理字符串形式的多列宽度数值
     } else if (width === 'avg') {
-      return new Array(getMaxCellOfRow(data)).fill(1);
-    }
+      // 处理平均值
+      var maxCellNumber = getMaxCellOfRow(data, props);
 
-    return isString(width);
+      if (maxCellNumber > 1) {
+        return new Array(maxCellNumber - 1).fill("".concat(1 / maxCellNumber * 100, "%"));
+      }
+    }
   }
 
   return 'auto';
 }
 /**
- * 从渲染数据中获取每行的单元格数量（以最多单元格的一行为准）
+ * 从原始数据(配置的二维数组)中获取每行的单元格数量（以最多单元格的一行为准）
  * @param data 用于渲染的数据
  * @returns {number}
  */
 
-function getMaxCellOfRow(data) {
+function getMaxCellFromData(data) {
   var cellsOfRow = []; // 获取每一行的数据量，存入数组 cellsOfRow 内
 
   external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.range(data.length).map(function (i) {
@@ -1467,6 +1470,29 @@ function getMaxCellOfRow(data) {
 
 
   return Math.max.apply(Math, cellsOfRow);
+}
+/**
+ * 获取行的单元格数量
+ * @param data {array[]} 用于渲染的数据
+ * @param props {object} 组件的props
+ * @returns {number}
+ */
+
+function getMaxCellOfRow(data, props) {
+  var maxCellFromData = getMaxCellFromData(data);
+  var _props$property$body$ = props.property.body.row,
+      serialNumber = _props$property$body$.serialNumber,
+      rowCheckbox = _props$property$body$.rowCheckbox;
+
+  if (serialNumber.show) {
+    maxCellFromData++;
+  }
+
+  if (rowCheckbox.show) {
+    maxCellFromData++;
+  }
+
+  return maxCellFromData;
 }
 /**
  * 补齐单元格
@@ -1536,7 +1562,7 @@ function fillRow(data, state) {
   var cloneData = toConsumableArray_default()(data); // 获取数据量最多的一行的数值
 
 
-  var maxCellValue = getMaxCellOfRow(cloneData);
+  var maxCellValue = getMaxCellFromData(cloneData);
   var newData = []; // 补齐空数据到缺失的行
 
   cloneData.forEach(function (row, ind) {
@@ -1733,13 +1759,13 @@ function getSpeed(targetScrollTop, scroll) {
 /**
  * 根据props及data获取过渡动画的样式表名
  * @param transition {boolean} 是否开启了过渡动画
- * @param isEqual {boolean} props数据
- * @returns {string}
+ * @param isDataChanged {boolean} 渲染数据是否发生变化
+ * @returns {null|string}
  */
 
-function getTransitionName(transition, isEqual) {
+function getTransitionName(transition, isDataChanged) {
   if (transition) {
-    if (!isEqual) {
+    if (isDataChanged) {
       return 'list-row-start';
     } else {
       return 'list-row-end';
@@ -1820,12 +1846,14 @@ function getRowStyle(rowState, event) {
 function getListContStyle(spacing) {
   if (!spacing || !parseInt(spacing)) {
     return {
-      borderCollapse: 'collapse'
+      borderCollapse: 'collapse',
+      borderSpacing: '0px'
     };
   }
 
   return {
-    borderSpacing: "".concat(spacing).indexOf('px') === -1 ? "0 ".concat(spacing, "px") : "0 ".concat(spacing)
+    borderSpacing: "".concat(spacing).indexOf('px') === -1 ? "0 ".concat(spacing, "px") : "0 ".concat(spacing),
+    borderCollapse: 'separate'
   };
 }
 // CONCATENATED MODULE: ./src/list.js
@@ -2078,12 +2106,13 @@ function (_React$Component) {
     });
 
     defineProperty_default()(assertThisInitialized_default()(_this), "setCellLink", function (link) {
-      var text = link.text,
+      var type = link.type,
+          text = link.text,
           event = link.event,
           callback = link.callback,
           data = link.data,
           href = link.href,
-          props = objectWithoutProperties_default()(link, ["text", "event", "callback", "data", "href"]);
+          props = objectWithoutProperties_default()(link, ["type", "text", "event", "callback", "data", "href"]);
 
       if (href) {
         // 防止事件冒泡
@@ -2142,7 +2171,7 @@ function (_React$Component) {
       var scroll = this.scroll,
           props = this.props,
           listContMain = this.listContMain;
-      var colWidth = getColClientWidth(listContMain, props); // 如果列数为0，则停止后续操作
+      var colWidth = getColClientWidth(listContMain); // 如果列数为0，则停止后续操作
 
       if (colWidth.length) {
         // 组件第一次render之后，DOM结构已经生成，此时开始设置每个单元格宽度以及组件滚动区域高度
@@ -2183,8 +2212,9 @@ function (_React$Component) {
       var _this3 = this;
 
       var listContMain = this.listContMain,
-          props = this.props;
-      var colWidth = getColClientWidth(listContMain, props);
+          props = this.props,
+          scroll = this.scroll;
+      var colWidth = getColClientWidth(listContMain);
 
       if (colWidth.length) {
         var _props$property$body$ = props.property.body.cell.style,
@@ -2240,15 +2270,21 @@ function (_React$Component) {
 
         if (parseInt(preHeight) !== parseInt(height) || preShow !== show) {
           this.setState({
-            scrollHeight: getScrollHeight(this.state)
+            scrollHeight: getScrollHeight(this.state, closest(scroll, '.list'))
           });
         } // 缓动动画
 
 
-        if (transition && transitionName === 'list-row-start') {
-          this.setState({
-            transitionName: getTransitionName(transition, external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqualWith(preState.data, this.state.data, customizer))
-          });
+        if (transition) {
+          if (!transitionName) {
+            this.setState({
+              transitionName: getTransitionName(transition, true)
+            });
+          } else if (transitionName === 'list-row-start') {
+            this.setState({
+              transitionName: getTransitionName(transition, false)
+            });
+          }
         } // 设置列表头行选择框的indeterminate
         // 如果开启了行选择功能且显示表头，根据每行的选择情况设置标题栏多选框的 indeterminate 状态
 
@@ -2352,6 +2388,8 @@ function (_React$Component) {
             defaultSelected = _this$state3.defaultSelected;
         var selectedCur = selected[cr.name] || [];
         tagProps = {
+          key: cr.key,
+          value: cr.value,
           type: cr.type,
           name: cr.type === 'radio' ? "".concat(cr.name, "-").concat(container) : cr.name,
           className: cr.className
@@ -2796,7 +2834,7 @@ function (_React$Component) {
       var listClass = !Number.isNaN(parseInt(spacing)) && parseInt(spacing) > 0 ? '' : 'list-no-spacing';
       return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("div", {
         style: list_objectSpread({}, listBorder, {}, conStyle),
-        className: "list".concat(className ? " ".concat(className) : '').concat(listClass ? " ".concat(listClass) : ''),
+        className: "list".concat(listClass ? " ".concat(listClass) : '').concat(className ? " ".concat(className) : ''),
         onMouseMove: this.scrollList.bind(this, false),
         onMouseLeave: this.scrollList.bind(this, true)
       }, this.loadHeader(headerData), this.loadBody(bodyData));
@@ -2812,27 +2850,21 @@ function (_React$Component) {
       var propsProperty = props.property,
           propsData = props.data,
           propsClassName = props.className;
+      var isDataChanged = !external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqualWith(propsData, stateData, customizer); // 检测本次渲染的数据是否有变化
 
-      var isDataChanged = external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqualWith(propsData, stateData, customizer); // 检测本次渲染的数据是否有变化
-
-
-      if (!external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqual(propsProperty, property) || !external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqual(propsClassName, className) || !isDataChanged) {
+      if (!external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqual(propsProperty, property) || !external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqual(propsClassName, className) || isDataChanged) {
         var propsHeight = props.property.style.height;
         var stateHeight = property.style.height;
         var propsCellWidth = props.property.body.cell.style.width;
         var stateCellWidth = property.body.cell.style.width;
         var row = props.property.body.row;
-        var transitionName = !isDataChanged ? getTransitionName(row.transition, isDataChanged) : state.transitionName;
-
-        var t = list_objectSpread({}, restState, {}, props, {
+        var transitionName = property.body.row.transition ? getTransitionName(row.transition, isDataChanged) : state.transitionName;
+        return list_objectSpread({}, restState, {}, props, {
           transitionName: transitionName,
           rowStyle: getRowStyle(props),
-          colWidth: propsCellWidth !== stateCellWidth ? handleColWidth(propsCellWidth, propsData) : state.colWidth,
+          colWidth: propsCellWidth !== stateCellWidth ? handleColWidth(props, propsData) : state.colWidth,
           scrollHeight: propsHeight !== stateHeight ? getScrollHeight(props) : state.scrollHeight
         });
-
-        console.log(t.colWidth);
-        return t;
       } // 如果props未更新属性，则返回state。此state已包含setState更新的值。
 
 
