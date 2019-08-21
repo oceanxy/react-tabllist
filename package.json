@@ -9,6 +9,7 @@
     "test-jest": "jest",
     "clean-demo": "rm -rf examples/",
     "clean-dist": "rm -rf dist/",
+    "start-demo": "webpack-dev-server --config build/webpack.config.dev.demo",
     "demo": "yarn clean-demo && webpack --config build/webpack.config.demo",
     "push-demo": "git subtree push -P examples github gh-pages && git subtree push -P examples coding coding-pages",
     "push": "git push github master && git push coding master",

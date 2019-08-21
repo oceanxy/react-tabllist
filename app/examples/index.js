@@ -8,7 +8,8 @@
  */
 
 import hljs from 'highlight.js'
-import 'highlight.js/styles/github.css'
+import 'highlight.js/lib/languages/javascript.js'
+import 'highlight.js/styles/rainbow.css'
 import _ from 'lodash'
 import React from 'react'
 import ReactDOM from 'react-dom'
@@ -167,7 +168,8 @@ function listDataset() {
 }
 
 const Demo = () => {
-	const option2 = {
+	const demo2 = {
+		className: 'demo2',
 		data: [
 			['1st column title', '2nd column title', '3rd column title'],
 			['row 1; column 1', 'row 1; column 2', 'row 1; column 3'],
@@ -205,7 +207,8 @@ const Demo = () => {
 			isScroll: false
 		}
 	}
-	const option3 = {
+	const demo3 = {
+		className: 'demo3',
 		data: [
 			['row 1; column 1', 'row 1; column 2', 'row 1; column 3'],
 			['row 2; column 1', 'row 2; column 2', 'row 2; column 3'],
@@ -253,7 +256,8 @@ const Demo = () => {
 			isScroll: true
 		}
 	}
-	const option4 = {
+	const demo4 = {
+		className: 'demo4',
 		data: [
 			['1st column', '2nd column', '3rd column', '4rd column'],
 			['row 1; column 1', 'row 1; column 2', 'row 1; column 3', 'row 1; column 4'],
@@ -333,7 +337,8 @@ const Demo = () => {
 			isScroll: true
 		}
 	}
-	const option5 = {
+	const demo5 = {
+		className: 'demo5',
 		data: [
 			['1st column', '2nd column', '3rd column', '4rd column'],
 			[
@@ -536,177 +541,7 @@ const Demo = () => {
 			isScroll: true
 		}
 	}
-	const option6 = {
-		className: 'demo6',
-		data: _.range(7).map((i) => {
-			return [
-				{
-					type: 'link',
-					uid: '',
-					text: `test title ${i + 1}`,
-					event: 'onClick',
-					className: 'link',
-					data: {
-						datetime: '2019-01-17 17:58',
-						author: 'Oceanxy'
-					},
-					callback: (data) => {
-						alert(` author: ${data.author},\n datetime: ${data.datetime}`)
-					}
-				},
-				{
-					type: 'button',
-					uid: '',
-					value: `test button ${i + 1}`,
-					className: 'btn',
-					data: {
-						message: `you clicked button ${i + 1} !`
-					},
-					callback: (data) => {
-						alert(`${data.message}`)
-					}
-				}
-			]
-		}),
-		property: {
-			style: {
-				padding: 10,
-				border: 'none',
-				background: '#060719',
-				width: 450,
-				height: 410,
-				margin: 0
-			},
-			border: {
-				borderWidth: 0
-			},
-			header: {
-				show: false
-			},
-			body: {
-				row: {
-					style: {
-						height: 40,
-						background: `url(${rowBg}) no-repeat center / 100% 100%`
-					},
-					spacing: 10
-				},
-				cell: {
-					style: {
-						textDecoration: 'none',
-						color: '#ffffff',
-						width: ',28%'
-					}
-				},
-				cellOfColumn: {
-					style: [{ textIndent: '2em', textAlign: 'left' }, { textAlign: 'center' }]
-				}
-			}
-		}
-	}
-	const option7 = {
-		className: 'demo7',
-		data: (() => {
-			const arr = _.range(7).map((i) => {
-				return ['企业名称' + i, '积分' + i, '车牌' + i]
-			})
-
-			arr.unshift(['企业名称', '积分', '车牌'])
-
-			return arr
-		})(),
-		property: {
-			style: {
-				padding: 10,
-				border: 'none',
-				background: '#060719',
-				width: 558,
-				height: 350,
-				margin: 0
-			},
-			border: {
-				borderWidth: 0
-			},
-			header: {
-				show: true,
-				style: {
-					height: 50,
-					background: `url(${demo7_header_bg}) no-repeat center / 100% 100%`
-				},
-				cellStyle: {
-					color: '#ffffff'
-				}
-			},
-			body: {
-				row: {
-					style: {
-						height: 44,
-						background: `url(${demo7_row_bg}) no-repeat center / 100% 100%`
-					},
-					spacing: 10
-				},
-				cell: {
-					style: {
-						color: '#ffffff',
-						width: '35%,35%',
-						textAlign: 'center'
-					}
-				}
-			}
-		}
-	}
-	const option8 = {
-		className: 'demo8',
-		data: (() => {
-			const arr = _.range(7).map((i) => {
-				return [Math.random() * 1000, '种类' + i, '车牌' + i, '归属地' + i, '行驶地' + i, '预警时间' + i]
-			})
-
-			arr.unshift(['序号', '种类', '车牌号', '归属地', '行驶地', '预警时间'])
-
-			return arr
-		})(),
-		property: {
-			style: {
-				padding: 10,
-				border: 'none',
-				background: '#060719',
-				width: 1180,
-				height: 350,
-				margin: 0
-			},
-			border: {
-				borderWidth: 0
-			},
-			header: {
-				show: true,
-				style: {
-					height: 50,
-					background: `url(${demo8_header_bg}) no-repeat center / 100% 100%`
-				},
-				cellStyle: {
-					color: '#ffffff'
-				}
-			},
-			body: {
-				row: {
-					style: {
-						height: 44,
-						background: `url(${demo8_row_bg}) no-repeat center / 100% 100%`
-					},
-					spacing: 10
-				},
-				cell: {
-					style: {
-						color: '#ffffff',
-						width: '16.6%, 16.6%, 16.6%, 16.6%, 16.6%',
-						textAlign: 'center'
-					}
-				}
-			}
-		}
-	}
-	const option9 = {
+	const demo6 = {
 		className: 'demo9',
 		data: [
 			[
@@ -974,7 +809,6 @@ const Demo = () => {
 						formatter: 'No.{index}',
 						style: {
 							backgroundColor: '#3991ff',
-							width: 80,
 							fontSize: 20,
 							color: '#2cff41'
 						},
@@ -1028,7 +862,178 @@ const Demo = () => {
 			}
 		}
 	}
-	const option10 = {
+
+	const case1 = {
+		className: 'case1',
+		data: _.range(7).map((i) => {
+			return [
+				{
+					type: 'link',
+					uid: '',
+					text: `test title ${i + 1}`,
+					event: 'onClick',
+					className: 'link',
+					data: {
+						datetime: '2019-01-17 17:58',
+						author: 'Oceanxy'
+					},
+					callback: (data) => {
+						alert(` author: ${data.author},\n datetime: ${data.datetime}`)
+					}
+				},
+				{
+					type: 'button',
+					uid: '',
+					value: `test button ${i + 1}`,
+					className: 'btn',
+					data: {
+						message: `you clicked button ${i + 1} !`
+					},
+					callback: (data) => {
+						alert(`${data.message}`)
+					}
+				}
+			]
+		}),
+		property: {
+			style: {
+				padding: 10,
+				border: 'none',
+				background: '#060719',
+				width: 450,
+				height: 410,
+				margin: 0
+			},
+			border: {
+				borderWidth: 0
+			},
+			header: {
+				show: false
+			},
+			body: {
+				row: {
+					style: {
+						height: 40,
+						background: `url(${rowBg}) no-repeat center / 100% 100%`
+					},
+					spacing: 10
+				},
+				cell: {
+					style: {
+						textDecoration: 'none',
+						color: '#ffffff',
+						width: ',38%'
+					}
+				},
+				cellOfColumn: {
+					style: [{ textIndent: '2em', textAlign: 'left' }, { textAlign: 'center' }]
+				}
+			}
+		}
+	}
+	const case2 = {
+		className: 'case2',
+		data: (() => {
+			const arr = _.range(7).map((i) => {
+				return ['企业名称' + i, '积分' + i, '车牌' + i]
+			})
+
+			arr.unshift(['企业名称', '积分', '车牌'])
+
+			return arr
+		})(),
+		property: {
+			style: {
+				padding: 10,
+				border: 'none',
+				background: '#060719',
+				width: 558,
+				height: 350,
+				margin: 0
+			},
+			border: {
+				borderWidth: 0
+			},
+			header: {
+				show: true,
+				style: {
+					height: 50,
+					background: `url(${demo7_header_bg}) no-repeat center / 100% 100%`
+				},
+				cellStyle: {
+					color: '#ffffff'
+				}
+			},
+			body: {
+				row: {
+					style: {
+						height: 44,
+						background: `url(${demo7_row_bg}) no-repeat center / 100% 100%`
+					},
+					spacing: 10
+				},
+				cell: {
+					style: {
+						color: '#ffffff',
+						width: '35%,35%',
+						textAlign: 'center'
+					}
+				}
+			}
+		}
+	}
+	const case3 = {
+		className: 'case3',
+		data: (() => {
+			const arr = _.range(7).map((i) => {
+				return [Math.random() * 1000, '种类' + i, '车牌' + i, '归属地' + i, '行驶地' + i, '预警时间' + i]
+			})
+
+			arr.unshift(['序号', '种类', '车牌号', '归属地', '行驶地', '预警时间'])
+
+			return arr
+		})(),
+		property: {
+			style: {
+				padding: 10,
+				border: 'none',
+				background: '#060719',
+				width: 1180,
+				height: 350,
+				margin: 0
+			},
+			border: {
+				borderWidth: 0
+			},
+			header: {
+				show: true,
+				style: {
+					height: 50,
+					background: `url(${demo8_header_bg}) no-repeat center / 100% 100%`
+				},
+				cellStyle: {
+					color: '#ffffff'
+				}
+			},
+			body: {
+				row: {
+					style: {
+						height: 44,
+						background: `url(${demo8_row_bg}) no-repeat center / 100% 100%`
+					},
+					spacing: 10
+				},
+				cell: {
+					style: {
+						color: '#ffffff',
+						width: '16.6%, 16.6%, 16.6%, 16.6%, 16.6%',
+						textAlign: 'center'
+					}
+				}
+			}
+		}
+	}
+	const pt = {
 		className: 'pt',
 		data: listDataset(),
 		property: {
@@ -1082,6 +1087,8 @@ const Demo = () => {
 		}
 	}
 
+	const createMarkup = text => ({ __html: text })
+
 	return (
 		<div className='container'>
 			<h1>demo1：default</h1>
@@ -1089,7 +1096,8 @@ const Demo = () => {
 			<pre>
 				<code className='javascript'>
 					{
-						'const option = {\n' +
+						'const demo1 = {\n' +
+						'  className: \'demo1\',\n' +
 						'  data: [],\n' +
 						'  property: {}\n' +
 						'}'
@@ -1098,11 +1106,12 @@ const Demo = () => {
 			</pre>
 
 			<h1>demo2：Basic use</h1>
-			<Tabllist property={option2.property} data={option2.data} />
+			<Tabllist {...demo2} />
 			<pre>
 				<code className='javascript'>
 					{
 						'const option = {\n' +
+						'  className: \'demo2\',\n' +
 						'  data: [\n' +
 						'    [\'1st column title\', \'2nd column title\', \'3rd column title\'],\n' +
 						'    [\'row 1; column 1\', \'row 1; column 2\', \'row 1; column 3\'],\n' +
@@ -1145,11 +1154,12 @@ const Demo = () => {
 			</pre>
 
 			<h1>demo3：Cell border and row background color</h1>
-			<Tabllist property={option3.property} data={option3.data} />
+			<Tabllist {...demo3} />
 			<pre>
 				<code className='javascript'>
 					{
 						'const option = {\n' +
+						'  className: \'demo3\',\n' +
 						'  data: [\n' +
 						'    [\'row 1; column 1\', \'row 1; column 2\', \'row 1; column 3\'],\n' +
 						'    [\'row 2; column 1\', \'row 2; column 2\', \'row 2; column 3\'],\n' +
@@ -1202,11 +1212,12 @@ const Demo = () => {
 			</pre>
 
 			<h1>demo4：Serial number and scrollable list</h1>
-			<Tabllist property={option4.property} data={option4.data} />
+			<Tabllist {...demo4} />
 			<pre>
 				<code className='javascript'>
 					{
 						'const option = {\n' +
+						'  className: \'demo4\',\n' +
 						'  data: [\n' +
 						'    [\'1st column\', \'2nd column\', \'3rd column\', \'4rd column\'],\n' +
 						'    [\'row 1; column 1\', \'row 1; column 2\', \'row 1; column 3\', \'row 1; column 4\'],\n' +
@@ -1291,11 +1302,12 @@ const Demo = () => {
 			</pre>
 
 			<h1>demo5：Object cell: Add another tag to the cell</h1>
-			<Tabllist property={option5.property} data={option5.data} />
+			<Tabllist {...demo5} />
 			<pre>
 				<code className='javascript'>
 					{
 						'const option = {\n' +
+						'  className: \'demo5\',\n' +
 						'  data: [\n' +
 						'    [\'1st column\', \'2nd column\', \'3rd column\', \'4rd column\'],\n' +
 						'    [\n' +
@@ -1503,12 +1515,12 @@ const Demo = () => {
 			</pre>
 
 			<h1>demo6：object unit for select and scroll to the specified row</h1>
-			<Tabllist {...option9} />
+			<Tabllist {...demo6} />
 			<pre>
 				<code className='javascript'>
 					{
 						'const option = {\n' +
-						'  className: \'demo9\',\n' +
+						'  className: \'demo6\',\n' +
 						'  data: [\n' +
 						'   [\n' +
 						'    \'1st column\',\n' +
@@ -1835,12 +1847,12 @@ const Demo = () => {
 
 			<h1 style={{ color: 'blue', textAlign: 'center', margin: '4em 0 2em' }}>Use in actual projects</h1>
 			<h2>Case 1</h2>
-			<Tabllist {...option6} />
+			<Tabllist {...case1} />
 			<pre>
 				<code className='javascript'>
 					{
 						'const option = {\n' +
-						'  className: \'demo6\',\n' +
+						'  className: \'case1\',\n' +
 						'  data: _.range(7).map((i) => {\n' +
 						'    return [\n' +
 						'      {\n' +
@@ -1898,7 +1910,7 @@ const Demo = () => {
 						'        style: {\n' +
 						'          textDecoration: \'none\',\n' +
 						'          color: \'#ffffff\',\n' +
-						'          width: \',28%\'\n' +
+						'          width: \',38%\'\n' +
 						'        }\n' +
 						'      },\n' +
 						'      cellOfColumn: {\n' +
@@ -1912,12 +1924,12 @@ const Demo = () => {
 			</pre>
 
 			<h2>Case 2</h2>
-			<Tabllist {...option7} />
+			<Tabllist {...case2} />
 			<pre>
 				<code className='javascript'>
 					{
 						'const option7 = {\n' +
-						'  className: \'demo7\',\n' +
+						'  className: \'case2\',\n' +
 						'  data: (() => {\n' +
 						'    const arr = _.range(7).map((i) => {\n' +
 						'      return [\'企业名称\' + i, \'积分\' + i, \'车牌\' + i]\n' +
@@ -1972,12 +1984,12 @@ const Demo = () => {
 			</pre>
 
 			<h2>Case 3</h2>
-			<Tabllist {...option8} />
+			<Tabllist {...case3} />
 			<pre>
 				<code className='javascript'>
 					{
 						'const option8 = {\n' +
-						'  className: \'demo8\',\n' +
+						'  className: \'case3\',\n' +
 						'  data: (() => {\n' +
 						'    const arr = _.range(7).map((i) => {\n' +
 						'      return [Math.random() * 1000, \'种类\' + i, \'车牌\' + i, \'归属地\' + i, \'行驶地\' + i, \'预警时间\' + i]\n' +
@@ -2032,8 +2044,8 @@ const Demo = () => {
 			</pre>
 
 			<h2>Case 4</h2>
-			<div className='demo10'>
-				<Tabllist {...option10} />
+			<div className='case4'>
+				<Tabllist {...pt} />
 			</div>
 			<pre>
 				<code className='javascript'>
@@ -2110,8 +2122,7 @@ const Demo = () => {
 						'        { id: 7141, name: \'马艳\' }\n' +
 						'      ]\n' +
 						'    }\n' +
-						'  ]' +
-						'\n' +
+						'  ]\n' +
 						'\n' +
 						'  const type = [\n' +
 						'    { id: 1, name: \'第一组\' },\n' +
@@ -2144,8 +2155,13 @@ const Demo = () => {
 						'        </div>\n' +
 						'      ]\n' +
 						'    }\n' +
-						'  })\n' +
-						'\n' +
+						'  })\n'
+					}
+				</code>
+			</pre>
+			<pre style={{ marginTop: 0 }}>
+				<code className='javascript'>
+					{
 						'  data.unshift([\n' +
 						'    \'\',\n' +
 						'    {\n' +
@@ -2184,7 +2200,7 @@ const Demo = () => {
 						'}' +
 						'\n' +
 						'\n' +
-						'const option10 = {\n' +
+						'const case4 = {\n' +
 						'    className: \'pt\',\n' +
 						'    data: listDataset(),\n' +
 						'    property: {\n' +
