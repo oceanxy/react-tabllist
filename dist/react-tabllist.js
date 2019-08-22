@@ -143,33 +143,9 @@ module.exports = _assertThisInitialized;
 
 /***/ }),
 /* 4 */
-/***/ (function(module, exports) {
-
-function _extends() {
-  module.exports = _extends = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-
-    return target;
-  };
-
-  return _extends.apply(this, arguments);
-}
-
-module.exports = _extends;
-
-/***/ }),
-/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var objectWithoutPropertiesLoose = __webpack_require__(17);
+var objectWithoutPropertiesLoose = __webpack_require__(19);
 
 function _objectWithoutProperties(source, excluded) {
   if (source == null) return {};
@@ -191,6 +167,30 @@ function _objectWithoutProperties(source, excluded) {
 }
 
 module.exports = _objectWithoutProperties;
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+function _extends() {
+  module.exports = _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
+module.exports = _extends;
 
 /***/ }),
 /* 6 */
@@ -230,7 +230,7 @@ module.exports = _createClass;
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _typeof = __webpack_require__(18);
+var _typeof = __webpack_require__(17);
 
 var assertThisInitialized = __webpack_require__(3);
 
@@ -261,7 +261,7 @@ module.exports = _getPrototypeOf;
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var setPrototypeOf = __webpack_require__(19);
+var setPrototypeOf = __webpack_require__(18);
 
 function _inherits(subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
@@ -362,27 +362,6 @@ module.exports = _toArray;
 /* 17 */
 /***/ (function(module, exports) {
 
-function _objectWithoutPropertiesLoose(source, excluded) {
-  if (source == null) return {};
-  var target = {};
-  var sourceKeys = Object.keys(source);
-  var key, i;
-
-  for (i = 0; i < sourceKeys.length; i++) {
-    key = sourceKeys[i];
-    if (excluded.indexOf(key) >= 0) continue;
-    target[key] = source[key];
-  }
-
-  return target;
-}
-
-module.exports = _objectWithoutPropertiesLoose;
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports) {
-
 function _typeof2(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof2 = function _typeof2(obj) { return typeof obj; }; } else { _typeof2 = function _typeof2(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof2(obj); }
 
 function _typeof(obj) {
@@ -402,7 +381,7 @@ function _typeof(obj) {
 module.exports = _typeof;
 
 /***/ }),
-/* 19 */
+/* 18 */
 /***/ (function(module, exports) {
 
 function _setPrototypeOf(o, p) {
@@ -415,6 +394,27 @@ function _setPrototypeOf(o, p) {
 }
 
 module.exports = _setPrototypeOf;
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports) {
+
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+
+  return target;
+}
+
+module.exports = _objectWithoutPropertiesLoose;
 
 /***/ }),
 /* 20 */
@@ -1111,12 +1111,8 @@ module.exports = _nonIterableSpread;
 __webpack_require__.r(__webpack_exports__);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/extends.js
-var helpers_extends = __webpack_require__(4);
+var helpers_extends = __webpack_require__(5);
 var extends_default = /*#__PURE__*/__webpack_require__.n(helpers_extends);
-
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/objectWithoutProperties.js
-var objectWithoutProperties = __webpack_require__(5);
-var objectWithoutProperties_default = /*#__PURE__*/__webpack_require__.n(objectWithoutProperties);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/classCallCheck.js
 var classCallCheck = __webpack_require__(6);
@@ -1141,6 +1137,10 @@ var inherits_default = /*#__PURE__*/__webpack_require__.n(inherits);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/defineProperty.js
 var defineProperty = __webpack_require__(2);
 var defineProperty_default = /*#__PURE__*/__webpack_require__.n(defineProperty);
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/objectWithoutProperties.js
+var objectWithoutProperties = __webpack_require__(4);
+var objectWithoutProperties_default = /*#__PURE__*/__webpack_require__.n(objectWithoutProperties);
 
 // EXTERNAL MODULE: external {"commonjs":"lodash","commonjs2":"lodash","amd":"lodash","root":"_"}
 var external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_ = __webpack_require__(0);
@@ -1340,8 +1340,6 @@ function closest(el, selector) {
 
     return el;
   }
-
-  return null;
 }
 /**
  * 设置屏幕滚动区域可见高度
@@ -1598,7 +1596,7 @@ function handleEvent(_ref, event) {
     instanceObject: this
   });
 
-  if (_objectUnit && _objectUnit.callback && external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isFunction(_objectUnit.callback)) {
+  if (_objectUnit.callback && external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isFunction(_objectUnit.callback)) {
     _objectUnit.callback(_objectUnit.data, _objectUnit, event);
   }
 }
@@ -1613,7 +1611,7 @@ function waring(property) {
   /**
    * 检测指定key是否被用户定义
    * @param discard 被定义的过时属性
-   * @param property 用户定义的整个配置对象
+   * @param property 用户配置的property对象
    * @returns {{isExist: boolean}|{isExist: boolean, value: *}} isExist:是否使用了过时属性 value:过时属性的值
    */
 
@@ -1693,7 +1691,8 @@ function waring(property) {
     if (result.isExist) {
       createNewProperty(_obj.replacement, property, result.value);
 
-      if (false) {}
+      if (false) {} // lgtm [js/unreachable-statement]
+
     }
   });
   return property;
@@ -1714,11 +1713,7 @@ function waring(property) {
 
 function getScrollTop(distanceConfig, rows, counter) {
   if (this === 'switch') {
-    if (!counter) {
-      return 0;
-    }
-
-    return rows[counter].offsetTop - rows[counter].parentElement.offsetTop;
+    return rows[counter].offsetTop - rows[counter].parentElement.parentElement.offsetTop;
   } else {
     if (isNaN(distanceConfig)) {
       return 0;
@@ -1773,19 +1768,6 @@ function getTransitionName(transition, isDataChanged) {
   }
 
   return '';
-}
-/**
- * lodash.isEqualWith方法的第三个参数
- * https://www.lodashjs.com/docs/latest#_isequalwithvalue-other-customizer
- * @param objValue
- * @param othValue
- * @returns {boolean}
- */
-
-function customizer(objValue, othValue) {
-  if (typeof objValue === 'function' || typeof othValue === 'function') {
-    return true;
-  }
 }
 /**
  * 获取行的样式
@@ -1852,7 +1834,7 @@ function getListContStyle(spacing) {
   }
 
   return {
-    borderSpacing: "".concat(spacing).indexOf('px') === -1 ? "0 ".concat(spacing, "px") : "0 ".concat(spacing),
+    borderSpacing: "".concat(spacing).includes('px') ? "0 ".concat(spacing) : "0 ".concat(spacing, "px"),
     borderCollapse: 'separate'
   };
 }
@@ -1897,7 +1879,7 @@ function (_React$Component) {
           listContSupport = _assertThisInitialize.listContSupport,
           _assertThisInitialize2 = _assertThisInitialize.state,
           scrollHeight = _assertThisInitialize2.scrollHeight,
-          enable = _assertThisInitialize2.property.scroll.enable; // 检测用于滚动的主容器和辅助容器是否存在
+          enable = _assertThisInitialize2.property.scroll.enable; // 检测实现滚动的主容器和辅助容器是否存在
 
 
       if (listContMain && listContSupport) {
@@ -1906,7 +1888,7 @@ function (_React$Component) {
 
         if (isInnerScroll || isInnerScroll === undefined) {
           // 检测滚动条件
-          // 根据滚动条件控制列表主体容器的辅助容器的显示状态
+          // 根据滚动条件控制辅助容器的显示状态
           if (enable && listContMain.clientHeight >= parseInt(scrollHeight)) {
             if (isInnerScroll !== undefined && e.type === 'mouseleave') {
               // 鼠标移除组件，恢复滚动
@@ -1961,8 +1943,10 @@ function (_React$Component) {
           listContMain = _assertThisInitialize5.listContMain,
           scroll = _assertThisInitialize5.scroll;
 
-      if (!isNaN(rowIndex) && rowIndex >= 0) {
+      if (!isNaN(rowIndex) && rowIndex > 0) {
         targetScrollTop = getScrollTop.bind('switch', null, listContMain.children, rowIndex)();
+      } else if (rowIndex === 0) {
+        targetScrollTop = 0;
       } // 时间恒定，根据需要移动的总距离求速度
 
 
@@ -2009,9 +1993,12 @@ function (_React$Component) {
 
     defineProperty_default()(assertThisInitialized_default()(_this), "rowHover", function (e) {
       e.stopPropagation();
+      e.persist();
 
-      _this.setState({
-        rowStyle: getRowStyle(_this.state, e)
+      _this.setState(function (prevState) {
+        return {
+          rowStyle: getRowStyle(prevState, e)
+        };
       });
     });
 
@@ -2106,13 +2093,10 @@ function (_React$Component) {
     });
 
     defineProperty_default()(assertThisInitialized_default()(_this), "setCellLink", function (link) {
-      var type = link.type,
-          text = link.text,
+      var text = link.text,
           event = link.event,
-          callback = link.callback,
-          data = link.data,
           href = link.href,
-          props = objectWithoutProperties_default()(link, ["type", "text", "event", "callback", "data", "href"]);
+          props = objectWithoutProperties_default()(link, ["text", "event", "href"]);
 
       if (href) {
         // 防止事件冒泡
@@ -2124,6 +2108,9 @@ function (_React$Component) {
 
       var tagProps = list_objectSpread({}, props, defineProperty_default()({}, event ? event : 'onClick', handleEvent.bind(assertThisInitialized_default()(_this), [link])));
 
+      delete tagProps.type;
+      delete tagProps.callback;
+      delete tagProps.data;
       return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("a", tagProps, text);
     });
 
@@ -2198,7 +2185,7 @@ function (_React$Component) {
   }, {
     key: "shouldComponentUpdate",
     value: function shouldComponentUpdate(nextProps, nextState) {
-      return !external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqualWith(this.state, nextState, customizer);
+      return !external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqual(this.state, nextState);
     }
     /**
      * 组件每次更新后执行
@@ -2246,7 +2233,7 @@ function (_React$Component) {
         var transition = row.transition,
             rowCheckboxShow = row.rowCheckbox.show; // 当滚动条显示时，重新计算header的宽度，和列表主体对齐
 
-        if (show && !enable && !external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqualWith(this.state, preState, customizer)) {
+        if (show && !enable && !external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqual(this.state, preState)) {
           this.setState({
             headerWidth: this.listContMain.clientWidth
           });
@@ -2269,8 +2256,10 @@ function (_React$Component) {
 
 
         if (parseInt(preHeight) !== parseInt(height) || preShow !== show) {
-          this.setState({
-            scrollHeight: getScrollHeight(this.state, closest(scroll, '.list'))
+          this.setState(function (prevState) {
+            return {
+              scrollHeight: getScrollHeight(prevState, closest(scroll, '.list'))
+            };
           });
         } // 缓动动画
 
@@ -2454,17 +2443,17 @@ function (_React$Component) {
   }, {
     key: "setCellSelect",
     value: function setCellSelect(cs) {
-      var type = cs.type,
-          text = cs.text,
+      var text = cs.text,
           option = cs.option,
-          data = cs.data,
           className = cs.className,
           event = cs.event,
-          callback = cs.callback,
-          props = objectWithoutProperties_default()(cs, ["type", "text", "option", "data", "className", "event", "callback"]);
+          props = objectWithoutProperties_default()(cs, ["text", "option", "className", "event"]);
 
       var tagProps = list_objectSpread({}, props, defineProperty_default()({}, event ? event : 'onChange', handleEvent.bind(this, [cs])));
 
+      delete tagProps.type;
+      delete tagProps.data;
+      delete tagProps.callback;
       return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("label", {
         className: className
       }, text ? external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("span", null, text) : null, external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("select", tagProps, option && option.map(function (item, index) {
@@ -2495,10 +2484,9 @@ function (_React$Component) {
       var text = ct.text,
           key = ct.key,
           className = ct.className,
-          data = ct.data,
           event = ct.event,
           callback = ct.callback,
-          restProps = objectWithoutProperties_default()(ct, ["text", "key", "className", "data", "event", "callback"]);
+          restProps = objectWithoutProperties_default()(ct, ["text", "key", "className", "event", "callback"]);
 
       var CTKey = key ? {
         key: key
@@ -2517,6 +2505,7 @@ function (_React$Component) {
         }
       }
 
+      delete restProps.data;
       return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("span", extends_default()({
         className: "list-cell-text".concat(className ? " ".concat(className) : ''),
         style: style
@@ -2850,7 +2839,7 @@ function (_React$Component) {
       var propsProperty = props.property,
           propsData = props.data,
           propsClassName = props.className;
-      var isDataChanged = !external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqualWith(propsData, stateData, customizer); // 检测本次渲染的数据是否有变化
+      var isDataChanged = !external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqual(propsData, stateData); // 检测本次渲染的数据是否有变化
 
       if (!external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqual(propsProperty, property) || !external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqual(propsClassName, className) || isDataChanged) {
         var propsHeight = props.property.style.height;
@@ -2892,6 +2881,9 @@ function (_React$Component) {
 
 
 
+var listConfigProps = config.property,
+    rest = objectWithoutProperties_default()(config, ["property"]);
+
 var src_default_0 =
 /*#__PURE__*/
 function (_Component) {
@@ -2910,7 +2902,7 @@ function (_Component) {
           property = _this$props.property,
           option = objectWithoutProperties_default()(_this$props, ["property"]);
 
-      var newProperty = external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.defaultsDeep({}, waring(property), config.property);
+      var newProperty = external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.defaultsDeep({}, waring(property), listConfigProps);
 
       return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement(list_default, extends_default()({
         property: newProperty
@@ -2921,7 +2913,7 @@ function (_Component) {
   return _default;
 }(external_commonjs_react_commonjs2_react_amd_react_root_React_["Component"]);
 
-defineProperty_default()(src_default_0, "defaultProps", config);
+defineProperty_default()(src_default_0, "defaultProps", rest);
 
 
 

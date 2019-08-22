@@ -158,9 +158,9 @@ export default class extends React.Component {
 
 			// 适应滚动区域高度
 			if(parseInt(preHeight) !== parseInt(height) || preShow !== show) {
-				this.setState({
-					scrollHeight: util.getScrollHeight(this.state, util.closest(scroll, '.list'))
-				})
+				this.setState(prevState => ({
+					scrollHeight: util.getScrollHeight(prevState, util.closest(scroll, '.list'))
+				}))
 			}
 
 			// 缓动动画
@@ -341,7 +341,8 @@ export default class extends React.Component {
 	 */
 	rowHover = e => {
 		e.stopPropagation()
-		this.setState({ rowStyle: util.getRowStyle(this.state, e) })
+		e.persist()
+		this.setState(prevState => ({ rowStyle: util.getRowStyle(prevState, e) }))
 	}
 
 	/**
@@ -469,7 +470,7 @@ export default class extends React.Component {
 	 * @returns {*} 单元格link DOM || null
 	 */
 	setCellLink = link => {
-		const { type, text, event, callback, data, href, ...props } = link
+		const { text, event, href, ...props } = link
 
 		if(href) {
 			// 防止事件冒泡
@@ -484,6 +485,10 @@ export default class extends React.Component {
 			...props,
 			[event ? event : 'onClick']: util.handleEvent.bind(this, [link])
 		}
+
+		delete tagProps.type
+		delete tagProps.callback
+		delete tagProps.data
 
 		return (
 			<a {...tagProps} >{text}</a>
@@ -591,12 +596,16 @@ export default class extends React.Component {
 	 * @param cs {object} 对象单元
 	 */
 	setCellSelect(cs) {
-		const { type, text, option, data, className, event, callback, ...props } = cs
+		const { text, option, className, event, ...props } = cs
 
 		const tagProps = {
 			...props,
 			[event ? event : 'onChange']: util.handleEvent.bind(this, [cs])
 		}
+
+		delete tagProps.type
+		delete tagProps.data
+		delete tagProps.callback
 
 		return (
 			<label className={className}>
@@ -623,7 +632,7 @@ export default class extends React.Component {
 			style: serialNumberStyle,
 			specialStyle
 		} = body.row.serialNumber
-		const { text, key, className, data, event, callback, ...restProps } = ct
+		const { text, key, className, event, callback, ...restProps } = ct
 		const CTKey = key ? { key } : {}
 		let style = serialNumberShow && key && key.match(/^listSN\d+/)
 			? {
@@ -642,6 +651,8 @@ export default class extends React.Component {
 				restProps['onClick'] = util.handleEvent.bind(this, [ct])
 			}
 		}
+
+		delete restProps.data
 
 		return (
 			<span
@@ -930,7 +941,7 @@ export default class extends React.Component {
 			<div
 				style={{ ...listBorder, ...conStyle }}
 				className={`list${listClass ? ` ${listClass}` : ''}${className ? ` ${className}` : ''}`}
-				onMouseEnter={this.scrollList.bind(this, false)}
+				onMouseMove={this.scrollList.bind(this, false)}
 				onMouseLeave={this.scrollList.bind(this, true)}
 			>
 				{this.loadHeader(headerData)}

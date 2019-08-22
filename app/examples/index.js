@@ -1087,8 +1087,6 @@ const Demo = () => {
 		}
 	}
 
-	const createMarkup = text => ({ __html: text })
-
 	return (
 		<div className='container'>
 			<h1>demo1：default</h1>

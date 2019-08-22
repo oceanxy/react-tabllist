@@ -267,7 +267,7 @@ export function handleEvent([_objectUnit, _func], event) {
 	// 开放方法
 	_objectUnit = { ..._objectUnit, instanceObject: this }
 
-	if(_objectUnit && _objectUnit.callback && _.isFunction(_objectUnit.callback)) {
+	if(_objectUnit.callback && _.isFunction(_objectUnit.callback)) {
 		_objectUnit.callback(_objectUnit.data, _objectUnit, event)
 	}
 }
@@ -359,7 +359,7 @@ export function waring(property) {
 				} else {
 					console.warn('Used obsolete configuration in React-tabllist')
 				}
-			}
+			} // lgtm [js/unreachable-statement]
 		}
 	})
 
