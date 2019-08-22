@@ -4,15 +4,17 @@ import listConfig from './config'
 import List from './list'
 import { waring } from './util'
 
+const { property: listConfigProps, ...rest } = listConfig
+
 export default class extends Component {
-  static defaultProps = listConfig
+	static defaultProps = rest
 
-  render() {
-    const { property, ...option } = this.props
-    const newProperty = _.defaultsDeep({}, waring(property), listConfig.property)
+	render() {
+		const { property, ...option } = this.props
+		const newProperty = _.defaultsDeep({}, waring(property), listConfigProps)
 
-    return (
-      <List property={newProperty} {...option} />
-    )
-  }
+		return (
+			<List property={newProperty} {...option} />
+		)
+	}
 }

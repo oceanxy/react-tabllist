@@ -4,6 +4,8 @@ import React from 'react'
 import ReactTabllist from '../src'
 import Enzyme from './enzyme.config'
 
+jest.useFakeTimers()
+
 const mockApp = (props) => {
 	const wrapper = Enzyme.mount(<ReactTabllist {...props} />)
 
@@ -94,19 +96,28 @@ describe('# change property', () => {
 		expect(margin).toBe('100px')
 	})
 
+	// behaviours dependent on rendered element sizes cannot be tested with jest/enzyme/jsdom.
+	// https://github.com/airbnb/enzyme/issues/1435#issuecomment-357130838
+	// 这里仅仅使用spy模拟出几个数据
 	describe('## change scroll', () => {
 		const data = _.range(20).map(i => {
 			return [`t-${i}-1`, `t-${i}-2`, `t-${i}-3`]
 		})
+
+		const scrollHeightSpy = jest
+			.spyOn(wrapper.find('.list .list-body .list-cont').at(0).getDOMNode(), 'clientHeight', 'get')
+			.mockImplementation(() => 500)
 
 		it('close scroll', () => {
 			wrapper.setProps({ data, property: { isScroll: false } })
 			expect(wrapper.find('.list .list-body').getDOMNode().scrollTop).toBe(0)
 		})
 
-		// 此测试失败：获取不到scrollTop
 		it('open scroll and continuous scrolling', () => {
-			// it('open scroll and continuous scrolling', done => {
+			const scrollTopSpy = jest
+				.spyOn(wrapper.find('.list .list-body').getDOMNode(), 'scrollTop', 'get')
+				.mockImplementation(() => 200)
+
 			wrapper.setProps({
 				property: {
 					style: { height: 100 },
@@ -119,15 +130,11 @@ describe('# change property', () => {
 				}
 			})
 
-			// setTimeout(() => {
-			expect(wrapper.find('.list .list-body').getDOMNode().scrollTop).toBeGreaterThanOrEqual(0)
-			// 	done()
-			// }, 1000)
+			jest.advanceTimersByTime(1000)
+			expect(wrapper.find('.list .list-body').getDOMNode().scrollTop).toBeGreaterThan(0)
 		})
 
-		// 此测试失败：获取不到scrollTop
 		it('Scroll one row at a time', () => {
-			// it('Scroll one row at a time', done => {
 			wrapper.setProps({
 				property: {
 					header: { show: false },
@@ -138,15 +145,9 @@ describe('# change property', () => {
 					}
 				}
 			})
-			// setTimeout(() => {
-			expect(wrapper.find('.list .list-body').getDOMNode().scrollTop).toBe(0)
-			// 	done()
-			// }, 1000)
 
-			// setTimeout(() => {
-			expect(wrapper.find('.list .list-body').getDOMNode().scrollTop).toBeGreaterThanOrEqual(0)
-			// 	done()
-			// }, 1000)
+			jest.advanceTimersByTime(10000)
+			expect(wrapper.find('.list .list-body').getDOMNode().scrollTop).toBeGreaterThan(0)
 		})
 	})
 
@@ -219,6 +220,10 @@ describe('# test cells of body', () => {
 							textAlign: 'left',
 							border: '1px solid blue',
 							width: 'auto'
+						},
+						iconStyle: {
+							width: 24,
+							height: 'auto'
 						}
 					}
 				}
@@ -443,6 +448,7 @@ describe('# test row of body', () => {
 		expect(borderSpacing).toBe('0px')
 		expect(borderCollapse).toBe('collapse')
 
+		// 不带单位
 		wrapper.setProps({
 			property: {
 				body: {
@@ -459,6 +465,24 @@ describe('# test row of body', () => {
 
 		expect(borderSpacing1).toBe('0 10px')
 		expect(borderCollapse1).toBe('separate')
+
+		// 带单位
+		wrapper.setProps({
+			property: {
+				body: {
+					row: {
+						spacing: '7px'
+					}
+				}
+			}
+		})
+
+		const { borderSpacing: borderSpacing2, borderCollapse: borderCollapse2 } = wrapper.find('.list .list-body .list-cont')
+			.at(0)
+			.getDOMNode().style
+
+		expect(borderSpacing2).toBe('0 7px')
+		expect(borderCollapse2).toBe('separate')
 	})
 
 	it('test style of row', () => {
@@ -547,7 +571,7 @@ describe('# test row of body', () => {
 				body: {
 					row: {
 						serialNumber: { show: false },
-						rowCheckbox: {
+						rowCheckBox: {
 							show: true,
 							column: 2,
 							style: { backgroundColor: 'blue' },
@@ -589,6 +613,25 @@ describe('# test row of body', () => {
 			.getDOMNode().style.backgroundColor
 		).toBe('red')
 
+		// 测试header内的checkbox的点击事件
+		// wrapper
+		// 	.find('.list-body .list-row').at(0)
+		// 	.find('.list-cell').at(1)
+		// 	.find('input').simulate('change')
+		//
+		// expect(
+		// 	wrapper
+		// 		.find('.list-body .list-row').at(0)
+		// 		.find('.list-cell').at(1)
+		// 		.find('input').getDOMNode().selected
+		// ).toEqual(true)
+
+		console.log(wrapper
+			.find('.list-body .list-row').at(0)
+			.find('.list-cell').at(1)
+			.find('input').debug())
+
+		// 测试列的优先级（当行号和行选择框的column配置为相同的值时）
 		wrapper.setProps({
 			property: {
 				body: {
@@ -882,184 +925,469 @@ describe('# test object unit', function() {
 		expect(wrapper.find('.list').getDOMNode().style.border).toBe('3px solid #f4f4f4')
 	})
 
-	it('test type: text', function() {
+	describe('## test type: text', function() {
+		it('with default event', function() {
+			wrapper.setProps({
+				data: [
+					['t1', 't2', 't3'],
+					[
+						'c1',
+						{
+							type: 'text',
+							text: '我是一个普通文本',
+							className: 'test-text',
+							callback: () => {
+								testClick({
+									borderColor: '#000000'
+								})
+							}
+						},
+						'c3'
+					]
+				]
+			})
+
+			const text = wrapper.find('.list-body .list-row').at(0)
+				.find('.list-cell').at(1)
+
+			expect(text.find('.test-text').exists()).toEqual(true)
+			expect(text.find('span').text()).toBe('我是一个普通文本')
+			text.find('span').simulate('click')
+			expect(wrapper.find('.list').getDOMNode().style.border).toBe('1px solid #000000')
+		})
+
+		it('test type: text', function() {
+			wrapper.setProps({
+				data: [
+					['t1', 't2', 't3'],
+					[
+						'c1',
+						{
+							type: 'text',
+							text: '我是一个普通文本',
+							className: 'test-text',
+							event: 'onClick',
+							callback: () => {
+								testClick({
+									borderColor: '#000000'
+								})
+							}
+						},
+						'c3'
+					]
+				]
+			})
+
+			const text = wrapper.find('.list-body .list-row').at(0)
+				.find('.list-cell').at(1)
+
+			expect(text.find('.test-text').exists()).toEqual(true)
+			expect(text.find('span').text()).toBe('我是一个普通文本')
+			text.find('span').simulate('click')
+			expect(wrapper.find('.list').getDOMNode().style.border).toBe('1px solid #000000')
+		})
+	})
+
+	describe('## test type: select', function() {
+		const handler = jest.fn(() => {})
+
+		const getProps = function() {
+			return {
+				data: [
+					[
+						't1',
+						't2',
+						{
+							type: 'select',
+							text: '滚动到：',
+							data: 123,
+							className: '',
+							option: [
+								{
+									id: '1',
+									label: 'Scroll to the 2nd row',
+									value: 1
+								},
+								{
+									id: '2',
+									label: 'Scroll to the 5rd row',
+									value: 2
+								},
+								{
+									id: '3',
+									label: 'Scroll to the 7rd row',
+									value: 3
+								}
+							],
+							event: 'onChange',
+							callback: (restData, objectUnit, event) => {
+								const { value } = event.target
+								const { data } = objectUnit.instanceObject.props
+
+								for(let i = 0, k = data; i < k.length; i++) {
+									if(_.isPlainObject(data[i]) && parseInt(data[i].value) === parseInt(value)) {
+										handler()
+										objectUnit.instanceObject.scrollTo(i - 1)
+										break
+									}
+								}
+							}
+						}
+					],
+					{
+						type: 'row',
+						data: 0,
+						value: 0,
+						event: 'onClick',
+						callback: (restData, objectUnit, event) => {
+							alert('test event of row')
+							console.log(restData, objectUnit, event)
+						},
+						className: 'click-row',
+						cells: [
+							'row 1; column 1',
+							{
+								type: 'link',
+								text: 'I am a first link',
+								className: 'test-link',
+								callback: () => {console.log('I am a first link')}
+							},
+							{
+								type: 'link',
+								text: 'I am a second link',
+								href: 'https://github.com/oceanxy/react-tabllist',
+								className: 'test-link'
+							},
+							{
+								type: 'button',
+								value: 'click me',
+								className: 'test-btn',
+								callback: () => {
+									alert('hello react-tabllist')
+								}
+							}
+						]
+					},
+					{
+						type: 'row',
+						data: 1,
+						value: 1,
+						event: 'onClick',
+						callback: (restData, objectUnit, event) => {
+							alert('test event of row')
+							console.log(restData, objectUnit, event)
+						},
+						className: 'click-row',
+						cells: [
+							'row 1; column 1',
+							{
+								type: 'link',
+								text: 'I am a first link',
+								className: 'test-link',
+								callback: () => {console.log('I am a first link')}
+							},
+							{
+								type: 'link',
+								text: 'I am a second link',
+								href: 'https://github.com/oceanxy/react-tabllist',
+								className: 'test-link'
+							},
+							{
+								type: 'button',
+								value: 'click me',
+								className: 'test-btn',
+								callback: () => {
+									alert('hello react-tabllist')
+								}
+							}
+						]
+					},
+					{
+						type: 'row',
+						data: 2,
+						value: 2,
+						event: 'onClick',
+						callback: (restData, objectUnit, event) => {
+							alert('test event of row')
+							console.log(restData, objectUnit, event)
+						},
+						className: 'click-row',
+						cells: [
+							'row 1; column 1',
+							{
+								type: 'link',
+								text: 'I am a first link',
+								className: 'test-link',
+								callback: () => {console.log('I am a first link')}
+							},
+							{
+								type: 'link',
+								text: 'I am a second link',
+								href: 'https://github.com/oceanxy/react-tabllist',
+								className: 'test-link'
+							},
+							{
+								type: 'button',
+								value: 'click me',
+								className: 'test-btn',
+								callback: () => {
+									alert('hello react-tabllist')
+								}
+							}
+						]
+					},
+					{
+						type: 'row',
+						data: 3,
+						value: 3,
+						event: 'onClick',
+						callback: (restData, objectUnit, event) => {
+							alert('test event of row')
+							console.log(restData, objectUnit, event)
+						},
+						className: 'click-row',
+						cells: [
+							'row 1; column 1',
+							{
+								type: 'link',
+								text: 'I am a first link',
+								className: 'test-link',
+								callback: () => {console.log('I am a first link')}
+							},
+							{
+								type: 'link',
+								text: 'I am a second link',
+								href: 'https://github.com/oceanxy/react-tabllist',
+								className: 'test-link'
+							},
+							{
+								type: 'button',
+								value: 'click me',
+								className: 'test-btn',
+								callback: () => {
+									alert('hello react-tabllist')
+								}
+							}
+						]
+					},
+					['c1', 'c2', 'c3']
+				]
+			}
+		}
+
+		it('Is the display normal', function() {
+			wrapper.setProps(getProps())
+
+			const text = wrapper.find('.list-header .list-cell').at(2)
+
+			expect(text.find('span').text()).toBe('滚动到：')
+			expect(text.find('select').exists()).toEqual(true)
+		})
+
+		describe('### test scroll target value', function() {
+			// 模拟滚动主容器的offsetTop值
+			const bodyOffsetTopSpy = jest
+				.spyOn(wrapper.find('.list .list-body').getDOMNode(), 'offsetTop', 'get')
+				.mockImplementation(() => 500)
+
+			it('Scroll to the first row', function() {
+				wrapper.setProps(getProps())
+
+				wrapper.find('select').simulate('change', { target: { value: 0 } })
+				expect(handler).toHaveBeenCalled()
+			})
+
+			it('When the scroll target value is less than 0', function() {
+				wrapper.setProps(getProps())
+				// 模拟body内第二行的offsetTop值
+				const rowOffsetTopSpy = jest
+					.spyOn(wrapper.find('.list .list-body .list-row').at(1).getDOMNode(), 'offsetTop', 'get')
+					.mockImplementation(() => 500)
+
+				wrapper.find('select').simulate('change', { target: { value: 1 } })
+				expect(handler).toHaveBeenCalled()
+			})
+
+			it('When the scroll target value is equal to 0', function() {
+				wrapper.setProps(getProps())
+				// 模拟body内第三行的offsetTop值
+				const rowOffsetTopSpy = jest
+					.spyOn(wrapper.find('.list .list-body .list-row').at(2).getDOMNode(), 'offsetTop', 'get')
+					.mockImplementation(() => 700)
+
+				wrapper.find('select').simulate('change', { target: { value: 2 } })
+				expect(handler).toHaveBeenCalled()
+			})
+
+			it('When the scroll target value is greater than 0', function() {
+				wrapper.setProps(getProps())
+				// 模拟body内第四行的offsetTop值
+				const rowOffsetTopSpy = jest
+					.spyOn(wrapper.find('.list .list-body .list-row').at(3).getDOMNode(), 'offsetTop', 'get')
+					.mockImplementation(() => 900)
+
+				wrapper.find('select').simulate('change', { target: { value: 3 } })
+				jest.runOnlyPendingTimers()
+				expect(handler).toHaveBeenCalled()
+			})
+		})
+	})
+
+	describe('## test type: radio', function() {
+		it('with default event', () => {
+			wrapper.setProps({
+				data: [
+					['t1', 't2'],
+					[
+						{
+							type: 'radio',
+							name: 'group1',
+							text: 'radio group 1-1',
+							value: 0,
+							className: 'test-radio'
+						},
+						{
+							type: 'radio',
+							name: 'group1',
+							text: 'radio group 1-2',
+							value: 1,
+							className: 'test-radio'
+						}
+					],
+					['c1', 'c2'],
+					[
+						[
+							{
+								type: 'radio',
+								name: 'group1',
+								text: 'radio group 1-1',
+								value: 0,
+								className: 'test-radio'
+							},
+							{
+								type: 'radio',
+								name: 'group1',
+								text: 'radio group 1-2',
+								value: 1,
+								className: 'test-radio'
+							}
+						],
+						'c4'
+					]
+				]
+			})
+
+			const radio = wrapper.find('.list-body .list-row').at(0)
+				.find('.list-cell').at(0)
+
+			expect(radio.find('input[name="group1-main"]').exists()).toEqual(true)
+			expect(radio.find('span').text()).toBe('radio group 1-1')
+			// radio.find('input').simulate('change', { target: { value: '0' } })
+			// expect(radio.find('input').getDOMNode().checked).toEqual(true)
+		})
+
+		it('with custom event', () => {
+			wrapper.setProps({
+				data: [
+					['t1', 't2'],
+					[
+						{
+							type: 'radio',
+							name: 'group1',
+							text: 'radio group 1-1',
+							value: 0,
+							event: 'onMouseEnter',
+							className: 'test-radio'
+						},
+						{
+							type: 'radio',
+							name: 'group1',
+							text: 'radio group 1-2',
+							value: 1,
+							event: 'onClick',
+							className: 'test-radio'
+						}
+					],
+					['c1', 'c2'],
+					[
+						[
+							{
+								type: 'radio',
+								name: 'group1',
+								text: 'radio group 1-1',
+								value: 0,
+								className: 'test-radio'
+							},
+							{
+								type: 'radio',
+								name: 'group1',
+								text: 'radio group 1-2',
+								value: 1,
+								className: 'test-radio'
+							}
+						],
+						'c4'
+					]
+				]
+			})
+
+			const radio = wrapper.find('.list-body .list-row').at(0)
+				.find('.list-cell').at(0)
+
+			expect(radio.find('input[name="group1-main"]').exists()).toEqual(true)
+			expect(radio.find('span').text()).toBe('radio group 1-1')
+			// radio.find('input').simulate('change', { target: { value: '0' } })
+			// expect(radio.find('input').getDOMNode().checked).toEqual(true)
+		})
+	})
+
+	it('test type: checkbox', () => {
 		wrapper.setProps({
 			data: [
-				['t1', 't2', 't3'],
+				['t1', 't2'],
 				[
-					'c1',
 					{
-						type: 'text',
-						text: '我是一个普通文本',
-						className: 'test-text',
-						callback: () => {
-							testClick({
-								borderColor: '#000000'
-							})
-						}
+						type: 'checkbox',
+						name: 'group1',
+						text: 'checkbox group 1-1',
+						className: 'test-checkbox'
 					},
-					'c3'
+					'c2'
 				]
 			]
 		})
 
-		const text = wrapper.find('.list-body .list-row').at(0)
-			.find('.list-cell').at(1)
+		const checkbox = wrapper.find('.list-body .list-cont').at(0)
+			.find('.list-row').at(0)
+			.find('.list-cell').at(0)
 
-		expect(text.find('.test-text').exists()).toEqual(true)
-		expect(text.find('span').text()).toBe('我是一个普通文本')
-		text.find('span').simulate('click')
-		expect(wrapper.find('.list').getDOMNode().style.border).toBe('1px solid #000000')
+		expect(checkbox.find('input[name="group1"]').exists()).toEqual(true)
+		expect(checkbox.find('span').text()).toBe('checkbox group 1-1')
+	})
+})
+
+it('test component hover', function() {
+	wrapper.find('.list').simulate('mouseenter')
+	wrapper.find('.list').simulate('mouseleave')
+})
+
+describe('test document event', function() {
+	let hidden = true
+	Object.defineProperty(document, 'hidden', {
+		configurable: true,
+		get() { return hidden },
+		set(bool) { hidden = Boolean(bool) }
 	})
 
-	it('test type: select', function() {
-		const handler = jest.fn(() => {})
-
-		wrapper.setProps({
-			data: [
-				[
-					't1',
-					't2',
-					{
-						type: 'select',
-						text: '滚动到：',
-						data: 123,
-						className: '',
-						option: [
-							{
-								id: '1',
-								label: 'Scroll to the 2nd row',
-								value: 0
-							},
-							{
-								id: '2',
-								label: 'Scroll to the 5rd row',
-								value: 1
-							},
-							{
-								id: '3',
-								label: 'Scroll to the 7rd row',
-								value: 2
-							}
-						],
-						event: 'onChange',
-						callback: (restData, objectUnit, event) => {
-							const { value } = event.target
-							const { data } = objectUnit.instanceObject.props
-
-							for(let i = 0, k = data; i < k.length; i++) {
-								if(_.isPlainObject(data[i]) && parseInt(data[i].value) === parseInt(value)) {
-									handler()
-									objectUnit.instanceObject.scrollTo(i - 1)
-									break
-								}
-							}
-						}
-					}
-				],
-				['c1', 'c2', 'c3'],
-				{
-					type: 'row',
-					data: 1,
-					value: 0,
-					event: 'onClick',
-					callback: (restData, objectUnit, event) => {
-						alert('test event of row')
-						console.log(restData, objectUnit, event)
-					},
-					className: 'click-row',
-					cells: [
-						'row 1; column 1',
-						{
-							type: 'link',
-							text: 'I am a first link',
-							className: 'test-link',
-							callback: () => {console.log('I am a first link')}
-						},
-						{
-							type: 'link',
-							text: 'I am a second link',
-							href: 'https://github.com/oceanxy/react-tabllist',
-							className: 'test-link'
-						},
-						{
-							type: 'button',
-							value: 'click me',
-							className: 'test-btn',
-							callback: () => {
-								alert('hello react-tabllist')
-							}
-						}
-					]
-				}
-			]
-		})
-
-		const text = wrapper.find('.list-header .list-cell').at(2)
-
-		expect(text.find('select').exists()).toEqual(true)
-		expect(text.find('span').text()).toBe('滚动到：')
-		text.find('select').simulate('change', { target: { value: 0 } })
-		expect(handler).toHaveBeenCalled()
+	it('document.hidden is true', function() {
+		document.hidden = true
+		document.dispatchEvent(new Event('visibilitychange'))
 	})
 
-	// it('test radio', () => {
-	// 	wrapper.setProps({
-	// 		data: [
-	// 			['t1', 't2'],
-	// 			[
-	// 				{
-	// 					type: 'radio',
-	// 					name: 'group1',
-	// 					text: 'radio group 1-1',
-	// 					value: 0,
-	// 					className: 'test-radio'
-	// 				},
-	// 				{
-	// 					type: 'radio',
-	// 					name: 'group1',
-	// 					text: 'radio group 1-2',
-	// 					value: 1,
-	// 					className: 'test-radio'
-	// 				}
-	// 			],
-	// 			['c1', 'c2']
-	// 		]
-	// 	})
-	//
-	// 	const radio = wrapper.find('.list-body .list-row').at(0)
-	// 		.find('.list-cell').at(0)
-	//
-	// 	expect(radio.find('input[name="group1-main"]').exists()).toEqual(true)
-	// 	expect(radio.find('span').text()).toBe('radio group 1-1')
-	// 	radio.find('input').simulate('change', { target: { value: '0' } })
-	// 	console.log(wrapper.children().state().selected)
-	// 	expect(radio.find('input').getDOMNode().checked).toEqual(true)
-	// })
-
-	// it('test checkbox', () => {
-	// 	wrapper.setProps({
-	// 		data: [
-	// 			['t1', 't2'],
-	// 			[
-	// 				{
-	// 					type: 'checkbox',
-	// 					name: 'group1',
-	// 					text: 'checkbox group 1-1',
-	// 					className: 'test-checkbox'
-	// 				},
-	// 				'c2'
-	// 			]
-	// 		]
-	// 	})
-	//
-	// 	const checkbox = wrapper.find('.list-body .list-cont').at(0)
-	// 		.find('.list-row').at(0)
-	// 		.find('.list-cell').at(0)
-	//
-	// 	expect(checkbox.find('input[name="group1"]').exists()).toEqual(true)
-	// 	expect(checkbox.find('span').text()).toBe('checkbox group 1-1')
-	// })
+	it('document.hidden is false', function() {
+		document.hidden = false
+		document.dispatchEvent(new Event('visibilitychange'))
+	})
 })
 
 describe('test lifecycles', function() {

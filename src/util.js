@@ -23,8 +23,6 @@ export function closest(el, selector) {
 
 		return el
 	}
-
-	return null
 }
 
 /**
@@ -285,7 +283,7 @@ export function waring(property) {
 	/**
 	 * 检测指定key是否被用户定义
 	 * @param discard 被定义的过时属性
-	 * @param property 用户定义的整个配置对象
+	 * @param property 用户配置的property对象
 	 * @returns {{isExist: boolean}|{isExist: boolean, value: *}} isExist:是否使用了过时属性 value:过时属性的值
 	 */
 	function isKeyExists(discard, property) {
@@ -355,7 +353,7 @@ export function waring(property) {
 		if(result.isExist) {
 			createNewProperty(_obj.replacement, property, result.value)
 
-			if(process.env.NODE_ENV === 'development') {
+			if(process.env.NODE_ENV !== 'production') {
 				if(_obj.warn) {
 					console.warn(_obj.warn)
 				} else {
@@ -383,11 +381,7 @@ export function waring(property) {
  */
 export function getScrollTop(distanceConfig, rows, counter) {
 	if(this === 'switch') {
-		if(!counter) {
-			return 0
-		}
-
-		return rows[counter].offsetTop - rows[counter].parentElement.offsetTop
+		return rows[counter].offsetTop - rows[counter].parentElement.parentElement.offsetTop
 	} else {
 		if(isNaN(distanceConfig)) {
 			return 0
@@ -443,19 +437,6 @@ export function getTransitionName(transition, isDataChanged) {
 	}
 
 	return ''
-}
-
-/**
- * lodash.isEqualWith方法的第三个参数
- * https://www.lodashjs.com/docs/latest#_isequalwithvalue-other-customizer
- * @param objValue
- * @param othValue
- * @returns {boolean}
- */
-export function customizer(objValue, othValue) {
-	if(typeof objValue === 'function' || typeof othValue === 'function') {
-		return true
-	}
 }
 
 /**
@@ -534,7 +515,7 @@ export function getListContStyle(spacing) {
 	}
 
 	return {
-		borderSpacing: (`${spacing}`).indexOf('px') === -1 ? `0 ${spacing}px` : `0 ${spacing}`,
+		borderSpacing: `${spacing}`.includes('px') ? `0 ${spacing}` : `0 ${spacing}px`,
 		borderCollapse: 'separate'
 	}
 }

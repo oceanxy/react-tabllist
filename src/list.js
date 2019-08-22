@@ -41,7 +41,7 @@ export default class extends React.Component {
 	static getDerivedStateFromProps(props, state) {
 		let { property, data: stateData, className, ...restState } = state
 		const { property: propsProperty, data: propsData, className: propsClassName } = props
-		const isDataChanged = !_.isEqualWith(propsData, stateData, util.customizer)
+		const isDataChanged = !_.isEqual(propsData, stateData)
 
 		// 检测本次渲染的数据是否有变化
 		if(!_.isEqual(propsProperty, property) || !_.isEqual(propsClassName, className) || isDataChanged) {
@@ -99,7 +99,7 @@ export default class extends React.Component {
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {
-		return !_.isEqualWith(this.state, nextState, util.customizer)
+		return !_.isEqual(this.state, nextState)
 	}
 
 	/**
@@ -134,7 +134,7 @@ export default class extends React.Component {
 			const { transition, rowCheckbox: { show: rowCheckboxShow } } = row
 
 			// 当滚动条显示时，重新计算header的宽度，和列表主体对齐
-			if(show && !enable && !_.isEqualWith(this.state, preState, util.customizer)) {
+			if(show && !enable && !_.isEqual(this.state, preState)) {
 				this.setState({ headerWidth: this.listContMain.clientWidth })
 			}
 
@@ -202,14 +202,14 @@ export default class extends React.Component {
 			state: { scrollHeight, property: { scroll: { enable } } }
 		} = this
 
-		// 检测用于滚动的主容器和辅助容器是否存在
+		// 检测实现滚动的主容器和辅助容器是否存在
 		if(listContMain && listContSupport) {
 			// 删除上一次定时器，后续根据状态来判定是否定义新的定时器
 			clearInterval(this.marqueeInterval)
 
 			if(isInnerScroll || isInnerScroll === undefined) {
 				// 检测滚动条件
-				// 根据滚动条件控制列表主体容器的辅助容器的显示状态
+				// 根据滚动条件控制辅助容器的显示状态
 				if(enable && listContMain.clientHeight >= parseInt(scrollHeight)) {
 					if(isInnerScroll !== undefined && e.type === 'mouseleave') {
 						// 鼠标移除组件，恢复滚动
@@ -274,8 +274,10 @@ export default class extends React.Component {
 			scroll
 		} = this
 
-		if(!isNaN(rowIndex) && rowIndex >= 0) {
+		if(!isNaN(rowIndex) && rowIndex > 0) {
 			targetScrollTop = util.getScrollTop.bind('switch', null, listContMain.children, rowIndex)()
+		} else if(rowIndex === 0) {
+			targetScrollTop = 0
 		}
 
 		// 时间恒定，根据需要移动的总距离求速度
@@ -928,7 +930,7 @@ export default class extends React.Component {
 			<div
 				style={{ ...listBorder, ...conStyle }}
 				className={`list${listClass ? ` ${listClass}` : ''}${className ? ` ${className}` : ''}`}
-				onMouseMove={this.scrollList.bind(this, false)}
+				onMouseEnter={this.scrollList.bind(this, false)}
 				onMouseLeave={this.scrollList.bind(this, true)}
 			>
 				{this.loadHeader(headerData)}
