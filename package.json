@@ -1,7 +1,7 @@
 {
   "name": "react-tabllist",
-  "version": "1.5.0",
-  "description": "React-based customizable style table or list components that support event and callback functions.",
+  "version": "1.5.1",
+  "description": "React-based list (table) components that support events, callback functions, and custom styles.",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --config build/webpack.config.dev",
