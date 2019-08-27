@@ -275,32 +275,42 @@ $ npm start
 
 ###### 对象单元的属性
 
-|**键** `{类型}`                                   |描述                                                                                                                     |use                                                                                               |
-|-------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|
-|**type** <br> `{string}`                         |要在单元格内生成的节点类型                                                                                                  | `row` `button` `link` `img` `radio` `checkbox` `select` `text`                                   |
-|~~**uid**~~ <br> `{string}` **1.2.2版本之前可用**  |`已废弃` 单元格的唯一标识，可用来保存id等。该字段功能与key相似，也可以使用data字段结合回调函数来代替，故决定在1.2.2版本废弃该字段。    | ~~`row`~~ `button` `link` `img` `radio` `checkbox` ~~`select`~~ ~~`text`~~                       |
-|**name** <br>`{string}`                          |radio和checkbox必须设置的属性，同HTML同类标签的name属性                                                                      | ~~`row`~~ ~~`button`~~ ~~`link`~~ ~~`img`~~ `radio` `checkbox` ~~`select`~~ `text`                |
-|**text** <br> `{string}`                         |渲染后的HTML标签的文本                                                                                                     | ~~`row`~~ ~~`button`~~ `link` `img` `radio` `checkbox` `select` `text`                            |
-|**value** <br> `{number\|string}`                |生成的HTML标签的`value`属性，`1.4.1版本开始所有对象单元都可使用`                                                               | 1.4.1版本之前： ~~`row`~~ `button` ~~`link`~~ ~~`img`~~ ~~`radio`~~ ~~`checkbox`~~ <br /> 1.4.1版本开始： `row` `button` `link` `img` `radio` `checkbox` `select` `text`  |
-|**src** <br> `{string}`                          |图片链接，如：'http(s)://xxx' 或 'data:image/xxx'                                                                          | ~~`row`~~ ~~`button`~~ ~~`link`~~ `img` ~~`radio`~~ ~~`checkbox`~~ ~~`select`~~ ~~`text`~~        |
-|**alt** <br> `{string}`                          |图片的alt属性                                                                                                             | ~~`row`~~ ~~`button`~~ ~~`link`~~ `img` ~~`radio`~~ ~~`checkbox`~~ ~~`select`~~ ~~`text`~~        |
-|**href** <br> `{string}`                         |link类型的超链接地址（同HTML a标签的href），也可不传此属性而使用event和callback的组合自定义事件回调                               | ~~`row`~~ ~~`button`~~ `link` ~~`img`~~ ~~`radio`~~ ~~`checkbox`~~ ~~`select`~~ ~~`text`~~        |
-|**className** <br> `{string}`                    |自定义样式表名称                                                                                                           | `row` `button` `link` `img` `radio` `checkbox` `select` `text`                                    |
-|**event** <br> `{string}`                        |触发事件的方式，需和[回调函数](#callback)配合使用                                                                             | `row` `button` `link` ~~`img`~~ `radio` `checkbox` `select` `text`                                |
-|**callback** <br> `{function}`                   |触发事件后的回调函数，详细见[回调函数](#callback)介绍                                                                         | `row` `button` `link` ~~`img`~~ `radio` `checkbox` `select` `text`                                |
-|**option** <br> `{object[]}`                     |`select`类型专属属性, 详情见[option](#Option)介绍                                                                           | ~~`row`~~ ~~`button`~~ ~~`link`~~ ~~`img`~~ ~~`radio`~~ ~~`checkbox`~~ `select` ~~`text`~~        |
-|**cells** <br> `{object[]}`                      |`row`类型专属属性, 详情见[data](#props.data)介绍                                                                            | `row` ~~`button`~~ ~~`link`~~ ~~`img`~~ ~~`radio`~~ ~~`checkbox`~~ ~~`select`~~ ~~`text`~~        |
-|**data** <br>`{*}`                               |自定义属性，理论上可以传任何值。这个值在组件内部并不会使用，您可以在[回调函数](#callback)的第一个参数得到这个值                       | `row` `button` `link` `img` `radio` `checkbox` `select` `text`                                     |
-|react的key属性                                    |-                                                                                                                        | -                                                                                                  |
-|**key** <br> `{string}`                          |jsx循环或数组需要用到的key属性，`请确保key的唯一性`                                                                           | `row` `button` `link` `img` `radio` `checkbox` `select` `text`                                     |
+|**键** `{类型}`                                   |描述                                                                                                                     |row    |button  |link  |img  |radio  | checkbox  | select  | text|
+|-------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------|-------|--------|------|-----|-------|-----------|---------|-----|
+|**type** <br> `{string}`                         |要在单元格内生成的节点类型                                                                                                  |✅     |✅     |✅    |✅   |✅    |✅         |✅       |✅  |
+|~~**uid**~~ <br> `{string}` **1.2.2版本之前可用**  |`已废弃` 单元格的唯一标识，可用来保存id等。该字段功能与key相似，也可以使用data字段结合回调函数来代替，故决定在1.2.2版本废弃该字段。    |❎     |✅    |✅    |✅    |✅    |✅         |❎      |❎   |
+|**name** <br>`{string}`                          |radio和checkbox必须设置的属性，同HTML同类标签的name属性                                                                      |❎     |❎     |❎    |❎    |✅    |✅        |❎      |✅   |
+|**text** <br> `{string}`                         |渲染后的HTML标签的文本                                                                                                     |❎     |❎     |✅    |✅    |✅    |✅        |✅      |✅   |
+|**value** <br> `{number\|string}`                |生成的HTML标签的`value`属性，`**1.4.1版本开始所有对象单元都可使用**`                                                           |❎     |✅     |❎    |❎    |❎    |❎        |❎      |❎   |
+|**src** <br> `{string}`                          |图片链接，如：'http(s)://xxx' 或 'data:image/xxx'                                                                          |❎     |❎     |❎     |✅   |❎     |❎       |❎      |❎   |
+|**alt** <br> `{string}`                          |图片的alt属性                                                                                                             |❎     |❎     |❎     |✅   |❎     |❎       |❎      |❎   |
+|**href** <br> `{string}`                         |link类型的超链接地址（同HTML a标签的href），也可不传此属性而使用event和callback的组合自定义事件回调                               |❎     |❎     |✅     |❎   |❎     |❎       |❎      |❎   |
+|**className** <br> `{string}`                    |自定义样式表名称                                                                                                           |✅     |✅     |✅    |✅   |✅    |✅         |✅      |✅  |
+|**event** <br> `{string}`                        |触发事件的方式，需和[回调函数](#callback)配合使用                                                                             |✅     |✅     |✅    |❌   |✅    |✅         |✅      |✅  |
+|**callback** <br> `{function}`                   |触发事件后的回调函数，详细见[回调函数](#callback)介绍                                                                         |✅     |✅     |✅    |❌   |✅    |✅         |✅      |✅  |
+|**option** <br> `{object[]}`                     |`select`类型专属属性, 详情见[option](#Option)介绍                                                                            |❌     |❌     |❌    |❌   |❌    |❌         |✅      |❌  |
+|**cells** <br> `{object[]}`                      |`row`类型专属属性, 详情见[data](#props.data)介绍                                                                             |✅     |❌     |❌    |❌   |❌    |❌         |❌      |❌  |
+|**data** <br>`{*}`                               |自定义属性，理论上可以传任何值。这个值在组件内部并不会使用，您可以在[回调函数](#callback)的第一个参数得到这个值                       |✅     |✅     |✅    |✅   |✅    |✅         |✅       |✅  |
+|react的key属性                                    |-                                                                                                                        |-       |-      |-      |-    |-      |-          |-        |-   |
+|**key** <br> `{string}`                          |jsx循环或数组需要用到的key属性，`请确保key的唯一性`                                                                           |✅     |✅     |✅    |✅   |✅    |✅         |✅       |✅  |
 
 ###### callback 回调函数
+
+- v1.5.0及之前版本
 
 |callback(data, objectUnit, event) |自定义事件的回调函数，可以配合`event`使用。若event未定义，则默认单击事件触发后回调此函数  |
 |----------------------------------|---------------------------------------------------------------------------------|
 |data                              |`对象单元格`属性中自定义的data属性，一般用来保存该单元格独一无二的信息。这是一个预留的属性 |
-|objectUnit                        |用于渲染该单元格的对象，即data里面定义的[对象单元](#对象单元)对象                                 |
+|objectUnit                        |用于渲染该单元格的对象，即data里面定义的[对象单元](#对象单元)对象                       |
 |event                             |触发单元格绑定的事件后返回的event对象                                                |
+
+- v1.5.1
+
+|callback(instance, objectUnit, event) |自定义事件的回调函数，可以配合`event`使用。若event未定义，则默认单击事件触发后回调此函数  |
+|--------------------------------------|--------------------------------------------------------------------------------|
+|instance                              |组件实例对象暴露出来的一些属性和方法                                                 |
+|objectUnit                            |该单元格内的对象单元数据                                                            |
+|event                                 |触发单元格绑定的事件后返回的event对象                                                |
 
 ###### Option
 
