@@ -4,6 +4,10 @@ import Tabllist from '../src'
 import './index.scss'
 
 const Dev = () => {
+	const checkboxEvent = function(a, b, c) {
+		console.log(a, b, c)
+	}
+
 	const option = {
 		data: [
 			[
@@ -33,16 +37,16 @@ const Dev = () => {
 						}
 					],
 					event: 'onChange',
-					callback: (restData, objectUnit, event) => {
+					callback: (instance, objectUnit, event) => {
 						// step 1: Get the value of select
 						const { value } = event.target
 						// step 2: According to the value of select to match the value of the corresponding row in the data,
 						// 				 and then get the index of the row
-						const { data } = objectUnit.instanceObject.props
-						for(let i = 0, k = data; i < k.length; i++) {
-							if(_.isPlainObject(data[i]) && parseInt(data[i].value) === parseInt(value)) {
+						const { scrollTo, renderData } = instance
+						for(let i = 0, k = renderData; i < k.length; i++) {
+							if(_.isPlainObject(renderData[i]) && parseInt(renderData[i].value) === parseInt(value)) {
 								// step 3: Call method scrolling list
-								objectUnit.instanceObject.scrollTo(i - 1)
+								scrollTo(i - 1)
 								break
 							}
 						}
@@ -153,14 +157,16 @@ const Dev = () => {
 						name: 'group1',
 						text: 'radio group 1-1',
 						value: 0,
-						className: 'test-radio'
+						className: 'test-radio',
+						callback: checkboxEvent
 					},
 					{
 						type: 'radio',
 						name: 'group1',
-						text: 'radio group 2-1',
+						text: 'radio group 1-2',
 						value: 1,
-						className: 'test-radio'
+						className: 'test-radio',
+						callback: checkboxEvent
 					}
 				],
 				'row 5; column 2',
@@ -183,13 +189,17 @@ const Dev = () => {
 							type: 'radio',
 							name: 'group2',
 							text: 'radio group 2-1',
-							className: 'test-radio'
+							className: 'test-radio',
+							value: 'a',
+							callback: checkboxEvent
 						},
 						{
 							type: 'radio',
 							name: 'group2',
 							text: 'radio group 2-2',
-							className: 'test-radio'
+							className: 'test-radio',
+							value: 'b',
+							callback: checkboxEvent
 						}
 					],
 					'row 6; column 2',
@@ -201,18 +211,24 @@ const Dev = () => {
 				[
 					{
 						type: 'checkbox',
-						name: 'chkxxx',
-						text: 'chk1'
+						name: 'chk',
+						text: 'chk1',
+						value: 'chk1',
+						callback: checkboxEvent
 					},
 					{
 						type: 'checkbox',
-						name: 'chkxxx',
-						text: 'chk2'
+						name: 'chk',
+						text: 'chk2',
+						value: 'chk2',
+						callback: checkboxEvent
 					},
 					{
 						type: 'checkbox',
-						name: 'chkxxx',
-						text: 'chk3'
+						name: 'chk',
+						text: 'chk3',
+						value: 'chk3',
+						callback: checkboxEvent
 					}
 				],
 				{
@@ -317,13 +333,13 @@ const Dev = () => {
 						{ height: 80 }
 					],
 					visual: {
-						show: true,
+						show: false,
 						style: {
 							backgroundColor: '#e8f4fc'
 						}
 					},
 					silent: {
-						show: false,
+						show: true,
 						style: {
 							backgroundColor: '#bcf0fc'
 						}
@@ -352,7 +368,6 @@ const Dev = () => {
 
 	return (
 		<div className='container'>
-			{/*<Tabllist />*/}
 			<Tabllist property={option.property} data={option.data} />
 		</div>
 	)

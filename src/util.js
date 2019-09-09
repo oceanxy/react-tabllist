@@ -253,22 +253,53 @@ export function fillRow(data, state) {
 
 /**
  * 组件内部元素的事件处理
- * @param _objectUnit {object} 渲染组件结构的对象单元
- * @param _func {function} 内部逻辑函数
+ * @param param {array} 保存渲染组件结构的对象单元以及内部逻辑函数的数组
  * @param event event对象
  */
-export function handleEvent([_objectUnit, _func], event) {
+export function handleEvent(param, event) {
 	event.stopPropagation()
 
-	if(_func && _.isFunction(_func)) {
-		_func(event)
+	if(_.isArray(param)) {
+		event.persist()
+
+		const [_objectUnit, _func] = param
+
+		// 如果有内部逻辑事件，执行之
+		if(_func && _.isFunction(_func)) {
+			_func(event)
+		} else {
+			// 没有内部逻辑事件，且对象单元存在时，执行用户的回调函数
+			if(_objectUnit && Object.keys(_objectUnit).length) {
+				expPropsAndMethods(this, _objectUnit, event)
+			}
+		}
 	}
+}
 
-	// 开放方法
-	_objectUnit = { ..._objectUnit, instanceObject: this }
-
+/**
+ * 给回调函数注入必要的属性和方法，暴露给外界使用
+ * @param comp {object} 组件实例对象
+ * @param _objectUnit {object} 渲染组件结构的对象单元
+ * @param event event对象
+ */
+export function expPropsAndMethods(comp, _objectUnit, event) {
 	if(_objectUnit.callback && _.isFunction(_objectUnit.callback)) {
-		_objectUnit.callback(_objectUnit.data, _objectUnit, event)
+		const { scrollTo, props, renderData, state } = comp
+		const cloneState = { ...state }
+		delete cloneState.property
+		delete cloneState.data
+		delete cloneState.className
+
+		_objectUnit.callback(
+			{
+				scrollTo,
+				props,
+				state: cloneState,
+				renderData
+			},
+			_objectUnit,
+			event
+		)
 	}
 }
 

@@ -114,7 +114,8 @@
 2. Fix bug: Numeric parsing error when custom cell width value is 'avg' or multiple values separated by commas.
 3. Fix bug: When deactivating list auto scrolling, you can't manually control the list to scroll to the specified row.
 4. Fix bug: Callback functions for object units {type: 'radio', ...} and {type: 'checkbox', ...} are not available. Note: This bug exists in all versions prior to version 1.5.1.
-5. Refactored part of the code.
+5. Optimize the parameter structure of the callback function.
+6. Refactored part of the code.
 
 #### 2.0.0
 1. Add a panel for dynamically adjusting properties in the development environment.
