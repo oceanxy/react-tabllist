@@ -3,7 +3,7 @@ import { getWaringProperty } from './config'
 
 /**
  * 从el元素向上选取第一个selector选择器匹配的元素
- * @param {Element} el DOM元素
+ * @param {Element || Node} el DOM元素
  * @param {string} selector 选择器
  * @return {Element} 按照选择器筛选后的元素
  */

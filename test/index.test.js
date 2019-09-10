@@ -170,7 +170,7 @@ describe('# change property', () => {
 			})
 
 			it('use default style of header', () => {
-				expect(wrapper.find('.list-header').getDOMNode().style.height).toBe('40px')
+				expect(wrapper.find('.list-header .list-row').getDOMNode().style.height).toBe('40px')
 			})
 
 			it('change style', function() {
@@ -178,7 +178,7 @@ describe('# change property', () => {
 					property: { header: { style: { height: 60, backgroundColor: '#000000' } } }
 				})
 
-				const { height, backgroundColor } = wrapper.find('.list-header').getDOMNode().style
+				const { height, backgroundColor } = wrapper.find('.list-header .list-row').getDOMNode().style
 
 				expect(height).toBe('60px')
 				expect(backgroundColor).toBe('rgb(0, 0, 0)')
@@ -613,23 +613,29 @@ describe('# test row of body', () => {
 			.getDOMNode().style.backgroundColor
 		).toBe('red')
 
-		// 测试header内的checkbox的点击事件
-		// wrapper
-		// 	.find('.list-body .list-row').at(0)
-		// 	.find('.list-cell').at(1)
-		// 	.find('input').simulate('change')
-		//
+		// 测试body内rowCheckbox的事件
+		const chk = wrapper
+			.find('.list-body .list-row').at(0)
+			.find('.list-cell').at(1)
+			.find('input')
+
+		const chkNode = chk.getDOMNode()
+		chkNode.checked = true
+
+		chk.simulate('change', { target: chkNode })
+
 		// expect(
 		// 	wrapper
 		// 		.find('.list-body .list-row').at(0)
 		// 		.find('.list-cell').at(1)
-		// 		.find('input').getDOMNode().selected
+		// 		.find('input').getDOMNode().checked
 		// ).toEqual(true)
 
-		console.log(wrapper
-			.find('.list-body .list-row').at(0)
+		// 测试header内rowCheckbox的事件
+		wrapper
+			.find('.list-header .list-row').at(0)
 			.find('.list-cell').at(1)
-			.find('input').debug())
+			.find('input').simulate('change')
 
 		// 测试列的优先级（当行号和行选择框的column配置为相同的值时）
 		wrapper.setProps({
@@ -759,7 +765,7 @@ describe('# test object unit', function() {
 					type: 'row',
 					data: 'null',
 					event: 'onClick',
-					callback: (data, cellData, event) => {
+					callback: () => {
 						testClick({
 							borderWidth: 6,
 							borderStyle: 'double',
@@ -786,7 +792,7 @@ describe('# test object unit', function() {
 					cells: ['t-1-1', 't-1-2', 't-1-3'],
 					data: 'null',
 					event: 'onClick',
-					callback: (data, cellData, event) => {
+					callback: () => {
 						testClick({
 							borderWidth: 4,
 							borderStyle: 'double',
@@ -816,7 +822,7 @@ describe('# test object unit', function() {
 						value: 'click me',
 						className: 'test-btn',
 						event: 'onClick',
-						callback: (data, cellObject, obj) => {
+						callback: () => {
 							testClick({
 								borderWidth: 2,
 								borderStyle: 'solid',
@@ -905,9 +911,9 @@ describe('# test object unit', function() {
 						className: 'test-link2',
 						key: '',
 						event: 'onClick',
-						callback: (data, cellData, event) => {
+						callback: (instance, objectUnit, event) => {
 							testClick({
-								borderWidth: data
+								borderWidth: objectUnit.data
 							})
 						}
 					},
@@ -1020,14 +1026,13 @@ describe('# test object unit', function() {
 								}
 							],
 							event: 'onChange',
-							callback: (restData, objectUnit, event) => {
+							callback: (instance, objectUnit, event) => {
 								const { value } = event.target
-								const { data } = objectUnit.instanceObject.props
-
-								for(let i = 0, k = data; i < k.length; i++) {
-									if(_.isPlainObject(data[i]) && parseInt(data[i].value) === parseInt(value)) {
+								const { scrollTo, renderData } = instance
+								for(let i = 0, k = renderData; i < k.length; i++) {
+									if(_.isPlainObject(renderData[i]) && parseInt(renderData[i].value) === parseInt(value)) {
+										scrollTo(i - 1)
 										handler()
-										objectUnit.instanceObject.scrollTo(i - 1)
 										break
 									}
 								}
@@ -1039,9 +1044,9 @@ describe('# test object unit', function() {
 						data: 0,
 						value: 0,
 						event: 'onClick',
-						callback: (restData, objectUnit, event) => {
+						callback: (instance, objectUnit, event) => {
 							alert('test event of row')
-							console.log(restData, objectUnit, event)
+							console.log(instance, objectUnit, event)
 						},
 						className: 'click-row',
 						cells: [
@@ -1050,7 +1055,7 @@ describe('# test object unit', function() {
 								type: 'link',
 								text: 'I am a first link',
 								className: 'test-link',
-								callback: () => {console.log('I am a first link')}
+								callback: () => console.log('I am a first link')
 							},
 							{
 								type: 'link',
@@ -1062,9 +1067,7 @@ describe('# test object unit', function() {
 								type: 'button',
 								value: 'click me',
 								className: 'test-btn',
-								callback: () => {
-									alert('hello react-tabllist')
-								}
+								callback: () => alert('hello react-tabllist')
 							}
 						]
 					},
@@ -1073,9 +1076,9 @@ describe('# test object unit', function() {
 						data: 1,
 						value: 1,
 						event: 'onClick',
-						callback: (restData, objectUnit, event) => {
+						callback: (instance, objectUnit, event) => {
 							alert('test event of row')
-							console.log(restData, objectUnit, event)
+							console.log(instance, objectUnit, event)
 						},
 						className: 'click-row',
 						cells: [
@@ -1084,7 +1087,7 @@ describe('# test object unit', function() {
 								type: 'link',
 								text: 'I am a first link',
 								className: 'test-link',
-								callback: () => {console.log('I am a first link')}
+								callback: () => console.log('I am a first link')
 							},
 							{
 								type: 'link',
@@ -1096,9 +1099,7 @@ describe('# test object unit', function() {
 								type: 'button',
 								value: 'click me',
 								className: 'test-btn',
-								callback: () => {
-									alert('hello react-tabllist')
-								}
+								callback: () => alert('hello react-tabllist')
 							}
 						]
 					},
@@ -1107,9 +1108,9 @@ describe('# test object unit', function() {
 						data: 2,
 						value: 2,
 						event: 'onClick',
-						callback: (restData, objectUnit, event) => {
+						callback: (instance, objectUnit, event) => {
 							alert('test event of row')
-							console.log(restData, objectUnit, event)
+							console.log(instance, objectUnit, event)
 						},
 						className: 'click-row',
 						cells: [
@@ -1118,7 +1119,7 @@ describe('# test object unit', function() {
 								type: 'link',
 								text: 'I am a first link',
 								className: 'test-link',
-								callback: () => {console.log('I am a first link')}
+								callback: () => console.log('I am a first link')
 							},
 							{
 								type: 'link',
@@ -1130,9 +1131,7 @@ describe('# test object unit', function() {
 								type: 'button',
 								value: 'click me',
 								className: 'test-btn',
-								callback: () => {
-									alert('hello react-tabllist')
-								}
+								callback: () => alert('hello react-tabllist')
 							}
 						]
 					},
@@ -1141,9 +1140,9 @@ describe('# test object unit', function() {
 						data: 3,
 						value: 3,
 						event: 'onClick',
-						callback: (restData, objectUnit, event) => {
+						callback: (instance, objectUnit, event) => {
 							alert('test event of row')
-							console.log(restData, objectUnit, event)
+							console.log(instance, objectUnit, event)
 						},
 						className: 'click-row',
 						cells: [
@@ -1152,7 +1151,7 @@ describe('# test object unit', function() {
 								type: 'link',
 								text: 'I am a first link',
 								className: 'test-link',
-								callback: () => {console.log('I am a first link')}
+								callback: () => console.log('I am a first link')
 							},
 							{
 								type: 'link',
@@ -1164,9 +1163,7 @@ describe('# test object unit', function() {
 								type: 'button',
 								value: 'click me',
 								className: 'test-btn',
-								callback: () => {
-									alert('hello react-tabllist')
-								}
+								callback: () => alert('hello react-tabllist')
 							}
 						]
 					},
@@ -1282,7 +1279,7 @@ describe('# test object unit', function() {
 
 			expect(radio.find('input[name="group1-main"]').exists()).toEqual(true)
 			expect(radio.find('span').text()).toBe('radio group 1-1')
-			// radio.find('input').simulate('change', { target: { value: '0' } })
+			radio.find('input').simulate('change')
 			// expect(radio.find('input').getDOMNode().checked).toEqual(true)
 		})
 
@@ -1336,7 +1333,8 @@ describe('# test object unit', function() {
 
 			expect(radio.find('input[name="group1-main"]').exists()).toEqual(true)
 			expect(radio.find('span').text()).toBe('radio group 1-1')
-			// radio.find('input').simulate('change', { target: { value: '0' } })
+
+			radio.find('input').simulate('change')
 			// expect(radio.find('input').getDOMNode().checked).toEqual(true)
 		})
 	})
@@ -1363,6 +1361,8 @@ describe('# test object unit', function() {
 
 		expect(checkbox.find('input[name="group1"]').exists()).toEqual(true)
 		expect(checkbox.find('span').text()).toBe('checkbox group 1-1')
+
+		checkbox.find('input').simulate('change')
 	})
 })
 

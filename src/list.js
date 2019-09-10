@@ -342,7 +342,7 @@ export default class extends React.Component {
 	/**
 	 * 复选框和单选按钮事件
 	 * @param {object} cr 生成DOM的数据
-	 * @param {object} event 点击的input对象
+	 * @param {Event} event 点击的input对象
 	 */
 	checkCR = (cr, event) => {
 		const { target } = event
@@ -370,10 +370,8 @@ export default class extends React.Component {
 			// 检测是否是行选择框
 			if(target.name === 'rowCheckbox') {
 				const { show: showHeader } = property.header
-				// 获取列表最外层容器
-				const listContainer = util.closest(target, '.list')
 				// 获取列表内所有的行选择框
-				const rowCheckboxes = listContainer.querySelectorAll('[name=\'rowCheckbox\']')
+				const rowCheckboxes = this.scroll.parentNode.querySelectorAll('[name=\'rowCheckbox\']')
 
 				// 当启用表头时，点击表头的行选择框
 				if(showHeader && _.isEqual(rowCheckboxes[0], target)) {
@@ -381,7 +379,7 @@ export default class extends React.Component {
 					selectedCur[targetName] = new Array(data.length).fill(target)
 				} else {
 					/* 触发非表头的行选择框 */
-					// 获取触发的行选择框的索引
+					// 获取触发的行选择框所在行的索引
 					const clickedActualIndex = _.findIndex(rowCheckboxes, target)
 					// 如果点击的是辅助容器内的行选择框，则对应到主容器内的行选择框的索引。
 					const mainIndex = clickedActualIndex >= data.length
@@ -392,6 +390,7 @@ export default class extends React.Component {
 
 					// 每次触发body内的行选择框时都检查一次所有行选择框的状态
 					const rowCheckboxSelectedQuantity = _.compact(selectedCur[targetName].map(chk => chk.checked).slice(1)).length
+					// body内行选择框未全选中
 					if(rowCheckboxSelectedQuantity !== data.length - 1) {
 						selectedCur[targetName][0] = { checked: false }
 						indeterminate = rowCheckboxSelectedQuantity > 0
@@ -406,10 +405,8 @@ export default class extends React.Component {
 					selectedCur[targetName] = []
 				}
 
-				// 获取复选框所在的单元格元素（考虑不限制于单个单元格内的复选框）
-				const listCell = util.closest(target, '.list-cell')
 				// 获取同一单元格内相同name的复选框
-				const checkboxes = listCell.querySelectorAll(`[name='${targetName}']`)
+				const checkboxes = this.listContMain.querySelectorAll(`[name='${targetName}']`)
 				// 获取触发的checkbox的索引
 				const clickedIndex = _.findIndex(checkboxes, target)
 				// 将处理后结果赋值给state
@@ -519,7 +516,13 @@ export default class extends React.Component {
 			// 处理标签属性
 			tagProps = {
 				key: cr.key,
-				value: cr.value !== undefined ? cr.value : `react-tabllist-value-${rowIndex}-${cellIndex}-${index}`,
+				value: cr.value !== undefined
+					? cr.value
+					: (
+						cr.name === 'rowCheckbox'
+							? `rowChk-${rowIndex}`
+							: `react-tabllist-value-${rowIndex}-${cellIndex}-${index}`
+					),
 				type: cr.type,
 				name: cr.type === 'radio' ? `${cr.name}-${container}` : cr.name,
 				className: cr.className
