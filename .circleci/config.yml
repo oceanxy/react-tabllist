@@ -17,6 +17,9 @@ jobs:
           name: update-npm
           command: 'sudo npm install -g npm@latest'
       - run:
+          name: get-folder-permissions
+          command: 'sudo chown -R $USER /usr/local/bin'
+      - run:
           name: install-yarn
           command: 'sudo npm install -g yarn'
       - restore_cache:
