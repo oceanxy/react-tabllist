@@ -2,12 +2,12 @@
 
 ---
 
-#### 2.0.0
+#### 2.0.0[plan]
 1. Add a panel for dynamically adjusting properties in the development environment.
 2. New Function: A unit can bind multiple events.
 3. Refactoring most of the old code.
 
-#### 1.5.1
+#### 1.5.1[latest]
 1. Fix bug: when setting css property {border-collapse: 'collapse'}, 'border-spacing' is invalid because it is ignored.
 2. Fix bug: Numeric parsing error when custom cell width value is 'avg' or multiple values separated by commas.
 3. Fix bug: When deactivating list auto scrolling, you can't manually control the list to scroll to the specified row.
