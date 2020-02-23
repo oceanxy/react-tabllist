@@ -116,10 +116,10 @@ The `data` data format is very similar to a two-dimensional array。
     [cell, cell, cell],   // row
     [
         cell, // cell
-        cell, 
+        cell,
         cell
-    ], 
-    [cell, cell, cell], 
+    ],
+    [cell, cell, cell],
     ...
 ]
 ```
@@ -132,19 +132,19 @@ The `data` data format is very similar to a two-dimensional array。
         type: 'row',
         cells: [cell, cell, cell],
         ...
-    }, 
+    },
     [  // Display rows as an array, each element representing a cell
         {type: 'button', ...},   // Generate a button in the cell
         cell,  // cell
         cell
-    ], 
+    ],
     [
-        cell, 
-        cell, 
+        cell,
+        cell,
         [
             {type: 'radio'}, {type: 'radio'}, ... // Generate two or more radios in the same cell
-        ]  
-    ], 
+        ]
+    ],
     ...
 ]
 ```
@@ -158,16 +158,17 @@ The data format that cells can parse is divided into the following four categori
 - jsx,Such as: `<button className='test-button' onclick='()=>{return null}'>click</button>`
 - Object（Object cell），Details are as follows：
 
-|type                         | description                                                                                                                               |
-|-----------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
-|row                          |Generate a unit row, `unit row object` can only be written in the body, invalid elsewhere                                                  |
-|img                          |Generate an img tag inside the cell                                                                                                        |
-|button                       |Generate a button in the cell                                                                                                              |
-|link                         |Generate a link in the cell (a tag)                                                                                                        |
-|radio                        |Generate a radio in the cell                                                                                                               |
-|checkbox                     |Generate a checkbox in the cell                                                                                                            |
-|select <sup>^1.4.1</sup>     |Generate a select in the cell                                                                                                              |
-|text <sup>^1.5.0</sup>       |Generate a plain text inside the cell. The only difference between writing a string directly in a cell is that it can increase the event.  |
+|type                         | description                                                                                                                                               |
+|-----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+|row                          |Generate a unit row, `unit row object` can only be written in the body, invalid elsewhere                                                                  |
+|img                          |Generate an img tag inside the cell                                                                                                                        |
+|button                       |Generate a button in the cell                                                                                                                              |
+|link                         |Generate a link in the cell (a tag)                                                                                                                        |
+|radio                        |Generate a radio in the cell                                                                                                                               |
+|checkbox                     |Generate a checkbox in the cell                                                                                                                            |
+|select <sup>^1.4.1</sup>     |Generate a select in the cell                                                                                                                              |
+|text <sup>^1.5.0</sup>       |Generate a plain text inside the cell. You can also replace the object unit with a string. If you don't plan to add events to this cell, you can do that.  |
+|input <sup>^1.6.0</sup>      |Generate a text box in a cell.                                                                                                                             |
 
 Here are some examples：
 
@@ -275,24 +276,30 @@ Here are some examples：
 
 ###### Object Cell Attribute
 
-|**key** `{type}`                                                       |description                                                                                                                                                                                                                                                                          |row       |button    |link      |img       |radio     |checkbox  |select    |text      |
-|-----------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|----------|----------|----------|----------|----------|----------|----------|
-|**type** <br> `{string}`                                               |The type of HTML tag to be generated in the cell                                                                                                                                                                                                                                     |✅       |✅        |✅        |✅       |✅        |✅        |✅       |✅        |
-|~~**uid**~~ <br> `{string}` **Available before version 1.2.2**         |`Deprecated` A unique identifier for a cell that can be used to save ids, and so on. This field function is similar to the key, and can also be replaced with a data field in conjunction with a callback function, so it is decided to discard this field in version 1.2.2.         |❌       |✅        |✅        |✅       |✅        |✅        |❌       |❌        |
-|**name** <br>`{string}`                                                |The attributes that the radio and checkbox must set, the same as the name attribute of the HTML-like tag.                                                                                                                                                                            |❌       |❌        |❌        |❌       |✅        |✅        |❌       |✅        |
-|**text** <br> `{string}`                                               |The text of the rendered HTML tag                                                                                                                                                                                                                                                    |❌       |❌        |✅        |✅       |✅        |✅        |✅       |✅        |
-|**value** <br> `{number\|string}`                                      |The `value` attribute of the generated HTML tag, `**All object units can be used starting with version 1.4.1**`                                                                                                                                                                          |❌       |✅        |❌        |❌       |❌        |❌        |❌       |❌        |
-|**src** <br> `{string}`                                                |Image link, such as: 'http(s)://xxx' or 'data:image/xxx'                                                                                                                                                                                                                             |❌       |❌        |❌        |✅       |❌        |❌        |❌       |❌        |
-|**alt** <br> `{string}`                                                |The alt attribute of the image                                                                                                                                                                                                                                                       |❌       |❌        |❌        |✅       |❌        |❌        |❌       |❌        |
-|**href** <br> `{string}`                                               |The hyperlink type of the link type (the same as the href of the HTML a tag), or you can use this combination of event and callback to customize the event callback without passing this attribute.                                                                                  |❌       |❌        |✅        |❌       |❌        |❌        |❌       |❌        |
-|**className** <br> `{string}`                                          |Custom style sheet name                                                                                                                                                                                                                                                              |✅       |✅        |✅        |✅       |✅        |✅        |✅       |✅        |
-|**event** <br> `{string}`                                              |The way to trigger an event needs to be used with [callback](#Callback)                                                                                                                                                                                                              |✅       |✅        |✅        |❌       |✅        |✅        |✅       |✅        |
-|**callback** <br> `{function}`                                         |The callback function after the trigger event, see the [callback](#Callback) for details.                                                                                                                                                                                            |✅       |✅        |✅        |❌       |✅        |✅        |✅       |✅        |
-|**option** <br> `{object[]}`                                           |Can only be used with the `select` type, see the [option](#Option) for details.                                                                                                                                                                                                      |❌       |❌        |❌        |❌       |❌        |❌        |✅       |❌        |
-|**cells** <br> `{object[]}`                                            |Can only be used with the `row` type, see the [data](#props.data) for details.                                                                                                                                                                                                       |✅       |❌        |❌        |❌       |❌        |❌        |❌       |❌        |
-|**data** <br>`{*}`                                                     |Custom attributes can theoretically pass any value. This value is not used inside the component, you can get this value in the first parameter of the [callback](#Callback)                                                                                                          |✅       |✅        |✅        |✅       |✅        |✅        |✅       |✅        |
-|REACT attributes may be required                                       |-                                                                                                                                                                                                                                                                                    |-        |-         |-          |-        |-          |-         |-         |-         |
-|**key** <br> `{string}`                                                |Jsx loop or array need to use the key attribute, `Please ensure the uniqueness of the key`                                                                                                                                                                                           |✅       |✅        |✅        |✅       |✅        |✅        |✅       |✅        |
+|**Attribute** `{type}`                                                 |Description                                                                                                                                                                                                                                                                          |row   |button  |link  |img       |radio     |checkbox  |input    |select   |text      |
+|-----------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------|--------|------|----------|----------|----------|---------|---------|----------|
+|~~**uid**~~ <br> `{string}` **Available before version 1.2.2**         |`Deprecated` A unique identifier for a cell that can be used to save ids, and so on. This field function is similar to the key, and can also be replaced with a data field in conjunction with a callback function, so it is decided to discard this field in version 1.2.2.             |❌    |✅     |✅    |✅       |✅        |✅        |❌      |❌       |❌        |
+|**type** <br> `{string}`                                               |The type of HTML tag to be generated in the cell                                                                                                                                                                                                                                     |✅    |✅     |✅    |✅       |✅        |✅        |✅      |✅       |✅        |
+|**text** <br> `{string}`                                               |The text of the rendered HTML tag                                                                                                                                                                                                                                                    |❌    |❌     |✅    |✅       |✅        |✅        |✅      |✅       |✅        |
+|**event** <br> `{string}`                                              |The way to trigger an event needs to be used with [callback](#Callback)                                                                                                                                                                                                              |✅    |✅     |✅    |❌       |✅        |✅        |✅      |✅       |✅        |
+|**callback** <br> `{function}`                                         |The callback function after the trigger event, see the [callback](#Callback) for details.                                                                                                                                                                                            |✅    |✅     |✅    |❌       |✅        |✅        |✅      |✅       |✅        |
+|**cells** <br> `{object[]}`                                            |Can only be used with the `row` type, see the [data](#props.data) for details.                                                                                                                                                                                                       |✅    |❌     |❌    |❌       |❌        |❌        |❌      |❌       |❌        |
+|**data** <br>`{*}`                                                     |Custom attributes can theoretically pass any value. This value is not used inside the component, you can get this value in the first parameter of the [callback](#Callback)                                                                                                           |✅    |✅     |✅    |✅       |✅        |✅        |✅      |✅       |✅        |
+|**option** <br> `{object[]}`                                           |Can only be used with the `select` type, see the [option](#Option) for details.                                                                                                                                                                                                      |❌    |❌     |❌    |❌       |❌        |❌        |❌      |✅       |❌        |
+
+
+###### HTML Attribute (The usage of these attributes is the same as that of native HTML tags. They are listed to indicate the points to be aware of when using them.)
+|**Attribute** `{type}`                                                 |Description                                                                                                                                                                                           |
+|-----------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|**name** <br>`{string}`                                                |The attributes that the radio and checkbox must set, the same as the name attribute of the HTML-like tag.                                                                                             |
+|**value** <br> `{number\|string}`                                      |The `value` attribute of the generated HTML tag, `**All object cell can be used starting with version 1.4.1**`                                                                                        |
+|**src** <br> `{string}`                                                |Image link, such as: 'http(s)://xxx' or 'data:image/xxx'                                                                                                                                              |
+|**alt** <br> `{string}`                                                |The alt attribute of the image                                                                                                                                                                        |
+|**href** <br> `{string}`                                               |The hyperlink type of the link type (the same as the href of the HTML a tag), or you can use this combination of event and callback to customize the event callback without passing this attribute.   |
+|**key** <br> `{string}`                                                |Jsx loop or array need to use the key attribute, `Please ensure the uniqueness of the key`                                                                                                            |
+|**className** <br> `{string}`                                          |Custom style sheet name                                                                                                                                                                               |
+
+For more tag attributes please visit [w3schools](https://www.w3schools.com/tags/).
 
 ###### Callback
 
