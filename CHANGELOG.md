@@ -9,7 +9,8 @@
 
 #### 1.6.0[developing]
 1. New object cell: input.
-2. Modify the description of the fields available in the object cell in the README.md file.
+2. Optimization of generation rules for object cells. You can now add custom attributes, react-related HTML attributes, and HTML attributes specified by w3school in the configuration of the object cell to make the resulting tags more friendly.
+3. Modify the description of the fields available in the object cell in the README.md file.
 
 #### 1.5.1[latest]
 1. Fix bug: when setting css property {border-collapse: 'collapse'}, 'border-spacing' is invalid because it is ignored.

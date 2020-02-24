@@ -16,11 +16,14 @@ const Dev = () => {
           defaultValue: '1st column',
           placeholder: '1st column'
         },
-        '2nd column',
+        {
+          type: 'text',
+          text: '2nd column'
+        },
         '3rd column',
         {
           type: 'select',
-          text: '4 ',
+          text: '4th column',
           data: 123,
           className: '',
           option: [
@@ -48,6 +51,7 @@ const Dev = () => {
             // 				 and then get the index of the row
             const { scrollTo, renderData } = instance;
             for(let i = 0, k = renderData; i < k.length; i++) {
+              // eslint-disable-next-line no-undef
               if(_.isPlainObject(renderData[i]) && parseInt(renderData[i].value) === parseInt(value)) {
                 // step 3: Call method scrolling list
                 scrollTo(i - 1);
@@ -58,10 +62,10 @@ const Dev = () => {
         }
       ],
       [
-        <span>I am span</span>,
-        <div onClick={() => alert('test JSX event')}>test JSX event</div>,
-        <a href='http://www.xieyangogo.cn/react-tabllist/'>I am link</a>,
-        <div>I am div</div>
+        <span key={0}>I am a span</span>,
+        <div key={1} onClick={() => alert('test JSX event')}>test JSX event</div>,
+        <a key={2} href='http://www.xieyangogo.cn/react-tabllist/'>I am a link</a>,
+        <div key={3}>I am a div</div>
       ],
       {
         type: 'row',
@@ -106,7 +110,7 @@ const Dev = () => {
           className: 'test-link2',
           key: '',
           event: 'onClick',
-          callback: (data, cellData, event) => {
+          callback: () => {
             window.open('https://github.com/oceanxy/react-tabllist');
           }
         },
@@ -151,7 +155,9 @@ const Dev = () => {
             callback: () => {
               alert('hello react-tabllist');
             }
-          }, 'row 4; column 3', 'row 4; column 4'
+          },
+          'row 4; column 3',
+          'row 4; column 4'
         ]
       },
       [
@@ -159,7 +165,7 @@ const Dev = () => {
           {
             type: 'radio',
             name: 'group1',
-            text: 'radio group 1-1',
+            text: 'row 5; column 1-1',
             value: 0,
             className: 'test-radio',
             callback: checkboxEvent
@@ -167,7 +173,7 @@ const Dev = () => {
           {
             type: 'radio',
             name: 'group1',
-            text: 'radio group 1-2',
+            text: 'row 5; column 1-2',
             value: 1,
             className: 'test-radio',
             callback: checkboxEvent

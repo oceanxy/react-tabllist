@@ -580,11 +580,23 @@ export function handleBuiltInAttributes(objectCell) {
 }
 
 /**
- * 生成ID
+ * 生成ID和key。如果未定义key，则key的值与新生成的id相同。
  * @param key {string} 唯一标识符
  * @param type {string} 单元格类型
- * @returns {string} ID
+ * @returns {{id: string, key: string}} 包含新生成的ID和key的对象
  */
-export function generateIDForTag(key, type) {
-  return key ? key : `rt-${type}-${(Math.random() * Math.pow(10, 10)).toFixed(0)}`;
+export function generateIdAndKeyForTag(key, type) {
+  const id = `rt-${type}-${(Math.random() * Math.pow(10, 10)).toFixed(0)}`;
+
+  if(key) {
+    return {
+      key,
+      id
+    };
+  }
+
+  return {
+    id,
+    key: id
+  };
 }
