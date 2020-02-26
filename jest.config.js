@@ -166,8 +166,7 @@ module.exports = {
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   transformIgnorePatterns: [
-    '/node_modules/',
-    '/node_modules/(?!(lodash-es|other-es-lib))'
+    '/node_modules/'
   ],
 
   transform: {
@@ -185,4 +184,4 @@ module.exports = {
 
   // Whether to use watchman for file crawling
   // watchman: true,
-};
+}
