@@ -1,6 +1,6 @@
 codecov:
   branch: master
-  token: c8f8f5b8-3555-41de-a3c7-9555d71318fe  # 本地执行时需要将codecov还原
+#  token: xxx  # 本地执行时需要将codecov还原
 
 coverage:
   status:

@@ -7,12 +7,12 @@
 2. New Function: A cell can bind multiple events.
 3. Refactoring most of the old code.
 
-#### 1.6.0[developing]
+#### 1.6.0[latest]
 1. New object cell: input.
 2. Optimization of generation rules for object cells. You can now add custom attributes, react-related HTML attributes, and HTML attributes specified by w3school in the configuration of the object cell to make the resulting tags more friendly.
 3. Modify the description of the fields available in the object cell in the README.md file.
 
-#### 1.5.1[latest]
+#### 1.5.1 `For some reason, v1.5.1 has disappeared! Don't panic, everything in v1.5.1 is included in v1.6.0. But I recommend using the latest version.`
 1. Fix bug: when setting css property {border-collapse: 'collapse'}, 'border-spacing' is invalid because it is ignored.
 2. Fix bug: Numeric parsing error when custom cell width value is 'avg' or multiple values separated by commas.
 3. Fix bug: When deactivating list auto scrolling, you can't manually control the list to scroll to the specified row.

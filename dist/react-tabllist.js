@@ -7,7 +7,7 @@
 		exports["ReactTabllist"] = factory(require("react"), require("lodash"));
 	else
 		root["ReactTabllist"] = factory(root["React"], root["_"]);
-})(window, function(__WEBPACK_EXTERNAL_MODULE__0__, __WEBPACK_EXTERNAL_MODULE__1__) {
+})(window, function(__WEBPACK_EXTERNAL_MODULE__2__, __WEBPACK_EXTERNAL_MODULE__3__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -91,23 +91,25 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 28);
+/******/ 	return __webpack_require__(__webpack_require__.s = 27);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE__0__;
+function _assertThisInitialized(self) {
+  if (self === void 0) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return self;
+}
+
+module.exports = _assertThisInitialized;
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE__1__;
-
-/***/ }),
-/* 2 */
 /***/ (function(module, exports) {
 
 function _defineProperty(obj, key, value) {
@@ -128,21 +130,43 @@ function _defineProperty(obj, key, value) {
 module.exports = _defineProperty;
 
 /***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE__2__;
+
+/***/ }),
 /* 3 */
 /***/ (function(module, exports) {
 
-function _assertThisInitialized(self) {
-  if (self === void 0) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-
-  return self;
-}
-
-module.exports = _assertThisInitialized;
+module.exports = __WEBPACK_EXTERNAL_MODULE__3__;
 
 /***/ }),
 /* 4 */
+/***/ (function(module, exports) {
+
+function _extends() {
+  module.exports = _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
+module.exports = _extends;
+
+/***/ }),
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var objectWithoutPropertiesLoose = __webpack_require__(19);
@@ -167,30 +191,6 @@ function _objectWithoutProperties(source, excluded) {
 }
 
 module.exports = _objectWithoutProperties;
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports) {
-
-function _extends() {
-  module.exports = _extends = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-
-    return target;
-  };
-
-  return _extends.apply(this, arguments);
-}
-
-module.exports = _extends;
 
 /***/ }),
 /* 6 */
@@ -232,7 +232,7 @@ module.exports = _createClass;
 
 var _typeof = __webpack_require__(17);
 
-var assertThisInitialized = __webpack_require__(3);
+var assertThisInitialized = __webpack_require__(0);
 
 function _possibleConstructorReturn(self, call) {
   if (call && (_typeof(call) === "object" || typeof call === "function")) {
@@ -284,11 +284,11 @@ module.exports = _inherits;
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayWithoutHoles = __webpack_require__(26);
+var arrayWithoutHoles = __webpack_require__(25);
 
 var iterableToArray = __webpack_require__(13);
 
-var nonIterableSpread = __webpack_require__(27);
+var nonIterableSpread = __webpack_require__(26);
 
 function _toConsumableArray(arr) {
   return arrayWithoutHoles(arr) || iterableToArray(arr) || nonIterableSpread();
@@ -348,7 +348,7 @@ module.exports = _toArray;
 
 var arrayWithHoles = __webpack_require__(12);
 
-var iterableToArrayLimit = __webpack_require__(25);
+var iterableToArrayLimit = __webpack_require__(24);
 
 var nonIterableRest = __webpack_require__(14);
 
@@ -362,16 +362,16 @@ module.exports = _slicedToArray;
 /* 17 */
 /***/ (function(module, exports) {
 
-function _typeof2(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof2 = function _typeof2(obj) { return typeof obj; }; } else { _typeof2 = function _typeof2(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof2(obj); }
-
 function _typeof(obj) {
-  if (typeof Symbol === "function" && _typeof2(Symbol.iterator) === "symbol") {
+  "@babel/helpers - typeof";
+
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     module.exports = _typeof = function _typeof(obj) {
-      return _typeof2(obj);
+      return typeof obj;
     };
   } else {
     module.exports = _typeof = function _typeof(obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : _typeof2(obj);
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
     };
   }
 
@@ -420,38 +420,318 @@ module.exports = _objectWithoutPropertiesLoose;
 /* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var api = __webpack_require__(21);
+            var content = __webpack_require__(22);
 
-var content = __webpack_require__(21);
+            content = content.__esModule ? content.default : content;
 
-if(typeof content === 'string') content = [[module.i, content, '']];
+            if (typeof content === 'string') {
+              content = [[module.i, content, '']];
+            }
 
-var transform;
-var insertInto;
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = api(content, options);
+
+var exported = content.locals ? content.locals : {};
 
 
 
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(23)(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {}
+module.exports = exported;
 
 /***/ }),
 /* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(22)(false);
-// Module
-exports.push([module.i, ".list {\n  overflow: hidden;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box; }\n  .list .list-header .list-cont {\n    border-collapse: collapse; }\n  .list .list-header .list-row {\n    background: no-repeat center / 100% 100%; }\n    .list .list-header .list-row .list-cell {\n      overflow: hidden;\n      white-space: nowrap;\n      text-overflow: ellipsis; }\n  .list .list-body {\n    overflow-x: hidden; }\n  .list .list-cont {\n    margin: 0;\n    padding: 0;\n    display: table;\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n    table-layout: fixed;\n    width: 100%;\n    height: auto;\n    -webkit-transition: all 400ms;\n    transition: all 400ms; }\n    .list .list-cont .list-row {\n      display: table-row;\n      list-style: none;\n      border: none !important;\n      -webkit-transition: all 300ms cubic-bezier(0, 0, 0.58, 1);\n      transition: all 300ms cubic-bezier(0, 0, 0.58, 1);\n      background: no-repeat center / 100% 100%; }\n      .list .list-cont .list-row.list-row-start {\n        -webkit-transform: scale(0.8);\n                transform: scale(0.8);\n        opacity: 0; }\n      .list .list-cont .list-row.list-row-end {\n        opacity: 1;\n        -webkit-transform: scale(1);\n                transform: scale(1); }\n      .list .list-cont .list-row.click-row {\n        cursor: pointer; }\n      .list .list-cont .list-row .list-cell {\n        display: table-cell;\n        -webkit-box-sizing: border-box;\n                box-sizing: border-box;\n        text-align: center;\n        vertical-align: middle;\n        word-break: break-all;\n        overflow: hidden;\n        background: no-repeat center / 100% 100%; }\n        .list .list-cont .list-row .list-cell * {\n          vertical-align: middle; }\n        .list .list-cont .list-row .list-cell a {\n          color: currentColor;\n          -webkit-text-decoration: transparent;\n                  text-decoration: transparent; }\n        .list .list-cont .list-row .list-cell label {\n          vertical-align: middle; }\n          .list .list-cont .list-row .list-cell label span, .list .list-cont .list-row .list-cell label input {\n            vertical-align: middle;\n            padding: 0 5px; }\n", ""]);
+"use strict";
 
+
+var isOldIE = function isOldIE() {
+  var memo;
+  return function memorize() {
+    if (typeof memo === 'undefined') {
+      // Test for IE <= 9 as proposed by Browserhacks
+      // @see http://browserhacks.com/#hack-e71d8692f65334173fee715c222cb805
+      // Tests for existence of standard globals is to allow style-loader
+      // to operate correctly into non-standard environments
+      // @see https://github.com/webpack-contrib/style-loader/issues/177
+      memo = Boolean(window && document && document.all && !window.atob);
+    }
+
+    return memo;
+  };
+}();
+
+var getTarget = function getTarget() {
+  var memo = {};
+  return function memorize(target) {
+    if (typeof memo[target] === 'undefined') {
+      var styleTarget = document.querySelector(target); // Special case to return head of iframe instead of iframe itself
+
+      if (window.HTMLIFrameElement && styleTarget instanceof window.HTMLIFrameElement) {
+        try {
+          // This will throw an exception if access to iframe is blocked
+          // due to cross-origin restrictions
+          styleTarget = styleTarget.contentDocument.head;
+        } catch (e) {
+          // istanbul ignore next
+          styleTarget = null;
+        }
+      }
+
+      memo[target] = styleTarget;
+    }
+
+    return memo[target];
+  };
+}();
+
+var stylesInDom = [];
+
+function getIndexByIdentifier(identifier) {
+  var result = -1;
+
+  for (var i = 0; i < stylesInDom.length; i++) {
+    if (stylesInDom[i].identifier === identifier) {
+      result = i;
+      break;
+    }
+  }
+
+  return result;
+}
+
+function modulesToDom(list, options) {
+  var idCountMap = {};
+  var identifiers = [];
+
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i];
+    var id = options.base ? item[0] + options.base : item[0];
+    var count = idCountMap[id] || 0;
+    var identifier = "".concat(id, " ").concat(count);
+    idCountMap[id] = count + 1;
+    var index = getIndexByIdentifier(identifier);
+    var obj = {
+      css: item[1],
+      media: item[2],
+      sourceMap: item[3]
+    };
+
+    if (index !== -1) {
+      stylesInDom[index].references++;
+      stylesInDom[index].updater(obj);
+    } else {
+      stylesInDom.push({
+        identifier: identifier,
+        updater: addStyle(obj, options),
+        references: 1
+      });
+    }
+
+    identifiers.push(identifier);
+  }
+
+  return identifiers;
+}
+
+function insertStyleElement(options) {
+  var style = document.createElement('style');
+  var attributes = options.attributes || {};
+
+  if (typeof attributes.nonce === 'undefined') {
+    var nonce =  true ? __webpack_require__.nc : undefined;
+
+    if (nonce) {
+      attributes.nonce = nonce;
+    }
+  }
+
+  Object.keys(attributes).forEach(function (key) {
+    style.setAttribute(key, attributes[key]);
+  });
+
+  if (typeof options.insert === 'function') {
+    options.insert(style);
+  } else {
+    var target = getTarget(options.insert || 'head');
+
+    if (!target) {
+      throw new Error("Couldn't find a style target. This probably means that the value for the 'insert' parameter is invalid.");
+    }
+
+    target.appendChild(style);
+  }
+
+  return style;
+}
+
+function removeStyleElement(style) {
+  // istanbul ignore if
+  if (style.parentNode === null) {
+    return false;
+  }
+
+  style.parentNode.removeChild(style);
+}
+/* istanbul ignore next  */
+
+
+var replaceText = function replaceText() {
+  var textStore = [];
+  return function replace(index, replacement) {
+    textStore[index] = replacement;
+    return textStore.filter(Boolean).join('\n');
+  };
+}();
+
+function applyToSingletonTag(style, index, remove, obj) {
+  var css = remove ? '' : obj.media ? "@media ".concat(obj.media, " {").concat(obj.css, "}") : obj.css; // For old IE
+
+  /* istanbul ignore if  */
+
+  if (style.styleSheet) {
+    style.styleSheet.cssText = replaceText(index, css);
+  } else {
+    var cssNode = document.createTextNode(css);
+    var childNodes = style.childNodes;
+
+    if (childNodes[index]) {
+      style.removeChild(childNodes[index]);
+    }
+
+    if (childNodes.length) {
+      style.insertBefore(cssNode, childNodes[index]);
+    } else {
+      style.appendChild(cssNode);
+    }
+  }
+}
+
+function applyToTag(style, options, obj) {
+  var css = obj.css;
+  var media = obj.media;
+  var sourceMap = obj.sourceMap;
+
+  if (media) {
+    style.setAttribute('media', media);
+  } else {
+    style.removeAttribute('media');
+  }
+
+  if (sourceMap && btoa) {
+    css += "\n/*# sourceMappingURL=data:application/json;base64,".concat(btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))), " */");
+  } // For old IE
+
+  /* istanbul ignore if  */
+
+
+  if (style.styleSheet) {
+    style.styleSheet.cssText = css;
+  } else {
+    while (style.firstChild) {
+      style.removeChild(style.firstChild);
+    }
+
+    style.appendChild(document.createTextNode(css));
+  }
+}
+
+var singleton = null;
+var singletonCounter = 0;
+
+function addStyle(obj, options) {
+  var style;
+  var update;
+  var remove;
+
+  if (options.singleton) {
+    var styleIndex = singletonCounter++;
+    style = singleton || (singleton = insertStyleElement(options));
+    update = applyToSingletonTag.bind(null, style, styleIndex, false);
+    remove = applyToSingletonTag.bind(null, style, styleIndex, true);
+  } else {
+    style = insertStyleElement(options);
+    update = applyToTag.bind(null, style, options);
+
+    remove = function remove() {
+      removeStyleElement(style);
+    };
+  }
+
+  update(obj);
+  return function updateStyle(newObj) {
+    if (newObj) {
+      if (newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap) {
+        return;
+      }
+
+      update(obj = newObj);
+    } else {
+      remove();
+    }
+  };
+}
+
+module.exports = function (list, options) {
+  options = options || {}; // Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+  // tags it will allow on a page
+
+  if (!options.singleton && typeof options.singleton !== 'boolean') {
+    options.singleton = isOldIE();
+  }
+
+  list = list || [];
+  var lastIdentifiers = modulesToDom(list, options);
+  return function update(newList) {
+    newList = newList || [];
+
+    if (Object.prototype.toString.call(newList) !== '[object Array]') {
+      return;
+    }
+
+    for (var i = 0; i < lastIdentifiers.length; i++) {
+      var identifier = lastIdentifiers[i];
+      var index = getIndexByIdentifier(identifier);
+      stylesInDom[index].references--;
+    }
+
+    var newLastIdentifiers = modulesToDom(newList, options);
+
+    for (var _i = 0; _i < lastIdentifiers.length; _i++) {
+      var _identifier = lastIdentifiers[_i];
+
+      var _index = getIndexByIdentifier(_identifier);
+
+      if (stylesInDom[_index].references === 0) {
+        stylesInDom[_index].updater();
+
+        stylesInDom.splice(_index, 1);
+      }
+    }
+
+    lastIdentifiers = newLastIdentifiers;
+  };
+};
 
 /***/ }),
 /* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(23);
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, ".list{overflow:hidden;box-sizing:border-box}.list .list-header .list-cont{border-collapse:collapse}.list .list-header .list-row{background:no-repeat center / 100% 100%}.list .list-header .list-row .list-cell{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.list .list-body{overflow-x:hidden}.list .list-cont{margin:0;padding:0;display:table;box-sizing:border-box;table-layout:fixed;width:100%;height:auto;transition:all 400ms}.list .list-cont .list-row{display:table-row;list-style:none;border:none !important;transition:all 300ms cubic-bezier(0, 0, 0.58, 1);background:no-repeat center / 100% 100%}.list .list-cont .list-row.list-row-start{transform:scale(0.8);opacity:0}.list .list-cont .list-row.list-row-end{opacity:1;transform:scale(1)}.list .list-cont .list-row.click-row{cursor:pointer}.list .list-cont .list-row .list-cell{display:table-cell;box-sizing:border-box;text-align:center;vertical-align:middle;word-break:break-all;overflow:hidden;background:no-repeat center / 100% 100%}.list .list-cont .list-row .list-cell *{vertical-align:middle}.list .list-cont .list-row .list-cell a{color:currentColor;-webkit-text-decoration:transparent;text-decoration:transparent}.list .list-cont .list-row .list-cell label{vertical-align:middle}.list .list-cont .list-row .list-cell label span,.list .list-cont .list-row .list-cell label input{vertical-align:middle;padding:0 5px}\n", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -471,7 +751,7 @@ module.exports = function (useSourceMap) {
       var content = cssWithMappingToString(item, useSourceMap);
 
       if (item[2]) {
-        return "@media ".concat(item[2], "{").concat(content, "}");
+        return "@media ".concat(item[2], " {").concat(content, "}");
       }
 
       return content;
@@ -480,7 +760,7 @@ module.exports = function (useSourceMap) {
   // eslint-disable-next-line func-names
 
 
-  list.i = function (modules, mediaQuery) {
+  list.i = function (modules, mediaQuery, dedupe) {
     if (typeof modules === 'string') {
       // eslint-disable-next-line no-param-reassign
       modules = [[null, modules, '']];
@@ -488,30 +768,34 @@ module.exports = function (useSourceMap) {
 
     var alreadyImportedModules = {};
 
-    for (var i = 0; i < this.length; i++) {
-      // eslint-disable-next-line prefer-destructuring
-      var id = this[i][0];
+    if (dedupe) {
+      for (var i = 0; i < this.length; i++) {
+        // eslint-disable-next-line prefer-destructuring
+        var id = this[i][0];
 
-      if (id != null) {
-        alreadyImportedModules[id] = true;
+        if (id != null) {
+          alreadyImportedModules[id] = true;
+        }
       }
     }
 
     for (var _i = 0; _i < modules.length; _i++) {
-      var item = modules[_i]; // skip already imported module
-      // this implementation is not 100% perfect for weird media query combinations
-      // when a module is imported multiple times with different media queries.
-      // I hope this will never occur (Hey this way we have smaller bundles)
+      var item = [].concat(modules[_i]);
 
-      if (item[0] == null || !alreadyImportedModules[item[0]]) {
-        if (mediaQuery && !item[2]) {
-          item[2] = mediaQuery;
-        } else if (mediaQuery) {
-          item[2] = "(".concat(item[2], ") and (").concat(mediaQuery, ")");
-        }
-
-        list.push(item);
+      if (dedupe && alreadyImportedModules[item[0]]) {
+        // eslint-disable-next-line no-continue
+        continue;
       }
+
+      if (mediaQuery) {
+        if (!item[2]) {
+          item[2] = mediaQuery;
+        } else {
+          item[2] = "".concat(mediaQuery, " and ").concat(item[2]);
+        }
+      }
+
+      list.push(item);
     }
   };
 
@@ -530,7 +814,7 @@ function cssWithMappingToString(item, useSourceMap) {
   if (useSourceMap && typeof btoa === 'function') {
     var sourceMapping = toComment(cssMapping);
     var sourceURLs = cssMapping.sources.map(function (source) {
-      return "/*# sourceURL=".concat(cssMapping.sourceRoot).concat(source, " */");
+      return "/*# sourceURL=".concat(cssMapping.sourceRoot || '').concat(source, " */");
     });
     return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
   }
@@ -547,509 +831,14 @@ function toComment(sourceMap) {
 }
 
 /***/ }),
-/* 23 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-
-var stylesInDom = {};
-
-var	memoize = function (fn) {
-	var memo;
-
-	return function () {
-		if (typeof memo === "undefined") memo = fn.apply(this, arguments);
-		return memo;
-	};
-};
-
-var isOldIE = memoize(function () {
-	// Test for IE <= 9 as proposed by Browserhacks
-	// @see http://browserhacks.com/#hack-e71d8692f65334173fee715c222cb805
-	// Tests for existence of standard globals is to allow style-loader
-	// to operate correctly into non-standard environments
-	// @see https://github.com/webpack-contrib/style-loader/issues/177
-	return window && document && document.all && !window.atob;
-});
-
-var getTarget = function (target, parent) {
-  if (parent){
-    return parent.querySelector(target);
-  }
-  return document.querySelector(target);
-};
-
-var getElement = (function (fn) {
-	var memo = {};
-
-	return function(target, parent) {
-                // If passing function in options, then use it for resolve "head" element.
-                // Useful for Shadow Root style i.e
-                // {
-                //   insertInto: function () { return document.querySelector("#foo").shadowRoot }
-                // }
-                if (typeof target === 'function') {
-                        return target();
-                }
-                if (typeof memo[target] === "undefined") {
-			var styleTarget = getTarget.call(this, target, parent);
-			// Special case to return head of iframe instead of iframe itself
-			if (window.HTMLIFrameElement && styleTarget instanceof window.HTMLIFrameElement) {
-				try {
-					// This will throw an exception if access to iframe is blocked
-					// due to cross-origin restrictions
-					styleTarget = styleTarget.contentDocument.head;
-				} catch(e) {
-					styleTarget = null;
-				}
-			}
-			memo[target] = styleTarget;
-		}
-		return memo[target]
-	};
-})();
-
-var singleton = null;
-var	singletonCounter = 0;
-var	stylesInsertedAtTop = [];
-
-var	fixUrls = __webpack_require__(24);
-
-module.exports = function(list, options) {
-	if (typeof DEBUG !== "undefined" && DEBUG) {
-		if (typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
-	}
-
-	options = options || {};
-
-	options.attrs = typeof options.attrs === "object" ? options.attrs : {};
-
-	// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
-	// tags it will allow on a page
-	if (!options.singleton && typeof options.singleton !== "boolean") options.singleton = isOldIE();
-
-	// By default, add <style> tags to the <head> element
-        if (!options.insertInto) options.insertInto = "head";
-
-	// By default, add <style> tags to the bottom of the target
-	if (!options.insertAt) options.insertAt = "bottom";
-
-	var styles = listToStyles(list, options);
-
-	addStylesToDom(styles, options);
-
-	return function update (newList) {
-		var mayRemove = [];
-
-		for (var i = 0; i < styles.length; i++) {
-			var item = styles[i];
-			var domStyle = stylesInDom[item.id];
-
-			domStyle.refs--;
-			mayRemove.push(domStyle);
-		}
-
-		if(newList) {
-			var newStyles = listToStyles(newList, options);
-			addStylesToDom(newStyles, options);
-		}
-
-		for (var i = 0; i < mayRemove.length; i++) {
-			var domStyle = mayRemove[i];
-
-			if(domStyle.refs === 0) {
-				for (var j = 0; j < domStyle.parts.length; j++) domStyle.parts[j]();
-
-				delete stylesInDom[domStyle.id];
-			}
-		}
-	};
-};
-
-function addStylesToDom (styles, options) {
-	for (var i = 0; i < styles.length; i++) {
-		var item = styles[i];
-		var domStyle = stylesInDom[item.id];
-
-		if(domStyle) {
-			domStyle.refs++;
-
-			for(var j = 0; j < domStyle.parts.length; j++) {
-				domStyle.parts[j](item.parts[j]);
-			}
-
-			for(; j < item.parts.length; j++) {
-				domStyle.parts.push(addStyle(item.parts[j], options));
-			}
-		} else {
-			var parts = [];
-
-			for(var j = 0; j < item.parts.length; j++) {
-				parts.push(addStyle(item.parts[j], options));
-			}
-
-			stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
-		}
-	}
-}
-
-function listToStyles (list, options) {
-	var styles = [];
-	var newStyles = {};
-
-	for (var i = 0; i < list.length; i++) {
-		var item = list[i];
-		var id = options.base ? item[0] + options.base : item[0];
-		var css = item[1];
-		var media = item[2];
-		var sourceMap = item[3];
-		var part = {css: css, media: media, sourceMap: sourceMap};
-
-		if(!newStyles[id]) styles.push(newStyles[id] = {id: id, parts: [part]});
-		else newStyles[id].parts.push(part);
-	}
-
-	return styles;
-}
-
-function insertStyleElement (options, style) {
-	var target = getElement(options.insertInto)
-
-	if (!target) {
-		throw new Error("Couldn't find a style target. This probably means that the value for the 'insertInto' parameter is invalid.");
-	}
-
-	var lastStyleElementInsertedAtTop = stylesInsertedAtTop[stylesInsertedAtTop.length - 1];
-
-	if (options.insertAt === "top") {
-		if (!lastStyleElementInsertedAtTop) {
-			target.insertBefore(style, target.firstChild);
-		} else if (lastStyleElementInsertedAtTop.nextSibling) {
-			target.insertBefore(style, lastStyleElementInsertedAtTop.nextSibling);
-		} else {
-			target.appendChild(style);
-		}
-		stylesInsertedAtTop.push(style);
-	} else if (options.insertAt === "bottom") {
-		target.appendChild(style);
-	} else if (typeof options.insertAt === "object" && options.insertAt.before) {
-		var nextSibling = getElement(options.insertAt.before, target);
-		target.insertBefore(style, nextSibling);
-	} else {
-		throw new Error("[Style Loader]\n\n Invalid value for parameter 'insertAt' ('options.insertAt') found.\n Must be 'top', 'bottom', or Object.\n (https://github.com/webpack-contrib/style-loader#insertat)\n");
-	}
-}
-
-function removeStyleElement (style) {
-	if (style.parentNode === null) return false;
-	style.parentNode.removeChild(style);
-
-	var idx = stylesInsertedAtTop.indexOf(style);
-	if(idx >= 0) {
-		stylesInsertedAtTop.splice(idx, 1);
-	}
-}
-
-function createStyleElement (options) {
-	var style = document.createElement("style");
-
-	if(options.attrs.type === undefined) {
-		options.attrs.type = "text/css";
-	}
-
-	if(options.attrs.nonce === undefined) {
-		var nonce = getNonce();
-		if (nonce) {
-			options.attrs.nonce = nonce;
-		}
-	}
-
-	addAttrs(style, options.attrs);
-	insertStyleElement(options, style);
-
-	return style;
-}
-
-function createLinkElement (options) {
-	var link = document.createElement("link");
-
-	if(options.attrs.type === undefined) {
-		options.attrs.type = "text/css";
-	}
-	options.attrs.rel = "stylesheet";
-
-	addAttrs(link, options.attrs);
-	insertStyleElement(options, link);
-
-	return link;
-}
-
-function addAttrs (el, attrs) {
-	Object.keys(attrs).forEach(function (key) {
-		el.setAttribute(key, attrs[key]);
-	});
-}
-
-function getNonce() {
-	if (false) {}
-
-	return __webpack_require__.nc;
-}
-
-function addStyle (obj, options) {
-	var style, update, remove, result;
-
-	// If a transform function was defined, run it on the css
-	if (options.transform && obj.css) {
-	    result = typeof options.transform === 'function'
-		 ? options.transform(obj.css) 
-		 : options.transform.default(obj.css);
-
-	    if (result) {
-	    	// If transform returns a value, use that instead of the original css.
-	    	// This allows running runtime transformations on the css.
-	    	obj.css = result;
-	    } else {
-	    	// If the transform function returns a falsy value, don't add this css.
-	    	// This allows conditional loading of css
-	    	return function() {
-	    		// noop
-	    	};
-	    }
-	}
-
-	if (options.singleton) {
-		var styleIndex = singletonCounter++;
-
-		style = singleton || (singleton = createStyleElement(options));
-
-		update = applyToSingletonTag.bind(null, style, styleIndex, false);
-		remove = applyToSingletonTag.bind(null, style, styleIndex, true);
-
-	} else if (
-		obj.sourceMap &&
-		typeof URL === "function" &&
-		typeof URL.createObjectURL === "function" &&
-		typeof URL.revokeObjectURL === "function" &&
-		typeof Blob === "function" &&
-		typeof btoa === "function"
-	) {
-		style = createLinkElement(options);
-		update = updateLink.bind(null, style, options);
-		remove = function () {
-			removeStyleElement(style);
-
-			if(style.href) URL.revokeObjectURL(style.href);
-		};
-	} else {
-		style = createStyleElement(options);
-		update = applyToTag.bind(null, style);
-		remove = function () {
-			removeStyleElement(style);
-		};
-	}
-
-	update(obj);
-
-	return function updateStyle (newObj) {
-		if (newObj) {
-			if (
-				newObj.css === obj.css &&
-				newObj.media === obj.media &&
-				newObj.sourceMap === obj.sourceMap
-			) {
-				return;
-			}
-
-			update(obj = newObj);
-		} else {
-			remove();
-		}
-	};
-}
-
-var replaceText = (function () {
-	var textStore = [];
-
-	return function (index, replacement) {
-		textStore[index] = replacement;
-
-		return textStore.filter(Boolean).join('\n');
-	};
-})();
-
-function applyToSingletonTag (style, index, remove, obj) {
-	var css = remove ? "" : obj.css;
-
-	if (style.styleSheet) {
-		style.styleSheet.cssText = replaceText(index, css);
-	} else {
-		var cssNode = document.createTextNode(css);
-		var childNodes = style.childNodes;
-
-		if (childNodes[index]) style.removeChild(childNodes[index]);
-
-		if (childNodes.length) {
-			style.insertBefore(cssNode, childNodes[index]);
-		} else {
-			style.appendChild(cssNode);
-		}
-	}
-}
-
-function applyToTag (style, obj) {
-	var css = obj.css;
-	var media = obj.media;
-
-	if(media) {
-		style.setAttribute("media", media)
-	}
-
-	if(style.styleSheet) {
-		style.styleSheet.cssText = css;
-	} else {
-		while(style.firstChild) {
-			style.removeChild(style.firstChild);
-		}
-
-		style.appendChild(document.createTextNode(css));
-	}
-}
-
-function updateLink (link, options, obj) {
-	var css = obj.css;
-	var sourceMap = obj.sourceMap;
-
-	/*
-		If convertToAbsoluteUrls isn't defined, but sourcemaps are enabled
-		and there is no publicPath defined then lets turn convertToAbsoluteUrls
-		on by default.  Otherwise default to the convertToAbsoluteUrls option
-		directly
-	*/
-	var autoFixUrls = options.convertToAbsoluteUrls === undefined && sourceMap;
-
-	if (options.convertToAbsoluteUrls || autoFixUrls) {
-		css = fixUrls(css);
-	}
-
-	if (sourceMap) {
-		// http://stackoverflow.com/a/26603875
-		css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
-	}
-
-	var blob = new Blob([css], { type: "text/css" });
-
-	var oldSrc = link.href;
-
-	link.href = URL.createObjectURL(blob);
-
-	if(oldSrc) URL.revokeObjectURL(oldSrc);
-}
-
-
-/***/ }),
 /* 24 */
 /***/ (function(module, exports) {
 
-
-/**
- * When source maps are enabled, `style-loader` uses a link element with a data-uri to
- * embed the css on the page. This breaks all relative urls because now they are relative to a
- * bundle instead of the current page.
- *
- * One solution is to only use full urls, but that may be impossible.
- *
- * Instead, this function "fixes" the relative urls to be absolute according to the current page location.
- *
- * A rudimentary test suite is located at `test/fixUrls.js` and can be run via the `npm test` command.
- *
- */
-
-module.exports = function (css) {
-  // get current location
-  var location = typeof window !== "undefined" && window.location;
-
-  if (!location) {
-    throw new Error("fixUrls requires window.location");
-  }
-
-	// blank or null?
-	if (!css || typeof css !== "string") {
-	  return css;
-  }
-
-  var baseUrl = location.protocol + "//" + location.host;
-  var currentDir = baseUrl + location.pathname.replace(/\/[^\/]*$/, "/");
-
-	// convert each url(...)
-	/*
-	This regular expression is just a way to recursively match brackets within
-	a string.
-
-	 /url\s*\(  = Match on the word "url" with any whitespace after it and then a parens
-	   (  = Start a capturing group
-	     (?:  = Start a non-capturing group
-	         [^)(]  = Match anything that isn't a parentheses
-	         |  = OR
-	         \(  = Match a start parentheses
-	             (?:  = Start another non-capturing groups
-	                 [^)(]+  = Match anything that isn't a parentheses
-	                 |  = OR
-	                 \(  = Match a start parentheses
-	                     [^)(]*  = Match anything that isn't a parentheses
-	                 \)  = Match a end parentheses
-	             )  = End Group
-              *\) = Match anything and then a close parens
-          )  = Close non-capturing group
-          *  = Match anything
-       )  = Close capturing group
-	 \)  = Match a close parens
-
-	 /gi  = Get all matches, not the first.  Be case insensitive.
-	 */
-	var fixedCss = css.replace(/url\s*\(((?:[^)(]|\((?:[^)(]+|\([^)(]*\))*\))*)\)/gi, function(fullMatch, origUrl) {
-		// strip quotes (if they exist)
-		var unquotedOrigUrl = origUrl
-			.trim()
-			.replace(/^"(.*)"$/, function(o, $1){ return $1; })
-			.replace(/^'(.*)'$/, function(o, $1){ return $1; });
-
-		// already a full url? no change
-		if (/^(#|data:|http:\/\/|https:\/\/|file:\/\/\/|\s*$)/i.test(unquotedOrigUrl)) {
-		  return fullMatch;
-		}
-
-		// convert the url to a full url
-		var newUrl;
-
-		if (unquotedOrigUrl.indexOf("//") === 0) {
-		  	//TODO: should we add protocol?
-			newUrl = unquotedOrigUrl;
-		} else if (unquotedOrigUrl.indexOf("/") === 0) {
-			// path should be relative to the base url
-			newUrl = baseUrl + unquotedOrigUrl; // already starts with '/'
-		} else {
-			// path should be relative to current directory
-			newUrl = currentDir + unquotedOrigUrl.replace(/^\.\//, ""); // Strip leading './'
-		}
-
-		// send back the fixed url(...)
-		return "url(" + JSON.stringify(newUrl) + ")";
-	});
-
-	// send back the fixed css
-	return fixedCss;
-};
-
-
-/***/ }),
-/* 25 */
-/***/ (function(module, exports) {
-
 function _iterableToArrayLimit(arr, i) {
+  if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) {
+    return;
+  }
+
   var _arr = [];
   var _n = true;
   var _d = false;
@@ -1078,7 +867,7 @@ function _iterableToArrayLimit(arr, i) {
 module.exports = _iterableToArrayLimit;
 
 /***/ }),
-/* 26 */
+/* 25 */
 /***/ (function(module, exports) {
 
 function _arrayWithoutHoles(arr) {
@@ -1094,7 +883,7 @@ function _arrayWithoutHoles(arr) {
 module.exports = _arrayWithoutHoles;
 
 /***/ }),
-/* 27 */
+/* 26 */
 /***/ (function(module, exports) {
 
 function _nonIterableSpread() {
@@ -1104,14 +893,14 @@ function _nonIterableSpread() {
 module.exports = _nonIterableSpread;
 
 /***/ }),
-/* 28 */
+/* 27 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/extends.js
-var helpers_extends = __webpack_require__(5);
+var helpers_extends = __webpack_require__(4);
 var extends_default = /*#__PURE__*/__webpack_require__.n(helpers_extends);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/classCallCheck.js
@@ -1135,19 +924,19 @@ var inherits = __webpack_require__(10);
 var inherits_default = /*#__PURE__*/__webpack_require__.n(inherits);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/defineProperty.js
-var defineProperty = __webpack_require__(2);
+var defineProperty = __webpack_require__(1);
 var defineProperty_default = /*#__PURE__*/__webpack_require__.n(defineProperty);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/objectWithoutProperties.js
-var objectWithoutProperties = __webpack_require__(4);
+var objectWithoutProperties = __webpack_require__(5);
 var objectWithoutProperties_default = /*#__PURE__*/__webpack_require__.n(objectWithoutProperties);
 
 // EXTERNAL MODULE: external {"commonjs":"lodash","commonjs2":"lodash","amd":"lodash","root":"_"}
-var external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_ = __webpack_require__(1);
+var external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_ = __webpack_require__(3);
 var external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default = /*#__PURE__*/__webpack_require__.n(external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_);
 
 // EXTERNAL MODULE: external {"commonjs":"react","commonjs2":"react","amd":"react","root":"React"}
-var external_commonjs_react_commonjs2_react_amd_react_root_React_ = __webpack_require__(0);
+var external_commonjs_react_commonjs2_react_amd_react_root_React_ = __webpack_require__(2);
 var external_commonjs_react_commonjs2_react_amd_react_root_React_default = /*#__PURE__*/__webpack_require__.n(external_commonjs_react_commonjs2_react_amd_react_root_React_);
 
 // CONCATENATED MODULE: ./src/config.js
@@ -1252,12 +1041,12 @@ var external_commonjs_react_commonjs2_react_amd_react_root_React_default = /*#__
       }
     }
   }
-  /**
-   * 为过时的属性配置警告信息
-   * @returns {{discard: string, version: string, replacement: string}[]}
-   */
-
 });
+/**
+ * 为过时的属性配置警告信息
+ * @returns {{discard: string, version: string, replacement: string}[]}
+ */
+
 function getWaringProperty() {
   return [{
     version: '1.0.0',
@@ -1294,11 +1083,11 @@ var toArray = __webpack_require__(15);
 var toArray_default = /*#__PURE__*/__webpack_require__.n(toArray);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/assertThisInitialized.js
-var assertThisInitialized = __webpack_require__(3);
+var assertThisInitialized = __webpack_require__(0);
 var assertThisInitialized_default = /*#__PURE__*/__webpack_require__.n(assertThisInitialized);
 
 // EXTERNAL MODULE: ./src/index.scss
-var src = __webpack_require__(20);
+var src_0 = __webpack_require__(20);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/slicedToArray.js
 var slicedToArray = __webpack_require__(16);
@@ -1313,15 +1102,16 @@ var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableA
 
 
 
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 
 
 /**
  * 从el元素向上选取第一个selector选择器匹配的元素
- * @param {Element} el DOM元素
+ * @param {Element || Node} el DOM元素
  * @param {string} selector 选择器
  * @return {Element} 按照选择器筛选后的元素
  */
@@ -1866,6 +1656,67 @@ function getListContStyle(spacing) {
     borderCollapse: 'separate'
   };
 }
+/**
+ * 处理自定义对象单元格的内置属性（剔除不存在的内置属性）
+ * @param objectCell {object} 自定义对象单元格对象
+ * @returns {{attrs: *, builtInAttrs: {}}}
+ *    builtInAttrs: 可用的内置属性集合
+ *    attrs: 剔除内置属性后剩下的其余属性
+ */
+
+function handleBuiltInAttributes(objectCell) {
+  var type = objectCell.type,
+      text = objectCell.text,
+      event = objectCell.event,
+      callback = objectCell.callback,
+      cells = objectCell.cells,
+      data = objectCell.data,
+      option = objectCell.option,
+      attrs = objectWithoutProperties_default()(objectCell, ["type", "text", "event", "callback", "cells", "data", "option"]);
+
+  var builtInAttrs = {
+    type: type,
+    text: text,
+    event: event,
+    callback: callback,
+    cells: cells,
+    data: data,
+    option: option
+  };
+  builtInAttrs = Object.entries(builtInAttrs).reduce(function (object, arr) {
+    if (arr[1] !== undefined && arr[1] !== null) {
+      return _objectSpread({}, object, defineProperty_default()({}, arr[0], arr[1]));
+    }
+
+    return object;
+  }, {});
+  return {
+    builtInAttrs: builtInAttrs,
+    attrs: attrs
+  };
+}
+/**
+ * 生成ID和key。如果未定义key，则key的值与新生成的id相同。
+ * @param key {string} 唯一标识符
+ * @param type {string} 单元格类型
+ * @returns {{id: string, key: string}} 包含新生成的ID和key的对象
+ */
+
+function generateIdAndKeyForTag(key, type) {
+  var id = "rt-".concat(type, "-").concat((Math.random() * Math.pow(10, 10)).toFixed(0));
+
+  if (key) {
+    return {
+      key: key,
+      id: id
+    };
+  }
+
+  return {
+    id: id,
+    key: id
+  };
+}
 // CONCATENATED MODULE: ./src/list.js
 
 
@@ -1880,7 +1731,7 @@ function getListContStyle(spacing) {
 
 function list_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function list_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { list_ownKeys(source, true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { list_ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function list_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { list_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { list_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 
 
@@ -1893,12 +1744,12 @@ var list_default =
 function (_React$Component) {
   inherits_default()(_default, _React$Component);
 
-  function _default(_props) {
+  function _default(props) {
     var _this;
 
     classCallCheck_default()(this, _default);
 
-    _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(_default).call(this, _props));
+    _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(_default).call(this, props));
 
     defineProperty_default()(assertThisInitialized_default()(_this), "scrollList", function (isInnerScroll, e) {
       var _assertThisInitialize = assertThisInitialized_default()(_this),
@@ -2018,6 +1869,16 @@ function (_React$Component) {
       }, 4);
     });
 
+    defineProperty_default()(assertThisInitialized_default()(_this), "checkScrollDistance", function () {
+      var _assertThisInitialize6 = assertThisInitialized_default()(_this),
+          listContMain = _assertThisInitialize6.listContMain,
+          scroll = _assertThisInitialize6.scroll;
+
+      if (listContMain.clientHeight <= scroll.scrollTop) {
+        scroll.scrollTop = scroll.scrollTop - listContMain.clientHeight;
+      }
+    });
+
     defineProperty_default()(assertThisInitialized_default()(_this), "rowHover", function (e) {
       e.stopPropagation();
       e.persist();
@@ -2058,18 +1919,17 @@ function (_React$Component) {
       else if (target.type === 'checkbox') {
           // 检测是否是行选择框
           if (target.name === 'rowCheckbox') {
-            var showHeader = property.header.show; // 获取列表最外层容器
+            var showHeader = property.header.show; // 获取列表内所有的行选择框
 
-            var listContainer = closest(target, '.list'); // 获取列表内所有的行选择框
+            var rowCheckboxes = _this.scroll.parentNode.querySelectorAll('[name=\'rowCheckbox\']'); // 当启用表头时，点击表头的行选择框
 
-            var rowCheckboxes = listContainer.querySelectorAll('[name=\'rowCheckbox\']'); // 当启用表头时，点击表头的行选择框
 
             if (showHeader && external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isEqual(rowCheckboxes[0], target)) {
               indeterminate = false;
               selectedCur[targetName] = new Array(data.length).fill(target);
             } else {
               /* 触发非表头的行选择框 */
-              // 获取触发的行选择框的索引
+              // 获取触发的行选择框所在行的索引
               var clickedActualIndex = external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.findIndex(rowCheckboxes, target); // 如果点击的是辅助容器内的行选择框，则对应到主容器内的行选择框的索引。
 
 
@@ -2080,7 +1940,8 @@ function (_React$Component) {
 
               var rowCheckboxSelectedQuantity = external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.compact(selectedCur[targetName].map(function (chk) {
                 return chk.checked;
-              }).slice(1)).length;
+              }).slice(1)).length; // body内行选择框未全选中
+
 
               if (rowCheckboxSelectedQuantity !== data.length - 1) {
                 selectedCur[targetName][0] = {
@@ -2098,12 +1959,11 @@ function (_React$Component) {
             /* 非行选择框 */
             if (!selectedCur[targetName]) {
               selectedCur[targetName] = [];
-            } // 获取复选框所在的单元格元素（考虑不限制于单个单元格内的复选框）
+            } // 获取同一单元格内相同name的复选框
 
 
-            var listCell = closest(target, '.list-cell'); // 获取同一单元格内相同name的复选框
+            var checkboxes = _this.listContMain.querySelectorAll("[name='".concat(targetName, "']")); // 获取触发的checkbox的索引
 
-            var checkboxes = listCell.querySelectorAll("[name='".concat(targetName, "']")); // 获取触发的checkbox的索引
 
             var clickedIndex = external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.findIndex(checkboxes, target); // 将处理后结果赋值给state
 
@@ -2122,33 +1982,486 @@ function (_React$Component) {
       });
     });
 
-    defineProperty_default()(assertThisInitialized_default()(_this), "setCellLink", function (link) {
-      var text = link.text,
-          event = link.event,
-          href = link.href,
-          props = objectWithoutProperties_default()(link, ["text", "event", "href"]);
+    defineProperty_default()(assertThisInitialized_default()(_this), "setCellImage", function (ci) {
+      var iconStyle = _this.state.property.body.cell.iconStyle;
 
-      if (href) {
-        // 防止事件冒泡
-        props.onClick = handleEvent.bind(assertThisInitialized_default()(_this));
-        return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("a", extends_default()({
-          href: href
-        }, props), text);
+      var _util$handleBuiltInAt = handleBuiltInAttributes(ci),
+          builtInAttrs = _util$handleBuiltInAt.builtInAttrs,
+          attrs = _util$handleBuiltInAt.attrs;
+
+      var src = attrs.src;
+
+      var _util$generateIdAndKe = generateIdAndKeyForTag(attrs.key, builtInAttrs.type),
+          id = _util$generateIdAndKe.id,
+          key = _util$generateIdAndKe.key;
+
+      if (src && typeof src === 'string' && (src.indexOf('http://') !== -1 || src.indexOf('https://') !== -1 || src.indexOf('data:image/') !== -1)) {
+        return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("label", {
+          htmlFor: id,
+          key: key,
+          style: iconStyle,
+          className: "list-cell-img"
+        }, external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("img", extends_default()({
+          id: id,
+          alt: attrs.alt || id
+        }, attrs)), ci.text ? external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("span", null, ci.text) : null);
+      }
+    });
+
+    defineProperty_default()(assertThisInitialized_default()(_this), "setCellLink", function (cl) {
+      var _util$handleBuiltInAt2 = handleBuiltInAttributes(cl),
+          builtInAttrs = _util$handleBuiltInAt2.builtInAttrs,
+          attrs = _util$handleBuiltInAt2.attrs;
+
+      var text = builtInAttrs.text,
+          event = builtInAttrs.event,
+          type = builtInAttrs.type;
+
+      var tagProps = list_objectSpread({}, generateIdAndKeyForTag(attrs.key, type), {}, attrs); // 如果存在href属性，则不再另行添加事件
+
+
+      if (attrs.href) {
+        tagProps = list_objectSpread({}, tagProps, {
+          onClick: handleEvent.bind(assertThisInitialized_default()(_this)) // 此函数是为了防止事件冒泡
+
+        });
+      } else {
+        tagProps = list_objectSpread({}, tagProps, defineProperty_default()({}, event ? event : 'onClick', handleEvent.bind(assertThisInitialized_default()(_this), [cl])));
       }
 
-      var tagProps = list_objectSpread({}, props, defineProperty_default()({}, event ? event : 'onClick', handleEvent.bind(assertThisInitialized_default()(_this), [link])));
-
-      delete tagProps.type;
-      delete tagProps.callback;
-      delete tagProps.data;
       return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("a", tagProps, text);
+    });
+
+    defineProperty_default()(assertThisInitialized_default()(_this), "setCellInput", function (cr, _ref, container) {
+      var rowIndex = _ref.rowIndex,
+          cellIndex = _ref.cellIndex,
+          index = _ref.index;
+      var tagProps;
+
+      var _util$handleBuiltInAt3 = handleBuiltInAttributes(cr),
+          builtInAttrs = _util$handleBuiltInAt3.builtInAttrs,
+          attrs = _util$handleBuiltInAt3.attrs;
+
+      if (cr.type === 'button') {
+        var _objectSpread3;
+
+        tagProps = list_objectSpread((_objectSpread3 = {}, defineProperty_default()(_objectSpread3, cr.event ? cr.event : 'onClick', handleEvent.bind(assertThisInitialized_default()(_this), [cr])), defineProperty_default()(_objectSpread3, "type", 'button'), _objectSpread3), generateIdAndKeyForTag(attrs.key, 'button'), {}, attrs);
+        return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("input", tagProps);
+      } else if (cr.type === 'input') {
+        var _objectSpread4;
+
+        var event = builtInAttrs.event,
+            text = builtInAttrs.text;
+
+        var _util$generateIdAndKe2 = generateIdAndKeyForTag(attrs.key, 'input'),
+            id = _util$generateIdAndKe2.id,
+            key = _util$generateIdAndKe2.key;
+
+        tagProps = list_objectSpread((_objectSpread4 = {}, defineProperty_default()(_objectSpread4, event ? event : 'onClick', handleEvent.bind(assertThisInitialized_default()(_this), [cr])), defineProperty_default()(_objectSpread4, "type", 'text'), defineProperty_default()(_objectSpread4, "id", id), _objectSpread4), attrs);
+        return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("label", {
+          htmlFor: tagProps.id,
+          className: "list-cell-input",
+          key: key
+        }, text ? external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("span", null, text + ' ') : '', external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("input", extends_default()({
+          id: tagProps.id
+        }, tagProps)));
+      } else {
+        // checkbox or radio
+        var _event = builtInAttrs.event,
+            type = builtInAttrs.type,
+            _text = builtInAttrs.text;
+        var value = attrs.value,
+            name = attrs.name;
+        var selected = _this.state.selected;
+        var selectedCur = selected[name] || [];
+
+        var _util$generateIdAndKe3 = generateIdAndKeyForTag(attrs.key, type),
+            _id = _util$generateIdAndKe3.id,
+            _key = _util$generateIdAndKe3.key; // 处理标签属性
+
+
+        tagProps = list_objectSpread({
+          id: _id,
+          type: type
+        }, attrs, {
+          value: value !== undefined ? value : name === 'rowCheckbox' ? "rowChk-".concat(rowIndex) : "react-tabllist-value-".concat(rowIndex, "-").concat(cellIndex, "-").concat(index),
+          name: type === 'radio' ? "".concat(name, "-").concat(container) : name,
+          className: "".concat(type === 'radio' ? 'list-cell-radio' : 'list-cell-chk').concat(attrs.className ? " ".concat(attrs.className) : '')
+        }); // 处理选中状态
+
+        var tempIndex;
+
+        if (type === 'checkbox') {
+          // 复选框保存被选中框的索引
+          if (name === 'rowCheckbox') {
+            tempIndex = rowIndex;
+          } else {
+            tempIndex = index;
+          }
+
+          tagProps.checked = !!(selectedCur[tempIndex] && selectedCur[tempIndex].checked);
+        } else if (type === 'radio') {
+          // 单选按钮保存被选中按钮的key值
+          tagProps.checked = !!(selectedCur[0] && selectedCur[0].name.substring(0, selectedCur[0].name.lastIndexOf('-')) === name + '' && selectedCur[0].value === tagProps.value + '');
+        } // 处理事件
+
+
+        if (_event && _event !== 'onClick' && _event !== 'onChange') {
+          tagProps[_event] = handleEvent.bind(assertThisInitialized_default()(_this), [cr]);
+        }
+
+        tagProps.onChange = handleEvent.bind(assertThisInitialized_default()(_this), [cr, _this.checkCR.bind(null, cr)]);
+        tagProps.onClick = handleEvent.bind(assertThisInitialized_default()(_this), []); // 打印警告信息
+
+        if (type === 'radio' && !container) {
+          console.error('When the type attribute of the input tag is radio, the third parameter "container" of setCellInput() is a required parameter, otherwise the function will be invalid!');
+          return null;
+        } // 处理 JSX
+
+
+        if (type === 'radio' || type === 'checkbox') {
+          var _this$state$property$ = _this.state.property.body.row.rowCheckbox,
+              rowCheckboxShow = _this$state$property$.show,
+              rowCheckboxStyle = _this$state$property$.style,
+              specialStyle = _this$state$property$.specialStyle;
+          var style = rowCheckboxShow && _key && _key.match(/^rowCheck\d+/) ? list_objectSpread({}, rowCheckboxStyle, {}, specialStyle[rowIndex - 1]) : {};
+          return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("label", {
+            htmlFor: _id,
+            key: _key,
+            onClick: handleEvent.bind(assertThisInitialized_default()(_this), []) // 处理冒泡
+            ,
+            style: style,
+            className: "list-cell-".concat(type) // className is list-cell-radio or list-cell-checkbox
+
+          }, external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("input", tagProps), _text ? external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("span", null, _text) : null);
+        }
+      }
+    });
+
+    defineProperty_default()(assertThisInitialized_default()(_this), "setCellSelect", function (cs) {
+      var _util$handleBuiltInAt4 = handleBuiltInAttributes(cs),
+          builtInAttrs = _util$handleBuiltInAt4.builtInAttrs,
+          attrs = _util$handleBuiltInAt4.attrs;
+
+      var text = builtInAttrs.text,
+          option = builtInAttrs.option,
+          event = builtInAttrs.event,
+          type = builtInAttrs.type;
+
+      var _util$generateIdAndKe4 = generateIdAndKeyForTag(attrs.key, type),
+          id = _util$generateIdAndKe4.id,
+          key = _util$generateIdAndKe4.key;
+
+      var tagProps = list_objectSpread(defineProperty_default()({
+        id: id
+      }, event ? event : 'onChange', handleEvent.bind(assertThisInitialized_default()(_this), [cs])), attrs);
+
+      return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("label", {
+        htmlFor: id,
+        key: key,
+        className: "list-cell-select"
+      }, text ? external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("span", null, text) : null, external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("select", tagProps, option && option.map(function (item, index) {
+        return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("option", extends_default()({
+          key: "".concat(id, "-option-").concat(index)
+        }, item));
+      })));
+    });
+
+    defineProperty_default()(assertThisInitialized_default()(_this), "setCellText", function (ct, _ref2) {
+      var rowIndex = _ref2.rowIndex;
+      var _this$state$property = _this.state.property,
+          header = _this$state$property.header,
+          body = _this$state$property.body;
+      var _body$row$serialNumbe = body.row.serialNumber,
+          serialNumberShow = _body$row$serialNumbe.show,
+          serialNumberStyle = _body$row$serialNumbe.style,
+          specialStyle = _body$row$serialNumbe.specialStyle;
+
+      var _util$handleBuiltInAt5 = handleBuiltInAttributes(ct),
+          builtInAttrs = _util$handleBuiltInAt5.builtInAttrs,
+          attrs = _util$handleBuiltInAt5.attrs;
+
+      var _util$generateIdAndKe5 = generateIdAndKeyForTag(attrs.key, builtInAttrs.type),
+          id = _util$generateIdAndKe5.id,
+          key = _util$generateIdAndKe5.key;
+
+      var text = builtInAttrs.text,
+          event = builtInAttrs.event,
+          callback = builtInAttrs.callback;
+      var style = serialNumberShow && key.match(/^listSN\d+/) ? list_objectSpread({}, !header.show || rowIndex !== 0 ? serialNumberStyle : {}, {}, specialStyle[rowIndex - 1], {}, attrs.style) : attrs.style; // 处理内置样式表
+
+      attrs.className = attrs.className ? "list-cell-text ".concat(attrs.className) : attrs.className; // 处理默认事件及回调函数
+
+      if (typeof callback === 'function') {
+        style = list_objectSpread({}, style, {
+          cursor: 'pointer'
+        });
+
+        if (event) {
+          attrs[event] = handleEvent.bind(assertThisInitialized_default()(_this), [ct]);
+        } else {
+          attrs['onClick'] = handleEvent.bind(assertThisInitialized_default()(_this), [ct]);
+        }
+      }
+
+      return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("span", extends_default()({
+        id: id,
+        key: key
+      }, attrs, {
+        style: style
+      }), text);
+    });
+
+    defineProperty_default()(assertThisInitialized_default()(_this), "setCell", function (rowData, rowIndex, container) {
+      var _this$state2 = _this.state,
+          colWidth = _this$state2.colWidth,
+          property = _this$state2.property,
+          rowStyle = _this$state2.rowStyle;
+      var _property$body = property.body,
+          cellOfColumnStyle = _property$body.cellOfColumn.style,
+          style = _property$body.cell.style; // 处理border属性值
+
+      var listBorder = _this.setBorder(style);
+
+      return rowData.map(function (cellData, cellIndex) {
+        return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("div", {
+          key: "".concat(container, "-cell-r").concat(rowIndex, "-c").concat(cellIndex),
+          className: "list-cell",
+          style: list_objectSpread({
+            height: rowStyle[rowIndex] ? rowStyle[rowIndex].height : 'auto'
+          }, style, {
+            width: typeof colWidth === 'string' ? colWidth : colWidth[cellIndex] || 'auto'
+          }, cellOfColumnStyle[cellIndex], {}, listBorder)
+        }, _this.parsing(cellData, {
+          rowIndex: rowIndex + 1,
+          cellIndex: cellIndex
+        }, container));
+      });
+    });
+
+    defineProperty_default()(assertThisInitialized_default()(_this), "parsing", function (cellData, _ref3, container) {
+      var rowIndex = _ref3.rowIndex,
+          cellIndex = _ref3.cellIndex,
+          index = _ref3.index;
+
+      if (Array.isArray(cellData)) {
+        return cellData.map(function (o, i) {
+          return _this.parsing(o, {
+            rowIndex: rowIndex,
+            cellIndex: cellIndex,
+            index: i
+          }, container);
+        });
+      }
+
+      if (external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isObject(cellData)) {
+        switch (cellData.type) {
+          case 'link':
+            return _this.setCellLink(cellData);
+
+          case 'select':
+            return _this.setCellSelect(cellData);
+
+          case 'img':
+            return _this.setCellImage(cellData);
+
+          case 'text':
+            return _this.setCellText(cellData, {
+              rowIndex: rowIndex
+            });
+
+          case 'input':
+            return _this.setCellInput(cellData, {
+              rowIndex: rowIndex,
+              cellIndex: cellIndex,
+              index: index
+            });
+
+          case 'radio':
+          case 'checkbox':
+          case 'button':
+            return _this.setCellInput(cellData, {
+              rowIndex: rowIndex,
+              cellIndex: cellIndex,
+              index: index
+            }, container);
+        }
+      } // 不是指定对象，返回原数据
+
+
+      return cellData;
+    });
+
+    defineProperty_default()(assertThisInitialized_default()(_this), "setBorder", function (borderStyle) {
+      var border = _this.state.property.border;
+      var newBorder = {}; // borderStyle对象的border属性为空字符串
+
+      if (borderStyle && borderStyle.border === '') {
+        return border;
+      } // borderStyle对象的border属性为空值以外的其他假值
+
+
+      if (!borderStyle.border) {
+        newBorder.borderWidth = borderStyle.borderWidth || border.borderWidth;
+        newBorder.borderColor = borderStyle.borderColor || border.borderColor;
+        newBorder.borderStyle = borderStyle.borderStyle || border.borderStyle;
+        return newBorder;
+      }
+
+      return {
+        border: borderStyle.border
+      };
+    });
+
+    defineProperty_default()(assertThisInitialized_default()(_this), "setRow", function (bodyData, container) {
+      var _this$state3 = _this.state,
+          property = _this$state3.property,
+          transitionName = _this$state3.transitionName,
+          rowStyle = _this$state3.rowStyle;
+      var transition = property.body.row.transition; // 处理行动画的样式
+
+      var transitionClassName = transition ? " ".concat(transitionName) : '';
+      return bodyData.map(function (rowData, rowIndex) {
+        var customClassName = rowData.className ? " ".concat(rowData.className) : '';
+        var LIElementProps = {
+          className: "list-row".concat(customClassName).concat(transitionClassName),
+          style: rowStyle[rowIndex],
+          onMouseEnter: _this.rowHover,
+          onMouseLeave: _this.rowHover
+        }; // 检测行数据是一个对象还是一个数组
+        // 如果是对象，则需要对行数据做一些处理，比如添加自定义事件等（目前只支持添加事件）
+
+        if (external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isPlainObject(rowData) && rowData.type === 'row') {
+          LIElementProps[rowData.event] = handleEvent.bind(assertThisInitialized_default()(_this), [rowData]);
+          LIElementProps.value = rowData.value;
+        } else {
+          LIElementProps = list_objectSpread({}, LIElementProps, {
+            type: 'row'
+          });
+        }
+
+        return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("li", extends_default()({
+          key: "list-row-".concat(container, "-").concat(rowData.key ? rowData.key : rowIndex)
+        }, LIElementProps), external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isArray(rowData) ? _this.setCell(rowData, rowIndex, container) : _this.setCell(rowData.cells, rowIndex, container));
+      });
+    });
+
+    defineProperty_default()(assertThisInitialized_default()(_this), "loadHeader", function (data) {
+      var _this$state4 = _this.state,
+          property = _this$state4.property,
+          colWidth = _this$state4.colWidth,
+          headerWidth = _this$state4.headerWidth;
+      var enable = property.scroll.enable,
+          _property$header = property.header,
+          style = _property$header.style,
+          cellStyle = _property$header.cellStyle,
+          showHeader = _property$header.show;
+      var minWidth = property.body.cell.style.minWidth; // 处理border属性值
+
+      var listBorder = _this.setBorder(cellStyle);
+
+      if (showHeader && data && data.length) {
+        return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("ul", {
+          className: "list-header list-cont",
+          style: !enable && headerWidth ? {
+            width: headerWidth
+          } : null
+        }, external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("li", {
+          key: "list-row",
+          className: "list-row",
+          style: style
+        }, data.map(function (cell, index) {
+          return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("div", {
+            className: "list-cell",
+            title: external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isObject(cell) ? cell.text : cell,
+            key: "list-header-".concat(index),
+            style: list_objectSpread({}, cellStyle, {
+              width: typeof colWidth === 'string' ? colWidth : colWidth[index] || 'auto',
+              minWidth: minWidth
+            }, listBorder)
+          }, _this.parsing(cell, {
+            rowIndex: 0,
+            cellIndex: 0
+          }));
+        })));
+      }
+
+      return null;
+    });
+
+    defineProperty_default()(assertThisInitialized_default()(_this), "loadBody", function (bodyData) {
+      var _this$state5 = _this.state,
+          scrollHeight = _this$state5.scrollHeight,
+          _this$state5$property = _this$state5.property,
+          _this$state5$property2 = _this$state5$property.body,
+          style = _this$state5$property2.style,
+          spacing = _this$state5$property2.row.spacing,
+          enable = _this$state5$property.scroll.enable; // 处理css属性‘border-collapse’与‘border-spacing’的值
+
+      var listContStyle = getListContStyle(spacing);
+      return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("div", {
+        className: "list-body",
+        ref: function ref(ele) {
+          return _this.scroll = ele;
+        },
+        style: list_objectSpread({}, style, {
+          height: scrollHeight,
+          overflowY: enable ? 'hidden' : 'auto'
+        })
+      }, external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("ul", {
+        className: "list-cont",
+        style: listContStyle,
+        ref: function ref(ele) {
+          return _this.listContMain = ele;
+        }
+      }, _this.setRow(bodyData, 'main')), external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("ul", {
+        className: "list-cont",
+        style: listContStyle,
+        ref: function ref(ele) {
+          return _this.listContSupport = ele;
+        }
+      }, _this.setRow(bodyData, 'support')));
+    });
+
+    defineProperty_default()(assertThisInitialized_default()(_this), "render", function () {
+      var _this$state6 = _this.state,
+          _this$state6$property = _this$state6.property,
+          showHeader = _this$state6$property.header.show,
+          spacing = _this$state6$property.body.row.spacing,
+          conStyle = _this$state6$property.style,
+          data = _this$state6.data,
+          className = _this$state6.className; // 处理border属性值
+
+      var listBorder = _this.setBorder(conStyle); // 当存在表头数据且表头是开启时处理数据
+
+
+      var headerData;
+      var bodyData;
+      _this.renderData = fillRow(data, _this.state);
+
+      if (showHeader && data.length) {
+        var _this$renderData = toArray_default()(_this.renderData);
+
+        headerData = _this$renderData[0];
+        bodyData = _this$renderData.slice(1);
+      } else {
+        bodyData = _this.renderData;
+      }
+
+      var listClass = !Number.isNaN(parseInt(spacing)) && parseInt(spacing) > 0 ? '' : 'list-no-spacing';
+      return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("div", {
+        style: list_objectSpread({}, listBorder, {}, conStyle),
+        className: "list".concat(listClass ? " ".concat(listClass) : '').concat(className ? " ".concat(className) : ''),
+        onMouseMove: _this.scrollList.bind(assertThisInitialized_default()(_this), false),
+        onMouseLeave: _this.scrollList.bind(assertThisInitialized_default()(_this), true)
+      }, _this.loadHeader(headerData), _this.loadBody(bodyData));
     });
 
     _this.state = {
       // 每列单元格的宽度数组
       colWidth: [],
       // body可见区域的高度
-      scrollHeight: getScrollHeight(_props),
+      scrollHeight: getScrollHeight(props),
       // 所有复选框和单选按钮的状态
       selected: {
         rowCheckbox: []
@@ -2167,9 +2480,9 @@ function (_React$Component) {
       // 渲染数据
       data: config.data,
       // 列表的自定义样式表名
-      className: config.className // 当一次滚动多行时可用，组件可视区域第一行的索引
+      className: config.className
+    }; // 当一次滚动多行时可用，组件可视区域第一行的索引
 
-    };
     _this.rowIndex = 0;
     return _this;
   }
@@ -2177,9 +2490,7 @@ function (_React$Component) {
   createClass_default()(_default, [{
     key: "componentDidMount",
 
-    /**
-     * 组件挂载后执行组件的滚动操作和设置表头单元格和主体单元格宽度对应
-     */
+    /**   * 组件挂载后执行组件的滚动操作和设置表头单元格和主体单元格宽度对应   */
     value: function componentDidMount() {
       var _this2 = this;
 
@@ -2210,11 +2521,7 @@ function (_React$Component) {
         });
       }
     }
-    /**
-     * 组件每次更新后执行
-     * @param {object} preProps prev props
-     * @param {object} preState prev state
-     */
+    /**   * 组件每次更新后执行   * @param {object} preProps prev props   * @param {object} preState prev state   */
 
   }, {
     key: "componentDidUpdate",
@@ -2233,16 +2540,16 @@ function (_React$Component) {
         var _preProps$property$bo = preProps.property.body.cell.style,
             preColCellWidth = _preProps$property$bo.width,
             preCellMinWidth = _preProps$property$bo.minWidth;
-        var _this$state2 = this.state,
-            _this$state2$property = _this$state2.property,
-            _this$state2$property2 = _this$state2$property.style,
-            conWidth = _this$state2$property2.width,
-            height = _this$state2$property2.height,
-            enable = _this$state2$property.scroll.enable,
-            show = _this$state2$property.header.show,
-            body = _this$state2$property.body,
-            transitionName = _this$state2.transitionName,
-            indeterminate = _this$state2.indeterminate;
+        var _this$state7 = this.state,
+            _this$state7$property = _this$state7.property,
+            _this$state7$property2 = _this$state7$property.style,
+            conWidth = _this$state7$property2.width,
+            height = _this$state7$property2.height,
+            enable = _this$state7$property.scroll.enable,
+            show = _this$state7$property.header.show,
+            body = _this$state7$property.body,
+            transitionName = _this$state7.transitionName,
+            indeterminate = _this$state7.indeterminate;
         var _preState$property = preState.property,
             preBody = _preState$property.body,
             preShow = _preState$property.header.show,
@@ -2266,11 +2573,7 @@ function (_React$Component) {
         if (preConWidth !== conWidth || iconWidth !== preIconWidth || colCellWidth !== preColCellWidth || cellMinWidth !== preCellMinWidth) {
           // 避免css动画未执行完时获取的列宽不正确，400为css动画的持续时间，见index.scss文件
           setTimeout(function () {
-            /**
-             * 组件更新之后，DOM结构已更新，此时重新设置每个单元格宽度
-             * 设置规则以props里面的width字段为准
-             * 详情见width字段说明
-             */
+            /**           * 组件更新之后，DOM结构已更新，此时重新设置每个单元格宽度           * 设置规则以props里面的width字段为准           * 详情见width字段说明           */
             _this3.setState({
               colWidth: colWidth
             });
@@ -2314,538 +2617,8 @@ function (_React$Component) {
     value: function componentWillUnmount() {
       clearInterval(this.marqueeInterval);
     }
-    /**
-     * 列表滚动处理
-     * @param {boolean?} isInnerScroll 内部滚动变量（用于事件控制）
-     * @param {object?} e 事件回调参数
-     */
+    /**   * 列表滚动处理   * @param {boolean?} isInnerScroll 内部滚动变量（用于事件控制）   * @param {object?} e 事件回调参数   */
 
-  }, {
-    key: "checkScrollDistance",
-
-    /**
-     * 检测主容器是否滚动完一个周期立即重置scrollTop值
-     */
-    value: function checkScrollDistance() {
-      var listContMain = this.listContMain,
-          scroll = this.scroll;
-
-      if (listContMain.clientHeight <= scroll.scrollTop) {
-        scroll.scrollTop = scroll.scrollTop - listContMain.clientHeight;
-      }
-    }
-    /**
-     * 行hover事件
-     * @param {object} e event
-     */
-
-  }, {
-    key: "setCellIcon",
-
-    /**
-     * 设置单元格图标
-     * @param {object} icon icon对象
-     * @param rowIndex {number} 行索引
-     * @param cellIndex {number} 列索引
-     * @returns {*[]} 单元格图标DOM || null
-     */
-    value: function setCellIcon(icon, _ref) {
-      var rowIndex = _ref.rowIndex,
-          cellIndex = _ref.cellIndex;
-      var iconStyle = this.state.property.body.cell.iconStyle;
-
-      if (icon.src && typeof icon.src === 'string' && (icon.src.indexOf('http://') !== -1 || icon.src.indexOf('https://') !== -1 || icon.src.indexOf('data:image/') !== -1)) {
-        return [external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("img", {
-          src: icon.src,
-          alt: icon.alt || '',
-          style: iconStyle,
-          key: icon.key || "icon-".concat(rowIndex, "-").concat(cellIndex),
-          className: icon.className
-        }), external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("span", {
-          key: "text".concat(-icon.key) || false
-        }, icon.text || '')];
-      }
-    }
-    /**
-     * 设置单元格link(链接)
-     * @param {object} link link对象
-     * @returns {*} 单元格link DOM || null
-     */
-
-  }, {
-    key: "setCellInput",
-
-    /**
-     * 设置单元格checkbox、radio或button
-     * @param {object} cr cr对象
-     * @param {number?} rowIndex 所在行的索引
-     * @param {number?} cellIndex 所在单元格的索引
-     * @param {number?} index 当前索引
-     * @param {string?} container 当前渲染元素所在的容器
-     * @returns {*} 单元格checkbox或radio || null
-     */
-    value: function setCellInput(cr, _ref2, container) {
-      var rowIndex = _ref2.rowIndex,
-          cellIndex = _ref2.cellIndex,
-          index = _ref2.index;
-      var tagProps = {}; // 处理事件
-
-      if (cr.type === 'button') {
-        var _tagProps;
-
-        tagProps = (_tagProps = {}, defineProperty_default()(_tagProps, cr.event ? cr.event : 'onClick', handleEvent.bind(this, [cr])), defineProperty_default()(_tagProps, "key", cr.key), defineProperty_default()(_tagProps, "type", cr.type), defineProperty_default()(_tagProps, "value", cr.value), defineProperty_default()(_tagProps, "className", cr.className), _tagProps);
-        return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("input", tagProps);
-      } else {
-        var selected = this.state.selected;
-        var selectedCur = selected[cr.name] || []; // 处理标签属性
-
-        tagProps = {
-          key: cr.key,
-          value: cr.value !== undefined ? cr.value : "react-tabllist-value-".concat(rowIndex, "-").concat(cellIndex, "-").concat(index),
-          type: cr.type,
-          name: cr.type === 'radio' ? "".concat(cr.name, "-").concat(container) : cr.name,
-          className: cr.className // 处理选中状态
-
-        };
-        var tempIndex;
-
-        if (cr.type === 'checkbox') {
-          // 复选框保存被选中框的索引
-          if (cr.name === 'rowCheckbox') {
-            tempIndex = rowIndex;
-          } else {
-            tempIndex = index;
-          }
-
-          tagProps.checked = !!(selectedCur[tempIndex] && selectedCur[tempIndex].checked);
-        } else if (cr.type === 'radio') {
-          // 单选按钮保存被选中按钮的key值
-          tagProps.checked = !!(selectedCur[0] && selectedCur[0].name.substring(0, selectedCur[0].name.lastIndexOf('-')) === cr.name + '' && selectedCur[0].value === tagProps.value + '');
-        } // 处理事件
-
-
-        if (cr.event && cr.event !== 'onClick' && cr.event !== 'onChange') {
-          tagProps[cr.event] = handleEvent.bind(this, [cr]);
-        }
-
-        tagProps.onChange = handleEvent.bind(this, [cr, this.checkCR.bind(null, cr)]);
-        tagProps.onClick = handleEvent.bind(this, []); // 打印警告信息
-
-        if (cr.type === 'radio' && !container) {
-          console.error('When the type attribute of the input tag is radio, the third parameter "container" of setCellInput() is a required parameter, otherwise the function will be invalid!');
-          return null;
-        } // 处理 JSX
-
-
-        if (cr.type === 'radio' || cr.type === 'checkbox') {
-          var _this$state$property$ = this.state.property.body.row.rowCheckbox,
-              rowCheckboxShow = _this$state$property$.show,
-              rowCheckboxStyle = _this$state$property$.style,
-              specialStyle = _this$state$property$.specialStyle;
-          var style = rowCheckboxShow && cr.key && cr.key.match(/^rowCheck\d+/) ? list_objectSpread({}, rowCheckboxStyle, {}, specialStyle[rowIndex - 1]) : {};
-          return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("label", {
-            className: "".concat(cr.type === 'radio' ? 'list-cell-radio' : 'list-cell-chk').concat(cr.className ? " ".concat(cr.className) : ''),
-            key: "".concat(cr.key || "cr-".concat(rowIndex, "-").concat(cellIndex, "-").concat(index)),
-            onClick: handleEvent.bind(this, []) // 处理冒泡
-            ,
-            style: style
-          }, external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("input", tagProps), cr.text ? external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("span", null, cr.text) : null);
-        }
-      }
-    }
-    /**
-     * 设置单元格的下拉列表
-     * @param cs {object} 对象单元
-     */
-
-  }, {
-    key: "setCellSelect",
-    value: function setCellSelect(cs) {
-      var text = cs.text,
-          option = cs.option,
-          className = cs.className,
-          event = cs.event,
-          props = objectWithoutProperties_default()(cs, ["text", "option", "className", "event"]);
-
-      var tagProps = list_objectSpread({}, props, defineProperty_default()({}, event ? event : 'onChange', handleEvent.bind(this, [cs])));
-
-      delete tagProps.type;
-      delete tagProps.data;
-      delete tagProps.callback;
-      return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("label", {
-        className: className
-      }, text ? external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("span", null, text) : null, external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("select", tagProps, option && option.map(function (item, index) {
-        return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("option", extends_default()({
-          key: index
-        }, item));
-      })));
-    }
-    /**
-     * 设置单元格内的对象单元文本
-     * @param ct {object} 对象单元
-     * @param rowIndex {number} 行索引
-     * @returns {*}
-     */
-
-  }, {
-    key: "setCellText",
-    value: function setCellText(ct, _ref3) {
-      var rowIndex = _ref3.rowIndex;
-      var _this$state$property = this.state.property,
-          header = _this$state$property.header,
-          body = _this$state$property.body;
-      var _body$row$serialNumbe = body.row.serialNumber,
-          serialNumberShow = _body$row$serialNumbe.show,
-          serialNumberStyle = _body$row$serialNumbe.style,
-          specialStyle = _body$row$serialNumbe.specialStyle;
-
-      var text = ct.text,
-          key = ct.key,
-          className = ct.className,
-          event = ct.event,
-          callback = ct.callback,
-          restProps = objectWithoutProperties_default()(ct, ["text", "key", "className", "event", "callback"]);
-
-      var CTKey = key ? {
-        key: key
-      } : {};
-      var style = serialNumberShow && key && key.match(/^listSN\d+/) ? list_objectSpread({}, !header.show || rowIndex !== 0 ? serialNumberStyle : {}, {}, specialStyle[rowIndex - 1]) : {}; // 处理默认事件及回调函数
-
-      if (typeof callback === 'function') {
-        style = list_objectSpread({}, style, {
-          cursor: 'pointer'
-        });
-
-        if (event) {
-          restProps[event] = handleEvent.bind(this, [ct]);
-        } else {
-          restProps['onClick'] = handleEvent.bind(this, [ct]);
-        }
-      }
-
-      delete restProps.data;
-      return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("span", extends_default()({
-        className: "list-cell-text".concat(className ? " ".concat(className) : ''),
-        style: style
-      }, CTKey, restProps), text);
-    }
-    /**
-     * 设置单元格
-     * @param rowData {Array} 行数据
-     * @param rowIndex {number} 行索引
-     * @param container {string} 当前所在容器的名称
-     */
-
-  }, {
-    key: "setCell",
-    value: function setCell(rowData, rowIndex, container) {
-      var _this4 = this;
-
-      var _this$state3 = this.state,
-          colWidth = _this$state3.colWidth,
-          property = _this$state3.property,
-          rowStyle = _this$state3.rowStyle;
-      var _property$body = property.body,
-          cellOfColumnStyle = _property$body.cellOfColumn.style,
-          style = _property$body.cell.style; // 处理border属性值
-
-      var listBorder = this.setBorder(style);
-      return rowData.map(function (cellData, cellIndex) {
-        return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("div", {
-          key: "".concat(container, "-cell-r").concat(rowIndex, "-c").concat(cellIndex),
-          className: "list-cell",
-          style: list_objectSpread({
-            height: rowStyle[rowIndex] ? rowStyle[rowIndex].height : 'auto'
-          }, style, {
-            width: typeof colWidth === 'string' ? colWidth : colWidth[cellIndex] || 'auto'
-          }, cellOfColumnStyle[cellIndex], {}, listBorder)
-        }, _this4.parsing(cellData, {
-          rowIndex: rowIndex + 1,
-          cellIndex: cellIndex
-        }, container));
-      });
-    }
-    /**
-     * 解析数据里面的对象
-     * @param {object} cellData 需要解析的单元格数据
-     * @param {number} rowIndex 需要解析的单元格数据所在行的索引
-     * @param {number} cellIndex 需要解析的单元格数据所在行的索引
-     * @param {number?} index 当前循环遍历的index
-     * @param {string?} container 当前渲染单元格所在的容器（此参数目前只在type为radio时生效）
-     * @returns {*} 单元格数据或DOM
-     */
-
-  }, {
-    key: "parsing",
-    value: function parsing(cellData, _ref4, container) {
-      var _this5 = this;
-
-      var rowIndex = _ref4.rowIndex,
-          cellIndex = _ref4.cellIndex,
-          index = _ref4.index;
-
-      if (Array.isArray(cellData)) {
-        return cellData.map(function (o, i) {
-          return _this5.parsing(o, {
-            rowIndex: rowIndex,
-            cellIndex: cellIndex,
-            index: i
-          }, container);
-        });
-      }
-
-      if (external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isObject(cellData)) {
-        switch (cellData.type) {
-          case 'img':
-            return this.setCellIcon(cellData, {
-              rowIndex: rowIndex,
-              cellIndex: cellIndex
-            });
-
-          case 'link':
-            return this.setCellLink(cellData);
-
-          case 'radio':
-            return this.setCellInput(cellData, {
-              rowIndex: rowIndex,
-              cellIndex: cellIndex,
-              index: index
-            }, container);
-
-          case 'checkbox':
-            return this.setCellInput(cellData, {
-              rowIndex: rowIndex,
-              cellIndex: cellIndex,
-              index: index
-            });
-
-          case 'button':
-            return this.setCellInput(cellData, {
-              rowIndex: rowIndex,
-              cellIndex: cellIndex,
-              index: index
-            });
-
-          case 'select':
-            return this.setCellSelect(cellData);
-
-          case 'text':
-            return this.setCellText(cellData, {
-              rowIndex: rowIndex
-            });
-        }
-      } // 不是指定对象，返回原数据
-
-
-      return cellData;
-    }
-    /**
-     * 设置边框
-     * 检测到空值则使用全局配置，而不是设置为无边框
-     * @param {object} borderStyle 含有边框属性的对象
-     * @returns {object} 返回包含border及其相关属性的对象
-     */
-
-  }, {
-    key: "setBorder",
-    value: function setBorder(borderStyle) {
-      var border = this.state.property.border;
-      var newBorder = {}; // borderStyle对象的border属性为空字符串
-
-      if (borderStyle && borderStyle.border === '') {
-        return border;
-      } // borderStyle对象的border属性为空值以外的其他假值
-
-
-      if (!borderStyle.border) {
-        newBorder.borderWidth = borderStyle.borderWidth || border.borderWidth;
-        newBorder.borderColor = borderStyle.borderColor || border.borderColor;
-        newBorder.borderStyle = borderStyle.borderStyle || border.borderStyle;
-        return newBorder;
-      }
-
-      return {
-        border: borderStyle.border
-      };
-    }
-    /**
-     * 设置行
-     * @param {array} bodyData 列表主体数据
-     * @param {string} container 当前所在容器的名称
-     * @returns {*} 列表主体DOM
-     */
-
-  }, {
-    key: "setRow",
-    value: function setRow(bodyData, container) {
-      var _this6 = this;
-
-      var _this$state4 = this.state,
-          property = _this$state4.property,
-          transitionName = _this$state4.transitionName,
-          rowStyle = _this$state4.rowStyle;
-      var transition = property.body.row.transition; // 处理行动画的样式
-
-      var transitionClassName = transition ? " ".concat(transitionName) : '';
-      return bodyData.map(function (rowData, rowIndex) {
-        var customClassName = rowData.className ? " ".concat(rowData.className) : '';
-        var LIElementProps = {
-          className: "list-row".concat(customClassName).concat(transitionClassName),
-          style: rowStyle[rowIndex],
-          onMouseEnter: _this6.rowHover,
-          onMouseLeave: _this6.rowHover // 检测行数据是一个对象还是一个数组
-          // 如果是对象，则需要对行数据做一些处理，比如添加自定义事件等（目前只支持添加事件）
-
-        };
-
-        if (external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isPlainObject(rowData) && rowData.type === 'row') {
-          LIElementProps[rowData.event] = handleEvent.bind(_this6, [rowData]);
-          LIElementProps.value = rowData.value;
-        } else {
-          LIElementProps = list_objectSpread({}, LIElementProps, {
-            type: 'row'
-          });
-        }
-
-        return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("li", extends_default()({
-          key: "".concat(container, "-list-row").concat(rowData.key ? rowData.key : rowIndex)
-        }, LIElementProps), external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isArray(rowData) ? _this6.setCell(rowData, rowIndex, container) : _this6.setCell(rowData.cells, rowIndex, container));
-      });
-    }
-    /**
-     * 加载列表头
-     * @param {array} data 列表头数据
-     * @returns {*} 列表头DOM
-     */
-
-  }, {
-    key: "loadHeader",
-    value: function loadHeader(data) {
-      var _this7 = this;
-
-      var _this$state5 = this.state,
-          property = _this$state5.property,
-          colWidth = _this$state5.colWidth,
-          headerWidth = _this$state5.headerWidth;
-      var enable = property.scroll.enable,
-          _property$header = property.header,
-          style = _property$header.style,
-          cellStyle = _property$header.cellStyle,
-          showHeader = _property$header.show;
-      var minWidth = property.body.cell.style.minWidth; // 处理border属性值
-
-      var listBorder = this.setBorder(cellStyle);
-
-      if (showHeader && data && data.length) {
-        return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("ul", {
-          className: "list-header list-cont",
-          style: !enable && headerWidth ? {
-            width: headerWidth
-          } : null
-        }, external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("li", {
-          key: "list-row",
-          className: "list-row",
-          style: style
-        }, data.map(function (cell, index) {
-          return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("div", {
-            className: "list-cell",
-            title: external_commonjs_lodash_commonjs2_lodash_amd_lodash_root_default.a.isObject(cell) ? cell.text : cell,
-            key: "list-header-".concat(index),
-            style: list_objectSpread({}, cellStyle, {
-              width: typeof colWidth === 'string' ? colWidth : colWidth[index] || 'auto',
-              minWidth: minWidth
-            }, listBorder)
-          }, _this7.parsing(cell, {
-            rowIndex: 0,
-            cellIndex: 0
-          }));
-        })));
-      }
-
-      return null;
-    }
-    /**
-     * 加载列表主体
-     * @param bodyData
-     * @returns {*}
-     */
-
-  }, {
-    key: "loadBody",
-    value: function loadBody(bodyData) {
-      var _this8 = this;
-
-      var _this$state6 = this.state,
-          scrollHeight = _this$state6.scrollHeight,
-          _this$state6$property = _this$state6.property,
-          _this$state6$property2 = _this$state6$property.body,
-          style = _this$state6$property2.style,
-          spacing = _this$state6$property2.row.spacing,
-          enable = _this$state6$property.scroll.enable; // 处理css属性‘border-collapse’与‘border-spacing’的值
-
-      var listContStyle = getListContStyle(spacing);
-      return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("div", {
-        className: "list-body",
-        ref: function ref(ele) {
-          return _this8.scroll = ele;
-        },
-        style: list_objectSpread({}, style, {
-          height: scrollHeight,
-          overflowY: enable ? 'hidden' : 'auto'
-        })
-      }, external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("ul", {
-        className: "list-cont",
-        style: listContStyle,
-        ref: function ref(ele) {
-          return _this8.listContMain = ele;
-        }
-      }, this.setRow(bodyData, 'main')), external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("ul", {
-        className: "list-cont",
-        style: listContStyle,
-        ref: function ref(ele) {
-          return _this8.listContSupport = ele;
-        }
-      }, this.setRow(bodyData, 'support')));
-    }
-    /**
-     * 渲染 DOM 结构
-     * @returns {*} 组件DOM
-     */
-
-  }, {
-    key: "render",
-    value: function render() {
-      var _this$state7 = this.state,
-          _this$state7$property = _this$state7.property,
-          showHeader = _this$state7$property.header.show,
-          spacing = _this$state7$property.body.row.spacing,
-          conStyle = _this$state7$property.style,
-          data = _this$state7.data,
-          className = _this$state7.className; // 处理border属性值
-
-      var listBorder = this.setBorder(conStyle); // 当存在表头数据且表头是开启时处理数据
-
-      var headerData;
-      var bodyData;
-      this.renderData = fillRow(data, this.state);
-
-      if (showHeader && data.length) {
-        var _this$renderData = toArray_default()(this.renderData);
-
-        headerData = _this$renderData[0];
-        bodyData = _this$renderData.slice(1);
-      } else {
-        bodyData = this.renderData;
-      }
-
-      var listClass = !Number.isNaN(parseInt(spacing)) && parseInt(spacing) > 0 ? '' : 'list-no-spacing';
-      return external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("div", {
-        style: list_objectSpread({}, listBorder, {}, conStyle),
-        className: "list".concat(listClass ? " ".concat(listClass) : '').concat(className ? " ".concat(className) : ''),
-        onMouseMove: this.scrollList.bind(this, false),
-        onMouseLeave: this.scrollList.bind(this, true)
-      }, this.loadHeader(headerData), this.loadBody(bodyData));
-    }
   }], [{
     key: "getDerivedStateFromProps",
     value: function getDerivedStateFromProps(props, state) {
