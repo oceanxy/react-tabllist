@@ -13,6 +13,7 @@ const Dev = () => {
       [
         {
           type: 'input',
+          text: '1',
           defaultValue: '1st column',
           placeholder: '1st column'
         },
@@ -102,7 +103,18 @@ const Dev = () => {
         ]
       },
       [
-        'row 2; column 1',
+        {
+          type: 'img',
+          src: 'http://www.xieyangogo.cn/root/assets/img/web_github_128px.png',
+          alt: '',
+          text: 'row 2; column 1',
+          key: '',
+          value: '',
+          style: {
+            width: 24,
+            height: 24
+          }
+        },
         {
           type: 'link',
           data: 10,

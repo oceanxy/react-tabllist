@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --config build/webpack.config.dev",
     "test": "jest --coverage --detectOpenHandles --forceExit && codecov",
-    "test-jest": "jest --detectOpenHandles --forceExit",
+    "tjest": "jest --detectOpenHandles --forceExit",
     "clean-demo": "rm -rf examples/",
     "clean-dist": "rm -rf dist/",
     "start-demo": "webpack-dev-server --config build/webpack.config.dev.demo",
