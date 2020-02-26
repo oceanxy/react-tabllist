@@ -263,14 +263,22 @@ Here are some examples：
             label: 'item 1',
             value: 1
         }
-    ],
+    ]
 }
 
 // text
 {
     type: 'text',
     text: 'I am a normal text',
-    callback: (data, cellData, event) => {},
+    callback: (data, cellData, event) => {}
+}
+
+// input
+{
+    type: 'input',
+    text: 'username:',
+    placeholder: 'enter username',
+    defaultValue: 'oceanxy' // This attribute is not a standard HTML tag attribute, but it is a property of the React element (the purpose is to set the default value of the text box). As you can see, `you can also use React's officially defined properties in object cells.`
 }
 ```
 
@@ -289,6 +297,7 @@ Here are some examples：
 
 
 ###### HTML Attribute (The usage of these attributes is the same as that of native HTML tags. They are listed to indicate the points to be aware of when using them.)
+
 |**Attribute** `{type}`                                                 |Description                                                                                                                                                                                           |
 |-----------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 |**name** <br>`{string}`                                                |The attributes that the radio and checkbox must set, the same as the name attribute of the HTML-like tag.                                                                                             |
@@ -296,10 +305,18 @@ Here are some examples：
 |**src** <br> `{string}`                                                |Image link, such as: 'http(s)://xxx' or 'data:image/xxx'                                                                                                                                              |
 |**alt** <br> `{string}`                                                |The alt attribute of the image                                                                                                                                                                        |
 |**href** <br> `{string}`                                               |The hyperlink type of the link type (the same as the href of the HTML a tag), or you can use this combination of event and callback to customize the event callback without passing this attribute.   |
+
+> For more tag attributes please visit [w3schools](https://www.w3schools.com/tags/).
+
+###### React's Element Attribute
+
+|**Attribute** `{type}`                                                 |Description                                                                                                                                                                                           |
+|-----------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 |**key** <br> `{string}`                                                |Jsx loop or array need to use the key attribute, `Please ensure the uniqueness of the key`                                                                                                            |
 |**className** <br> `{string}`                                          |Custom style sheet name                                                                                                                                                                               |
+|**defaultValue** <br> `{string|number}`                                |The default value of labels such as text boxes, different from value                                                                                                                                  |
 
-For more tag attributes please visit [w3schools](https://www.w3schools.com/tags/).
+> For more attributes, see the `type definition file` (d.ts) of the react library.
 
 ###### Callback
 

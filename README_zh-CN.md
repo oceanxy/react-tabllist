@@ -272,6 +272,14 @@ $ npm start
     text: '我是一个普通文本',
     callback: (data, cellData, event) => {},
 }
+
+// input
+{
+    type: 'input',
+    text: 'username:',
+    placeholder: 'enter username',
+    defaultValue: 'oceanxy' // 这个属性不是标准的HTML标签属性，但它是React元素的属性（作用是设置文本框的默认值）。`所以，你也可以在对象单元格里使用React官方定义的属性。`
+}
 ```
 
 ###### 自定义对象单元格的属性
@@ -289,6 +297,7 @@ $ npm start
 
 
 ###### HTML属性 (这些属性的用法同原生的HTML标签，之所以列出来是为了注明使用它们时需要注意的点。)
+
 |**属性** `{类型}`                                 |描述                                                                                          |
 |-------------------------------------------------|----------------------------------------------------------------------------------------------|
 |**name** <br>`{string}`                          |radio和checkbox必须设置的属性，同HTML同类标签的name属性                                           |
@@ -296,10 +305,18 @@ $ npm start
 |**src** <br> `{string}`                          |图片链接，如：'http(s)://xxx' 或 'data:image/xxx'                                               |
 |**alt** <br> `{string}`                          |图片的alt属性                                                                                  |
 |**href** <br> `{string}`                         |link类型的超链接地址（同HTML a标签的href），也可不传此属性而使用event和callback的组合自定义事件回调    |
+
+> 更多标签的属性请访问[w3schools](https://www.w3school.com.cn/tags/index.asp)。
+
+###### React's Element Attribute
+
+|**属性** `{类型}`                                 |描述                                                                                          |
+|-------------------------------------------------|----------------------------------------------------------------------------------------------|
 |**key** <br> `{string}`                          |jsx循环或数组需要用到的key属性，`请确保key的唯一性`                                                |
 |**className** <br> `{string}`                    |自定义样式表名称                                                                                |
+|**defaultValue** <br> `{string|number}`          |Custom style sheet name                                                                       |
 
-更多标签的属性请访问[w3schools](https://www.w3school.com.cn/tags/index.asp)。
+> 更多属性请查看react库的`类型定义文件`(d.ts)。
 
 ###### callback 回调函数
 
