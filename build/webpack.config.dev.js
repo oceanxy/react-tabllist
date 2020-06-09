@@ -1,12 +1,12 @@
-const path = require('path')
-const merge = require('webpack-merge')
-const baseConfig = require('./webpack.base')
-const htmlWebpackPlugin = require('html-webpack-plugin')
-const stylelintWebpackPlugin = require('stylelint-webpack-plugin')
+const path = require('path');
+const merge = require('webpack-merge');
+const baseConfig = require('./webpack.base');
+const htmlWebpackPlugin = require('html-webpack-plugin');
+const stylelintWebpackPlugin = require('stylelint-webpack-plugin');
 
 let config = {
   mode: 'development',
-  devtool: 'inline-source-map',
+  devtool: 'cheap-module-eval-source-map',
   entry: {
     'react-tabllist.dev': './app/index.js'
   },
@@ -71,12 +71,12 @@ let config = {
     }),
     new stylelintWebpackPlugin({
       context: 'src',
-      files: 'style/css/*.scss',
+      files: '*.scss',
       failOnError: false,
       quiet: true,
       fix: true
     })
   ]
-}
+};
 
-module.exports = merge(baseConfig, config)
+module.exports = merge(baseConfig, config);

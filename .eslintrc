@@ -23,28 +23,25 @@
   "plugins": [
     "react",
     "@typescript-eslint"
-
   ],
   "rules": {
     "indent": [
       "error",
-      "tab",
+      2,
       {
         "SwitchCase": 1
       }
     ],
-    "linebreak-style": [
-      0,
-      "unix"
-    ],
+    "linebreak-style": 0,
     "quotes": [
       "error",
       "single"
     ],
     "semi": [
       "error",
-      "never"
+      "always"
     ],
+    "no-debugger": 1,
     "react/display-name": 0,
     "react/prop-types": 0
   }

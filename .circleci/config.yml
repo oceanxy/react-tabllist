@@ -16,24 +16,21 @@ jobs:
       - run:
           name: update-npm
           command: 'sudo npm install -g npm@latest'
-      - run:
-          name: install-yarn
-          command: 'sudo npm install -g yarn'
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
           name: install-package
-          command: yarn
+          command: npm install
       - save_cache:
           paths:
             - ./node_modules
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
           name: test-stylelint
-          command: yarn lint
+          command: npm run lint
       - run:
           name: run-unit-test-and-uploading-reports
-          command: yarn test
+          command: npm run test
       - run:
           name: chmod
           command: chmod +x build/scripts/pushDemo.sh
