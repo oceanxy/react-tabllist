@@ -1,7 +1,10 @@
 {
+  "root": true,
   "env": {
     "es6": true,
-    "browser": true
+    "browser": true,
+    "node": true,
+    "jest": true
   },
   "parser": "babel-eslint",
   "parserOptions": {
@@ -18,7 +21,9 @@
     "plugin:react/recommended"
   ],
   "plugins": [
-    "react"
+    "react",
+    "@typescript-eslint"
+
   ],
   "rules": {
     "indent": [
@@ -29,7 +34,7 @@
       }
     ],
     "linebreak-style": [
-      "error",
+      0,
       "unix"
     ],
     "quotes": [

@@ -52,13 +52,19 @@ const config = {
             loader: 'style-loader'
           },
           {
-            loader: 'css-loader'
+            loader: 'css-loader',
+            options: {
+              importLoaders: 2
+            }
           },
           {
             loader: 'postcss-loader'
           },
           {
-            loader: 'sass-loader'
+            loader: 'sass-loader',
+            options: {
+              implementation: require('sass')
+            }
           }
         ]
       },
