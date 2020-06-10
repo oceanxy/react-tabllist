@@ -1,7 +1,7 @@
-const path = require('path')
-const merge = require('webpack-merge')
-const baseConfig = require('./webpack.base')
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+const path = require('path');
+const merge = require('webpack-merge');
+const baseConfig = require('./webpack.base');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 const config = {
   mode: 'production',
@@ -87,6 +87,6 @@ const config = {
       })
     ]
   }
-}
+};
 
-module.exports = merge(baseConfig, config)
+module.exports = merge(baseConfig, config);

@@ -1,0 +1,1 @@
+declare function closest(el: Element, selector: string): Element | undefined

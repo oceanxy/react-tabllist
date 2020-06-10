@@ -1,8 +1,8 @@
-const path = require('path')
-const merge = require('webpack-merge')
-const baseConfig = require('./webpack.base')
-const htmlWebpackPlugin = require('html-webpack-plugin')
-const stylelintWebpackPlugin = require('stylelint-webpack-plugin')
+const path = require('path');
+const merge = require('webpack-merge');
+const baseConfig = require('./webpack.base');
+const htmlWebpackPlugin = require('html-webpack-plugin');
+const stylelintWebpackPlugin = require('stylelint-webpack-plugin');
 
 let config = {
   mode: 'development',
@@ -77,6 +77,6 @@ let config = {
       fix: true
     })
   ]
-}
+};
 
-module.exports = merge(baseConfig, config)
+module.exports = merge(baseConfig, config);

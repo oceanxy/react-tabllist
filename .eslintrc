@@ -6,15 +6,15 @@
     "node": true,
     "jest": true
   },
-  "parser": "babel-eslint",
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
+    "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true,
       "modules": true,
       "experimentalObjectRestSpread": true
     },
-    "ecmaVersion": 2018,
-    "sourceType": "module"
+    "ecmaVersion": 2020
   },
   "extends": [
     "eslint:recommended",
@@ -22,7 +22,8 @@
   ],
   "plugins": [
     "react",
-    "@typescript-eslint"
+    "@typescript-eslint",
+    "import"
   ],
   "rules": {
     "indent": [
@@ -43,6 +44,8 @@
     ],
     "no-debugger": 1,
     "react/display-name": 0,
-    "react/prop-types": 0
+    "react/prop-types": 0,
+    "no-unused-vars": 0,
+    "@typescript-eslint/no-unused-vars": 2
   }
 }

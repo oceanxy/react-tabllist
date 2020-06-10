@@ -1,4 +1,4 @@
-export default {
+export default <TableConfig>{
   className: '',
   data: [
     ['1st column', '2nd column', '3rd column'],
@@ -107,7 +107,7 @@ export default {
  * 为过时的属性配置警告信息
  * @returns {{discard: string, version: string, replacement: string}[]}
  */
-export function getWaringProperty() {
+export function getWaringProperty(): Waring[] {
   return [
     {
       version: '1.0.0',

@@ -8,7 +8,7 @@ let config = {
   mode: 'development',
   devtool: 'cheap-module-eval-source-map',
   entry: {
-    'react-tabllist.dev': './app/index.js'
+    'react-tabllist.dev': './app'
   },
   output: {
     filename: '[name].js',
