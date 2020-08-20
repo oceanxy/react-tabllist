@@ -11,7 +11,7 @@ import { ReactNode } from 'react';
 export function closest(
   el: HTMLElement,
   selector: string
-) {
+): HTMLElement | undefined {
   if (el) {
     const matchesSelector = el.matches ||
       el.webkitMatchesSelector ||
@@ -31,11 +31,14 @@ export function closest(
 
 /**
  * 设置屏幕滚动区域可见高度
- * @param {object} props props
- * @param {=} listComponent 列表组件实例对象
- * @returns {*} 列表滚动区域可见高度
+ * @param {object} props Props
+ * @param {Element?} listComponent 列表组件实例对象
+ * @returns {number} 列表滚动区域可见高度
  */
-export function getScrollHeight(props: Readonly<any> & Readonly<{ children?: ReactNode; }>, listComponent: Element | undefined) {
+export function getScrollHeight(
+  props: Readonly<any> & Readonly<{ children?: ReactNode; }>,
+  listComponent?: Element
+): number {
   const {
     header: {show, style},
     style: {height}
@@ -69,8 +72,8 @@ export function getScrollHeight(props: Readonly<any> & Readonly<{ children?: Rea
  * @param listContMain 滚动主容器对象
  * @returns {Array} 列表每列的宽度值，数组长度代表列数
  */
-export function getColClientWidth(listContMain: HTMLUListElement) {
-  const widthArr = [];
+export function getColClientWidth(listContMain: HTMLUListElement): CellWidth[] {
+  const widthArr = <CellWidth[]>[];
 
   if (listContMain && listContMain.children.length) {
     for (let i = 0, l = listContMain.children[0].children; i < l.length; i++) {
@@ -87,8 +90,12 @@ export function getColClientWidth(listContMain: HTMLUListElement) {
  * @param {array} data 用于渲染组件的数据
  * @returns {*} 用于渲染每列单元格的宽度值
  */
-export function handleColWidth(props: TableConfig, data: any) {
-  function isString(widthValue: string | number) {
+export function handleColWidth(props: TableConfig, data: Row[]): CellWidth[] | CellWidth {
+  /**
+   * 转换字符串
+   * @param widthValue
+   */
+  function convertUnit(widthValue: string | number): CellWidth {
     if ((widthValue as string).includes('px')) {
       return `${parseFloat(widthValue as string)}px`;
     } else if ((widthValue as string).includes('%')) {
@@ -100,12 +107,16 @@ export function handleColWidth(props: TableConfig, data: any) {
     return 'auto';
   }
 
-  function isArray(width: any[]) {
+  /**
+   * 处理宽度数组
+   * @param width
+   */
+  function handleWidthArray(width: any[]): CellWidth[] {
     return width.map(o => {
       if (o === 0 || !o) {
         return 'auto';
       } else if (typeof o === 'string') {
-        return isString(o);
+        return convertUnit(o);
       }
 
       return o;
@@ -115,10 +126,10 @@ export function handleColWidth(props: TableConfig, data: any) {
   const width = props.property?.body?.cell?.style?.width;
 
   if (Array.isArray(width)) { // 处理数组形式的多列宽度数值
-    return isArray(width);
+    return handleWidthArray(width);
   } else if (typeof width === 'string') { // 处理字符串形式的宽度数值
     if ((width as string).includes(',')) {
-      return isArray((width as string).split(',')); // 处理字符串形式的多列宽度数值
+      return handleWidthArray((width as string).split(',')); // 处理字符串形式的多列宽度数值
     } else if (width === 'avg') { // 处理平均值
       const maxCellNumber = getMaxCellOfRow(data, props);
 
@@ -136,17 +147,17 @@ export function handleColWidth(props: TableConfig, data: any) {
  * @param data 用于渲染的数据
  * @returns {number}
  */
-export function getMaxCellFromData(data: string | any[]) {
+export function getMaxCellFromData(data: Row[]): number {
   const cellsOfRow: any[] = [];
 
   // 获取每一行的数据量，存入数组 cellsOfRow 内
   _.range(data.length).map(i => {
     // 如果行数据是一个对象，保证该对象内一定有一个cells字段
-    if (_.isPlainObject(data[i]) && !data[i].cells) {
-      data[i].cells = [];
+    if (_.isPlainObject(data[i]) && !(<ObjectRow>data[i]).cells) {
+      (<ObjectRow>data[i]).cells = [];
     }
 
-    cellsOfRow.push(_.isArray(data[i]) ? data[i].length : data[i].cells.length);
+    cellsOfRow.push(_.isArray(data[i]) ? (<Cell[]>data[i]).length : (<ObjectRow>data[i]).cells.length);
   });
 
   // 获取数据量最多的一行的数值

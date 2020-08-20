@@ -1,10 +1,23 @@
 import { CSSProperties } from 'react';
 
 declare global {
+  import { EventHandler } from 'react';
+
+  /**
+   * css style
+   */
   type Style = {
     [K in keyof CSSProperties]?: CSSProperties
   }
 
+  /**
+   * 单元格宽度值
+   */
+  type CellWidth = number | 'auto' | string
+
+  /**
+   * 过期属性的警告
+   */
   interface Waring {
     version: string
     discard: string | [string, 'Object']
@@ -12,6 +25,9 @@ declare global {
     warn: string
   }
 
+  /**
+   * 表格配置
+   */
   interface TableConfig {
     className?: string
     data?: any[][]
@@ -76,4 +92,66 @@ declare global {
       }
     }
   }
+
+  /**
+   * 表格实例
+   */
+  class ReactTabllist {
+
+  }
+
+  function EventFn(instance: ReactTabllist, cellData: Cell, event: EventHandler<any>): never
+
+  /**
+   * 单元行
+   */
+  interface ObjectRow {
+    readonly type: 'row'
+    cells: Cell[]
+    data: any
+    value: any
+    event: string
+    callback: EventFn
+    className: string
+    key: string
+  }
+
+  interface Button {
+  }
+
+  interface Link {
+  }
+
+  interface Text {
+  }
+
+  interface Img {
+  }
+
+  interface Radio {
+  }
+
+  interface Checkbox {
+  }
+
+  interface Select {
+  }
+
+  interface Input {
+  }
+
+  /**
+   * 对象单元
+   */
+  type ObjectUnit = Button | Link | Img | Radio | Checkbox | Select | Text | Input
+
+  /**
+   * 单元格
+   */
+  type Cell = string | ObjectUnit | JSX.Element | Cell[]
+
+  /**
+   * 单元行
+   */
+  type Row = ObjectRow | Cell[]
 }
