@@ -1,5 +1,5 @@
 import {
-  AnchorHTMLAttributes, ButtonHTMLAttributes,
+  AnchorHTMLAttributes,
   EventHandler,
   HTMLAttributes, ImgHTMLAttributes, InputHTMLAttributes,
   ReactElement, SelectHTMLAttributes,
@@ -7,10 +7,12 @@ import {
 } from 'react'
 import { ReactTabllist } from './config'
 
+
+
 /**
  * 对象单元回调函数接口
  */
-interface EventCallback {
+declare interface EventCallback {
   (instance: Partial<ReactTabllist>, cellData: ObjectUnit, event: SyntheticEvent): void
 }
 
@@ -18,7 +20,7 @@ interface EventCallback {
  * 对象单元
  * 事件默认为`onClick`
  */
-interface ObjectUnit<E extends string = 'onClick'> {
+declare interface ObjectUnit<E extends string = 'onClick'> {
   /**
    * 同react的key属性
    */
@@ -58,7 +60,7 @@ interface ObjectUnit<E extends string = 'onClick'> {
 /**
  * 单元行
  */
-interface ObjectRow extends ObjectUnit, HTMLAttributes<HTMLLIElement> {
+declare interface ObjectRow extends ObjectUnit, HTMLAttributes<HTMLLIElement> {
   readonly type: 'row'
   cells: Cell[]
 }
@@ -67,54 +69,54 @@ interface ObjectRow extends ObjectUnit, HTMLAttributes<HTMLLIElement> {
 //   readonly type: 'button'
 // }
 
-interface ObjectButton extends ObjectUnit, InputHTMLAttributes<HTMLInputElement> {
+declare interface ObjectButton extends ObjectUnit, InputHTMLAttributes<HTMLInputElement> {
   readonly type: 'button'
 }
 
-interface ObjectLink extends ObjectUnit, AnchorHTMLAttributes<HTMLAnchorElement> {
+declare interface ObjectLink extends ObjectUnit, AnchorHTMLAttributes<HTMLAnchorElement> {
   readonly type: 'link'
   text?: string
   href?: string
 }
 
-interface ObjectText extends ObjectUnit, HTMLAttributes<HTMLSpanElement> {
+declare interface ObjectText extends ObjectUnit, HTMLAttributes<HTMLSpanElement> {
   readonly type: 'text'
   text?: string
 }
 
-interface ObjectImg extends ObjectUnit, ImgHTMLAttributes<HTMLImageElement> {
+declare interface ObjectImg extends ObjectUnit, ImgHTMLAttributes<HTMLImageElement> {
   readonly type: 'img'
   src?: string
   alt?: string
   text?: string
 }
 
-interface ObjectRadio extends ObjectUnit, InputHTMLAttributes<HTMLInputElement> {
+declare interface ObjectRadio extends ObjectUnit, InputHTMLAttributes<HTMLInputElement> {
   readonly type: 'radio'
   text: string
   name: string
 }
 
-interface ObjectCheckbox extends ObjectUnit, InputHTMLAttributes<HTMLInputElement> {
+declare interface ObjectCheckbox extends ObjectUnit, InputHTMLAttributes<HTMLInputElement> {
   readonly type: 'checkbox'
   text: string
   name: string
 }
 
-interface ObjectOption {
+declare interface ObjectOption {
   readonly type: 'option'
   id: string
   label: string
   value: string | number
 }
 
-interface ObjectSelect extends ObjectUnit, SelectHTMLAttributes<HTMLSelectElement> {
+declare interface ObjectSelect extends ObjectUnit, SelectHTMLAttributes<HTMLSelectElement> {
   readonly type: 'select'
   option: ObjectOption[]
   text?: string
 }
 
-interface ObjectInput extends ObjectUnit, InputHTMLAttributes<HTMLInputElement> {
+declare interface ObjectInput extends ObjectUnit, InputHTMLAttributes<HTMLInputElement> {
   readonly type: 'input'
   name?: string
   text?: string
@@ -123,30 +125,30 @@ interface ObjectInput extends ObjectUnit, InputHTMLAttributes<HTMLInputElement> 
 /**
  * 单元格
  */
-type Cell = string | ObjectUnit | ReactElement<any, any> | Cell[]
+declare type Cell = string | ObjectUnit | ReactElement<any, any> | Cell[]
 
 /**
  * 单元行
  */
-type Row = ObjectRow | Cell[]
+declare type Row = ObjectRow | Cell[]
 
 /**
  * 对象单元属性集合
  */
-type ObjectUnion = ObjectRow & ObjectCheckbox & ObjectText & ObjectImg &
+declare type ObjectUnion = ObjectRow & ObjectCheckbox & ObjectText & ObjectImg &
   ObjectButton & ObjectInput & ObjectLink & ObjectRadio & ObjectSelect
 
 /**
  * 内置属性定义
  */
-type BuiltAttrs = 'type' | 'text' | 'event' | 'eventHandler' | 'callback' | 'cells' | 'data' | 'option'
+declare type BuiltAttrs = 'type' | 'text' | 'event' | 'eventHandler' | 'callback' | 'cells' | 'data' | 'option'
 
 /**
  * 从对象单元中选取内置属性，得到新的对象单元类型
  */
-type BuiltInAttrs<T extends ObjectUnit> = Pick<T, Extract<keyof T, BuiltAttrs>>
+declare type BuiltInAttrs<T extends ObjectUnit> = Pick<T, Extract<keyof T, BuiltAttrs>>
 
 /**
  * 从对象单元中选取非内置属性，得到新的对象单元类型
  */
-type ObjectRestAttrs<T extends ObjectUnit> = Pick<T, Exclude<keyof T, BuiltAttrs>>
+declare type ObjectRestAttrs<T extends ObjectUnit> = Pick<T, Exclude<keyof T, BuiltAttrs>>

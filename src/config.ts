@@ -1,5 +1,5 @@
-import { TableConfig } from 'types/config';
-import { Waring } from 'types/waring';
+import { TableConfig } from '@/types/config';
+import { Waring } from '@/types/waring';
 
 export default <TableConfig>{
   className: '',

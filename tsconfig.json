@@ -3,7 +3,7 @@
     // 允许从没有设置默认导出的模块中默认导入。这并不影响代码的输出，仅为了类型检查。
     "allowSyntheticDefaultImports": true,
     /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */
-    "esModuleInterop": false,
+    "esModuleInterop": true,
     // 生成相应的 .map文件,
     "sourceMap": true,
     // 在表达式和声明上有隐含的 any类型时报错。默认false
@@ -11,6 +11,7 @@
     // 模块引入方式,
     "module": "UMD",
     // 指定ECMAScript目标版本,
+    // "target": "esnext",
     "target": "es5",
     // 决定如何处理模块,
     "moduleResolution": "node",
@@ -30,9 +31,7 @@
     "strict": true,
     /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "@/*": ["src/*"]
     },
     /* Allow javascript files to be compiled. */
     "allowJs": true,
@@ -43,19 +42,23 @@
     /* Enables experimental support for ES7 decorators. */
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": false,
-    "outDir": "lib",
+    "resolveJsonModule": true,
+    "outDir": "./dist/",
     "declaration": true
     /* 要包含的类型声明文件路径列表 */
 //    "typeRoots": [
-//      "types",
+//      "@/types",
 //      "node_modules/@types"
 //    ]
   },
   "include": [
     // 这个表示处理根目录的src目录下所有的.ts和.tsx文件，并不是所有文件
-    "src"
+    "src/**/*"
   ],
+  "awesomeTypescriptLoaderOptions": {
+    "transpileOnly": true
+  },
+  "compileOnSave": true,
   "exclude": [
     "node_modules"
   ]

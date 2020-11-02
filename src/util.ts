@@ -1,8 +1,8 @@
 import _ from 'lodash'
 import { getWaringProperty } from './config'
 import { CSSProperties, ReactNode, SyntheticEvent } from 'react'
-import { TableConfig, TableConfigUnit, TableProperty } from 'types/config'
-import { CellWidth } from 'types/decoration'
+import { TableConfig, TableConfigUnit, TableProperty } from '@/types/config'
+import { CellWidth } from '@/types/decoration'
 import {
   BuiltInAttrs,
   Cell,
@@ -12,9 +12,9 @@ import {
   ObjectText,
   ObjectUnit,
   Row
-} from 'types/structure'
-import { ReactTabllist, TableState } from 'types/list'
-import { IsKeyExists } from 'types/waring'
+} from '@/types/structure'
+import { ReactTabllist, TableState } from '@/types/list'
+import { IsKeyExists } from '@/types/waring'
 
 /**
  * 从el元素向上选取第一个selector选择器匹配的元素

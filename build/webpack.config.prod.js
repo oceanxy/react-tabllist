@@ -6,8 +6,8 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const config = {
   mode: 'production',
   entry: {
-    'react-tabllist': './src/index.js',
-    'react-tabllist.min': './src/index.js'
+    'react-tabllist': './src/index.tsx',
+    'react-tabllist.min': './src/index.tsx'
   },
   output: {
     path: path.resolve(__dirname, '../dist'),

@@ -1,7 +1,10 @@
-import { TableConfig } from 'types/config'
+/// <reference path="config.d.ts" />
+
 import React from 'react'
-import { Style } from 'types/decoration'
-import { ObjectUnit, Row } from 'types/structure'
+import { Style } from '@/types/decoration'
+import { ObjectUnit, Row } from '@/types/structure'
+import { TableConfig } from '@/types/config'
+import { Node } from 'webpack'
 
 interface RowCheckedState {
   rowCheckbox?: Event<HTMLInputElement>[]
@@ -43,7 +46,7 @@ readonly interface TableState extends TableConfig {
   rowStyle?: Style[]
 }
 
-export class ReactTabllist extends React.Component<TableConfig, TableState> {
+export default class ReactTabllist extends React.Component<TableConfig, TableState> {
   /**
    * 经过计算后，最终用于渲染表格的数据
    */

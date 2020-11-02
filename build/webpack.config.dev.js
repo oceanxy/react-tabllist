@@ -3,12 +3,13 @@ const merge = require('webpack-merge');
 const baseConfig = require('./webpack.base');
 const htmlWebpackPlugin = require('html-webpack-plugin');
 const stylelintWebpackPlugin = require('stylelint-webpack-plugin');
+const { CheckerPlugin } = require('awesome-typescript-loader');
 
 let config = {
   mode: 'development',
   devtool: 'cheap-module-eval-source-map',
   entry: {
-    'react-tabllist.dev': './app'
+    'react-tabllist.dev': './app/index.jsx'
   },
   output: {
     filename: '[name].js',
@@ -75,7 +76,8 @@ let config = {
       failOnError: false,
       quiet: true,
       fix: true
-    })
+    }),
+    new CheckerPlugin()
   ]
 };
 

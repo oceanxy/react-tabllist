@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ReactTabllist from '../src';
+import ReactTabllist from '../src/index.tsx';
 import './index.scss';
 
 const Dev = () => {

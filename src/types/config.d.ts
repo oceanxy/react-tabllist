@@ -1,6 +1,6 @@
 import { CSSProperties } from 'react'
 import { Style } from './decoration'
-import { Row } from 'types/structure'
+import { Row } from './structure'
 
 /**
  * 表格配置对象基础单元
