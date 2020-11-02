@@ -2,7 +2,7 @@ import 'jsdom-global/register';
 import _ from 'lodash';
 import React from 'react';
 import ReactTabllist from '../src';
-import Enzyme from './enzyme.config';
+import Enzyme from 'test/enzyme.config';
 
 jest.useFakeTimers();
 
@@ -526,7 +526,7 @@ describe('# test row of body', () => {
           },
           cell: {
             style: {
-              width: [, 111]
+              width: ['', 111]
             }
           }
         }
@@ -580,7 +580,7 @@ describe('# test row of body', () => {
           },
           cell: {
             style: {
-              width: [, 111, 112]
+              width: ['', 111, 112]
             }
           }
         }

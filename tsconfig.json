@@ -6,10 +6,10 @@
     "esModuleInterop": false,
     // 生成相应的 .map文件,
     "sourceMap": true,
-    // 在表达式和声明上有隐含的 any类型时报错。（默认为false，个人建议也为false，可以兼容之前的js代码，这里改为true是为了我自己检测哪些类型需要处理）,
+    // 在表达式和声明上有隐含的 any类型时报错。默认false
     "noImplicitAny": true,
     // 模块引入方式,
-    "module": "esnext",
+    "module": "UMD",
     // 指定ECMAScript目标版本,
     "target": "es5",
     // 决定如何处理模块,
@@ -43,12 +43,18 @@
     /* Enables experimental support for ES7 decorators. */
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": false,
+    "outDir": "lib",
+    "declaration": true
+    /* 要包含的类型声明文件路径列表 */
+//    "typeRoots": [
+//      "types",
+//      "node_modules/@types"
+//    ]
   },
   "include": [
     // 这个表示处理根目录的src目录下所有的.ts和.tsx文件，并不是所有文件
-    "src/*",
-    "types/*"
+    "src"
   ],
   "exclude": [
     "node_modules"

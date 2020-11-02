@@ -1,3 +1,6 @@
+import { TableConfig } from 'types/config';
+import { Waring } from 'types/waring';
+
 export default <TableConfig>{
   className: '',
   data: [
@@ -139,7 +142,7 @@ export function getWaringProperty(): Waring[] {
     },
     {
       version: '1.5.0',
-      discard: ['property.body.row.rowCheckbox', 'Object'],
+      discard: 'property.body.row.rowCheckbox',
       replacement: 'property.body.row.rowCheckbox.show',
       warn: 'Used obsolete configuration in React-tabllist: \'property.body.row.rowCheckbox\' is no longer directly set to a boolean value in version 1.5.0, but an object. For example: {show: boolean, style: cssProperties}.'
     }

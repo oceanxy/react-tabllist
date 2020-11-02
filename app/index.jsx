@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Tabllist from '../src';
+import ReactTabllist from '../src';
 import './index.scss';
 
 const Dev = () => {
@@ -390,7 +390,7 @@ const Dev = () => {
 
   return (
     <div className='container'>
-      <Tabllist property={option.property} data={option.data} />
+      <ReactTabllist property={option.property} data={option.data} />
     </div>
   );
 };
