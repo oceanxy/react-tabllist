@@ -1,0 +1,31 @@
+root = true
+
+[*]
+
+# 编码格式，通常都是选 utf-8
+charset = utf-8
+
+# 换行符，可选配置有 lf ，cr ，crlf ，会有三种的原因是因为各个操作系统之间的换行符不一致，这里有历史原因，有兴趣的同学自行了解吧，许多有名的开源库都是使用 lf ，我们姑且也跟跟风吧。
+end_of_line = crlf
+
+# 缩进风格，可选配置有 tab 和 space
+indent_style = space
+
+# 缩进大小，可设定为 1-8 的数字，比如设定为 2 ，那就是缩进 2 个空格。
+indent_size = 2
+
+# 在尾部插入一行，个人很喜欢这个风格，当最后一行代码很长的时候，你又想对该行代码比较靠后的位置编辑时，不要太好用哦，建议大家也开上。
+insert_final_newline = true
+
+max_line_length = 120
+tab_width = 2
+
+# 去除多余的空格，比如你不小心在尾巴多打了个空格，它会给你自动去掉。
+trim_trailing_whitespace = true
+
+ij_continuation_indent_size = 2
+ij_formatter_off_tag = @formatter:off
+ij_formatter_on_tag = @formatter:on
+ij_formatter_tags_enabled = false
+ij_smart_tabs = false
+ij_wrap_on_typing = false
