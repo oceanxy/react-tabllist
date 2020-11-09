@@ -3,7 +3,7 @@
   "tabWidth": 2,
   "semi": false,
   "singleQuote": true,
-  "endOfLine": "lf",
+  "endOfLine": "crlf",
   "printWidth": 120,
   "bracketSpacing": true,
   "arrowParens": "always"

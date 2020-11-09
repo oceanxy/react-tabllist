@@ -85,6 +85,11 @@ module.exports = {
     ],
     'unicorn/prefer-query-selector': ERROR,
     'unicorn/no-null': OFF,
+    'unicorn/import-style': OFF,
+
+    // note you must disable the base rule as it can report incorrect errors
+    'no-use-before-define': OFF,
+    '@typescript-eslint/no-use-before-define': ['error'],
 
     '@typescript-eslint/no-useless-constructor': ERROR,
     '@typescript-eslint/no-empty-function': WARN,
@@ -107,14 +112,14 @@ module.exports = {
 
     'lines-between-class-members': [ERROR, 'always'],
     // indent: [ERROR, 2, { SwitchCase: 1 }],
-    'linebreak-style': [ERROR, 'unix'],
+    'linebreak-style': [ERROR, 'windows'],
     quotes: [ERROR, 'single'],
     semi: [ERROR, 'never'],
     'no-unused-expressions': WARN,
     'no-plusplus': OFF,
     'no-console': OFF,
     'class-methods-use-this': ERROR,
-    'jsx-quotes': [ERROR, 'prefer-single'],
+    'jsx-quotes': [ERROR, 'prefer-double'],
     'global-require': OFF
   }
 }
