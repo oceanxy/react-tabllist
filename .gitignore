@@ -9,4 +9,5 @@ package-lock.json
 *.log
 *.log.*
 npm-debug.log
+dist
 /.vscode/

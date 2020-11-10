@@ -1,5 +1,3 @@
-/// <reference path="config.d.ts" />
-
 import React from 'react'
 import { Style } from '@/types/decoration'
 import { ObjectUnit, Row } from '@/types/structure'
