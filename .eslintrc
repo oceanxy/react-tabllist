@@ -19,6 +19,9 @@
     "eslint:recommended",
     "plugin:react/recommended"
   ],
+  "ignorePatterns": [
+    "types"
+  ],
   "plugins": [
     "react"
   ],

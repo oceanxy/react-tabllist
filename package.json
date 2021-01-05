@@ -50,6 +50,8 @@
     "@babel/preset-env": "^7.4.3",
     "@babel/preset-react": "^7.0.0",
     "@babel/runtime": "^7.4.3",
+    "@types/react": "^16.9.56",
+    "@types/react-dom": "^16.9.9",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^25.1.0",
@@ -104,5 +106,6 @@
     "README_zh-CN.md",
     "index.js",
     "dist/"
-  ]
+  ],
+  "types": "types/index.d.ts"
 }
