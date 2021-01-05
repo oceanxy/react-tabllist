@@ -337,12 +337,14 @@ Here are some examples：
 |objectUnit                            |Object unit data in the cell                                                                                                                            |
 |event                                 |React SyntheticBaseEvent                                                                                                                                            |
 
+- instance
+
 ```ecmascript 6
 {
-    scrollTo(rowIndex), // Scroll the component to the specified row
-    props, // The properties passed to the component can be re-assigned to update the component
-    readonlyState, // Component status (read only)
-    renderData // Render component data
+    scrollTo(rowIndex, targetScrollTop), // Scroll the component to the specified row. If row Index is false, use a value to represent the scroll distance (target Scroll Top)
+    props,              // The properties passed to the component can be re-assigned to update the component
+    readonlyState,      // Component status (read only)
+    renderData          // Render component data
 }
 ```
 

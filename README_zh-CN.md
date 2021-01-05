@@ -331,18 +331,20 @@ $ npm start
 
 - v1.5.1
 
-|callback(instance, objectUnit, event) |自定义事件的回调函数，可以配合`event`使用。若event未定义，则默认单击事件触发后回调此函数  |
+|callback(instance, objectUnit, event) |自定义事件的回调函数，可以配合`event`使用。若event未定义，则默认单击事件触发后回调此函数       |
 |--------------------------------------|--------------------------------------------------------------------------------|
-|instance                              |组件实例对象暴露出来的一些属性和方法                                                 |
-|objectUnit                            |该单元格内的自定义对象单元格数据                                                            |
-|event                                 |触发单元格绑定的事件后返回的event对象（React SyntheticBaseEvent）                    |
+|instance                              |组件实例对象暴露出来的一些属性和方法，如下：                                             |
+|objectUnit                            |该单元格内的自定义对象单元格数据                                                       |
+|event                                 |触发单元格绑定的事件后返回的event对象（React SyntheticBaseEvent）                       |
+
+- instance
 
 ```ecmascript 6
 {
-    scrollTo(rowIndex), // 使组件滚动到指定行
-    props, // 传递给组件的properties,可重新赋值，以更新组件
-    readonlyState, // 组件状态（只读）
-    renderData // 渲染组件的数据
+    scrollTo(rowIndex), // 使组件滚动到指定行。如果rowIndex为假值，则使用一个数值代表滚动距离（targetScrollTop）
+    props,              // 传递给组件的properties,可重新赋值，以更新组件
+    readonlyState,      // 组件状态（只读）
+    renderData          // 渲染组件的数据
 }
 ```
 
