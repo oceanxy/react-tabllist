@@ -13,10 +13,11 @@
 [![Last Commit](https://img.shields.io/github/last-commit/oceanxy/react-tabllist.svg)](https://github.com/oceanxy/react-tabllist)
 
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/oceanxy/react-tabllist.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/oceanxy/react-tabllist/context:javascript)
-[![Gitter](https://img.shields.io/gitter/room/oceanxy/react-tabllist.svg)](https://gitter.im/react-tabllist/community?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
 [![Dependencies Status](https://david-dm.org/oceanxy/react-tabllist/status.svg)](https://david-dm.org/oceanxy/react-tabllist)
 [![DevDependencies Status](https://david-dm.org/oceanxy/react-tabllist/dev-status.svg)](https://david-dm.org/oceanxy/react-tabllist?type=dev)
 [![PeerDependencies Status](https://david-dm.org/oceanxy/react-tabllist/peer-status.svg)](https://david-dm.org/oceanxy/react-tabllist?type=peer)
+
+[comment]: <> ([![Gitter]&#40;https://img.shields.io/gitter/room/oceanxy/react-tabllist.svg&#41;]&#40;https://gitter.im/react-tabllist/community?utm_source=share-link&utm_medium=link&utm_campaign=share-link&#41;)
 
 [English](./README.md) | 简体中文
 
@@ -334,7 +335,16 @@ $ npm start
 |--------------------------------------|--------------------------------------------------------------------------------|
 |instance                              |组件实例对象暴露出来的一些属性和方法                                                 |
 |objectUnit                            |该单元格内的自定义对象单元格数据                                                            |
-|event                                 |触发单元格绑定的事件后返回的event对象                                                |
+|event                                 |触发单元格绑定的事件后返回的event对象（React SyntheticBaseEvent）                    |
+
+```ecmascript 6
+{
+    scrollTo(rowIndex), // 使组件滚动到指定行
+    props, // 传递给组件的properties,可重新赋值，以更新组件
+    readonlyState, // 组件状态（只读）
+    renderData // 渲染组件的数据
+}
+```
 
 ###### Option
 
@@ -522,3 +532,17 @@ cellWidth可选值：
   }
 }
 ```
+
+### 鸣谢
+
+`react-tabllist`项目得以继续为大家免费服务，其中一个原因是 [jetbrains公司](https://www.jetbrains.com/?from=react-tabllist) 免费提供的开发工具，这里对他们表示感谢！
+
+### Q&A
+
+---
+
+Q: 感谢 [AimLuo](https://github.com/AimLuo) 提出的关于在`data`中写`对象单元`好还是`JSX语法`好的问题
+
+A: [查看详情](https://github.com/oceanxy/react-tabllist/issues/1)
+
+---

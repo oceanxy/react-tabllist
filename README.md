@@ -13,10 +13,11 @@
 [![Last Commit](https://img.shields.io/github/last-commit/oceanxy/react-tabllist.svg)](https://github.com/oceanxy/react-tabllist)
 
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/oceanxy/react-tabllist.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/oceanxy/react-tabllist/context:javascript)
-[![Gitter](https://img.shields.io/gitter/room/oceanxy/react-tabllist.svg)](https://gitter.im/react-tabllist/community?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
 [![Dependencies Status](https://david-dm.org/oceanxy/react-tabllist/status.svg)](https://david-dm.org/oceanxy/react-tabllist)
 [![DevDependencies Status](https://david-dm.org/oceanxy/react-tabllist/dev-status.svg)](https://david-dm.org/oceanxy/react-tabllist?type=dev)
 [![PeerDependencies Status](https://david-dm.org/oceanxy/react-tabllist/peer-status.svg)](https://david-dm.org/oceanxy/react-tabllist?type=peer)
+
+[comment]: <> ([![Gitter]&#40;https://img.shields.io/gitter/room/oceanxy/react-tabllist.svg&#41;]&#40;https://gitter.im/react-tabllist/community?utm_source=share-link&utm_medium=link&utm_campaign=share-link&#41;)
 
 English | [简体中文](./README_zh-CN.md)
 
@@ -330,11 +331,20 @@ Here are some examples：
 
 - v1.5.1
 
-|callback(data, objectUnit, event) |Custom event callback function, can be used with `event`. If the event is undefined, the default click event is triggered after the callback.           |
-|----------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
-|instance                          |Some properties and methods exposed by the component instance object                                                                                    |
-|objectUnit                        |Object unit data in the cell                                                                                                                            |
-|event                             |Event Object                                                                                                                                            |
+|callback(instance, objectUnit, event) |Custom event callback function, can be used with `event`. If the event is undefined, the default click event is triggered after the callback.           |
+|--------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
+|instance                              |Some properties and methods exposed by the component instance object                                                                                    |
+|objectUnit                            |Object unit data in the cell                                                                                                                            |
+|event                                 |React SyntheticBaseEvent                                                                                                                                            |
+
+```ecmascript 6
+{
+    scrollTo(rowIndex), // Scroll the component to the specified row
+    props, // The properties passed to the component can be re-assigned to update the component
+    readonlyState, // Component status (read only)
+    renderData // Render component data
+}
+```
 
 ###### Option
 
@@ -523,3 +533,20 @@ The default value of the component is based on this configuration table.
   }
 }
 ```
+
+### Thanks
+
+The `react-tabllist` project can continue to serve everyone free of charge. One of the reasons is the free development tools provided by [jetbrains](https://www.jetbrains.com/?from=react-tabllist). Thank them here!
+
+### Q&A
+
+---
+
+Q: Thanks to [AimLuo](https://github.com/AimLuo) for the question: Is it better to write `object units` in `data` or `JSX syntax`?
+
+A: [answer](https://github.com/oceanxy/react-tabllist/issues/1)
+
+---
+
+
+

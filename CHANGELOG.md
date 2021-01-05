@@ -7,7 +7,16 @@
 2. New Function: A cell can bind multiple events.
 3. Refactoring most of the old code.
 
-#### 1.6.0[latest]
+### 1.6.1[latest]
+This version has not updated features, only some field names and comments have been optimized. In addition, the version of the core dependency library has been updated, as well as some updates in the development mode. The details are as follows:
+
+1. Remove yarn.lock and package-lock.json from .gitignore
+2. Update the version of highlight.js in development mode. The version used before the update (v 9.15.6) has a vulnerability. In fact, the version before v 10.4.1 has this vulnerability
+3. Update the version of the core dependency library
+4. Optimized the parameter structure of the callback function exposed to the object unit (note that props can be re-assigned through the callback function of the object unit, and the component has been updated. This function has existed before, but it is not explained in the text)
+5. Update the README.md file
+
+#### 1.6.0
 1. New object cell: input.
 2. Optimization of generation rules for object cells. You can now add custom attributes, react-related HTML attributes, and HTML attributes specified by w3school in the configuration of the object cell to make the resulting tags more friendly.
 3. Modify the description of the fields available in the object cell in the README.md file.

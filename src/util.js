@@ -278,13 +278,19 @@ export function handleEvent(param, event) {
 
 /**
  * 给回调函数注入必要的属性和方法，暴露给外界使用
- * @param comp {object} 组件实例对象
- * @param _objectUnit {object} 渲染组件结构的对象单元
- * @param event event对象
+ * @param instance {object} 暴露给回调函数使用的部分属性和方法
+ *    {
+ *      scrollTo, // {function(rowIndex)} 滚动到指定行
+ *      props, // props（可重新赋值以更新组件）
+ *      readonlyState: cloneState, // 只读的组件状态
+ *      renderData // 渲染组件的数据
+ *    }
+ * @param _objectUnit {object} 对象单元
+ * @param event {SyntheticBaseEvent} event对象
  */
-export function expPropsAndMethods(comp, _objectUnit, event) {
+export function expPropsAndMethods(instance, _objectUnit, event) {
   if(_objectUnit.callback && _.isFunction(_objectUnit.callback)) {
-    const { scrollTo, props, renderData, state } = comp;
+    const { scrollTo, props, renderData, state } = instance;
     const cloneState = { ...state };
     delete cloneState.property;
     delete cloneState.data;
@@ -294,7 +300,7 @@ export function expPropsAndMethods(comp, _objectUnit, event) {
       {
         scrollTo,
         props,
-        state: cloneState,
+        readonlyState: cloneState,
         renderData
       },
       _objectUnit,
