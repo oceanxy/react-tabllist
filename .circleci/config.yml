@@ -10,7 +10,7 @@ jobs:
         - coding-pages
     working_directory: ~/react-tabllist
     docker:
-      - image: circleci/node:8.12.0
+      - image: circleci/node:14.15.0
     steps:
       - checkout
       - run:
