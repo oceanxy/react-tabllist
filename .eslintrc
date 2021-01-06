@@ -35,10 +35,7 @@
       "error",
       "single"
     ],
-    "semi": [
-      "error",
-      "always"
-    ],
+    "semi": 0,
     "no-debugger": 1,
     "react/display-name": 0,
     "react/prop-types": 0

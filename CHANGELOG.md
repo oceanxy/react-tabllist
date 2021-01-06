@@ -7,7 +7,7 @@
 2. New Function: A cell can bind multiple events.
 3. Refactoring most of the old code.
 
-### 1.6.1[latest]
+#### 1.6.1[latest]
 This version has not updated features, only some field names and comments have been optimized. In addition, the version of the core dependency library has been updated, as well as some updates in the development mode. The details are as follows:
 
 1. Remove yarn.lock and package-lock.json from .gitignore

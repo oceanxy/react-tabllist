@@ -1,7 +1,9 @@
 node_modules
+/coverage/
+/examples/
 
 .idea/
-/coverage
+
 .DS_Store
 .svn/
 *.log
