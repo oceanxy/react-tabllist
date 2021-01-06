@@ -4,10 +4,6 @@ jobs:
     branches:
       only:
         - master
-        - /rc-.*/
-      ignore:
-        - gh-pages
-        - coding-pages
     working_directory: ~/react-tabllist
     docker:
       - image: circleci/node:14.15.0
