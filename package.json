@@ -31,7 +31,12 @@
     "multi-mode",
     "infinite-scroll",
     "visualization",
-    "event-driven"
+    "event-driven",
+    "props",
+    "subarray",
+    "callback",
+    "callback-functions",
+    "jsx"
   ],
   "repository": {
     "type": "git",
@@ -106,8 +111,8 @@
     "webpack-node-externals": "^2.5.2"
   },
   "peerDependencies": {
-    "react": "16.4.0",
-    "react-dom": "16.4.0"
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0"
   },
   "dependencies": {},
   "files": [
@@ -115,6 +120,8 @@
     "README.md",
     "README_zh-CN.md",
     "index.js",
-    "dist/"
-  ]
+    "dist/",
+    "types/"
+  ],
+  "types": "types/index.d.ts"
 }
