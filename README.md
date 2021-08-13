@@ -7,16 +7,16 @@
 [![NPM Version](https://img.shields.io/npm/v/react-tabllist.svg)](https://www.npmjs.com/package/react-tabllist)
 [![Minified Size](https://img.shields.io/bundlephobia/min/react-tabllist.svg)](https://bundlephobia.com/result?p=react-tabllist)
 [![CircleCI Status](https://img.shields.io/circleci/project/github/oceanxy/react-tabllist/master.svg)](https://circleci.com/gh/oceanxy/react-tabllist)
-[![Codecov](https://img.shields.io/codecov/c/github/oceanxy/react-tabllist/master.svg)](https://codecov.io/gh/oceanxy/react-tabllist)
 [![NPM Download](https://img.shields.io/npm/dw/react-tabllist.svg)](https://www.npmjs.com/package/react-tabllist)
+
+[![Codecov](https://img.shields.io/codecov/c/github/oceanxy/react-tabllist/master.svg)](https://codecov.io/gh/oceanxy/react-tabllist)
+[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/oceanxy/react-tabllist.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/oceanxy/react-tabllist/context:javascript)
 [![Dependency React](https://img.shields.io/npm/dependency-version/react-tabllist/peer/react.svg)]()
 [![Last Commit](https://img.shields.io/github/last-commit/oceanxy/react-tabllist.svg)](https://github.com/oceanxy/react-tabllist)
 
-[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/oceanxy/react-tabllist.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/oceanxy/react-tabllist/context:javascript)
-[![Dependencies Status](https://david-dm.org/oceanxy/react-tabllist/status.svg)](https://david-dm.org/oceanxy/react-tabllist)
-[![DevDependencies Status](https://david-dm.org/oceanxy/react-tabllist/dev-status.svg)](https://david-dm.org/oceanxy/react-tabllist?type=dev)
-[![PeerDependencies Status](https://david-dm.org/oceanxy/react-tabllist/peer-status.svg)](https://david-dm.org/oceanxy/react-tabllist?type=peer)
-
+[comment]: <> ([![Dependencies Status]&#40;https://david-dm.org/oceanxy/react-tabllist/status.svg&#41;]&#40;https://david-dm.org/oceanxy/react-tabllist&#41;&#41;)
+[comment]: <> ([![DevDependencies Status]&#40;https://david-dm.org/oceanxy/react-tabllist/dev-status.svg&#41;]&#40;https://david-dm.org/oceanxy/react-tabllist?type=dev&#41;)
+[comment]: <> ([![PeerDependencies Status]&#40;https://david-dm.org/oceanxy/react-tabllist/peer-status.svg&#41;]&#40;https://david-dm.org/oceanxy/react-tabllist?type=peer&#41;)
 [comment]: <> ([![Gitter]&#40;https://img.shields.io/gitter/room/oceanxy/react-tabllist.svg&#41;]&#40;https://gitter.im/react-tabllist/community?utm_source=share-link&utm_medium=link&utm_campaign=share-link&#41;)
 
 English | [简体中文](./README_zh-CN.md)
