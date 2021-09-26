@@ -1,5 +1,5 @@
-import _ from 'lodash';
-import { getWaringProperty } from './config';
+import _ from 'lodash'
+import { getWaringProperty } from './config'
 
 /**
  * 从el元素向上选取第一个selector选择器匹配的元素
@@ -8,52 +8,52 @@ import { getWaringProperty } from './config';
  * @return {Element} 按照选择器筛选后的元素
  */
 export function closest(el, selector) {
-  if(el) {
+  if (el) {
     const matchesSelector = el.matches ||
       el.webkitMatchesSelector ||
       el.mozMatchesSelector ||
-      el.msMatchesSelector;
+      el.msMatchesSelector
 
-    while(el) {
-      if(matchesSelector.call(el, selector)) {
-        break;
+    while (el) {
+      if (matchesSelector.call(el, selector)) {
+        break
       }
-      el = el.parentNode || el.parentElement;
+      el = el.parentNode || el.parentElement
     }
 
-    return el;
+    return el
   }
 }
 
 /**
- * 设置屏幕滚动区域可见高度
+ * 获取滚动区域可见高度
  * @param {object} props props
- * @param {=} listComponent 列表组件实例对象
+ * @param {Element} [listComponentElement] 列表组件实例对象
  * @returns {*} 列表滚动区域可见高度
  */
-export function getScrollHeight(props, listComponent) {
+export function getVisibleHeightOfScroll(props, listComponentElement) {
   const {
     header: { show, style },
     style: { height }
-  } = props.property;
+  } = props.property
 
-  if(listComponent && window) {
-    const { paddingTop, paddingBottom, borderTopWidth, borderBottomWidth } = getComputedStyle(listComponent, null);
-    const result = parseInt(height) - parseInt(paddingTop || 0) - parseInt(paddingBottom || 0) - parseInt(borderTopWidth || 0) - parseInt(borderBottomWidth || 0);
+  if (listComponentElement && window) {
+    const { paddingTop, paddingBottom, borderTopWidth, borderBottomWidth } = getComputedStyle(listComponentElement, null)
+    const result = parseInt(height) - parseInt(paddingTop || 0) - parseInt(paddingBottom || 0) - parseInt(borderTopWidth || 0) - parseInt(borderBottomWidth || 0)
 
-    if(show) {
-      return result - parseInt(style.height);
+    if (show) {
+      return result - parseInt(style.height)
     }
 
-    return result;
+    return result
   }
 
   // 如果启用了表头
-  if(show) {
-    return parseInt(height) - parseInt(style.height);
+  if (show) {
+    return parseInt(height) - parseInt(style.height)
   }
 
-  return parseInt(height);
+  return parseInt(height)
 }
 
 /**
@@ -62,15 +62,15 @@ export function getScrollHeight(props, listComponent) {
  * @returns {Array} 列表每列的宽度值，数组长度代表列数
  */
 export function getColClientWidth(listContMain) {
-  const widthArr = [];
+  const widthArr = []
 
-  if(listContMain && listContMain.children.length) {
-    for(let i = 0, l = listContMain.children[0].children; i < l.length; i++) {
-      widthArr.push(l[i].offsetWidth || 'auto');
+  if (listContMain && listContMain.children.length) {
+    for (let i = 0, l = listContMain.children[0].children; i < l.length; i++) {
+      widthArr.push(l[i].offsetWidth || 'auto')
     }
   }
 
-  return widthArr;
+  return widthArr
 }
 
 /**
@@ -81,46 +81,46 @@ export function getColClientWidth(listContMain) {
  */
 export function handleColWidth(props, data) {
   function isString(widthValue) {
-    if(widthValue.includes('px')) {
-      return `${parseFloat(widthValue)}px`;
-    } else if(widthValue.includes('%')) {
-      return `${parseFloat(widthValue)}%`;
-    } else if(widthValue * 1) {
-      return parseFloat(widthValue);
+    if (widthValue.includes('px')) {
+      return `${parseFloat(widthValue)}px`
+    } else if (widthValue.includes('%')) {
+      return `${parseFloat(widthValue)}%`
+    } else if (widthValue * 1) {
+      return parseFloat(widthValue)
     }
 
-    return 'auto';
+    return 'auto'
   }
 
   function isArray(width) {
     return width.map(o => {
-      if(o === 0 || !o) {
-        return 'auto';
-      } else if(typeof o === 'string') {
-        return isString(o);
+      if (o === 0 || !o) {
+        return 'auto'
+      } else if (typeof o === 'string') {
+        return isString(o)
       }
 
-      return o;
-    });
+      return o
+    })
   }
 
-  const { width } = props.property.body.cell.style;
+  const { width } = props.property.body.cell.style
 
-  if(Array.isArray(width)) { // 处理数组形式的多列宽度数值
-    return isArray(width);
-  } else if(typeof width === 'string') { // 处理字符串形式的宽度数值
-    if(width.includes(',')) {
-      return isArray(width.split(',')); // 处理字符串形式的多列宽度数值
-    } else if(width === 'avg') { // 处理平均值
-      const maxCellNumber = getMaxCellOfRow(data, props);
+  if (Array.isArray(width)) { // 处理数组形式的多列宽度数值
+    return isArray(width)
+  } else if (typeof width === 'string') { // 处理字符串形式的宽度数值
+    if (width.includes(',')) {
+      return isArray(width.split(',')) // 处理字符串形式的多列宽度数值
+    } else if (width === 'avg') { // 处理平均值
+      const maxCellNumber = getMaxCellOfRow(data, props)
 
-      if(maxCellNumber > 1) {
-        return new Array(maxCellNumber - 1).fill(`${1 / maxCellNumber * 100}%`);
+      if (maxCellNumber > 1) {
+        return new Array(maxCellNumber - 1).fill(`${1 / maxCellNumber * 100}%`)
       }
     }
   }
 
-  return 'auto';
+  return 'auto'
 }
 
 /**
@@ -129,20 +129,20 @@ export function handleColWidth(props, data) {
  * @returns {number}
  */
 export function getMaxCellFromData(data) {
-  const cellsOfRow = [];
+  const cellsOfRow = []
 
   // 获取每一行的数据量，存入数组 cellsOfRow 内
   _.range(data.length).map(i => {
     // 如果行数据是一个对象，保证该对象内一定有一个cells字段
-    if(_.isPlainObject(data[i]) && !data[i].cells) {
-      data[i].cells = [];
+    if (_.isPlainObject(data[i]) && !data[i].cells) {
+      data[i].cells = []
     }
 
-    cellsOfRow.push(_.isArray(data[i]) ? data[i].length : data[i].cells.length);
-  });
+    cellsOfRow.push(_.isArray(data[i]) ? data[i].length : data[i].cells.length)
+  })
 
   // 获取数据量最多的一行的数值
-  return Math.max(...cellsOfRow);
+  return Math.max(...cellsOfRow)
 }
 
 /**
@@ -152,18 +152,18 @@ export function getMaxCellFromData(data) {
  * @returns {number}
  */
 export function getMaxCellOfRow(data, props) {
-  let maxCellFromData = getMaxCellFromData(data);
-  const { serialNumber, rowCheckbox } = props.property.body.row;
+  let maxCellFromData = getMaxCellFromData(data)
+  const { serialNumber, rowCheckbox } = props.property.body.row
 
-  if(serialNumber.show) {
-    maxCellFromData++;
+  if (serialNumber.show) {
+    maxCellFromData++
   }
 
-  if(rowCheckbox.show) {
-    maxCellFromData++;
+  if (rowCheckbox.show) {
+    maxCellFromData++
   }
 
-  return maxCellFromData;
+  return maxCellFromData
 }
 
 /**
@@ -186,7 +186,7 @@ export function fillRow(data, state) {
       text: '',
       key: `rowCheck${rowIndex}`,
       name: 'rowCheckbox'
-    };
+    }
 
     const SNCell = {
       type: 'text',
@@ -194,25 +194,25 @@ export function fillRow(data, state) {
         ? serialNumber.columnName
         : serialNumber.formatter.replace('{index}', rowIndex),
       key: `listSN${rowIndex}`
-    };
+    }
 
-    const insertList = [];
+    const insertList = []
 
-    if(rowCheckbox.column > serialNumber.column) {
-      insertList.push([SNCell, serialNumber]);
-      insertList.push([rowCheck, rowCheckbox]);
+    if (rowCheckbox.column > serialNumber.column) {
+      insertList.push([SNCell, serialNumber])
+      insertList.push([rowCheck, rowCheckbox])
     } else {
-      insertList.push([rowCheck, rowCheckbox]);
-      insertList.push([SNCell, serialNumber]);
+      insertList.push([rowCheck, rowCheckbox])
+      insertList.push([SNCell, serialNumber])
     }
 
     insertList.forEach(list => {
-      if(list[1].show) {
-        insertedRow.splice(list[1].column - 1, 0, list[0]);
+      if (list[1].show) {
+        insertedRow.splice(list[1].column - 1, 0, list[0])
       }
-    });
+    })
 
-    return insertedRow;
+    return insertedRow
   }
 
   /**
@@ -226,29 +226,29 @@ export function fillRow(data, state) {
     insertedRow = [
       ...cloneRow,
       ...new Array(maxCellValue - cloneRow.length).fill('')
-    ];
+    ]
 
-    return insertCellToRow(insertedRow, rowIndex);
+    return insertCellToRow(insertedRow, rowIndex)
   }
 
-  const { header, body } = state.property;
-  const { row: { rowCheckbox, serialNumber } } = body;
-  const cloneData = [...data];
+  const { header, body } = state.property
+  const { row: { rowCheckbox, serialNumber } } = body
+  const cloneData = [...data]
   // 获取数据量最多的一行的数值
-  const maxCellValue = getMaxCellFromData(cloneData);
-  const newData = [];
+  const maxCellValue = getMaxCellFromData(cloneData)
+  const newData = []
 
   // 补齐空数据到缺失的行
   cloneData.forEach((row, ind) => {
-    if(_.isArray(cloneData[ind])) {
-      newData.push(handleRow(newData[ind], ind, cloneData[ind]));
+    if (_.isArray(cloneData[ind])) {
+      newData.push(handleRow(newData[ind], ind, cloneData[ind]))
     } else {
-      newData[ind] = { ...cloneData[ind] };
-      newData[ind].cells = handleRow(newData[ind].cells, ind, cloneData[ind].cells);
+      newData[ind] = { ...cloneData[ind] }
+      newData[ind].cells = handleRow(newData[ind].cells, ind, cloneData[ind].cells)
     }
-  });
+  })
 
-  return newData;
+  return newData
 }
 
 /**
@@ -257,20 +257,20 @@ export function fillRow(data, state) {
  * @param event event对象
  */
 export function handleEvent(param, event) {
-  event.stopPropagation();
+  event.stopPropagation()
 
-  if(_.isArray(param)) {
-    event.persist();
+  if (_.isArray(param)) {
+    event.persist()
 
-    const [_objectUnit, _func] = param;
+    const [_objectUnit, _func] = param
 
     // 如果有内部逻辑事件，执行之
-    if(_func && _.isFunction(_func)) {
-      _func(event);
+    if (_func && _.isFunction(_func)) {
+      _func(event)
     } else {
       // 没有内部逻辑事件，且对象单元存在时，执行用户的回调函数
-      if(_objectUnit && Object.keys(_objectUnit).length) {
-        expPropsAndMethods(this, _objectUnit, event);
+      if (_objectUnit && Object.keys(_objectUnit).length) {
+        expPropsAndMethods(this, _objectUnit, event)
       }
     }
   }
@@ -289,12 +289,12 @@ export function handleEvent(param, event) {
  * @param event {SyntheticBaseEvent} event对象
  */
 export function expPropsAndMethods(instance, _objectUnit, event) {
-  if(_objectUnit.callback && _.isFunction(_objectUnit.callback)) {
-    const { scrollTo, props, renderData, state } = instance;
-    const cloneState = { ...state };
-    delete cloneState.property;
-    delete cloneState.data;
-    delete cloneState.className;
+  if (_objectUnit.callback && _.isFunction(_objectUnit.callback)) {
+    const { scrollTo, props, renderData, state } = instance
+    const cloneState = { ...state }
+    delete cloneState.property
+    delete cloneState.data
+    delete cloneState.className
 
     _objectUnit.callback(
       {
@@ -305,7 +305,7 @@ export function expPropsAndMethods(instance, _objectUnit, event) {
       },
       _objectUnit,
       event
-    );
+    )
   }
 }
 
@@ -315,7 +315,7 @@ export function expPropsAndMethods(instance, _objectUnit, event) {
  * @returns {*} 新的property
  */
 export function waring(property) {
-  const waringProperty = getWaringProperty();
+  const waringProperty = getWaringProperty()
 
   /**
    * 检测指定key是否被用户定义
@@ -324,36 +324,36 @@ export function waring(property) {
    * @returns {{isExist: boolean}|{isExist: boolean, value: *}} isExist:是否使用了过时属性 value:过时属性的值
    */
   function isKeyExists(discard, property) {
-    if(!property || !discard || !discard[0]) {
-      return { isExist: false };
+    if (!property || !discard || !discard[0]) {
+      return { isExist: false }
     }
 
     // 将传入的对象路径字符串拆分为数组
-    const isDiscardArray = Array.isArray(discard);
-    const pathList = isDiscardArray ? discard[0].split('.') : discard.split('.');
+    const isDiscardArray = Array.isArray(discard)
+    const pathList = isDiscardArray ? discard[0].split('.') : discard.split('.')
     // 如果使用了过时的属性，则此变量用来保存用户设置的属性值
-    let value;
+    let value
 
     // 检测用户的配置对象是否存在警告
-    for(let i = 1; i < pathList.length; i++) {
-      if(typeof property[pathList[i]] === 'undefined') {
-        return { isExist: false };
+    for (let i = 1; i < pathList.length; i++) {
+      if (typeof property[pathList[i]] === 'undefined') {
+        return { isExist: false }
       }
 
-      if(i !== pathList.length - 1) {
-        property = property[pathList[i]];
+      if (i !== pathList.length - 1) {
+        property = property[pathList[i]]
       } else {
-        value = property[pathList[i]];
+        value = property[pathList[i]]
 
-        if(isDiscardArray && Object.prototype.toString.apply(value) === `[object ${discard[1]}]`) {
-          return { isExist: false };
+        if (isDiscardArray && Object.prototype.toString.apply(value) === `[object ${discard[1]}]`) {
+          return { isExist: false }
         } else {
-          property = pathList[i];
+          property = pathList[i]
         }
       }
     }
 
-    return { isExist: true, value };
+    return { isExist: true, value }
   }
 
   /**
@@ -363,44 +363,44 @@ export function waring(property) {
    * @param valueOfDiscard 用户使用的过时key的值
    */
   function createNewProperty(replacement, property, valueOfDiscard) {
-    if(!replacement) {
-      return;
+    if (!replacement) {
+      return
     }
 
     // 将传入的对象路径字符串拆分为数组
-    const pathList = replacement.split('.');
+    const pathList = replacement.split('.')
 
     // 替换过时属性，同时配置相对应的属性（如果存在）
-    for(let i = 1; i < pathList.length; i++) {
-      if(i !== pathList.length - 1) {
+    for (let i = 1; i < pathList.length; i++) {
+      if (i !== pathList.length - 1) {
         // 确保给定的属性路径是对象的形式，防止报错：获取未定义的对象的属性
-        if(property[pathList[i]] === 'undefined' || !_.isPlainObject(property[pathList[i]])) {
-          property[pathList[i]] = {};
+        if (property[pathList[i]] === 'undefined' || !_.isPlainObject(property[pathList[i]])) {
+          property[pathList[i]] = {}
         }
 
-        property = property[pathList[i]];
+        property = property[pathList[i]]
       } else {
-        property[pathList[i]] = valueOfDiscard;
+        property[pathList[i]] = valueOfDiscard
       }
     }
   }
 
   waringProperty.map(_obj => {
-    const result = isKeyExists(_obj.discard, property);
-    if(result.isExist) {
-      createNewProperty(_obj.replacement, property, result.value);
+    const result = isKeyExists(_obj.discard, property)
+    if (result.isExist) {
+      createNewProperty(_obj.replacement, property, result.value)
 
-      if(process.env.NODE_ENV !== 'production') {
-        if(_obj.warn) {
-          console.warn(_obj.warn);
+      if (process.env.NODE_ENV !== 'production') {
+        if (_obj.warn) {
+          console.warn(_obj.warn)
         } else {
-          console.warn('Used obsolete configuration in React-tabllist');
+          console.warn('Used obsolete configuration in React-tabllist')
         }
       } // lgtm [js/unreachable-statement]
     }
-  });
+  })
 
-  return property;
+  return property
 }
 
 /**
@@ -417,25 +417,25 @@ export function waring(property) {
  * @returns {*} 处理后的滚动距离
  */
 export function getScrollTop(distanceConfig, rows, counter) {
-  if(this === 'switch') {
-    return rows[counter].offsetTop - rows[counter].parentElement.parentElement.offsetTop;
+  if (this === 'switch') {
+    return rows[counter].offsetTop - rows[counter].parentElement.parentElement.offsetTop
   } else {
-    if(isNaN(distanceConfig)) {
-      return 0;
+    if (isNaN(distanceConfig)) {
+      return 0
     } else {
-      if(distanceConfig >= 0) {
-        return Math.ceil(distanceConfig);
+      if (distanceConfig >= 0) {
+        return Math.ceil(distanceConfig)
       }
 
-      let nextRow = (counter + 1) * -distanceConfig;
+      let nextRow = (counter + 1) * -distanceConfig
 
       // 当设置一次滚动多行后，如果某一次递增的索引大于了总行数，则直接返回父容器的高度
       // 即接下来的一次滚动直接滚动到主容器最后的位置
-      if(nextRow > rows.length - 1) {
-        return rows[0].parentElement.offsetHeight;
+      if (nextRow > rows.length - 1) {
+        return rows[0].parentElement.offsetHeight
       }
 
-      return rows[nextRow].offsetTop - rows[0].offsetTop;
+      return rows[nextRow].offsetTop - rows[0].offsetTop
     }
   }
 }
@@ -447,15 +447,15 @@ export function getScrollTop(distanceConfig, rows, counter) {
  * @returns {number}
  */
 export function getSpeed(targetScrollTop, scroll) {
-  const distance = targetScrollTop - scroll.scrollTop;
+  const distance = targetScrollTop - scroll.scrollTop
 
-  if(distance > 0) {
-    return Math.ceil(distance / 30);
-  } else if(distance < 0) {
-    return Math.floor(distance / 30);
+  if (distance > 0) {
+    return Math.ceil(distance / 30)
+  } else if (distance < 0) {
+    return Math.floor(distance / 30)
   }
 
-  return 1;
+  return 1
 }
 
 /**
@@ -465,15 +465,15 @@ export function getSpeed(targetScrollTop, scroll) {
  * @returns {null|string}
  */
 export function getTransitionName(transition, isDataChanged) {
-  if(transition) {
-    if(isDataChanged) {
-      return 'list-row-start';
+  if (transition) {
+    if (isDataChanged) {
+      return 'list-row-start'
     } else {
-      return 'list-row-end';
+      return 'list-row-end'
     }
   }
 
-  return '';
+  return ''
 }
 
 /**
@@ -483,10 +483,10 @@ export function getTransitionName(transition, isDataChanged) {
  * @param event
  */
 export function getRowStyle(rowState, event) {
-  const { data, property } = rowState;
-  const { body, header } = property;
-  const { show: headerShow } = header;
-  const { row } = body;
+  const { data, property } = rowState
+  const { body, header } = property
+  const { show: headerShow } = header
+  const { row } = body
   const {
     style,
     visual: {
@@ -499,43 +499,43 @@ export function getRowStyle(rowState, event) {
       show: silentShow,
       style: silentStyle
     }
-  } = row;
+  } = row
 
-  let rowStyle = [];
+  let rowStyle = []
 
   _.range(headerShow ? data.length - 1 : data.length).map(index => {
-    let tempStyle = style;
+    let tempStyle = style
 
-    if(visualShow && interval && !Number.isNaN(interval) && index % (interval * 2) >= interval) {
+    if (visualShow && interval && !Number.isNaN(interval) && index % (interval * 2) >= interval) {
       tempStyle = {
         ...tempStyle,
         ...visualStyle
-      };
-    }
-
-    if(specialStyle && _.isArray(specialStyle)) {
-      tempStyle = {
-        ...tempStyle,
-        ...specialStyle[index]
-      };
-    }
-
-    if(event) {
-      const rowElement = closest(event.target, '.list-row');
-      const rowIndex = Array.prototype.indexOf.call(rowElement.parentNode.childNodes, rowElement);
-
-      if(!silentShow && index === rowIndex && event.type === 'mouseenter') {
-        tempStyle = {
-          ...tempStyle,
-          ...silentStyle
-        };
       }
     }
 
-    rowStyle.push(tempStyle);
-  });
+    if (specialStyle && _.isArray(specialStyle)) {
+      tempStyle = {
+        ...tempStyle,
+        ...specialStyle[index]
+      }
+    }
 
-  return rowStyle;
+    if (event) {
+      const rowElement = closest(event.target, '.list-row')
+      const rowIndex = Array.prototype.indexOf.call(rowElement.parentNode.childNodes, rowElement)
+
+      if (!silentShow && index === rowIndex && event.type === 'mouseenter') {
+        tempStyle = {
+          ...tempStyle,
+          ...silentStyle
+        }
+      }
+    }
+
+    rowStyle.push(tempStyle)
+  })
+
+  return rowStyle
 }
 
 /**
@@ -544,17 +544,17 @@ export function getRowStyle(rowState, event) {
  * @returns {{borderCollapse: string}|{borderSpacing: string}}
  */
 export function getListContStyle(spacing) {
-  if(!spacing || !parseInt(spacing)) {
+  if (!spacing || !parseInt(spacing)) {
     return {
       borderCollapse: 'collapse',
       borderSpacing: '0px'
-    };
+    }
   }
 
   return {
     borderSpacing: `${spacing}`.includes('px') ? `0 ${spacing}` : `0 ${spacing}px`,
     borderCollapse: 'separate'
-  };
+  }
 }
 
 /**
@@ -565,24 +565,24 @@ export function getListContStyle(spacing) {
  *    attrs: 剔除内置属性后剩下的其余属性
  */
 export function handleBuiltInAttributes(objectCell) {
-  const { type, text, event, callback, cells, data, option, ...attrs } = objectCell;
-  let builtInAttrs = { type, text, event, callback, cells, data, option };
+  const { type, text, event, callback, cells, data, option, ...attrs } = objectCell
+  let builtInAttrs = { type, text, event, callback, cells, data, option }
 
   builtInAttrs = Object.entries(builtInAttrs).reduce((object, arr) => {
-    if(arr[1] !== undefined && arr[1] !== null) {
+    if (arr[1] !== undefined && arr[1] !== null) {
       return {
         ...object,
         [arr[0]]: arr[1]
-      };
+      }
     }
 
-    return object;
-  }, {});
+    return object
+  }, {})
 
   return {
     builtInAttrs,
     attrs
-  };
+  }
 }
 
 /**
@@ -592,17 +592,17 @@ export function handleBuiltInAttributes(objectCell) {
  * @returns {{id: string, key: string}} 包含新生成的ID和key的对象
  */
 export function generateIdAndKeyForTag(key, type) {
-  const id = `rt-${type}-${(Math.random() * Math.pow(10, 10)).toFixed(0)}`;
+  const id = `rt-${type}-${(Math.random() * Math.pow(10, 10)).toFixed(0)}`
 
-  if(key) {
+  if (key) {
     return {
       key,
       id
-    };
+    }
   }
 
   return {
     id,
     key: id
-  };
+  }
 }

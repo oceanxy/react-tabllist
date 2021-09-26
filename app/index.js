@@ -1,12 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Tabllist from '../src';
-import './index.scss';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import Tabllist from '../src'
+import './index.scss'
 
 const Dev = () => {
   const checkboxEvent = function(a, b, c) {
-    console.log(a, b, c);
-  };
+    console.log(a, b, c)
+  }
 
   const option = {
     data: [
@@ -47,16 +47,16 @@ const Dev = () => {
           event: 'onChange',
           callback: (instance, objectUnit, event) => {
             // step 1: Get the value of select
-            const { value } = event.target;
+            const { value } = event.target
             // step 2: According to the value of select to match the value of the corresponding row in the data,
             // 				 and then get the index of the row
-            const { scrollTo, renderData } = instance;
-            for(let i = 0, k = renderData; i < k.length; i++) {
+            const { scrollTo, renderData } = instance
+            for (let i = 0, k = renderData; i < k.length; i++) {
               // eslint-disable-next-line no-undef
-              if(_.isPlainObject(renderData[i]) && parseInt(renderData[i].value) === parseInt(value)) {
+              if (_.isPlainObject(renderData[i]) && parseInt(renderData[i].value) === parseInt(value)) {
                 // step 3: Call method scrolling list
-                scrollTo(i - 1);
-                break;
+                scrollTo(i - 1)
+                break
               }
             }
           }
@@ -65,7 +65,7 @@ const Dev = () => {
       [
         <span key={0}>I am a span</span>,
         <div key={1} onClick={() => alert('test JSX event')}>test JSX event</div>,
-        <a key={2} href='http://www.xieyangogo.cn/react-tabllist/'>I am a link</a>,
+        <a key={2} href="http://www.xieyangogo.cn/react-tabllist/">I am a link</a>,
         <div key={3}>I am a div</div>
       ],
       {
@@ -74,8 +74,8 @@ const Dev = () => {
         value: 0,
         event: 'onClick',
         callback: (restData, objectUnit, event) => {
-          alert('test event of row');
-          console.log(restData, objectUnit, event);
+          alert('test event of row')
+          console.log(restData, objectUnit, event)
         },
         className: 'click-row',
         cells: [
@@ -84,7 +84,9 @@ const Dev = () => {
             type: 'link',
             text: 'I am a first link',
             className: 'test-link',
-            callback: () => {console.log('I am a first link');}
+            callback: () => {
+              console.log('I am a first link')
+            }
           },
           {
             type: 'link',
@@ -97,7 +99,7 @@ const Dev = () => {
             value: 'click me',
             className: 'test-btn',
             callback: () => {
-              alert('hello react-tabllist');
+              alert('hello react-tabllist')
             }
           }
         ]
@@ -123,7 +125,7 @@ const Dev = () => {
           key: '',
           event: 'onClick',
           callback: () => {
-            window.open('https://github.com/oceanxy/react-tabllist');
+            window.open('https://github.com/oceanxy/react-tabllist')
           }
         },
         {
@@ -138,7 +140,7 @@ const Dev = () => {
           className: 'test-btn',
           event: 'onClick',
           callback: (data, cellObject, obj) => {
-            obj.target.value = 'clicked';
+            obj.target.value = 'clicked'
           }
         }
       ],
@@ -149,8 +151,8 @@ const Dev = () => {
         value: 1,
         event: 'onClick',
         callback: (restData, objectUnit, event) => {
-          alert('test event of row');
-          console.log(restData, objectUnit, event);
+          alert('test event of row')
+          console.log(restData, objectUnit, event)
         },
         className: 'click-row',
         cells: [
@@ -165,7 +167,7 @@ const Dev = () => {
             value: 'click me',
             className: 'test-btn',
             callback: () => {
-              alert('hello react-tabllist');
+              alert('hello react-tabllist')
             }
           },
           'row 4; column 3',
@@ -201,8 +203,8 @@ const Dev = () => {
         value: 2,
         event: 'onClick',
         callback: (restData, objectUnit, event) => {
-          alert('test event of row');
-          console.log(restData, objectUnit, event);
+          alert('test event of row')
+          console.log(restData, objectUnit, event)
         },
         className: 'click-row',
         cells: [
@@ -259,7 +261,7 @@ const Dev = () => {
           event: 'onClick',
           className: 'test-link',
           callback: () => {
-            alert('clicked link');
+            alert('clicked link')
           }
         },
         {
@@ -267,18 +269,18 @@ const Dev = () => {
           value: 'click me',
           className: 'test-btn',
           callback: (data, cellObject, cellElement) => {
-            if(!data) {
-              data = 'data of button is undefined';
+            if (!data) {
+              data = 'data of button is undefined'
             }
 
-            cellElement.target.value = 'you clicked me!!';
-            cellElement.target.style.width = '150px';
+            cellElement.target.value = 'you clicked me!!'
+            cellElement.target.style.width = '150px'
 
-            console.log(data);
-            console.log(cellObject);
-            console.log(cellElement);
+            console.log(data)
+            console.log(cellObject)
+            console.log(cellElement)
 
-            alert('hello react-tabllist, Please check the console');
+            alert('hello react-tabllist, Please check the console')
           }
         }
       ],
@@ -301,7 +303,8 @@ const Dev = () => {
       scroll: {
         enable: true,
         speed: 50,
-        distance: 1
+        distance: 1,
+        frequency: 1
       },
       header: {
         show: true,
@@ -352,7 +355,9 @@ const Dev = () => {
             { height: 80 },
             { height: 30 },
             { height: 50 },
-            { height: 80 }
+            { height: 80 },
+            {},
+            { height: 200 }
           ],
           visual: {
             show: false,
@@ -386,16 +391,16 @@ const Dev = () => {
         }
       }
     }
-  };
+  }
 
   return (
-    <div className='container'>
+    <div className="container">
       <Tabllist property={option.property} data={option.data} />
     </div>
-  );
-};
+  )
+}
 
 ReactDOM.render(
   <Dev />,
   document.getElementById('root')
-);
+)

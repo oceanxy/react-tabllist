@@ -101,7 +101,7 @@ export default {
       }
     }
   }
-};
+}
 
 /**
  * 为过时的属性配置警告信息
@@ -143,5 +143,5 @@ export function getWaringProperty() {
       replacement: 'property.body.row.rowCheckbox.show',
       warn: 'Used obsolete configuration in React-tabllist: \'property.body.row.rowCheckbox\' is no longer directly set to a boolean value in version 1.5.0, but an object. For example: {show: boolean, style: cssProperties}.'
     }
-  ];
+  ]
 }

@@ -7,7 +7,7 @@
 2. New Function: A cell can bind multiple events.
 3. Refactoring most of the old code.
 
-#### 1.6.2[dev]
+#### 1.7.0[dev]
 1. Update dependency package.
 
 #### 1.6.1[latest]
