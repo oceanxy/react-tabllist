@@ -285,7 +285,8 @@ const Dev = () => {
         }
       ],
       ['row 8; column 1', 'row 8; column 2', 'row 8; column 3', 'row 8; column 4'],
-      ['row 9; column 1', 'row 9; column 2', 'row 9; column 3', 'row 9; column 4']
+      ['row 9; column 1', 'row 9; column 2', 'row 9; column 3', 'row 9; column 4'],
+      ['row 10; column 1', 'row 10; column 2', 'row 10; column 3', 'row 10; column 4']
     ],
     property: {
       border: {

@@ -38,7 +38,12 @@ export function getVisibleHeightOfScroll(props, listComponentElement) {
   } = props.property
 
   if (listComponentElement && window) {
-    const { paddingTop, paddingBottom, borderTopWidth, borderBottomWidth } = getComputedStyle(listComponentElement, null)
+    const {
+      paddingTop,
+      paddingBottom,
+      borderTopWidth,
+      borderBottomWidth
+    } = getComputedStyle(listComponentElement, null)
     const result = parseInt(height) - parseInt(paddingTop || 0) - parseInt(paddingBottom || 0) - parseInt(borderTopWidth || 0) - parseInt(borderBottomWidth || 0)
 
     if (show) {
@@ -286,7 +291,7 @@ export function handleEvent(param, event) {
  *      renderData // 渲染组件的数据
  *    }
  * @param _objectUnit {object} 对象单元
- * @param event {SyntheticBaseEvent} event对象
+ * @param event {Event} event对象
  */
 export function expPropsAndMethods(instance, _objectUnit, event) {
   if (_objectUnit.callback && _.isFunction(_objectUnit.callback)) {
@@ -404,50 +409,52 @@ export function waring(property) {
 }
 
 /**
- * @desc 获取组件每次滚动的距离。
+ * 获取组件每次滚动的距离。
  - 如果值为正整数，单位为`像素`；
  - 为`0`，表示停用滚动，同`scroll.enable:false`；
  - 如果为负整数，则以行为单位进行滚动，行数等于该值的绝对值。
  - 如果为正小数，则向上取整。
  - 如果为负小数，则向下取整。
- - 如果为非数字或，则取`0`。
- * @param distanceConfig {number} 用户设置的滚动距离
- * @param rows {Array} 包含所有行的数组
- * @param counter {number} 当前可视区域第一行的索引
+ - 如果为非数字，则取`0`。
+ * @param {number} distance 下一次滚动的距离
+ * @param {Array} rows 包含所有行的数组
+ * @param {number} index 当前可视区域第一行的索引
  * @returns {*} 处理后的滚动距离
  */
-export function getScrollTop(distanceConfig, rows, counter) {
-  if (this === 'switch') {
-    return rows[counter].offsetTop - rows[counter].parentElement.parentElement.offsetTop
+export function getDistanceOfNextScroll(distance, rows, index) {
+  if (this === '__SCROLL_TO_SPECIFIED_ROW__') {
+    return rows[index].offsetTop - rows[index].parentElement.parentElement.offsetTop
   } else {
-    if (isNaN(distanceConfig)) {
+    if (isNaN(distance)) {
       return 0
     } else {
-      if (distanceConfig >= 0) {
-        return Math.ceil(distanceConfig)
+      if (distance >= 0) {
+        return Math.ceil(distance)
       }
 
-      let nextRow = (counter + 1) * -distanceConfig
+      // distance小于0，代表按行数滚动
+      // 获取下一次要滚动到的目标行
+      let rowNumberWillScroll = (index + 1) * -Math.floor(distance)
 
       // 当设置一次滚动多行后，如果某一次递增的索引大于了总行数，则直接返回父容器的高度
       // 即接下来的一次滚动直接滚动到主容器最后的位置
-      if (nextRow > rows.length - 1) {
+      if (rowNumberWillScroll > rows.length - 1) {
         return rows[0].parentElement.offsetHeight
       }
 
-      return rows[nextRow].offsetTop - rows[0].offsetTop
+      return rows[rowNumberWillScroll].offsetTop - rows[0].offsetTop
     }
   }
 }
 
 /**
  * 获取下一次滚动的速度(px/ms)
- * @param targetScrollTop {number} 滚动目标值
- * @param scroll {object} 滚动容器对象
+ * @param {number} targetScrollTop 滚动目标值
+ * @param {Element} scrollContainer 滚动容器对象
  * @returns {number}
  */
-export function getSpeed(targetScrollTop, scroll) {
-  const distance = targetScrollTop - scroll.scrollTop
+export function getSpeed(targetScrollTop, scrollContainer) {
+  const distance = targetScrollTop - scrollContainer.scrollTop
 
   if (distance > 0) {
     return Math.ceil(distance / 30)

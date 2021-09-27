@@ -9,6 +9,9 @@
 
 #### 1.7.0[dev]
 1. Update dependency package.
+2. Optimize the code logic related to scrolling, complete some comments, and modify some incorrect comments.
+3. Improve the readability of some source code, such as variable naming.
+4. Modify the className of the outermost container of the component to more recognizable and unique characters to avoid polluting other components or pages.
 
 #### 1.6.1[latest]
 This version has not updated features, only some field names and comments have been optimized. In addition, the version of the core dependency library has been updated, as well as some updates in the development mode. The details are as follows:
