@@ -303,9 +303,14 @@ const Dev = () => {
       },
       scroll: {
         enable: true,
-        speed: 50,
+        speed: 20,
         distance: 1,
-        frequency: 1
+        /**
+         * >1 每次滚动圈数（每次启用列表滚动后，frequency圈后将自动停止滚动。鼠标移上组件可再次激活新一轮的滚动）
+         * <1或NaN 持续滚动
+         */
+        frequency: 1,
+        disabledInnerHover: false // 禁用组件内部的事件处理（禁用后，需自行在对象单元内添加事件处理）
       },
       header: {
         show: true,

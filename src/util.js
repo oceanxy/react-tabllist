@@ -306,7 +306,10 @@ export function expPropsAndMethods(instance, _objectUnit, event) {
         scrollTo,
         props,
         readonlyState: cloneState,
-        renderData
+        renderData,
+        // TODO v1.7.1
+        // TODO 暴露最外层容器的属性、可视区域属性、header、body等属性，以便用户获取组件的DOM信息，
+        // TODO 暴露pause方法、canScroll方法以及其他可用的方法
       },
       _objectUnit,
       event
@@ -421,7 +424,7 @@ export function waring(property) {
  * @param {number} index 当前可视区域第一行的索引
  * @returns {*} 处理后的滚动距离
  */
-export function getDistanceOfNextScroll(distance, rows, index) {
+export function getNextScrollDistance(distance, rows, index) {
   if (this === '__SCROLL_TO_SPECIFIED_ROW__') {
     return rows[index].offsetTop - rows[index].parentElement.parentElement.offsetTop
   } else {
