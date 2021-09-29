@@ -110,7 +110,7 @@ function listDataset() {
       type: 'row',
       value: d.groupId,
       cells: [
-        <div className='group_info'>
+        <div key='group_info' className='group_info'>
           <div className='avatar'>
             <img src={d.avatar} alt='' />
           </div>
@@ -120,7 +120,7 @@ function listDataset() {
             <p>联系电话：{d.tel}</p>
           </div>
         </div>,
-        <div className='group_p'>
+        <div key='group_p' className='group_p'>
           <p>组员：</p>
           <p>
             {d.operator.reduce((str, pn) => ` ${str + pn.name} `, '')}
@@ -455,8 +455,8 @@ const Demo = () => {
           value: 'click me',
           className: 'test-btn',
           callback: (instance, objectUnit, event) => {
-            if(!data) {
-              data = 'data of button is undefined';
+            if(!objectUnit?.data) {
+              objectUnit.data = 'data of button is undefined';
             }
 
             event.target.value = 'you clicked me!!';
@@ -587,10 +587,10 @@ const Demo = () => {
         }
       ],
       [
-        <span>I am span</span>,
-        <div onClick={() => alert('test JSX event')}>test JSX event</div>,
-        <a href='http://www.xieyangogo.cn/react-tabllist/'>I am link</a>,
-        <div>I am div</div>
+        <span key='text-span'>I am span</span>,
+        <div key='event' onClick={() => alert('test JSX event')}>test JSX event</div>,
+        <a key='link' href='http://www.xieyangogo.cn/react-tabllist/'>I am link</a>,
+        <div key='text-div'>I am div</div>
       ],
       {
         type: 'row',

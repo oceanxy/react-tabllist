@@ -44,6 +44,7 @@ export function getVisibleHeightOfScroll(props, listComponentElement) {
       borderTopWidth,
       borderBottomWidth
     } = getComputedStyle(listComponentElement, null)
+
     const result = parseInt(height) - parseInt(paddingTop || 0) - parseInt(paddingBottom || 0) - parseInt(borderTopWidth || 0) - parseInt(borderBottomWidth || 0)
 
     if (show) {
@@ -283,37 +284,59 @@ export function handleEvent(param, event) {
 
 /**
  * 给回调函数注入必要的属性和方法，暴露给外界使用
- * @param instance {object} 暴露给回调函数使用的部分属性和方法
- *    {
- *      scrollTo, // {function(rowIndex)} 滚动到指定行
- *      props, // props（可重新赋值以更新组件）
- *      readonlyState: cloneState, // 只读的组件状态
- *      renderData // 渲染组件的数据
- *    }
+ * @param instance {object} 组件实例
  * @param _objectUnit {object} 对象单元
  * @param event {Event} event对象
  */
 export function expPropsAndMethods(instance, _objectUnit, event) {
   if (_objectUnit.callback && _.isFunction(_objectUnit.callback)) {
-    const { scrollTo, props, renderData, state } = instance
-    const cloneState = { ...state }
-    delete cloneState.property
-    delete cloneState.data
-    delete cloneState.className
-
     _objectUnit.callback(
-      {
-        scrollTo,
-        props,
-        readonlyState: cloneState,
-        renderData,
-        // TODO v1.7.1
-        // TODO 暴露最外层容器的属性、可视区域属性、header、body等属性，以便用户获取组件的DOM信息，
-        // TODO 暴露pause方法、canScroll方法以及其他可用的方法
-      },
+      getExposeList(instance),
       _objectUnit,
       event
     )
+  }
+}
+
+export function expPropsAndMethodsForEvent(instance, events) {
+  const mainContainer = {}
+
+  Object.entries(events).forEach(([key, event]) => {
+    mainContainer[key] = e => event(e, getExposeList(instance))
+  })
+
+  return mainContainer
+}
+
+/**
+ * 获取公开属性列表
+ * 公开后，可以在事件及对象单元的回调函数里面使用
+ * @param {object} instance 组件实例
+ * {
+ *    scrollTo, // {function(rowIndex)} 滚动到指定行
+ *    pause, // 滚动时控制组件暂停与否的方法
+ *    props, // props（可重新赋值以更新组件）
+ *    readonlyState: cloneState, // 只读的组件状态
+ *    renderData // 渲染组件的数据
+ * }
+ * @returns {{renderData, state, pause, scrollTo, props}}
+ */
+export function getExposeList(instance) {
+  const { scrollTo, pause, props, renderData, state } = instance
+  const cloneState = { ...state }
+  delete cloneState.property
+  delete cloneState.data
+  delete cloneState.className
+
+  return {
+    scrollTo,
+    pause,
+    props,
+    readonlyState: cloneState,
+    renderData
+    // TODO v1.7.1
+    // TODO 暴露最外层容器的属性、可视区域属性、header、body等属性，以便用户获取组件的DOM信息，
+    // TODO 暴露pause方法、canScroll方法以及其他可用的方法
   }
 }
 
