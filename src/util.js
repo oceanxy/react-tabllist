@@ -298,14 +298,38 @@ export function expPropsAndMethods(instance, _objectUnit, event) {
   }
 }
 
-export function expPropsAndMethodsForEvent(instance, events) {
-  const mainContainer = {}
+/**
+ * 为事件加入公开的属性和方法
+ * @param {ReactTabllist} instance 类
+ * @param {object} props render props
+ * @returns {{mainContainer: {}, scrollContainer: {}}}
+ */
+export function expPropsAndMethodsForEvent(instance, props) {
+  const mainContainerEvents = {}
+  const scrollContainerEvents = {}
 
-  Object.entries(events).forEach(([key, event]) => {
-    mainContainer[key] = e => event(e, getExposeList(instance))
+  // 从props中筛选事件
+  Object.entries(props).forEach(([key, eventFn]) => {
+    if (key.substr(0, 2) === 'on' && typeof eventFn === 'function') {
+      const exposeList = getExposeList(instance)
+
+      if (key === 'onScroll') {
+        /**
+         * React事件回调函数
+         * @param {SyntheticEvent} e event
+         * @returns {object} 添加公开属性和方法后的事件回调函数执行结果
+         */
+        scrollContainerEvents[key] = e => eventFn(e, exposeList)
+      } else {
+        mainContainerEvents[key] = e => eventFn(e, exposeList)
+      }
+    }
   })
 
-  return mainContainer
+  return {
+    mainContainer: mainContainerEvents,
+    scrollContainer: scrollContainerEvents
+  }
 }
 
 /**
@@ -322,21 +346,28 @@ export function expPropsAndMethodsForEvent(instance, events) {
  * @returns {{renderData, state, pause, scrollTo, props}}
  */
 export function getExposeList(instance) {
-  const { scrollTo, pause, props, renderData, state } = instance
-  const cloneState = { ...state }
-  delete cloneState.property
-  delete cloneState.data
-  delete cloneState.className
+  const {
+    scrollTo, pause, paused, props,
+    renderData, state, scrollFrequency,
+    scrollContainer, mainContainer,
+    listContMain, herderContainer
+  } = instance
+
+  const { indeterminate, selected } = state
 
   return {
-    scrollTo,
-    pause,
-    props,
-    readonlyState: cloneState,
-    renderData
-    // TODO v1.7.1
-    // TODO 暴露最外层容器的属性、可视区域属性、header、body等属性，以便用户获取组件的DOM信息，
-    // TODO 暴露pause方法、canScroll方法以及其他可用的方法
+    scrollTo, // 滚动到指定行
+    pause, // 暂停/取消暂停函数
+    paused, // 当前组件的滚动状态（是否在滚动中）
+    props, // render props
+    indeterminate, // 行选择框的indeterminate状态
+    selected, // 包括行选择框、自定义的复选框以及自定义单选按钮的勾选状态集合
+    rowsHeight: listContMain.offsetHeight, // 所有行的总高度
+    scrollFrequency, // 从组件加载到目前已滚动的圈数
+    renderData, // 处理后最终用于渲染列表的data
+    header: herderContainer, // header
+    body: scrollContainer, // 滚动容器
+    container: mainContainer // 主容器
   }
 }
 
@@ -436,20 +467,19 @@ export function waring(property) {
 
 /**
  * 获取组件每次滚动的距离。
- - 如果值为正整数，单位为`像素`；
- - 为`0`，表示停用滚动，同`scroll.enable:false`；
- - 如果为负整数，则以行为单位进行滚动，行数等于该值的绝对值。
- - 如果为正小数，则向上取整。
- - 如果为负小数，则向下取整。
- - 如果为非数字，则取`0`。
- * @param {number} distance 下一次滚动的距离
- * @param {Array} rows 包含所有行的数组
- * @param {number} index 当前可视区域第一行的索引
- * @returns {*} 处理后的滚动距离
+ * @param {number} distance 从配置获取的下一次滚动的距离
+ *  - 如果值为正整数，单位为`像素`；
+ *  - 如果为正小数，则向上取整；
+ *  - 为`0`或非数字，返回0；
+ *  - 如果为负整数，则把行作为单位进行滚动，行数等于该值的绝对值；
+ *  - 如果为负小数，则向下取整；
+ * @param {HTMLCollection} rows 包含所有行的数组
+ * @param {number} rowIndex distance为非数字时（不合法值），此值为目标行索引；当distance合法时，此值为可视区域内第一行的索引
+ * @returns {number} 处理后的滚动距离
  */
-export function getNextScrollDistance(distance, rows, index) {
-  if (this === '__SCROLL_TO_SPECIFIED_ROW__') {
-    return rows[index].offsetTop - rows[index].parentElement.parentElement.offsetTop
+export function getNextScrollDistance(distance, rows, rowIndex) {
+  if (this === '__SCROLL_TO_SPECIFIED_ROW__' || isNaN(distance)) {
+    return rows[rowIndex].offsetTop - rows[rowIndex].parentElement.parentElement.offsetTop
   } else {
     if (isNaN(distance)) {
       return 0
@@ -460,7 +490,7 @@ export function getNextScrollDistance(distance, rows, index) {
 
       // distance小于0，代表按行数滚动
       // 获取下一次要滚动到的目标行
-      let rowNumberWillScroll = (index + 1) * -Math.floor(distance)
+      let rowNumberWillScroll = (rowIndex + 1) * -Math.floor(distance)
 
       // 当设置一次滚动多行后，如果某一次递增的索引大于了总行数，则直接返回父容器的高度
       // 即接下来的一次滚动直接滚动到主容器最后的位置

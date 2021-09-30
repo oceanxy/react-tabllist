@@ -398,7 +398,9 @@ const Dev = () => {
       <Tabllist
         property={option.property}
         data={option.data}
-        onMouseOver={(e, instance) => instance.pause(true)}
+        onMouseOver={(e, instance) => {
+          instance.pause(true)
+        }}
         onMouseOut={(e, instance) => instance.pause(false)}
       />
     </div>

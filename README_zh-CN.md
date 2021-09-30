@@ -315,7 +315,7 @@ $ npm start
 |-------------------------------------------------|----------------------------------------------------------------------------------------------|
 |**key** <br> `{string}`                          |jsx循环或数组需要用到的key属性，`请确保key的唯一性`                                                |
 |**className** <br> `{string}`                    |自定义样式表名称                                                                                |
-|**defaultValue** <br> `{string|number}`          |Custom style sheet name                                                                       |
+|**defaultValue** <br> `{string\|number}`         |Custom style sheet name                                                                       |
 
 > 更多属性请查看react库的`类型定义文件`(d.ts)。
 
