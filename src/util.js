@@ -467,39 +467,32 @@ export function waring(property) {
 
 /**
  * 获取组件每次滚动的距离。
- * @param {number} distance 从配置获取的下一次滚动的距离
- *  - 如果值为正整数，单位为`像素`；
- *  - 如果为正小数，则向上取整；
- *  - 为`0`或非数字，返回0；
- *  - 如果为负整数，则把行作为单位进行滚动，行数等于该值的绝对值；
- *  - 如果为负小数，则向下取整；
+ * @param {number} distance 从配置项获取下一次滚动的距离
+ - 如果值为正数或0，单位为`像素`。如果为正小数，则向上取整；
+ - 如果为负数，则以行（hang）为单位滚动，行数等于该值的绝对值。如果为负小数，则向下取整；
  * @param {HTMLCollection} rows 包含所有行的数组
- * @param {number} rowIndex distance为非数字时（不合法值），此值为目标行索引；当distance合法时，此值为可视区域内第一行的索引
+ * @param {number} rowIndex distance>=0或为非数字时，rowIndex为目标行索引；当distance<0时，为可视区域内第一行的索引
  * @returns {number} 处理后的滚动距离
  */
-export function getNextScrollDistance(distance, rows, rowIndex) {
-  if (this === '__SCROLL_TO_SPECIFIED_ROW__' || isNaN(distance)) {
+export function getDistanceOfNextScroll(distance, rows, rowIndex) {
+  // distance为不合法值，根据目标行索引计算scrollTop。
+  if (isNaN(distance)) {
     return rows[rowIndex].offsetTop - rows[rowIndex].parentElement.parentElement.offsetTop
   } else {
-    if (isNaN(distance)) {
-      return 0
-    } else {
-      if (distance >= 0) {
-        return Math.ceil(distance)
-      }
-
-      // distance小于0，代表按行数滚动
-      // 获取下一次要滚动到的目标行
-      let rowNumberWillScroll = (rowIndex + 1) * -Math.floor(distance)
-
-      // 当设置一次滚动多行后，如果某一次递增的索引大于了总行数，则直接返回父容器的高度
-      // 即接下来的一次滚动直接滚动到主容器最后的位置
-      if (rowNumberWillScroll > rows.length - 1) {
-        return rows[0].parentElement.offsetHeight
-      }
-
-      return rows[rowNumberWillScroll].offsetTop - rows[0].offsetTop
+    if (distance >= 0) {
+      return Math.ceil(distance)
     }
+
+    // distance小于0，按行数滚动（此时rowIndex代表当前可视区域内第一行的索引）
+    // 获取下一次要滚动到的目标行
+    let rowIndexWillScrollTo = rowIndex + -Math.floor(distance)
+
+    // 当设置一次滚动多行后，如果某一次递增的索引大于了总行数，则直接返回父容器的高度。即接下来的一次滚动直接滚动到主容器最后的位置
+    if (rowIndexWillScrollTo > rows.length - 1) {
+      return rows[0].parentElement.offsetHeight
+    }
+
+    return rows[rowIndexWillScrollTo].offsetTop - rows[0].offsetTop
   }
 }
 

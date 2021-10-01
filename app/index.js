@@ -303,8 +303,10 @@ const Dev = () => {
       },
       scroll: {
         enable: true,
-        speed: 20,
-        distance: 1
+        speed: 1000,
+        distance: -1
+        // speed: 20,
+        // distance: 1
       },
       header: {
         show: true,
