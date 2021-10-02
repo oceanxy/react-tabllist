@@ -397,6 +397,7 @@ const Dev = () => {
 
   return (
     <div className="container">
+      {/*  TODO 加几个自定义事件 */}
       <Tabllist
         property={option.property}
         data={option.data}
@@ -404,6 +405,18 @@ const Dev = () => {
           instance.pause(true)
         }}
         onMouseOut={(e, instance) => instance.pause(false)}
+        onScrollTo={
+          // 一次性滚动结束后（scroll.distance<0时）或调用scrollTo函数后触发
+          (e, instance) => console.log(instance.firstRowIndexInViewableArea)
+        }
+        onScrollToEnd={
+          // 滚动到组件尾部触发，即滚动到最后一行时触发
+          (e, instance) => console.log(instance)
+        }
+        onScrollFullCircle={
+          // 滚动完整一圈后触发
+          (e, instance) => console.log(instance)
+        }
       />
     </div>
   )

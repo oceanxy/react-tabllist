@@ -105,7 +105,7 @@ export default {
 
 /**
  * 为过时的属性配置警告信息
- * @returns {{discard: string, version: string, replacement: string}[]}
+ * @returns {{discard: string, version: string, replacement?: string, warn?: string}[]}
  */
 export function getWaringProperty() {
   return [

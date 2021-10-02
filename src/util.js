@@ -336,21 +336,15 @@ export function expPropsAndMethodsForEvent(instance, props) {
  * 获取公开属性列表
  * 公开后，可以在事件及对象单元的回调函数里面使用
  * @param {object} instance 组件实例
- * {
- *    scrollTo, // {function(rowIndex)} 滚动到指定行
- *    pause, // 滚动时控制组件暂停与否的方法
- *    props, // props（可重新赋值以更新组件）
- *    readonlyState: cloneState, // 只读的组件状态
- *    renderData // 渲染组件的数据
- * }
- * @returns {{renderData, state, pause, scrollTo, props}}
+ * @returns {*}
  */
 export function getExposeList(instance) {
   const {
     scrollTo, pause, paused, props,
     renderData, state, scrollFrequency,
     scrollContainer, mainContainer,
-    listContMain, herderContainer
+    listContMain, herderContainer,
+    firstRowIndexInViewableArea
   } = instance
 
   const { indeterminate, selected } = state
@@ -359,7 +353,7 @@ export function getExposeList(instance) {
     scrollTo, // 滚动到指定行
     pause, // 暂停/取消暂停函数
     paused, // 当前组件的滚动状态（是否在滚动中）
-    props, // render props
+    props, // render props （可重新赋值以更新组件）
     indeterminate, // 行选择框的indeterminate状态
     selected, // 包括行选择框、自定义的复选框以及自定义单选按钮的勾选状态集合
     rowsHeight: listContMain.offsetHeight, // 所有行的总高度
@@ -367,7 +361,8 @@ export function getExposeList(instance) {
     renderData, // 处理后最终用于渲染列表的data
     header: herderContainer, // header
     body: scrollContainer, // 滚动容器
-    container: mainContainer // 主容器
+    container: mainContainer, // 主容器
+    firstRowIndexInViewableArea // 当前可视区域内第一行的索引（当前版本只在scroll.distance<0时可用）
   }
 }
 
@@ -470,8 +465,9 @@ export function waring(property) {
  * @param {number} distance 从配置项获取下一次滚动的距离
  - 如果值为正数或0，单位为`像素`。如果为正小数，则向上取整；
  - 如果为负数，则以行（hang）为单位滚动，行数等于该值的绝对值。如果为负小数，则向下取整；
- * @param {HTMLCollection} rows 包含所有行的数组
- * @param {number} rowIndex distance>=0或为非数字时，rowIndex为目标行索引；当distance<0时，为可视区域内第一行的索引
+ - 如果为非数字，则`rows`和`rowIndex`为必传参数
+ * @param {HTMLCollection} [rows] 包含所有行的数组
+ * @param {number} [rowIndex] distance>=0或为非数字时，rowIndex为目标行索引；当distance<0时，为可视区域内第一行的索引
  * @returns {number} 处理后的滚动距离
  */
 export function getDistanceOfNextScroll(distance, rows, rowIndex) {
@@ -508,10 +504,10 @@ export function getSpeed(targetScrollTop, scrollContainer) {
   if (distance > 0) {
     return Math.ceil(distance / 30)
   } else if (distance < 0) {
-    return Math.floor(distance / 30)
+    return -Math.floor(distance / 30)
   }
 
-  return 1
+  return distance
 }
 
 /**
