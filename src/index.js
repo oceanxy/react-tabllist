@@ -6,7 +6,7 @@ import { waring } from './util'
 
 const { property: listConfigProps, ...rest } = listConfig
 
-export default class extends Component {
+export default class ReactTabllist extends Component {
   static defaultProps = rest
 
   render() {

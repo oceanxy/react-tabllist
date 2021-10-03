@@ -276,7 +276,7 @@ export function handleEvent(param, event) {
     } else {
       // 没有内部逻辑事件，且对象单元存在时，执行用户的回调函数
       if (_objectUnit && Object.keys(_objectUnit).length) {
-        expPropsAndMethods(this, _objectUnit, event)
+        expPropsAndMethods.call(this, _objectUnit, event)
       }
     }
   }
@@ -284,14 +284,14 @@ export function handleEvent(param, event) {
 
 /**
  * 给回调函数注入必要的属性和方法，暴露给外界使用
- * @param instance {object} 组件实例
+ * @this {_ReactTabllist} 类
  * @param _objectUnit {object} 对象单元
  * @param event {Event} event对象
  */
-export function expPropsAndMethods(instance, _objectUnit, event) {
+export function expPropsAndMethods(_objectUnit, event) {
   if (_objectUnit.callback && _.isFunction(_objectUnit.callback)) {
     _objectUnit.callback(
-      getExposeList(instance),
+      getExposeList.call(this),
       _objectUnit,
       event
     )
@@ -300,19 +300,19 @@ export function expPropsAndMethods(instance, _objectUnit, event) {
 
 /**
  * 为事件加入公开的属性和方法
- * @param {ReactTabllist} instance 类
- * @param {object} props render props
+ * @this {_ReactTabllist} _ReactTabllist类
  * @returns {{mainContainer: {}, scrollContainer: {}}}
  */
-export function expPropsAndMethodsForEvent(instance, props) {
+export function expPropsAndMethodsForEvent() {
   const mainContainerEvents = {}
   const scrollContainerEvents = {}
 
-  // 从props中筛选事件
-  Object.entries(props).forEach(([key, eventFn]) => {
+  // 从props中筛选React事件（不包含自定义事件）
+  Object.entries({...this.props}).forEach(([key, eventFn]) => {
     if (key.substr(0, 2) === 'on' && typeof eventFn === 'function') {
-      const exposeList = getExposeList(instance)
+      const exposeList = getExposeList.call(this)
 
+      // 筛选滚动相关的事件
       if (key === 'onScroll') {
         /**
          * React事件回调函数
@@ -335,17 +335,17 @@ export function expPropsAndMethodsForEvent(instance, props) {
 /**
  * 获取公开属性列表
  * 公开后，可以在事件及对象单元的回调函数里面使用
- * @param {object} instance 组件实例
+ * @this {_ReactTabllist} 类
  * @returns {*}
  */
-export function getExposeList(instance) {
+export function getExposeList() {
   const {
     scrollTo, pause, paused, props,
     renderData, state, scrollFrequency,
     scrollContainer, mainContainer,
     listContMain, herderContainer,
     firstRowIndexInViewableArea
-  } = instance
+  } = this
 
   const { indeterminate, selected } = state
 
@@ -508,6 +508,20 @@ export function getSpeed(targetScrollTop, scrollContainer) {
   }
 
   return distance
+}
+
+/**
+ * 触发自定义事件
+ * @this {_ReactTabllist} 类
+ * @param {string} customEventName 自定义事件的名称
+ */
+export function dispatchCustomEvent(customEventName) {
+  this.scrollContainer.dispatchEvent(new CustomEvent(customEventName, {
+    detail: {
+      nodes: this.scrollContainer
+    },
+    bubbles: true
+  }))
 }
 
 /**
