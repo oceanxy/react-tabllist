@@ -65,12 +65,27 @@ const props = {
 	className: 'demo',
 	property: {},
 	data: [
-       ['1st column', '2nd column', '3rd column'],
-       ['1st cell', '2nd cell', '3rd cell']
+       ['第一列', '第二列', '第三列'],
+       ['第一行第一个单元格', '第一行第二个单元格', '第一行第三个单元格']
     ]
 }
 
 ReactDOM.render(<ReactTabllist {...props} />, mountNode);
+
+/**
+ * 处理滚动中的逻辑
+ * @param {SyntheticEvent} event
+ * @param {Exposes} exposes 包含暴露的属性和方法的一个对象
+ */
+function handleScroll(event, exposes) {
+  // 一些逻辑
+}
+
+// 使用React事件
+ReactDOM.render(<ReactTabllist {...props} onScroll={handleScroll} />, mountNode);
+
+// 使用组件内置的自定义事件
+ReactDOM.render(<ReactTabllist {...props} custom_onScrollToEnd={handleScroll} />, mountNode);
 ```
 
 ### 开发环境
@@ -95,7 +110,7 @@ $ npm start
 #### props
 
 |**props** type                                  |描述                      |详情                                     |
-|------------------------------------------------|--------------------------|----------------------------------------|
+|------------------------------------------------|-------------------------|----------------------------------------|
 |**data** <br> `{[Array, Array, Array,...]}`     |渲染表格需要的数据          |[props.data](#props.data)               |
 |**className** <br> `{string}`                   |自定义样式表名称            |''                                      |
 |**property** <br> `{Object}`                    |用于包装表格的属性          |[props.property](#props.property)       |
@@ -108,7 +123,7 @@ $ npm start
 
 ###### 数据格式
 
-`data`为一个类似二维数组。
+`props.data`为一个类二维数组。
 
 - 数组内每一个子数组代表一行，子数组内每一个元素代表一个单元格。单元格的显示顺序为数组下标顺序，所以在重构数据时应当确定每一个单元格的顺序及显示内容。
 
@@ -182,7 +197,7 @@ $ npm start
     value: 'row.typeID',
     event: 'onClick',
     callback: (data, cellData, event) => {},
-    className: ''，
+    className: '',
     key: ''
 }
 
@@ -213,7 +228,7 @@ $ npm start
     type: 'link',
     text: 'I am a link, I use the href attribute',
     className: 'test-link',
-    key: ''，
+    key: '',
     href: 'https://github.com/oceanxy/react-tabllist',
     value:''
 }
@@ -221,7 +236,7 @@ $ npm start
     type: 'link',
     text: 'I am a link, I use event and callback to implement custom functions',
     className: 'test-link',
-    key: ''，
+    key: '',
     data:  {},
     event: 'onClick',
     callback: (data, cellData, event) => {},
@@ -296,7 +311,6 @@ $ npm start
 |**data** <br>`{*}`                               |自定义属性，理论上可以传任何值。这个值在组件内部并不会使用，您可以在[回调函数](#callback)的第一个参数得到这个值                       |✅     |✅     |✅   |✅    |✅     |✅        |✅       |✅      |✅  |
 |**option** <br> `{object[]}`                     |`select`类型专属属性, 详情见[option](#Option)介绍                                                                           |❌     |❌     |❌    |❌    |❌    |❌         |❌       |✅      |❌  |
 
-
 ###### HTML属性 (这些属性的用法同原生的HTML标签，之所以列出来是为了注明使用它们时需要注意的点。)
 
 |**属性** `{类型}`                                 |描述                                                                                          |
@@ -323,21 +337,25 @@ $ npm start
 
 - v1.5.0及之前版本
 
-|callback(data, objectUnit, event) |自定义事件的回调函数，可以配合`event`使用。若event未定义，则默认单击事件触发后回调此函数  |
-|----------------------------------|---------------------------------------------------------------------------------|
-|data                              |`自定义对象单元格`属性中自定义的data属性，一般用来保存该单元格独一无二的信息。这是一个预留的属性 |
-|objectUnit                        |用于渲染该单元格的对象，即data里面定义的[自定义对象单元格](#自定义对象单元格)对象                       |
-|event                             |触发单元格绑定的事件后返回的event对象                                                |
+callback(data:Array[], objectUnit:object, event:SyntheticEvent)
 
-- v1.5.1
+自定义事件的回调函数，可以配合`event`使用。若event未定义，则默认单击事件触发后回调此函数
 
-|callback(instance, objectUnit, event) |自定义事件的回调函数，可以配合`event`使用。若event未定义，则默认单击事件触发后回调此函数       |
-|--------------------------------------|--------------------------------------------------------------------------------|
-|instance                              |组件实例对象暴露出来的一些属性和方法，如下：                                             |
-|objectUnit                            |该单元格内的自定义对象单元格数据                                                       |
-|event                                 |触发单元格绑定的事件后返回的event对象（React SyntheticBaseEvent）                       |
+    - data：自定义对象单元格属性中自定义的data属性，一般用来保存该单元格独一无二的信息。这是一个预留的属性
+    - objectUnit：用于渲染该单元格的对象，即data里面定义的自定义对象单元格对象
+    - event：触发单元格绑定的事件后返回的event对象
 
-- instance
+- v1.5.1至v1.6.1
+
+callback(instance:object, objectUnit:object, event:SyntheticEvent)
+
+自定义事件的回调函数，可以配合`event`使用。若event未定义，则默认单击事件触发后回调此函数
+
+    - instance：组件暴露出来的一些属性和方法
+    - objectUnit：该单元格内的自定义对象单元格数据
+    - event：触发单元格绑定的事件后返回的event对象
+
+**instance**
 
 ```ecmascript 6
 {
@@ -347,6 +365,37 @@ $ npm start
     renderData          // 渲染组件的数据
 }
 ```
+
+- v1.7.0及之后
+
+callback(exposes, objectUnit, event)
+
+自定义事件的回调函数，可以配合`event`使用。若event未定义，则默认单击事件触发后回调此函数
+
+    - exposes：组件暴露出来的一些属性和方法
+    - objectUnit：该单元格内的自定义对象单元格数据
+    - event：触发单元格绑定的事件后返回的event对象
+
+**exposes**
+
+|方法                        |参数                   |描述               |
+|---------------------------|----------------------|-------------------|
+|scrollTo(rowIndex: number) |rowIndex:行索引        |滚动到`rowIndex`行  |
+|pause(isPause?: boolean)   |isPause:是否是暂停。缺省时根据组件内部的paused属性自行判断暂停滚动或启动滚动 |滚动到指定行 |
+
+|属性                           |类型          |描述               |
+|------------------------------|-------------|-------------------|
+|paused                        |boolean      |组件开启滚动功能后有意义，当前组件滚动状态。 true:暂停中；false:滚动中  |
+|props                         |object       |组件的`props`，可重新赋值以更新组件 |
+|indeterminate                 |boolean      |行选择框的`indeterminate`状态 |
+|selected                      |object       |包括行选择框、自定义的复选框以及自定义单选按钮的勾选状态集合 |
+|rowsHeight                    |number       |所有行的总高度 |
+|scrollFrequency               |number       |从组件加载到目前已滚动的圈数 |
+|renderData                    |Array[]      |处理后最终用于渲染列表的`data` |
+|header                        |JSX.Element  |`表头容器`元素 |
+|body                          |JSX.Element  |表格`body容器`元素 |
+|container                     |JSX.Element  |组件最外层容器元素 |
+|firstRowIndexInViewableArea   |number       |当前可视区域内第一行的索引（当前版本只在`scroll.distance<0`时可用） |
 
 ###### Option
 
@@ -415,21 +464,36 @@ $ npm start
 ###### cellWidth
 
 cellWidth可选值：
-- 'auto'：完全根据单元格内的具体数据自动设置单元格宽度；
-- 'avg'：每个单元格宽度趋近于相等，但会根据单元格内的具体数据适当调整宽度；
-- \[10, 20, 10]：行内每一个单元格依次取数组的值。如果数组某索引的值为占位符（即“,”），则该单元格的宽度将被设置为“auto”；当数组长度小于列数时，其余的列默认设置为“auto”。
-- '10,20,10'：根据逗号分隔值，每一列依次取值。详细规则同数组形式。
 
-注意：
+    - 'auto'：完全根据单元格内的具体数据自动设置单元格宽度；
+    - 'avg'：每个单元格宽度趋近于相等，但会根据单元格内的具体数据适当调整宽度；
+    - [10, 20, 10]：行内每一个单元格依次取数组的值。如果数组某索引的值为占位符（即“,”），则该单元格的宽度将被设置为“auto”；当数组长度小于列数时，其余的列默认设置为“auto”。
+    - '10,20,10'：根据逗号分隔值，每一列依次取值。详细规则同数组形式。
+
+**注意**
 
 1. 无论通过何种方式，如果最终渲染出来的单元格宽度值小于`style.minWidth`，则使用`style.minWidth`值。
 2. 注意组件总宽度不能小于每列的宽度总和，否则后面超过宽度部分的列将被隐藏。
 3. 当自定义多列的宽度值时，如果每一列都定义了一个具体的值，应保证这些值的总和等于组件的宽度值，否则渲染后列的实际宽度可能不是预期的值。正常情况下，我们应该保证至少一列的宽度为自动适应，即不设置值或使用逗号跳过。
 4. 注意单元格样式的优先级顺序。
 
+#### 事件
+
+- `v1.7.0`及其后版本支持`React`原生事件，并移除了之前版本写在代码内部的事件绑定。
+- 新增了3个自定义滚动事件：
+
+  - custom_onScrollTo：不连续滚动（scroll.distance<0时）结束后或调用公开的scrollTo函数后触发。
+  - custom_onScrollToEnd：滚动到组件尾部触发，即最后一行出现再组件可视区域内时触发。
+  - custom_onScrollFullCircle：滚动完整一圈后触发。
+
+- 所有事件，包括React原生事件和自定义滚动事件，回调参数都有两个：
+
+  - event：`SyntheticEvent`
+  - exposes：`object` 暴露的属性和方法
+
 ### 配置样例
 
-组件的默认值以此配置表为准
+**组件的默认值以此配置表为准**
 
 ```json5
 {
