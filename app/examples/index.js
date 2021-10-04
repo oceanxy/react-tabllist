@@ -1,28 +1,28 @@
 /**
  * @Author: Oceanxy
- * @Email: xieyang@hiynn.com
+ * @Email: xyzsyx@163.com
  * @Description: demo
  * @Date: 2019-01-14 17:47:41
- * @LastModified: Oceanxy（xyzsyx@163.com）
- * @LastModifiedTime: 2019-02-25 18:22:12
+ * @LastModified: Oceanxy(xyzsyx@163.com)
+ * @LastModifiedTime: 2021-10-04 周一 15:56:55
  */
 
-import hljs from 'highlight.js';
-import 'highlight.js/lib/languages/javascript.js';
-import 'highlight.js/styles/rainbow.css';
-import _ from 'lodash';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Tabllist from '../../src';
-import demo10_listHeaderBg from './images/demo10_header_bg.png';
-import demo7_header_bg from './images/demo7_header_bg.png';
-import demo7_row_bg from './images/demo7_row_bg.png';
-import demo8_header_bg from './images/demo8_row_bg.png';
-import demo8_row_bg from './images/demo8_row_bg.png';
-import rowBg from './images/row-bg.png';
-import './index.scss';
+import hljs from 'highlight.js'
+import 'highlight.js/lib/languages/javascript.js'
+import 'highlight.js/styles/rainbow.css'
+import _ from 'lodash'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import Tabllist from '../../src'
+import demo10_listHeaderBg from './images/demo10_header_bg.png'
+import demo7_header_bg from './images/demo7_header_bg.png'
+import demo7_row_bg from './images/demo7_row_bg.png'
+import demo8_header_bg from './images/demo8_row_bg.png'
+import demo8_row_bg from './images/demo8_row_bg.png'
+import rowBg from './images/row-bg.png'
+import './index.scss'
 
-hljs.initHighlightingOnLoad();
+hljs.initHighlightingOnLoad()
 
 function listDataset() {
   let data = [
@@ -96,39 +96,39 @@ function listDataset() {
         { id: 7141, name: '马艳' }
       ]
     }
-  ];
+  ]
   const type = [
     { id: 1, name: '第一组' },
     { id: 2, name: '第二组' },
     { id: 3, name: '第三组' },
     { id: 4, name: '第四组' },
     { id: 5, name: '第五组' }
-  ];
+  ]
 
   data = data.map(d => {
     return {
       type: 'row',
       value: d.groupId,
       cells: [
-        <div key='group_info' className='group_info'>
-          <div className='avatar'>
-            <img src={d.avatar} alt='' />
+        <div key="group_info" className="group_info">
+          <div className="avatar">
+            <img src={d.avatar} alt="" />
           </div>
-          <div className='group_h'>
+          <div className="group_h">
             <p>小组：{d.group}</p>
             <p>小组长：{d.name}</p>
             <p>联系电话：{d.tel}</p>
           </div>
         </div>,
-        <div key='group_p' className='group_p'>
+        <div key="group_p" className="group_p">
           <p>组员：</p>
           <p>
             {d.operator.reduce((str, pn) => ` ${str + pn.name} `, '')}
           </p>
         </div>
       ]
-    };
-  });
+    }
+  })
 
   data.unshift([
     '',
@@ -142,28 +142,28 @@ function listDataset() {
             id: item.id,
             label: item.name,
             value: item.id
-          };
-        });
+          }
+        })
       })(),
       event: 'onChange',
       callback: (instance, objectUnit, event) => {
         // step 1: Get the value of select
-        const { value } = event.target;
+        const { value } = event.target
         // step 2: According to the value of select to match the value of the corresponding row in the data,
         // 				 and then get the index of the row
-        const { scrollTo, renderData } = instance;
-        for(let i = 0, k = renderData; i < k.length; i++) {
-          if(_.isPlainObject(renderData[i]) && parseInt(renderData[i].value) === parseInt(value)) {
+        const { scrollTo, renderData } = instance
+        for (let i = 0, k = renderData; i < k.length; i++) {
+          if (_.isPlainObject(renderData[i]) && parseInt(renderData[i].value) === parseInt(value)) {
             // step 3: Call method scrolling list
-            scrollTo(i - 1);
-            break;
+            scrollTo(i - 1)
+            break
           }
         }
       }
     }
-  ]);
+  ])
 
-  return data;
+  return data
 }
 
 const Demo = () => {
@@ -205,7 +205,7 @@ const Demo = () => {
       },
       isScroll: false
     }
-  };
+  }
   const demo3 = {
     className: 'demo3',
     data: [
@@ -254,7 +254,7 @@ const Demo = () => {
       speed: 50,
       isScroll: true
     }
-  };
+  }
   const demo4 = {
     className: 'demo4',
     data: [
@@ -335,7 +335,7 @@ const Demo = () => {
       speed: 40,
       isScroll: true
     }
-  };
+  }
   const demo5 = {
     className: 'demo5',
     data: [
@@ -356,7 +356,7 @@ const Demo = () => {
           value: 'click me',
           className: 'test-btn',
           callback: () => {
-            alert('hello react-tabllist');
+            alert('hello react-tabllist')
           }
         }
       ],
@@ -375,7 +375,7 @@ const Demo = () => {
           value: 'click me',
           className: 'test-btn',
           callback: () => {
-            alert('hello react-tabllist');
+            alert('hello react-tabllist')
           }
         }
       ],
@@ -394,7 +394,7 @@ const Demo = () => {
           value: 'click me',
           className: 'test-btn',
           callback: () => {
-            alert('hello react-tabllist');
+            alert('hello react-tabllist')
           }
         }, 'row 4; column 3', 'row 4; column 4'
       ],
@@ -455,18 +455,18 @@ const Demo = () => {
           value: 'click me',
           className: 'test-btn',
           callback: (instance, objectUnit, event) => {
-            if(!objectUnit?.data) {
-              objectUnit.data = 'data of button is undefined';
+            if (!objectUnit?.data) {
+              objectUnit.data = 'data of button is undefined'
             }
 
-            event.target.value = 'you clicked me!!';
-            event.target.style.width = '150px';
+            event.target.value = 'you clicked me!!'
+            event.target.style.width = '150px'
 
-            console.log(instance);
-            console.log(objectUnit);
-            console.log(event);
+            console.log(instance)
+            console.log(objectUnit)
+            console.log(event)
 
-            alert('hello react-tabllist, Please check the console');
+            alert('hello react-tabllist, Please check the console')
           }
         }
       ],
@@ -539,7 +539,7 @@ const Demo = () => {
       speed: 40,
       isScroll: true
     }
-  };
+  }
   const demo6 = {
     className: 'demo6',
     data: [
@@ -572,25 +572,25 @@ const Demo = () => {
           event: 'onChange',
           callback: (instance, objectUnit, event) => {
             // step 1: Get the value of select
-            const { value } = event.target;
+            const { value } = event.target
             // step 2: According to the value of select to match the value of the corresponding row in the data,
             // 				 and then get the index of the row
-            const { scrollTo, renderData } = instance;
-            for(let i = 0, k = renderData; i < k.length; i++) {
-              if(_.isPlainObject(renderData[i]) && parseInt(renderData[i].value) === parseInt(value)) {
+            const { scrollTo, renderData } = instance
+            for (let i = 0, k = renderData; i < k.length; i++) {
+              if (_.isPlainObject(renderData[i]) && parseInt(renderData[i].value) === parseInt(value)) {
                 // step 3: Call method scrolling list
-                scrollTo(i - 1);
-                break;
+                scrollTo(i - 1)
+                break
               }
             }
           }
         }
       ],
       [
-        <span key='text-span'>I am span</span>,
-        <div key='event' onClick={() => alert('test JSX event')}>test JSX event</div>,
-        <a key='link' href='http://www.xieyangogo.cn/react-tabllist/'>I am link</a>,
-        <div key='text-div'>I am div</div>
+        <span key="text-span">I am span</span>,
+        <div key="event" onClick={() => alert('test JSX event')}>test JSX event</div>,
+        <a key="link" href="http://www.xieyangogo.cn/react-tabllist/">I am link</a>,
+        <div key="text-div">I am div</div>
       ],
       {
         type: 'row',
@@ -598,8 +598,8 @@ const Demo = () => {
         value: 0,
         event: 'onClick',
         callback: (instance, objectUnit, event) => {
-          alert('test event of row');
-          console.log(instance, objectUnit, event);
+          alert('test event of row')
+          console.log(instance, objectUnit, event)
         },
         className: 'click-row',
         cells: [
@@ -608,7 +608,9 @@ const Demo = () => {
             type: 'link',
             text: 'I am a first link',
             className: 'test-link',
-            callback: () => {console.log('I am a first link');}
+            callback: () => {
+              console.log('I am a first link')
+            }
           },
           {
             type: 'link',
@@ -621,7 +623,7 @@ const Demo = () => {
             value: 'click me',
             className: 'test-btn',
             callback: () => {
-              alert('hello react-tabllist');
+              alert('hello react-tabllist')
             }
           }
         ]
@@ -639,7 +641,7 @@ const Demo = () => {
           value: 'click me',
           className: 'test-btn',
           callback: () => {
-            alert('hello react-tabllist');
+            alert('hello react-tabllist')
           }
         }
       ],
@@ -650,8 +652,8 @@ const Demo = () => {
         value: 1,
         event: 'onClick',
         callback: (instance, objectUnit, event) => {
-          alert('test event of row');
-          console.log(instance, objectUnit, event);
+          alert('test event of row')
+          console.log(instance, objectUnit, event)
         },
         className: 'click-row',
         cells: [
@@ -666,7 +668,7 @@ const Demo = () => {
             value: 'click me',
             className: 'test-btn',
             callback: () => {
-              alert('hello react-tabllist');
+              alert('hello react-tabllist')
             }
           }, 'row 4; column 3', 'row 4; column 4'
         ]
@@ -696,8 +698,8 @@ const Demo = () => {
         value: 2,
         event: 'onClick',
         callback: (instance, objectUnit, event) => {
-          alert('test event of row');
-          console.log(instance, objectUnit, event);
+          alert('test event of row')
+          console.log(instance, objectUnit, event)
         },
         className: 'click-row',
         cells: [
@@ -744,7 +746,7 @@ const Demo = () => {
           event: 'onClick',
           className: 'test-link',
           callback: () => {
-            alert('clicked link');
+            alert('clicked link')
           }
         },
         {
@@ -752,16 +754,16 @@ const Demo = () => {
           value: 'click me',
           className: 'test-btn',
           callback: (instance, objectUnit, event) => {
-            if(!objectUnit.data) {
-              objectUnit.data = 'data of button is undefined';
+            if (!objectUnit.data) {
+              objectUnit.data = 'data of button is undefined'
             }
 
-            event.target.value = 'you clicked me!!';
-            event.target.style.width = '150px';
+            event.target.value = 'you clicked me!!'
+            event.target.style.width = '150px'
 
-            console.log(instance, objectUnit, event);
+            console.log(instance, objectUnit, event)
 
-            alert('hello react-tabllist, Please check the console');
+            alert('hello react-tabllist, Please check the console')
           }
         }
       ],
@@ -797,7 +799,8 @@ const Demo = () => {
       body: {
         row: {
           rowCheckBox: true,
-          onClick: () => {}, // 仅在1.2.0版本生效，此处用于测试控制台打印警告信息
+          onClick: () => {
+          }, // 仅在1.2.0版本生效，此处用于测试控制台打印警告信息
           style: {
             height: 34
           },
@@ -858,7 +861,7 @@ const Demo = () => {
         distance: -1
       }
     }
-  };
+  }
 
   const case1 = {
     className: 'case1',
@@ -875,7 +878,7 @@ const Demo = () => {
             author: 'Oceanxy'
           },
           callback: (instance, objectUnit) => {
-            alert(` author: ${objectUnit.data.author},\n datetime: ${objectUnit.data.datetime}`);
+            alert(` author: ${objectUnit.data.author},\n datetime: ${objectUnit.data.datetime}`)
           }
         },
         {
@@ -887,10 +890,10 @@ const Demo = () => {
             message: `you clicked button ${i + 1} !`
           },
           callback: (instance, objectUnit) => {
-            alert(`${objectUnit.data.message}`);
+            alert(`${objectUnit.data.message}`)
           }
         }
-      ];
+      ]
     }),
     property: {
       style: {
@@ -927,17 +930,17 @@ const Demo = () => {
         }
       }
     }
-  };
+  }
   const case2 = {
     className: 'case2',
     data: (() => {
       const arr = _.range(7).map((i) => {
-        return ['企业名称' + i, '积分' + i, '车牌' + i];
-      });
+        return ['企业名称' + i, '积分' + i, '车牌' + i]
+      })
 
-      arr.unshift(['企业名称', '积分', '车牌']);
+      arr.unshift(['企业名称', '积分', '车牌'])
 
-      return arr;
+      return arr
     })(),
     property: {
       style: {
@@ -978,17 +981,17 @@ const Demo = () => {
         }
       }
     }
-  };
+  }
   const case3 = {
     className: 'case3',
     data: (() => {
       const arr = _.range(7).map((i) => {
-        return [Math.random() * 1000, '种类' + i, '车牌' + i, '归属地' + i, '行驶地' + i, '预警时间' + i];
-      });
+        return [Math.random() * 1000, '种类' + i, '车牌' + i, '归属地' + i, '行驶地' + i, '预警时间' + i]
+      })
 
-      arr.unshift(['序号', '种类', '车牌号', '归属地', '行驶地', '预警时间']);
+      arr.unshift(['序号', '种类', '车牌号', '归属地', '行驶地', '预警时间'])
 
-      return arr;
+      return arr
     })(),
     property: {
       style: {
@@ -1029,7 +1032,7 @@ const Demo = () => {
         }
       }
     }
-  };
+  }
   const pt = {
     className: 'pt',
     data: listDataset(),
@@ -1082,14 +1085,14 @@ const Demo = () => {
         }
       }
     }
-  };
+  }
 
   return (
-    <div className='container'>
+    <div className="container">
       <h1>demo1：default</h1>
       <Tabllist />
       <pre>
-        <code className='javascript'>
+        <code className="javascript">
           {
             'const option = {\n' +
             '  className: \'demo1\',\n' +
@@ -1103,7 +1106,7 @@ const Demo = () => {
       <h1>demo2：Basic use</h1>
       <Tabllist {...demo2} />
       <pre>
-        <code className='javascript'>
+        <code className="javascript">
           {
             'const option = {\n' +
             '  className: \'demo2\',\n' +
@@ -1151,7 +1154,7 @@ const Demo = () => {
       <h1>demo3：Cell border and row background color</h1>
       <Tabllist {...demo3} />
       <pre>
-        <code className='javascript'>
+        <code className="javascript">
           {
             'const option = {\n' +
             '  className: \'demo3\',\n' +
@@ -1209,7 +1212,7 @@ const Demo = () => {
       <h1>demo4：Serial number and scrollable list</h1>
       <Tabllist {...demo4} />
       <pre>
-        <code className='javascript'>
+        <code className="javascript">
           {
             'const option = {\n' +
             '  className: \'demo4\',\n' +
@@ -1299,7 +1302,7 @@ const Demo = () => {
       <h1>demo5：Object cell: Add another tag to the cell</h1>
       <Tabllist {...demo5} />
       <pre>
-        <code className='javascript'>
+        <code className="javascript">
           {
             'const option = {\n' +
             '   className: \'demo5\',\n' +
@@ -1512,7 +1515,7 @@ const Demo = () => {
       <h1>demo6：object unit for select and scroll to the specified row</h1>
       <Tabllist {...demo6} />
       <pre>
-        <code className='javascript'>
+        <code className="javascript">
           {
             'const option = {\n' +
             '   className: \'demo6\',\n' +
@@ -1841,7 +1844,7 @@ const Demo = () => {
       <h2>Case 1</h2>
       <Tabllist {...case1} />
       <pre>
-        <code className='javascript'>
+        <code className="javascript">
           {
             'const option = {\n' +
             '   className: \'case1\',\n' +
@@ -1918,7 +1921,7 @@ const Demo = () => {
       <h2>Case 2</h2>
       <Tabllist {...case2} />
       <pre>
-        <code className='javascript'>
+        <code className="javascript">
           {
             'const option = {\n' +
             '   className: \'case2\',\n' +
@@ -1978,7 +1981,7 @@ const Demo = () => {
       <h2>Case 3</h2>
       <Tabllist {...case3} />
       <pre>
-        <code className='javascript'>
+        <code className="javascript">
           {
             'const option = {\n' +
             '   className: \'case3\',\n' +
@@ -2036,11 +2039,11 @@ const Demo = () => {
       </pre>
 
       <h2>Case 4</h2>
-      <div className='case4'>
+      <div className="case4">
         <Tabllist {...pt} />
       </div>
       <pre>
-        <code className='javascript'>
+        <code className="javascript">
           {
             'const option = {\n' +
             '   className: \'pt\',\n' +
@@ -2099,7 +2102,7 @@ const Demo = () => {
         </code>
       </pre>
       <pre style={{ marginTop: 0 }}>
-        <code className='javascript'>
+        <code className="javascript">
           {
             'function listDataset() {\n' +
             '   let data = [\n' +
@@ -2211,7 +2214,7 @@ const Demo = () => {
         </code>
       </pre>
       <pre style={{ marginTop: 0 }}>
-        <code className='javascript'>
+        <code className="javascript">
           {
             '   data.unshift([\n' +
             '      \'\',\n' +
@@ -2252,10 +2255,10 @@ const Demo = () => {
         </code>
       </pre>
     </div>
-  );
-};
+  )
+}
 
 ReactDOM.render(
   <Demo />,
   document.getElementById('root')
-);
+)

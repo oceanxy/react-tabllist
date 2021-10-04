@@ -7,14 +7,16 @@
 2. New Function: A cell can bind multiple events.
 3. Refactoring most of the old code.
 
-#### 1.7.0[dev]
+#### 1.7.0[latest]
 1. Update dependency package.
-2. Optimize the code logic related to scrolling, complete some comments, and modify some incorrect comments.
+2. Rewrite the scrolling logic; improve some comments, and modify some incorrect comments.
 3. Improve the readability of some source code, such as variable naming.
 4. Modify the className of the outermost container of the component to more recognizable and unique characters to avoid polluting other components or pages.
-5. 取消最外层容器的鼠标事件和行的事件绑定，原有功能改为在新增的事件中配置
+5. Cancel the mouse events of the outermost container and the events bound to the cell row in the code, and replace the original functions with React events. See Article 6 for details.
+6. Added React event support, and 3 additional scroll-related custom events.
+7. The disclosed attributes and methods have been optimized and adjusted.
 
-#### 1.6.1[latest]
+#### 1.6.1
 This version has not updated features, only some field names and comments have been optimized. In addition, the version of the core dependency library has been updated, as well as some updates in the development mode. The details are as follows:
 
 1. Remove yarn.lock and package-lock.json from .gitignore

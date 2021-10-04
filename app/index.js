@@ -397,7 +397,6 @@ const Dev = () => {
 
   return (
     <div className="container">
-      {/*  TODO 加几个自定义事件 */}
       <Tabllist
         property={option.property}
         data={option.data}
