@@ -383,36 +383,36 @@ npm install react-tabllist --save
       }
       ```
 
-    - v1.7.0 and later
+  - v1.7.0 and later
 
-      `callback(exposes:object, objectUnit:object, event:SyntheticEvent)`
+    `callback(exposes:object, objectUnit:object, event:SyntheticEvent)`
 
-      Custom event callback function, can be used with `event`. If the event is undefined, the default click event is triggered after the callback.
+    Custom event callback function, can be used with `event`. If the event is undefined, the default click event is triggered after the callback.
 
-      - exposes: Some properties and methods exposed
-      - objectUnit: Object unit data in the cell
-      - event: React SyntheticBaseEvent
+    - exposes: Some properties and methods exposed
+    - objectUnit: Object unit data in the cell
+    - event: React SyntheticBaseEvent
 
-      **exposes**
+    **exposes**
 
-      |Method                     |Parameter                       |Description                               |
-      |---------------------------|--------------------------------|------------------------------------------|
-      |scrollTo(rowIndex: number) |rowIndex`{number}`:row index    |scrolls the list to the specified row     |
-      |pause(isPause?: boolean)   |isPause`{boolean}`:Is the list paused.<br>By default, you can pause scrolling or start scrolling according to the paused attribute inside the component. |Pause or start the scrolling of the list |
+    |Method                     |Parameter                       |Description                               |
+    |---------------------------|--------------------------------|------------------------------------------|
+    |scrollTo(rowIndex: number) |rowIndex`{number}`:row index    |scrolls the list to the specified row     |
+    |pause(isPause?: boolean)   |isPause`{boolean}`:Is the list paused.<br>By default, you can pause scrolling or start scrolling according to the paused attribute inside the component. |Pause or start the scrolling of the list |
 
-      |Attribute                     |Type             |description                | 
-      |------------------------------|-----------------|---------------------------|
-      |paused                        |`{boolean}`      |The scrolling status of the current component (effective when the component turns on the scrolling function). True means suspended; False means scrolling  |
-      |props                         |`{object}`       |The `props` of the component can be re assigned to update the component |
-      |indeterminate                 |`{boolean}`      |The `indeterminate` status of the row selection box in the header |
-      |selected                      |`{object}`       |It includes row selection boxes, custom check boxes, and check status sets of custom radio buttons |
-      |rowsHeight                    |`{number}`       |Total height of all rows |
-      |scrollFrequency               |`{number}`       |Number of turns from component loading to current scrolling |
-      |renderData                    |`{Array[]}`      |Final used for rendering list after processing `data` |
-      |header                        |`{JSX.Element}`  |`Header container` element |
-      |body                          |`{JSX.Element}`  |`Body container` element |
-      |container                     |`{JSX.Element}`  |Component outermost container element |
-      |firstRowIndexInViewableArea   |`{number}`       |The index of the first row in the current viewing area (the current version is only available when `scroll.distance < 0`) |
+    |Attribute                     |Type             |description                | 
+    |------------------------------|-----------------|---------------------------|
+    |paused                        |`{boolean}`      |The scrolling status of the current component (effective when the component turns on the scrolling function). True means suspended; False means scrolling  |
+    |props                         |`{object}`       |The `props` of the component can be re assigned to update the component |
+    |indeterminate                 |`{boolean}`      |The `indeterminate` status of the row selection box in the header |
+    |selected                      |`{object}`       |It includes row selection boxes, custom check boxes, and check status sets of custom radio buttons |
+    |rowsHeight                    |`{number}`       |Total height of all rows |
+    |scrollFrequency               |`{number}`       |Number of turns from component loading to current scrolling |
+    |renderData                    |`{Array[]}`      |Final used for rendering list after processing `data` |
+    |header                        |`{JSX.Element}`  |`Header container` element |
+    |body                          |`{JSX.Element}`  |`Body container` element |
+    |container                     |`{JSX.Element}`  |Component outermost container element |
+    |firstRowIndexInViewableArea   |`{number}`       |The index of the first row in the current viewing area (the current version is only available when `scroll.distance < 0`) |
 
   **_Option_**
 
