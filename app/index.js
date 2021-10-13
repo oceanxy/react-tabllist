@@ -305,8 +305,8 @@ const Dev = () => {
         enable: true,
         // speed: 1000,
         // distance: -1
-        speed: 20,
-        distance: 1
+        speed: 1000,
+        distance: -2
       },
       header: {
         show: true,
@@ -404,14 +404,19 @@ const Dev = () => {
           instance.pause(true)
         }}
         onMouseOut={(e, instance) => instance.pause(false)}
+        // onScroll={
+        //   () => {
+        //     // some code
+        //   }
+        // }
         // custom_onScrollTo={
         //   // 一次性滚动（scroll.distance<0时）结束后或调用公开的scrollTo函数后触发
         //   (e, instance) => console.log(e, instance)
         // }
-        custom_onScrollToEnd={
-          // 当distance>=0时，滚动到组件尾部触发，即组件最后一行完全进入可视区域内时触发
-          (e, instance) => console.log(e, instance)
-        }
+        // custom_onScrollToEnd={
+        //   // 当distance>=0时，滚动到组件尾部触发，即组件最后一行完全进入可视区域内时触发
+        //   (e, instance) => console.log(e, instance)
+        // }
         // custom_onScrollFullCircle={
         //   // 滚动完整一圈后触发
         //   (e, instance) => console.log(e, instance)

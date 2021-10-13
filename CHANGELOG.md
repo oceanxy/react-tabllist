@@ -7,6 +7,10 @@
 2. New Function: A cell can bind multiple events.
 3. Refactoring most of the old code.
 
+#### 1.7.1[dev]
+1. Modify the document according to the updated content of v1.7.0.
+2. 修改bug-滚动到指定行的索引小于当前可视区域内第一行的索引时，滚动异常.
+
 #### 1.7.0[latest]
 1. Update dependency package.
 2. Rewrite the scrolling logic; improve some comments, and modify some incorrect comments.
