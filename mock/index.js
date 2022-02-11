@@ -1,0 +1,51 @@
+import Mock from 'mockjs'
+import appConfig from '../src/config'
+
+const URL = require('url')
+
+Mock.setup({ timeout: appConfig.mockDelay })
+const { mock } = Mock
+
+const modulesFiles = require.context('./modules', true, /\.js$/)
+
+// 自动引入 './modules' 中的所有模块
+// 不再需要`import app from './modules/app'`
+const mockModule = modulesFiles.keys().reduce((modules, modulePath) => {
+  // eg. 设置 './app.js' => 'app'
+  const value = modulesFiles(modulePath)
+
+  modules = {
+    ...modules,
+    ...value.default
+  }
+
+  return modules
+}, {})
+
+// 注册需要被mockjs拦截的接口
+export default Object.entries(mockModule).map(([modelKey, mockModel]) => {
+  // 把接口地址中的"/"替换为转义字符“\/”
+  const url = modelKey.replaceAll('/', '\\/')
+
+  mock(new RegExp(`${url}(|\\?\\S*)$`), options => {
+    const printOptions = {
+      ...options
+    }
+
+    if (printOptions.body?.includes('&')) {
+      printOptions.body = URL.parse(`?${printOptions.body}`, true).query
+    } else {
+      printOptions.body = JSON.parse(printOptions.body)
+    }
+
+    if (process.env.NODE_ENV === 'development') {
+      console.log('已拦截的接口：', printOptions)
+    }
+
+    if (typeof mockModel === 'function') {
+      return mock(mockModel(printOptions))
+    }
+
+    return mock(mockModel)
+  })
+})
