@@ -7,55 +7,35 @@
       collapsible
     >
       <div class="logo" />
-      <a-menu
-        :default-selected-keys="['4']"
-        mode="inline"
-        theme="dark"
-      >
-        <a-menu-item key="1">
-          <a-icon type="user" />
-          <span class="nav-text">nav 1</span>
-        </a-menu-item>
-        <a-menu-item key="2">
-          <a-icon type="video-camera" />
-          <span class="nav-text">nav 2</span>
-        </a-menu-item>
-        <a-menu-item key="3">
-          <a-icon type="upload" />
-          <span class="nav-text">nav 3</span>
-        </a-menu-item>
-        <a-menu-item key="4">
-          <a-icon type="user" />
-          <span class="nav-text">nav 4</span>
-        </a-menu-item>
-      </a-menu>
+      <t-g-menu />
     </a-layout-sider>
     <a-layout>
       <t-g-header :collapsed.sync="collapsed" />
       <a-layout-content class="tem-gen-content">
-        <router-view />
+        <t-g-router-view />
       </a-layout-content>
-      <a-layout-footer style="text-align: center">
-        蓝桥科技 ©2022 技术支持
-      </a-layout-footer>
+      <t-g-footer />
     </a-layout>
   </a-layout>
 </template>
 
 <script>
-import { Layout, Menu } from 'ant-design-vue'
-import TGHeader from '@/layouts/Header'
+import { Layout } from 'ant-design-vue'
+import TGHeader from '@/layouts/components/TGHeader'
+import TGFooter from '@/layouts/components/TGFooter'
+import TGMenu from '@/layouts/components/TGMenu'
+import TGRouterView from '@/layouts/TGRouterView'
 
 export default {
   name: 'TGLayout',
   components: {
+    TGRouterView,
+    TGMenu,
+    TGFooter,
     TGHeader,
     [Layout.name]: Layout,
     [Layout.Sider.name]: Layout.Sider,
-    [Layout.Content.name]: Layout.Content,
-    [Layout.Footer.name]: Layout.Footer,
-    [Menu.name]: Menu,
-    [Menu.Item.name]: Menu.Item
+    [Layout.Content.name]: Layout.Content
   },
   data: () => ({
     collapsed: false

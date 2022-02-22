@@ -19,7 +19,7 @@ export default {
     },
     setAuthentication(state, payload) {
       if (payload) {
-        sessionStorage.setItem('token', payload.token)
+        sessionStorage.setItem('token', payload)
       } else {
         sessionStorage.removeItem('token')
       }
@@ -35,7 +35,7 @@ export default {
         commit('setUserInfo', response.data.userInfo)
         commit('setAuthentication', response.data.token)
 
-        await router.replace({ name: 'Home' })
+        await router.replace({ name: 'home' })
       }
 
       commit('setLoading', false)
@@ -49,7 +49,7 @@ export default {
         commit('setUserInfo', {})
         commit('setAuthentication', null)
 
-        await router.replace({ name: 'Login' })
+        await router.replace({ name: 'login' })
       }
 
       commit('setLoading', false)

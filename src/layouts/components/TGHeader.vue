@@ -24,17 +24,14 @@
         </template>
       </a-dropdown>
     </div>
-    <a-breadcrumb class="gen-ten-breadcrumb">
-      <a-breadcrumb-item>Home</a-breadcrumb-item>
-      <a-breadcrumb-item>List</a-breadcrumb-item>
-      <a-breadcrumb-item>App</a-breadcrumb-item>
-    </a-breadcrumb>
+    <t-g-breadcrumb />
   </a-layout-header>
 </template>
 
 <script>
-import { Avatar, Badge, Breadcrumb, Divider, Dropdown, Layout, Menu } from 'ant-design-vue'
+import { Avatar, Badge, Divider, Dropdown, Layout, Menu } from 'ant-design-vue'
 import { createNamespacedHelpers } from 'vuex'
+import TGBreadcrumb from '@/layouts/components/TGBreadcrumb'
 
 const { mapState, mapActions } = createNamespacedHelpers('login')
 
@@ -51,11 +48,10 @@ export default {
     }
   },
   components: {
+    TGBreadcrumb,
     [Layout.Header.name]: Layout.Header,
     [Badge.name]: Badge,
     [Avatar.name]: Avatar,
-    [Breadcrumb.name]: Breadcrumb,
-    [Breadcrumb.Item.name]: Breadcrumb.Item,
     [Divider.name]: Divider,
     [Menu.name]: Menu,
     [Menu.Item.name]: Menu.Item,
@@ -104,11 +100,6 @@ export default {
     .gem-ten-user-info {
       margin-right: 20px;
     }
-  }
-
-  .gen-ten-breadcrumb {
-    padding: 16px 20px;
-    border-top: 1px solid #ededed;
   }
 }
 </style>
