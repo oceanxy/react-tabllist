@@ -26,6 +26,7 @@
 import { Menu } from 'ant-design-vue'
 import { menuRoutes } from '@/router'
 
+// 函数组件 自定义子菜单
 const TGSubMenu = {
   template: `
     <a-sub-menu
