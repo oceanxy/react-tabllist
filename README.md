@@ -1,4 +1,4 @@
-# template-generator
+# vue-template-generator
 
 ## Project setup
 ```
@@ -46,6 +46,10 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
   - main.js：主程序入口
 
 ## 主要功能介绍
+
+### JSX
+
+  1. 支持**JSX**，基于**vue 2.x**
 
 ### UI组件及样式
 
