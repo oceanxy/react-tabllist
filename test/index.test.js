@@ -1809,7 +1809,7 @@ describe('test event', () => {
     eventWrapper.find('.__tabllist__').simulate('mouseout')
   })
 
-  // 自定义事件暂无法测试
+  // 自定义事件暂无法测试（无法使用 `simulate` 触发）
   // it('react custom event: custom_onScrollTo', () => {
   //   eventWrapper.find('.__tabllist__ .list-body').simulate('custom_onScrollTo')
   //   expect(handler3).toHaveBeenCalled()
