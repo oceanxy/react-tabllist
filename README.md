@@ -42,7 +42,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
     - antvComponents：ant design vue 常用全局组件按需注册，非常用的组件请在需要用到时按需引入
     - request：axios简易封装 HTTP请求等相关功能
   - views：页面及其附属组件
-  - App.vue：实例化Vue组件
+  - App.jsx：根组件
   - main.js：主程序入口
 
 ## 主要功能介绍

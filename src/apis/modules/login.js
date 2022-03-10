@@ -1,14 +1,16 @@
+import qs from 'qs'
+
 export default {
   login(request, data) {
     return request({
-      url: '/login',
+      url: '/auth/passport/login',
       method: 'post',
-      data
+      data: qs.stringify(data)
     })
   },
   logout(request) {
     return request({
-      url: '/logout',
+      url: '/auth/passport/logout',
       method: 'post'
     })
   }

@@ -1,12 +1,17 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import TGLayout from '../layouts/TGLayout.vue'
-import TGRouterView from '../layouts/TGRouterView.vue'
+import ULLayout from '../layouts/ULLayout.vue'
+import ULRouterView from '../layouts/ULRouterView.vue'
 import config from '@/config'
 
 Vue.use(VueRouter)
 
-// 路由
+/**
+ * 路由
+ *
+ * path留空，父级将将自动跳转到此项配置指定的组件
+ * children 内没有 path 为空的项，如果需要自动跳转到子级，需要配合redirect属性使用
+ */
 export const routes = [
   {
     path: '/login',
@@ -14,7 +19,7 @@ export const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */'@/views/Login.vue'),
+    component: () => import(/* webpackChunkName: "about" */'@/views/Login'),
     meta: {
       title: '登录',
       keepAlive: false,
@@ -23,18 +28,16 @@ export const routes = [
   },
   {
     path: '/',
-    component: TGLayout,
-    name: 'root',
+    component: ULLayout,
     meta: {
       title: '首页',
       keepAlive: true,
       requiresAuth: true
     },
     children: [
-      // path 留空， '/' 路由将自动跳转到此配置指定的组件
       {
         path: '',
-        component: () => import('@/views/Home.vue'),
+        component: () => import('@/views/Home'),
         name: 'home',
         meta: {
           title: '首页',
@@ -43,46 +46,22 @@ export const routes = [
         }
       },
       {
-        path: 'generator',
-        name: 'generator',
-        component: TGRouterView,
-        // 子路由中没有path为空字符串的路由时，需要添加重定向，以便导航到本级时不会出现白屏
-        redirect: { name: 'test1' },
+        path: 'sites',
+        name: 'sites',
+        component: ULRouterView,
         meta: {
-          title: '路由生成器',
+          title: '站点管理',
           keepAlive: true,
           requiresAuth: true
         },
+        redirect: { name: 'apps' },
         children: [
           {
-            path: 'test1',
-            name: 'test1',
-            component: TGRouterView,
-            redirect: { name: 'test5' },
+            path: 'apps',
+            name: 'apps',
+            component: () => import('@/views/sites/Apps'),
             meta: {
-              title: 'test1',
-              keepAlive: true,
-              requiresAuth: true
-            },
-            children: [
-              {
-                path: 'test5',
-                name: 'test5',
-                component: () => import('@/views/Generator.vue'),
-                meta: {
-                  title: 'test5',
-                  keepAlive: true,
-                  requiresAuth: true
-                }
-              }
-            ]
-          },
-          {
-            path: 'test2',
-            name: 'test2',
-            component: () => import('@/views/Home.vue'),
-            meta: {
-              title: 'test2',
+              title: '站点列表',
               keepAlive: true,
               requiresAuth: true
             }
@@ -90,31 +69,20 @@ export const routes = [
         ]
       },
       {
-        path: 'generator2',
-        name: 'generator2',
-        component: TGRouterView,
+        path: 'modules',
+        component: ULRouterView,
         meta: {
-          title: '路由生成器2',
+          title: '功能模块管理',
           keepAlive: true,
           requiresAuth: true
         },
         children: [
           {
             path: '',
-            name: 'generator2Root',
-            component: () => import('@/views/Generator.vue'),
+            name: 'modules',
+            component: () => import('@/views/Modules'),
             meta: {
-              title: '路由生成器2',
-              keepAlive: true,
-              requiresAuth: true
-            }
-          },
-          {
-            path: 'test4',
-            name: 'test4',
-            component: () => import('@/views/Home.vue'),
-            meta: {
-              title: 'test4',
+              title: '功能模块列表',
               keepAlive: true,
               requiresAuth: true
             }
@@ -122,46 +90,20 @@ export const routes = [
         ]
       },
       {
-        path: 'generator3',
-        name: 'generator3',
-        component: TGRouterView,
-        // 子路由中没有path为空字符串的路由时，需要添加重定向，以便导航到本级时不会出现白屏
-        redirect: { name: 'test6' },
+        path: 'pages',
+        component: ULRouterView,
         meta: {
-          title: '路由生成器3',
+          title: '页面管理',
           keepAlive: true,
           requiresAuth: true
         },
         children: [
           {
-            path: 'test1',
-            name: 'test6',
-            component: TGRouterView,
-            redirect: { name: 'test7' },
+            path: '',
+            name: 'pages',
+            component: () => import('@/views/Pages'),
             meta: {
-              title: 'test6',
-              keepAlive: true,
-              requiresAuth: true
-            },
-            children: [
-              {
-                path: 'test7',
-                name: 'test7',
-                component: () => import('@/views/Generator.vue'),
-                meta: {
-                  title: 'test7',
-                  keepAlive: true,
-                  requiresAuth: true
-                }
-              }
-            ]
-          },
-          {
-            path: 'test8',
-            name: 'test8',
-            component: () => import('@/views/Home.vue'),
-            meta: {
-              title: 'test8',
+              title: '页面列表',
               keepAlive: true,
               requiresAuth: true
             }
@@ -169,21 +111,118 @@ export const routes = [
         ]
       },
       {
-        path: 'system-settings',
-        name: 'systemSettings',
-        component: () => import('@/views/SystemSettings.vue'),
+        path: 'events',
+        component: ULRouterView,
         meta: {
-          title: '系统设置',
+          title: '事件管理',
           keepAlive: true,
           requiresAuth: true
-        }
+        },
+        children: [
+          {
+            path: '',
+            name: 'events',
+            component: () => import('@/views/Events'),
+            meta: {
+              title: '事件列表',
+              keepAlive: true,
+              requiresAuth: true
+            }
+          }
+        ]
+      },
+      {
+        path: 'tags',
+        name: 'tags',
+        component: ULRouterView,
+        meta: {
+          title: '业务标签管理',
+          keepAlive: true,
+          requiresAuth: true
+        },
+        redirect: { name: 'tagsCategories' },
+        children: [
+          {
+            path: 'categories',
+            name: 'tagsCategories',
+            component: () => import('@/views/Tags/Categories'),
+            meta: {
+              title: '标签分类',
+              keepAlive: true,
+              requiresAuth: true
+            }
+          }
+        ]
+      },
+      {
+        path: 'system',
+        name: 'system',
+        component: ULRouterView,
+        meta: {
+          title: '系统管理',
+          keepAlive: true,
+          requiresAuth: true
+        },
+        redirect: { name: 'menus' },
+        children: [
+          {
+            path: 'menus',
+            name: 'menus',
+            component: () => import('@/views/system/Menus'),
+            meta: {
+              title: '菜单管理',
+              keepAlive: true,
+              requiresAuth: true
+            }
+          },
+          {
+            path: 'roles',
+            name: 'roles',
+            component: () => import('@/views/system/Roles'),
+            meta: {
+              title: '角色管理',
+              keepAlive: true,
+              requiresAuth: true
+            }
+          },
+          {
+            path: 'users',
+            name: 'users',
+            component: () => import('@/views/system/Users'),
+            meta: {
+              title: '用户管理',
+              keepAlive: true,
+              requiresAuth: true
+            }
+          },
+          {
+            path: 'departments',
+            name: 'departments',
+            component: () => import('@/views/system/Departments'),
+            meta: {
+              title: '部门管理',
+              keepAlive: true,
+              requiresAuth: true
+            }
+          },
+          {
+            path: 'dictionaries',
+            name: 'dictionaries',
+            component: () => import('@/views/system/Dictionaries'),
+            meta: {
+              title: '字典管理',
+              keepAlive: true,
+              requiresAuth: true
+            }
+          }
+        ]
       }
     ]
   },
   {
     path: '/404',
     name: 'notFound',
-    component: () => import('@/views/NotFound.vue'),
+    component: () => import('@/views/NotFound'),
     meta: {
       title: '404',
       keep: false,

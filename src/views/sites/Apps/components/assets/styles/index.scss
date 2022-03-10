@@ -1,0 +1,13 @@
+.uni-log-app-form {
+  display: flex;
+
+  .ant-form-item {
+    flex: auto;
+    display: flex;
+    align-items: center;
+
+    .ant-form-item-control-wrapper {
+      width: 200px;
+    }
+  }
+}
