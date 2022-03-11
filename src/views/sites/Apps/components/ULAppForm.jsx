@@ -1,6 +1,6 @@
 import { Button, Form, Input, Select, Space } from 'ant-design-vue'
-import './assets/styles/index.scss'
 import { dispatch } from '@/utils/store'
+import './assets/styles/index.scss'
 
 export default Form.create({})({
   inject: ['moduleName'],

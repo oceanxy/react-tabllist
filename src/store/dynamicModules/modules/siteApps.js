@@ -1,4 +1,5 @@
 import apis from '@/apis'
+import { cloneDeep } from 'lodash'
 
 export default (store, commitRootInModule) => {
   // 搜索模型
@@ -18,7 +19,8 @@ export default (store, commitRootInModule) => {
       },
       total: 0,
       current: {},
-      list: []
+      list: [],
+      editModalVisible: false
     },
     mutations: {},
     actions: {
@@ -75,6 +77,31 @@ export default (store, commitRootInModule) => {
         }
 
         commitRootInModule('setLoading', false)
+      },
+      setModalStateForEdit({ state }, payload) {
+        commitRootInModule('setModalVisible', {
+          modalVisibleField: 'editModalVisible',
+          value: payload
+        })
+      },
+      setCurrent({ state }, payload) {
+        commitRootInModule('setCurrent', cloneDeep(payload || {}))
+      },
+      /**
+       * 删除站点
+       * @param state
+       * @param dispatch
+       * @param ids {Array}
+       * @returns {Promise<void>}
+       */
+      async delete({ state, dispatch }, ids) {
+        const response = await apis.deleteSiteApp({ ids })
+
+        if (response.status) {
+          dispatch('getSiteApps')
+        }
+
+        return response.status
       }
     }
   })

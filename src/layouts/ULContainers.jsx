@@ -4,9 +4,14 @@ export default {
   render() {
     return (
       <div class="uni-log-container">
-        {this.$slots.form}
-        {this.$slots.buttons}
-        {this.$slots.table}
+        <div class="uni-log-container-content">
+          {this.$slots.form}
+          {this.$slots.buttons}
+          {this.$slots.table}
+        </div>
+        <div class="uni-log-container-modals">
+          {this.$slots.modals}
+        </div>
       </div>
     )
   }

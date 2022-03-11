@@ -2,7 +2,8 @@
 // 配合babel-plugin-import，此时会自动引入对应的样式文件
 import {
   Button, Icon, Input, Tree,
-  Form, FormModel, Spin, Select
+  Form, FormModel, Spin, Select,
+  Modal
 } from 'ant-design-vue'
 import Vue from 'vue'
 
@@ -19,3 +20,6 @@ Vue.component(FormModel.name, FormModel)
 Vue.component(FormModel.Item.name, FormModel.Item)
 Vue.component(Select.name, Select)
 Vue.component(Select.Option.name, Select.Option)
+
+// 解决报错：[Vue warn]: Failed to resolve directive: ant-portal (found in <Anonymous>)
+Vue.use(Modal)

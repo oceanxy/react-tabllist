@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import getters from './getters'
+import mutations from './mutations'
 import dynamicModules from './dynamicModules'
 
 Vue.use(Vuex)
@@ -20,23 +21,7 @@ const modules = modulesFiles.keys().reduce((modules, modulePath) => {
 
 const store = new Vuex.Store({
   state: {},
-  mutations: {
-    setLoading(state, { payload, moduleName }) {
-      state[moduleName].loading = payload
-    },
-    setSearch(state, { payload, moduleName }) {
-      state[moduleName].search = payload
-    },
-    setPagination(state, { payload, moduleName }) {
-      state[moduleName].pagination = payload
-    },
-    setTotal(state, { payload, moduleName }) {
-      state[moduleName].total = payload
-    },
-    setList(state, { payload, moduleName }) {
-      state[moduleName].list = payload
-    }
-  },
+  mutations,
   actions: {},
   modules,
   getters

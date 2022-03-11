@@ -1,0 +1,72 @@
+export default {
+  /**
+   * 设置数据列表的loading
+   * @param state {Object}
+   * @param payload {boolean}
+   * @param moduleName {string}
+   */
+  setLoading(state, { payload, moduleName }) {
+    state[moduleName].loading = payload
+  },
+  /**
+   * 设置列表搜索参数对象
+   * @param state {Object}
+   * @param payload {Object}
+   * @param moduleName {string}
+   */
+  setSearch(state, { payload, moduleName }) {
+    state[moduleName].search = payload
+  },
+  /**
+   * 设置当前的临时数据对象
+   * current: 当前页面正在操作的临时数据对象。如新增，编辑等需要临时保存数据的对象
+   * @param state {Object}
+   * @param payload {Object}
+   * @param moduleName {string}
+   */
+  setCurrent(state, { payload, moduleName }) {
+    state[moduleName].current = payload
+  },
+  /**
+   * 设置分页信息
+   * @param state {Object}
+   * @param payload {{
+   *   pageIndex: number,
+   *   pageSize: number
+   * }}
+   * @param moduleName {string}
+   */
+  setPagination(state, { payload, moduleName }) {
+    state[moduleName].pagination = payload
+  },
+  /**
+   * 设置列表的数据总条数
+   * @param state {Object}
+   * @param payload {number}
+   * @param moduleName {string}
+   */
+  setTotal(state, { payload, moduleName }) {
+    state[moduleName].total = payload
+  },
+  /**
+   * 设置列表数据
+   * @param state {Object}
+   * @param payload {Object[]}
+   * @param moduleName {string}
+   */
+  setList(state, { payload, moduleName }) {
+    state[moduleName].list = payload
+  },
+  /**
+   *
+   * @param state {Object}
+   * @param payload {{
+   *   modalVisibleField: string,
+   *   value: any
+   * }} modalVisibleField: 控制modal显示的字段 value：要设置的值
+   * @param moduleName {string}
+   */
+  setModalVisible(state, { payload, moduleName }) {
+    state[moduleName][payload.modalVisibleField] = payload.value
+  }
+}
