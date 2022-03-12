@@ -38,14 +38,19 @@ export default Object.entries(mockModule).map(([modelKey, mockModel]) => {
       printOptions.body = JSON.parse(printOptions.body)
     }
 
-    if (process.env.NODE_ENV === 'development') {
-      console.log('已拦截的接口：', printOptions)
-    }
+    let response
 
     if (typeof mockModel === 'function') {
-      return mock(mockModel(printOptions))
+      response = mock(mockModel(printOptions))
+    } else {
+      response = mock(mockModel)
     }
 
-    return mock(mockModel)
+    if (process.env.NODE_ENV === 'development') {
+      console.log('request：', printOptions)
+      console.log('response:', response)
+    }
+
+    return response
   })
 })

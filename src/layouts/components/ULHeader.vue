@@ -1,15 +1,15 @@
 <template>
-  <a-layout-header class="gen-ten-layout-header">
-    <div class="gen-ten-header">
+  <a-layout-header class="uni-log-layout-header">
+    <div class="uni-log-header">
       <a-icon
         :type="innerCollapsed ? 'menu-unfold' : 'menu-fold'"
         class="trigger"
         @click="handleClick"
       />
-      <a-badge class="gen-ten-badge" dot>
+      <a-badge class="uni-log-badge" dot>
         <a-avatar icon="user" shape="square" />
       </a-badge>
-      <a-divider class="gen-ten-divider" type="vertical" />
+      <a-divider class="uni-log-divider" type="vertical" />
       <a-dropdown class="gem-ten-user-info">
         <a @click="e => e.preventDefault()">
           <span>{{ userInfo.fullName }}</span>
@@ -80,20 +80,20 @@ export default {
 </script>
 
 <style lang="scss">
-.gen-ten-layout-header {
+.uni-log-layout-header {
   height: 118px;
   padding: 0;
   background: #ffffff;
 
-  .gen-ten-header {
+  .uni-log-header {
     display: flex;
     align-items: center;
 
-    .gen-ten-badge {
+    .uni-log-badge {
       margin-left: auto;
     }
 
-    .gen-ten-divider {
+    .uni-log-divider {
       margin: 0 12px;
     }
 

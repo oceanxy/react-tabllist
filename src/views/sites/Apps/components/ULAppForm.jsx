@@ -19,7 +19,7 @@ export default Form.create({})({
     onSubmit(e) {
       e.preventDefault()
 
-      this.form.validateFields(async(err, values) => {
+      this.form.validateFields(async (err, values) => {
         if (!err) {
           await dispatch(this.moduleName, 'setSearch', values)
         }
@@ -33,8 +33,6 @@ export default Form.create({})({
         onSubmit={this.onSubmit}
         colon={false}
         class="uni-log-app-form"
-        labelCol={{ offset: 2 }}
-        wrapperCol={{ offset: 1 }}
       >
         <Space>
           <Form.Item label="站点名称">

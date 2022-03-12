@@ -19,7 +19,7 @@ module.exports = {
       // 引入sass全局变量文件
       sass: {
         sassOptions: {
-          prependData: '@import "@/styles/theme.scss"'
+          prependData: '@import "@/assets/styles/theme.scss"'
         }
       },
       // 启用内联JavaScript。ant-design-vue使用less编写，且使用了内联写法，所以需要开启

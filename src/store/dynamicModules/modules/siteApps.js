@@ -15,9 +15,9 @@ export default (store, commitRootInModule) => {
       search: { ...searchModel },
       pagination: {
         pageIndex: 0,
-        pageSize: 10
+        pageSize: 10,
+        total: 0
       },
-      total: 0,
       current: {},
       list: [],
       editModalVisible: false
@@ -40,6 +40,12 @@ export default (store, commitRootInModule) => {
       setPagination({ state }, payload) {
         commitRootInModule('setPagination', { ...state.pagination, ...payload })
       },
+      /**
+       * 更新状态
+       * @param state
+       * @param payload
+       * @return {Promise<*>}
+       */
       async updateStatus({ state }, payload) {
         commitRootInModule('setLoading', true)
 
@@ -68,10 +74,9 @@ export default (store, commitRootInModule) => {
           commitRootInModule('setPagination', {
             ...state.pagination,
             pageIndex: response.data.pageIndex,
-            pageSize: response.data.pageSize
+            pageSize: response.data.pageSize,
+            total: response.data.totalNum
           })
-
-          commitRootInModule('setTotal', response.data.totalNum)
 
           commitRootInModule('setList', response.data.rows)
         }

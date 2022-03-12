@@ -1,13 +1,11 @@
 import { Switch, Table, Tag, message, Space, Button } from 'ant-design-vue'
 import { mapGetters } from 'vuex'
-import pagination from '@/mixins/pagination'
 import { dispatch } from '@/utils/store'
-import './assets/styles/index.scss'
 import { cloneDeep } from 'lodash'
+import './assets/styles/index.scss'
 
 export default {
   inject: ['moduleName'],
-  mixins: [pagination],
   data() {
     return {
       columns: [
@@ -52,8 +50,10 @@ export default {
         },
         {
           title: '操作',
+          key: 'operation',
           fixed: 'right',
           align: 'center',
+          width: 400,
           scopedSlots: { customRender: 'operation' }
         }
       ],
@@ -64,8 +64,9 @@ export default {
       },
       rowKey: 'id',
       tableLayout: 'fixed',
-      // scroll: { x: true },
-      dataSource: []
+      dataSource: [],
+      pagination: false,
+      scroll: {}
     }
   },
   computed: {
@@ -77,10 +78,19 @@ export default {
       () => this.$store.state[this.moduleName].list,
       async list => {
         this.dataSource = list
+
+        this.resize()
       }
     )
 
     await this.fetchList()
+  },
+  mounted() {
+    window.addEventListener('resize', this.resize)
+
+    this.$on('hook:beforeDestroy', () => {
+      window.removeEventListener('resize', this.resize)
+    })
   },
   methods: {
     async fetchList() {
@@ -126,14 +136,24 @@ export default {
           ' 删除失败！'
         ])
       }
+    },
+    resize() {
+      this.$nextTick(() => {
+        this.scroll = {
+          // x: this.$refs['siteAppsTable'].$el.clientWidth - 17,
+          x: this.$refs['siteAppsTable'].$el.clientWidth,
+          y: this.$refs['siteAppsTable'].$el.clientHeight - 54,
+          scrollToFirstRowOnChange: true
+        }
+      })
     }
   },
   render() {
     return (
       <Table
+        ref="siteAppsTable"
         class="uni-log-app-table"
         loading={this.getLoading(this.moduleName)}
-        pagination={this.pagination}
         {...{ props: this.$data }}
         {...{
           scopedSlots: {

@@ -3,8 +3,9 @@ import ULAppForm from './components/ULAppForm'
 import ULAppTable from './components/ULAppTable'
 import ULAppButtons from './components/ULAppButtons'
 import dynamicState from '@/mixins/dynamicState'
-import './assets/styles/index.scss'
 import ULAppModalForEdit from '@/views/sites/Apps/components/ULAppModalForEdit'
+import ULAppPagination from '@/views/sites/Apps/components/ULAppPagination'
+import './assets/styles/index.scss'
 
 export default {
   name: 'SiteApps',
@@ -18,6 +19,7 @@ export default {
         <ULAppForm slot="form" />
         <ULAppButtons slot="buttons" />
         <ULAppTable slot="table" />
+        <ULAppPagination slot="pagination" />
 
         <ULAppModalForEdit slot="modals" />
       </ULContainers>

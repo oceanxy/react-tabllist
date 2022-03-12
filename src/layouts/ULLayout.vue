@@ -76,5 +76,9 @@ export default {
     padding: 24px;
     background: #ffffff;
   }
+
+  .ant-layout {
+    overflow: hidden;
+  }
 }
 </style>

@@ -8,6 +8,7 @@ export default {
           {this.$slots.form}
           {this.$slots.buttons}
           {this.$slots.table}
+          {this.$slots.pagination}
         </div>
         <div class="uni-log-container-modals">
           {this.$slots.modals}

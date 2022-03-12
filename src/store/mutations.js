@@ -40,15 +40,6 @@ export default {
     state[moduleName].pagination = payload
   },
   /**
-   * 设置列表的数据总条数
-   * @param state {Object}
-   * @param payload {number}
-   * @param moduleName {string}
-   */
-  setTotal(state, { payload, moduleName }) {
-    state[moduleName].total = payload
-  },
-  /**
    * 设置列表数据
    * @param state {Object}
    * @param payload {Object[]}

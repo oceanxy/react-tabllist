@@ -1,5 +1,3 @@
-import { dispatch } from '@/utils/store'
-
 /**
  * @Author: Oceanxy
  * @Email: xyzsyx@163.com
@@ -7,22 +5,31 @@ import { dispatch } from '@/utils/store'
  * @Date: 2022-03-10 周四 16:32:23
  */
 
-export default {
-  computed: {
-    pagination() {
-      const { pagination, total } = this.$store.state[this.moduleName]
+import { dispatch } from '@/utils/store'
 
-      return {
-        current: pagination.pageIndex + 1,
-        total: total,
-        pageSize: pagination.pageSize,
-        showSizeChanger: true,
-        showQuickJumper: true,
-        showTotal: total => `共 ${total} 条`,
-        onChange: this.onPaginationChange,
-        onShowSizeChange: this.onPaginationChange
+export default {
+  data() {
+    return {
+      current: 1,
+      total: 0,
+      pageSize: 10,
+      showSizeChanger: true,
+      showQuickJumper: true,
+      showTotal: total => `共 ${total} 条`,
+      on: {
+        change: this.onPaginationChange,
+        showSizeChange: this.onPaginationChange
       }
     }
+  },
+  created() {
+    this.$watch(
+      () => this.$store.state[this.moduleName].pagination,
+      pagination => {
+        this.current = pagination.pageIndex + 1
+        this.total = pagination.total
+        this.pageSize = pagination.pageSize
+      })
   },
   methods: {
     onPaginationChange(current, pageSize) {

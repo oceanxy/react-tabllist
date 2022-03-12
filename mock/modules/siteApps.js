@@ -8,7 +8,7 @@ export default {
       pageSize: 10, // 每页大小	integer(int64)
       totalNum: 10, // 总条数,没查总条数则为-1	integer(int64)
       totalPage: 10, // 总页数	integer(int64)
-      'rows|5-10': [
+      'rows|10': [
         {
           appName: '@ctitle(4,10)', // 名称	string
           'collectType|1': [1, 2], // 采集类型（1、全量采集，默认；2、可视化埋点）	string
@@ -17,9 +17,9 @@ export default {
           createTimeStr: '', // 创建时间（格式17位 yyyyMMddHHmmssSSS）YYYY_MM_DD_HH_MM	string
           creatorId: '', // 创建人ID	string
           creatorName: '', // 创建人姓名	string
-          defaultUrl: '', // 默认页面地址（例如：http://nlp.ckcest.cn/）	string
+          defaultUrl: '/index/index/index/index/index/index/index/index/index', // 默认页面地址（例如：http://nlp.ckcest.cn/）	string
           description: '', // 描述	string
-          domain: '', // 域名（例如：nlp.ckcest.cn）	string
+          domain: 'www.xxx.com', // 域名（例如：nlp.ckcest.cn）	string
           domainPath: '', // 	string
           frameType: '', // 框架类型(传统框架：1，Vue：2)	string
           frameTypeStr: '', // 框架类型文本	string
@@ -36,9 +36,9 @@ export default {
           pageModeStr: '', // 页面模式文本	string
           pathCaseSensitivity: '', // 路径是否大小写	string
           pathCaseSensitivityStr: '', // 路径是否大小写文本	string
-          platformType: '', // 平台类型（web：1，h5：2，android：3，ios：4）	string
+          platformType: '@integer(1, 4)', // 平台类型（web：1，h5：2，android：3，ios：4）	string
           platformTypeStr: '', // 平台类型文本	string
-          protocol: '', // 传输协议类型（https：1，http：2）	string
+          protocol: '@integer(1,2)', // 传输协议类型（https：1，http：2）	string
           protocolStr: '', // 传输协议类型文本	string
           remark: '', // 备注	string
           sdkInserted: '', // SDK是否接入(0 接入中 1接入成功)	string

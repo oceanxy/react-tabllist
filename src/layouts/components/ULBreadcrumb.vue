@@ -1,5 +1,5 @@
 <template>
-  <a-breadcrumb :routes="matchedRoute" class="gen-ten-breadcrumb">
+  <a-breadcrumb :routes="matchedRoute" class="uni-log-breadcrumb">
     <template #itemRender="{route, routes}">
       <span v-if="routes.indexOf(route) === routes.length - 1">
         {{ handleBreadcrumbName(route) }}
@@ -42,7 +42,7 @@ export default {
 </script>
 
 <style lang="scss">
-.gen-ten-breadcrumb {
+.uni-log-breadcrumb {
   padding: 16px 20px;
   border-top: 1px solid #ededed;
 }

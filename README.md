@@ -31,13 +31,13 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 - src
   - apis：API定义
   - assets：静态资源（如图片、视频、第三方库等）
+    - styles：通用全局样式
+      - theme.scss 主题样式及颜色定义
   - components：通用组件（自定义组件、高阶组件等，请按规范命名 TG + 组件名称）
   - config：源码相关配置
   - layouts：布局组件
   - router：路由
   - store：通用全局状态
-  - styles：通用全局样式
-    - theme.scss 主题样式及颜色定义
   - utils：工具包（工具函数、高阶函数、混合、注入等辅助型功能）
     - antvComponents：ant design vue 常用全局组件按需注册，非常用的组件请在需要用到时按需引入
     - request：axios简易封装 HTTP请求等相关功能
