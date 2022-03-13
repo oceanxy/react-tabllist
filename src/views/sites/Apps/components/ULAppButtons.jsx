@@ -23,9 +23,9 @@ export default {
   render() {
     return (
       <Space>
-        <Button type="primary" onClick={this.onAddClick}>新增</Button>
-        <Button type="primary" onClick={this.onEditClick}>修改</Button>
-        <Button type="danger" onClick={this.onDeleteClick}>删除</Button>
+        <Button type="primary" onClick={this.onAddClick} icon='plus'>新增</Button>
+        <Button type="primary" onClick={this.onEditClick} icon='edit'>修改</Button>
+        <Button type="danger" onClick={this.onDeleteClick} icon='delete'>删除</Button>
       </Space>
     )
   }

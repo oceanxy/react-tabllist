@@ -10,9 +10,6 @@ import './assets/styles/index.scss'
 export default {
   name: 'SiteApps',
   mixins: [dynamicState],
-  provide() {
-    return { moduleName: this.moduleName }
-  },
   render() {
     return (
       <ULContainers class="uni-log-sites-apps">

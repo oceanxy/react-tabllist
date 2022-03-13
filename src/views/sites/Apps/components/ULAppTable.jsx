@@ -17,6 +17,7 @@ export default {
         {
           title: '平台类型',
           align: 'center',
+          width: 80,
           scopedSlots: {
             customRender: 'platformType'
           }
@@ -24,6 +25,7 @@ export default {
         {
           title: '协议类型',
           align: 'center',
+          width: 80,
           scopedSlots: {
             customRender: 'protocol'
           }
@@ -46,27 +48,29 @@ export default {
         {
           title: '状态',
           align: 'center',
+          width: 60,
           scopedSlots: { customRender: 'status' }
         },
         {
           title: '操作',
           key: 'operation',
-          fixed: 'right',
+          // fixed: 'right',
           align: 'center',
-          width: 400,
+          width: 340,
           scopedSlots: { customRender: 'operation' }
         }
       ],
       rowSelection: {
         selections: true,
-        fixed: true,
+        // fixed: true,
         columnWidth: 50
       },
       rowKey: 'id',
       tableLayout: 'fixed',
       dataSource: [],
       pagination: false,
-      scroll: {}
+      scroll: {},
+      size: 'small'
     }
   },
   computed: {
@@ -141,7 +145,7 @@ export default {
       this.$nextTick(() => {
         this.scroll = {
           // x: this.$refs['siteAppsTable'].$el.clientWidth - 17,
-          x: this.$refs['siteAppsTable'].$el.clientWidth,
+          // x: this.$refs['siteAppsTable'].$el.clientWidth,
           y: this.$refs['siteAppsTable'].$el.clientHeight - 54,
           scrollToFirstRowOnChange: true
         }
@@ -171,7 +175,7 @@ export default {
               />
             ),
             operation: (text, record) => (
-              <Space>
+              <Space class='operation-space'>
                 <Button
                   type="link"
                   icon="edit"

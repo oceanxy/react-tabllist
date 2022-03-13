@@ -9,14 +9,17 @@ import store, { dynamicModules } from '@/store'
 import { commitRootInModule } from '@/utils/store'
 
 export default {
+  provide() {
+    return { moduleName: this.moduleName }
+  },
   computed: {
     moduleName() {
       if (!this.$options.name) {
-        console.warn('请设置组件的名称(name)，动态创建store模块需要！')
+        console.warn('请设置组件的名称(name)，动态创建store模块需要该属性！')
         return null
       }
 
-      return (this.$options.name).replace(/^\S/g, s => s.toLowerCase())
+      return this.$options.name.replace(/^\S/g, s => s.toLowerCase())
     }
   },
   created() {

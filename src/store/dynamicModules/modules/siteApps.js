@@ -83,17 +83,27 @@ export default (store, commitRootInModule) => {
 
         commitRootInModule('setLoading', false)
       },
+      /**
+       * 设置新增/编辑弹窗可见状态
+       * @param state
+       * @param payload
+       */
       setModalStateForEdit({ state }, payload) {
         commitRootInModule('setModalVisible', {
           modalVisibleField: 'editModalVisible',
           value: payload
         })
       },
+      /**
+       * 设置当前正在操作的对象为一个新的副本
+       * @param state
+       * @param payload
+       */
       setCurrent({ state }, payload) {
         commitRootInModule('setCurrent', cloneDeep(payload || {}))
       },
       /**
-       * 删除站点
+       * 删除站点应用
        * @param state
        * @param dispatch
        * @param ids {Array}
@@ -101,6 +111,43 @@ export default (store, commitRootInModule) => {
        */
       async delete({ state, dispatch }, ids) {
         const response = await apis.deleteSiteApp({ ids })
+
+        if (response.status) {
+          dispatch('getSiteApps', {
+            pageIndex: 0
+          })
+        }
+
+        return response.status
+      },
+      /**
+       * 新增站点应用
+       * @param state
+       * @param dispatch
+       * @param payload
+       * @return {Promise<*>}
+       */
+      async add({ state, dispatch }, payload) {
+        const response = await apis.addSiteApp(payload)
+
+        if (response.status) {
+          dispatch('setModalStateForEdit', false)
+          dispatch('getSiteApps', {
+            pageIndex: 0
+          })
+        }
+
+        return response.status
+      },
+      /**
+       * 更新站点应用
+       * @param state
+       * @param dispatch
+       * @param payload
+       * @return {Promise<*>}
+       */
+      async update({ state, dispatch }, payload) {
+        const response = await apis.updateSiteApp(payload)
 
         if (response.status) {
           dispatch('getSiteApps')

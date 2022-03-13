@@ -4,7 +4,6 @@ import { omit } from 'lodash'
 import './assets/styles/index.scss'
 
 export default {
-  inject: ['moduleName'],
   mixins: [pagination],
   render() {
     return (

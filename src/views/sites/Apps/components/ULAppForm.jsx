@@ -58,10 +58,11 @@ export default Form.create({})({
                 loading={this.loading}
                 htmlType="submit"
                 type="primary"
+                icon='search'
               >
                 搜索
               </Button>
-              <Button onClick={this.onClear}>重置</Button>
+              <Button onClick={this.onClear} icon='reload'>重置</Button>
             </Space>
           </Form.Item>
         </Space>

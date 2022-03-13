@@ -14,8 +14,15 @@
 
 .uni-log-app-table {
   overflow: hidden;
+  border: none;
 
-  .ant-table td {
-    //word-break: break-word;
+  .ant-table {
+    border: 0 !important;
+  }
+
+  .operation-space {
+    .ant-space-item {
+      margin-right: 0 !important;
+    }
   }
 }

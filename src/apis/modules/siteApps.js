@@ -33,5 +33,19 @@ export default {
       method: 'post',
       data: qs.stringify(data, { arrayFormat: 'comma' })
     })
+  },
+  addSiteApp(request, data) {
+    return request({
+      url: '/deploy/application/add',
+      method: 'post',
+      data: qs.stringify(data)
+    })
+  },
+  updateSiteApp(request, data) {
+    return request({
+      url: '/deploy/application/update',
+      method: 'post',
+      data: qs.stringify(data)
+    })
   }
 }

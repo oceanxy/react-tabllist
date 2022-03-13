@@ -15,6 +15,7 @@ export default {
    * @param moduleName {string}
    */
   setSearch(state, { payload, moduleName }) {
+    state[moduleName].pagination.pageIndex = 0
     state[moduleName].search = payload
   },
   /**

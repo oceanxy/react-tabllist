@@ -8,6 +8,7 @@
 import { dispatch } from '@/utils/store'
 
 export default {
+  inject: ['moduleName'],
   data() {
     return {
       current: 1,
@@ -18,7 +19,7 @@ export default {
       showTotal: total => `共 ${total} 条`,
       on: {
         change: this.onPaginationChange,
-        showSizeChange: this.onPaginationChange
+        showSizeChange: this.onSizeChange
       }
     }
   },
@@ -32,10 +33,27 @@ export default {
       })
   },
   methods: {
-    onPaginationChange(current, pageSize) {
+    /**
+     * 翻页触发
+     * @param page
+     * @param pageSize
+     */
+    onPaginationChange(page, pageSize) {
       dispatch(this.moduleName, 'getSiteApps', {
-        pageIndex: current - 1,
+        pageIndex: page - 1,
         pageSize
+      })
+    },
+    /**
+     * 每页显示条数改变后触发
+     * @param current
+     * @param size
+     */
+    onSizeChange(current, size) {
+      // 改变每页显示条数后，回到第一页
+      dispatch({
+        pageIndex: 0,
+        pageSize: size
       })
     }
   }

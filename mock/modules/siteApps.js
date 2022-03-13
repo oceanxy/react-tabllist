@@ -11,13 +11,13 @@ export default {
       'rows|10': [
         {
           appName: '@ctitle(4,10)', // 名称	string
-          'collectType|1': [1, 2], // 采集类型（1、全量采集，默认；2、可视化埋点）	string
+          collectType: '@integer(1,2)', // 采集类型（1、全量采集，默认；2、可视化埋点）	string
           collectTypeStr: '', // 采集类型文本	string
           createTime: '', // 创建时间（格式17位 yyyyMMddHHmmssSSS）	integer
           createTimeStr: '', // 创建时间（格式17位 yyyyMMddHHmmssSSS）YYYY_MM_DD_HH_MM	string
           creatorId: '', // 创建人ID	string
           creatorName: '', // 创建人姓名	string
-          defaultUrl: '/index/index/index/index/index/index/index/index/index', // 默认页面地址（例如：http://nlp.ckcest.cn/）	string
+          defaultUrl: 'http://nlp.ckcest.cn/', // 默认页面地址（例如：http://nlp.ckcest.cn/）	string
           description: '', // 描述	string
           domain: 'www.xxx.com', // 域名（例如：nlp.ckcest.cn）	string
           domainPath: '', // 	string
@@ -105,34 +105,20 @@ export default {
   },
   /**
    * 参数
-   * appName  名称    false
-   * string
-   * collectType  采集类型（1、全量采集，默认；2、可视化埋点）    false
-   * string(byte)
-   * defaultUrl  首页地址（例如：http://nlp.ckcest.cn/）    false
-   * string
-   * description  描述    false
-   * string
-   * domain  域名（例如：nlp.ckcest.cn）    false
-   * string
-   * frameType  框架类型(传统框架：1，Vue：2)    false
-   * string(byte)
-   * pageMode  页面模式(1:多页面模式,2:单页面模式)    false
-   * string(byte)
-   * pathCaseSensitivity  路径是否大小写    false
-   * string(byte)
-   * platformType  平台类型（web：1，h5：2，android：3，ios：4）    false
-   * string(byte)
-   * protocol  传输协议类型（https：1，http：2）    false
-   * string(byte)
-   * remark  备注    false
-   * string
-   * siteType  功能分类(1:综合性站点,2:专题应用类站点,3:搜索站点)    false
-   * string(byte)
-   * sortIndex  排序值（越大排在越前）    false
-   * integer(int64)
-   * status  状态 （-1：删除，1：正常 2：停用）    false
-   * string(byte)
+   * appName 名称 false string
+   * collectType  采集类型（1、全量采集，默认；2、可视化埋点） false string(byte)
+   * defaultUrl  首页地址（例如：http://nlp.ckcest.cn/） false string
+   * description  描述    false string
+   * domain  域名（例如：nlp.ckcest.cn）    false string
+   * frameType  框架类型(传统框架：1，Vue：2)    false string(byte)
+   * pageMode  页面模式(1:多页面模式,2:单页面模式)    false string(byte)
+   * pathCaseSensitivity  路径是否大小写    false string(byte)
+   * platformType  平台类型（web：1，h5：2，android：3，ios：4） false string(byte)
+   * protocol  传输协议类型（https：1，http：2） false string(byte)
+   * remark  备注    false string
+   * siteType  功能分类(1:综合性站点,2:专题应用类站点,3:搜索站点) false string(byte)
+   * sortIndex  排序值（越大排在越前） false integer(int64)
+   * status  状态 （-1：删除，1：正常 2：停用） false string(byte)
    */
   '/deploy/application/add': {
     status: true,
@@ -140,7 +126,7 @@ export default {
     message: '',
     data: {}
   },
-  // 参数id
+  // 参数 id
   '/deploy/application/getApplication': {
     status: true,
     code: 10000,
