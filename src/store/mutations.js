@@ -29,6 +29,17 @@ export default {
     state[moduleName].current = payload
   },
   /**
+   * 设置表格选中的行数据
+   * @param state {Object}
+   * @param [selectedRowKeys] {string[]}
+   * @param [selectedRows] {Object[]}
+   * @param moduleName string
+   */
+  setRowSelected(state, { payload: { selectedRowKeys, selectedRows }, moduleName }) {
+    state[moduleName].selectedRowKeys = selectedRowKeys || []
+    state[moduleName].selectedRows = selectedRows || []
+  },
+  /**
    * 设置分页信息
    * @param state {Object}
    * @param payload {{

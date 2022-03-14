@@ -39,7 +39,7 @@ export default {
      * @param pageSize
      */
     onPaginationChange(page, pageSize) {
-      dispatch(this.moduleName, 'getSiteApps', {
+      dispatch(this.moduleName, 'getList', {
         pageIndex: page - 1,
         pageSize
       })

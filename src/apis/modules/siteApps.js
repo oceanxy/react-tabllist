@@ -27,6 +27,12 @@ export default {
       data: qs.stringify(data)
     })
   },
+  /**
+   * 删除站点应用
+   * @param request
+   * @param data
+   * @returns {*}
+   */
   deleteSiteApp(request, data) {
     return request({
       url: '/deploy/application/delete',
@@ -34,18 +40,30 @@ export default {
       data: qs.stringify(data, { arrayFormat: 'comma' })
     })
   },
+  /**
+   * 新增站点应用
+   * @param request
+   * @param data
+   * @returns {*}
+   */
   addSiteApp(request, data) {
     return request({
       url: '/deploy/application/add',
       method: 'post',
-      data: qs.stringify(data)
+      data
     })
   },
+  /**
+   * 修改站点应用
+   * @param request
+   * @param data
+   * @returns {*}
+   */
   updateSiteApp(request, data) {
     return request({
       url: '/deploy/application/update',
       method: 'post',
-      data: qs.stringify(data)
+      data
     })
   }
 }

@@ -1,31 +1,9 @@
 import { Button, Form, Input, Select, Space } from 'ant-design-vue'
-import { dispatch } from '@/utils/store'
+import searchForm from '@/mixins/searchForm'
 import './assets/styles/index.scss'
 
 export default Form.create({})({
-  inject: ['moduleName'],
-  created() {
-    // 为 search 创建动态侦听器
-    this.$watch(
-      () => this.$store.state[this.moduleName].search,
-      () => dispatch(this.moduleName, 'getSiteApps')
-    )
-  },
-  methods: {
-    async onClear() {
-      await dispatch(this.moduleName, 'setSearch')
-      this.form.resetFields()
-    },
-    onSubmit(e) {
-      e.preventDefault()
-
-      this.form.validateFields(async (err, values) => {
-        if (!err) {
-          await dispatch(this.moduleName, 'setSearch', values)
-        }
-      })
-    }
-  },
+  mixins: [searchForm],
   render() {
     return (
       <Form
@@ -58,11 +36,11 @@ export default Form.create({})({
                 loading={this.loading}
                 htmlType="submit"
                 type="primary"
-                icon='search'
+                icon="search"
               >
                 搜索
               </Button>
-              <Button onClick={this.onClear} icon='reload'>重置</Button>
+              <Button onClick={this.onClear} icon="reload">重置</Button>
             </Space>
           </Form.Item>
         </Space>

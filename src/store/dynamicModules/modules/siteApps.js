@@ -20,7 +20,9 @@ export default (store, commitRootInModule) => {
       },
       current: {},
       list: [],
-      editModalVisible: false
+      editModalVisible: false,
+      selectedRowKeys: [],
+      selectedRows: []
     },
     mutations: {},
     actions: {
@@ -61,7 +63,7 @@ export default (store, commitRootInModule) => {
        * @param pagination
        * @returns {Promise<void>}
        */
-      async getSiteApps({ state }, pagination) {
+      async getList({ state }, pagination) {
         commitRootInModule('setLoading', true)
 
         const response = await apis.getSiteApps({
@@ -103,6 +105,14 @@ export default (store, commitRootInModule) => {
         commitRootInModule('setCurrent', cloneDeep(payload || {}))
       },
       /**
+       * 设置选择的行
+       * @param state
+       * @param payload
+       */
+      setRowSelected({ state }, payload) {
+        commitRootInModule('setRowSelected', payload)
+      },
+      /**
        * 删除站点应用
        * @param state
        * @param dispatch
@@ -110,12 +120,20 @@ export default (store, commitRootInModule) => {
        * @returns {Promise<void>}
        */
       async delete({ state, dispatch }, ids) {
+        commitRootInModule('setLoading', true)
+
+        if (!ids) {
+          ids = state.selectedRowKeys
+        }
+
         const response = await apis.deleteSiteApp({ ids })
 
         if (response.status) {
-          dispatch('getSiteApps', {
+          dispatch('getList', {
             pageIndex: 0
           })
+        } else {
+          commitRootInModule('setLoading', false)
         }
 
         return response.status
@@ -132,7 +150,7 @@ export default (store, commitRootInModule) => {
 
         if (response.status) {
           dispatch('setModalStateForEdit', false)
-          dispatch('getSiteApps', {
+          dispatch('getList', {
             pageIndex: 0
           })
         }
@@ -150,7 +168,7 @@ export default (store, commitRootInModule) => {
         const response = await apis.updateSiteApp(payload)
 
         if (response.status) {
-          dispatch('getSiteApps')
+          dispatch('getList')
         }
 
         return response.status

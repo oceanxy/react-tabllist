@@ -54,11 +54,14 @@ export default {
         })),
         vck: payload.picCode
       })
-      const { status, data: { userInfo, token, menuList, defaultMenuUrl } } = response
+
+      const { status } = response
 
       commit('setLoading', false)
 
       if (status) {
+        const { userInfo, token, menuList, defaultMenuUrl } = response.data
+
         commit('setUserInfo', userInfo)
         commit('setAuthentication', token)
         commit('setSiteCache', {

@@ -1,65 +1,12 @@
-import { Col, Form, Input, Modal, Row, Select, message } from 'ant-design-vue'
-import { mapGetters } from 'vuex'
-import { dispatch } from '@/utils/store'
+import { Col, Form, Input, Modal, Row, Select, Switch } from 'ant-design-vue'
+import editForm from '@/mixins/editForm'
 import './assets/styles/index.scss'
 
 export default Form.create({})({
-  inject: ['moduleName'],
-  data() {
-    return {
-      okText: '提交',
-      maskClosable: false,
-      confirmLoading: false,
-      width: 600
-    }
-  },
-  computed: {
-    ...mapGetters({
-      getEditModalVisible: 'getEditModalVisible',
-      current: 'getCurrent'
-    }),
-    title() {
-      return this.current.id ? '编辑' : '新增'
-    },
-    visible() {
-      return this.getEditModalVisible(this.moduleName)
-    }
-  },
-  methods: {
-    onSubmit() {
-      this.form.validateFields(async (err, values) => {
-        if (!err) {
-          this.confirmLoading = true
-
-          let status
-
-          // 存在ID，目前为编辑模式
-          if (this.current?.id) {
-            status = await dispatch(this.moduleName, 'update', {
-              id: this.current.id,
-              ...values
-            })
-          } else /* 新增模式 */ {
-            status = await dispatch(this.moduleName, 'add', values)
-          }
-
-          if (status) {
-            message.success('操作成功！')
-          } else {
-            message.warning('操作失败！')
-          }
-
-          this.confirmLoading = false
-        }
-      })
-    },
-    async onCancel() {
-      await dispatch(this.moduleName, 'setModalStateForEdit', false)
-    }
-  },
+  mixins: [editForm],
   render() {
     const attributes = {
-      props: this.$data,
+      props: this.modalProps,
       on: {
         cancel: this.onCancel,
         ok: this.onSubmit
@@ -105,6 +52,35 @@ export default Form.create({})({
               )
             }
           </Form.Item>
+          <Row>
+            <Col span={12}>
+              <Form.Item label="框架类型" labelCol={{ span: 8 }} wrapperCol={{ span: 14 }}>
+                {
+                  this.form.getFieldDecorator('frameType', {
+                    initialValue: 1,
+                    rules: [{ required: true, message: '请输入框架类型' }]
+                  })(
+                    <Select placeholder="请选择框架类型" allowClear>
+                      <Select.Option value={1}>Vue</Select.Option>
+                      <Select.Option value={2}>React</Select.Option>
+                    </Select>
+                  )
+                }
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="状态" labelCol={{ span: 8 }} wrapperCol={{ span: 14 }}>
+                {
+                  this.form.getFieldDecorator('status', {
+                    initialValue: true,
+                    valuePropName: 'checked'
+                  })(
+                    <Switch />
+                  )
+                }
+              </Form.Item>
+            </Col>
+          </Row>
           <Row>
             <Col span={12}>
               <Form.Item label="采集类型" labelCol={{ span: 8 }} wrapperCol={{ span: 14 }}>
@@ -205,6 +181,19 @@ export default Form.create({})({
               )
             }
           </Form.Item>
+          <Row>
+            <Col span={12}>
+              <Form.Item label="排序" labelCol={{ span: 8 }} wrapperCol={{ span: 14 }}>
+                {
+                  this.form.getFieldDecorator('sortIndex', {
+                    initialValue: 0
+                  })(
+                    <Input placeholder="请输入域名" allowClear />
+                  )
+                }
+              </Form.Item>
+            </Col>
+          </Row>
         </Form>
       </Modal>
     )
