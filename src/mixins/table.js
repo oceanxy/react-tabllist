@@ -80,6 +80,10 @@ export default {
         ])
       }
     },
+    async onAddClick(record) {
+      await dispatch(this.moduleName, 'setCurrent', cloneDeep({ parentId: record.id }))
+      await dispatch(this.moduleName, 'setModalStateForEdit', true)
+    },
     async onEditClick(record) {
       await dispatch(this.moduleName, 'setCurrent', cloneDeep(record))
       await dispatch(this.moduleName, 'setModalStateForEdit', true)
@@ -108,9 +112,9 @@ export default {
     resize() {
       this.$nextTick(() => {
         this.tableProps.scroll = {
-          // x: this.$refs['siteAppsTable'].$el.clientWidth - 17,
-          // x: this.$refs['siteAppsTable'].$el.clientWidth,
-          y: this.$refs['siteAppsTable'].$el.clientHeight - 54,
+          // x: this.$refs[`${this.moduleName}Table`].$el.clientWidth - 17,
+          // x: this.$refs[`${this.moduleName}Table`].$el.clientWidth,
+          y: this.$refs[`${this.moduleName}Table`].$el.clientHeight - 54,
           scrollToFirstRowOnChange: true
         }
       })

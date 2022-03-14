@@ -80,7 +80,7 @@ export const routes = [
           {
             path: '',
             name: 'modules',
-            component: () => import('@/views/Modules'),
+            component: () => import('@/views/FunctionalModules'),
             meta: {
               title: '功能模块列表',
               keepAlive: true,

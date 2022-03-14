@@ -8,7 +8,7 @@ export default {
   render() {
     return (
       <Pagination
-        class="uni-log-app-pagination"
+        class="uni-log-functional-modules-pagination"
         {...{
           props: omit(this.$data, 'on'),
           on: this.$data.on

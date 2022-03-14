@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import getters from './getters'
 import mutations from './mutations'
+import actions from './actions'
 import dynamicModules from './dynamicModules'
 
 Vue.use(Vuex)
@@ -20,9 +21,11 @@ const modules = modulesFiles.keys().reduce((modules, modulePath) => {
 }, {})
 
 const store = new Vuex.Store({
-  state: {},
+  state: {
+    allSiteApps: []
+  },
   mutations,
-  actions: {},
+  actions,
   modules,
   getters
 })

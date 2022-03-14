@@ -15,12 +15,12 @@ export default Form.create({})({
 
     return (
       <Modal
-        title={`${this.title}站点`}
+        title={`${this.title}模块`}
         visible={this.visible}
         {...attributes}
       >
         <Form
-          class="uni-log-app-edit-form"
+          class="uni-log-functional-modules-edit-form"
           labelCol={{ span: 4 }}
           wrapperCol={{ span: 19 }}
           colon={false}

@@ -9,40 +9,24 @@ export default {
       tableProps: {
         columns: [
           {
-            title: '站点名称',
-            dataIndex: 'appName',
+            title: '模块名称',
+            dataIndex: 'moduleName',
             align: 'center'
           },
           {
-            title: '平台类型',
+            title: '所属站点',
             align: 'center',
-            width: 80,
-            scopedSlots: {
-              customRender: 'platformType'
-            }
+            dataIndex: 'appName'
           },
           {
-            title: '协议类型',
+            title: '模块描述',
             align: 'center',
-            width: 80,
-            scopedSlots: {
-              customRender: 'protocol'
-            }
+            dataIndex: 'remark'
           },
           {
-            title: '域名',
-            dataIndex: 'domain',
-            align: 'center'
-          },
-          {
-            title: '首页',
-            dataIndex: 'defaultUrl',
-            align: 'center'
-          },
-          {
-            title: '采集类型',
+            title: '创建时间',
             align: 'center',
-            scopedSlots: { customRender: 'collectType' }
+            dataIndex: 'createTimeStr'
           },
           {
             title: '状态',
@@ -55,7 +39,7 @@ export default {
             key: 'operation',
             // fixed: 'right',
             align: 'center',
-            width: 340,
+            width: 250,
             scopedSlots: { customRender: 'operation' }
           }
         ]
@@ -66,18 +50,11 @@ export default {
     return (
       <Table
         ref={`${this.moduleName}Table`}
-        class="uni-log-table uni-log-app-table"
+        class="uni-log-table uni-log-functional-modules-table"
         loading={this.getLoading(this.moduleName)}
         {...{ props: this.tableProps }}
         {...{
           scopedSlots: {
-            platformType: (text, record) => ['web', 'h5', 'android', 'ios'][+record.platformType - 1],
-            protocol: (text, record) => ['https', 'http'][+record.protocol - 1],
-            collectType: (text, record) => (
-              <Tag color="blue">
-                {['全量采集', '可视化埋点'][record.collectType - 1]}
-              </Tag>
-            ),
             status: (text, record) => (
               <Switch
                 checked={record.status === 1}
@@ -86,6 +63,14 @@ export default {
             ),
             operation: (text, record) => (
               <Space class="operation-space">
+                <Button
+                  type="link"
+                  icon="plus"
+                  size="small"
+                  onClick={() => this.onAddClick(record)}
+                >
+                  新增
+                </Button>
                 <Button
                   type="link"
                   icon="edit"
@@ -101,20 +86,6 @@ export default {
                   onClick={() => this.onDeleteClick(record)}
                 >
                   删除
-                </Button>
-                <Button
-                  type="link"
-                  icon="control"
-                  size="small"
-                >
-                  配置页面
-                </Button>
-                <Button
-                  type="link"
-                  icon="appstore"
-                  size="small"
-                >
-                  功能模块
                 </Button>
               </Space>
             )

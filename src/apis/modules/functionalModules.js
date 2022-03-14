@@ -2,25 +2,25 @@ import qs from 'qs'
 
 export default {
   /**
-   * 获取站点应用分页列表
-   * @param [request]
+   * 获取功能模块分页列表
+   * @param request
    * @param data
    * @returns {*}
    */
-  getSiteApps(request, data) {
+  getFunctionalModules(request, data) {
     return request({
-      url: '/deploy/application/getApplicationPageList',
+      url: '/deploy/module/getModulePageList',
       method: 'post',
       data: qs.stringify(data)
     })
   },
   /**
-   * 更新站点状态
-   * @param [request]
+   * 更新功能模块状态
+   * @param request
    * @param data
    * @returns {*}
    */
-  updateSiteAppsStatus(request, data) {
+  updateFunctionalModulesStatus(request, data) {
     return request({
       url: '/deploy/application/updateStatus',
       method: 'post',
@@ -28,12 +28,12 @@ export default {
     })
   },
   /**
-   * 删除站点应用
-   * @param [request]
+   * 删除功能模块
+   * @param request
    * @param data
    * @returns {*}
    */
-  deleteSiteApp(request, data) {
+  deleteFunctionalModules(request, data) {
     return request({
       url: '/deploy/application/delete',
       method: 'post',
@@ -41,40 +41,29 @@ export default {
     })
   },
   /**
-   * 新增站点应用
-   * @param [request]
+   * 新增功能模块
+   * @param request
    * @param data
    * @returns {*}
    */
-  addSiteApp(request, data) {
+  addFunctionalModules(request, data) {
     return request({
-      url: '/deploy/application/add',
+      url: '/deploy/module/add',
       method: 'post',
       data
     })
   },
   /**
-   * 修改站点应用
-   * @param [request]
+   * 修改功能模块
+   * @param request
    * @param data
    * @returns {*}
    */
-  updateSiteApp(request, data) {
+  updateFunctionalModules(request, data) {
     return request({
-      url: '/deploy/application/update',
+      url: '/deploy/module/update',
       method: 'post',
       data
-    })
-  },
-  /**
-   * 获取所有站点应用（用于select）
-   * @param [request]
-   * @returns {*}
-   */
-  getAllSiteApps(request) {
-    return request({
-      url: '/deploy/application/getDicList',
-      method: 'post'
     })
   }
 }

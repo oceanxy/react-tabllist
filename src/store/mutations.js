@@ -1,5 +1,13 @@
 export default {
   /**
+   * 获取所有站点应用
+   * @param state
+   * @param payload
+   */
+  setAllSiteApps(state, payload) {
+    state.allSiteApps = payload
+  },
+  /**
    * 设置数据列表的loading
    * @param state {Object}
    * @param payload {boolean}

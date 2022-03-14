@@ -26,3 +26,32 @@ body {
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+
+.uni-log-search-form {
+  display: flex;
+
+  .ant-form-item {
+    flex: auto;
+    display: flex;
+    align-items: center;
+
+    .ant-form-item-control-wrapper {
+      width: 200px;
+    }
+  }
+}
+
+.uni-log-table {
+  overflow: hidden;
+  border: none;
+
+  .ant-table {
+    border: 0 !important;
+  }
+
+  .operation-space {
+    .ant-space-item {
+      margin-right: 0 !important;
+    }
+  }
+}
