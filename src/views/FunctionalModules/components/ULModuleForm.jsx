@@ -34,7 +34,7 @@ export default Form.create({})({
                 <Select placeholder="请选择所属站点" allowClear>
                   {
                     this.allSiteApps.map(item => (
-                      <Select.Option value={item.appId}>
+                      <Select.Option value={item.id}>
                         {item.appName}
                       </Select.Option>
                     ))

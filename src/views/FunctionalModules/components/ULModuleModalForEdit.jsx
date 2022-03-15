@@ -1,9 +1,28 @@
-import { Col, Form, Input, Modal, Row, Select, Switch } from 'ant-design-vue'
+import { Form, Input, Modal, Select } from 'ant-design-vue'
 import editForm from '@/mixins/editForm'
+import { mapState } from 'vuex'
 import '../assets/styles/index.scss'
 
 export default Form.create({})({
   mixins: [editForm],
+  data() {
+    return {
+      modalProps: {
+        width: 400
+      }
+    }
+  },
+  computed: mapState({
+    allSiteApps: 'allSiteApps',
+    allFunctionalModules: 'allFunctionalModules'
+  }),
+  watch: {
+    async visible(value) {
+      if (value) {
+        await this.$store.dispatch('getAllFunctionalModules')
+      }
+    }
+  },
   render() {
     const attributes = {
       props: this.modalProps,
@@ -21,179 +40,69 @@ export default Form.create({})({
       >
         <Form
           class="uni-log-functional-modules-edit-form"
-          labelCol={{ span: 4 }}
-          wrapperCol={{ span: 19 }}
+          labelCol={{ span: 6 }}
+          wrapperCol={{ span: 16 }}
           colon={false}
         >
-          <Form.Item label="站点名称">
+          <Form.Item label="所属站点">
             {
-              this.form.getFieldDecorator('appName', {
-                rules: [{ required: true, message: '请输入站点名称!', trigger: 'blur' }]
+              this.form.getFieldDecorator('appId', {
+                rules: [{ required: true, message: '请选择所属站点!', trigger: 'change' }]
               })(
-                <Input placeholder="请输入站点名称" allowClear />
+                <Select placeholder="请选择所属站点" allowClear>
+                  {
+                    this.allSiteApps.map(item => (
+                      <Select.Option value={item.id}>
+                        {item.appName}
+                      </Select.Option>
+                    ))
+                  }
+                </Select>
               )
             }
           </Form.Item>
-          <Form.Item label="域名">
+          <Form.Item label="父级模块">
             {
-              this.form.getFieldDecorator('domain', {
-                rules: [{ required: true, message: '请输入域名称!', trigger: 'blur' }]
+              this.form.getFieldDecorator('parentId', {
+                rules: [{ required: true, message: '请输入域名称!', trigger: 'change' }]
               })(
-                <Input placeholder="请输入域名" allowClear />
+                <Select placeholder="请选择所属站点" allowClear>
+                  {
+                    this.allFunctionalModules.map(item => (
+                      <Select.Option value={item.id}>
+                        {item.moduleName}
+                      </Select.Option>
+                    ))
+                  }
+                </Select>
               )
             }
           </Form.Item>
-          <Form.Item label="首页">
+          <Form.Item label="模块名称">
             {
-              this.form.getFieldDecorator('defaultUrl', {
-                rules: [{ required: true, message: '请输入首页路由!', trigger: 'blur' }]
+              this.form.getFieldDecorator('moduleName', {
+                rules: [{ required: true, message: '请输入模块名称!', trigger: 'blur' }]
               })(
-                <Input placeholder="请输入首页地址" allowClear />
+                <Input placeholder="请输入模块名称" allowClear />
               )
             }
           </Form.Item>
-          <Row>
-            <Col span={12}>
-              <Form.Item label="框架类型" labelCol={{ span: 8 }} wrapperCol={{ span: 14 }}>
-                {
-                  this.form.getFieldDecorator('frameType', {
-                    initialValue: 1,
-                    rules: [{ required: true, message: '请输入框架类型' }]
-                  })(
-                    <Select placeholder="请选择框架类型" allowClear>
-                      <Select.Option value={1}>Vue</Select.Option>
-                      <Select.Option value={2}>React</Select.Option>
-                    </Select>
-                  )
-                }
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item label="状态" labelCol={{ span: 8 }} wrapperCol={{ span: 14 }}>
-                {
-                  this.form.getFieldDecorator('status', {
-                    initialValue: true,
-                    valuePropName: 'checked'
-                  })(
-                    <Switch />
-                  )
-                }
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row>
-            <Col span={12}>
-              <Form.Item label="采集类型" labelCol={{ span: 8 }} wrapperCol={{ span: 14 }}>
-                {
-                  this.form.getFieldDecorator('collectType', {
-                    initialValue: 1
-                  })(
-                    <Select placeholder="请选择采集类型" allowClear>
-                      <Select.Option value={1}>全量采集</Select.Option>
-                      <Select.Option value={2}>可视化埋点</Select.Option>
-                    </Select>
-                  )
-                }
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item label="协议类型" labelCol={{ span: 8 }} wrapperCol={{ span: 14 }}>
-                {
-                  this.form.getFieldDecorator('protocol', {
-                    initialValue: 1
-                  })(
-                    <Select placeholder="请选择协议类型" allowClear>
-                      <Select.Option value={1}>https</Select.Option>
-                      <Select.Option value={2}>http</Select.Option>
-                    </Select>
-                  )
-                }
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row>
-            <Col span={12}>
-              <Form.Item label="平台类型" labelCol={{ span: 8 }} wrapperCol={{ span: 14 }}>
-                {
-                  this.form.getFieldDecorator('platformType', {
-                    initialValue: 1
-                  })(
-                    <Select placeholder="请选择平台类型" allowClear>
-                      <Select.Option value={1}>web</Select.Option>
-                      <Select.Option value={2}>h5</Select.Option>
-                      <Select.Option value={3}>android</Select.Option>
-                      <Select.Option value={4}>ios</Select.Option>
-                    </Select>
-                  )
-                }
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item label="功能分类" labelCol={{ span: 8 }} wrapperCol={{ span: 14 }}>
-                {
-                  this.form.getFieldDecorator('siteType', {
-                    initialValue: 1
-                  })(
-                    <Select placeholder="请选择功能分类" allowClear>
-                      <Select.Option value={1}>综合性站点</Select.Option>
-                      <Select.Option value={2}>专题应用类站点</Select.Option>
-                      <Select.Option value={3}>搜索站点</Select.Option>
-                    </Select>
-                  )
-                }
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row>
-            <Col span={12}>
-              <Form.Item label="页面模式" labelCol={{ span: 8 }} wrapperCol={{ span: 14 }}>
-                {
-                  this.form.getFieldDecorator('pageMode', {
-                    initialValue: 1
-                  })(
-                    <Select placeholder="请选择页面模式" allowClear>
-                      <Select.Option value={1}>多页面模式</Select.Option>
-                      <Select.Option value={2}>单页面模式</Select.Option>
-                    </Select>
-                  )
-                }
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item label="路径大小写" labelCol={{ span: 8 }} wrapperCol={{ span: 14 }}>
-                {
-                  this.form.getFieldDecorator('pathCaseSensitivity', {
-                    initialValue: 1
-                  })(
-                    <Select placeholder="请选择页面模式" allowClear>
-                      <Select.Option value={1}>区分大小写</Select.Option>
-                      <Select.Option value={2}>不区分大小写</Select.Option>
-                    </Select>
-                  )
-                }
-              </Form.Item>
-            </Col>
-          </Row>
-          <Form.Item label="备注">
+          <Form.Item label="模块描述">
             {
               this.form.getFieldDecorator('remark')(
-                <Input placeholder="请输入备注" type="textarea" />
+                <Input placeholder="请输入模块描述" type="textarea" />
               )
             }
           </Form.Item>
-          <Row>
-            <Col span={12}>
-              <Form.Item label="排序" labelCol={{ span: 8 }} wrapperCol={{ span: 14 }}>
-                {
-                  this.form.getFieldDecorator('sortIndex', {
-                    initialValue: 0
-                  })(
-                    <Input placeholder="请输入域名" allowClear />
-                  )
-                }
-              </Form.Item>
-            </Col>
-          </Row>
+          <Form.Item label="排序">
+            {
+              this.form.getFieldDecorator('sortIndex', {
+                initialValue: 0
+              })(
+                <Input placeholder="请输入排序" allowClear />
+              )
+            }
+          </Form.Item>
         </Form>
       </Modal>
     )

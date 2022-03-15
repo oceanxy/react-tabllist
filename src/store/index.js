@@ -22,7 +22,8 @@ const modules = modulesFiles.keys().reduce((modules, modulePath) => {
 
 const store = new Vuex.Store({
   state: {
-    allSiteApps: []
+    allSiteApps: [],
+    allFunctionalModules: []
   },
   mutations,
   actions,

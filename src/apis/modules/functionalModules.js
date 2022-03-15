@@ -15,6 +15,17 @@ export default {
     })
   },
   /**
+   * 获取所有功能模块列表
+   * @param request
+   * @returns {*}
+   */
+  getAllFunctionalModules(request) {
+    return request({
+      url: '/deploy/module/getModulePageDict',
+      method: 'post'
+    })
+  },
+  /**
    * 更新功能模块状态
    * @param request
    * @param data

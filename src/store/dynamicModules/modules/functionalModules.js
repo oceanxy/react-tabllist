@@ -1,5 +1,5 @@
 import apis from '@/apis'
-import { cloneDeep } from 'lodash'
+import { cloneDeep, omit } from 'lodash'
 
 export default (store, commitRootInModule) => {
   // 搜索模型
@@ -35,11 +35,11 @@ export default (store, commitRootInModule) => {
       async getList({ state }, pagination) {
         commitRootInModule('setLoading', true)
 
-        const response = await apis.getFunctionalModules({
+        const response = await apis.getFunctionalModules(omit({
           ...state.pagination,
           ...state.search,
           ...pagination
-        })
+        }, 'total'))
 
         if (response.status) {
           commitRootInModule('setPagination', {

@@ -1,4 +1,4 @@
-import { Switch, Table, Tag, Space, Button } from 'ant-design-vue'
+import { Switch, Table, Space, Button } from 'ant-design-vue'
 import table from '@/mixins/table'
 import '../assets/styles/index.scss'
 

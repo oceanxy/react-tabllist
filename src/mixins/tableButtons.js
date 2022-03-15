@@ -33,8 +33,14 @@ export default {
     )
   },
   methods: {
-    async onAddClick() {
-      await dispatch(this.moduleName, 'setCurrent', {})
+    async onAddClick(record) {
+      if (record) {
+        await dispatch(this.moduleName, 'setCurrent', {
+          parentId: record.parentId
+        })
+      } else {
+        await dispatch(this.moduleName, 'setCurrent', {})
+      }
       await dispatch(this.moduleName, 'setModalStateForEdit', true)
     },
     async onEditClick() {
@@ -46,8 +52,6 @@ export default {
 
       if (status) {
         message.success('删除成功！')
-      } else {
-        message.warning('删除失败！')
       }
     }
   }

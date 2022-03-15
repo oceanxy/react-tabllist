@@ -188,7 +188,7 @@ export default Form.create({})({
                   this.form.getFieldDecorator('sortIndex', {
                     initialValue: 0
                   })(
-                    <Input placeholder="请输入域名" allowClear />
+                    <Input placeholder="请输入排序" allowClear />
                   )
                 }
               </Form.Item>

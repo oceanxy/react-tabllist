@@ -72,8 +72,6 @@ export default {
 
           if (status) {
             message.success('操作成功！')
-          } else {
-            message.warning('操作失败！')
           }
 
           this.confirmLoading = false

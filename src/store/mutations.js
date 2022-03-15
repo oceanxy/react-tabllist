@@ -1,11 +1,19 @@
 export default {
   /**
-   * 获取所有站点应用
+   * 设置所有站点应用
    * @param state
    * @param payload
    */
   setAllSiteApps(state, payload) {
     state.allSiteApps = payload
+  },
+  /**
+   * 设置所有功能模块
+   * @param state
+   * @param payload
+   */
+  setAllFunctionalModules(state, payload) {
+    state.allFunctionalModules = payload
   },
   /**
    * 设置数据列表的loading

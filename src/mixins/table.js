@@ -7,7 +7,7 @@
 
 import { dispatch } from '@/utils/store'
 import { mapGetters } from 'vuex'
-import { message } from 'ant-design-vue'
+import { message, Modal } from 'ant-design-vue'
 import { cloneDeep } from 'lodash'
 
 export default {
@@ -73,11 +73,6 @@ export default {
           <span style={{ color: 'blue' }}>{record.appName}</span>,
           ' 的状态已更新！'
         ])
-      } else {
-        message.warning([
-          <span style={{ color: 'blue' }}>{record.appName}</span>,
-          ' 的状态未更新！'
-        ])
       }
     },
     async onAddClick(record) {
@@ -88,20 +83,25 @@ export default {
       await dispatch(this.moduleName, 'setCurrent', cloneDeep(record))
       await dispatch(this.moduleName, 'setModalStateForEdit', true)
     },
-    async onDeleteClick(record) {
-      const status = await dispatch(this.moduleName, 'delete', [record.id])
+    onDeleteClick(record) {
+      Modal.confirm({
+        title: '确认',
+        content: '确定要删除吗？',
+        okText: '确认',
+        cancelText: '取消',
+        onOk: async close => {
+          const status = await dispatch(this.moduleName, 'delete', [record.id])
 
-      if (status) {
-        message.success([
-          <span style={{ color: 'blue' }}>{record.appName}</span>,
-          ' 已成功删除！'
-        ])
-      } else {
-        message.warning([
-          <span style={{ color: 'blue' }}>{record.appName}</span>,
-          ' 删除失败！'
-        ])
-      }
+          if (status) {
+            message.success([
+              <span style={{ color: 'blue' }}>{record.appName}</span>,
+              ' 已成功删除！'
+            ])
+          }
+
+          close()
+        }
+      })
     },
     async onRowSelectionChange(selectedRowKeys, selectedRows) {
       await dispatch(this.moduleName, 'setRowSelected', {
