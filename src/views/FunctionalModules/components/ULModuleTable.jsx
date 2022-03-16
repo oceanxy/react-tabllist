@@ -10,17 +10,14 @@ export default {
         columns: [
           {
             title: '模块名称',
-            dataIndex: 'moduleName',
-            align: 'center'
+            dataIndex: 'moduleName'
           },
           {
             title: '所属站点',
-            align: 'center',
             dataIndex: 'appName'
           },
           {
             title: '模块描述',
-            align: 'center',
             dataIndex: 'remark'
           },
           {
@@ -28,12 +25,12 @@ export default {
             align: 'center',
             dataIndex: 'createTimeStr'
           },
-          {
-            title: '状态',
-            align: 'center',
-            width: 60,
-            scopedSlots: { customRender: 'status' }
-          },
+          // {
+          //   title: '状态',
+          //   align: 'center',
+          //   width: 60,
+          //   scopedSlots: { customRender: 'status' }
+          // },
           {
             title: '操作',
             key: 'operation',
@@ -55,12 +52,12 @@ export default {
         {...{ props: this.tableProps }}
         {...{
           scopedSlots: {
-            status: (text, record) => (
-              <Switch
-                checked={record.status === 1}
-                onChange={checked => this.onStatusChange(checked, record)}
-              />
-            ),
+            // status: (text, record) => (
+            //   <Switch
+            //     checked={+record.status === 1}
+            //     onChange={checked => this.onStatusChange(checked, record)}
+            //   />
+            // ),
             operation: (text, record) => (
               <Space class="operation-space">
                 <Button

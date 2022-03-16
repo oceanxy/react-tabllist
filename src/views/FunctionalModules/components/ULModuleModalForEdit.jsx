@@ -66,9 +66,9 @@ export default Form.create({})({
             {
               this.form.getFieldDecorator('parentId', {
                 initialValue: this.current.parentId,
-                rules: [{ required: true, message: '请输入域名称!', trigger: 'change' }]
+                rules: [{ required: true, message: '请选择父级页面!', trigger: 'change' }]
               })(
-                <Select placeholder="请选择所属站点" allowClear>
+                <Select placeholder="请选择父级页面" allowClear>
                   {
                     this.allFunctionalModules.map(item => (
                       <Select.Option value={item.id}>

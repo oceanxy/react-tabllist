@@ -2,77 +2,90 @@ import qs from 'qs'
 
 export default {
   /**
-   * 获取功能模块分页列表
+   * 获取页面分页列表
    * @param [request]
    * @param data
    * @returns {*}
    */
-  getFunctionalModules(request, data) {
+  getPages(request, data) {
     return request({
-      url: '/deploy/module/getModulePageList',
+      url: '/deploy/page/getPagePageList',
       method: 'post',
       data: qs.stringify(data)
     })
   },
   /**
-   * 获取所有功能模块列表
+   * 获取所有页面
    * @param [request]
    * @returns {*}
    */
-  getAllFunctionalModules(request) {
+  getAllPages(request) {
     return request({
-      url: '/deploy/module/getDicList',
+      url: '/deploy/page/getDicList',
       method: 'post'
     })
   },
   /**
-   * 更新功能模块状态
+   * 更新页面状态
    * @param [request]
    * @param data
    * @returns {*}
    */
-  updateFunctionalModulesStatus(request, data) {
+  updatePagesStatus(request, data) {
     return request({
-      url: '/deploy/module/updateStatus',
+      url: '/deploy/page/updateStatus',
       method: 'post',
       data: qs.stringify(data)
     })
   },
   /**
-   * 删除功能模块
+   * 更新监控状态
    * @param [request]
    * @param data
    * @returns {*}
    */
-  deleteFunctionalModules(request, data) {
+  updatePagesMonitorStatus(request, data) {
     return request({
-      url: '/deploy/module/delete',
+      url: '/deploy/page/updateMonitorStatus',
+      method: 'post',
+      data: qs.stringify(data)
+    })
+  },
+  /**
+   * 删除页面
+   * @param [request]
+   * @param data
+   * @returns {*}
+   */
+  deletePages(request, data) {
+    return request({
+      url: '/deploy/page/delete',
       method: 'post',
       data: qs.stringify(data, { arrayFormat: 'comma' })
     })
   },
   /**
-   * 新增功能模块
+   * 新增页面
    * @param [request]
    * @param data
    * @returns {*}
    */
-  addFunctionalModules(request, data) {
+  addPages(request, data) {
     return request({
-      url: '/deploy/module/add',
+      url: '/deploy/page/add',
       method: 'post',
       data
     })
   },
   /**
-   * 修改功能模块
+   * 修改页面
    * @param [request]
    * @param data
    * @returns {*}
    */
-  updateFunctionalModules(request, data) {
+  updatePages(request, data) {
     return request({
-      url: '/deploy/module/update',
+      url: '/deploy/page/update',
       method: 'post',
       data
     })

@@ -6,7 +6,7 @@ export default {
    * @param state {Object}
    * @param commit {Function}
    */
-  async getAllSiteApps({ state, commit }) {
+  async getAllSiteApps({ commit }) {
     const { status, data } = await apis.getAllSiteApps()
 
     if (status) {
@@ -19,11 +19,23 @@ export default {
    * @param commit
    * @returns {Promise<void>}
    */
-  async getAllFunctionalModules({ state, commit }) {
+  async getAllFunctionalModules({ commit }) {
     const { status, data } = await apis.getAllFunctionalModules()
 
     if (status) {
       commit('setAllFunctionalModules', data || [])
+    }
+  },
+  /**
+   * 获取所有页面
+   * @param commit
+   * @returns {Promise<void>}
+   */
+  async getAllPages({ commit }) {
+    const { status, data } = await apis.getAllPages()
+
+    if (status) {
+      commit('setAllPages', data || [])
     }
   }
 }

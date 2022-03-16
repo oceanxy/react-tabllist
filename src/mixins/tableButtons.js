@@ -41,6 +41,7 @@ export default {
       } else {
         await dispatch(this.moduleName, 'setCurrent', {})
       }
+
       await dispatch(this.moduleName, 'setModalStateForEdit', true)
     },
     async onEditClick() {

@@ -16,6 +16,14 @@ export default {
     state.allFunctionalModules = payload
   },
   /**
+   * 设置所有页面
+   * @param state
+   * @param payload
+   */
+  setAllPages(state, payload) {
+    state.allPages = payload
+  },
+  /**
    * 设置数据列表的loading
    * @param state {Object}
    * @param payload {boolean}

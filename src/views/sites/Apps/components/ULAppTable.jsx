@@ -11,7 +11,6 @@ export default {
           {
             title: '站点名称',
             dataIndex: 'appName',
-            align: 'center'
           },
           {
             title: '平台类型',
@@ -31,13 +30,11 @@ export default {
           },
           {
             title: '域名',
-            dataIndex: 'domain',
-            align: 'center'
+            dataIndex: 'domain'
           },
           {
             title: '首页',
-            dataIndex: 'defaultUrl',
-            align: 'center'
+            dataIndex: 'defaultUrl'
           },
           {
             title: '采集类型',
@@ -80,7 +77,7 @@ export default {
             ),
             status: (text, record) => (
               <Switch
-                checked={record.status === 1}
+                checked={+record.status === 1}
                 onChange={checked => this.onStatusChange(checked, record)}
               />
             ),

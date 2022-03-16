@@ -44,7 +44,7 @@ export default {
       ]
     }
   },
-  '/deploy/module/getModulePageDict': {
+  '/deploy/module/getDicList': {
     status: true,
     code: 10000,
     message: '',

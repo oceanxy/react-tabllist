@@ -64,15 +64,19 @@ export default {
         status: checked ? 1 : 2
       })
 
-      // 更新当前行受控Switch组件的值
       const index = this.tableProps.dataSource.findIndex(item => item.id === record.id)
-      this.$set(this.tableProps.dataSource[index], 'status', checked ? 1 : 2)
 
       if (status) {
         message.success([
           <span style={{ color: 'blue' }}>{record.appName}</span>,
           ' 的状态已更新！'
         ])
+
+        // 更新当前行受控Switch组件的值
+        this.$set(this.tableProps.dataSource[index], 'status', checked ? 1 : 2)
+      } else {
+        // 调用接口失败时，还原值
+        this.$set(this.tableProps.dataSource[index], 'status', checked ? 2 : 1)
       }
     },
     async onAddClick(record) {
