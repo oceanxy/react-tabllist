@@ -28,6 +28,7 @@ export default Form.create({})({
           <Form.Item label="站点名称">
             {
               this.form.getFieldDecorator('appName', {
+                initialValue: this.current.appName,
                 rules: [{ required: true, message: '请输入站点名称!', trigger: 'blur' }]
               })(
                 <Input placeholder="请输入站点名称" allowClear />
@@ -37,6 +38,7 @@ export default Form.create({})({
           <Form.Item label="域名">
             {
               this.form.getFieldDecorator('domain', {
+                initialValue: this.current.domain,
                 rules: [{ required: true, message: '请输入域名称!', trigger: 'blur' }]
               })(
                 <Input placeholder="请输入域名" allowClear />
@@ -46,6 +48,7 @@ export default Form.create({})({
           <Form.Item label="首页">
             {
               this.form.getFieldDecorator('defaultUrl', {
+                initialValue: this.current.defaultUrl,
                 rules: [{ required: true, message: '请输入首页路由!', trigger: 'blur' }]
               })(
                 <Input placeholder="请输入首页地址" allowClear />
@@ -57,7 +60,7 @@ export default Form.create({})({
               <Form.Item label="框架类型" labelCol={{ span: 8 }} wrapperCol={{ span: 14 }}>
                 {
                   this.form.getFieldDecorator('frameType', {
-                    initialValue: 1,
+                    initialValue: this.current.frameType || 1,
                     rules: [{ required: true, message: '请输入框架类型' }]
                   })(
                     <Select placeholder="请选择框架类型" allowClear>
@@ -72,7 +75,7 @@ export default Form.create({})({
               <Form.Item label="状态" labelCol={{ span: 8 }} wrapperCol={{ span: 14 }}>
                 {
                   this.form.getFieldDecorator('status', {
-                    initialValue: true,
+                    initialValue: +this.current.status === 1 || true,
                     valuePropName: 'checked'
                   })(
                     <Switch />
@@ -86,7 +89,7 @@ export default Form.create({})({
               <Form.Item label="采集类型" labelCol={{ span: 8 }} wrapperCol={{ span: 14 }}>
                 {
                   this.form.getFieldDecorator('collectType', {
-                    initialValue: 1
+                    initialValue: this.current.collectType || 1
                   })(
                     <Select placeholder="请选择采集类型" allowClear>
                       <Select.Option value={1}>全量采集</Select.Option>
@@ -100,7 +103,7 @@ export default Form.create({})({
               <Form.Item label="协议类型" labelCol={{ span: 8 }} wrapperCol={{ span: 14 }}>
                 {
                   this.form.getFieldDecorator('protocol', {
-                    initialValue: 1
+                    initialValue: this.current.protocol || 1
                   })(
                     <Select placeholder="请选择协议类型" allowClear>
                       <Select.Option value={1}>https</Select.Option>
@@ -116,7 +119,7 @@ export default Form.create({})({
               <Form.Item label="平台类型" labelCol={{ span: 8 }} wrapperCol={{ span: 14 }}>
                 {
                   this.form.getFieldDecorator('platformType', {
-                    initialValue: 1
+                    initialValue: this.current.platformType || 1
                   })(
                     <Select placeholder="请选择平台类型" allowClear>
                       <Select.Option value={1}>web</Select.Option>
@@ -132,7 +135,7 @@ export default Form.create({})({
               <Form.Item label="功能分类" labelCol={{ span: 8 }} wrapperCol={{ span: 14 }}>
                 {
                   this.form.getFieldDecorator('siteType', {
-                    initialValue: 1
+                    initialValue: this.current.siteType || 1
                   })(
                     <Select placeholder="请选择功能分类" allowClear>
                       <Select.Option value={1}>综合性站点</Select.Option>
@@ -149,7 +152,7 @@ export default Form.create({})({
               <Form.Item label="页面模式" labelCol={{ span: 8 }} wrapperCol={{ span: 14 }}>
                 {
                   this.form.getFieldDecorator('pageMode', {
-                    initialValue: 1
+                    initialValue: this.current.pageMode || 1
                   })(
                     <Select placeholder="请选择页面模式" allowClear>
                       <Select.Option value={1}>多页面模式</Select.Option>
@@ -163,7 +166,7 @@ export default Form.create({})({
               <Form.Item label="路径大小写" labelCol={{ span: 8 }} wrapperCol={{ span: 14 }}>
                 {
                   this.form.getFieldDecorator('pathCaseSensitivity', {
-                    initialValue: 1
+                    initialValue: this.current.pathCaseSensitivity || 1
                   })(
                     <Select placeholder="请选择页面模式" allowClear>
                       <Select.Option value={1}>区分大小写</Select.Option>
@@ -176,7 +179,9 @@ export default Form.create({})({
           </Row>
           <Form.Item label="备注">
             {
-              this.form.getFieldDecorator('remark')(
+              this.form.getFieldDecorator('remark', {
+                initialValue: this.current.remark
+              })(
                 <Input placeholder="请输入备注" type="textarea" />
               )
             }
@@ -186,7 +191,7 @@ export default Form.create({})({
               <Form.Item label="排序" labelCol={{ span: 8 }} wrapperCol={{ span: 14 }}>
                 {
                   this.form.getFieldDecorator('sortIndex', {
-                    initialValue: 0
+                    initialValue: this.current.sortIndex || 0
                   })(
                     <Input placeholder="请输入排序" allowClear />
                   )

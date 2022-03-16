@@ -7,7 +7,7 @@
 
 import { dispatch } from '@/utils/store'
 import { mapGetters } from 'vuex'
-import { message } from 'ant-design-vue'
+import { message, Modal } from 'ant-design-vue'
 
 export default {
   inject: ['moduleName'],
@@ -48,11 +48,21 @@ export default {
       await dispatch(this.moduleName, 'setModalStateForEdit', true)
     },
     async onDeleteClick() {
-      const status = await dispatch(this.moduleName, 'delete')
+      Modal.confirm({
+        title: '确认',
+        content: '确定要删除吗？',
+        okText: '确认',
+        cancelText: '取消',
+        onOk: async close => {
+          const status = await dispatch(this.moduleName, 'delete')
 
-      if (status) {
-        message.success('删除成功！')
-      }
+          if (status) {
+            message.success('删除成功！')
+          }
+
+          close()
+        }
+      })
     }
   }
 }

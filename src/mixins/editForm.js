@@ -36,15 +36,7 @@ export default {
     visible(value) {
       if (value) {
         this.current = this.getCurrent(this.moduleName)
-
         this.title = this.current.id ? '编辑' : '新增'
-
-        this.$nextTick(() => {
-          this.form.setFieldsValue({
-            ...this.current,
-            status: +this.current?.status === 1
-          })
-        })
       } else {
         this.form.resetFields()
       }
@@ -54,7 +46,7 @@ export default {
     onSubmit() {
       this.form.validateFields(async(err, values) => {
         if (!err) {
-          this.confirmLoading = true
+          this.modalProps.confirmLoading = true
 
           let status
           const data = {
@@ -74,7 +66,7 @@ export default {
             message.success('操作成功！')
           }
 
-          this.confirmLoading = false
+          this.modalProps.confirmLoading = false
         }
       })
     },

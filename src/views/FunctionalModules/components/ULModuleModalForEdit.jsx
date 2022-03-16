@@ -47,6 +47,7 @@ export default Form.create({})({
           <Form.Item label="所属站点">
             {
               this.form.getFieldDecorator('appId', {
+                initialValue: this.current.appId,
                 rules: [{ required: true, message: '请选择所属站点!', trigger: 'change' }]
               })(
                 <Select placeholder="请选择所属站点" allowClear>
@@ -64,6 +65,7 @@ export default Form.create({})({
           <Form.Item label="父级模块">
             {
               this.form.getFieldDecorator('parentId', {
+                initialValue: this.current.parentId,
                 rules: [{ required: true, message: '请输入域名称!', trigger: 'change' }]
               })(
                 <Select placeholder="请选择所属站点" allowClear>
@@ -81,6 +83,7 @@ export default Form.create({})({
           <Form.Item label="模块名称">
             {
               this.form.getFieldDecorator('moduleName', {
+                initialValue: this.current.moduleName,
                 rules: [{ required: true, message: '请输入模块名称!', trigger: 'blur' }]
               })(
                 <Input placeholder="请输入模块名称" allowClear />
@@ -89,7 +92,9 @@ export default Form.create({})({
           </Form.Item>
           <Form.Item label="模块描述">
             {
-              this.form.getFieldDecorator('remark')(
+              this.form.getFieldDecorator('remark', {
+                initialValue: this.current.remark
+              })(
                 <Input placeholder="请输入模块描述" type="textarea" />
               )
             }
@@ -97,7 +102,7 @@ export default Form.create({})({
           <Form.Item label="排序">
             {
               this.form.getFieldDecorator('sortIndex', {
-                initialValue: 0
+                initialValue: this.current.sortIndex || 0
               })(
                 <Input placeholder="请输入排序" allowClear />
               )

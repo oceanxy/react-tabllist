@@ -26,14 +26,17 @@ export default {
     if (this.moduleName) {
       if (!store.hasModule(this.moduleName)) {
         dynamicModules[this.moduleName]?.(store, commitRootInModule.bind(null, this.moduleName, store.commit))
-      } else {
-        console.warn(`未在vuex store(store/dynamicModules/modules)中找到与“${this.moduleName}”对应的名称，vuex 动态模块将不会创建！`)
       }
-    }
-  },
-  destroyed() {
-    if (store.hasModule(this.moduleName)) {
-      store.unregisterModule(this.moduleName)
+    } else {
+      console.warn(`未在vuex store(store/dynamicModules/modules)中找到与“${this.moduleName}”对应的名称，vuex 动态模块将不会创建！`)
     }
   }
+  /**
+   * 组件销毁时，取消注册动态store模块
+   */
+  // destroyed() {
+  //   if (store.hasModule(this.moduleName)) {
+  //     store.unregisterModule(this.moduleName)
+  //   }
+  // }
 }

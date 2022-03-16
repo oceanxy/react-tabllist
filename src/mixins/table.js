@@ -112,6 +112,7 @@ export default {
     resize() {
       this.$nextTick(() => {
         this.tableProps.scroll = {
+          // 固定列时，需要设置x
           // x: this.$refs[`${this.moduleName}Table`].$el.clientWidth - 17,
           // x: this.$refs[`${this.moduleName}Table`].$el.clientWidth,
           y: this.$refs[`${this.moduleName}Table`].$el.clientHeight - 54,
