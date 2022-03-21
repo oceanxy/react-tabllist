@@ -9,7 +9,7 @@ export default {
       <Space>
         <Button
           type="primary"
-          onClick={() => this.onAddClick()}
+          onClick={this.onAddClick}
           icon="plus"
         >
           新增

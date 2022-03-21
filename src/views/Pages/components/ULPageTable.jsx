@@ -86,10 +86,10 @@ export default {
         ])
 
         // 更新当前行受控Switch组件的值
-        this.$set(this.tableProps.dataSource[index], 'isMonitor', !!checked)
+        this.$set(this.tableProps.dataSource[index], 'isMonitor', checked ? 1 : 2)
       } else {
         // 调用接口失败时，还原值
-        this.$set(this.tableProps.dataSource[index], 'isMonitor', !checked)
+        this.$set(this.tableProps.dataSource[index], 'isMonitor', checked ? 2 : 1)
       }
     },
     onBuriedClick(record) {

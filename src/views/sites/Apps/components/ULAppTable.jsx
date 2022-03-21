@@ -10,7 +10,7 @@ export default {
         columns: [
           {
             title: '站点名称',
-            dataIndex: 'appName',
+            dataIndex: 'appName'
           },
           {
             title: '平台类型',

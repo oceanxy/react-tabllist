@@ -62,7 +62,7 @@ export default Form.create({})({
               )
             }
           </Form.Item>
-          <Form.Item label="父级模块">
+          <Form.Item label="父级页面">
             {
               this.form.getFieldDecorator('parentId', {
                 initialValue: this.current.parentId,

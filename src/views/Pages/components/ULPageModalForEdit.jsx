@@ -14,6 +14,7 @@ import {
 } from 'ant-design-vue'
 import editForm from '@/mixins/editForm'
 import { mapState } from 'vuex'
+import MutiInput from '@/components/MutiInput'
 import '../assets/styles/index.scss'
 
 export default Form.create({})({
@@ -83,24 +84,28 @@ export default Form.create({})({
               )
             }
           </Form.Item>
-          <Form.Item label="父级页面">
-            {
-              this.form.getFieldDecorator('parentId', {
-                initialValue: this.current.parentId,
-                rules: [{ required: true, message: '请选择父级页面!', trigger: 'change' }]
-              })(
-                <Select placeholder="请选择父级页面" allowClear>
-                  {
-                    this.allPages.map(item => (
-                      <Select.Option value={item.id}>
-                        {item.pageName}
-                      </Select.Option>
-                    ))
-                  }
-                </Select>
-              )
-            }
-          </Form.Item>
+          {
+            this.current.parentId ? (
+              <Form.Item label="父级页面">
+                {
+                  this.form.getFieldDecorator('parentId', {
+                    initialValue: +this.current.parentId === 0 ? '' : this.current.parentId,
+                    rules: [{ required: true, message: '请选择父级页面!', trigger: 'change' }]
+                  })(
+                    <Select placeholder="请选择父级页面" allowClear>
+                      {
+                        this.allPages.map(item => (
+                          <Select.Option value={item.id}>
+                            {item.pageName}
+                          </Select.Option>
+                        ))
+                      }
+                    </Select>
+                  )
+                }
+              </Form.Item>
+            ) : ''
+          }
           <Form.Item label="页面名称">
             {
               this.form.getFieldDecorator('pageName', {
@@ -114,10 +119,16 @@ export default Form.create({})({
           <Form.Item label="页面路径">
             {
               this.form.getFieldDecorator('pagePathList', {
-                initialValue: this.current.pagePathList,
-                rules: [{ required: true, message: '请输入页面路径!', trigger: 'blur' }]
+                rules: [{ required: true, message: '请输入页面路径!', trigger: 'blur' }],
+                initialValue: this.current.pagePathList
               })(
-                <Input placeholder="请输入页面路径" allowClear />
+                <MutiInput
+                  placeholder="请输入页面路径"
+                  valueTypeDefinition={['allPath', 'remark']}
+                  onChange={() => {
+                    /**/
+                  }}
+                />
               )
             }
           </Form.Item>
