@@ -43,7 +43,7 @@ export default {
     }
   },
   methods: {
-    onSubmit() {
+    onSubmit(transformValue) {
       this.form.validateFields(async(err, values) => {
         if (!err) {
           this.modalProps.confirmLoading = true
@@ -51,7 +51,8 @@ export default {
           let status
           const data = {
             ...values,
-            status: values.status ? 1 : 2
+            status: values.status ? 1 : 2,
+            ...transformValue(values)
           }
 
           // 存在ID，目前为编辑模式
@@ -63,6 +64,7 @@ export default {
           }
 
           if (status) {
+            await dispatch(this.moduleName, 'setModalStateForEdit', false)
             message.success('操作成功！')
           }
 

@@ -22,10 +22,15 @@ export default (store, commitRootInModule) => {
       current: {},
       list: [],
       editModalVisible: false,
+      conflictModalVisible: false,
       selectedRowKeys: [],
       selectedRows: []
     },
-    mutations: {},
+    mutations: {
+      setConflictModalVisible(state, payload) {
+        state.conflictModalVisible = payload
+      }
+    },
     actions: {
       /**
        * 获取列表数据
@@ -172,6 +177,9 @@ export default (store, commitRootInModule) => {
           modalVisibleField: 'editModalVisible',
           value: payload
         })
+      },
+      setModalStateForConflict({ commit }, payload) {
+        commit('setConflictModalVisible', payload)
       },
       /**
        * 设置当前正在操作的对象为一个新的副本

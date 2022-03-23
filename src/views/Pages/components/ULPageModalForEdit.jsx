@@ -14,8 +14,9 @@ import {
 } from 'ant-design-vue'
 import editForm from '@/mixins/editForm'
 import { mapState } from 'vuex'
-import MutiInput from '@/components/MutiInput'
+import ULMultiInput from './ULMultiInput'
 import '../assets/styles/index.scss'
+import { dispatch } from '@/utils/store'
 
 export default Form.create({})({
   mixins: [editForm],
@@ -41,8 +42,23 @@ export default Form.create({})({
     }
   },
   methods: {
-    onConflictClick() {
-      //
+    async onConflictClick() {
+      await dispatch(this.moduleName, 'setModalStateForConflict', true)
+    },
+    allPathValidator(rule, value, callback) {
+      const result = value.filter(item => !item.allPath)
+
+      if (!value.length || result.length) {
+        callback(new Error('路径字段不要留空！'))
+      }
+
+      callback()
+    },
+    transformValue(values) {
+      return {
+        isMonitor: +values.isMonitor,
+        isSameGroup: +values.isSameGroup
+      }
     }
   },
   render() {
@@ -50,7 +66,7 @@ export default Form.create({})({
       props: this.modalProps,
       on: {
         cancel: this.onCancel,
-        ok: this.onSubmit
+        ok: this.onSubmit.bind(this, this.transformValue)
       }
     }
 
@@ -85,12 +101,11 @@ export default Form.create({})({
             }
           </Form.Item>
           {
-            this.current.parentId ? (
+            this.current.parentId && +this.current.parentId !== 0 ? (
               <Form.Item label="父级页面">
                 {
                   this.form.getFieldDecorator('parentId', {
-                    initialValue: +this.current.parentId === 0 ? '' : this.current.parentId,
-                    rules: [{ required: true, message: '请选择父级页面!', trigger: 'change' }]
+                    initialValue: +this.current.parentId === 0 ? '' : this.current.parentId
                   })(
                     <Select placeholder="请选择父级页面" allowClear>
                       {
@@ -119,16 +134,12 @@ export default Form.create({})({
           <Form.Item label="页面路径">
             {
               this.form.getFieldDecorator('pagePathList', {
-                rules: [{ required: true, message: '请输入页面路径!', trigger: 'blur' }],
-                initialValue: this.current.pagePathList
+                rules: [
+                  { required: true, validator: this.allPathValidator, trigger: 'change' }
+                ],
+                initialValue: this.current.pagePathList || []
               })(
-                <MutiInput
-                  placeholder="请输入页面路径"
-                  valueTypeDefinition={['allPath', 'remark']}
-                  onChange={() => {
-                    /**/
-                  }}
-                />
+                <ULMultiInput />
               )
             }
           </Form.Item>
@@ -136,7 +147,7 @@ export default Form.create({})({
             {
               this.form.getFieldDecorator('classify', {
                 initialValue: this.current.classify || 1,
-                rules: [{ required: true, message: '请选择页面类型!', trigger: 'change' }]
+                rules: [{ type: 'number', required: true, message: '请选择页面类型!', trigger: 'change' }]
               })(
                 <Select placeholder="请选择页面类型" allowClear>
                   <Select.Option value={1}>综合页面</Select.Option>

@@ -1,13 +1,15 @@
 import { Modal, Table } from 'ant-design-vue'
-import tableModal from '@/mixins/tableModal'
 import '../assets/styles/index.scss'
+import { mapGetters } from 'vuex'
+import { dispatch } from '@/utils/store'
 
 export default {
-  mixins: [tableModal],
+  inject: ['moduleName'],
   data() {
     return {
       modalProps: {
-        width: 700
+        width: 700,
+        footer: ''
       },
       tableProps: {
         columns: [
@@ -32,21 +34,39 @@ export default {
           {
             title: '操作',
             key: 'operation',
-            // fixed: 'right',
             align: 'center',
-            width: 400,
             scopedSlots: { customRender: 'operation' }
           }
         ]
       }
     }
   },
+  computed: {
+    ...mapGetters({
+      getCurrent: 'getCurrent'
+    }),
+    visible() {
+      return this.$store.state[this.moduleName].conflictModalVisible
+    }
+  },
+  methods: {
+    async onCancel() {
+      await dispatch(this.moduleName, 'setModalStateForConflict', false)
+    }
+  },
   render() {
+    const attrs = {
+      props: this.modalProps,
+      on: {
+        cancel: this.onCancel
+      }
+    }
+
     return (
       <Modal
-        title={`${this.title}页面`}
+        title="冲突列表"
         visible={this.visible}
-        {...{ props: this.modalProps }}
+        {...attrs}
       >
         <Table
           {...{ props: this.tableProps }}

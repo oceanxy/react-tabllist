@@ -6,6 +6,7 @@ import ULPagePagination from './components/ULPagePagination'
 import ULPageModalForEdit from './components/ULPageModalForEdit'
 import ULPageButtons from './components/ULPageButtons'
 import dynamicState from '@/mixins/dynamicState'
+import ULPageModalForConflictPage from '@/views/Pages/components/ULPageModalForConflictPage'
 
 export default {
   name: 'Pages',
@@ -18,7 +19,10 @@ export default {
         <ULPageTable slot="table" />
         <ULPagePagination slot="pagination" />
 
-        <ULPageModalForEdit slot="modals" />
+        <div slot="modals">
+          <ULPageModalForEdit />
+          <ULPageModalForConflictPage />
+        </div>
       </ULContainers>
     )
   }
