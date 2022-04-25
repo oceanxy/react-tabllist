@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import getters from './getters'
+import mutations from './mutations'
+import actions from './actions'
+import dynamicModules from './dynamicModules'
 
 Vue.use(Vuex)
 
@@ -17,10 +20,20 @@ const modules = modulesFiles.keys().reduce((modules, modulePath) => {
   return modules
 }, {})
 
-export default new Vuex.Store({
-  state: {},
-  mutations: {},
-  actions: {},
+const store = new Vuex.Store({
+  state: {
+    allSiteApps: [],
+    allFunctionalModules: [],
+    allPages: []
+  },
+  mutations,
+  actions,
   modules,
   getters
 })
+
+export {
+  dynamicModules
+}
+
+export default store

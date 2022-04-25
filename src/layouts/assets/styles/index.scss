@@ -1,0 +1,10 @@
+.tg-container {
+  height: 100%;
+
+  .tg-container-content {
+    display: grid;
+    grid-template: 40px 40px 1fr 32px / 1fr;
+    grid-row-gap: 10px;
+    height: 100%;
+  }
+}

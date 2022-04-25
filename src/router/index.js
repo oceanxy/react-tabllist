@@ -1,15 +1,23 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Layout from '../layouts/Layout.vue'
 import config from '@/config'
 
 Vue.use(VueRouter)
 
-const routes = [
+/**
+ * 路由
+ *
+ * path留空，父级将将自动跳转到此项配置指定的组件
+ * children 内没有 path 为空的项，如果需要自动跳转到子级，需要配合redirect属性使用
+ */
+export const routes = [
   {
     path: '/login',
-    name: 'Login',
-    component: () => import('../views/Login.vue'),
+    name: 'login',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */'@/views/Login'),
     meta: {
       title: '登录',
       keepAlive: false,
@@ -18,36 +26,41 @@ const routes = [
   },
   {
     path: '/',
-    component: Layout,
+    component: () => import('@/layouts/TGVisualScreenLayout'),
+    meta: {
+      title: '首页',
+      keepAlive: true,
+      requiresAuth: true
+    },
     children: [
       {
         path: '',
-        name: 'Home',
-        component: () => import('../views/Home.vue'),
+        component: () => import('@/views/Home'),
+        name: 'home',
         meta: {
+          title: '首页',
           keepAlive: true,
-          requiresAuth: true
+          requiresAuth: false
         }
       },
       {
-        path: 'about',
-        name: 'About',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+        path: '/comp',
+        component: () => import('@/views/CommonComponentsDirectory'),
+        name: 'comp',
         meta: {
+          title: '共用组件目录',
           keepAlive: true,
-          requiresAuth: true
+          requiresAuth: false
         }
       }
     ]
   },
   {
-    name: 'NotFound',
     path: '/404',
-    component: () => import('@/views/NotFound.vue'),
+    name: 'notFound',
+    component: () => import('@/views/NotFound'),
     meta: {
+      title: '404',
       keep: false,
       requiresAuth: false
     }
@@ -57,6 +70,24 @@ const routes = [
     redirect: '/404'
   }
 ]
+
+/* ======生成用于菜单显示的路由，根据 routes 生成========= */
+const filterRoutes = routes.filter(route => route.path === '/')
+const rootRoute = {
+  ...filterRoutes[0],
+  children: null
+}
+
+export const menuRoutes = filterRoutes[0].children.reduce((menuRoutes, route) => {
+  if (!route.path) {
+    menuRoutes.push(rootRoute)
+  } else {
+    menuRoutes.push(route)
+  }
+
+  return menuRoutes
+}, [])
+/* ==================================================== */
 
 const router = new VueRouter({
   routes,
@@ -81,7 +112,7 @@ router.beforeEach((to, from, next) => {
       next()
     } else {
       next({
-        name: 'Login',
+        name: 'login',
         query: {
           // 将跳转的路由path作为参数，登录成功后跳转到该路由
           redirect: to.path,
@@ -90,9 +121,9 @@ router.beforeEach((to, from, next) => {
       })
     }
   } else {
-    if (to.name === 'Login' && token) {
+    if (to.name === 'login' && token) {
       next({
-        name: from.name || 'Home'
+        name: from.name || 'home'
       })
     } else {
       next()

@@ -38,6 +38,9 @@ module.exports = {
     'vue/no-template-shadow': 0,
     'vue/no-mutating-props': 0,
 
+    'vue/no-unused-vars': 1,
+    'vue/no-unused-components': 1,
+
     // 禁用 console
     'no-console': process.env.NODE_ENV === 'production' ? 1 : 0,
     // 禁止在条件中使用常量表达式，比如 if (false)
@@ -117,7 +120,7 @@ module.exports = {
     'no-catch-shadow': 0,
     // 禁止出现未使用过的变量
     'no-unused-vars': [
-      2,
+      1,
       {
         vars: 'all',
         args: 'none'

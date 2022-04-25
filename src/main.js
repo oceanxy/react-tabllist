@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import App from './App.vue'
+import App from './App'
 import router from './router'
 import store from './store'
 import config from './config'
@@ -12,8 +12,6 @@ Vue.config.productionTip = false
 if (process.env.NODE_ENV === 'development' && config.mock) {
   require('../mock/index.js')
 }
-
-Vue.config.productionTip = false
 
 new Vue({
   router,

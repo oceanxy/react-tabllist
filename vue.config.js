@@ -2,11 +2,13 @@ module.exports = {
   publicPath: process.env.VUE_APP_PUBLIC_PATH,
   runtimeCompiler: true,
   devServer: {
-    port: '8089',
+    port: '8090',
     open: false,
     proxy: {
-      '/api': {
-        target: 'http://10.100.1.201:46300'
+      '/mgapi': {
+        target: 'http://10.100.1.94:46300',
+        changeOrigin: true,
+        secure: false
       }
     }
   },
@@ -17,7 +19,7 @@ module.exports = {
       // 引入sass全局变量文件
       sass: {
         sassOptions: {
-          prependData: '@import "@/styles/theme.scss"'
+          prependData: '@import "@/assets/styles/theme.scss"'
         }
       },
       // 启用内联JavaScript。ant-design-vue使用less编写，且使用了内联写法，所以需要开启

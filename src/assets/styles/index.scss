@@ -1,0 +1,60 @@
+html,
+body,
+#app {
+  overflow: hidden;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  color: #2c3e50;
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+}
+
+#nav {
+  padding: 30px;
+}
+
+#nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+#nav a.router-link-exact-active {
+  color: #42b983;
+}
+
+.tg-search-form {
+  display: flex;
+
+  .ant-form-item {
+    flex: auto;
+    display: flex;
+    align-items: center;
+
+    .ant-form-item-control-wrapper {
+      width: 200px;
+    }
+  }
+}
+
+.tg-table {
+  overflow: hidden;
+  border: none;
+
+  .ant-table {
+    border: 0 !important;
+  }
+
+  .operation-space {
+    .ant-space-item {
+      margin-right: 0 !important;
+    }
+  }
+}
