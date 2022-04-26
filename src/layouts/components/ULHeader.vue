@@ -1,15 +1,15 @@
 <template>
-  <a-layout-header class="uni-log-layout-header">
-    <div class="uni-log-header">
+  <a-layout-header class="tg-layout-header">
+    <div class="tg-header">
       <a-icon
         :type="innerCollapsed ? 'menu-unfold' : 'menu-fold'"
         class="trigger"
         @click="handleClick"
       />
-      <a-badge class="uni-log-badge" dot>
+      <a-badge class="tg-badge" dot>
         <a-avatar icon="user" shape="square" />
       </a-badge>
-      <a-divider class="uni-log-divider" type="vertical" />
+      <a-divider class="tg-divider" type="vertical" />
       <a-dropdown class="gem-ten-user-info">
         <a @click="e => e.preventDefault()">
           <span>{{ userInfo.fullName }}</span>
@@ -24,14 +24,14 @@
         </template>
       </a-dropdown>
     </div>
-    <u-l-breadcrumb />
+    <t-g-breadcrumb />
   </a-layout-header>
 </template>
 
 <script>
 import { Avatar, Badge, Divider, Dropdown, Layout, Menu } from 'ant-design-vue'
 import { createNamespacedHelpers } from 'vuex'
-import ULBreadcrumb from '@/layouts/components/ULBreadcrumb'
+import TGBreadcrumb from '@/layouts/components/TGBreadcrumb'
 
 const { mapState, mapActions } = createNamespacedHelpers('login')
 
@@ -48,7 +48,7 @@ export default {
     }
   },
   components: {
-    ULBreadcrumb,
+    TGBreadcrumb,
     [Layout.Header.name]: Layout.Header,
     [Badge.name]: Badge,
     [Avatar.name]: Avatar,
@@ -80,20 +80,20 @@ export default {
 </script>
 
 <style lang="scss">
-.uni-log-layout-header {
+.tg-layout-header {
   height: 118px;
   padding: 0;
   background: #ffffff;
 
-  .uni-log-header {
+  .tg-header {
     display: flex;
     align-items: center;
 
-    .uni-log-badge {
+    .tg-badge {
       margin-left: auto;
     }
 
-    .uni-log-divider {
+    .tg-divider {
       margin: 0 12px;
     }
 

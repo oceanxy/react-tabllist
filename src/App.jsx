@@ -3,7 +3,13 @@ import { ConfigProvider } from 'ant-design-vue'
 import './assets/styles/index.scss'
 
 export default {
-  name: 'ULApp',
+  name: 'TGApp',
+  data() {
+    return {
+      ratioX: 1,
+      ratioY: 1
+    }
+  },
   created() {
     const tempState = JSON.parse(sessionStorage.getItem('state'))
 
@@ -17,7 +23,15 @@ export default {
     // 在页面刷新时将store里的信息保存到sessionStorage里，以便刷新页面后还原store
     window.addEventListener('beforeunload', this.setStore)
   },
+  mounted() {
+    window.onresize = this.getRatio
+    this.getRatio()
+  },
   methods: {
+    getRatio() {
+      this.ratioX = window.innerWidth / 1920
+      this.ratioY = window.innerHeight / 1080
+    },
     setStore() {
       sessionStorage.setItem('state', JSON.stringify(this.$store.state))
     }
@@ -27,7 +41,13 @@ export default {
   },
   render() {
     return (
-      <div id="app">
+      <div
+        id="app"
+        style={{
+          transform: `scale(${this.ratioX}, ${this.ratioY})`,
+          transformOrigin: 'left top'
+        }}
+      >
         <ConfigProvider locale={zhCN}>
           {
             this.$route.meta.keepAlive

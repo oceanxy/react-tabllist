@@ -1,8 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import ULLayout from '../layouts/ULLayout.vue'
-import ULRouterView from '../layouts/ULRouterView.vue'
 import config from '@/config'
+import TGRouterView from '@/layouts/components/TGRouterView'
 
 Vue.use(VueRouter)
 
@@ -28,13 +27,16 @@ export const routes = [
   },
   {
     path: '/',
-    component: ULLayout,
+    // 选择布局组件
+    // component: () => import('@/layouts/TGVisualScreenLayout'),
+    component: () => import('@/layouts/TGBackendSystemLayout'),
     meta: {
       title: '首页',
       keepAlive: true,
       requiresAuth: true
     },
     children: [
+      // 所有路由在这里面添加
       {
         path: '',
         component: () => import('@/views/Home'),
@@ -48,7 +50,7 @@ export const routes = [
       {
         path: 'sites',
         name: 'sites',
-        component: ULRouterView,
+        component: TGRouterView,
         meta: {
           title: '站点管理',
           keepAlive: true,
@@ -70,7 +72,7 @@ export const routes = [
       },
       {
         path: 'modules',
-        component: ULRouterView,
+        component: TGRouterView,
         meta: {
           title: '功能模块管理',
           keepAlive: true,
@@ -91,7 +93,7 @@ export const routes = [
       },
       {
         path: 'pages',
-        component: ULRouterView,
+        component: TGRouterView,
         meta: {
           title: '页面管理',
           keepAlive: true,
@@ -112,7 +114,7 @@ export const routes = [
       },
       {
         path: 'events',
-        component: ULRouterView,
+        component: TGRouterView,
         meta: {
           title: '事件管理',
           keepAlive: true,
@@ -134,7 +136,7 @@ export const routes = [
       {
         path: 'tags',
         name: 'tags',
-        component: ULRouterView,
+        component: TGRouterView,
         meta: {
           title: '业务标签管理',
           keepAlive: true,
@@ -157,7 +159,7 @@ export const routes = [
       {
         path: 'system',
         name: 'system',
-        component: ULRouterView,
+        component: TGRouterView,
         meta: {
           title: '系统管理',
           keepAlive: true,
@@ -216,12 +218,22 @@ export const routes = [
             }
           }
         ]
+      },
+      {
+        path: '/comp',
+        component: () => import('@/views/CommonComponentsDirectory'),
+        name: 'comp',
+        meta: {
+          title: '共用组件目录',
+          keepAlive: true,
+          requiresAuth: false
+        }
       }
     ]
   },
   {
     path: '/404',
-    name: 'notFound',
+    name: 'NotFound',
     component: () => import('@/views/NotFound'),
     meta: {
       title: '404',

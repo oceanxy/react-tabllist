@@ -12,6 +12,11 @@ body {
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   color: #2c3e50;
+
+  // 可视化项目
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
 }
 
 #nav {
@@ -27,7 +32,8 @@ body {
   color: #42b983;
 }
 
-.uni-log-search-form {
+.uni-log-search-form,
+.tg-search-form {
   display: flex;
 
   .ant-form-item {
@@ -41,7 +47,8 @@ body {
   }
 }
 
-.uni-log-table {
+.uni-log-table,
+.tg-table {
   overflow: hidden;
   border: none;
 

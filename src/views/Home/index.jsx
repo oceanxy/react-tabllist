@@ -1,11 +1,7 @@
-import './assets/styles/index.scss'
-
 export default {
   render() {
     return (
-      <div class="uni-log-home">
-        HOME
-      </div>
+      <RouterLink to={'/comp'}>可视化共用组件库</RouterLink>
     )
   }
 }

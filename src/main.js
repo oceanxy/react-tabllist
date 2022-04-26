@@ -13,8 +13,6 @@ if (process.env.NODE_ENV === 'development' && config.mock) {
   require('../mock/index.js')
 }
 
-Vue.config.productionTip = false
-
 new Vue({
   router,
   store,
