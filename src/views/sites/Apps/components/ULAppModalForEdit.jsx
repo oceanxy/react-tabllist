@@ -1,24 +1,25 @@
 import { Col, Form, Input, Modal, Row, Select, Switch } from 'ant-design-vue'
 import editForm from '@/mixins/editForm'
 import '../assets/styles/index.scss'
+import DragModal from '@/components/DragModal'
 
 export default Form.create({})({
   mixins: [editForm],
   render() {
     const attributes = {
-      props: this.modalProps,
       on: {
         cancel: this.onCancel,
         ok: this.onSubmit
+      },
+      attrs: {
+        ...this.modalProps,
+        title: `${this.title}站点`,
+        visible: this.visible
       }
     }
 
     return (
-      <Modal
-        title={`${this.title}站点`}
-        visible={this.visible}
-        {...attributes}
-      >
+      <DragModal {...attributes}>
         <Form
           class="uni-log-app-edit-form"
           labelCol={{ span: 4 }}
@@ -31,7 +32,10 @@ export default Form.create({})({
                 initialValue: this.current.appName,
                 rules: [{ required: true, message: '请输入站点名称!', trigger: 'blur' }]
               })(
-                <Input placeholder="请输入站点名称" allowClear />
+                <Input
+                  placeholder="请输入站点名称"
+                  allowClear
+                />
               )
             }
           </Form.Item>
@@ -41,7 +45,10 @@ export default Form.create({})({
                 initialValue: this.current.domain,
                 rules: [{ required: true, message: '请输入域名称!', trigger: 'blur' }]
               })(
-                <Input placeholder="请输入域名" allowClear />
+                <Input
+                  placeholder="请输入域名"
+                  allowClear
+                />
               )
             }
           </Form.Item>
@@ -51,19 +58,29 @@ export default Form.create({})({
                 initialValue: this.current.defaultUrl,
                 rules: [{ required: true, message: '请输入首页路由!', trigger: 'blur' }]
               })(
-                <Input placeholder="请输入首页地址" allowClear />
+                <Input
+                  placeholder="请输入首页地址"
+                  allowClear
+                />
               )
             }
           </Form.Item>
           <Row>
             <Col span={12}>
-              <Form.Item label="框架类型" labelCol={{ span: 8 }} wrapperCol={{ span: 14 }}>
+              <Form.Item
+                label="框架类型"
+                labelCol={{ span: 8 }}
+                wrapperCol={{ span: 14 }}
+              >
                 {
                   this.form.getFieldDecorator('frameType', {
                     initialValue: this.current.frameType || 1,
                     rules: [{ required: true, message: '请输入框架类型' }]
                   })(
-                    <Select placeholder="请选择框架类型" allowClear>
+                    <Select
+                      placeholder="请选择框架类型"
+                      allowClear
+                    >
                       <Select.Option value={1}>Vue</Select.Option>
                       <Select.Option value={2}>React</Select.Option>
                     </Select>
@@ -72,7 +89,11 @@ export default Form.create({})({
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item label="状态" labelCol={{ span: 8 }} wrapperCol={{ span: 14 }}>
+              <Form.Item
+                label="状态"
+                labelCol={{ span: 8 }}
+                wrapperCol={{ span: 14 }}
+              >
                 {
                   this.form.getFieldDecorator('status', {
                     initialValue: +this.current.status === 1 || true,
@@ -86,12 +107,19 @@ export default Form.create({})({
           </Row>
           <Row>
             <Col span={12}>
-              <Form.Item label="采集类型" labelCol={{ span: 8 }} wrapperCol={{ span: 14 }}>
+              <Form.Item
+                label="采集类型"
+                labelCol={{ span: 8 }}
+                wrapperCol={{ span: 14 }}
+              >
                 {
                   this.form.getFieldDecorator('collectType', {
                     initialValue: this.current.collectType || 1
                   })(
-                    <Select placeholder="请选择采集类型" allowClear>
+                    <Select
+                      placeholder="请选择采集类型"
+                      allowClear
+                    >
                       <Select.Option value={1}>全量采集</Select.Option>
                       <Select.Option value={2}>可视化埋点</Select.Option>
                     </Select>
@@ -100,12 +128,19 @@ export default Form.create({})({
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item label="协议类型" labelCol={{ span: 8 }} wrapperCol={{ span: 14 }}>
+              <Form.Item
+                label="协议类型"
+                labelCol={{ span: 8 }}
+                wrapperCol={{ span: 14 }}
+              >
                 {
                   this.form.getFieldDecorator('protocol', {
                     initialValue: this.current.protocol || 1
                   })(
-                    <Select placeholder="请选择协议类型" allowClear>
+                    <Select
+                      placeholder="请选择协议类型"
+                      allowClear
+                    >
                       <Select.Option value={1}>https</Select.Option>
                       <Select.Option value={2}>http</Select.Option>
                     </Select>
@@ -116,12 +151,19 @@ export default Form.create({})({
           </Row>
           <Row>
             <Col span={12}>
-              <Form.Item label="平台类型" labelCol={{ span: 8 }} wrapperCol={{ span: 14 }}>
+              <Form.Item
+                label="平台类型"
+                labelCol={{ span: 8 }}
+                wrapperCol={{ span: 14 }}
+              >
                 {
                   this.form.getFieldDecorator('platformType', {
                     initialValue: this.current.platformType || 1
                   })(
-                    <Select placeholder="请选择平台类型" allowClear>
+                    <Select
+                      placeholder="请选择平台类型"
+                      allowClear
+                    >
                       <Select.Option value={1}>web</Select.Option>
                       <Select.Option value={2}>h5</Select.Option>
                       <Select.Option value={3}>android</Select.Option>
@@ -132,12 +174,19 @@ export default Form.create({})({
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item label="功能分类" labelCol={{ span: 8 }} wrapperCol={{ span: 14 }}>
+              <Form.Item
+                label="功能分类"
+                labelCol={{ span: 8 }}
+                wrapperCol={{ span: 14 }}
+              >
                 {
                   this.form.getFieldDecorator('siteType', {
                     initialValue: this.current.siteType || 1
                   })(
-                    <Select placeholder="请选择功能分类" allowClear>
+                    <Select
+                      placeholder="请选择功能分类"
+                      allowClear
+                    >
                       <Select.Option value={1}>综合性站点</Select.Option>
                       <Select.Option value={2}>专题应用类站点</Select.Option>
                       <Select.Option value={3}>搜索站点</Select.Option>
@@ -149,12 +198,19 @@ export default Form.create({})({
           </Row>
           <Row>
             <Col span={12}>
-              <Form.Item label="页面模式" labelCol={{ span: 8 }} wrapperCol={{ span: 14 }}>
+              <Form.Item
+                label="页面模式"
+                labelCol={{ span: 8 }}
+                wrapperCol={{ span: 14 }}
+              >
                 {
                   this.form.getFieldDecorator('pageMode', {
                     initialValue: this.current.pageMode || 1
                   })(
-                    <Select placeholder="请选择页面模式" allowClear>
+                    <Select
+                      placeholder="请选择页面模式"
+                      allowClear
+                    >
                       <Select.Option value={1}>多页面模式</Select.Option>
                       <Select.Option value={2}>单页面模式</Select.Option>
                     </Select>
@@ -163,12 +219,19 @@ export default Form.create({})({
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item label="路径大小写" labelCol={{ span: 8 }} wrapperCol={{ span: 14 }}>
+              <Form.Item
+                label="路径大小写"
+                labelCol={{ span: 8 }}
+                wrapperCol={{ span: 14 }}
+              >
                 {
                   this.form.getFieldDecorator('pathCaseSensitivity', {
                     initialValue: this.current.pathCaseSensitivity || 1
                   })(
-                    <Select placeholder="请选择页面模式" allowClear>
+                    <Select
+                      placeholder="请选择页面模式"
+                      allowClear
+                    >
                       <Select.Option value={1}>区分大小写</Select.Option>
                       <Select.Option value={2}>不区分大小写</Select.Option>
                     </Select>
@@ -182,25 +245,35 @@ export default Form.create({})({
               this.form.getFieldDecorator('remark', {
                 initialValue: this.current.remark
               })(
-                <Input placeholder="请输入备注" type="textarea" />
+                <Input
+                  placeholder="请输入备注"
+                  type="textarea"
+                />
               )
             }
           </Form.Item>
           <Row>
             <Col span={12}>
-              <Form.Item label="排序" labelCol={{ span: 8 }} wrapperCol={{ span: 14 }}>
+              <Form.Item
+                label="排序"
+                labelCol={{ span: 8 }}
+                wrapperCol={{ span: 14 }}
+              >
                 {
                   this.form.getFieldDecorator('sortIndex', {
                     initialValue: this.current.sortIndex || 0
                   })(
-                    <Input placeholder="请输入排序" allowClear />
+                    <Input
+                      placeholder="请输入排序"
+                      allowClear
+                    />
                   )
                 }
               </Form.Item>
             </Col>
           </Row>
         </Form>
-      </Modal>
+      </DragModal>
     )
   }
 })

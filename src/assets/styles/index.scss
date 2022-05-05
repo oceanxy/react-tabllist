@@ -62,3 +62,12 @@ body {
     }
   }
 }
+
+.ant-modal-wrap {
+  // 防止拖动ant-modal时出现滚动条
+  overflow: hidden !important;
+
+  .ant-modal-content {
+    transform: var(--transform);
+  }
+}
