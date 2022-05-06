@@ -15,12 +15,22 @@ export default {
   }),
   watch: {
     targetNumber(value) {
-      this.executeAnimation(value)
+      this.targetNumber = value
+
+      this.startDistance = this.targetDistance
+      this.targetDistance = this.$refs.container.clientHeight * this.targetNumber
     }
   },
   mounted() {
     this.itemHeight = this.$refs.container.clientHeight
-    this.executeAnimation()
+
+    if (this.targetNumber) {
+      this.startDistance = 0
+      this.targetDistance = this.targetNumber * this.itemHeight
+    } else {
+      this.startDistance = 9 * this.itemHeight
+      this.targetDistance = 0
+    }
   },
   methods: {
     executeAnimation(height, value) {
@@ -42,21 +52,15 @@ export default {
         class="number-container"
       >
         <div
-          class={`scroll-container${this.targetDistance ? ' scroll' : ' reduction'}`}
+          class="scroll-container animation"
           style={{
             '--height': `${this.itemHeight}px`,
-            '--start': `-${this.start}px`,
+            '--start': `-${this.startDistance}px`,
             '--target': `-${this.targetDistance}px`
           }}
         >
           {
-            _.range(0, 10).map(num => (
-              <div
-                class={`number-item${this.targetDistance || !this.targetNumber ? ' show' : ''}`}
-              >
-                {num}
-              </div>
-            ))
+            _.range(0, 10).map(num => <div class="number-item">{num}</div>)
           }
         </div>
       </div>

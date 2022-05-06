@@ -92,41 +92,18 @@
   height: 100%;
 
   .scroll-container {
-    &.scroll {
-      animation: 2s scrollTop ease 1 normal forwards;
+    transition: all 2s;
+    transform: translateY(var(--start));
+    opacity: 0;
 
-      @keyframes scrollTop {
-        0% {
-          transform: translate3d(0, var(--start), 0);
-        }
-        100% {
-          transform: translate3d(0, var(--target), 0);
-        }
-      }
-    }
-
-    &.reduction {
-      animation: 2s reduction ease 1 normal forwards;
-
-      @keyframes reduction {
-        0% {
-          transform: translate3d(0, var(--start), 0);
-        }
-        100% {
-          transform: translate3d(0, var(--target), 0);
-        }
-      }
+    &.animation {
+      transform: translateY(var(--target));
+      opacity: 1;
     }
 
     .number-item {
       height: var(--height);
       line-height: var(--height);
-      opacity: 0;
-      transition: all 1000ms;
-
-      &.show {
-        opacity: 1;
-      }
     }
   }
 }
