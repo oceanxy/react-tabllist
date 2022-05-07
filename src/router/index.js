@@ -48,8 +48,8 @@ export const routes = [
         }
       },
       {
-        path: 'sites',
-        name: 'sites',
+        path: 'site',
+        name: 'site',
         component: TGRouterView,
         meta: {
           title: '站点管理',
@@ -71,7 +71,7 @@ export const routes = [
         ]
       },
       {
-        path: 'modules',
+        path: 'module',
         component: TGRouterView,
         meta: {
           title: '功能模块管理',
@@ -80,7 +80,7 @@ export const routes = [
         },
         children: [
           {
-            path: '',
+            path: 'modules',
             name: 'modules',
             component: () => import('@/views/FunctionalModules'),
             meta: {
@@ -92,7 +92,7 @@ export const routes = [
         ]
       },
       {
-        path: 'pages',
+        path: 'page',
         component: TGRouterView,
         meta: {
           title: '页面管理',
@@ -101,7 +101,7 @@ export const routes = [
         },
         children: [
           {
-            path: '',
+            path: 'pages',
             name: 'pages',
             component: () => import('@/views/Pages'),
             meta: {
@@ -113,7 +113,7 @@ export const routes = [
         ]
       },
       {
-        path: 'events',
+        path: 'event',
         component: TGRouterView,
         meta: {
           title: '事件管理',
@@ -122,7 +122,7 @@ export const routes = [
         },
         children: [
           {
-            path: '',
+            path: 'events',
             name: 'events',
             component: () => import('@/views/Events'),
             meta: {
@@ -134,8 +134,8 @@ export const routes = [
         ]
       },
       {
-        path: 'tags',
-        name: 'tags',
+        path: 'tag',
+        name: 'tag',
         component: TGRouterView,
         meta: {
           title: '业务标签管理',
@@ -146,7 +146,7 @@ export const routes = [
         children: [
           {
             path: 'categories',
-            name: 'tagsCategories',
+            name: 'categories',
             component: () => import('@/views/Tags/Categories'),
             meta: {
               title: '标签分类',
@@ -220,7 +220,7 @@ export const routes = [
         ]
       },
       {
-        path: '/comp',
+        path: 'comp',
         component: () => import('@/views/CommonComponentsDirectory'),
         name: 'comp',
         meta: {

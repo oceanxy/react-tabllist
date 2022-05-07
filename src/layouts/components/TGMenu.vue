@@ -111,6 +111,7 @@ export default {
         }
 
         this.selectedKeys = keyPath
+
         this.$nextTick(() => {
           this.openKeys = keyPath
         })
