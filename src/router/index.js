@@ -78,6 +78,7 @@ export const routes = [
           keepAlive: true,
           requiresAuth: true
         },
+        redirect: { name: 'modules' },
         children: [
           {
             path: 'modules',
@@ -99,6 +100,7 @@ export const routes = [
           keepAlive: true,
           requiresAuth: true
         },
+        redirect: { name: 'pages' },
         children: [
           {
             path: 'pages',
@@ -120,6 +122,7 @@ export const routes = [
           keepAlive: true,
           requiresAuth: true
         },
+        redirect: { name: 'events' },
         children: [
           {
             path: 'events',
@@ -142,7 +145,7 @@ export const routes = [
           keepAlive: true,
           requiresAuth: true
         },
-        redirect: { name: 'tagsCategories' },
+        redirect: { name: 'categories' },
         children: [
           {
             path: 'categories',
