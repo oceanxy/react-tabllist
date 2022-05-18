@@ -7,9 +7,6 @@ Vue.use(VueRouter)
 
 /**
  * 路由
- *
- * path留空，父级将将自动跳转到此项配置指定的组件
- * children 内没有 path 为空的项，如果需要自动跳转到子级，需要配合redirect属性使用
  */
 export const routes = [
   {
