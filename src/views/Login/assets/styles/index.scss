@@ -2,7 +2,7 @@
   position: relative;
   overflow: hidden;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   background: url('../../assets/images/bg2.png') no-repeat center;
 
   .login-logo {
@@ -14,7 +14,7 @@
     height: 92px;
     padding-left: 100px;
     color: #ffffff;
-    background: url('../../assets/images/logo.png') no-repeat 10px 3px / auto 100%;
+    //background: url('../../assets/images/logo.png') no-repeat 10px 3px / auto 100%;
   }
 
   .login-center {
@@ -27,7 +27,7 @@
     .login-animate {
       width: 50vw;
       height: 100%;
-      background: url('../../assets/images/left-bg.png') no-repeat center / 100% auto;
+      //background: url('../../assets/images/left-bg.png') no-repeat center / 100% auto;
     }
 
     .login-canvas {
