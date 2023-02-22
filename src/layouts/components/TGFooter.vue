@@ -9,9 +9,7 @@ import { Layout } from 'ant-design-vue'
 
 export default {
   name: 'TGFooter',
-  components: {
-    [Layout.Footer.name]: Layout.Footer
-  }
+  components: { [Layout.Footer.name]: Layout.Footer }
 }
 </script>
 

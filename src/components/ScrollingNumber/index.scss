@@ -1,0 +1,48 @@
+.pe-scrolling-number-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+
+  .text {
+    font-size: 16px;
+    white-space: nowrap;
+    font-weight: 500;
+    text-align: left;
+    color: #ffffff;
+    font-family: Source Han Sans CN-Light, Microsoft YaHei, serif;
+  }
+
+  .value {
+    height: 40px;
+    display: flex;
+    font-size: 40px;
+    font-family: DINPro-Bold, Microsoft YaHei, serif;
+    font-weight: 500;
+    text-align: LEFT;
+    color: #ffffff;
+    line-height: 40px;
+  }
+}
+
+.number-container {
+  overflow: hidden;
+  height: 100%;
+
+  .scroll-container {
+    transition: all 2s;
+    transform: translateY(var(--start));
+    opacity: 0;
+
+    &.animation {
+      transform: translateY(var(--target));
+      opacity: 1;
+    }
+
+    .number-item {
+      height: var(--height);
+      line-height: var(--height);
+    }
+  }
+}

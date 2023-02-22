@@ -1,0 +1,22 @@
+.pe-others-selector {
+  &.ant-select {
+    flex: none !important;
+
+    .ant-select-selection {
+      background: none;
+      //border: none;
+      //box-shadow: none;
+
+      .ant-select-selection__rendered {
+        //margin-left: 0;
+        padding-right: 4px;
+
+        .ant-select-selection-selected-value {
+          font-size: 16px;
+          font-weight: bolder;
+          color: #344054;
+        }
+      }
+    }
+  }
+}

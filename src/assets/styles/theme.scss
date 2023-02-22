@@ -1,18 +1,22 @@
-$primary-color: #409eff;
-$success-color: #67c23a;
-$warning-color: #e6a23c;
-$danger-color: #f56c6c;
-$info-color: #909399;
-$line-color: #eee;
+// 主题颜色配置，主要用于非 ant design vue 组件的颜色控制。
+// ant design vue 的主题色请按照官方文档修改，本项目采用官方的 vue-cli3 方案。
+// 本项目请在 vue.config 内配置
 
-//选中树
-$tree-active: #d9f3e8;
-//边框线条
-$border-line-color: #eee;
-//菜单
-$menu-bg: #fff; //菜单背景
-$menu-color: #4f4f4f; //菜单颜色默认文本颜色
-$menu-active: #4075db; //选中后的颜色
-$menu-active-text: #fff; //选中后的文本颜色
-$menu-height: 48px; //菜单单项高度
-$menu-hover-color: #ecf5ff; //菜单hover颜色
+// 主题色配置
+$primary-color: #16b364;
+$primary-shadow-color: rgba(22, 179, 100, 0.2);
+$primary-shadow-normal: rgba(22, 179, 100, 0.6);
+$primary-active-color: #159f5b;
+$primary-hover-color: #29c275;
+$error-color: #f97066;
+
+// 滚动条主题色配置
+$scrollbar-track-color: #eff1f5;
+$scrollbar-track-shadow-color: rgba(91, 91, 91, 0.3);
+$scrollbar-thumb-color: rgba(185, 192, 212, 0.6);
+$scrollbar-thumb-hover-color: rgba(185, 192, 212, 1);
+$scrollbar-thumb-shadow-color: rgba(211, 211, 211, 0.3);
+
+@mixin container-border-radius($value: 4px) {
+  border-radius: $value;
+}

@@ -1,0 +1,110 @@
+.tg-universal-box {
+  overflow: hidden;
+  width: var(--box-width);
+  height: auto;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+
+  &.show-shadow {
+    box-shadow: 0 10px 32px 0 rgba(0, 62, 163, 0.1);
+  }
+
+  .box-title {
+    position: relative;
+    padding: 10px 20px 10px 0;
+    min-height: 40px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    font-weight: bolder;
+    color: #344054;
+    gap: 1vh;
+    flex: none;
+    white-space: nowrap;
+
+    .box-title-label {
+      white-space: nowrap;
+    }
+
+    & > *:not(.box-title) {
+      display: flex;
+      flex: auto;
+      align-items: center;
+      gap: 2vh;
+    }
+
+    .more-btn {
+      flex: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &.padding-left {
+      padding-left: 20px;
+    }
+
+    &.divider:before {
+      position: absolute;
+      content: '';
+      left: 0;
+      width: 2px;
+      height: 1.6vh;
+      background: #007aff;
+      border-radius: 0 2px 2px 0;
+    }
+
+    .ant-btn:not(.custom-button) {
+      margin-left: auto;
+      border: none;
+      background: none;
+    }
+  }
+
+  .box-content {
+    background: #ffffff;
+    flex: auto;
+    padding: 20px;
+    overflow: auto;
+    height: 100%;
+    position: relative;
+    border-radius: 6px;
+
+    &.line {
+      border-top: 1px solid #d9d9d9;
+    }
+
+    &.flex {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 2vh;
+    }
+
+    // .bn-container-spin {
+    //   position: absolute;
+    //   top: 0;
+    //   left: 0;
+    //   right: 0;
+    //   bottom: 0;
+    //   z-index: 100;
+    //   display: flex;
+    //   align-items: center;
+    //   justify-content: center;
+    // }
+  }
+}
+
+@media screen and (max-width: 1366px) {
+  .tg-universal-box {
+    .box-content {
+      padding: 10px 15px !important;
+      grid-template: 28px 30vh / repeat(2, 1fr) !important;
+      grid-column-gap: 20px !important;
+    }
+  }
+}

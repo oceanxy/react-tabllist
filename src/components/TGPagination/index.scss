@@ -1,0 +1,71 @@
+@import '@/assets/styles/theme.scss';
+
+.tg-pagination {
+  flex: none;
+
+  //.ant-pagination-item {
+  //  &:hover,
+  //  &:focus {
+  //    border-color: $primary-color;
+  //
+  //    a {
+  //      color: $primary-color;
+  //    }
+  //  }
+  //
+  //  &.ant-pagination-item-active {
+  //    font-weight: 500;
+  //    border-color: $primary-color;
+  //    background-color: $primary-color;
+  //
+  //    a {
+  //      color: #ffffff;
+  //    }
+  //  }
+  //}
+  //
+  //.ant-pagination-prev,
+  //.ant-pagination-next,
+  //.ant-pagination-prev,
+  //.ant-pagination-next {
+  //  &:not(.ant-pagination-disabled) {
+  //    &:focus,
+  //    &:focus,
+  //    &:hover,
+  //    &:hover {
+  //      .ant-pagination-item-link,
+  //      .ant-pagination-item-link,
+  //      .ant-pagination-item-link,
+  //      .ant-pagination-item-link {
+  //        color: $primary-color;
+  //        border-color: $primary-color;
+  //      }
+  //    }
+  //  }
+  //}
+  //
+  //.ant-pagination-jump-prev,
+  //.ant-pagination-jump-next {
+  //  .ant-pagination-item-container .ant-pagination-item-link-icon,
+  //  .ant-pagination-item-container .ant-pagination-item-link-icon {
+  //    color: $primary-color;
+  //  }
+  //
+  //  a {
+  //    color: $primary-color;
+  //  }
+  //}
+  //
+  //.ant-pagination-options {
+  //  .ant-pagination-options-quick-jumper {
+  //    input:hover,
+  //    input:focus {
+  //      border-color: $primary-color;
+  //    }
+  //
+  //    input:focus {
+  //      box-shadow: 0 0 0 2px $primary-shadow-color;
+  //    }
+  //  }
+  //}
+}

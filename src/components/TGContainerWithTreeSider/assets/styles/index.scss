@@ -1,0 +1,101 @@
+@import '@/assets/styles/theme.scss';
+
+.fe-tree-container.fe-tree-container {
+  background: #ffffff;
+  @include container-border-radius;
+  gap: 0;
+
+  .fe-tree-content-container.fe-tree-content-container {
+    box-sizing: border-box;
+  }
+
+  .fe-tree-sider-container.fe-tree-sider-container {
+    width: 260px;
+    flex: none;
+
+    .fe-tree-data {
+      border-right: 1px solid #d9d9d9;
+      height: 100%;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      .ant-input {
+        height: 38px;
+        line-height: 38px;
+        font-size: 14px;
+        flex: none;
+      }
+
+      .ant-spin-nested-loading {
+        flex: auto;
+        overflow-x: hidden;
+        overflow-y: auto;
+
+        .ant-tree {
+          padding-right: 10px;
+        }
+
+        .ant-tree-treenode-switcher-open,
+        .ant-tree-treenode-switcher-close {
+          width: 100%;
+          display: grid;
+          grid-template: 24px 1fr / 24px 1fr;
+
+          .ant-tree-node-content-wrapper {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 0;
+            overflow: hidden;
+
+            &:hover {
+              background: #fff1e8;
+            }
+
+            &.ant-tree-node-selected {
+              background: #fdead7;
+            }
+
+            .icon {
+              font-size: 24px;
+            }
+
+            .ant-tree-title {
+              display: inline-block;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+
+              .title {
+                font-size: 14px;
+                color: #344054;
+              }
+            }
+          }
+
+          .ant-tree-child-tree {
+            grid-column: span 2;
+          }
+        }
+
+        .ant-tree > li > .ant-tree-switcher.ant-tree-switcher-noop,
+        .ant-tree > li > .ant-tree-child-tree > li > .ant-tree-switcher.ant-tree-switcher-noop {
+          visibility: hidden;
+        }
+
+        .ant-tree > li > .ant-tree-child-tree > li > .ant-tree-child-tree > li {
+          .ant-tree-switcher.ant-tree-switcher-noop {
+            visibility: hidden;
+          }
+
+          &:before {
+            top: 7px;
+            height: calc(100% - 26px);
+          }
+        }
+      }
+    }
+  }
+}

@@ -15,11 +15,12 @@ const Title = {
     tdom: null
   }),
   watch: {
-    'isShow'(value) {
+    isShow(value) {
       if (value) {
         const tx = 0
         const ty = 0
         const transformStr = `translate(${tx}px,${ty}px)`
+
         this.updateTransform(transformStr, tx, ty)
         this.position.dx = tx
         this.position.dy = ty
@@ -43,6 +44,7 @@ const Title = {
       const tx = event.pageX - this.position.startX
       const ty = event.pageY - this.position.startY
       const transformStr = `translate(${tx}px,${ty}px)`
+
       this.updateTransform(transformStr, tx, ty)
       this.position.dx = tx
       this.position.dy = ty
@@ -61,7 +63,7 @@ const Title = {
       document.removeEventListener('mousemove', this.docMove)
     },
     updateTransform(transformStr, tx, ty) {
-      this.$listeners?.change({ '--transform': transformStr })
+      this.$listeners?.move({ '--transform': transformStr })
     }
   },
   render() {
@@ -77,37 +79,29 @@ const Title = {
 }
 
 export default {
-  data: () => ({
-    style: {}
-  }),
+  data: () => ({ style: {} }),
   methods: {
-    onChange(value) {
+    onMove(value) {
       this.style = value
     }
   },
   render() {
+    const titleAttribute = {
+      props: { isShow: this.$attrs.visible },
+      on: { move: this.onMove }
+    }
+
     const attributes = {
       props: {
         ..._.omit(this.$attrs, ['title', 'dialogStyle']),
+        title: <Title {...titleAttribute}>{this.$attrs.title}</Title>,
         dialogStyle: { ...this.$attrs.dialogStyle, ...this.style }
       },
       on: this.$listeners
     }
 
-    const titleAttribute = {
-      props: {
-        isShow: this.$attrs.visible
-      },
-      on: {
-        change: this.onChange
-      }
-    }
-
     return (
       <Modal {...attributes}>
-        <template slot="title">
-          <Title {...titleAttribute}>{this.$attrs.title}</Title>
-        </template>
         {...this.$slots.default}
       </Modal>
     )

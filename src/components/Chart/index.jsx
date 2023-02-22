@@ -1,6 +1,6 @@
 import './index.scss'
 import * as echarts from 'echarts'
-//引入监听dom变化的组件
+// 引入监听dom变化的组件
 import elementResizeDetectorMaker from 'element-resize-detector'
 
 export default {
@@ -23,10 +23,10 @@ export default {
     option: {
       handler(value) {
         if (this.notMerge) {
-          this.$_chartInstance.clear()
+          this.$_chartInstance?.clear()
         }
 
-        this.$_chartInstance.setOption(value, this.notMerge)
+        this.$_chartInstance?.setOption(value, this.notMerge)
       },
       deep: true
     }
@@ -35,10 +35,7 @@ export default {
     this.$_elementResizeDetector = elementResizeDetectorMaker()
     this.$_elementResizeDetector.listenTo(this.$refs.chart, this.listener)
 
-    this.$nextTick(() => {
-      // this.$_chartHeight = this.$refs['chartContainer'].clientHeight + 'px'
-      this.initChart()
-    })
+    this.initChart()
   },
   methods: {
     initChart() {
@@ -56,11 +53,7 @@ export default {
   },
   render() {
     return (
-      <div
-        ref="chartContainer"
-        // style={{ '--height': this.$_chartHeight }}
-        class="fj-chart-container"
-      >
+      <div ref="chartContainer" class="tg-chart-container">
         <div ref="chart" class="chart-container" />
       </div>
     )

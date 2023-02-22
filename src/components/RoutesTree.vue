@@ -7,7 +7,11 @@
         title="添加菜单"
         @click="addRootNode"
       />
-      <a-button class="generator" @click="generateRoutes">生成路由文件</a-button>
+      <a-button
+        class="generator"
+        @click="generateRoutes"
+      >生成路由文件
+      </a-button>
     </div>
     <a-tree
       :expandedKeys.sync="expandedKeys"
@@ -54,7 +58,10 @@
             @click="deleteNode(nodeData)"
           />
         </a-button-group>
-        <a-button-group v-else class="tree-buttons">
+        <a-button-group
+          v-else
+          class="tree-buttons"
+        >
           <a-button
             :disabled="!currentNodeTitle"
             icon="check"
@@ -133,7 +140,7 @@ export default {
       }
     },
     onDragEnter(info) {
-      console.log(info)
+      // console.log(info)
       // expandedKeys 需要受控时设置
       // this.expandedKeys = info.expandedKeys
     },
@@ -145,6 +152,7 @@ export default {
 
       // Find dragObject
       let dragObj
+
       this.loop(null, dragKey, (item, index, arr) => {
         arr.splice(index, 1)
         dragObj = item
@@ -194,7 +202,9 @@ export default {
           isOperation: true
         })
 
-        nodeData = { ...nodeData, ...item }
+        nodeData = {
+          ...nodeData, ...item 
+        }
       })
 
       if (!nodeData.expanded) {

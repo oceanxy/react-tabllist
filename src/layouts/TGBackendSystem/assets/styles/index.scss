@@ -1,0 +1,125 @@
+#tg-responsive-layout {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  z-index: 2;
+  display: flex;
+
+  .logo {
+    height: 32px;
+    margin: 16px;
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .trigger {
+    font-size: 18px;
+    line-height: 64px;
+    padding: 0 24px;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+
+  .trigger:hover {
+    color: #1890ff;
+  }
+
+  .tg-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    background: #f2f4f7;
+    //min-width: 1106px;
+  }
+
+  .ant-layout {
+    overflow: hidden;
+    flex: auto;
+  }
+
+  @media screen and (max-width: 1366px) {
+    .tg-layout-header {
+      height: 54px;
+      line-height: 54px;
+
+      .tg-logo {
+        width: 205px;
+        height: 32px;
+      }
+    }
+
+    .tg-content {
+      .tg-breadcrumb {
+        padding: 10px 20px;
+        font-size: 12px;
+      }
+
+      .fe-tree-content-container {
+        padding: 10px;
+      }
+    }
+
+    .tg-sider.tg-sider {
+      width: 168px !important;
+      flex: 0 0 168px !important;
+      max-width: 168px !important;
+      min-width: 168px !important;
+
+      &.collapsed {
+        width: 80px !important;
+        flex: 0 0 80px !important;
+        max-width: 80px !important;
+        min-width: 80px !important;
+      }
+
+      &.ant-layout-sider-has-trigger {
+        padding-bottom: 32px;
+      }
+
+      .ant-menu-item,
+      .ant-menu-submenu-title {
+        font-size: 12px;
+        height: 32px;
+        line-height: 32px;
+
+        .anticon {
+          font-size: 16px;
+        }
+      }
+    }
+
+    .fe-tree-sider-container {
+      width: 190px;
+
+      .ant-tree {
+        font-size: 12px;
+      }
+
+      .tg-container-trigger {
+        width: 12px;
+        height: 36px;
+        right: -12px;
+        font-size: 12px;
+      }
+    }
+  }
+
+  .tg-sider {
+    flex: none !important;
+    width: 230px !important;
+    max-width: 230px !important;
+    min-width: 230px !important;
+
+    .ant-layout-sider-children {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &.collapsed {
+      width: 80px !important;
+      flex: 0 0 80px !important;
+      max-width: 80px !important;
+      min-width: 80px !important;
+    }
+  }
+}

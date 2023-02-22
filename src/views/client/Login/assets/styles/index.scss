@@ -1,0 +1,204 @@
+.bn-login-container {
+  display: flex;
+  gap: 16px;
+  z-index: 10;
+}
+
+.pre-login-container {
+  .button {
+    font-size: 20px;
+    line-height: 20px;
+    height: 60px;
+    width: 240px;
+    color: #ffffff;
+    background: no-repeat left 32px center / 24px;
+    padding-left: 32px;
+
+    &.btn-login {
+      background-color: #1890ff;
+      background-image: url(../images/btn-login.png);
+    }
+
+    &.btn-logon {
+      background-color: #13c2c2;
+      background-image: url(../images/btn-logon.png);
+    }
+  }
+}
+
+.list-container {
+  gap: 10px;
+
+  &.icon-menu {
+    .ant-list-item {
+      margin-bottom: 0 !important;
+    }
+  }
+}
+
+.corporate-services-title {
+  display: flex;
+  width: 100%;
+  align-items: center;
+
+  .ant-btn.custom-button {
+    margin-left: auto;
+  }
+}
+
+.corporate-services-tags {
+  .ant-tag {
+    border: none;
+  }
+}
+
+.login-third-part {
+  overflow: hidden;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .ant-spin-text {
+    margin-top: 10px;
+    font-size: 20px;
+    color: #666666;
+  }
+}
+
+.logon-box {
+  display: flex;
+  gap: 16px;
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  overflow: hidden;
+  .logon-form {
+    flex-grow: 1;
+    background: #ffffff;
+    max-height: calc(100% - 100px);
+    overflow: auto;
+  }
+
+  .logon-sider {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 389px;
+
+    .logon-sider-conditions {
+      background: #ffffff;
+      padding: 12px;
+    }
+
+    .logon-sider-qa {
+      background: #ffffff;
+      padding: 12px;
+    }
+  }
+}
+
+.login-box {
+  .login-box-content.login-box-content {
+    padding: 40px 94px;
+  }
+
+  .login-subtitle {
+    font-size: 32px;
+    line-height: 62px;
+    text-align: center;
+    color: #0050b3;
+    margin-bottom: 14px;
+  }
+
+  .ant-tabs-bar {
+    border: none;
+
+    .ant-tabs-tab {
+      margin: 0;
+      padding: 10px;
+      font-size: 16px;
+      line-height: 24px;
+      width: 200px;
+      text-align: center;
+    }
+
+    .ant-tabs-ink-bar {
+      height: 3px;
+    }
+  }
+
+  .ant-form-item {
+    .ant-form-item-control {
+      line-height: 50px;
+    }
+
+    .anticon {
+      font-size: 18px;
+    }
+
+    .ant-input {
+      height: 48px;
+      width: 98%;
+      margin-left: 1%;
+      line-height: 48px;
+      font-size: 18px;
+      padding-left: 36px;
+      background: #f1f7ff;
+      border: none;
+      outline: none;
+      box-sizing: border-box;
+    }
+
+    &.code {
+      .ant-form-item-children {
+        display: flex;
+
+        .ant-input-affix-wrapper {
+          flex-grow: 1;
+          flex-shrink: 1;
+
+          .ant-input {
+            border-radius: 4px;
+          }
+        }
+
+        img {
+          flex-grow: 0;
+          flex-shrink: 0;
+          width: 90px;
+          height: 48px;
+          outline: none;
+          border: none;
+          background: #f1f7ff;
+          margin-right: 4px;
+          border-radius: 4px;
+        }
+      }
+    }
+
+    .login-submit {
+      width: 100%;
+      height: 48px;
+      background: #1890ff;
+      border: 1px solid #096dd9;
+      border-radius: 2px;
+      font-size: 16px;
+      font-weight: bolder;
+      color: #ffffff;
+    }
+  }
+
+  .login-log-on {
+    font-size: 12px;
+    text-align: center;
+    color: #1890ff;
+    line-height: 20px;
+  }
+}
+
+// 开启手机号登录删除该样式
+.ant-tabs-nav-scroll {
+  text-align: center;
+}

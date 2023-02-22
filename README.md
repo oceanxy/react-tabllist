@@ -61,7 +61,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
   1. 多端适配，灵活配置布局文件
 
 ### 脱离后端
-  
+
   1. **mockjs**支撑，开发模式下无需后端服务即可调试项目
   2. 开发模式下自动绕开前端权限验证模块
   3. mock接口**支持传参**，并可在控制台打印**request**和**response**
@@ -89,3 +89,11 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
   1. 按需引入**ant design vue**组件
 
 ### 更多功能加入中...
+
+### 本项目开发过程中遇到的挑战点
+
+1. 在父组件中获取子孙组件（不限层级）的方法。
+
+除了递归遍历，例如`this.$children.xxx.$children.$refs[xxx]`的形式，可以借鉴`React`的`ref`，采用`callback`的形式。
+
+结合`vue`的`provided`和`inject`实现。具体例子见 */src/components/BNContainerWithSider* 组件与 */src/mixins/forTable* 的交互。

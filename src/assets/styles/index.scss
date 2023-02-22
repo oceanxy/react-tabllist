@@ -1,3 +1,5 @@
+@import '@/assets/styles/theme.scss';
+
 html,
 body,
 #app {
@@ -7,16 +9,78 @@ body,
 
 body {
   margin: 0;
+
+  p {
+    margin: 0;
+    padding: 0;
+  }
 }
 
 #app {
+  position: relative;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   color: #2c3e50;
 
-  // 可视化项目
-  width: 1920px;
-  height: 1080px;
-  overflow: hidden;
+  // 可视化项目缩放页面专用
+  //width: 1920px;
+  //height: 1080px;
+  //overflow: hidden;
+
+  #loading {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & > div {
+      width: 64px;
+      height: 20px;
+      display: flex;
+      gap: 6px;
+
+      span {
+        width: 6px;
+        height: 100%;
+        border-radius: 3px;
+        background: $primary-color;
+        -webkit-animation: load 1s ease infinite;
+
+        &:nth-child(2) {
+          -webkit-animation-delay: 0.2s;
+        }
+
+        &:nth-child(3) {
+          -webkit-animation-delay: 0.4s;
+        }
+
+        &:nth-child(4) {
+          -webkit-animation-delay: 0.6s;
+        }
+
+        &:nth-child(5) {
+          -webkit-animation-delay: 0.8s;
+        }
+
+        @-webkit-keyframes load {
+          0%,
+          100% {
+            height: 20px;
+            background: $primary-color;
+          }
+
+          50% {
+            height: 40px;
+            margin: -10px 0;
+            background: $primary-hover-color;
+          }
+        }
+      }
+    }
+  }
 }
 
 #nav {
@@ -29,45 +93,585 @@ body {
 }
 
 #nav a.router-link-exact-active {
-  color: #42b983;
+  color: $primary-color;
 }
 
-.uni-log-search-form,
-.tg-search-form {
-  display: flex;
+@font-face {
+  font-family: DOUYU;
+  src: url(../fonts/douyuFont-2.otf);
+}
 
-  .ant-form-item {
-    flex: auto;
+@font-face {
+  font-family: BigruixianBlackGBV;
+  src: url(../fonts/BigruixianBlackGBV.TTF);
+}
+
+.tg-not-found {
+  position: relative;
+  height: 100%;
+  z-index: 2;
+
+  .tg-not-found-content {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .hint {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex: auto;
+      width: 100%;
+      height: 60%;
+      max-height: 600px;
+      min-height: 400px;
+      padding-top: 400px;
+      font-size: 16px;
+      background: url('../notFound.png') no-repeat center top / auto 70%;
+    }
+  }
+}
+
+.tg-inquiry.tg-inquiry {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  row-gap: 8px;
+  column-gap: 16px;
+  padding: 16px 24px;
+
+  .row-up {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    .icon {
+      font-size: 24px;
+    }
+
+    .activity {
+      min-width: 220px;
+
+      .ant-form-item-control-wrapper {
+        width: 100%;
+
+        .ant-select-selection {
+          border: none;
+          outline: none;
+          box-shadow: unset;
+
+          .ant-select-selection__rendered {
+            margin-right: 30px;
+            margin-left: 0;
+
+            .ant-select-selection-selected-value {
+              font-size: 14px;
+              color: rgba(52, 64, 84, 0.8);
+            }
+          }
+        }
+      }
+    }
+
+    .btn-group {
+      margin-left: auto;
+    }
+  }
+
+  .row-down {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+
+    .form-item-btn {
+      width: auto !important;
+
+      .ant-form-item-control-wrapper {
+        z-index: 11 !important;
+      }
+    }
+
+    .return {
+      margin-left: auto;
+    }
+  }
+
+  .ant-form-item:not(.activity) {
+    flex: none;
+    width: 220px;
+    box-sizing: border-box;
+    margin-right: 0 !important;
     display: flex;
     align-items: center;
 
+    &.ant-form-item-with-help {
+      margin-bottom: 0;
+    }
+
+    &.span-2 {
+      width: 452px;
+    }
+
+    .ant-form-item-label {
+      z-index: 1;
+      flex: none;
+      overflow: initial;
+
+      label {
+        display: inline-block;
+        width: 70px;
+        font-size: 12px;
+        color: rgba(52, 64, 84, 0.62);
+        text-align: justify;
+        text-align-last: justify;
+        padding-left: 10px;
+        padding-right: 4px;
+      }
+    }
+
     .ant-form-item-control-wrapper {
-      width: 200px;
+      flex: auto;
+      width: 100%;
+      margin-left: -70px;
+      z-index: 0;
+
+      .ant-select {
+        width: 100%;
+      }
+
+      .ant-form-item-control {
+        height: 100%;
+
+        // inquiry 组件内的行内表单防止样式错位，隐藏文字提示信息
+        &.has-error .ant-form-explain,
+        .ant-form-item-children + * {
+          display: none;
+        }
+
+        .ant-form-item-children {
+          display: flex;
+          height: 100%;
+
+          & > .ant-select .ant-select-selection,
+          & > .ant-input-affix-wrapper .ant-input,
+          & > .ant-input-number,
+          & > .ant-input,
+          & > .ant-calendar-picker .ant-calendar-picker-input,
+          & > .ant-input-group {
+            width: 100%;
+            padding-left: 80px;
+          }
+
+          & > .ant-calendar-picker {
+            width: 100%;
+          }
+
+          & > .ant-input-group {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+
+            &:hover {
+              border-color: $primary-color;
+            }
+
+            .ant-input-number {
+              border-color: transparent !important;
+              outline: none !important;
+              box-shadow: none !important;
+            }
+
+            .ant-input-number:first-child {
+              &:hover,
+              &:focus,
+              &:active {
+                border-color: transparent !important;
+                border-right: 1px solid #d9d9d9 !important;
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
 
-.uni-log-table,
-.tg-table {
+.tg-function {
+  margin-left: auto;
+  flex: none;
+  padding: 14px 24px;
+}
+
+.ant-table-wrapper {
+  flex: auto;
   overflow: hidden;
-  border: none;
+
+  .tg-table-field-highlight {
+    color: #13c2c2;
+    font-size: 15px;
+    font-weight: bolder;
+  }
+
+  .tg-table-multiple-field {
+    p {
+      margin: 0;
+
+      &.highlight {
+        font-weight: 600;
+        font-size: 15px;
+      }
+
+      &:last-child {
+        color: #999999;
+      }
+    }
+  }
 
   .ant-table {
-    border: 0 !important;
-  }
+    .table-row-background {
+      background-color: #f9f9fb;
+    }
 
-  .operation-space {
-    .ant-space-item {
-      margin-right: 0 !important;
+    .ant-table-thead > tr.ant-table-row-hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td,
+    .ant-table-tbody > tr.ant-table-row-hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td,
+    .ant-table-thead > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td,
+    .ant-table-tbody > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
+      background-color: #edfcf2;
+    }
+
+    .ant-table-thead > tr > th {
+      border: none;
+      background: none;
+      color: #5d6b98;
+      font-weight: bolder;
+    }
+
+    &.ant-table-bordered .ant-table-thead {
+      & > tr > th {
+        box-sizing: border-box;
+        border-right: 1px solid #e8e8e8;
+        border-bottom: 1px solid #e8e8e8;
+      }
+    }
+
+    .ant-table-header,
+    .ant-table-thead {
+      background: #f9f9fb !important;
+    }
+
+    .ant-table-header,
+    .ant-table-body {
+      //margin-bottom: 0 !important;
+      //overflow: auto !important;
+    }
+
+    .tg-tags-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+
+      .ant-btn {
+        padding: 0 2px;
+        font-size: 12px;
+        line-height: unset;
+        height: unset;
+      }
     }
   }
 }
 
-.ant-modal-wrap {
-  // 防止拖动ant-modal时出现滚动条
-  overflow: hidden !important;
+.ant-descriptions {
+  .ant-descriptions-item {
+    //display: flex;
+    padding: 2px 0;
 
-  .ant-modal-content {
-    transform: var(--transform);
+    .ant-descriptions-item-label {
+      flex: none;
+      font-size: 14px;
+      color: #595959;
+    }
+
+    .ant-descriptions-item-content {
+      font-size: 14px;
+      color: #434343;
+      flex: auto;
+    }
   }
 }
+
+.ant-spin-nested-loading,
+.ant-spin-container {
+  height: 100%;
+}
+
+/********************************* 弹出框 *************************************/
+
+.ant-modal-wrap {
+  .ant-modal-content {
+    transform: var(--transform);
+
+    .ant-modal-header {
+      background: linear-gradient(to bottom, #edfcf2, #ffffff);
+    }
+
+    .ant-modal-body {
+      overflow: auto;
+      max-height: calc(90vh - 200px);
+      padding: 24px 40px;
+
+      .ant-table {
+        height: auto;
+      }
+    }
+
+    .ant-modal-footer {
+      background: #f6fef9;
+      border: none;
+      text-align: center;
+    }
+  }
+}
+
+.tg-table-modal {
+  .ant-modal-wrap {
+    .ant-modal-body {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .tg-table-in-modal {
+      height: auto;
+      overflow-y: auto;
+      max-height: 580px;
+    }
+  }
+}
+
+/************************************************************************************/
+
+/********************************* 子模块容器 *************************************/
+.ant-modal-root.tg-submodule-container {
+  .ant-modal-body {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .tg-inquiry {
+      padding: 0;
+      flex-direction: row;
+    }
+  }
+}
+
+/************************************************************************************/
+
+/********************************* 表单自定义栅格化 *************************************/
+.tg-form-grid {
+  display: flex;
+  column-gap: 24px;
+  flex-wrap: wrap;
+
+  &.label-size-small.label-size-small {
+    .ant-form-item-label {
+      width: 90px;
+      word-break: break-all;
+    }
+  }
+
+  .ant-form-item-label {
+    padding-right: 10px;
+    line-height: 20px;
+    padding-top: 12px;
+
+    label {
+      white-space: normal;
+    }
+  }
+
+  .ant-form-item {
+    width: 100%;
+    display: flex;
+
+    .ant-form-item-label {
+      width: 130px;
+      flex: none;
+    }
+
+    .ant-form-item-control-wrapper {
+      flex: auto;
+      overflow: hidden;
+
+      .ant-form-item-children {
+        .hint {
+          line-height: 20px;
+          margin-bottom: 0;
+          margin-top: 4px;
+          color: #c3c3c3;
+        }
+      }
+    }
+
+    &.half {
+      width: calc((100% - 24px) / 2);
+    }
+
+    &.one-third {
+      width: calc((100% - 48px) / 3);
+    }
+
+    &.combo {
+      margin-bottom: 0;
+    }
+
+    &.custom {
+      display: flex;
+      align-items: center;
+
+      .ant-form-item-children {
+        width: 100%;
+        display: flex;
+        column-gap: 24px;
+
+        .ant-row {
+          flex: auto;
+        }
+
+        .ant-form-item {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  .tg-form-checkbox {
+    padding: 9px 0 2px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    label {
+      margin-left: 0;
+    }
+  }
+}
+
+/**********************************************************************/
+
+/*****************定义滚动条高宽及背景高宽 分别对应横竖滚动条的尺寸***********/
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: unset;
+}
+
+// 定义滚动条轨道内阴影 圆角
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 3px $scrollbar-track-shadow-color;
+  border-radius: 3px;
+  background-color: $scrollbar-track-color;
+}
+
+// 定义滑块内阴影 圆角
+::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  box-shadow: inset 0 0 3px $scrollbar-thumb-shadow-color;
+  background-color: $scrollbar-thumb-color;
+
+  &:hover {
+    background-color: $scrollbar-thumb-hover-color;
+  }
+}
+
+@media screen and (max-width: 1366px) {
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+}
+
+/**********************************************************************/
+
+/******************************* 可增减表格 ****************************/
+.tg-multi-input {
+  .multi-input-table {
+    .ant-table {
+      height: auto;
+    }
+
+    td {
+      padding: 6px;
+    }
+  }
+}
+
+/**********************************************************************/
+
+/******************************* 上图图片 ****************************/
+.tg-upload-pic {
+  //width: 100%;
+  //display: flex;
+  //flex-wrap: wrap;
+}
+
+/**********************************************************************/
+
+/******************************* SelectTree 父节点只做展开/折叠功能 ****************************/
+.tg-select-dropdown {
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  max-height: 400px !important;
+
+  .ant-select-tree-switcher {
+    position: relative;
+  }
+
+  .ant-select-tree-switcher_open::before,
+  .ant-select-tree-switcher_close::before {
+    content: '';
+    position: absolute;
+    right: -310px;
+    top: 0;
+    left: 0;
+    bottom: 0;
+  }
+}
+
+/********************************************************************/
+
+.bnm-tree-select-dropdown {
+  max-height: 550px !important;
+}
+
+.ant-btn.ant-btn-link {
+  padding: 0;
+}
+
+.ant-empty.ant-empty-normal {
+  margin: 0;
+  padding: 24px 0;
+}
+
+.ant-calendar-time-picker-select-option-disabled {
+  display: none;
+}
+
+/******************************* 弹窗 修改header和footer样式 ****************************/
+.bnm-modal-edit-user-form {
+  .ant-modal-header {
+    background: linear-gradient(180deg, #edfcf2, #ffffff);
+  }
+
+  .ant-modal-footer {
+    background-color: #f6fef9;
+    text-align: center;
+  }
+}
+
+/********************************************************************/

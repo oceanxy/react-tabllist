@@ -1,0 +1,34 @@
+.bn-image-preview {
+  position: relative;
+
+  .img {
+    display: block;
+    object-fit: cover;
+    cursor: pointer;
+  }
+}
+
+.bn-image-preview-modal {
+  .ant-modal-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 500px;
+    padding: 0;
+    position: relative;
+
+    .btn {
+      position: absolute;
+      top: 49%;
+      z-index: 100;
+    }
+
+    .up {
+      left: 5%;
+    }
+
+    .next {
+      right: 5%;
+    }
+  }
+}
