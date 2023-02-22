@@ -19,11 +19,11 @@
         </a-badge>
         <span class="tg-user-name">{{ userInfo.nickName || userInfo.fullName }}</span>
         <a-divider type="vertical" />
-        <a-button
-          class="btn edit-pwd"
-          title="修改密码"
-          @click="onEditPassword()"
-        />
+        <!--<a-button-->
+        <!--  class="btn edit-pwd"-->
+        <!--  title="修改密码"-->
+        <!--  @click="onEditPassword()"-->
+        <!--/>-->
         <a-button
           class="btn logout"
           title="注销"
@@ -38,7 +38,7 @@
 <script>
 import { Avatar, Badge, Divider, Dropdown, Icon, Layout, Menu, Tag } from 'ant-design-vue'
 import { mapActions, mapGetters } from 'vuex'
-import ModalOfEditPassword from '@/views/manager/organizations/StaffManagement/components/ModalOfEditPassword'
+// import ModalOfEditPassword from '@/views/manager/organizations/StaffManagement/components/ModalOfEditPassword'
 
 export default {
   name: 'TGHeader',
@@ -65,7 +65,7 @@ export default {
     [Dropdown.name]: Dropdown,
     [Tag.name]: Tag,
     [Divider.name]: Divider,
-    ModalOfEditPassword: ModalOfEditPassword
+    // ModalOfEditPassword: ModalOfEditPassword
   },
   computed: {
     ...mapGetters({ getState: 'getState' }),
