@@ -134,14 +134,12 @@ module.exports = {
     'array-bracket-spacing': [2, 'never'],
     // 禁止或强制在单行代码块中使用空格(禁用)
     'block-spacing': [1, 'never'],
-    // 强制使用一致的缩进 第二个参数为 "tab" 时，会使用tab，
+    // 强制使用一致的缩进 第二个参数为 'tab' 时，会使用tab，
     // if while function 后面的{必须与if在同一行，java风格。
     'brace-style': [
       2,
       '1tbs',
-      {
-        allowSingleLine: true
-      }
+      { allowSingleLine: true }
     ],
     // 双峰驼命名格式
     camelcase: 0,
@@ -156,23 +154,16 @@ module.exports = {
     // 控制逗号在行尾出现还是在行首出现 (默认行尾)
     // http://eslint.org/docs/rules/comma-style
     'comma-style': [2, 'last'],
-    // "SwitchCase" (默认：0) 强制 switch 语句中的 case 子句的缩进水平
+    // 'SwitchCase' (默认：0) 强制 switch 语句中的 case 子句的缩进水平
     // 以方括号取对象属性时，[ 后面和 ] 前面是否需要空格, 可选参数 never, always
     'computed-property-spacing': [2, 'never'],
     // 用于指统一在回调函数中指向this的变量名，箭头函数中的this已经可以指向外层调用者，应该没卵用了
-    // e.g [0,"that"] 指定只能 var that = this. that不能指向其他任何值，this也不能赋值给that以外的其他值
+    // e.g [0,'that'] 指定只能 var that = this. that不能指向其他任何值，this也不能赋值给that以外的其他值
     'consistent-this': [0, 'that'],
     // 强制使用命名的 function 表达式
     'func-names': 0,
     // 文件末尾强制换行
     'eol-last': 2,
-    indent: [
-      2,
-      2,
-      {
-        SwitchCase: 1
-      }
-    ],
     // 强制在对象字面量的属性中键和值之间使用一致的间距
     'key-spacing': [
       2,
@@ -184,9 +175,9 @@ module.exports = {
     // 强制使用一致的换行风格
     // 'linebreak-style': [1, 'windows'],
     // 强制一致地使用函数声明或函数表达式，方法定义风格，参数：
-    // declaration: 强制使用方法声明的方式，function f(){} e.g [2, "declaration"]
-    // expression：强制使用方法表达式的方式，var f = function() {} e.g [2, "expression"]
-    // allowArrowFunctions: declaration风格中允许箭头函数。 e.g [2, "declaration", { "allowArrowFunctions": true }]
+    // declaration: 强制使用方法声明的方式，function f(){} e.g [2, 'declaration']
+    // expression：强制使用方法表达式的方式，var f = function() {} e.g [2, 'expression']
+    // allowArrowFunctions: declaration风格中允许箭头函数。 e.g [2, 'declaration', { 'allowArrowFunctions': true }]
     'func-style': 0,
     // 强制在关键字前后使用一致的空格 (前后腰需要)
     'keyword-spacing': 2,
@@ -205,18 +196,14 @@ module.exports = {
     // 不允许多个空行
     'no-multiple-empty-lines': [
       2,
-      {
-        max: 2
-      }
+      { max: 2 }
     ],
     // 禁止可以在有更简单的可替代的表达式时使用三元操作符
     'no-unneeded-ternary': 2,
     // 强制函数中的变量要么一起声明要么分开声明
     'one-var': [
       2,
-      {
-        initialized: 'never'
-      }
+      { initialized: 'never' }
     ],
     // 强制操作符使用一致的换行符
     'operator-linebreak': [
@@ -261,6 +248,73 @@ module.exports = {
     // 要求使用 const 声明那些声明后不再被修改的变量
     'prefer-const': 2,
     // 要求或禁止模板字符串中的嵌入表达式周围空格的使用
-    'template-curly-spacing': 1
+    'template-curly-spacing': 0,
+    'indent': [
+      2,
+      2,
+      {
+        SwitchCase: 1,
+        ignoredNodes: ['TemplateLiteral']
+      }
+    ],
+    // 要求或禁止在语句间填充空行
+    'padding-line-between-statements': [
+      2,
+      // 要求 return 之前要有空行
+      {
+        blankLine: 'always', prev: '*', next: 'return'
+      },
+      // 要求每一个变量声明之后都有空行
+      {
+        blankLine: 'always', prev: ['const', 'let', 'var'], next: '*'
+      },
+      {
+        blankLine: 'any', prev: ['const', 'let', 'var'], next: ['const', 'let', 'var']
+      },
+      // 要求所有的指令序言之后都有空行
+      {
+        blankLine: 'always', prev: 'directive', next: '*'
+      },
+      {
+        blankLine: 'any', prev: 'directive', next: 'directive'
+      },
+      // 要求所有的 if 块前后要有空行
+      {
+        blankLine: 'always', prev: 'if', next: '*'
+      },
+      {
+        blankLine: 'always', prev: '*', next: 'if'
+      },
+      // 要求所有的 import 块后要有空行
+      {
+        blankLine: 'always', prev: 'import', next: '*'
+      },
+      {
+        blankLine: 'any', prev: 'import', next: 'import'
+      },
+      // 要求所有的 export 块前要有空行
+      {
+        blankLine: 'always', prev: '*', next: 'export'
+      }
+    ],
+    // 在大括号内换行规则
+    'object-curly-newline': [
+      1,
+      {
+        'ObjectExpression': {
+          'multiline': true,
+          'minProperties': 3
+        },
+        'ObjectPattern': {
+          'multiline': true,
+          'minProperties': 3
+        },
+        'ImportDeclaration': 'never',
+        'ExportDeclaration': {
+          'multiline': true,
+          'minProperties': 3
+        }
+      }
+    ]
   }
 }
