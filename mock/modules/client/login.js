@@ -10,7 +10,7 @@ export default {
         id: '7364573105524781366',
         orgId: '1357924680123456789',
         isOrganLeader: 1,
-        fullName: '管理员',
+        fullName: '重庆誉存科技有限公司',
         fullNamePinyin: 'guanliyuan',
         gender: 1,
         position: '0',

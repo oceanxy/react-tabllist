@@ -4,9 +4,7 @@ module.exports = {
     // 支持jsx
     [
       '@vue/babel-preset-jsx',
-      {
-        injectH: false
-      }
+      {injectH: false}
     ]
   ],
   plugins: [
