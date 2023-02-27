@@ -398,7 +398,7 @@ export default {
       return Object.prototype.toString.call(this.getCustomIcon) === '[object Function]'
         ? this.getCustomIcon(treeNode)
         : treeNode.obj.menuIcon
-          ? () => import(`@/layouts/components/TGMenu/assets/images/${treeNode.obj.menuIcon}.svg`)
+          ? () => import(`@/assets/images/${treeNode.obj.menuIcon}.svg`)
           : undefined // todo 此处设置为默认图标
     },
     /**

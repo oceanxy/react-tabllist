@@ -30,12 +30,12 @@ export default (
     dynamicState = {
       async created() {
         // 判断动态模块文件夹内是否存在与moduleName匹配的文件，用以作为动态模块的模版
-        if (this.$store.dynamicModules[customModuleName]) {
+        if (this.$store._dynamicModules[customModuleName]) {
           // 判断是否已经注册了该模块
           if (!this.$store.hasModule(customModuleName)) {
             this.$store.registerModule(
               customModuleName,
-              this.$store.dynamicModules[customModuleName]?.(commitRootInModule.bind(
+              this.$store._dynamicModules[customModuleName]?.(commitRootInModule.bind(
                 null,
                 customModuleName,
                 this.$store.commit
@@ -79,12 +79,12 @@ export default (
       created() {
         if (this.moduleName) {
           // 判断动态模块文件夹内是否存在与moduleName匹配的文件，用以作为动态模块的模版
-          if (this.$store.dynamicModules[this.moduleName]) {
+          if (this.$store._dynamicModules[this.moduleName]) {
             // 判断是否已经注册了该模块
             if (!this.$store.hasModule(this.moduleName)) {
               this.$store.registerModule(
                 this.moduleName,
-                this.$store.dynamicModules[this.moduleName]?.(commitRootInModule.bind(
+                this.$store._dynamicModules[this.moduleName]?.(commitRootInModule.bind(
                   null,
                   this.moduleName,
                   this.$store.commit

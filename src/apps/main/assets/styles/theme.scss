@@ -1,0 +1,22 @@
+// 主题颜色配置，主要用于非 ant design vue 组件的颜色控制。
+// ant design vue 的主题色请按照官方文档修改，本项目采用官方的 vue-cli3 方案。
+// 本项目请在 vue.config 内配置
+
+// 主题色配置
+$primary-color: #16b364;
+$primary-shadow-color: rgba(22, 179, 100, 0.2);
+$primary-shadow-normal: rgba(22, 179, 100, 0.6);
+$primary-active-color: #159f5b;
+$primary-hover-color: #29c275;
+$error-color: #f97066;
+
+// 滚动条主题色配置
+$scrollbar-track-color: #eff1f5;
+$scrollbar-track-shadow-color: rgba(91, 91, 91, 0.3);
+$scrollbar-thumb-color: rgba(185, 192, 212, 0.6);
+$scrollbar-thumb-hover-color: rgba(185, 192, 212, 1);
+$scrollbar-thumb-shadow-color: rgba(211, 211, 211, 0.3);
+
+@mixin container-border-radius($value: 4px) {
+  border-radius: $value;
+}

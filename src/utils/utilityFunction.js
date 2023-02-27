@@ -1,8 +1,5 @@
 export function generateRoute(menu) {
-  const route = {
-    meta: {},
-    children: []
-  }
+  const route = { meta: {}, children: [] }
   const {
     name,
     icon,
@@ -38,11 +35,11 @@ export function generateRoute(menu) {
   } else if (component?.includes('layouts')) {
     route.component = () => import(`@/layouts${component.slice(9)}`)
   } else {
-    route.component = () => import('@/layouts/components/TGRouterView')
+    route.component = () => import('@/components/TGRouterView')
   }
 
   if (icon) {
-    route.meta.icon = () => import('@/layouts/components/TGMenu/assets/images/' + icon + '.svg')
+    route.meta.icon = () => import('@/assets/images/' + icon + '.svg')
   }
 
   if (redirect) {
@@ -113,15 +110,13 @@ export function downFile(blob, fileName) {
   if (window.navigator.msSaveBlob) {
     window.navigator.msSaveBlob(blob, fileName)
   } else {
-    const tmpa = document.createElement('a')
-
-    tmpa.download = fileName
-    console.log(blob)
     const urlObj = URL.createObjectURL(blob)
+    const tmp = document.createElement('a')
 
-    console.log(urlObj)
-    tmpa.href = urlObj
-    tmpa.click() // 模拟点击实现下载
+    tmp.download = fileName
+    tmp.href = urlObj
+    tmp.click() // 模拟点击实现下载
+
     setTimeout(function() {
       // 延时释放
       URL.revokeObjectURL(urlObj)

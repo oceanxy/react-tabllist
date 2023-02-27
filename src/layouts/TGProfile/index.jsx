@@ -1,8 +1,8 @@
 import './assets/styles/index.scss'
 import { Layout } from 'ant-design-vue'
-import TGHeader from '@/layouts/components/TGHeader'
-import TGMenu from '@/layouts/components/TGMenu'
-import TGRouterView from '@/layouts/components/TGRouterView'
+import TGHeader from '@/components/TGHeader'
+import TGMenu from '@/components/TGMenu'
+import TGRouterView from '@/components/TGRouterView'
 
 export default {
   name: 'TGProfileLayout',

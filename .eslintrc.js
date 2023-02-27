@@ -42,7 +42,7 @@ module.exports = {
     'vue/no-unused-components': 1,
 
     // 禁用 console
-    'no-console': process.env.NODE_ENV === 'production' ? 1 : 0,
+    'no-console': [process.env.NODE_ENV === 'production' ? 1 : 0, { allow: ['warn', 'error'] }],
     // 禁止在条件中使用常量表达式，比如 if (false)
     'no-constant-condition': 2,
     // 数组和对象键值对最后一个逗号， never参数：不能带末尾的逗号, always参数：必须带末尾的逗号，

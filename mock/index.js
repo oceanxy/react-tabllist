@@ -1,5 +1,5 @@
 import Mock from 'mockjs'
-import appConfig from '../src/config'
+import appConfig from '@/config'
 
 const URL = require('url')
 

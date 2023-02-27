@@ -1,8 +1,27 @@
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin // Webpack包文件分析器
-const CompressionPlugin = require('compression-webpack-plugin') // Gzip
 // const VConsolePlugin = require('vconsole-webpack-plugin') // 引入 移动端模拟开发者工具 插件 （另：https://github.com/liriliri/eruda）
+const CompressionPlugin = require('compression-webpack-plugin') // Gzip
+const { getAvailableProjectNames } = require('./build/configs')
+
+let config = {} // 打包时使用“--proj appName1 appName2 ...”指令带可对指定的 app 统一打包，不带或无效的 appName 将对整体项目打包
+
+const availableProjectNames = getAvailableProjectNames()
+
+if (availableProjectNames.length) {
+  config = {
+    pages: {
+      index: {
+        entry: `src/apps/${availableProjectNames[0]}/main.js`,
+        // title: '',
+        chunks: [availableProjectNames[0], 'chunk-vendors', 'chunk-common']
+      }
+    },
+    outputDir: `dist/${availableProjectNames[0]}`
+  }
+}
 
 module.exports = {
+  ...config,
   publicPath: process.env.VUE_APP_PUBLIC_PATH,
   // 是否使用包含运行时编译器的 Vue 构建版本。设置为 true 后可以在 Vue 组件中使用 template 选项，但应用会额外增加 10kb 左右。
   // 默认值是false

@@ -1,4 +1,4 @@
-import TGHeader from '@/layouts/components/TGHeader'
+import TGHeader from '@/components/TGHeader'
 import { Button, Layout, Space } from 'ant-design-vue'
 
 export default {

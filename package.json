@@ -4,9 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "dev:m": "vue-cli-service serve --mode development-manager",
-    "build:m": "vue-cli-service build --mode production-manager",
+    "build": "node ./build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -15,6 +13,7 @@
     "core-js": "^3.6.5",
     "echarts": "^5.3.2",
     "element-resize-detector": "^1.2.4",
+    "glob": "^8.1.0",
     "jsencrypt": "^3.2.1",
     "lodash": "^4.17.21",
     "moment": "^2.29.3",
@@ -50,6 +49,7 @@
     "less-loader": "^7.3.0",
     "mockjs": "^1.1.0",
     "prettier": "^2.5.1",
+    "rimraf": "^4.1.2",
     "sass": "^1.49.7",
     "sass-loader": "^10.2.1",
     "vue-svg-loader": "^0.16.0",

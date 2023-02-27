@@ -1,5 +1,7 @@
 import axios from 'axios'
 import config from '@/config'
+import router from '@/router'
+import store from '@/store'
 import { showMessage } from '@/utils/message'
 
 const service = axios.create({
@@ -14,21 +16,6 @@ service.interceptors.request.use(
 
     if (token) {
       config.headers.token = token
-    }
-
-    if (process.env.VUE_APP_PROJECT === 'development-client' || process.env.VUE_APP_PROJECT === 'production-client') {
-      const companyId = localStorage.getItem('companyId')
-
-      if (companyId) {
-        config.headers.companyId = companyId
-      }
-    } else {
-      const terminal = process.env.VUE_APP_PROJECT.match(/(?<=(-)).*/g)[0]
-      const parkId = await require('@/store/' + terminal).default.state.login.userInfo.parkId
-
-      if (parkId) {
-        config.headers.parkId = parkId
-      }
     }
 
     return config
@@ -62,18 +49,8 @@ service.interceptors.response.use(
 
     // 登录失效，需要重新登录
     if (+res.code === 30001) {
-      const terminal = process.env.VUE_APP_PROJECT.match(/(?<=(-)).*/g)[0]
-      const store = await import('../store/' + terminal)
-      const router = await import('../router/' + terminal)
-
-      // if (process.env.VUE_APP_PROJECT === 'development-client' || process.env.VUE_APP_PROJECT === 'production-client') {
-      //   store = await import('../store/client')
-      // } else {
-      //   store = await import('../store/manager')
-      // }
-
-      await store.default.dispatch('login/clear')
-      await router.default.replace({ name: 'login' })
+      await store.dispatch('login/clear')
+      await router.replace({ name: 'login' })
     }
 
     return Promise.resolve({

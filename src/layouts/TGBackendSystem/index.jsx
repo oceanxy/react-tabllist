@@ -1,9 +1,9 @@
 import './assets/styles/index.scss'
 import { Layout } from 'ant-design-vue'
-import TGHeader from '@/layouts/components/TGHeader'
-import TGMenu from '@/layouts/components/TGMenu'
-import TGRouterView from '@/layouts/components/TGRouterView'
-import Logo from '@/layouts/components/Logo'
+import TGHeader from '@/components/TGHeader'
+import TGMenu from '@/components/TGMenu'
+import TGRouterView from '@/components/TGRouterView'
+import Logo from '@/components/Logo'
 import { mapGetters } from 'vuex'
 
 export default {

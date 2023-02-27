@@ -5,8 +5,6 @@
  * @Date: 2022-11-08 周二 17:24:00
  */
 
-import { Tag } from 'ant-design-vue'
-
 /**
  * 体检配置--项目分类 用于保存/传递街道树ID的字段名
  * @param treeHierarchy {number} 树的层级
@@ -77,9 +75,9 @@ export function getSchoolTreeIcon(treeNode) {
  */
 export function getOrganizationTreeIcon(treeNode) {
   if (treeNode.isParent) {
-    return () => import('@/layouts/components/TGMenu/assets/images/organization.svg')
+    return () => import('@/assets/images/organization.svg')
   } else {
-    return () => import('@/layouts/components/TGMenu/assets/images/organizationItem.svg')
+    return () => import('@/assets/images/organizationItem.svg')
   }
 }
 
