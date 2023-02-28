@@ -1,39 +1,62 @@
 import './assets/styles/index.scss'
-import BNContainer from '@/components/TGModule'
-import TGContainerWithSider from '@/components/TGContainerWithSider'
 import dynamicState from '@/mixins/dynamicState'
+import TGContainer from '@/components/TGContainer'
 
 export default {
-  name: 'home',
+  name: 'Home',
   mixins: [dynamicState()],
   render() {
     return (
-      <TGContainerWithSider class="tg-home">
-        <template slot="default">
-          保交楼首页
-        </template>
-        <template slot="sider">
-          <BNContainer
-            width="100%"
-            moduleTitle="我的快捷菜单"
-            showBoxShadow={false}
-            class="shortcut-menu-container"
-            titleClass="not-login-title"
-            contentClass="shortcut-container"
-          >
-          </BNContainer>
-          <BNContainer
-            class="my-news-container"
-            width="100%"
-            modalTitle="我的消息"
-            showBoxShadow={false}
-            showMore
-            titleClass="not-login-title"
-            onmore={this.onMore}
-          >
-          </BNContainer>
-        </template>
-      </TGContainerWithSider>
+      <div class={'tg-edph-home'}>
+        <TGContainer
+          class="tg-edph-home-concern"
+          modalTitle="我的关注"
+          showBoxShadow={false}
+          titleClass="not-login-title"
+          contentClass="shortcut-container"
+        >
+        </TGContainer>
+        <TGContainer
+          class="tg-edph-home-userinfo"
+          width="40%"
+          modalTitle="我的消息"
+          showBoxShadow={false}
+          showMore
+          titleClass="not-login-title"
+          onmore={this.onMore}
+        >
+        </TGContainer>
+        <TGContainer
+          class="tg-edph-home-frequently-used-functions"
+          width="100%"
+          modalTitle="常用功能"
+          showBoxShadow={false}
+          showMore
+          titleClass="not-login-title"
+          onmore={this.onMore}
+        >
+        </TGContainer>
+        <TGContainer
+          class="tg-edph-home-to-do"
+          width="49%"
+          modalTitle="待办事项"
+          showBoxShadow={false}
+          showMore
+          titleClass="not-login-title"
+          onmore={this.onMore}
+        >
+        </TGContainer>
+        <TGContainer
+          class="my-news-container"
+          width="50%"
+          modalTitle="审阅消息"
+          showBoxShadow={false}
+          showMore
+          titleClass="not-login-title"
+          onmore={this.onMore}
+        >
+        </TGContainer>
+      </div>
     )
   }
 }

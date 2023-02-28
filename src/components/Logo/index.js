@@ -1,5 +1,6 @@
 import './styles/index.scss'
 import { mapGetters } from 'vuex'
+import config from '@/config'
 
 export default {
   computed: {
@@ -18,11 +19,9 @@ export default {
       <div
         class={'tg-logo'}
         onClick={this.goBackHome}
-        title={'H+学生健康管理'}
+        title={config.systemName}
       >
-        {
-          this.collapsed ? '' : 'H+学生健康管理'
-        }
+        {config.systemName}
       </div>
     )
   }

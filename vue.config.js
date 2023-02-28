@@ -30,24 +30,11 @@ module.exports = {
     port: '8190',
     open: false,
     proxy: {
-      '/api': {
-        target: 'http://10.100.1.101:35930',
-        // target: 'http://10.100.1.94:35930',
-        changeOrigin: true,
-        secure: false
-      },
-      // 巴南管理端（暂用，后期删除）
       '/mgapi': {
-        target: 'http://10.100.1.94:47910',
+        target: 'http://10.100.1.94:44100',
         changeOrigin: true,
         secure: false
       }
-      // 巴南企业端（暂用，后期删除）
-      // '/api': {
-      //   target: 'http://10.100.1.94:47930',
-      //   changeOrigin: true,
-      //   secure: false
-      // }
     }
   },
   css: {
@@ -60,8 +47,8 @@ module.exports = {
       less: {
         lessOptions: {
           modifyVars: {
-            'primary-color': '#16b364',
-            'link-color': '#16b364'
+            'primary-color': '#2970ff',
+            'link-color': '#2970ff'
             // 'border-radius-base': '2px'
           },
           javascriptEnabled: true

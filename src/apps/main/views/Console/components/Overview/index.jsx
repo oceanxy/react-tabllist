@@ -1,5 +1,5 @@
 import './assets/styles/index.scss'
-import BNContainer from '@/components/TGModule'
+import TGContainer from '@/components/TGContainer'
 import BarChart from '../BarChart'
 import PieChart from '../PieChart'
 

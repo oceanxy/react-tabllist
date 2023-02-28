@@ -22,11 +22,12 @@
         :key="route.path || Math.random()"
         :style="route.meta.hide ? { display: 'none' } : ''"
       >
-        <a-icon
-          theme="filled"
-          v-if="route.meta.icon"
-          :component="route.meta.icon"
-        />
+        <!--<a-icon-->
+        <!--  theme="filled"-->
+        <!--  v-if="route.meta.icon"-->
+        <!--  :component="route.meta.icon"-->
+        <!--/>-->
+        <icon-font type="icon-icon_menu_placeholder_fill" />
         <span>{{ route.meta && route.meta.title }}</span>
       </a-menu-item>
     </template>
@@ -51,10 +52,11 @@ const TGSubMenu = {
       popupClassName="t-g-menu-popup"
     >
     <div slot="title">
-      <a-icon
-        v-if="menuInfo.meta.icon"
-        :component="menuInfo.meta.icon"
-      />
+      <!--<a-icon-->
+      <!--  v-if="menuInfo.meta.icon"-->
+      <!--  :component="menuInfo.meta.icon"-->
+      <!--/>-->
+      <icon-font type="icon-icon_menu_placeholder_fill" />
       <span>{{ menuInfo.meta && menuInfo.meta.title }}</span>
     </div>
     <template v-for="route in menuInfo.children">
@@ -70,10 +72,11 @@ const TGSubMenu = {
         :key="route.path || Math.random()"
         :style="route.meta.hide ? { display: 'none' } : ''"
       >
-        <a-icon
-          v-if="route.meta.icon"
-          :component="route.meta.icon"
-        />
+        <!--<a-icon-->
+        <!--  v-if="route.meta.icon"-->
+        <!--  :component="route.meta.icon"-->
+        <!--/>-->
+        <icon-font type="icon-icon_menu_placeholder_fill" />
         <span>{{ route.meta && route.meta.title }}</span>
       </a-menu-item>
     </template>

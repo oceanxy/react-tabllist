@@ -4,7 +4,7 @@
 export default [
   {
     path: 'edph/home',
-    name: 'edphHome',
+    name: 'home',
     component: () => import('@/apps/ensuring-deliveries-of-presold-homes/views/Home'),
     meta: {
       title: '保交楼首页',

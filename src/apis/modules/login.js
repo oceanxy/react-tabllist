@@ -46,5 +46,16 @@ export default {
       url: '/auth/passport/getUserMenuList',
       method: 'post'
     })
+  },
+  /**
+   * 获取验证码key
+   * @param request
+   * @returns {*}
+   */
+  getCodeKey(request) {
+    return request({
+      url: '/auth/verifyCode/getVerifyCodeKey',
+      method: 'post'
+    })
   }
 }

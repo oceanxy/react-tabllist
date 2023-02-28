@@ -1,6 +1,5 @@
-import '../assets/styles/index.scss'
 import { createNamespacedHelpers } from 'vuex'
-import { Button, Form, Input } from 'ant-design-vue'
+import { Button, Form, Icon, Input } from 'ant-design-vue'
 import { generateRoute } from '@/utils/utilityFunction'
 import { createRouter } from '@/router'
 
@@ -13,23 +12,24 @@ export default Form.create({ name: 'TGLoginForm' })({
     picCodePath: '',
     hint: false
   }),
-  computed: mapState({ loading: 'loading' }),
-  mounted() {
+  computed: mapState({ loading: 'loading', codeKey: 'codeKey' }),
+  async mounted() {
     this.setLoading(false)
-    // this.genCode()
 
     if (process.env.NODE_ENV === 'development') {
       // 开发模式默认账号密码
       this.form.setFieldsValue({
-        username: 'adminOne',
-        password: '123456'
-        // picCode: 'LANJOR'
+        username: 'sysadmin',
+        password: '123456',
+        picCode: 'LANJOR'
       })
     }
+
+    await this.genCode()
   },
   methods: {
     ...mapMutations({ setLoading: 'setLoading' }),
-    ...mapActions({ login: 'login' }),
+    ...mapActions({ login: 'login', getCodeKey: 'getCodeKey' }),
     handleSubmit(e) {
       e.preventDefault()
 
@@ -38,7 +38,7 @@ export default Form.create({ name: 'TGLoginForm' })({
           const { status } = await this.login(values)
 
           if (!status) {
-            // this.genCode()
+            await this.genCode()
           } else {
             this.hint = true
 
@@ -55,8 +55,10 @@ export default Form.create({ name: 'TGLoginForm' })({
         }
       })
     },
-    genCode() {
-      this.picCodePath = '/api/auth/verifyCode/loginImg?t=' + Math.random()
+    async genCode() {
+      await this.getCodeKey()
+
+      this.picCodePath = `${process.env.VUE_APP_BASE_API}/auth/verifyCode/loginImg?verifyCodeKey=${this.codeKey}`
     }
   },
   render() {
@@ -72,12 +74,19 @@ export default Form.create({ name: 'TGLoginForm' })({
               rules: [
                 {
                   required: true,
-                  message: '请输入用户名！',
+                  message: '请输入用户名!',
                   trigger: ''
                 }
               ]
             })(
-              <Input placeholder="请输入账号" />
+              <Input placeholder="请输入账号">
+                <template slot="prefix">
+                  <a-icon
+                    style={{ color: '#1890ff' }}
+                    type="user"
+                  />
+                </template>
+              </Input>
             )
           }
         </Form.Item>
@@ -85,29 +94,46 @@ export default Form.create({ name: 'TGLoginForm' })({
           {
             this.form.getFieldDecorator('password', {
               rules: [
-                { required: true, message: '请输入密码！' }
+                { required: true, message: '请输入密码!' }
               ]
             })(
-              <Input placeholder="请输入密码" type="password" />
+              <Input
+                placeholder="请输入密码"
+                type="password"
+              >
+                <template slot="prefix">
+                  <Icon
+                    style={{ color: '#1890ff' }}
+                    type="lock"
+                  />
+                </template>
+              </Input>
             )
           }
         </Form.Item>
-        {/*<Form.Item class="code" style={{ display: 'none' }}>*/}
-        {/*  {*/}
-        {/*    this.form.getFieldDecorator('picCode', {*/}
-        {/*      rules: [*/}
-        {/*        { required: true, message: '请输入验证码!' }*/}
-        {/*      ]*/}
-        {/*    })(*/}
-        {/*      <Input placeholder="请输入验证码" />*/}
-        {/*    )*/}
-        {/*  }*/}
-        {/*  <img*/}
-        {/*    src={this.picCodePath}*/}
-        {/*    alt=""*/}
-        {/*    onClick={this.genCode}*/}
-        {/*  />*/}
-        {/*</Form.Item>*/}
+        <Form.Item class="code">
+          {
+            this.form.getFieldDecorator('picCode', {
+              rules: [
+                { required: true, message: '请输入验证码!' }
+              ]
+            })(
+              <Input placeholder="请输入验证码">
+                <template slot="prefix">
+                  <Icon
+                    style={{ color: '#1890ff' }}
+                    type="code"
+                  />
+                </template>
+              </Input>
+            )
+          }
+          <img
+            src={this.picCodePath}
+            alt=""
+            onClick={this.genCode}
+          />
+        </Form.Item>
         <Form.Item>
           <Button
             class="login-submit"

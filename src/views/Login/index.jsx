@@ -4,7 +4,7 @@
 
 import './assets/styles/index.scss'
 import ULLoginForm from '@/views/Login/components/TGLoginForm'
-import BNContainer from '@/components/TGModule'
+import TGContainer from '@/components/TGContainer'
 import config from '@/config'
 
 export default {

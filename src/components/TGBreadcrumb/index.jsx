@@ -1,5 +1,5 @@
 import './index.scss'
-import { Breadcrumb } from 'ant-design-vue'
+import { Breadcrumb, Button } from 'ant-design-vue'
 import { RouterLink } from 'vue-router'
 
 export default {
@@ -10,10 +10,6 @@ export default {
       // 'normal'：正常模式 'onlyLast'：只显示最后一级
       default: 'mormal'
     }
-  },
-  components: {
-    [Breadcrumb.name]: Breadcrumb,
-    [Breadcrumb.Item.name]: Breadcrumb.Item
   },
   computed: {
     matchedRoute() {
@@ -41,33 +37,43 @@ export default {
       return route?.meta?.title ?? route.name
     },
     itemRender({ route, routes }) {
+      // 最后一项
       if (routes.indexOf(route) === routes.length - 1) {
         return (
           <span class={'tg-breadcrumb-last-title'}>
             {this.handleBreadcrumbName(route)}
           </span>
         )
-      } else {
-        if (this.mode === 'normal') {
-          return (
-            <RouterLink to={route.path || '/'}>
-              {this.handleBreadcrumbName(route)}
-            </RouterLink>
-          )
-        }
-
-        return null
       }
+
+      if (this.mode === 'normal') {
+        return (
+          <RouterLink to={route.path || '/'}>
+            {this.handleBreadcrumbName(route)}
+          </RouterLink>
+        )
+      }
+
+      return null
     }
   },
   render() {
     return (
-      <Breadcrumb
-        routes={this.matchedRoute}
-        class={'tg-breadcrumb'}
-        separator={'>'}
-        itemRender={this.itemRender}
-      />
+      <div class={'tg-breadcrumb'}>
+        <IconFont type={'icon-global-home'} class={'tg-breadcrumb-btn-home'} />
+        <Breadcrumb
+          routes={this.matchedRoute}
+          separator={'/'}
+          itemRender={this.itemRender}
+        />
+        <div class={'tg-breadcrumb-guide'}>
+          <IconFont type={'icon-global-help'} class={'tg-breadcrumb-btn-question'} />
+          <Button type={'link'} class={'tg-breadcrumb-btn'}>
+            工作台操作指南
+            <IconFont type={'icon-global-right'} class={'tg-breadcrumb-btn-right'} />
+          </Button>
+        </div>
+      </div>
     )
   }
 }

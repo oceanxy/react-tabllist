@@ -1,0 +1,210 @@
+@import '@/assets/styles/theme.scss';
+
+.tg-layout-header {
+  height: 56px;
+  padding: 0;
+  background: $primary-color;
+  line-height: unset;
+  display: flex;
+
+  .tg-layout-header-content {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 24px;
+    flex: auto;
+
+    .tg-layout-header-search {
+      width: 300px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      .menu-btn {
+        border: none;
+        transition: all 0.3s;
+        opacity: 0.6;
+
+        &:hover {
+          opacity: 1;
+        }
+
+        &.menu-btn-fold {
+          font-size: 1.8em;
+          color: #ffffff;
+
+          &.reverse {
+            transform: rotateY(180deg);
+          }
+        }
+      }
+
+      .search-input {
+        .ant-input-group {
+          transition: all 0.15s;
+
+          &:hover {
+            border-radius: 6px;
+            box-shadow: 0 0 0 2px rgb(#ffffff, 20%)
+          }
+
+          .ant-input {
+            background: $primary-hover-color;
+            height: 36px;
+            line-height: 36px;
+            color: #ffffff;
+            font-size: 14px;
+            border: none;
+
+            &:focus {
+              box-shadow: unset;
+            }
+
+            &::placeholder {
+              color: $primary-placeholder-color;
+            }
+          }
+
+          .ant-input-group-addon {
+            border: none;
+            background: $primary-hover-color;
+
+            .anticon {
+              color: #ffffff;
+              font-size: 1.4em;
+              opacity: .6;
+              transition: opacity 0.3s;
+              cursor: pointer;
+            }
+
+            &:hover {
+              .anticon {
+                opacity: 1;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .tg-header-info {
+      margin-left: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .tg-header-user {
+        display: flex;
+        align-items: center;
+
+        &.tg-header-user-content {
+          .tg-user-info {
+            padding-left: 12px;
+            font-size: 16px;
+            padding-right: 16px;
+
+            .username {
+              color: #ffffff;
+              font-size: 14px;
+              font-weight: 500;
+              line-height: 18px;
+            }
+
+            .tel {
+              color: $primary-sub-color;
+              font-size: 12px;
+              font-weight: 400;
+              line-height: 15px;
+            }
+          }
+        }
+      }
+
+      .tg-header-divider {
+        height: 36px;
+        background: $primary-sub-color;
+        margin-left: 16px;
+        margin-right: 24px;
+      }
+
+      .tg-header-icon {
+        color: #ffffff;
+        font-size: 1.8em;
+        margin-left: 8px;
+        margin-right: 8px;
+        opacity: 0.6;
+
+        .anticon {
+          vertical-align: unset;
+        }
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
+
+.tg-header-user-overlay {
+  padding: 0;
+  top: 64px !important;
+}
+
+.tg-header-news-overlay {
+  padding: 0;
+  top: 64px !important;
+
+  .ant-popover-inner-content {
+    padding: 0 0 12px 0;
+
+    .tg-header-news {
+      width: 240px;
+      background: #ffffff;
+
+      .ant-tabs-nav-container {
+        line-height: 42px;
+
+        .ant-badge {
+          font-size: 14px;
+          font-weight: 700;
+          color: $primary-active-color;
+        }
+      }
+
+      .ant-tabs-ink-bar {
+        height: 1px;
+      }
+
+      .ant-menu-item {
+        padding: 12px 16px;
+        margin: 0;
+        height: auto;
+        line-height: initial;
+        overflow: hidden;
+        white-space: break-spaces;
+        transition: background 0.3s;
+        border-bottom: 1px solid $border-color-default;
+
+        &:hover {
+          color: inherit;
+          background: $primary-hover-light-color;
+        }
+
+        div:first-child {
+          font-size: 12px;
+          font-weight: 400;
+          color: $text-or-icon-color;
+          padding-bottom: 8px;
+        }
+
+        div:last-child {
+          font-size: 12px;
+          font-weight: 400;
+          color: $text-or-icon-sub-color;
+        }
+      }
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import { Form } from 'ant-design-vue'
-import BNContainer from '@/components/TGModule'
+import TGContainer from '@/components/TGContainer'
 
 export default Form.create({})({
   data() {

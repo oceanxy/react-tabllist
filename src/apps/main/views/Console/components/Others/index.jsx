@@ -1,5 +1,5 @@
 import './index.scss'
-import BNContainer from '@/components/TGModule'
+import TGContainer from '@/components/TGContainer'
 import Chart from '@/components/Chart'
 import { Spin } from 'ant-design-vue'
 import Title from '../Title'

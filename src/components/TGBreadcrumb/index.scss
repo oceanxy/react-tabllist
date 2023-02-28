@@ -1,11 +1,46 @@
+@import '@/assets/styles/theme.scss';
+
 .tg-breadcrumb {
+  display: flex;
+  align-items: center;
+  height: 60px;
   flex: none;
-  padding: 14px 24px;
-  line-height: 32px;
+  padding: 16px 24px;
+  line-height: 24px;
+
+  .tg-breadcrumb-btn-home {
+    color: $text-or-icon-color;
+    font-size: 1.3em;
+    margin-right: 4px;
+  }
 
   .tg-breadcrumb-last-title {
     font-size: 14px;
-    font-weight: bolder;
-    color: #344054;
+    font-weight: 400;
+    color: $text-or-icon-color;
+    //color: $text-or-icon-light-color;
+  }
+
+  .tg-breadcrumb-guide {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+
+    .tg-breadcrumb-btn-question {
+      color: $text-or-icon-color;
+      font-size: 1.3em;
+    }
+
+    .tg-breadcrumb-btn {
+      display: flex;
+      align-items: center;
+      margin-left: 8px;
+    }
+
+    .tg-breadcrumb-btn-right {
+      margin-top: 0.125em;
+      margin-left: 2px;
+      color: $text-or-icon-color;
+    }
   }
 }

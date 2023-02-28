@@ -20,9 +20,9 @@ export default {
       fullName: '',
       id: ''
     },
-    parkList: [],
     visibilityOfEditPassword: false,
-    currentItem: {}
+    currentItem: {},
+    codeKey: ''
   },
   mutations: {
     setLoading(state, payload) {
@@ -71,7 +71,8 @@ export default {
             p: payload.password
           })
         ),
-        vck: payload.picCode
+        vck: payload.picCode,
+        verifyCodeKey: state.codeKey
       })
 
       const { status } = response
@@ -117,11 +118,22 @@ export default {
 
       return Promise.resolve(true)
     },
-    async switchEnt({
-      dispatch, commit, state
-    }, payload) {
-      commit('setParkInfo', payload)
-      window.location.reload()
+    async getCodeKey({ commit }) {
+      const response = await apis.getCodeKey()
+
+      if (response.status) {
+        commit('setState', {
+          value: response.data,
+          moduleName: 'login',
+          stateName: 'codeKey'
+        }, { root: true })
+      } else {
+        commit('setState', {
+          value: '',
+          moduleName: 'login',
+          stateName: 'codeKey'
+        }, { root: true })
+      }
     }
   }
 }

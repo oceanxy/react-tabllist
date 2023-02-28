@@ -6,7 +6,7 @@ import './assets/styles/index.scss'
 import { Tabs } from 'ant-design-vue'
 import TGLoginForm from '@/views/Login/components/TGLoginForm'
 import TGTabPane from '@/components/TGTabPane'
-import BNContainer from '@/components/TGModule'
+import TGContainer from '@/components/TGContainer'
 import { createNamespacedHelpers } from 'vuex'
 
 const { mapActions } = createNamespacedHelpers('login')

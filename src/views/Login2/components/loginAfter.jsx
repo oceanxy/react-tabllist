@@ -3,7 +3,7 @@
  */
 
 import '../assets/styles/index.scss'
-import BNContainer from '@/components/TGModule'
+import TGContainer from '@/components/TGContainer'
 import { Button, Tag } from 'ant-design-vue'
 import { createNamespacedHelpers } from 'vuex'
 

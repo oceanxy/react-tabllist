@@ -2,6 +2,9 @@
 // 配合babel-plugin-import，此时会自动引入对应的样式文件
 import { Button, Form, FormModel, Icon, Input, Modal, Select, Spin, Tree } from 'ant-design-vue'
 import Vue from 'vue'
+import config from '@/config'
+
+const IconFont = Icon.createFromIconfontCN({ scriptUrl: config.iconFontSymbol })
 
 // 按需注册特定组件
 Vue.component(Spin.name, Spin)
@@ -16,6 +19,7 @@ Vue.component(FormModel.name, FormModel)
 Vue.component(FormModel.Item.name, FormModel.Item)
 Vue.component(Select.name, Select)
 Vue.component(Select.Option.name, Select.Option)
+Vue.component('IconFont', IconFont)
 
 // 解决报错：[Vue warn]: Failed to resolve directive: ant-portal (found in <Anonymous>)
 Vue.use(Modal)

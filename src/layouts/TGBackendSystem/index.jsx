@@ -3,8 +3,8 @@ import { Layout } from 'ant-design-vue'
 import TGHeader from '@/components/TGHeader'
 import TGMenu from '@/components/TGMenu'
 import TGRouterView from '@/components/TGRouterView'
-import Logo from '@/components/Logo'
 import { mapGetters } from 'vuex'
+import TGBreadcrumb from '@/components/TGBreadcrumb'
 
 export default {
   name: 'TGBackendSystemLayout',
@@ -17,19 +17,19 @@ export default {
   render() {
     return (
       <Layout id="tg-responsive-layout">
-        <Layout.Sider
-          theme={'light'}
-          v-model={this.collapsed}
-          trigger={null}
-          class={`tg-sider${this.collapsed ? ' collapsed' : ''}`}
-          collapsible
-        >
-          <Logo />
-          <TGMenu />
-        </Layout.Sider>
+        <TGHeader />
         <Layout>
-          <TGHeader layout="manager" showBreadcrumb={false} />
+          <Layout.Sider
+            theme={'light'}
+            v-model={this.collapsed}
+            trigger={null}
+            class={`tg-sider${this.collapsed ? ' collapsed' : ''}`}
+            collapsible
+          >
+            <TGMenu />
+          </Layout.Sider>
           <Layout.Content class="tg-content">
+            <TGBreadcrumb />
             <TGRouterView />
           </Layout.Content>
         </Layout>
