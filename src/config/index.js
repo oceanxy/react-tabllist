@@ -8,7 +8,7 @@ export default {
   // 动态路由（从后台获取权限菜单）
   dynamicRouting: false,
   // iconfont
-  iconFontSymbol: '//at.alicdn.com/t/c/font_3919835_7nkito7l0b7.js',
+  iconFontSymbol: '//at.alicdn.com/t/c/font_3919835_632idb1pkh.js',
   // 系统名称
   systemName: '渝兴集团综合管理平台',
   systemNameEn: '',

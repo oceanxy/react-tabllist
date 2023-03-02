@@ -240,9 +240,9 @@ export default {
 
       // ------------------------------------------------------------------------
 
-      let keyPath = e.key
+      let keyPath = [e.key]
 
-      if (!keyPath) {
+      if (!keyPath[0]) {
         const subMenuDom = path.filter(dom => dom.classList?.contains('ant-menu-submenu'))
 
         // 获取当前点击的折叠菜单的keyPath

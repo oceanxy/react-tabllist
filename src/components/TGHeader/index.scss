@@ -6,6 +6,9 @@
   background: $primary-color;
   line-height: unset;
   display: flex;
+  position: relative;
+  z-index: 1000;
+  @include box-shadow($primary-shadow-color);
 
   .tg-layout-header-content {
     height: 100%;

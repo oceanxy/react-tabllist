@@ -4,21 +4,39 @@
 
 // 主题色配置
 $primary-color: #2970ff;
-$primary-shadow-color: rgb(41, 112, 255, .2);
-$primary-shadow-normal: rgb(40, 112, 255, .6);
+$primary-shadow-color: $primary-color;
 $primary-active-color: #155eef;
 $primary-hover-color: #528bff;
 $primary-hover-light-color: #eff4ff;
 $primary-placeholder-color: #b2ccff;
 $primary-sub-color: #b2ccff;
-$error-color: #f97066;
+
+// 状态色
+$error-color: #f04438;
+$error-light-color: #fffbfa;
+$warn-color: #f79009;
+$warn-light-color: #fffcf5;
+$success-color: #12b76a;
+$success-light-color: #f6fef9;
+$info-color: #2970ff;
+$info-light-color: #f3f7ff;
+$disabled-color: #10182859;
+$disabled-light-color: #1018280a;
+
+// 模块底色
+$module-background-color: #ffffff;
+$card-background-color: #f8fafc;
+$card-background-deepen-color: #eef2f6;
 
 // 边框
 $border-color-default: #1018281f;
 $border-color-table: #1018280f;
+$border-shadow-color: rgba(0, 0, 0, 0.10);
 
 // 文字
+$text-primary-color: #000000;
 $text-or-icon-color: #18181b;
+$text-or-icon-slightly-color: #18181bcc;
 $text-or-icon-sub-color: #18181b9e;
 $text-or-icon-light-color: #18181b59;
 
@@ -31,4 +49,8 @@ $scrollbar-thumb-shadow-color: rgba(211, 211, 211, 0.3);
 
 @mixin container-border-radius($value: 4px) {
   border-radius: $value;
+}
+
+@mixin box-shadow($color) {
+  box-shadow: 2px 0 6px 0 $color;
 }

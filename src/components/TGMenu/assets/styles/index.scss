@@ -4,6 +4,9 @@
   overflow-x: hidden;
   overflow-y: auto;
   height: 100%;
+  position: relative;
+  z-index: 900;
+  @include box-shadow($border-shadow-color);
 }
 
 .ant-menu-submenu.ant-menu-submenu-popup > .ant-menu {

@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App'
 import config from './config'
 import '@/utils/antvComponents'
-import { generateRoute } from '@/utils/utilityFunction'
+import { initializeDynamicRoutes } from '@/utils/utilityFunction'
 import router from '@/router'
 import store from '@/store'
 
@@ -14,8 +14,7 @@ if (process.env.NODE_ENV === 'development' && config.mock) {
 }
 
 if (localStorage.getItem('token') && config.dynamicRouting) {
-  const tempMenu = JSON.parse(localStorage.getItem('menu'))[0]
-  const menu = generateRoute(tempMenu)
+  const menu = initializeDynamicRoutes()
   const homeRouteIndex = router.options.routes.findIndex(route => route.path === '/')
 
   router.matcher = router.createRouter(menu).matcher

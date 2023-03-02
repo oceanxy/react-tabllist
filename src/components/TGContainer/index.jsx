@@ -4,7 +4,7 @@ import { Button } from 'ant-design-vue'
 export default {
   props: {
     /**
-     * 标题文字
+     * 标题文字 或 JSX.Element
      */
     modalTitle: {
       type: [String, Object],
@@ -24,6 +24,14 @@ export default {
     showMore: {
       type: Boolean,
       default: false
+    },
+    /**
+     * 右侧显示更多的图标，依赖 showMore
+     * DOMElement 或 JSX.Element
+     */
+    rightIcon: {
+      type: [String, Object],
+      default: ''
     },
     /**
      * 是否显示标题与内容的分割线
@@ -61,6 +69,15 @@ export default {
       default: false
     }
   },
+  computed: {
+    _rightIcon() {
+      return (
+        <div class={'right-icon'}>
+          {this.rightIcon}
+        </div>
+      )
+    }
+  },
   methods: {
     onMore() {
       this.$emit('more')
@@ -89,11 +106,15 @@ export default {
                 {this.modalTitle}
                 {
                   this.showMore
-                    ? <Button
-                      class={'more-btn'}
-                      icon="right"
-                      onclick={this.onMore}
-                    />
+                    ? (
+                      this._rightIcon || (
+                        <Button
+                          class={'right-icon'}
+                          icon="right"
+                          onclick={this.onMore}
+                        />
+                      )
+                    )
                     : null
                 }
               </div>

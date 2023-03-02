@@ -1,61 +1,31 @@
 import './assets/styles/index.scss'
 import dynamicState from '@/mixins/dynamicState'
-import TGContainer from '@/components/TGContainer'
+import Concern from './components/Concern'
+import UserInfo from './components/UserInfo'
+import FrequentlyUsed from '@/views/Workbench/components/FrequentlyUsed'
+import Todo from './components/Todo'
+import News from './components/News'
 
 export default {
   name: 'Workbench',
   mixins: [dynamicState()],
   render() {
     return (
-      <div class={'tg-edph-home'}>
-        <TGContainer
-          class="tg-edph-home-concern"
-          modalTitle="我的关注"
-          showBoxShadow={false}
-          titleClass="not-login-title"
-          contentClass="shortcut-container"
-        >
-        </TGContainer>
-        <TGContainer
-          class="tg-edph-home-userinfo"
-          width="40%"
-          modalTitle="我的消息"
-          showBoxShadow={false}
-          showMore
-          titleClass="not-login-title"
-          onmore={this.onMore}
-        >
-        </TGContainer>
-        <TGContainer
-          class="tg-edph-home-frequently-used-functions"
-          width="100%"
-          modalTitle="常用功能"
-          showBoxShadow={false}
-          showMore
-          titleClass="not-login-title"
-          onmore={this.onMore}
-        >
-        </TGContainer>
-        <TGContainer
-          class="tg-edph-home-to-do"
-          width="49%"
-          modalTitle="待办事项"
-          showBoxShadow={false}
-          showMore
-          titleClass="not-login-title"
-          onmore={this.onMore}
-        >
-        </TGContainer>
-        <TGContainer
-          class="my-news-container"
-          width="50%"
-          modalTitle="审阅消息"
-          showBoxShadow={false}
-          showMore
-          titleClass="not-login-title"
-          onmore={this.onMore}
-        >
-        </TGContainer>
+      <div class={'tg-workbench'}>
+        <div class={'row-1'}>
+          {/* 我的关注 */}
+          <Concern class={'tg-workbench-concern'} />
+          {/* 用户信息 */}
+          <UserInfo class={'tg-workbench-userinfo'} />
+        </div>
+        {/* 常用功能 */}
+        <FrequentlyUsed class={'row-2 tg-workbench-frequently-used'} />
+        <div class={'row-3'}>
+          {/* 待办事项 */}
+          <Todo class={'tg-workbench-to-do'} />
+          {/* 审阅消息 */}
+          <News class={'tg-workbench-news'} />
+        </div>
       </div>
     )
   }

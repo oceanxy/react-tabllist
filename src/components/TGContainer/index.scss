@@ -5,6 +5,7 @@
   border-radius: 6px;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
   z-index: 10;
 
   &.show-shadow {
@@ -13,7 +14,7 @@
 
   .box-title {
     position: relative;
-    padding: 10px 20px 10px 0;
+    padding: 16px;
     min-height: 40px;
     box-sizing: border-box;
     display: flex;
@@ -21,7 +22,6 @@
     font-size: 16px;
     font-weight: bolder;
     color: #344054;
-    gap: 1vh;
     flex: none;
     white-space: nowrap;
 
@@ -29,18 +29,24 @@
       white-space: nowrap;
     }
 
-    & > *:not(.box-title) {
+    & > *:not(.box-title, .anticon) {
       display: flex;
       flex: auto;
       align-items: center;
-      gap: 2vh;
+      gap: .5ic;
     }
 
-    .more-btn {
+    .right-icon {
       flex: none;
       display: flex;
       align-items: center;
-      justify-content: center;
+      transition: opacity .3s;
+      cursor: pointer;
+      opacity: 0.6;
+
+      &:hover {
+        opacity: 1;
+      }
     }
 
     &.padding-left {
