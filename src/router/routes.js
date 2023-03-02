@@ -19,15 +19,30 @@ export default [
   {
     path: '/',
     name: 'home',
+    redirect: { name: 'workbench' },
     // 选择布局组件
     component: () => import('@/layouts/TGBackendSystem'),
     meta: {
-      title: '后台',
+      title: '工作台',
       keepAlive: false,
       requiresAuth: true,
-      icon: () => import('@/assets/images/console.svg')
+      // icon: () => import('@/assets/images/console.svg') // svg 图表方式
+      icon: 'icon-menu-workbench' // icon-font symbol 方式
     },
-    children: []
+    children: [
+      {
+        path: 'workbench',
+        name: 'workbench',
+        // 选择布局组件
+        component: () => import('@/views/Workbench'),
+        meta: {
+          title: '工作台',
+          keepAlive: false,
+          requiresAuth: true,
+          icon: 'icon-menu-workbench'
+        }
+      }
+    ]
   },
   {
     path: '/404',

@@ -90,10 +90,7 @@ export default {
                       <IconFont type={'icon-global-down'} style={'color: #ffffff'} />
                     </div>
                     <Menu slot={'overlay'}>
-                      <Menu.Item>111</Menu.Item>
-                      <Menu.Item>222</Menu.Item>
-                      <Menu.Item>333</Menu.Item>
-                      <Menu.Item>444</Menu.Item>
+                      <Menu.Item onClick={this.onLogOut}>注销</Menu.Item>
                     </Menu>
                   </Dropdown>
                   <Divider type={'vertical'} class={'tg-header-divider'} />

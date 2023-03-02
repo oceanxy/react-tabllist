@@ -38,7 +38,7 @@ export default {
   },
   render () {
     return (
-      <BNContainer width={600} class="login-box" contentClass="login-box-content" showTitleShape={false}>
+      <TGContainer width={600} class="login-box" contentClass="login-box-content" showTitleShape={false}>
         <div class="login-subtitle">Welcome Login!</div>
         <Tabs activeKey={this.activeKey} size="large" onTabClick={this.handleTabClick}>
           <TGTabPane name="帐号密码登录" tabKey={1}>
@@ -53,7 +53,7 @@ export default {
             企业还未入驻？点击立即申请
           </Button> */}
         </div>
-      </BNContainer>
+      </TGContainer>
     )
   }
 }

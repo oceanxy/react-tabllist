@@ -1,7 +1,8 @@
 import { createNamespacedHelpers } from 'vuex'
 import { Button, Form, Icon, Input } from 'ant-design-vue'
-import { generateRoute } from '@/utils/utilityFunction'
+import { initializeDynamicRoutes } from '@/utils/utilityFunction'
 import { createRouter } from '@/router'
+import config from '@/config'
 
 const {
   mapState, mapActions, mapMutations
@@ -42,12 +43,13 @@ export default Form.create({ name: 'TGLoginForm' })({
           } else {
             this.hint = true
 
-            const tempMenu = JSON.parse(localStorage.getItem('menu'))[0]
-            const menu = generateRoute(tempMenu)
+            if (config.dynamicRouting) {
+              const menu = initializeDynamicRoutes()
 
-            // 生成动态路由
-            this.$router.matcher = createRouter(menu).matcher
-            this.$router.options.routes.splice(1, 1, menu)
+              // 生成动态路由
+              this.$router.matcher = createRouter(menu).matcher
+              this.$router.options.routes.splice(1, 1, menu)
+            }
 
             await this.$router.replace({ name: 'home' })
             this.hint = false

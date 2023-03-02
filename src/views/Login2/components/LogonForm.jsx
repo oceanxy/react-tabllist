@@ -7,7 +7,7 @@ export default Form.create({})({
   },
   render() {
     return (
-      <BNContainer modalTitle="申请入驻" width="auto"></BNContainer>
+      <TGContainer modalTitle="申请入驻" width="auto"></TGContainer>
     )
   }
 })

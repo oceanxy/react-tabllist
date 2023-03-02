@@ -98,4 +98,4 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 除了递归遍历，例如`this.$children.xxx.$children.$refs[xxx]`的形式，可以借鉴`React`的`ref`，采用`callback`的形式。
 
-结合`vue`的`provided`和`inject`实现。具体例子见 */src/components/BNContainerWithSider* 组件与 */src/mixins/forTable* 的交互。
+结合`vue`的`provided`和`inject`实现。具体例子见 */src/components/TGContainerWithSider* 组件与 */src/mixins/forTable* 的交互。

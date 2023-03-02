@@ -12,22 +12,26 @@
     <template v-for="route in menuRoutes">
       <t-g-sub-menu
         v-if="!route.meta.hideChildren && route.children && route.children.length"
-        :key="route.path || Math.random()"
+        :key="route.path"
         :menu-info="route"
         @subMenuClick="titleClick"
         :style="route.meta.hide ? { display: 'none' } : ''"
+        :selectedKeys="selectedKeys"
       />
       <a-menu-item
         v-else
-        :key="route.path || Math.random()"
+        :key="route.path"
         :style="route.meta.hide ? { display: 'none' } : ''"
       >
-        <!--<a-icon-->
-        <!--  theme="filled"-->
-        <!--  v-if="route.meta.icon"-->
-        <!--  :component="route.meta.icon"-->
-        <!--/>-->
-        <icon-font type="icon-icon_menu_placeholder_fill" />
+        <a-icon
+          theme="filled"
+          v-if="route.meta.icon && typeof route.meta.icon !== 'string'"
+          :component="route.meta.icon"
+        />
+        <icon-font
+          v-else-if="route.meta.icon"
+          :type="route.meta.icon + (selectedKeys[0] === route.path ? '-active' : '')"
+        />
         <span>{{ route.meta && route.meta.title }}</span>
       </a-menu-item>
     </template>
@@ -37,7 +41,7 @@
 <script>
 import './assets/styles/index.scss'
 import { Menu } from 'ant-design-vue'
-import { generateRoute } from '@/utils/utilityFunction'
+import { initializeDynamicRoutes } from '@/utils/utilityFunction'
 import config from '@/config'
 import { constRoutes } from '@/router'
 
@@ -45,38 +49,46 @@ import { constRoutes } from '@/router'
 const TGSubMenu = {
   template: `
     <a-sub-menu
-      :key="menuInfo.path || Math.random()"
+      :key="menuInfo.path"
       v-bind="$props"
       v-on="$listeners"
       @titleClick="titleClick"
       popupClassName="t-g-menu-popup"
     >
     <div slot="title">
-      <!--<a-icon-->
-      <!--  v-if="menuInfo.meta.icon"-->
-      <!--  :component="menuInfo.meta.icon"-->
-      <!--/>-->
-      <icon-font type="icon-icon_menu_placeholder_fill" />
+      <a-icon
+        theme="filled"
+        v-if="menuInfo.meta.icon && typeof menuInfo.meta.icon !== 'string'"
+        :component="menuInfo.meta.icon"
+      />
+      <icon-font
+        v-else-if="menuInfo.meta.icon"
+        :type="menuInfo.meta.icon + (menuInfo.children.map(i => i.path).includes(selectedKeys[0]) ? '-active' : '')"
+      />
       <span>{{ menuInfo.meta && menuInfo.meta.title }}</span>
     </div>
     <template v-for="route in menuInfo.children">
       <t-g-sub-menu
         v-if="!route.meta.hideChildren && route.children && route.children.length"
-        :key="route.path || Math.random()"
+        :key="route.path"
         :menu-info="route"
         @subMenuClick="titleClick"
         :style="route.meta.hide ? { display: 'none' } : ''"
       />
       <a-menu-item
         v-else
-        :key="route.path || Math.random()"
+        :key="route.path"
         :style="route.meta.hide ? { display: 'none' } : ''"
       >
-        <!--<a-icon-->
-        <!--  v-if="route.meta.icon"-->
-        <!--  :component="route.meta.icon"-->
-        <!--/>-->
-        <icon-font type="icon-icon_menu_placeholder_fill" />
+        <a-icon
+          theme="filled"
+          v-if="route.meta.icon && typeof route.meta.icon !== 'string'"
+          :component="route.meta.icon"
+        />
+        <icon-font
+          v-else-if="route.meta.icon"
+          :type="route.meta.icon + (selectedKeys[0] === route.path ? '-active' : '')"
+        />
         <span>{{ route.meta && route.meta.title }}</span>
       </a-menu-item>
     </template>
@@ -86,11 +98,16 @@ const TGSubMenu = {
   // must add isSubMenu: true
   isSubMenu: true,
   props: {
-    // 解构a-sub-menu的属性，也就是文章开头提到的为什么使用函数式组件
+    // 解构a-sub-menu的属性，使用函数式组件的原因
     ...Menu.SubMenu.props,
     // 接收父级传递过来的菜单信息
     menuInfo: {
       type: Object,
+      required: true
+    },
+    // 当前选中菜单的数组
+    selectedKeys: {
+      type: Array,
       required: true
     }
   },
@@ -133,20 +150,19 @@ export default {
     $route: {
       immediate: true,
       handler(value) {
-        const path = value.matched[value.matched.length - 1].path.substring(1)
-        let keyPath = []
+        const keyPath = []
 
         // 根据当前进入页面的路由设置菜单的selectedKeys和openKeys值
-        if (path === '') {
-          keyPath = ['/']
-        } else {
-          keyPath = path.split('/').reverse()
+        for (let i = 0; i < value.matched.length; i++) {
+          if (value.matched[i].path !== '') {
+            keyPath.push(value.matched[i].path.substring((keyPath.at(-1) || '').length + i))
+          }
         }
 
         this.selectedKeys = keyPath
 
         this.$nextTick(() => {
-          this.openKeys = keyPath
+          this.openKeys = keyPath.reverse()
         })
       }
     }
@@ -167,8 +183,7 @@ export default {
   },
   methods: {
     getMenuRoutes() {
-      const tempMenu = JSON.parse(localStorage.getItem('menu'))[0]
-      const menu = generateRoute(tempMenu)
+      const menu = initializeDynamicRoutes()
 
       const routes = menu.children
       const rootRoute = {
@@ -225,13 +240,17 @@ export default {
 
       // ------------------------------------------------------------------------
 
-      const subMenuDom = path.filter(dom => dom.classList?.contains('ant-menu-submenu'))
+      let keyPath = e.key
 
-      // 获取当前点击的折叠菜单的keyPath
-      const keyPath = subMenuDom
-        .filter((dom, index) => (!index && !dom.__vue__.$props.isOpen) || (index > 0 && dom.__vue__.$props.isOpen))
-        .map(dom => dom.__vue__.$props.eventKey)
-        .reverse()
+      if (!keyPath) {
+        const subMenuDom = path.filter(dom => dom.classList?.contains('ant-menu-submenu'))
+
+        // 获取当前点击的折叠菜单的keyPath
+        keyPath = subMenuDom
+          .filter((dom, index) => (!index && !dom.__vue__.$props.isOpen) || (index > 0 && dom.__vue__.$props.isOpen))
+          .map(dom => dom.__vue__.$props.eventKey)
+          .reverse()
+      }
 
       // 将当前打开的父级菜单存入缓存中
       localStorage.setItem('openKeys', JSON.stringify(keyPath))

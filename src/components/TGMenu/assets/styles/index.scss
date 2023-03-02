@@ -1,3 +1,5 @@
+@import '@/assets/styles/theme.scss';
+
 .ant-menu.t-g-menu-container {
   overflow-x: hidden;
   overflow-y: auto;
@@ -12,26 +14,29 @@
 .ant-menu.t-g-menu-container,
 .ant-menu-submenu.t-g-menu-popup {
   .ant-menu-item {
-    color: rgba(52, 64, 84, 0.62);
+    color: $text-or-icon-color;
     font-size: 14px;
+    font-weight: 400;
 
     &.ant-menu-item-selected {
-      color: rgba(52, 64, 84, 1);
-      background: #fef6ee;
+      color: $primary-active-color;
+      background: $primary-hover-light-color;
       font-weight: bolder;
     }
   }
 
   .ant-menu-submenu-selected {
-    background: #fef6ee;
+    color: $primary-active-color;
+    background: $primary-hover-light-color;;
   }
 
   .ant-menu-submenu-title {
     & > div {
       display: flex;
       align-items: center;
-      color: rgba(52, 64, 84, 0.62);
+      color: $text-or-icon-color;
       font-size: 14px;
+      font-weight: 500;
     }
   }
 
@@ -42,14 +47,18 @@
     align-items: center;
 
     &:hover {
-      background: #fef6ee;
+      background: $primary-hover-light-color;
     }
+  }
+
+  .ant-menu-sub .ant-menu-item span {
+    padding-left: 12px;
   }
 
   .ant-menu-item .anticon,
   .ant-menu-submenu-title .anticon {
     margin-right: 8px;
-    font-size: 24px;
+    font-size: 1.4em;
   }
 
   .ant-menu-selected::after,

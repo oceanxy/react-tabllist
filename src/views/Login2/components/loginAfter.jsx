@@ -29,7 +29,7 @@ export default {
   },
   render() {
     return (
-      <BNContainer
+      <TGContainer
         modalTitle={
           <div class="corporate-services-title">
             企业服务
@@ -47,7 +47,7 @@ export default {
           {this.userInfo.isContract === 1 ? <Tag color="cyan">已签约</Tag> : null}
           {this.userInfo.isOwe === 1 ? <Tag color="red">已欠费</Tag> : null}
         </div>
-      </BNContainer>
+      </TGContainer>
     )
   }
 }

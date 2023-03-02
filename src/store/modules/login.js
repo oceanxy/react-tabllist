@@ -79,7 +79,11 @@ export default {
 
       if (status) {
         const {
-          userInfo, token, menuList, defaultMenuUrl, parkList
+          userInfo,
+          token,
+          menuList,
+          defaultMenuUrl,
+          parkList
         } = response.data
 
         commit('setUserInfo', userInfo)

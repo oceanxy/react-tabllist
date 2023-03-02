@@ -1,4 +1,13 @@
-export function generateRoute(menu) {
+/**
+ * 生成路由
+ * @param [menu]
+ * @returns {{children: *[], meta: {}}}
+ */
+export function initializeDynamicRoutes(menu) {
+  if (!menu) {
+    menu = JSON.parse(localStorage.getItem('menu'))[0]
+  }
+
   const route = { meta: {}, children: [] }
   const {
     name,
@@ -48,7 +57,7 @@ export function generateRoute(menu) {
 
   if (children?.length) {
     children.forEach(child => {
-      route.children.push(generateRoute(child))
+      route.children.push(initializeDynamicRoutes(child))
     })
   }
 

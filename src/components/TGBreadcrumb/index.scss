@@ -9,16 +9,23 @@
   line-height: 24px;
 
   .tg-breadcrumb-btn-home {
-    color: $text-or-icon-color;
-    font-size: 1.3em;
+    color: $text-or-icon-sub-color;
+    font-size: 1.2em;
     margin-right: 4px;
   }
 
-  .tg-breadcrumb-last-title {
+  .ant-breadcrumb-link a {
     font-size: 14px;
     font-weight: 400;
+    color: $text-or-icon-light-color;
+
+    &:hover {
+      color: $primary-color;
+    }
+  }
+
+  .tg-breadcrumb-last-title {
     color: $text-or-icon-color;
-    //color: $text-or-icon-light-color;
   }
 
   .tg-breadcrumb-guide {

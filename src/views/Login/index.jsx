@@ -25,7 +25,7 @@ export default {
     return (
       <div class={'tg-login'}>
         <div class={'title'}>{config.systemName}</div>
-        <BNContainer
+        <TGContainer
           width={400}
           class={'tg-login-box'}
           contentClass={'login-box-content'}
@@ -34,7 +34,7 @@ export default {
           <div class={'login-logo'} />
           <div class={'login-subtitle'}>您好，欢迎登录</div>
           <ULLoginForm />
-        </BNContainer>
+        </TGContainer>
         <div class={'corporate-services'}>蓝桥科技有限公司技术支持</div>
       </div>
     )

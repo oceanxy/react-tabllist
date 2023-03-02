@@ -217,7 +217,7 @@ export default ({
         }
       })
 
-      // 为 /src/components/BNContainerWithSider 组件注入获取 table ref 的逻辑
+      // 为 /src/components/TGContainerWithSider 组件注入获取 table ref 的逻辑
       if (this.getRefOfChild instanceof Function) {
         this.getRefOfChild(this.$refs[`${this.moduleName}Table`])
       }
@@ -543,7 +543,7 @@ export default ({
       // 模块名（页面组件使用 dynamicState 混合后会自动 provide 该属性）
       moduleName: { default: undefined },
       submoduleName: { default: undefined },
-      // 获取本组件的ref，依赖 moduleName（从 /src/components/BNContainerWithSider 注入的函数）
+      // 获取本组件的ref，依赖 moduleName（从 /src/components/TGContainerWithSider 注入的函数）
       getRefOfChild: { default: () => undefined }
     }
   }

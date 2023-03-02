@@ -15,12 +15,18 @@ export default {
           <LogonForm></LogonForm>
         </div>
         <div class="logon-sider">
-          <BNContainer
+          <TGContainer
             modalTitle="企业入驻条件"
             width="390px"
             showMore={true}
-            contentClass="logon-sider-conditions"></BNContainer>
-          <BNContainer modalTitle="常见问题" width="390px" showMore={true} contentClass="logon-sider-qa"></BNContainer>
+            contentClass="logon-sider-conditions"
+          />
+          <TGContainer
+            modalTitle="常见问题"
+            width="390px"
+            showMore={true}
+            contentClass="logon-sider-qa"
+          />
         </div>
       </div>
     )

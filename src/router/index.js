@@ -31,9 +31,10 @@ export function createRouter(routes) {
     }
   } else {
     // TODO 这里要获取所有子项目的路由，或者从启动命令参数获取指定项目的路由
-    const mainRoutes = require('../apps/main/router/routes')
+    // const mainRoutes = require('../apps/main/router/routes')
     const edphRouter = require('../apps/ensuring-deliveries-of-presold-homes/router/routes')
-    const appRoutes = [...new Set([...(mainRoutes.default), ...(edphRouter.default)])]
+    // const appRoutes = [...new Set([...(mainRoutes.default), ...(edphRouter.default)])]
+    const appRoutes = [...new Set(edphRouter.default)]
 
     constRoutes[homeRoutesIndex].children = constRoutes[homeRoutesIndex].children.concat(appRoutes)
   }
