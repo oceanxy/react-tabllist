@@ -5,13 +5,14 @@ import UserInfo from './components/UserInfo'
 import FrequentlyUsed from '@/views/Workbench/components/FrequentlyUsed'
 import Todo from './components/Todo'
 import News from './components/News'
+import TGContainer from '@/components/TGContainer'
 
 export default {
   name: 'Workbench',
   mixins: [dynamicState()],
   render() {
     return (
-      <div class={'tg-workbench'}>
+      <TGContainer class={'tg-workbench'} contentClass={'tg-workbench-container'}>
         <div class={'row-1'}>
           {/* 我的关注 */}
           <Concern class={'tg-workbench-concern'} />
@@ -26,7 +27,7 @@ export default {
           {/* 审阅消息 */}
           <News class={'tg-workbench-news'} />
         </div>
-      </div>
+      </TGContainer>
     )
   }
 }

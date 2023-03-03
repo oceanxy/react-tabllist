@@ -49,7 +49,7 @@ export default [
   {
     path: 'edph/real-estate',
     component: TGRouterView,
-    redirect: { name: 'realEstateList' },
+    redirect: { name: 'assets' },
     meta: {
       title: '不动产管理',
       keepAlive: false,
@@ -58,11 +58,11 @@ export default [
     },
     children: [
       {
-        path: 'real-estate-list',
-        name: 'realEstateList',
-        component: () => import('@/apps/ensuring-deliveries-of-presold-homes/views/realEstate/RealEstateList'),
+        path: 'assets',
+        name: 'assets',
+        component: () => import('@/apps/ensuring-deliveries-of-presold-homes/views/realEstate/Assets'),
         meta: {
-          title: '不动产列表',
+          title: '资产',
           keepAlive: false,
           requiresAuth: true
         }
@@ -79,11 +79,11 @@ export default [
         }
       },
       {
-        path: 'buildings',
-        name: 'buildings',
-        component: () => import('@/apps/ensuring-deliveries-of-presold-homes/views/realEstate/Buildings'),
+        path: 'projects',
+        name: 'projects',
+        component: () => import('@/apps/ensuring-deliveries-of-presold-homes/views/realEstate/Projects'),
         meta: {
-          title: '楼盘',
+          title: '项目',
           keepAlive: false,
           requiresAuth: true
         }

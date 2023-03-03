@@ -240,8 +240,6 @@ export default {
 
       // ------------------------------------------------------------------------
 
-      console.log(this.openKeys, e.key)
-
       let keyPath
 
       if (e.key) {
@@ -251,7 +249,6 @@ export default {
           keyPath = [e.key]
         }
       } else {
-
         // 获取当前点击的折叠菜单的keyPath
         keyPath = path
           .filter(dom => dom.classList?.contains('ant-menu-submenu'))

@@ -66,13 +66,19 @@ export default {
           separator={'/'}
           itemRender={this.itemRender}
         />
-        <div class={'tg-breadcrumb-guide'}>
-          <IconFont type={'icon-global-help'} class={'tg-breadcrumb-btn-question'} />
-          <Button type={'link'} class={'tg-breadcrumb-btn'}>
-            工作台操作指南
-            <IconFont type={'icon-global-right'} class={'tg-breadcrumb-btn-right'} />
-          </Button>
-        </div>
+        {
+          this.$route.name === 'workbench'
+            ? (
+              <div class={'tg-breadcrumb-guide'}>
+                <IconFont type={'icon-global-help'} class={'tg-breadcrumb-btn-question'} />
+                <Button type={'link'} class={'tg-breadcrumb-btn'}>
+                  工作台操作指南
+                  <IconFont type={'icon-global-right'} class={'tg-breadcrumb-btn-right'} />
+                </Button>
+              </div>
+            )
+            : null
+        }
       </div>
     )
   }

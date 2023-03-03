@@ -139,7 +139,8 @@ body {
   justify-content: flex-start;
   row-gap: 8px;
   column-gap: 16px;
-  padding: 16px 24px;
+  padding: 12px 20px;
+  background: $module-background-color;
 
   .row-up {
     display: flex;
@@ -304,7 +305,7 @@ body {
 .tg-function {
   margin-left: auto;
   flex: none;
-  padding: 14px 24px;
+  padding: 14px 0 24px;
 }
 
 .ant-table-wrapper {

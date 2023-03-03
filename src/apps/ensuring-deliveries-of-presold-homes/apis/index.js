@@ -1,10 +1,9 @@
 import service from '@/utils/request'
 
-// 加载框架内的apis
 const modulesFiles = require.context('./modules', true, /\.js$/)
-// 加载app内的apis
-const dynamicModulesFiles = require.context('../apps', true, /apis\/modules\/[a-zA-Z0-9-]+\.js/)
 
+// 自动引入 './modules' 中的所有 api 模块
+// 不再需要`import app from './modules/app'`
 const apis = modulesFiles.keys().reduce((modules, modulePath) => {
   // eg. 设置 './app.js' => 'app'
   const value = modulesFiles(modulePath)
@@ -17,19 +16,8 @@ const apis = modulesFiles.keys().reduce((modules, modulePath) => {
   return modules
 }, {})
 
-const appApis = dynamicModulesFiles.keys().reduce((modules, modulePath) => {
-  const value = dynamicModulesFiles(modulePath)
-
-  modules = {
-    ...modules,
-    ...value.default
-  }
-
-  return modules
-}, {})
-
 // 动态注入参数
-Object.entries({...apis, ...appApis}).forEach(([apiName, api]) => {
+Object.entries(apis).forEach(([apiName, api]) => {
   apis[apiName] = parameter => api(service, parameter)
 })
 

@@ -56,7 +56,7 @@ export default ({
           pagination: false,
           scroll: {}, // 注意：此属性不要手动设置，在this.resize方法内已经自动分配
           size: 'middle',
-          bordered: true,
+          bordered: false,
           rowClassName(record, index) {
             return index % 2 === 1 ? 'table-row-background' : ''
           }

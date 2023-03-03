@@ -1,399 +1,405 @@
 @import '@/assets/styles/theme.scss';
 
 .tg-workbench {
-  flex: 1;
-  padding: 0 24px 24px 24px;
-  display: flex;
-  gap: 12px;
-  overflow-y: auto;
-  flex-direction: column;
+  width: 100% !important;
+  overflow: hidden;
 
-  .container-title {
+  .tg-workbench-container {
+    flex: 1;
+    padding: 0 24px 24px 24px !important;
     display: flex;
-    align-items: center;
-    height: 20px;
-    line-height: 20px;
-    color: $text-or-icon-color;
-    font-size: 14px;
-    font-weight: 500;
-
-    .anticon {
-      color: $primary-color;
-      font-size: 1.4ic;
-    }
-  }
-
-  .row-1 {
-    width: 100%;
-    display: flex;
-    height: 222px;
     gap: 12px;
-  }
+    overflow-y: auto;
+    flex-direction: column;
+    background: none !important;
 
-  .row-3 {
-    display: flex;
-    flex: auto;
-    gap: 12px;
-    min-height: 276px;
-  }
-
-  .tg-workbench-concern {
-    flex: auto;
-    min-width: 690px;
-    background: $module-background-color;
-
-    .concern-cards {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-      padding: 0 16px 16px 16px;
-
-      .ant-card {
-        width: calc(25% - 48px);
-        min-width: 154px;
-        height: 69px;
-        box-sizing: border-box;
-        overflow: hidden;
-        border: none;
-        background: $card-background-color;
-
-        .ant-card-body {
-          padding: 8px 16px;
-          display: flex;
-          flex-direction: column;
-          font-size: 12px;
-          color: $text-or-icon-slightly-color;
-
-          span {
-            font-size: 24px;
-            font-weight: bolder;
-            color: $text-primary-color;
-          }
-        }
-      }
-    }
-  }
-
-  .tg-workbench-userinfo {
-    flex: none;
-    min-width: 490px;
-    flex: none;
-    height: 222px;
-    background: $module-background-color;
-
-    .userinfo-container {
-      display: flex;
-      flex-direction: column;
-
-      .userinfo-card {
-        flex: auto;
-        border: none;
-        border-bottom: 1px solid $border-color-default;
-        background: url('../../assets/images/user.png') no-repeat right center / auto 100%;
-
-        .ant-card-body {
-          padding: 0;
-          height: 100%;
-
-          .ant-avatar {
-            background: $primary-color;
-            font-size: 24px;
-            font-weight: 700;
-          }
-
-          .ant-card-meta-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: $text-or-icon-color;
-            margin-bottom: 0;
-            padding-top: 4px;
-          }
-
-          .ant-card-meta-description {
-            display: inline-block;
-            background: #84adff;
-            border-radius: 3px;
-            font-size: 12px;
-            font-weight: 400;
-            color: #ffffff;
-            padding: 0 6px;
-          }
-
-          .number-of-logins {
-            padding: 20px 10px 10px 70px;
-            color: $text-or-icon-sub-color;
-
-            span {
-              font-size: 40px;
-              font-weight: 700;
-              color: $text-primary-color;
-              display: inline-block;
-              line-height: 50px;
-            }
-          }
-        }
-      }
-
-      .logon-time {
-        flex: none;
-        height: 30px;
-        line-height: 40px;
-        font-size: 12px;
-        text-align: center;
-        color: $text-or-icon-sub-color;
-      }
-    }
-  }
-
-  .row-2.tg-workbench-frequently-used {
-    flex: none;
-    height: 116px;
-    background: $module-background-color;
-
-    .frequently-used-container {
+    .container-title {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 0 16px 16px;
+      height: 20px;
+      line-height: 20px;
+      color: $text-or-icon-color;
+      font-size: 14px;
+      font-weight: 500;
 
-      .ant-card-meta {
+      .anticon {
+        color: $primary-color;
+        font-size: 1.4ic;
+      }
+    }
+
+    .row-1 {
+      width: 100%;
+      display: flex;
+      height: 222px;
+      gap: 12px;
+    }
+
+    .row-3 {
+      display: flex;
+      flex: auto;
+      gap: 12px;
+      min-height: 276px;
+    }
+
+    .tg-workbench-concern {
+      flex: auto;
+      min-width: 222px;
+      background: $module-background-color;
+
+      .concern-cards {
         display: flex;
-        height: 48px;
-        flex: auto;
-        align-items: center;
-        overflow: hidden;
-        min-width: 130px;
-        border-radius: 4px;
+        gap: 16px;
+        flex-wrap: wrap;
+        padding: 0 16px 16px 16px;
 
-        .ant-card-meta-avatar {
-          display: flex;
-          align-items: center;
-          justify-content: flex-end;
-          flex: none;
-          margin-left: -48px;
-          width: 100px;
-          height: 100px;
-          color: #ffffff;
-          border-radius: 50%;
-          padding-right: 10px;
+        .ant-card {
+          width: calc((100% - 48px) / 4);
+          min-width: 154px;
+          height: 69px;
+          box-sizing: border-box;
+          overflow: hidden;
+          border: none;
+          background: $card-background-color;
 
-          .anticon {
+          .ant-card-body {
+            padding: 8px 16px;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            font-size: 1.6em;
-            vertical-align: unset;
-          }
-        }
+            flex-direction: column;
+            font-size: 12px;
+            color: $text-or-icon-slightly-color;
 
-        .ant-card-meta-detail {
-          padding: 0 16px 0 12px;
-
-          .ant-card-meta-title {
-            font-size: 14px;
-            font-weight: 700;
-            color: $text-or-icon-color;
-          }
-        }
-
-        &:first-child {
-          background: #eff8ff;
-
-          .ant-card-meta-avatar {
-            background: rgba(132, 202, 255, 0.2);
-
-            .anticon {
-              background: #53b1fd;
-            }
-          }
-        }
-
-        &:nth-child(2) {
-          background: #edfcf2;
-
-          .ant-card-meta-avatar {
-            background: rgba(115, 226, 163, .2);
-
-            .anticon {
-              background: #3ccb7f;
-            }
-          }
-        }
-
-        &:nth-child(3) {
-          background: #f4f3ff;
-
-          .ant-card-meta-avatar {
-            background: rgba(189, 180, 254, .2);
-
-            .anticon {
-              background: #9b8afb;
-            }
-          }
-        }
-
-        &:nth-child(4) {
-          background: #fef6ee;
-
-          .ant-card-meta-avatar {
-            background: rgba(243, 135, 68, .2);
-
-            .anticon {
-              background: #f38744;
-            }
-          }
-        }
-
-        &:nth-child(5) {
-          background: #f0fdf9;
-
-          .ant-card-meta-avatar {
-            background: rgba(95, 233, 208, .2);
-
-            .anticon {
-              background: #2ed3b7;
-            }
-          }
-        }
-
-        &:nth-child(6) {
-          background: #fefbe8;
-
-          .ant-card-meta-avatar {
-            background: rgba(253, 226, 114, .2);
-
-            .anticon {
-              background: #fac515;
-            }
-          }
-        }
-
-        &:nth-child(7) {
-          background: #eef4ff;
-
-          .ant-card-meta-avatar {
-            background: rgba(164, 188, 253, .2);
-
-            .anticon {
-              background: #8098f9;
-            }
-          }
-        }
-
-        &:nth-child(8) {
-          background: #fff1f3;
-
-          .ant-card-meta-avatar {
-            background: rgba(254, 163, 180, .2);
-
-            .anticon {
-              background: #fd6f8e;
+            span {
+              font-size: 24px;
+              font-weight: bolder;
+              color: $text-primary-color;
             }
           }
         }
       }
     }
-  }
 
-  .tg-workbench-to-do {
-    flex: auto;
-    background: $module-background-color;
+    .tg-workbench-userinfo {
+      flex: none;
+      min-width: 490px;
+      flex: none;
+      height: 222px;
+      background: $module-background-color;
 
-    .to-do-container {
-      .calendar-for-list {
-        width: 56px;
-        height: 46px;
-        background: $card-background-color;
+      .userinfo-container {
+        display: flex;
+        flex-direction: column;
 
-        .datetime {
+        .userinfo-card {
+          flex: auto;
+          border: none;
+          border-bottom: 1px solid $border-color-default;
+          background: url('../../assets/images/user.png') no-repeat right center / auto 100%;
+
+          .ant-card-body {
+            padding: 0;
+            height: 100%;
+
+            .ant-avatar {
+              background: $primary-color;
+              font-size: 24px;
+              font-weight: 700;
+            }
+
+            .ant-card-meta-title {
+              font-size: 16px;
+              font-weight: 700;
+              color: $text-or-icon-color;
+              margin-bottom: 0;
+              padding-top: 4px;
+            }
+
+            .ant-card-meta-description {
+              display: inline-block;
+              background: #84adff;
+              border-radius: 3px;
+              font-size: 12px;
+              font-weight: 400;
+              color: #ffffff;
+              padding: 0 6px;
+            }
+
+            .number-of-logins {
+              padding: 20px 10px 10px 70px;
+              color: $text-or-icon-sub-color;
+
+              span {
+                font-size: 40px;
+                font-weight: 700;
+                color: $text-primary-color;
+                display: inline-block;
+                line-height: 50px;
+              }
+            }
+          }
+        }
+
+        .logon-time {
+          flex: none;
+          height: 30px;
+          line-height: 40px;
+          font-size: 12px;
+          text-align: center;
+          color: $text-or-icon-sub-color;
+        }
+      }
+    }
+
+    .row-2.tg-workbench-frequently-used {
+      flex: none;
+      height: 116px;
+      background: $module-background-color;
+
+      .frequently-used-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 0 16px 16px;
+
+        .ant-card-meta {
+          display: flex;
+          height: 48px;
+          flex: auto;
+          align-items: center;
+          overflow: hidden;
+          min-width: 130px;
+          border-radius: 4px;
+
+          .ant-card-meta-avatar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            flex: none;
+            margin-left: -48px;
+            width: 100px;
+            height: 100px;
+            color: #ffffff;
+            border-radius: 50%;
+            padding-right: 10px;
+
+            .anticon {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 32px;
+              height: 32px;
+              border-radius: 8px;
+              font-size: 1.6em;
+              vertical-align: unset;
+            }
+          }
+
+          .ant-card-meta-detail {
+            padding: 0 16px 0 12px;
+
+            .ant-card-meta-title {
+              font-size: 14px;
+              font-weight: 700;
+              color: $text-or-icon-color;
+            }
+          }
+
+          &:first-child {
+            background: #eff8ff;
+
+            .ant-card-meta-avatar {
+              background: rgba(132, 202, 255, 0.2);
+
+              .anticon {
+                background: #53b1fd;
+              }
+            }
+          }
+
+          &:nth-child(2) {
+            background: #edfcf2;
+
+            .ant-card-meta-avatar {
+              background: rgba(115, 226, 163, .2);
+
+              .anticon {
+                background: #3ccb7f;
+              }
+            }
+          }
+
+          &:nth-child(3) {
+            background: #f4f3ff;
+
+            .ant-card-meta-avatar {
+              background: rgba(189, 180, 254, .2);
+
+              .anticon {
+                background: #9b8afb;
+              }
+            }
+          }
+
+          &:nth-child(4) {
+            background: #fef6ee;
+
+            .ant-card-meta-avatar {
+              background: rgba(243, 135, 68, .2);
+
+              .anticon {
+                background: #f38744;
+              }
+            }
+          }
+
+          &:nth-child(5) {
+            background: #f0fdf9;
+
+            .ant-card-meta-avatar {
+              background: rgba(95, 233, 208, .2);
+
+              .anticon {
+                background: #2ed3b7;
+              }
+            }
+          }
+
+          &:nth-child(6) {
+            background: #fefbe8;
+
+            .ant-card-meta-avatar {
+              background: rgba(253, 226, 114, .2);
+
+              .anticon {
+                background: #fac515;
+              }
+            }
+          }
+
+          &:nth-child(7) {
+            background: #eef4ff;
+
+            .ant-card-meta-avatar {
+              background: rgba(164, 188, 253, .2);
+
+              .anticon {
+                background: #8098f9;
+              }
+            }
+          }
+
+          &:nth-child(8) {
+            background: #fff1f3;
+
+            .ant-card-meta-avatar {
+              background: rgba(254, 163, 180, .2);
+
+              .anticon {
+                background: #fd6f8e;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .tg-workbench-to-do {
+      flex: auto;
+      background: $module-background-color;
+
+      .to-do-container {
+        .calendar-for-list {
+          width: 56px;
+          height: 46px;
+          background: $card-background-color;
+
+          .datetime {
+            font-size: 12px;
+            font-weight: 400;
+            color: $text-or-icon-sub-color;
+            height: 18px;
+            line-height: 18px;
+            text-align: center;
+            background: $card-background-deepen-color;
+          }
+
+          .date {
+            font-size: 13px;
+            font-weight: 700;
+            text-align: center;
+            color: #4b5565;
+            line-height: 28px;
+          }
+        }
+
+        .ant-list-item-meta-title {
+          font-size: 15px;
+          font-weight: 500;
+          color: $text-or-icon-color;
+
+          .ant-tag {
+            &.warn {
+              color: $warn-color;
+              border: 1px solid $warn-color;
+              background: $warn-light-color;
+            }
+
+            &.info {
+              color: $info-color;
+              border: 1px solid $info-color;
+              background: $info-light-color;
+            }
+
+            &.error {
+              color: $error-color;
+              border: 1px solid $error-color;
+              background: $error-light-color;
+            }
+          }
+        }
+
+        .ant-list-item-meta-description {
           font-size: 12px;
           font-weight: 400;
           color: $text-or-icon-sub-color;
-          height: 18px;
-          line-height: 18px;
-          text-align: center;
-          background: $card-background-deepen-color;
         }
 
-        .date {
-          font-size: 13px;
-          font-weight: 700;
-          text-align: center;
-          color: #4b5565;
-          line-height: 28px;
+        .ant-list-item-meta-time {
+          font-size: 12px;
+          font-weight: 400;
+          text-align: right;
+          color: $text-or-icon-sub-color;
         }
-      }
-
-      .ant-list-item-meta-title {
-        font-size: 15px;
-        font-weight: 500;
-        color: $text-or-icon-color;
-
-        .ant-tag {
-          &.warn {
-            color: $warn-color;
-            border: 1px solid $warn-color;
-            background: $warn-light-color;
-          }
-
-          &.info {
-            color: $info-color;
-            border: 1px solid $info-color;
-            background: $info-light-color;
-          }
-
-          &.error {
-            color: $error-color;
-            border: 1px solid $error-color;
-            background: $error-light-color;
-          }
-        }
-      }
-
-      .ant-list-item-meta-description {
-        font-size: 12px;
-        font-weight: 400;
-        color: $text-or-icon-sub-color;
-      }
-
-      .ant-list-item-meta-time {
-        font-size: 12px;
-        font-weight: 400;
-        text-align: right;
-        color: $text-or-icon-sub-color;
       }
     }
-  }
 
-  .tg-workbench-news {
-    flex: auto;
-    background: $module-background-color;
+    .tg-workbench-news {
+      flex: auto;
+      background: $module-background-color;
 
-    .news-container {
-      .ant-list-item-meta-avatar {
-        display: flex;
-        align-items: center;
-        height: 100%;
+      .news-container {
+        .ant-list-item-meta-avatar {
+          display: flex;
+          align-items: center;
+          height: 100%;
 
-        .new-status {
-          margin: 0;
+          .new-status {
+            margin: 0;
+          }
         }
-      }
 
-      .ant-list-item-meta-title {
-        font-size: 15px;
-        font-weight: 500;
-        color: $text-or-icon-color;
-      }
+        .ant-list-item-meta-title {
+          font-size: 15px;
+          font-weight: 500;
+          color: $text-or-icon-color;
+        }
 
-      .ant-list-item-meta-description {
-        font-size: 12px;
-        font-weight: 400;
-        color: $text-or-icon-sub-color;
+        .ant-list-item-meta-description {
+          font-size: 12px;
+          font-weight: 400;
+          color: $text-or-icon-sub-color;
+        }
       }
     }
   }
