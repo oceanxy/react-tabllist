@@ -240,13 +240,21 @@ export default {
 
       // ------------------------------------------------------------------------
 
-      let keyPath = [e.key]
+      console.log(this.openKeys, e.key)
 
-      if (!keyPath[0]) {
-        const subMenuDom = path.filter(dom => dom.classList?.contains('ant-menu-submenu'))
+      let keyPath
+
+      if (e.key) {
+        if (this.openKeys.includes(e.key)) {
+          keyPath = []
+        } else {
+          keyPath = [e.key]
+        }
+      } else {
 
         // 获取当前点击的折叠菜单的keyPath
-        keyPath = subMenuDom
+        keyPath = path
+          .filter(dom => dom.classList?.contains('ant-menu-submenu'))
           .filter((dom, index) => (!index && !dom.__vue__.$props.isOpen) || (index > 0 && dom.__vue__.$props.isOpen))
           .map(dom => dom.__vue__.$props.eventKey)
           .reverse()
