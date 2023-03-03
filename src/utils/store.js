@@ -25,14 +25,7 @@ export function commitRootInModule(moduleName, commit, mutation, payload) {
  * @returns {Promise<any>}
  */
 export async function dispatch(moduleName, action, payload) {
-  const terminal = process.env.VUE_APP_PROJECT.match(/(?<=(-)).*/g)[0]
-  const store = await import('../store/' + terminal)
-
-  // if (process.env.VUE_APP_PROJECT === 'development-client' || process.env.VUE_APP_PROJECT === 'production-client') {
-  //   store = await import('../store/client')
-  // } else {
-  //   store = await import('../store/manager')
-  // }
+  const store = await import('../store')
 
   return await store.default.dispatch(`${moduleName}/${action}`, payload)
 }

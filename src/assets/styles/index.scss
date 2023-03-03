@@ -417,7 +417,7 @@ body {
     transform: var(--transform);
 
     .ant-modal-header {
-      background: linear-gradient(to bottom, #edfcf2, #ffffff);
+      background: linear-gradient(to bottom, $primary-hover-light-color, #ffffff);
     }
 
     .ant-modal-body {
@@ -431,7 +431,7 @@ body {
     }
 
     .ant-modal-footer {
-      background: #f6fef9;
+      background: $primary-hover-light-color;
       border: none;
       text-align: center;
     }
@@ -662,17 +662,3 @@ body {
 .ant-calendar-time-picker-select-option-disabled {
   display: none;
 }
-
-/******************************* 弹窗 修改header和footer样式 ****************************/
-.bnm-modal-edit-user-form {
-  .ant-modal-header {
-    background: linear-gradient(180deg, #edfcf2, #ffffff);
-  }
-
-  .ant-modal-footer {
-    background-color: #f6fef9;
-    text-align: center;
-  }
-}
-
-/********************************************************************/

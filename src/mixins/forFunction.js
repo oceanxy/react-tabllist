@@ -128,7 +128,7 @@ export default cb => ({
     },
     /**
      * 导出功能
-     * @param fileName {string} 导出文件名
+     * @param [fileName] {string} 导出文件名 默认为本页面的 title
      * @param [payload] {Object} 自定义导出参数，会联合该模块的 store.state.search 一起传递给接口
      * @param [customApiName] {string} 自定义导出接口名
      * @returns {Promise<void>}
@@ -144,8 +144,8 @@ export default cb => ({
       await this.$store.dispatch('export', {
         moduleName: this.moduleName,
         additionalQueryParameters: this.$route.query,
+        fileName: fileName || this.$route.meta.title,
         payload,
-        fileName,
         customApiName
       })
 

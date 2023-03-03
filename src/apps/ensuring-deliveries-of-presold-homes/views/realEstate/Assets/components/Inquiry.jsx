@@ -50,7 +50,7 @@ export default Form.create({})({
             >
               查询
             </Button>
-            {/*<Button onClick={this.onClear} icon="reload">重置</Button>*/}
+            {/*<Button onClick={this.onClear} icon="reload">重置并刷新</Button>*/}
           </Space>
         </Space>
       </Form>
