@@ -1,8 +1,9 @@
 import forTable from '@/mixins/forTable'
-import { Button, Space, Tag } from 'ant-design-vue'
+import { Button, Space } from 'ant-design-vue'
+import forFunction from '@/mixins/forFunction'
 
 export default {
-  mixins: [forTable()],
+  mixins: [forTable(), forFunction()],
   data() {
     return {
       tableProps: {
@@ -61,15 +62,31 @@ export default {
         ]
       },
       scopedSlots: {
-        status: (text, record) => {
-          return record.status === 1 ? <Tag color="green">启用</Tag> : <Tag color="red">停用</Tag>
-        },
+        title: () => (
+          <Space>
+            <Button
+              type="primary"
+              disabled={this.editButtonDisabled}
+              onClick={() => this.onCustomEditClick()}
+              icon="edit"
+            >
+              编辑
+            </Button>
+            <Button
+              type="danger"
+              disabled={this.deleteButtonDisabled}
+              onClick={() => this.onCustomDeleteClick()}
+              icon="delete"
+            >
+              删除
+            </Button>
+          </Space>
+        ),
         operation: (text, record) => (
           <Space>
             <Button
               type="link"
               size="small"
-              disabled={this.isFeatureDisabled}
               onClick={() => this.onEditClick(record)}
             >
               编辑
@@ -77,7 +94,6 @@ export default {
             <Button
               type="link"
               size="small"
-              disabled={this.isFeatureDisabled}
               onClick={() => this.onDeleteClick(record)}
             >
               删除
@@ -85,15 +101,6 @@ export default {
           </Space>
         )
       }
-    }
-  },
-  computed: {
-    // 学校及学校下级禁用新增、修改或删除等一切操作
-    isFeatureDisabled() {
-      const { type } = this.$store.state[this.moduleName].search
-
-      // 类型（1.区 2.职能部门 3.街道 4.学校顶级 5.学校 6.年级 7.班级）
-      return [4, 5, 6, 7].includes(type)
     }
   }
 }

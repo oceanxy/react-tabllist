@@ -322,7 +322,7 @@ export default {
    * @param [payload={}] {Object} 参数
    * @param [isFetchList] {boolean} 是否在成功提交后刷新本模块列表，默认false
    * @param [isResetSelectedRows] {Boolean} 是否在成功执行后重置对应 store 内 selectedRows，默认false。一般在批量操作时使用
-   * @param [stateName] {string} 用于接收接口返回值的 state 字段名称，在相应模块的 store.state 内定义
+   * @param [stateName] {string} 用于接收接口返回值的 state 字段名称，该字段需要提前在相应模块的 store.state 内定义好
    * @param [submoduleName] {string} 子级模块名
    * @param [visibilityFieldName] {string} 成功执行操作后要关闭的弹窗的控制字段（定义在对应模块的 store.state 内）
    * @param parametersOfGetListAction {...{
@@ -388,7 +388,7 @@ export default {
       }
     }
 
-    return response.status
+    return response
   },
   /**
    * 获取带有加载状态的列表、表格、树、下拉菜单或相似结构的资源。

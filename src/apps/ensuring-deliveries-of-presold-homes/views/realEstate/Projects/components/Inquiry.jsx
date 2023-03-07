@@ -1,9 +1,8 @@
-import { Button, Form, Input, Select, Space } from 'ant-design-vue'
+import { Button, Form, Input, Space } from 'ant-design-vue'
 import forInquiry from '@/mixins/forInquiry'
 
 export default Form.create({})({
   mixins: [forInquiry()],
-  data: () => ({ initialValues: { fullName: undefined } }),
   render() {
     return (
       <Form
@@ -13,10 +12,10 @@ export default Form.create({})({
         class="tg-inquiry"
       >
         <Space>
-          <Form.Item label={'开发商名称'}>
+          <Form.Item label={'关键字'}>
             {
-              this.form.getFieldDecorator('fullName', { initialValue: this.initialValues.fullName })(
-                <Input placeholder="输入名称搜索" allowClear maxLength={30} />
+              this.form.getFieldDecorator('projectName', { initialValue: this.initialValues.projectName })(
+                <Input placeholder="开发商/楼盘名称" allowClear />
               )
             }
           </Form.Item>

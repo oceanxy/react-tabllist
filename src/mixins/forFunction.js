@@ -67,14 +67,14 @@ export default cb => ({
      * @param [initialValue] {Object} 初始化默认值
      * @returns {Promise<void>}
      */
-    async onAddClick(initialValue = {}) {
+    async onCustomAddClick(initialValue = {}) {
       await this._setVisibilityOfModal({ ...initialValue })
     },
     /**
      * 编辑
      * @returns {Promise<void>}
      */
-    async onEditClick() {
+    async onCustomEditClick() {
       await this._setVisibilityOfModal(this.editedRow)
     },
     /**
@@ -82,14 +82,14 @@ export default cb => ({
      * @param visibilityFieldName {string}
      * @returns {Promise<void>}
      */
-    async onAuditClick(visibilityFieldName) {
+    async onCustomAuditClick(visibilityFieldName) {
       await this._setVisibilityOfModal({ ids: this.ids }, visibilityFieldName)
     },
     /**
      * 删除
      * @returns {Promise<void>}
      */
-    async onDeleteClick() {
+    async onCustomDeleteClick() {
       await verificationDialog(
         async () => {
           return await this.$store.dispatch('delete', { moduleName: this.moduleName })
@@ -133,7 +133,7 @@ export default cb => ({
      * @param [customApiName] {string} 自定义导出接口名
      * @returns {Promise<void>}
      */
-    async onExport(fileName, payload, customApiName) {
+    async onCustomExport(fileName, payload, customApiName) {
       message.loading({
         content: '正在导出，请稍候...',
         duration: 0

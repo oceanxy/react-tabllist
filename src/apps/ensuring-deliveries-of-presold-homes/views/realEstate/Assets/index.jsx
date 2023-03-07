@@ -17,7 +17,7 @@ export default {
         <Inquiry slot={'inquiry'} />
         <Table slot={'table'} />
         <TGPagination slot={'pagination'} />
-        <ModalOfEdit slot={'modals'} modalTitle={'{action}组织'} />
+        <ModalOfEdit slot={'modals'} modalTitle={'{action}资产'} />
       </TGContainerWithTable>
     )
   }

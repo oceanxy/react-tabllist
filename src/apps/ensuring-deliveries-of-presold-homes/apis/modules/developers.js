@@ -15,6 +15,19 @@ export default {
     })
   },
   /**
+   * 获取开发商枚举
+   * @param request
+   * @param data
+   * @returns {*}
+   */
+  getEnumOfDevelopers(request, data) {
+    return request({
+      url: '/estate/developers/getDevelopersList',
+      method: 'post',
+      data: qs.stringify(data)
+    })
+  },
+  /**
    * 新增开发商
    * @param request
    * @param data

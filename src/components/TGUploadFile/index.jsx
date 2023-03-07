@@ -17,7 +17,7 @@ export default {
     },
     action: {
       type: String,
-      default: '/api/system/upload/file'
+      default: '/mgapi/system/upload/fileUpload'
     },
     accept: {
       type: String,
@@ -37,7 +37,7 @@ export default {
       fileList: [],
       previewImage: '',
       previewVisible: false,
-      name: 'files',
+      name: 'file',
       headers: { token: localStorage.getItem('token') }
     }
   },
@@ -81,7 +81,10 @@ export default {
       // this.previewVisible = true
     },
     handleChange({ file, fileList }) {
-      this.fileList = fileList
+      this.fileList = fileList.map(file => ({
+        ...file,
+        status: file.response?.status ? 'done' : 'error' ?? 'uploading'
+      }))
 
       if (this.fileList.length >= this.limit) {
         this.fileList = this.fileList.slice(0, this.limit)

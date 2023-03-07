@@ -69,21 +69,21 @@ export default [
         }
       },
       {
-        path: 'assets',
-        name: 'assets',
-        component: () => import('@/apps/ensuring-deliveries-of-presold-homes/views/realEstate/Assets'),
-        meta: {
-          title: '资产',
-          keepAlive: false,
-          requiresAuth: true
-        }
-      },
-      {
         path: 'projects',
         name: 'projects',
         component: () => import('@/apps/ensuring-deliveries-of-presold-homes/views/realEstate/Projects'),
         meta: {
           title: '项目',
+          keepAlive: false,
+          requiresAuth: true
+        }
+      },
+      {
+        path: 'assets',
+        name: 'assets',
+        component: () => import('@/apps/ensuring-deliveries-of-presold-homes/views/realEstate/Assets'),
+        meta: {
+          title: '资产',
           keepAlive: false,
           requiresAuth: true
         }

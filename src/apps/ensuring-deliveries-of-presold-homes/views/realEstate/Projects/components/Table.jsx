@@ -26,27 +26,34 @@ export default {
             dataIndex: 'projectName'
           },
           {
-            title: '资产名称',
-            width: 200,
-            dataIndex: 'easteName'
+            title: '借款金额(万)',
+            width: 100,
+            align: 'center',
+            dataIndex: 'moneyValue'
           },
           {
-            title: '资产性质',
+            title: '还款计划',
             width: 80,
             align: 'center',
-            dataIndex: 'easteDicName'
+            dataIndex: 'refundPlan'
           },
           {
-            title: '建面(㎡)',
-            width: 80,
+            title: '下期还款时间',
+            width: 100,
             align: 'center',
-            dataIndex: 'buildArea'
+            dataIndex: 'nextTime'
           },
           {
-            title: '套内(㎡)',
+            title: '已还金额(万)',
+            width: 100,
+            align: 'center',
+            dataIndex: 'refundAmount'
+          },
+          {
+            title: '资产收购',
             width: 80,
             align: 'center',
-            dataIndex: 'indoorArea'
+            dataIndex: 'acquisition'
           },
           {
             title: '编辑时间',
@@ -56,8 +63,7 @@ export default {
           {
             title: '操作',
             fixed: 'right',
-            align: 'center',
-            width: 150,
+            width: 180,
             scopedSlots: { customRender: 'operation' }
           }
         ]
@@ -88,6 +94,12 @@ export default {
             <Button
               type="link"
               size="small"
+            >
+              合同
+            </Button>
+            <Button
+              type="link"
+              size="small"
               onClick={() => this.onEditClick(record)}
             >
               编辑
@@ -98,6 +110,12 @@ export default {
               onClick={() => this.onDeleteClick(record)}
             >
               删除
+            </Button>
+            <Button
+              type="link"
+              size="small"
+            >
+              还款
             </Button>
           </Space>
         )

@@ -2,93 +2,95 @@ import qs from 'qs'
 
 export default {
   /**
-   * 获取资产列表
+   * 获取项目列表
    * @param [request]
    * @param data
    * @returns {*}
    */
-  getAssets(request, data) {
+  getProjects(request, data) {
     return request({
-      url: '/estate/estate/getEstatePageList',
+      url: '/estate/projectInfo/getProjectInfoPageList',
       method: 'post',
       data: qs.stringify(data)
     })
   },
   /**
-   * 新增资产
+   * 获取项目详情
    * @param request
    * @param data
    * @returns {*}
    */
-  addAssets(request, data) {
+  getDetailsOfProjects(request, data) {
     return request({
-      url: '/estate/estate/add',
+      url: '/estate/projectInfo/getProjectInfo',
+      method: 'post',
+      data: qs.stringify(data)
+    })
+  },
+  /**
+   * 新增项目
+   * @param request
+   * @param data
+   * @returns {*}
+   */
+  addProjects(request, data) {
+    return request({
+      url: '/estate/projectInfo/add',
       method: 'post',
       data
     })
   },
   /**
-   * 修改资产
+   * 修改项目
    * @param request
    * @param data
    * @returns {*}
    */
-  updateAssets(request, data) {
+  updateProjects(request, data) {
     return request({
-      url: '/estate/estate/update',
+      url: '/estate/projectInfo/update',
       method: 'post',
       data
     })
   },
   /**
-   * 删除资产
+   * 删除项目
    * @param request
    * @param data
    * @returns {*}
    */
-  deleteAssets(request, data) {
+  deleteProjects(request, data) {
     return request({
-      url: '/estate/estate/delete',
+      url: '/estate/projectInfo/delete',
       method: 'post',
       data: qs.stringify(data, { arrayFormat: 'comma' })
     })
   },
   /**
-   * 导出资产数据
+   * 导出项目数据
    * @param request
    * @param params
    * @returns {*}
    */
-  exportAssets(request, params) {
+  exportProjects(request, params) {
     return request({
-      url: '/estate/estate/exportExcel',
+      url: '/estate/projectInfo/exportExcel',
       method: 'get',
       params,
       responseType: 'blob'
     })
   },
   /**
-   * 修改资产状态
+   * 修改项目状态
    * @param request
    * @param data
    * @returns {*}
    */
-  updateAssetsStatus(request, data) {
+  updateProjectsStatus(request, data) {
     return request({
-      url: '/estate/estate/updateStatus',
+      url: '/estate/projectInfo/updateStatus',
       method: 'post',
       data: qs.stringify(data)
-    })
-  },
-  /**
-   * 获取企业性质枚举
-   * @param request
-   * @returns {*}
-   */
-  getEnumOfNatureOfAssets(request) {
-    return request({
-      url: '/estate/dictionary/getEstateType',
-      method: 'post'
     })
   }
 }

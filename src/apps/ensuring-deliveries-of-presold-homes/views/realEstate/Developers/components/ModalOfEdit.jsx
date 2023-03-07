@@ -26,7 +26,7 @@ export default Form.create({})({
       return {
         attrs: this.modalProps,
         on: {
-          cancel: () => this.onCancel(),
+          cancel: () => this.onCancel(null, null, this.restoreCurrentItem),
           ok: () => this.onSubmit({
             customDataHandler: value => {
               const data = cloneDeep(value)
@@ -41,7 +41,15 @@ export default Form.create({})({
               data.areaName = value.districtList[2].name
 
               return data
-            }
+            },
+            // 为其他模块调用本弹窗做适配
+            ...(this.moduleName === 'developers' ? {} : {
+              customApiName: 'addDevelopers',
+              isFetchList: false,
+              done: response => {
+                this.restoreCurrentItem(response.data)
+              }
+            })
           })
         }
       }
@@ -60,6 +68,44 @@ export default Form.create({})({
             }),
             dispatch('common', 'getAdministrativeDivision')
           ])
+        }
+      }
+    }
+  },
+  methods: {
+    restoreCurrentItem(developer) {
+      // 为其他模块调用本弹窗做适配，关闭弹窗恢复 currentItem
+      if (this.moduleName !== 'developers') {
+        this.$store.commit('setState', {
+          value: {
+            ...this.currentItem._currentItem,
+            ...(
+              developer
+                ? {
+                  developerId: developer.id,
+                  developerName: developer.fullName
+                }
+                : {}
+            )
+          },
+          moduleName: this.moduleName,
+          stateName: 'currentItem'
+        })
+
+        if (developer) {
+          this.$store.commit('setState', {
+            value: {
+              loading: false,
+              list: [
+                {
+                  id: developer.id,
+                  fullName: developer.fullName
+                }
+              ]
+            },
+            moduleName: this.moduleName,
+            stateName: 'enumOfDevelopers'
+          })
         }
       }
     }
@@ -104,7 +150,7 @@ export default Form.create({})({
                     required: true,
                     type: 'object',
                     message: '请选择企业性质！',
-                    trigger: 'blur'
+                    trigger: 'change'
                   }
                 ]
               })(
@@ -133,7 +179,7 @@ export default Form.create({})({
                   }
                 ]
               })(
-                <Input placeholder="请输入联系人姓名" allowClear />
+                <Input placeholder="请输入联系人姓名" allowClear maxLength={30} />
               )
             }
           </Form.Item>
@@ -150,7 +196,7 @@ export default Form.create({})({
                   { validator: verifyPhoneNumber }
                 ]
               })(
-                <Input placeholder="请输入联系电话" allowClear />
+                <Input placeholder="请输入联系电话" allowClear maxLength={30} />
               )
             }
           </Form.Item>
@@ -167,7 +213,7 @@ export default Form.create({})({
                   { validator: verifyEmail }
                 ]
               })(
-                <Input placeholder="请输入电子邮箱" allowClear />
+                <Input placeholder="请输入电子邮箱" allowClear maxLength={30} />
               )
             }
           </Form.Item>
@@ -211,15 +257,24 @@ export default Form.create({})({
           </Form.Item>
           <Form.Item label="详细地址">
             {
-              this.form.getFieldDecorator('address', { initialValue: this.currentItem.address })(
-                <Input placeholder="请输入详细地址" allowClear />
+              this.form.getFieldDecorator('address', {
+                initialValue: this.currentItem.address,
+                rules: [
+                  {
+                    required: true,
+                    message: '请输入详细地址！',
+                    trigger: 'blur'
+                  }
+                ]
+              })(
+                <Input placeholder="请输入详细地址" allowClear maxLength={30} />
               )
             }
           </Form.Item>
           <Form.Item label="备注">
             {
               this.form.getFieldDecorator('remark', { initialValue: this.currentItem.remark })(
-                <Input.TextArea placeholder="请输入备注" allowClear />
+                <Input.TextArea placeholder="请输入备注" allowClear maxLength={100} />
               )
             }
           </Form.Item>
@@ -236,7 +291,11 @@ export default Form.create({})({
                   }
                 ]
               })(
-                <InputNumber style={{ width: '100%' }} placeholder="请输入排序" />
+                <InputNumber
+                  style={{ width: '100%' }}
+                  placeholder="请输入排序"
+                  max={10000}
+                />
               )
             }
           </Form.Item>

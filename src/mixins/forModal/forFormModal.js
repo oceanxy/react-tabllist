@@ -24,13 +24,17 @@ export default ({ disableSubmitButton = true } = {}) => {
       candidateTitle: {
         type: Array,
         default: () => ['编辑', '新增']
+      },
+      /**
+       * 控制弹窗显示的字段（本混合默认为 “visibilityOfEdit”）
+       */
+      visibilityFieldName: {
+        type: String,
+        default: 'visibilityOfEdit'
       }
     },
     data() {
-      return {
-        visibilityFieldName: 'visibilityOfEdit',
-        modalProps: { okButtonProps: { props: { disabled: disableSubmitButton } } }
-      }
+      return { modalProps: { okButtonProps: { props: { disabled: disableSubmitButton } } } }
     },
     watch: {
       visible: {
@@ -92,7 +96,7 @@ export default ({ disableSubmitButton = true } = {}) => {
        *    (action 列表请在 /src/store/actions.js 内查看，TODO 目前只适配了部分 action)
        * @param [customValidation] {() => boolean} 自定义验证函数
        * @param [customDataHandler] {(values) => Object} 自定义参数处理
-       * @param [done] {() => void} 提交成功后的回调函数
+       * @param [done] {response => void} 提交成功后的回调函数
        */
       onSubmit({
         isFetchList = true,
@@ -104,6 +108,7 @@ export default ({ disableSubmitButton = true } = {}) => {
         done
       } = {}) {
         this.form.validateFieldsAndScroll(async (err, values) => {
+
           let validation = true
 
           if (typeof customValidation === 'function') {
@@ -137,15 +142,15 @@ export default ({ disableSubmitButton = true } = {}) => {
               payload = customDataHandler(payload)
             }
 
-            const status = await this.$store.dispatch(action, {
+            const response = await this.$store.dispatch(action, {
               moduleName: this.moduleName,
-              visibilityFieldName: this.visibilityFieldName,
+              visibilityFieldName: this._visibilityFieldName,
               isFetchList,
               customApiName,
               // 请求参数
               payload,
 
-              // action 为 'custom' 是可用。是否重置表格行选择框的选中内容。
+              // action 为 'custom' 时可用。是否重置表格行选择框的选中内容。
               isResetSelectedRows,
               // action 为 'export' 时可用。
               // 请根据参数的取值和性质自行决定在混入组件的 data 内或 computed 内定义。
@@ -159,13 +164,13 @@ export default ({ disableSubmitButton = true } = {}) => {
               }
             })
 
-            if (status) {
+            if (response.status) {
               // 操作提示消息
-              message(status)
+              message(response.status)
 
               // 成功回调
               if (typeof done === 'function') {
-                done()
+                done(response)
               }
             }
 

@@ -23,12 +23,18 @@ export default customModuleName => {
       modalTitle: {
         type: String,
         default: '{action}'
+      },
+      /**
+       * 控制弹窗显示的字段
+       */
+      visibilityFieldName: {
+        type: String,
+        default: ''
       }
     },
     data() {
       return {
         inModal: true,
-        visibilityFieldName: '',
         modalProps: {
           visible: false,
           title: '',
@@ -51,14 +57,17 @@ export default customModuleName => {
       details() {
         return this.getState('details', this.moduleName) || {}
       },
+      _visibilityFieldName() {
+        return this.$parent.$attrs.visibilityFieldName || this.visibilityFieldName
+      },
       visible() {
-        return this.getState(this.visibilityFieldName, this.moduleName) ??
-          this.getState(this.visibilityFieldName, this.moduleName, this.submoduleName)
+        return this.getState(this._visibilityFieldName, this.moduleName) ??
+          this.getState(this._visibilityFieldName, this.moduleName, this.submoduleName)
       },
       attributes() {
         return {
           attrs: this.modalProps,
-          on: { cancel: () => this.onCancel(this.visibilityFieldName) }
+          on: { cancel: () => this.onCancel(this._visibilityFieldName) }
         }
       }
     },
@@ -72,6 +81,15 @@ export default customModuleName => {
         handler(value) {
           if (value) {
             this.modalProps.title = this.$parent.$attrs.modalTitle || this.modalTitle
+
+            // 如果存在未清空的详情数据，则清空
+            if (this.details) {
+              this.$store.commit('setState', {
+                value: {},
+                moduleName: this.moduleName,
+                stateName: 'details'
+              })
+            }
           }
 
           this.modalProps.visible = value
@@ -83,13 +101,14 @@ export default customModuleName => {
        * 取消/关闭 弹窗
        * @param [visibilityFieldName] {string} 对应store模块内控制该弹窗的字段名。默认为新增/编辑弹窗的字段名：visibilityOfEdit
        * @param [submoduleName] {string} 子模块名，必须通过参数传入（在需要时传入），否则会引起bug
+       * @param [callback] {Function} 关闭后的回调函数
        * @returns {Promise<void>}
        */
-      async onCancel(visibilityFieldName, submoduleName) {
+      async onCancel(visibilityFieldName, submoduleName, callback) {
         await this._dispatch(
           'setModalVisible',
           {
-            statusField: visibilityFieldName,
+            statusField: this._visibilityFieldName || visibilityFieldName,
             statusValue: false
           },
           {
@@ -106,6 +125,10 @@ export default customModuleName => {
               disabled: true
             }
           }
+        }
+
+        if (typeof callback === 'function') {
+          callback()
         }
       }
     }
