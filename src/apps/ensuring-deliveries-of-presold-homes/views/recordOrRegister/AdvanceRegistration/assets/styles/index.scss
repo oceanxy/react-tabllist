@@ -1,1 +1,19 @@
 @import '@/assets/styles/theme.scss';
+.import-btn-box {
+  font-size: 14px;
+  border-radius: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  height: auto;
+  .ant-upload {
+    color: $primary-color;
+    padding: 20px 0;
+  }
+  .icon {
+    font-size: 30px;
+    margin-bottom: 6px;
+  }
+}
+.point-out {
+  display: flex;
+}
