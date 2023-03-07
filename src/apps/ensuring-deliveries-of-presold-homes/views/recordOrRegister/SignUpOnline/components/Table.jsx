@@ -83,7 +83,7 @@ export default {
           </Space>
         ),
         rescindContractStatus: (text, record) => {
-          return record.rescindContractStatus === 1 ? <Tag>未解除</Tag> : <Tag color="green">已解除</Tag>
+          return record.rescindContractStatus === 1 ? <Tag color="orange" >未解除</Tag> : <Tag color="green">已解除</Tag>
         },
         operation: (text, record) => (
           <Space>

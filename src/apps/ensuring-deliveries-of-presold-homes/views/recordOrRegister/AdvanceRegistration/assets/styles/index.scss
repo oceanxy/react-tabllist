@@ -1,45 +1,19 @@
 @import '@/assets/styles/theme.scss';
-.import-box {
-  .import-btn-box {
-    background-color: rgba($color: $primary-color, $alpha: 0.03);
-    padding: 35px;
-    font-size: 14px;
-    border-radius: 3px;
+.import-btn-box {
+  font-size: 14px;
+  border-radius: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  height: auto;
+  .ant-upload {
     color: $primary-color;
-    width: 100%;
-    box-sizing: border-box;
-    height: auto;
-    .icon {
-      font-size: 36px;
-      margin-bottom: 6px;
-    }
+    padding: 20px 0;
   }
-  .progress-box {
-    display: flex;
-    padding: 15px 0;
-    .link {
-      flex-shrink: 0;
-      font-size: 16px;
-      margin: 3px;
-      padding-right: 10px;
-    }
-    > div {
-      flex: 1;
-      .progress {
-        display: flex;
-        justify-content: space-between;
-        .icon {
-          color: $error-color;
-          margin-right: 0 !important;
-          cursor: pointer;
-        }
-      }
-    }
+  .icon {
+    font-size: 30px;
+    margin-bottom: 6px;
   }
-  .point-out {
-    display: flex;
-    p {
-      color: $text-or-icon-color;
-    }
-  }
+}
+.point-out {
+  display: flex;
 }

@@ -23,7 +23,7 @@ export default {
           {
             title: '项目',
             width: 80,
-            dataIndex: 'lastOperateTimeStr'
+            dataIndex: 'projectName'
           },
           {
             title: '不动产名称',

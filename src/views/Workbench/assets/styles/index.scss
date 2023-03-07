@@ -25,7 +25,9 @@
 
       .anticon {
         color: $primary-color;
-        font-size: 1.4ic;
+        // font-size: 1.4ic;
+        font-size: 20px;
+        margin-right: 8px;
       }
     }
 
@@ -222,7 +224,7 @@
             background: #edfcf2;
 
             .ant-card-meta-avatar {
-              background: rgba(115, 226, 163, .2);
+              background: rgba(115, 226, 163, 0.2);
 
               .anticon {
                 background: #3ccb7f;
@@ -234,7 +236,7 @@
             background: #f4f3ff;
 
             .ant-card-meta-avatar {
-              background: rgba(189, 180, 254, .2);
+              background: rgba(189, 180, 254, 0.2);
 
               .anticon {
                 background: #9b8afb;
@@ -246,7 +248,7 @@
             background: #fef6ee;
 
             .ant-card-meta-avatar {
-              background: rgba(243, 135, 68, .2);
+              background: rgba(243, 135, 68, 0.2);
 
               .anticon {
                 background: #f38744;
@@ -258,7 +260,7 @@
             background: #f0fdf9;
 
             .ant-card-meta-avatar {
-              background: rgba(95, 233, 208, .2);
+              background: rgba(95, 233, 208, 0.2);
 
               .anticon {
                 background: #2ed3b7;
@@ -270,7 +272,7 @@
             background: #fefbe8;
 
             .ant-card-meta-avatar {
-              background: rgba(253, 226, 114, .2);
+              background: rgba(253, 226, 114, 0.2);
 
               .anticon {
                 background: #fac515;
@@ -282,7 +284,7 @@
             background: #eef4ff;
 
             .ant-card-meta-avatar {
-              background: rgba(164, 188, 253, .2);
+              background: rgba(164, 188, 253, 0.2);
 
               .anticon {
                 background: #8098f9;
@@ -294,7 +296,7 @@
             background: #fff1f3;
 
             .ant-card-meta-avatar {
-              background: rgba(254, 163, 180, .2);
+              background: rgba(254, 163, 180, 0.2);
 
               .anticon {
                 background: #fd6f8e;
