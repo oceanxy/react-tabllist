@@ -1,9 +1,10 @@
 .tg-logo {
   display: flex;
+  line-height: 1;
   align-items: center;
-  width: 240px;
+  min-width: 240px;
   height: 100%;
-  background: url(~@/assets/images/logo.png) no-repeat left 20px center / 22px  24px;
+  background: url(~@/assets/images/logo.png) no-repeat left 20px center / 22px 24px;
   cursor: pointer;
   transition: all 0.3s;
   padding-left: 52px;

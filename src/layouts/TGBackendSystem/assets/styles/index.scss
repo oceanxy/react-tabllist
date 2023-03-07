@@ -36,16 +36,22 @@
     overflow: hidden;
     flex: auto;
   }
-
+  @media screen and (max-width: 892px) {
+    .tg-layout-header {
+      .tg-logo {
+        width: 52px;
+      }
+    }
+  }
   @media screen and (max-width: 1366px) {
     .tg-layout-header {
       height: 54px;
       line-height: 54px;
 
-      .tg-logo {
-        width: 205px;
-        height: 32px;
-      }
+      // .tg-logo {
+      //   width: 205px;
+      //   height: 32px;
+      // }
     }
 
     .tg-content {

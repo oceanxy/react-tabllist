@@ -49,7 +49,7 @@
 
           &:hover {
             border-radius: 6px;
-            box-shadow: 0 0 0 2px rgb(#ffffff, 20%)
+            box-shadow: 0 0 0 2px rgb(#ffffff, 20%);
           }
 
           .ant-input {
@@ -76,7 +76,7 @@
             .anticon {
               color: #ffffff;
               font-size: 1.4em;
-              opacity: .6;
+              opacity: 0.6;
               transition: opacity 0.3s;
               cursor: pointer;
             }
@@ -125,8 +125,9 @@
       }
 
       .tg-header-divider {
-        height: 36px;
+        height: 24px;
         background: $primary-sub-color;
+        opacity: 0.5;
         margin-left: 16px;
         margin-right: 24px;
       }
