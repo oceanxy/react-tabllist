@@ -6,6 +6,7 @@ import { defineAsyncComponent } from 'vue'
 import TGUploadFile from '@/components/TGUploadFile'
 import StepRateList from './StepRateList'
 import RepaymentPlanList from './RepaymentPlanList'
+import moment from 'moment'
 
 export default Form.create({})({
   mixins: [forFormModal()],
@@ -43,8 +44,8 @@ export default Form.create({})({
               data.cityName = value.districtList[1].name
               data.areaId = value.districtList[2].id
               data.areaName = value.districtList[2].name
-              data.ctContract = value.ctContract[0].response.data[0]
-              data.devContract = value.devContract[0].response.data[0]
+              data.ctContract = value.ctContract[0].response?.data[0] ?? value.ctContract[0].raw
+              data.devContract = value.devContract[0].response?.data[0] ?? value.devContract[0].raw
 
               return data
             }
@@ -63,62 +64,81 @@ export default Form.create({})({
       return () => (
         <ModalOfDeveloper modalTitle={'{action}开发商'} visibilityFieldName={'visibilityOfDeveloper'} />
       )
+    },
+    dateRangeOfRepaymentPlan() {
+      const range = this.form.getFieldValue('projectSegmentRateList')
+
+      if (range?.[0]?.starDate && range?.at(-1)?.endDate) {
+        return [moment(range[0].starDate), moment(range.at(-1).endDate)]
+      }
+
+      return []
     }
   },
   watch: {
     visible: {
       immediate: true,
       async handler(value) {
-        if (value && this.currentItem.id) {
-          // 初始化表单内的模糊查询结果，编辑模式下用列表的值作为默认值
-          this.setState(
-            'enumOfDevelopers',
-            this.currentItem.id
-              ? [
-                {
-                  id: this.currentItem.developerId,
-                  fullName: this.currentItem.developerName
-                }
-              ]
-              : []
-          )
+        if (value) {
+          if (!this.administrativeDivision.length) {
+            await this.$store.dispatch('common/getAdministrativeDivision')
+          }
 
-          // 获取详情数据
-          await this.$store.dispatch('getDetails', {
-            moduleName: this.moduleName,
-            payload: { id: this.currentItem.id }
-          })
+          if (this.currentItem.id) {
+            // 初始化表单内的模糊查询结果，编辑模式下用列表的值作为默认值
+            this.setState(
+              'enumOfDevelopers',
+              this.currentItem.id
+                ? [
+                  {
+                    id: this.currentItem.developerId,
+                    fullName: this.currentItem.developerName
+                  }
+                ]
+                : []
+            )
 
-          // 回填
-          this.form.setFieldsValue({
-            districtList: [
-              { id: this.details.provinceId, name: this.details.provinceName },
-              { id: this.details.cityId, name: this.details.cityName },
-              { id: this.details.areaId, name: this.details.areaName }
-            ],
-            address: this.details.address,
-            status: !isNaN(this.details.status) ? this.details.status === 1 : true,
-            ctContract: this.details.ctContract
-              ? [
-                {
-                  uid: 'ct-contract',
-                  key: this.details.ctContract.key,
-                  url: this.details.ctContract.path,
-                  status: 'done',
-                  name: this.details.ctContract.fileName
-                }
-              ] : [],
-            devContract: this.details.devContract
-              ? [
-                {
-                  uid: 'dev-contract',
-                  key: this.details.devContract.key,
-                  url: this.details.devContract.path,
-                  status: 'done',
-                  name: this.details.devContract.fileName
-                }
-              ] : []
-          })
+            // 获取详情数据
+            await this.$store.dispatch('getDetails', {
+              moduleName: this.moduleName,
+              payload: { id: this.currentItem.id }
+            })
+
+            // 回填
+            this.form.setFieldsValue({
+              districtList: [
+                { id: this.details.provinceId, name: this.details.provinceName },
+                { id: this.details.cityId, name: this.details.cityName },
+                { id: this.details.areaId, name: this.details.areaName }
+              ],
+              address: this.details.address,
+              status: !isNaN(this.details.status) ? this.details.status === 1 : true,
+              repaymentPlanList: this.details.repaymentPlanList || [],
+              projectSegmentRateList: this.details.projectSegmentRateList || [],
+              ctContract: this.details.ctContract
+                ? [
+                  {
+                    uid: 'ct-contract',
+                    key: this.details.ctContract.key,
+                    url: this.details.ctContract.path,
+                    status: 'done',
+                    name: this.details.ctContract.fileName,
+                    raw: this.details.ctContract
+                  }
+                ] : [],
+              devContract: this.details.devContract
+                ? [
+                  {
+                    uid: 'dev-contract',
+                    key: this.details.devContract.key,
+                    url: this.details.devContract.path,
+                    status: 'done',
+                    name: this.details.devContract.fileName,
+                    raw: this.details.devContract
+                  }
+                ] : []
+            })
+          }
         }
       }
     }
@@ -247,12 +267,21 @@ export default Form.create({})({
             </Form.Item>
             <Form.Item label="详细地址">
               {
-                this.form.getFieldDecorator('address', { initialValue: undefined })(
+                this.form.getFieldDecorator('address', {
+                  initialValue: undefined,
+                  rules: [
+                    {
+                      required: true,
+                      message: '请输入详细地址！',
+                      trigger: 'blur'
+                    }
+                  ]
+                })(
                   <Input placeholder="请输入详细地址" allowClear maxLength={30} />
                 )
               }
             </Form.Item>
-            <Form.Item label="有无借款" class={'half'}>
+            <Form.Item label="有无借款" class={this.form.getFieldValue('isBorrow') === 1 ? 'half' : ''}>
               {
                 this.form.getFieldDecorator(
                   'isBorrow',
@@ -311,7 +340,7 @@ export default Form.create({})({
                           {
                             required: true,
                             type: 'array',
-                            message: '请输入分段利率！',
+                            message: '请输入完整的分段利率！',
                             trigger: 'change'
                           }
                         ]
@@ -323,17 +352,20 @@ export default Form.create({})({
                   <Form.Item label="还款计划">
                     {
                       this.form.getFieldDecorator('repaymentPlanList', {
-                        initialValue: this.currentItem.repaymentPlanList,
+                        initialValue: [],
                         rules: [
                           {
                             required: true,
-                            type: 'number',
-                            message: '请输入合法的借款金额（最大值一万亿）！',
-                            trigger: 'blur'
+                            type: 'array',
+                            message: '请输入完整的还款计划！',
+                            trigger: 'change'
                           }
                         ]
                       })(
-                        <RepaymentPlanList />
+                        <RepaymentPlanList
+                          disabled={!this.dateRangeOfRepaymentPlan.length}
+                          dateRange={this.dateRangeOfRepaymentPlan}
+                        />
                       )
                     }
                   </Form.Item>
@@ -401,7 +433,7 @@ export default Form.create({})({
             <Form.Item label="状态" class={'half'}>
               {
                 this.form.getFieldDecorator('status', {
-                  initialValue: undefined,
+                  initialValue: true,
                   valuePropName: 'checked'
                 })(
                   <Switch />

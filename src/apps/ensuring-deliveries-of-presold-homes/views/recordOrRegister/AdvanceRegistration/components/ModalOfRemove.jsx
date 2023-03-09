@@ -28,7 +28,6 @@ export default Form.create({})({
     }
   },
   methods: {
-
     async done() {
       await this.$store.dispatch('getList', {
         moduleName: this.moduleName,

@@ -9,7 +9,6 @@ import ModalOfEdit from './components/ModalOfEdit'
 import ModalOfRemove from './components/ModalOfRemove'
 import ModalOfImport from './components/ModalOfImport'
 
-
 export default {
   name: 'AdvanceRegistration',
   mixins: [dynamicState()],
