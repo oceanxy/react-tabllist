@@ -19,9 +19,6 @@ export default {
     setAdministrativeDivision(state, payload) {
       state.administrativeDivision = payload || []
       state.defaultAdministrativeDivision = payload.defaultIds || []
-    },
-    setAllBuildList(state, payload) {
-      state.allBuildList = payload || []
     }
   },
   actions: {

@@ -565,6 +565,41 @@ body {
 
 /**********************************************************************/
 
+/***************** 表单输入控件验证自定义 ***********/
+
+.has-error .ant-select.ant-select-focused.pass .ant-select-selection,
+.has-error .ant-input-affix-wrapper.pass .ant-input:focus,
+.has-error .ant-input-number-focused.pass,
+.has-error .ant-time-picker-input-focused.pass,
+.ant-calendar-picker.pass:focus .ant-calendar-picker-input:not(.ant-input-disabled),
+.has-error .ant-input-number.pass:focus,
+.has-error .ant-time-picker-input.pass:focus {
+  border-color: #5291ff;
+  box-shadow: 0 0 0 2px rgb(41 112 255 / 20%);
+}
+
+.has-error .ant-select.pass:hover .ant-select-selection,
+.has-error .ant-input-affix-wrapper.pass:hover .ant-input:not(.ant-input-disabled),
+.has-error .ant-input-number.pass:not([disabled]):hover,
+.has-error .ant-time-picker-input.pass:not([disabled]):hover,
+.has-error .ant-calendar-picker.pass:hover .ant-calendar-picker-input:not(.ant-input-disabled) {
+  border-color: #5291ff;
+}
+
+.has-error .ant-select.pass .ant-select-selection,
+.has-error .ant-input-affix-wrapper.pass .ant-input,
+.has-error .ant-input-number.pass,
+.has-error .ant-time-picker-input.pass,
+.has-error .ant-calendar-picker.pass .ant-calendar-picker-input {
+  border-color: $border-color-default;
+}
+
+.has-error .ant-select.pass .ant-select-selection .ant-select-arrow {
+  color: rgba(0, 0, 0, 0.25);
+}
+
+/**********************************************************************/
+
 /*****************定义滚动条高宽及背景高宽 分别对应横竖滚动条的尺寸***********/
 ::-webkit-scrollbar {
   width: 6px;
@@ -604,6 +639,10 @@ body {
   .multi-input-table {
     .ant-table {
       height: auto;
+
+      .ant-table-body {
+        margin: 0;
+      }
     }
 
     td {

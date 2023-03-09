@@ -8,7 +8,6 @@ export default Form.create({})({
   data() {
     return {
       modalProps: { width: 1000 },
-      visibilityFieldName: 'modalOfImportVisible',
       accept: '.xls,.xlsx',
       action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
       fileList: [],
@@ -92,7 +91,7 @@ export default Form.create({})({
       return {
         attrs: this.modalProps,
         on: {
-          cancel: () => this.onCancel('modalOfImportVisible'),
+          cancel: () => this.onCancel(this.modalOfImportVisible),
           ok: () => this.onSubmit(
             {
               isFetchList: false,

@@ -7,8 +7,7 @@ export default Form.create({})({
   mixins: [forFormModal()],
   data() {
     return {
-      modalProps: { width: 610 },
-      visibilityFieldName: 'modalOfRemoveVisible'
+      modalProps: { width: 610 }
     }
   },
   computed: {
@@ -16,7 +15,7 @@ export default Form.create({})({
       return {
         attrs: this.modalProps,
         on: {
-          cancel: () => this.onCancel('modalOfRemoveVisible'),
+          cancel: () => this.onCancel(this.modalOfRemoveVisible),
           ok: () => this.onSubmit(
             {
               isFetchList: false,
@@ -29,7 +28,6 @@ export default Form.create({})({
     }
   },
   methods: {
-
     async done() {
       await this.$store.dispatch('getList', {
         moduleName: this.moduleName,

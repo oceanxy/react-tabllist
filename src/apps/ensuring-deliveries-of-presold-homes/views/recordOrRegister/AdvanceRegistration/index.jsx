@@ -9,7 +9,6 @@ import ModalOfEdit from './components/ModalOfEdit'
 import ModalOfRemove from './components/ModalOfRemove'
 import ModalOfImport from './components/ModalOfImport'
 
-
 export default {
   name: 'AdvanceRegistration',
   mixins: [dynamicState()],
@@ -20,9 +19,11 @@ export default {
         <Inquiry slot={'inquiry'} />
         <Table slot={'table'} />
         <TGPagination slot={'pagination'} />
-        <ModalOfEdit slot={'modals'} modalTitle={'{action}登记'} />
-        <ModalOfImport slot={'modals'} modalTitle={'数据导入'} />
-        <ModalOfRemove slot={'modals'} modalTitle={'解除操作'} />
+        <template slot={'modals'}>
+          <ModalOfEdit modalTitle={'{action}登记'} />
+          <ModalOfImport modalTitle={'数据导入'} visibilityFieldName={'modalOfImportVisible'} />
+          <ModalOfRemove modalTitle={'解除操作'} visibilityFieldName={'modalOfRemoveVisible'} />
+        </template>
       </TGContainerWithTable>
     )
   }

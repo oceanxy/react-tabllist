@@ -80,19 +80,14 @@ export default {
       // this.previewImage = file.url || file.preview
       // this.previewVisible = true
     },
-    handleChange({ file, fileList }) {
-      this.fileList = fileList.map(file => ({
-        ...file,
-        status: file.response?.status ? 'done' : 'error' ?? 'uploading'
-      }))
+    handleChange({ fileList }) {
+      this.fileList = fileList
 
       if (this.fileList.length >= this.limit) {
         this.fileList = this.fileList.slice(0, this.limit)
       }
 
-      if (file.status === 'done') {
-        this.$emit('change', this.fileList)
-      }
+      this.$emit('change', this.fileList)
     }
   },
   render() {
