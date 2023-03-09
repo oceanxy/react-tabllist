@@ -20,9 +20,11 @@ export default {
         <Inquiry slot={'inquiry'} />
         <Table slot={'table'} />
         <TGPagination slot={'pagination'} />
-        <ModalOfEdit slot={'modals'} modalTitle={'{action}抵押记录'} />
-        <ModalOfImport slot={'modals'} modalTitle={'数据导入'} />
-        <ModalOfPurchase slot={'modals'} modalTitle={'收购资产'} />
+        <template slot={'modals'}>
+          <ModalOfEdit modalTitle={'{action}抵押记录'} />
+          <ModalOfImport modalTitle={'数据导入'} visibilityFieldName={'modalOfImportVisible'} />
+          <ModalOfPurchase modalTitle={'收购资产'} visibilityFieldName={'modalOfPurchaseVisible'} />
+        </template>
       </TGContainerWithTable>
     )
   }

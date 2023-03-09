@@ -8,7 +8,6 @@ export default Form.create({})({
   data() {
     return {
       modalProps: { width: 610 },
-      visibilityFieldName: 'modalOfRemoveVisible'
     }
   },
   computed: {
@@ -16,7 +15,7 @@ export default Form.create({})({
       return {
         attrs: this.modalProps,
         on: {
-          cancel: () => this.onCancel('modalOfRemoveVisible'),
+          cancel: () => this.onCancel(this.visibilityFieldName),
           ok: () => this.onSubmit(
             {
               isFetchList: false,

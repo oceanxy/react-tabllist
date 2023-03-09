@@ -55,7 +55,7 @@ export default Form.create({})({
           <Form.Item label={'名称'}>
             {
               this.form.getFieldDecorator('fullName', { initialValue: this.initialValues.fullName })(
-                <Input placeholder="项目/开发商名称" allowClear />
+                <Input maxLength={10} placeholder="项目/开发商名称" allowClear />
               )
             }
           </Form.Item>

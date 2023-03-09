@@ -24,7 +24,7 @@ export default {
         <Button
           type="primary"
           disabled={this.isFeatureDisabled}
-          onClick={() => this.onAddClick()}
+          onClick={() => this.onCustomAddClick()}
           icon="plus"
         >
           新增

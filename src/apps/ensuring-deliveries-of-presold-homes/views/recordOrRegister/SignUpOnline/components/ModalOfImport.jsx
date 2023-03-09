@@ -1,4 +1,4 @@
-import { Form, Icon, Button, message, Progress, Table } from 'ant-design-vue'
+import { Form, Icon, Button, Space, Table, Upload } from 'ant-design-vue'
 import forFormModal from '@/mixins/forModal/forFormModal'
 import DragModal from '@/components/DragModal'
 import { cloneDeep } from 'lodash'
@@ -8,7 +8,13 @@ export default Form.create({})({
   data() {
     return {
       modalProps: { width: 1000 },
-      visibilityFieldName: 'modalOfImportVisible',
+      accept: '.xls,.xlsx',
+      action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+      fileList: [],
+      previewImage: '',
+      previewVisible: false,
+      name: 'files',
+      headers: { token: localStorage.getItem('token') },
       columns: [
         {
           title: '开发商',
@@ -85,7 +91,7 @@ export default Form.create({})({
       return {
         attrs: this.modalProps,
         on: {
-          cancel: () => this.onCancel('modalOfImportVisible'),
+          cancel: () => this.onCancel(this.visibilityFieldName),
           ok: () => this.onSubmit(
             {
               isFetchList: false,
@@ -100,50 +106,18 @@ export default Form.create({})({
   methods: {
 
     // 上传文件
-    async uploadFile() {
-      const imFile = this.$refs.imFile
+    handleChange({ file, fileList }) {
+      this.fileList = fileList
 
-      imFile.click()
-
-    },
-
-    async importFile(info) {
-      if (!info.target.files || info.target.files.length === 0) {
-        return
+      if (this.fileList.length >= this.limit) {
+        this.fileList = this.fileList.slice(0, this.limit)
       }
 
-      const flie = info.target.files[0]
-      const suffix = flie.name.split('.')[1]
-
-      if (suffix !== 'xls' && suffix !== 'xlsx') {
-        message.warning('导入的文件可是不正确')
-
-        return
+      if (file.status === 'done') {
+        this.$emit('change', this.fileList)
       }
-
-      this.tablLoading = true
-      const formData = new FormData()
-
-      console.log('flie', flie)
-
-      formData.append('file', flie)
-      // const { status, data } = await apis.schoolImportFile(formData)
-
-      // if (status) {
-      //   this.tableData = data
-      //   this.newTableData = data.allData.map((item, index) => {
-      //     item.id = index
-
-      //     return item
-      //   })
-
-      //   this.tablLoading = false
-      //   this.defaultPage = false
-      // }
-
-      this.$refs.imFile.value = ''
-
     },
+
     async done() {
       await this.$store.dispatch('getList', {
         moduleName: this.moduleName,
@@ -160,37 +134,55 @@ export default Form.create({})({
       return data
     }
   },
+  watch: {
+    value: {
+      immediate: true,
+      handler(value) {
+        if (value && value.length) {
+          this.fileList = value.map((item, index) => {
+            if ('uid' in item) {
+              return item
+            } else {
+              return {
+                uid: item.key + index,
+                key: item.key,
+                url: item.path,
+                status: 'done',
+                name: item.fileName
+              }
+            }
+          })
+        } else {
+          this.fileList = []
+        }
+      }
+    }
+  },
   render() {
     return (
       <DragModal {...this.attributes}>
         <Form>
-          <div class={'import-box'}>
-            <input type="file" ref="imFile" style="display: none" onChange={this.importFile} accept="xlsx" />
-            <Button class={'import-btn-box'} type="dashed" onClick={() => this.uploadFile()} loading={this.tablLoading}>
+          <Space direction="vertical" class={'import-btn-box'}>
+            <Upload.Dragger
+              name="file"
+              accept={this.accept}
+              action={this.action}
+              fileList={this.fileList}
+              headers={this.headers}
+              onChange={this.handleChange}
+            >
               <Icon class={'icon'} type="cloud-upload"></Icon>
               <div>单击或拖动文件到此区域以上传</div>
-            </Button>
-            <div class={'progress-box'}>
-              <Icon type="link" class={'link'}></Icon>
-              <div>
-                <div class={'progress'}>
-                  <div>2021年预告登记数据.xlsx</div>
-                  <Icon class={'icon'} type="close"></Icon>
-                </div>
-                <Progress percent={10} show-info={false} size="small"></Progress>
-              </div>
-            </div>
+            </Upload.Dragger>
             <div class={'point-out'}>
-              <div>注意：</div>
+              <div style={'margin-top:4px'}>注意：</div>
               <div>
                 <p>1、请按指定格式导入数据，可 <Button type="link">下载模板文件 </Button>以作格式参考</p>
                 <p>2、支持xlsx，xls，csv格式</p>
               </div>
             </div>
-          </div>
-          <br />
-          <br />
-          <div>
+          </Space>
+          <div style={'margin-top:35px'}>
             <h3 style={'font-weight: bold;'}>导入数据</h3>
             <Table
               dataSource={this.tableList}

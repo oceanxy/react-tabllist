@@ -27,7 +27,8 @@ export default [
         path: 'advance-registration',
         name: 'advanceRegistration',
         // eslint-disable-next-line max-len
-        component: () => import('@/apps/ensuring-deliveries-of-presold-homes/views/recordOrRegister/AdvanceRegistration'),
+        component: () =>
+          import('@/apps/ensuring-deliveries-of-presold-homes/views/recordOrRegister/AdvanceRegistration'),
         meta: {
           title: '预告登记',
           keepAlive: false,
@@ -115,7 +116,8 @@ export default [
         path: 'payment-collection-statistics',
         name: 'paymentCollectionStatistics',
         // eslint-disable-next-line max-len
-        component: () => import('@/apps/ensuring-deliveries-of-presold-homes/views/statistics/PaymentCollectionStatistics'),
+        component: () =>
+          import('@/apps/ensuring-deliveries-of-presold-homes/views/statistics/PaymentCollectionStatistics'),
         meta: {
           title: '回款统计',
           keepAlive: false,
@@ -126,7 +128,8 @@ export default [
         path: 'statistics-of-sign-up-online',
         name: 'statisticsOfSignUpOnline',
         // eslint-disable-next-line max-len
-        component: () => import('@/apps/ensuring-deliveries-of-presold-homes/views/statistics/StatisticsOfSignUpOnline'),
+        component: () =>
+          import('@/apps/ensuring-deliveries-of-presold-homes/views/statistics/StatisticsOfSignUpOnline'),
         meta: {
           title: '网签统计',
           keepAlive: false,
@@ -137,9 +140,53 @@ export default [
         path: 'pre-registration-statistics',
         name: 'preRegistrationStatistics',
         // eslint-disable-next-line max-len
-        component: () => import('@/apps/ensuring-deliveries-of-presold-homes/views/statistics/PreRegistrationStatistics'),
+        component: () =>
+          import('@/apps/ensuring-deliveries-of-presold-homes/views/statistics/PreRegistrationStatistics'),
         meta: {
           title: '预登记统计',
+          keepAlive: false,
+          requiresAuth: true
+        }
+      }
+    ]
+  },
+  {
+    path: 'edph/system',
+    component: TGRouterView,
+    redirect: { name: 'combination' },
+    meta: {
+      title: '系统管理',
+      keepAlive: false,
+      requiresAuth: true,
+      icon: 'icon-menu-statistics'
+    },
+    children: [
+      {
+        path: 'combination',
+        name: 'combination',
+        component: () => import('@/apps/ensuring-deliveries-of-presold-homes/views/system/Combination'),
+        meta: {
+          title: '组织结构',
+          keepAlive: false,
+          requiresAuth: true
+        }
+      },
+      {
+        path: 'roles',
+        name: 'roles',
+        component: () => import('@/apps/ensuring-deliveries-of-presold-homes/views/system/Roles'),
+        meta: {
+          title: '角色',
+          keepAlive: false,
+          requiresAuth: true
+        }
+      },
+      {
+        path: 'account-numbers',
+        name: 'accountNumbers',
+        component: () => import('@/apps/ensuring-deliveries-of-presold-homes/views/system/AccountNumbers'),
+        meta: {
+          title: '账号管理',
           keepAlive: false,
           requiresAuth: true
         }

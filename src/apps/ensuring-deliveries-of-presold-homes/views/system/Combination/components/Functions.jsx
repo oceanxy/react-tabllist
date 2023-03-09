@@ -16,12 +16,6 @@ export default {
     return (
       <Space class="tg-function">
         <Button
-          onClick={() => this._setVisibilityOfModal({}, 'modalOfImportVisible')}
-        >
-          <IconFont type={'icon-button-dr-line'} />
-          导入
-        </Button>
-        <Button
           type="primary"
           disabled={this.isFeatureDisabled}
           onClick={() => this.onCustomAddClick()}
