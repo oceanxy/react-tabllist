@@ -35,7 +35,7 @@ export default {
           <div class={'login-subtitle'}>您好，欢迎登录</div>
           <ULLoginForm />
         </TGContainer>
-        <div class={'corporate-services'}>蓝桥科技有限公司技术支持</div>
+        <div class={'corporate-services'}>重庆蓝桥科技有限公司技术支持</div>
       </div>
     )
   }
