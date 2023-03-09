@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "SET NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service serve",
-    "build": "SET NODE_OPTIONS=--openssl-legacy-provider && node ./build",
-    "lint": "SET NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service lint"
+    "dev": "vue-cli-service serve",
+    "build": "node ./build",
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "ant-design-vue": "^1.7.8",
