@@ -307,9 +307,10 @@ body {
   flex: none;
 }
 
-.ant-table-title{
+.ant-table-title {
   padding: 0 0 12px 0 !important;
 }
+
 .ant-table-wrapper {
   flex: auto;
   overflow: hidden;
@@ -336,41 +337,36 @@ body {
   }
 
   .ant-table {
+    color: $text-or-icon-color;
+
     .table-row-background {
-      background-color: #f9f9fb;
+      background-color: $table-header-bg;
     }
 
     .ant-table-thead > tr.ant-table-row-hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td,
     .ant-table-tbody > tr.ant-table-row-hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td,
     .ant-table-thead > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td,
     .ant-table-tbody > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
-      background-color: #edfcf2;
+      background-color: $table-tr-bg-hover;
     }
 
     .ant-table-thead > tr > th {
-      // border: none;
-      background: none;
-      color: #5d6b98;
+      background: $table-header-bg;
+      color: $text-or-icon-color;
       font-weight: bolder;
+      font-size: 14px;
+      border-color: $table-border-color;
+    }
+
+    .ant-table-tbody > tr > th {
+      border-right: 1px solid $table-border-color;
+      border-bottom: 1px solid $table-border-color;
     }
 
     &.ant-table-bordered .ant-table-thead {
       & > tr > th {
         box-sizing: border-box;
-        border-right: 1px solid #e8e8e8;
-        border-bottom: 1px solid #e8e8e8;
       }
-    }
-
-    .ant-table-header,
-    .ant-table-thead {
-      background: #f9f9fb !important;
-    }
-
-    .ant-table-header,
-    .ant-table-body {
-      //margin-bottom: 0 !important;
-      //overflow: auto !important;
     }
 
     .tg-tags-group {
