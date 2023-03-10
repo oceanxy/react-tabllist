@@ -8,7 +8,6 @@ export default Form.create({})({
   data() {
     return {
       modalProps: { width: 610 },
-      visibilityFieldName: 'modalOfPurchaseVisible'
     }
   },
   computed: {
@@ -16,7 +15,7 @@ export default Form.create({})({
       return {
         attrs: this.modalProps,
         on: {
-          cancel: () => this.onCancel('modalOfPurchaseVisible'),
+          cancel: () => this.onCancel(this.visibilityFieldName),
           ok: () => this.onSubmit(
             {
               isFetchList: false,
@@ -31,13 +30,13 @@ export default Form.create({})({
       let developerName, projectName
 
       if (this.currentItem.developerName) {
-        developerName = this.currentItem.developerName + '⇒'
+        developerName = this.currentItem.developerName + ' / '
       } else {
         developerName = ''
       }
 
       if (this.currentItem.projectName) {
-        projectName = this.currentItem.estateName + '⇒'
+        projectName = this.currentItem.projectName + ' / '
       } else {
         projectName = ''
       }
@@ -82,7 +81,7 @@ export default Form.create({})({
                   }
                 ]
               })(
-                <Space><InputNumber placeholder="请输入单价" style={'width:100%'} allowClear addon-after="元" /><span>元</span></Space>
+                <Space><InputNumber max={9999999999999} placeholder="请输入单价" style={'width:100%'} allowClear addon-after="元" /><span>元</span></Space>
               )
             }
           </Form.Item>

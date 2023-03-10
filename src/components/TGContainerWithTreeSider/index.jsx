@@ -289,6 +289,8 @@ export default {
      * @param e {Object} 当前是否有被选中的结点
      */
     async onSelect(selectedKeys, e) {
+      console.log(selectedKeys, e)
+
       if (Object.keys(this.$route.query).length) {
         /**
          * #2 （一个书签，与本组件的 #1 配合）
@@ -394,13 +396,13 @@ export default {
      * @param treeNode
      * @returns {*|(function(): Promise<*>)|undefined}
      */
-    getIcon(treeNode) {
-      return Object.prototype.toString.call(this.getCustomIcon) === '[object Function]'
-        ? this.getCustomIcon(treeNode)
-        : treeNode.obj.menuIcon
-          ? () => import(`@/assets/images/${treeNode.obj.menuIcon}.svg`)
-          : undefined // todo 此处设置为默认图标
-    },
+    // getIcon(treeNode) {
+    //   return Object.prototype.toString.call(this.getCustomIcon) === '[object Function]'
+    //     ? this.getCustomIcon(treeNode)
+    //     : treeNode.obj.menuIcon
+    //       ? () => import(`@/assets/images/${treeNode.obj.menuIcon}.svg`)
+    //       : undefined // todo 此处设置为默认图标
+    // },
     /**
      * 获取树节点集合（注意此处有递归）
      * @param dataSource {Array} 生成树节点的数据源
@@ -412,11 +414,11 @@ export default {
           key={item.id}
           dataSource={item}
         >
-          <Icon
+          {/* <Icon
             slot={'icon'}
             class={'icon'}
             component={this.getIcon(item)}
-          />
+          /> */}
           {this.highlight(item)}
           {
             Array.isArray(item?.children)
@@ -466,7 +468,7 @@ export default {
           <Input
             prefix={<Icon
               type={'search'}
-              style={{ fontSize: '16px' }}
+              style={{ fontSize: '14px' }}
             />}
             all
             placeholder={this.placeholder}

@@ -305,7 +305,6 @@ body {
 .tg-function {
   margin-left: auto;
   flex: none;
-  padding: 14px 0 24px;
 }
 
 .ant-table-wrapper {
@@ -346,7 +345,7 @@ body {
     }
 
     .ant-table-thead > tr > th {
-      border: none;
+      // border: none;
       background: none;
       color: #5d6b98;
       font-weight: bolder;

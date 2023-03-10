@@ -1,4 +1,4 @@
-import { Form, Icon, Button, message, Space, Table, Upload } from 'ant-design-vue'
+import { Form, Icon, Button, Space, Table, Upload } from 'ant-design-vue'
 import forFormModal from '@/mixins/forModal/forFormModal'
 import DragModal from '@/components/DragModal'
 import { cloneDeep } from 'lodash'
@@ -91,7 +91,7 @@ export default Form.create({})({
       return {
         attrs: this.modalProps,
         on: {
-          cancel: () => this.onCancel(this.modalOfImportVisible),
+          cancel: () => this.onCancel(this.visibilityFieldName),
           ok: () => this.onSubmit(
             {
               isFetchList: false,
@@ -182,9 +182,7 @@ export default Form.create({})({
               </div>
             </div>
           </Space>
-          <br />
-          <br />
-          <div>
+          <div style={'margin-top:35px'}>
             <h3 style={'font-weight: bold;'}>导入数据</h3>
             <Table
               dataSource={this.tableList}

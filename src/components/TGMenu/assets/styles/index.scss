@@ -5,6 +5,7 @@
   overflow-y: auto;
   height: 100%;
   position: relative;
+  padding-top: 10px;
   z-index: 900;
   @include box-shadow($border-shadow-color);
 }

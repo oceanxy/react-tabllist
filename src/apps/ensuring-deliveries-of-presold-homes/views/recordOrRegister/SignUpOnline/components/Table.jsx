@@ -22,18 +22,20 @@ export default {
           },
           {
             title: '性质',
-            width: 80,
+            width: 70,
+            align: 'center',
             dataIndex: 'easteDicName'
           },
           {
             title: '建面㎡',
-            width: 100,
+            width: 70,
             align: 'center',
             dataIndex: 'buildArea'
           },
           {
             title: '套内㎡',
-            width: 100,
+            width: 70,
+            align: 'center',
             dataIndex: 'infloorArea'
           },
           {
