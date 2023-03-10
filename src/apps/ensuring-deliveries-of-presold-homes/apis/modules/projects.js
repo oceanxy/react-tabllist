@@ -92,5 +92,31 @@ export default {
       method: 'post',
       data: qs.stringify(data)
     })
+  },
+  /**
+   * 获取还款计划列表
+   * @param request
+   * @param data
+   * @returns {*}
+   */
+  getListOfRepaymentPlan(request, data) {
+    return request({
+      url: '/estate/projectInfo/getWaitRefundPlanList',
+      method: 'post',
+      data: qs.stringify(data)
+    })
+  },
+  /**
+   * 还款
+   * @param request
+   * @param data
+   * @returns {*}
+   */
+  repayment(request, data) {
+    return request({
+      url: '/estate/projectInfo/refund',
+      method: 'post',
+      data
+    })
   }
 }
