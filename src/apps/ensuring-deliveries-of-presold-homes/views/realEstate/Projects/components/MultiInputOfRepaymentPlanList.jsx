@@ -169,7 +169,6 @@ export default {
         this.principal = 0
 
         if (!err) {
-          this.count()
           this.$emit('change', this.dataSource)
         } else {
           this.dataSourceCache = this.dataSource

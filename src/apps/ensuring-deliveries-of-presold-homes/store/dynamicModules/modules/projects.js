@@ -4,6 +4,7 @@ export default commitRootInModule => createStoreModule({
   state: {
     visibilityOfDeveloper: false,
     visibilityOfRepayment: false,
+    visibilityOfRepaymentPlan: false,
     natureOfAssets: {
       list: [],
       loading: false
@@ -19,6 +20,16 @@ export default commitRootInModule => createStoreModule({
     repaymentPlanList: {
       list: [],
       loading: false
+    }
+  },
+  modules: {
+    repaymentPlan: {
+      state: {
+        rowKey: 'id',
+        search: {},
+        list: [],
+        loading: false
+      }
     }
   }
 }, [

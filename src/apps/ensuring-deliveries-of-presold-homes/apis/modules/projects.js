@@ -15,6 +15,19 @@ export default {
     })
   },
   /**
+   * 获取项目枚举
+   * @param request
+   * @param data
+   * @returns {*}
+   */
+  getEnumOfProjects(request, data) {
+    return request({
+      url: '/estate/projectInfo/getProjectInfoLikeName',
+      method: 'post',
+      data: qs.stringify(data)
+    })
+  },
+  /**
    * 获取项目详情
    * @param request
    * @param data
@@ -117,6 +130,16 @@ export default {
       url: '/estate/projectInfo/refund',
       method: 'post',
       data
+    })
+  },
+  /**
+   * 获取还款计划列表
+   */
+  getRepaymentPlanOfProjects(request, data) {
+    return request({
+      url: '/estate/projectInfo/getRefundPlanList',
+      method: 'post',
+      data: qs.stringify(data)
     })
   }
 }
