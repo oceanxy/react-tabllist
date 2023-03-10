@@ -31,6 +31,16 @@ export default {
             dataIndex: 'easteName'
           },
           {
+            title: '所在楼层',
+            width: 80,
+            dataIndex: 'floorNum'
+          },
+          {
+            title: '用途',
+            width: 80,
+            dataIndex: 'useType'
+          },
+          {
             title: '性质',
             width: 70,
             align: 'center',

@@ -12,7 +12,7 @@ export default Form.create({})({
         width: 810,
         destroyOnClose: true
       },
-      privilegeTreeList: [],
+      menuTreeList: [],
       roleTreeList: []
     }
   },
@@ -42,8 +42,8 @@ export default Form.create({})({
     }
   },
   methods: {
-    async getPrivilegeTree() {
-      const res = await apis.getPrivilegeTree()
+    async getMenuTree() {
+      const res = await apis.getMenuTree()
 
       if (res.status) {
         this.menuTreeList = res.data || []
@@ -63,7 +63,7 @@ export default Form.create({})({
       immediate: true,
       async handler(value) {
         if (value) {
-          this.getPrivilegeTree()
+          this.getMenuTree()
           this.getRoleTree()
         }
       }
@@ -129,7 +129,7 @@ export default Form.create({})({
                   allowClear
                   dropdownClassName={'tg-select-dropdown'}
                   dropdownStyle={{ maxHeight: '300px' }}
-                  treeData={this.privilegeTreeList}
+                  treeData={this.menuTreeList}
                   replaceFields={{
                     children: 'children',
                     title: 'name',
@@ -138,7 +138,7 @@ export default Form.create({})({
                   }}
                   treeNodeFilterProp={'title'}
                   placeholder={'请选择父级菜单'}
-                  treeDefaultExpandedKeys={[this.currentItem.indexMenuId || this.privilegeTreeList?.[0]?.id]}
+                  treeDefaultExpandedKeys={[this.currentItem.indexMenuId || this.menuTreeList?.[0]?.id]}
                 />
               )
             }

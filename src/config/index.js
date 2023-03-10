@@ -8,7 +8,7 @@ export default {
   // 动态路由（从后台获取权限菜单）
   dynamicRouting: false,
   // iconfont
-  iconFontSymbol: '//at.alicdn.com/t/c/font_3919835_632idb1pkh.js',
+  iconFontSymbol: '//at.alicdn.com/t/c/font_3919835_aisdhzsf53g.js',
   // 系统名称
   systemName: '渝兴集团综合管理平台',
   systemNameEn: '',
@@ -17,5 +17,5 @@ export default {
   // 账号密码加密key
   publicKey:
     'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCs7Iu8OPMKCt38fCWV5PdA7+TA+vxgNFnAiC+9xw8F4JifCKNRg07w3zxbSoUmW7dN3NMubM' +
-    'E9hQQizmx7IJk3hn91ieVg+CiYdA9MwpEThezYPsJ6+Oj9RsVPOCAsXa5+XRlc1lbmo7b21n5SVSkbog2OMqB2OlZK+SdwY+vrhQIDAQAB',
+    'E9hQQizmx7IJk3hn91ieVg+CiYdA9MwpEThezYPsJ6+Oj9RsVPOCAsXa5+XRlc1lbmo7b21n5SVSkbog2OMqB2OlZK+SdwY+vrhQIDAQAB'
 }
