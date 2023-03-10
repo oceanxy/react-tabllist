@@ -4,7 +4,11 @@ export default commitRootInModule =>
   createStoreModule(
     {
       state: {
-        menuTree: {
+        privilegeTreeList: {
+          loading: false,
+          list: []
+        },
+        roleMergerMenuList: {
           loading: false,
           list: []
         },

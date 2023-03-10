@@ -80,16 +80,16 @@ export default {
     })
   },
   /**
-   * 获取菜单树
+   * 获取权限树
    * @param request
    * @param data
    * @returns {*}
    */
-  getMenuTree(request, data) {
+  getPrivilegeTree(request, data) {
     return request({
-      url: '/system/menu/getMenuTree',
+      url: '/system/privilege/getPrivilegeTree',
       method: 'post',
-      data
+      data: qs.stringify(data)
     })
   },
 

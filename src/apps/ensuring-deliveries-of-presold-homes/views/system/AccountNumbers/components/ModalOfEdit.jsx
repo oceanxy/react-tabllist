@@ -203,6 +203,27 @@ export default Form.create({})({
               )
             }
           </Form.Item>
+
+          <Form.Item label="是否组织管理" class={'half'}>
+            {
+              this.form.getFieldDecorator('isOrganLeader', {
+                initialValue: this.currentItem.isOrganLeader || 1,
+                rules: [
+                  {
+                    required: true,
+                    type: 'number',
+                    message: '请选择性别！',
+                    trigger: 'change'
+                  }
+                ]
+              })(
+                <Select placeholder="请选择性别">
+                  <Select.Option value={1}>是</Select.Option>
+                  <Select.Option value={0}>否</Select.Option>
+                </Select>
+              )
+            }
+          </Form.Item>
           <Form.Item label="选择角色">
             {
               this.form.getFieldDecorator('role', {
