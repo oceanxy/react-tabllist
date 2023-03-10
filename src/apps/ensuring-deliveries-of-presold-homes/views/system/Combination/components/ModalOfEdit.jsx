@@ -11,15 +11,11 @@ export default Form.create({})({
         width: 810,
         destroyOnClose: true
       },
-      menuTreeList: []
     }
   },
   computed: {
     organTree() {
       return this.$store.state[this.moduleName].organTree?.list || []
-    },
-    menuTree() {
-      return this.getState('menuTree', this.moduleName)
     },
     attributes() {
       return {
@@ -41,25 +37,6 @@ export default Form.create({})({
           )
 
 
-        }
-      }
-    }
-  },
-  methods: {
-    async getMenuTree() {
-      await this.$store.dispatch('getListWithLoadingStatus', {
-        moduleName: this.moduleName,
-        stateName: 'menuTree',
-        customApiName: 'getMenuTree'
-      })
-    }
-  },
-  watch: {
-    visible: {
-      immediate: true,
-      async handler(value) {
-        if (value) {
-          this.getMenuTree()
         }
       }
     }

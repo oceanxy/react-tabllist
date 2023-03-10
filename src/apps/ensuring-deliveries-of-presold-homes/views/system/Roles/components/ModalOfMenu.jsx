@@ -18,8 +18,8 @@ export default Form.create({})({
   },
   computed: {
     ...mapGetters({ getState: 'getState' }),
-    menuTree() {
-      return this.getState('menuTree', this.moduleName)
+    privilegeTreeList() {
+      return this.getState('privilegeTreeList', this.moduleName)
     },
     roleMergerMenuList() {
       return this.getState('roleMergerMenuList', this.moduleName)
@@ -41,7 +41,7 @@ export default Form.create({})({
 
               // 从半选节点key数组中查找并生成后台需要数据结构
               const halfCheckedNodes = this.halfCheckedKeys.map(key => {
-                const halfCheckedNode = this.deepQuery(this.menuTree.list, key)
+                const halfCheckedNode = this.deepQuery(this.privilegeTreeList.list, key)
 
                 return {
                   objId: halfCheckedNode.id,
@@ -71,11 +71,11 @@ export default Form.create({})({
       async handler(value) {
         if (value) {
           await Promise.all([
-            // 获取菜单树
+            // 获取权限树
             this.$store.dispatch('getListWithLoadingStatus', {
               moduleName: this.moduleName,
-              stateName: 'menuTree',
-              customApiName: 'getMenuTree',
+              stateName: 'privilegeTreeList',
+              customApiName: 'getPrivilegeTree',
               payload: { roleId: this.currentItem.id }
             }),
             // 获取权限菜单（已分配给角色的菜单）
@@ -92,7 +92,7 @@ export default Form.create({})({
           this.$store.commit('setList', {
             value: [],
             moduleName: this.moduleName,
-            stateName: 'menuTree'
+            stateName: 'privilegeTreeList'
           })
 
           this.$store.commit('setList', {
@@ -145,7 +145,7 @@ export default Form.create({})({
         <Form class="tg-form-grid" colon={false}>
           <Form.Item>
             {
-              this.menuTree.list.length && !this.menuTree.loading && !this.roleMergerMenuList.loading
+              this.privilegeTreeList.list.length && !this.privilegeTreeList.loading && !this.roleMergerMenuList.loading
                 ? (
                   this.form.getFieldDecorator('privilegeInfoList', {
                     initialValue: this.checkedKeys,
@@ -159,15 +159,15 @@ export default Form.create({})({
                       }}
                       checkable={true}
                       selectable={false}
-                      treeData={this.menuTree.list}
+                      treeData={this.privilegeTreeList.list}
                       onCheck={this.onCheck}
-                      defaultExpandedKeys={[this.menuTree.list?.[0]?.id]}
+                      defaultExpandedKeys={[this.privilegeTreeList.list?.[0]?.id]}
                       showLine
                     />
                   )
                 )
                 : (
-                  <Spin spinning={this.menuTree.loading || this.roleMergerMenuList.loading}>
+                  <Spin spinning={this.privilegeTreeList.loading || this.roleMergerMenuList.loading}>
                     <Empty />
                   </Spin>
                 )

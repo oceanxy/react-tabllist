@@ -16,7 +16,6 @@ export default {
     return (
       <TGContainerWithTreeSider
         notNoneMode
-        getFieldNameForTreeId={() => 'orgId'}
         apiOptions={{
           apiName: 'getOrganTree',
           stateName: 'organTree',

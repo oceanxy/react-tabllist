@@ -289,6 +289,8 @@ export default {
      * @param e {Object} 当前是否有被选中的结点
      */
     async onSelect(selectedKeys, e) {
+      console.log(selectedKeys, e)
+
       if (Object.keys(this.$route.query).length) {
         /**
          * #2 （一个书签，与本组件的 #1 配合）
