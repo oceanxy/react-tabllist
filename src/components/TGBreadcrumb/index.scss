@@ -1,9 +1,12 @@
 @import '@/assets/styles/theme.scss';
+.ant-breadcrumb{
+  font-size: 12px;
+}
 
 .tg-breadcrumb {
   display: flex;
   align-items: center;
-  height: 60px;
+  height: 50px;
   flex: none;
   padding: 16px 24px;
   line-height: 24px;
@@ -15,7 +18,6 @@
   }
 
   .ant-breadcrumb-link a {
-    font-size: 14px;
     font-weight: 400;
     color: $text-or-icon-light-color;
 

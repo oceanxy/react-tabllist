@@ -466,7 +466,7 @@ export default {
           <Input
             prefix={<Icon
               type={'search'}
-              style={{ fontSize: '16px' }}
+              style={{ fontSize: '14px' }}
             />}
             all
             placeholder={this.placeholder}
