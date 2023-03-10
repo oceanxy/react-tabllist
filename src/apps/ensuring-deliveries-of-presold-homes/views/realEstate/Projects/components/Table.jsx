@@ -102,7 +102,9 @@ export default {
           </Space>
         ),
         refundPlan: (text, record) => (
-          <Button type="link">{record.refundPlan}</Button>
+          <Button type="link" onClick={() => this._setVisibilityOfModal(record, 'visibilityOfRepaymentPlan')}>
+            {record.refundPlan}
+          </Button>
         ),
         ctContract: (text, record) => record.ctContractUrl
           ? <Button type="link" onClick={() => window.open(record.ctContractUrl)}>预览</Button>

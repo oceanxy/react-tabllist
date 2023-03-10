@@ -7,6 +7,7 @@ import TGPagination from '@/components/TGPagination'
 import ModalOfEdit from './components/ModalOfEdit'
 import TGContainerWithTable from '@/components/TGContainerWithTable'
 import ModalOfRepayment from './components/ModalOfRepayment'
+import ModalOfRepaymentPlan from './components/ModalOfRepaymentPlan'
 
 export default {
   name: 'Projects',
@@ -21,6 +22,7 @@ export default {
         <template slot={'modals'}>
           <ModalOfEdit modalTitle={'{action}项目'} />
           <ModalOfRepayment modalTitle={'还款'} visibilityFieldName={'visibilityOfRepayment'} />
+          <ModalOfRepaymentPlan modalTitle={'还款计划'} visibilityFieldName={'visibilityOfRepaymentPlan'} />
         </template>
       </TGContainerWithTable>
     )
