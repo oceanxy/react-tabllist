@@ -27,6 +27,12 @@ export default {
             dataIndex: 'easteDicName'
           },
           {
+            title: '租售状态',
+            width: 80,
+            align: 'center',
+            scopedSlots: { customRender: 'salesStatus' }
+          },
+          {
             title: '建面㎡',
             width: 70,
             align: 'center',
@@ -84,6 +90,13 @@ export default {
             <Button disabled={this.tableSelectedRowKeys} onClick={() => this.onDeleteClick()}>删除</Button>
           </Space>
         ),
+        salesStatus: (text, record) => (
+          <div>
+            {
+              this.salesStatus(record)
+            }
+          </div>
+        ),
         rescindContractStatus: (text, record) => {
           return record.rescindContractStatus === 1 ? <Tag color="orange" >未解除</Tag> : <Tag color="green">已解除</Tag>
         },
@@ -139,5 +152,22 @@ export default {
         return true
       }
     },
+  },
+  methods: {
+    salesStatus(record) {
+      let text = ''
+
+      if (record.salesStatus === 1) {
+        text = '已售'
+      } else if (record.salesStatus === 2) {
+        text = '未售'
+      } else if (record.salesStatus === 3) {
+        text = '已租'
+      } else if (record.salesStatus === 4) {
+        text = '未知'
+      }
+
+      return text ?? ''
+    }
   }
 }

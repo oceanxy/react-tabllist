@@ -158,7 +158,7 @@ export default [
       title: '系统管理',
       keepAlive: false,
       requiresAuth: true,
-      icon: 'icon-menu-statistics'
+      icon: 'icon-menu-xtgl-line'
     },
     children: [
       {

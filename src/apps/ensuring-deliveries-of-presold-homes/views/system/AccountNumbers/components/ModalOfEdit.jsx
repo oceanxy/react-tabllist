@@ -1,8 +1,7 @@
-import { Input, Form, InputNumber, TreeSelect, Switch, Select } from 'ant-design-vue'
+import { Input, Form, InputNumber, TreeSelect, Switch, Select, RadioGroup, Radio } from 'ant-design-vue'
 import forFormModal from '@/mixins/forModal/forFormModal'
 import DragModal from '@/components/DragModal'
 import { cloneDeep } from 'lodash'
-import apis from '@/apis'
 
 export default Form.create({})({
   mixins: [forFormModal()],
@@ -161,7 +160,11 @@ export default Form.create({})({
                   }
                 ]
               })(
-                <Input maxLength={16} disabled={this.isPwd} placeholder="请输入密码" allowClear />
+                <Input
+                  type={this.isPwd ? 'password' : 'text'}
+                  maxLength={16}
+                  disabled={this.isPwd}
+                  placeholder="请输入密码" allowClear />
               )
             }
           </Form.Item>
@@ -195,11 +198,15 @@ export default Form.create({})({
                   }
                 ]
               })(
-                <Select placeholder="请选择性别">
-                  <Select.Option value={1}>男</Select.Option>
-                  <Select.Option value={2}>女</Select.Option>
-                  <Select.Option value={0}>未知</Select.Option>
-                </Select>
+                // <Select placeholder="请选择性别">
+                //   <Select.Option value={1}>男</Select.Option>
+                //   <Select.Option value={2}>女</Select.Option>
+                //   <Select.Option value={0}>未知</Select.Option>
+                // </Select>
+                <Radio.Group>
+                  <Radio value={1}>男</Radio>
+                  <Radio value={2}>女</Radio>
+                </Radio.Group>
               )
             }
           </Form.Item>
@@ -212,12 +219,12 @@ export default Form.create({})({
                   {
                     required: true,
                     type: 'number',
-                    message: '请选择性别！',
+                    message: '是否组织管理！',
                     trigger: 'change'
                   }
                 ]
               })(
-                <Select placeholder="请选择性别">
+                <Select placeholder="请选择">
                   <Select.Option value={1}>是</Select.Option>
                   <Select.Option value={0}>否</Select.Option>
                 </Select>
@@ -259,9 +266,7 @@ export default Form.create({})({
           </Form.Item>
           <Form.Item label="排序" class={'half'}>
             {
-              this.form.getFieldDecorator('sortIndex', {
-                initialValue: this.currentItem.sortIndex ?? 0
-              })(
+              this.form.getFieldDecorator('sortIndex', { initialValue: this.currentItem.sortIndex ?? 0 })(
                 <InputNumber
                   placeholder="数值越大排在越前"
                   allowClear
@@ -282,9 +287,7 @@ export default Form.create({})({
           </Form.Item>
           <Form.Item label="描述">
             {
-              this.form.getFieldDecorator('description', {
-                initialValue: this.currentItem.description || undefined
-              })(
+              this.form.getFieldDecorator('description', { initialValue: this.currentItem.description || undefined })(
                 <Input.TextArea
                   placeholder="请输入"
                   auto-size={{ minRows: 6 }}
