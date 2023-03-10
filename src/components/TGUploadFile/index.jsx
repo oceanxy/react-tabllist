@@ -30,6 +30,13 @@ export default {
     disabled: {
       type: Boolean,
       default: false
+    },
+    /**
+     * 上传组件所在表单的实例对象（form，用于验证文件并反馈给表单信息）
+     */
+    form: {
+      type: Object,
+      required: true
     }
   },
   data() {
@@ -81,13 +88,33 @@ export default {
       // this.previewVisible = true
     },
     handleChange({ fileList }) {
-      this.fileList = fileList
+      this.fileList = []
+      let err = false
 
-      if (this.fileList.length >= this.limit) {
-        this.fileList = this.fileList.slice(0, this.limit)
+      for (const file of fileList) {
+        if ('response' in file && !file.response.status) {
+          file.status = 'error'
+          file.response = file.response.message
+          err = true
+        }
+
+        this.fileList.push(file)
       }
 
-      this.$emit('change', this.fileList)
+      if (!err) {
+        if (this.fileList.length >= this.limit) {
+          this.fileList = this.fileList.slice(0, this.limit)
+        }
+
+        this.$emit('change', this.fileList)
+      } else {
+        this.form.setFields({
+          [this.$attrs.id]: {
+            value: this.fileList,
+            errors: [new Error('请上传合法的文件！')]
+          }
+        })
+      }
     }
   },
   render() {

@@ -6,6 +6,7 @@ import Table from './components/Table'
 import TGPagination from '@/components/TGPagination'
 import ModalOfEdit from './components/ModalOfEdit'
 import TGContainerWithTable from '@/components/TGContainerWithTable'
+import ModalOfRepayment from './components/ModalOfRepayment'
 
 export default {
   name: 'Projects',
@@ -17,7 +18,10 @@ export default {
         <Inquiry slot={'inquiry'} />
         <Table slot={'table'} />
         <TGPagination slot={'pagination'} />
-        <ModalOfEdit slot={'modals'} modalTitle={'{action}项目'} />
+        <template slot={'modals'}>
+          <ModalOfEdit modalTitle={'{action}项目'} />
+          <ModalOfRepayment modalTitle={'还款'} visibilityFieldName={'visibilityOfRepayment'} />
+        </template>
       </TGContainerWithTable>
     )
   }

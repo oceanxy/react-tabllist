@@ -197,111 +197,105 @@ export default {
   render() {
     return (
       <div class="tg-multi-input">
-        {
-          this.disabled
-            ? <span>填写分段利率后启用</span>
-            : [
-              <Table
-                class="multi-input-table"
-                columns={this.columns}
-                dataSource={this.dataSource}
-                pagination={false}
-                rowKey="id"
-                tableLayout={'fixed'}
-                size={'small'}
-                bordered
-                scopedSlots={{
-                  period: (text, record) => (
-                    <Input
-                      disabled
-                      vModel={record.period}
-                      style={{
-                        textAlign: 'center',
-                        background: 'none',
-                        border: 'none',
-                        color: '#000000a6',
-                        cursor: 'text'
-                      }}
-                    />
-                  ),
-                  repaymentEndDay: (text, record, index) => (
-                    <DatePicker
-                      vModel={record.date}
-                      class={record.repaymentEndDay ? 'pass' : ''}
-                      placeholder="还款日期"
-                      disabledDate={this.disabledDate}
-                      disabled={this.disabled}
-                      onChange={value => this.onCompValueChange('repaymentEndDay', value, index)}
-                    />
-                  ),
-                  repaymentType: (text, record, index) => (
-                    <Select
-                      vModel={record.repaymentType}
-                      class={record.repaymentType ? 'pass' : ''}
-                      placeholder="请选择"
-                      disabled={this.disabled}
-                      onChange={value => this.onCompValueChange('repaymentType', value, index)}
-                    >
-                      <Select.Option value={1}>本金</Select.Option>
-                      <Select.Option value={2}>利息</Select.Option>
-                    </Select>
-                  ),
-                  money: (text, record, index) => (
-                    <InputNumber
-                      vModel={record.money}
-                      class={record.money ? 'pass' : ''}
-                      style={'width: 100%'}
-                      min={0}
-                      max={1000000000000}
-                      precision={2}
-                      placeholder="还款金额"
-                      disabled={this.disabled}
-                      formatter={value => `￥ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                      parser={value => value.replace(/￥\s?|(,*)/g, '')}
-                      onChange={debounce(value => this.onCompValueChange('money', value, index), 300)}
-                    />
-                  ),
-                  percent: (text, record, index) => (
-                    <InputNumber
-                      vModel={record.percent}
-                      class={'pass'}
-                      style={'width: 100%'}
-                      min={0}
-                      max={100}
-                      precision={0}
-                      placeholder="本金比例"
-                      disabled={this.disabled}
-                      formatter={value => `${value}%`}
-                      parser={value => value.replace('%', '')}
-                      onChange={debounce(value => this.onCompValueChange('percent', value, index), 300)}
-                    />
-                  ),
-                  remark: (text, record, index) => (
-                    <Input
-                      vModel={record.remark}
-                      class={'pass'}
-                      allowClear
-                      maxLength={30}
-                      placeholder="备注"
-                      disabled={this.disabled}
-                      onChange={debounce(this.onCompValueChange, 300)}
-                    />
-                  ),
-                  operation: (text, record, index) => (
-                    <Button
-                      icon="delete"
-                      title={'移除本行'}
-                      onClick={() => this.onDelClick(record.id, index)}
-                      disabled={this.disabled}
-                    />
-                  )
+        <Table
+          class="multi-input-table"
+          columns={this.columns}
+          dataSource={this.dataSource}
+          pagination={false}
+          rowKey="id"
+          tableLayout={'fixed'}
+          size={'small'}
+          bordered
+          scopedSlots={{
+            period: (text, record) => (
+              <Input
+                disabled
+                vModel={record.period}
+                style={{
+                  textAlign: 'center',
+                  background: 'none',
+                  border: 'none',
+                  color: '#000000a6',
+                  cursor: 'text'
                 }}
-              />,
-              <p style={'color: #ffa191; font-weight: bolder; font-size: 14px'}>
-                还款总计：利息{this.interest}元 + 本金{this.principal}元 = {this.interest + this.principal}元
-              </p>
-            ]
-        }
+              />
+            ),
+            repaymentEndDay: (text, record, index) => (
+              <DatePicker
+                vModel={record.date}
+                class={record.repaymentEndDay ? 'pass' : ''}
+                placeholder="还款日期"
+                disabledDate={this.disabledDate}
+                disabled={this.disabled}
+                onChange={value => this.onCompValueChange('repaymentEndDay', value, index)}
+              />
+            ),
+            repaymentType: (text, record, index) => (
+              <Select
+                vModel={record.repaymentType}
+                class={record.repaymentType ? 'pass' : ''}
+                placeholder="请选择"
+                disabled={this.disabled}
+                onChange={value => this.onCompValueChange('repaymentType', value, index)}
+              >
+                <Select.Option value={1}>本金</Select.Option>
+                <Select.Option value={2}>利息</Select.Option>
+              </Select>
+            ),
+            money: (text, record, index) => (
+              <InputNumber
+                vModel={record.money}
+                class={record.money ? 'pass' : ''}
+                style={'width: 100%'}
+                min={0}
+                max={1000000000000}
+                precision={2}
+                placeholder="还款金额"
+                disabled={this.disabled}
+                formatter={value => `￥ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                parser={value => value.replace(/￥\s?|(,*)/g, '')}
+                onChange={debounce(value => this.onCompValueChange('money', value, index), 300)}
+              />
+            ),
+            percent: (text, record, index) => (
+              <InputNumber
+                vModel={record.percent}
+                class={'pass'}
+                style={'width: 100%'}
+                min={0}
+                max={100}
+                precision={0}
+                placeholder="本金比例"
+                disabled={this.disabled}
+                formatter={value => `${value}%`}
+                parser={value => value.replace('%', '')}
+                onChange={debounce(value => this.onCompValueChange('percent', value, index), 300)}
+              />
+            ),
+            remark: (text, record, index) => (
+              <Input
+                vModel={record.remark}
+                class={'pass'}
+                allowClear
+                maxLength={30}
+                placeholder="备注"
+                disabled={this.disabled}
+                onChange={debounce(this.onCompValueChange, 300)}
+              />
+            ),
+            operation: (text, record, index) => (
+              <Button
+                icon="delete"
+                title={'移除本行'}
+                onClick={() => this.onDelClick(record.id, index)}
+                disabled={this.disabled}
+              />
+            )
+          }}
+        />
+        <p style={'color: #ffa191; font-weight: bolder; font-size: 14px'}>
+          还款总计：利息{this.interest}元 + 本金{this.principal}元 = {this.interest + this.principal}元
+        </p>
       </div>
     )
   }

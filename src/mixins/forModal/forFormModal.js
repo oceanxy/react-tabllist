@@ -36,6 +36,13 @@ export default ({ disableSubmitButton = true } = {}) => {
     data() {
       return { modalProps: { okButtonProps: { props: { disabled: disableSubmitButton } } } }
     },
+    // computed: {
+    //   visibilityFieldName() {
+    //     const tag = this.$vnode.tag
+    //
+    //     return 'visibility' + tag.substring(tag.lastIndexOf('-') + 6)
+    //   }
+    // },
     watch: {
       visible: {
         immediate: true,

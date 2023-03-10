@@ -35,7 +35,7 @@ export default {
             title: '还款计划',
             width: 80,
             align: 'center',
-            dataIndex: 'refundPlan'
+            scopedSlots: { customRender: 'refundPlan' }
           },
           {
             title: '下期还款时间',
@@ -54,6 +54,18 @@ export default {
             width: 80,
             align: 'center',
             dataIndex: 'acquisition'
+          },
+          {
+            title: '市城投合同',
+            width: 100,
+            align: 'center',
+            scopedSlots: { customRender: 'ctContract' }
+          },
+          {
+            title: '开发商合同',
+            width: 100,
+            align: 'center',
+            scopedSlots: { customRender: 'devContract' }
           },
           {
             title: '编辑时间',
@@ -89,14 +101,17 @@ export default {
             </Button>
           </Space>
         ),
+        refundPlan: (text, record) => (
+          <Button type="link">{record.refundPlan}</Button>
+        ),
+        ctContract: (text, record) => record.ctContractUrl
+          ? <Button type="link" onClick={() => window.open(record.ctContractUrl)}>预览</Button>
+          : null,
+        devContract: (text, record) => record.devContractUrl
+          ? <Button type="link" onClick={() => window.open(record.devContractUrl)}>预览</Button>
+          : null,
         operation: (text, record) => (
           <Space>
-            <Button
-              type="link"
-              size="small"
-            >
-              合同
-            </Button>
             <Button
               type="link"
               size="small"
@@ -114,6 +129,7 @@ export default {
             <Button
               type="link"
               size="small"
+              onClick={() => this._setVisibilityOfModal(record, 'visibilityOfRepayment')}
             >
               还款
             </Button>

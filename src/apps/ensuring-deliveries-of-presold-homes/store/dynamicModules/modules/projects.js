@@ -3,6 +3,7 @@ import { createStoreModule } from '@/store/template'
 export default commitRootInModule => createStoreModule({
   state: {
     visibilityOfDeveloper: false,
+    visibilityOfRepayment: false,
     natureOfAssets: {
       list: [],
       loading: false
@@ -12,6 +13,10 @@ export default commitRootInModule => createStoreModule({
       loading: false
     },
     natureOfTheEnterprise: {
+      list: [],
+      loading: false
+    },
+    repaymentPlanList: {
       list: [],
       loading: false
     }

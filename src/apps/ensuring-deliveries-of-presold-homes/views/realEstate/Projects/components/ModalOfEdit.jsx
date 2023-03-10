@@ -4,8 +4,8 @@ import DragModal from '@/components/DragModal'
 import { cloneDeep, debounce } from 'lodash'
 import { defineAsyncComponent } from 'vue'
 import TGUploadFile from '@/components/TGUploadFile'
-import StepRateList from './StepRateList'
-import RepaymentPlanList from './RepaymentPlanList'
+import MultiInputOfStepRateList from './MultiInputOfStepRateList'
+import MultiInputOfRepaymentPlanList from './MultiInputOfRepaymentPlanList'
 import moment from 'moment'
 
 export default Form.create({})({
@@ -31,7 +31,12 @@ export default Form.create({})({
     },
     attributes() {
       return {
-        attrs: this.modalProps,
+        attrs: this.currentItem.isEdit
+          ? this.modalProps
+          : {
+            ...this.modalProps,
+            footer: <Button onClick={this.onCancel} title={'关闭'}>关闭</Button>
+          },
         on: {
           cancel: () => this.onCancel(),
           ok: () => this.onSubmit({
@@ -193,6 +198,7 @@ export default Form.create({})({
                     placeholder={'请选择开发商（可搜索）'}
                     onSearch={debounce(this.onSearchForDeveloper, 300)}
                     filterOption={false}
+                    disabled={this.currentItem.isEdit === 0}
                     notFoundContent={
                       this.enumOfDevelopers.loading
                         ? <Spin />
@@ -229,7 +235,12 @@ export default Form.create({})({
                     }
                   ]
                 })(
-                  <Input placeholder="请输入项目名称" allowClear maxLength={30} />
+                  <Input
+                    placeholder="请输入项目名称"
+                    allowClear
+                    maxLength={30}
+                    disabled={this.currentItem.isEdit === 0}
+                  />
                 )
               }
             </Form.Item>
@@ -255,6 +266,7 @@ export default Form.create({})({
                     placeholder="请选择省、市和区"
                     expandTrigger={'hover'}
                     allowClear
+                    disabled={this.currentItem.isEdit === 0}
                     fieldNames={{
                       label: 'name',
                       value: 'id',
@@ -277,7 +289,12 @@ export default Form.create({})({
                     }
                   ]
                 })(
-                  <Input placeholder="请输入详细地址" allowClear maxLength={30} />
+                  <Input
+                    placeholder="请输入详细地址"
+                    allowClear
+                    maxLength={30}
+                    disabled={this.currentItem.isEdit === 0}
+                  />
                 )
               }
             </Form.Item>
@@ -297,7 +314,7 @@ export default Form.create({})({
                     ]
                   }
                 )(
-                  <Radio.Group>
+                  <Radio.Group disabled={this.currentItem.isEdit === 0}>
                     <Radio value={1}>有</Radio>
                     <Radio value={0}>无</Radio>
                   </Radio.Group>
@@ -324,6 +341,7 @@ export default Form.create({})({
                           placeholder="请输入借款金额"
                           style={'width: 100%'}
                           allowClear
+                          disabled={this.currentItem.isEdit === 0}
                           precision={2}
                           formatter={value => `￥ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                           parser={value => value.replace(/￥\s?|(,*)/g, '')}
@@ -345,7 +363,7 @@ export default Form.create({})({
                           }
                         ]
                       })(
-                        <StepRateList />
+                        <MultiInputOfStepRateList disabled={this.currentItem.isEdit === 0} />
                       )
                     }
                   </Form.Item>,
@@ -362,8 +380,8 @@ export default Form.create({})({
                           }
                         ]
                       })(
-                        <RepaymentPlanList
-                          disabled={!this.dateRangeOfRepaymentPlan.length}
+                        <MultiInputOfRepaymentPlanList
+                          disabled={this.currentItem.isEdit === 0 || !this.dateRangeOfRepaymentPlan.length}
                           dateRange={this.dateRangeOfRepaymentPlan}
                         />
                       )
@@ -385,7 +403,11 @@ export default Form.create({})({
                     }
                   ]
                 })(
-                  <TGUploadFile limit={1} />
+                  <TGUploadFile
+                    form={this.form}
+                    limit={1}
+                    disabled={this.currentItem.isEdit === 0}
+                  />
                 )
               }
             </Form.Item>
@@ -402,14 +424,23 @@ export default Form.create({})({
                     }
                   ]
                 })(
-                  <TGUploadFile limit={1} />
+                  <TGUploadFile
+                    form={this.form}
+                    limit={1}
+                    disabled={this.currentItem.isEdit === 0}
+                  />
                 )
               }
             </Form.Item>
             <Form.Item label="备注">
               {
                 this.form.getFieldDecorator('remark', { initialValue: this.currentItem.remark })(
-                  <Input.TextArea placeholder="请输入备注" allowClear maxLength={10000} />
+                  <Input.TextArea
+                    placeholder="请输入备注"
+                    allowClear
+                    disabled={this.currentItem.isEdit === 0}
+                    maxLength={100}
+                  />
                 )
               }
             </Form.Item>
@@ -426,7 +457,12 @@ export default Form.create({})({
                     }
                   ]
                 })(
-                  <InputNumber style={{ width: '100%' }} placeholder="请输入排序" max={10000} />
+                  <InputNumber
+                    style={{ width: '100%' }}
+                    placeholder="请输入排序"
+                    disabled={this.currentItem.isEdit === 0}
+                    max={10000}
+                  />
                 )
               }
             </Form.Item>
@@ -436,7 +472,7 @@ export default Form.create({})({
                   initialValue: true,
                   valuePropName: 'checked'
                 })(
-                  <Switch />
+                  <Switch disabled={this.currentItem.isEdit === 0} />
                 )
               }
             </Form.Item>
