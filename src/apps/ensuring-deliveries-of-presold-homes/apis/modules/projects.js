@@ -15,6 +15,19 @@ export default {
     })
   },
   /**
+   * 获取项目枚举
+   * @param request
+   * @param data
+   * @returns {*}
+   */
+  getEnumOfProjects(request, data) {
+    return request({
+      url: '/estate/projectInfo/getProjectInfoLikeName',
+      method: 'post',
+      data: qs.stringify(data)
+    })
+  },
+  /**
    * 获取项目详情
    * @param request
    * @param data

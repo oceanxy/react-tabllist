@@ -37,6 +37,24 @@ export default {
             dataIndex: 'easteDicName'
           },
           {
+            title: '所在楼层',
+            width: 80,
+            align: 'center',
+            dataIndex: 'floorNum'
+          },
+          {
+            title: '用途',
+            width: 80,
+            align: 'center',
+            dataIndex: 'useType'
+          },
+          {
+            title: '租售状态',
+            width: 80,
+            align: 'center',
+            dataIndex: 'salesStatus'
+          },
+          {
             title: '建面(㎡)',
             width: 80,
             align: 'center',

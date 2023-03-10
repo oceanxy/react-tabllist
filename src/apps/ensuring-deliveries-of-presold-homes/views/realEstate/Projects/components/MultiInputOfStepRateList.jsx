@@ -145,7 +145,6 @@ export default {
 
       this.$nextTick(() => {
         if (!err) {
-          this.count()
           this.$emit('change', this.dataSource)
         } else {
           this.date = []

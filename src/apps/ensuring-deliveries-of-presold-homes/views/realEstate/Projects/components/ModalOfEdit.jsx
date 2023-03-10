@@ -20,6 +20,9 @@ export default Form.create({})({
     }
   },
   computed: {
+    loadingDetails() {
+      return this.$store.state[this.moduleName].loadingDetails
+    },
     natureOfAssets() {
       return this.$store.state[this.moduleName].natureOfAssets
     },
@@ -31,7 +34,7 @@ export default Form.create({})({
     },
     attributes() {
       return {
-        attrs: this.currentItem.isEdit
+        attrs: this.currentItem.isEdit !== 0
           ? this.modalProps
           : {
             ...this.modalProps,
@@ -53,7 +56,15 @@ export default Form.create({})({
               data.devContract = value.devContract[0].response?.data[0] ?? value.devContract[0].raw
 
               return data
-            }
+            },
+            // 为其他模块调用本弹窗做适配
+            ...(this.moduleName === 'projects' ? {} : {
+              customApiName: 'addProjects',
+              isFetchList: false,
+              done: response => {
+                this.restoreCurrentItem(response.data)
+              }
+            })
           })
         }
       }
@@ -149,6 +160,42 @@ export default Form.create({})({
     }
   },
   methods: {
+    restoreCurrentItem(project) {
+      // 为其他模块调用本弹窗做适配，关闭弹窗恢复 currentItem
+      if (this.moduleName !== 'projects') {
+        this.$store.commit('setState', {
+          value: {
+            ...this.currentItem._currentItem,
+            ...(
+              project
+                ? {
+                  projectId: project.id,
+                  projectName: project.projectName
+                }
+                : {}
+            )
+          },
+          moduleName: this.moduleName,
+          stateName: 'currentItem'
+        })
+
+        if (project) {
+          this.$store.commit('setState', {
+            value: {
+              loading: false,
+              list: [
+                {
+                  id: project.id,
+                  projectName: project.projectName
+                }
+              ]
+            },
+            moduleName: this.moduleName,
+            stateName: 'enumOfProjects'
+          })
+        }
+      }
+    },
     setState(stateName, value = []) {
       this.$store.commit('setState', {
         value: { loading: false, list: value },
@@ -179,7 +226,7 @@ export default Form.create({})({
   render() {
     return (
       <DragModal {...this.attributes}>
-        <Spin spinning={!!this.currentItem.id && !Object.keys(this.details).length}>
+        <Spin spinning={this.loadingDetails}>
           <Form class="tg-form-grid" colon={false}>
             <Form.Item label="开发商" class={'half'}>
               {

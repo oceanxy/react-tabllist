@@ -12,7 +12,8 @@ export default Form.create({})({
         width: 900,
         destroyOnClose: true
       },
-      keywordOfSearchDevelopers: ''
+      keywordOfSearchDevelopers: '',
+      keywordOfSearchProjects: ''
     }
   },
   computed: {
@@ -21,6 +22,9 @@ export default Form.create({})({
     },
     enumOfDevelopers() {
       return this.$store.state[this.moduleName].enumOfDevelopers
+    },
+    enumOfProjects() {
+      return this.$store.state[this.moduleName].enumOfProjects
     },
     attributes() {
       return {
@@ -51,6 +55,13 @@ export default Form.create({})({
       return () => (
         <ModalOfDeveloper modalTitle={'{action}开发商'} visibilityFieldName={'visibilityOfDeveloper'} />
       )
+    },
+    modalOfProject() {
+      const ModalOfProject = defineAsyncComponent(() => import('../../Projects/components/ModalOfEdit'))
+
+      return () => (
+        <ModalOfProject modalTitle={'{action}项目'} visibilityFieldName={'visibilityOfProject'} />
+      )
     }
   },
   watch: {
@@ -66,6 +77,18 @@ export default Form.create({})({
                 {
                   id: this.currentItem.developerId,
                   fullName: this.currentItem.developerName
+                }
+              ]
+              : []
+          )
+
+          this.setState(
+            'enumOfProjects',
+            this.currentItem.id
+              ? [
+                {
+                  id: this.currentItem.projectId,
+                  projectName: this.currentItem.projectName
                 }
               ]
               : []
@@ -95,8 +118,30 @@ export default Form.create({})({
         payload: { fullName: keyword }
       })
     },
+    async onSearchForProject(keyword) {
+      // 搜索前，先清空上一次搜索结果缓存
+      this.setState('enumOfProjects')
+
+      this.keywordOfSearchProjects = keyword
+
+      await this.$store.dispatch('getListWithLoadingStatus', {
+        moduleName: this.moduleName,
+        stateName: 'enumOfProjects',
+        customApiName: 'getEnumOfProjects',
+        payload: { projectName: keyword }
+      })
+    },
     async onAddDeveloper() {
-      await this._setVisibilityOfModal({}, 'visibilityOfDeveloper')
+      await this._setVisibilityOfModal({
+        fullName: this.keywordOfSearchDevelopers,
+        _currentItem: this.currentItem
+      }, 'visibilityOfDeveloper')
+    },
+    async onAddProject() {
+      await this._setVisibilityOfModal({
+        projectName: this.keywordOfSearchProjects,
+        _currentItem: this.currentItem
+      }, 'visibilityOfProject')
     }
   },
   render() {
@@ -151,34 +196,34 @@ export default Form.create({})({
                 rules: [
                   {
                     required: true,
-                    message: '请输入楼盘名称！',
+                    message: '请输入项目名称！',
                     trigger: 'change'
                   }
                 ]
               })(
                 <Select
                   showSearch
-                  placeholder={'请选择楼盘（可搜索）'}
-                  onSearch={debounce(this.onSearchForDeveloper, 300)}
+                  placeholder={'请选择项目（可搜索）'}
+                  onSearch={debounce(this.onSearchForProject, 300)}
                   filterOption={false}
                   notFoundContent={
-                    this.enumOfDevelopers.loading
+                    this.enumOfProjects.loading
                       ? <Spin />
-                      : this.keywordOfSearchDevelopers && !this.enumOfDevelopers.list.length
+                      : this.keywordOfSearchProjects && !this.enumOfProjects.list.length
                         ? (
-                          <span>查无此开发商，<Button
+                          <span>查无此项目，<Button
                             type={'link'}
-                            onClick={this.onAddDeveloper}
+                            onClick={this.onAddProject}
                           >
-                            新增开发商
+                            新增项目
                           </Button>。</span>
                         )
                         : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
                   }
                 >
                   {
-                    this.enumOfDevelopers.list.map(item => (
-                      <Select.Option value={item.id}>{item.fullName}</Select.Option>
+                    this.enumOfProjects.list.map(item => (
+                      <Select.Option value={item.id}>{item.projectName}</Select.Option>
                     ))
                   }
                 </Select>
@@ -238,10 +283,49 @@ export default Form.create({})({
               )
             }
           </Form.Item>
+          <Form.Item label="所在楼层" class={'half'}>
+            {
+              this.form.getFieldDecorator('floorNum', {
+                initialValue: this.currentItem.floorNum,
+                rules: [
+                  {
+                    required: true,
+                    message: '请输入所在楼层！',
+                    trigger: 'blur'
+                  }
+                ]
+              })(
+                <Input
+                  placeholder="请输入所在楼层"
+                  maxLength={100}
+                  allowClear
+                />
+              )
+            }
+          </Form.Item>
+          <Form.Item label="用途" class={'half'}>
+            {
+              this.form.getFieldDecorator('useType', { initialValue: this.currentItem.useType })(
+                <Input placeholder="请输入资产用途" allowClear maxLength={30} />
+              )
+            }
+          </Form.Item>
+          <Form.Item label="租售状态" class={'half'}>
+            {
+              this.form.getFieldDecorator('salesStatus', { initialValue: this.currentItem.salesStatus || 4 })(
+                <Select placeholder={'请请选择销售状态'}>
+                  <Select.Option value={1}>已售</Select.Option>
+                  <Select.Option value={2}>未售</Select.Option>
+                  <Select.Option value={3}>已租</Select.Option>
+                  <Select.Option value={4}>未知</Select.Option>
+                </Select>
+              )
+            }
+          </Form.Item>
           <Form.Item label="建筑面积(㎡)" class={'half'}>
             {
               this.form.getFieldDecorator('buildArea', {
-                initialValue: this.currentItem.buildArea,
+                initialValue: this.currentItem.buildArea ? +this.currentItem.buildArea : undefined,
                 rules: [
                   {
                     required: true,
@@ -262,17 +346,10 @@ export default Form.create({})({
           </Form.Item>
           <Form.Item label="套内面积(㎡)" class={'half'}>
             {
-              this.form.getFieldDecorator('indoorArea', {
-                initialValue: this.currentItem.indoorArea,
-                rules: [
-                  {
-                    required: true,
-                    type: 'number',
-                    message: '请输入套内面积！单位：平方米',
-                    trigger: 'blur'
-                  }
-                ]
-              })(
+              this.form.getFieldDecorator(
+                'indoorArea',
+                { initialValue: this.currentItem.indoorArea ? +this.currentItem.indoorArea : undefined }
+              )(
                 <InputNumber
                   placeholder="请输入套内面积"
                   style={'width: 100%'}
@@ -318,6 +395,7 @@ export default Form.create({})({
           </Form.Item>
         </Form>
         {this.modalOfDeveloper()}
+        {this.modalOfProject()}
       </DragModal>
     )
   }
