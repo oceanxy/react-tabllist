@@ -24,15 +24,17 @@ export default {
   render() {
     return (
       <div class={'tg-login'}>
-        <div class={'title'}>{config.systemName}</div>
+        <div class={'title'} />
         <TGContainer
           width={400}
           class={'tg-login-box'}
           contentClass={'login-box-content'}
           showTitleShape={false}
         >
-          <div class={'login-logo'} />
-          <div class={'login-subtitle'}>您好，欢迎登录</div>
+          <div class={'login-subtitle'}>
+            <p>您好!</p>
+            <p>欢迎登录{config.systemName}</p>
+          </div>
           <ULLoginForm />
         </TGContainer>
         <div class={'corporate-services'}>重庆蓝桥科技有限公司技术支持</div>
