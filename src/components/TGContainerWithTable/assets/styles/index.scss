@@ -5,7 +5,6 @@
   flex-direction: column;
   height: 0;
   flex: auto;
-  padding: 0 18px 12px 18px;
   gap: 12px;
 
   & > .tg-content-title {
@@ -57,5 +56,9 @@
         height: 0;
       }
     }
+  }
+
+  & > .tg-container-modals {
+    margin-bottom: -12px; // 抵消空元素造成的底部 gap 值
   }
 }

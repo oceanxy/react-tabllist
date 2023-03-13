@@ -146,7 +146,11 @@ export default {
        *  false：本组件不控制下层组件在组件创建阶段（created 生命周期）的数据请求，默认;
        *  true：下层组件在创建阶段不请求数据
        */
-      notInitList: this.notNoneMode
+      notInitList: this.notNoneMode,
+      /**
+       * 通知下层组件，当前页面是否启用侧边树
+       */
+      inTree: true
     }
   },
   watch: {
@@ -451,24 +455,17 @@ export default {
   render() {
     return (
       <TGContainerWithSider
-        class="fe-tree-container"
-        siderClass="fe-tree-sider-container"
-        contentClass={`fe-tree-content-container${this.contentClass ? ` ${this.contentClass}` : ''}`}
+        class="tg-tree-container"
+        siderClass="tg-tree-sider-container"
+        contentClass={`tg-tree-content-container${this.contentClass ? ` ${this.contentClass}` : ''}`}
         siderOnLeft
-        showSiderTrigger
         onSidebarSwitch={this.onSidebarSwitch}
       >
         {this.$slots.default}
-        <div
-          slot={'sider'}
-          class="fe-tree-data"
-        >
+        <div slot={'sider'} class="tg-tree-data">
           <Input
-            prefix={<Icon
-              type={'search'}
-              style={{ fontSize: '14px' }}
-            />}
-            all
+            prefix={<Icon type={'search'} style={{ fontSize: '14px' }} />}
+            allowClear
             placeholder={this.placeholder}
             onChange={debounce(this.onTreeSearch, 300)}
           />

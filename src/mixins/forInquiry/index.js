@@ -7,6 +7,7 @@
 
 import { cloneDeep, omit } from 'lodash'
 import moment from 'moment'
+import { Button, Form, Space } from 'ant-design-vue'
 
 /**
  * 生成用于表格搜索的混合
@@ -23,7 +24,12 @@ export default ({
   return {
     inject: {
       moduleName: { default: '' },
-      submoduleName: { default: '' }
+      submoduleName: { default: '' },
+      /**
+       * 注入树标识：判断当前页面是否启用侧边树
+       * 来自于 @/components/TGContainerWithTreeSider
+       */
+      inTree: { default: false }
     },
     data() {
       return {
@@ -54,6 +60,18 @@ export default ({
               merge: true
             })
           }
+        }
+      },
+      treeCollapsed: {
+        get() {
+          return this.$store.state['common'].treeCollapsed
+        },
+        async set(value) {
+          this.$store.commit('setState', {
+            value,
+            moduleName: 'common',
+            stateName: 'treeCollapsed'
+          })
         }
       }
     },
@@ -142,7 +160,51 @@ export default ({
             await this.onSearch({ ...payload, ...params }, options)
           }
         })
+      },
+      onTreeFold() {
+        this.$store.commit('setState', {
+          value: !this.treeCollapsed,
+          moduleName: 'common',
+          stateName: 'treeCollapsed'
+        })
       }
+    },
+    render() {
+      return (
+        <Form
+          layout="inline"
+          onSubmit={this.onSubmit}
+          colon={false}
+          class="tg-inquiry"
+        >
+          <Space>
+            {
+              this.inTree
+                ? (
+                  <IconFont
+                    class={`tree-btn${this.treeCollapsed ? ' reverse' : ''}`}
+                    type={'icon-menu-zk-line'}
+                    onClick={this.onTreeFold}
+                    title={!this.treeCollapsed ? '折叠树' : '展开树'}
+                  />
+                )
+                : null
+            }
+            {this.forRender}
+            <Space>
+              <Button
+                loading={this.loading}
+                htmlType="submit"
+                type="primary"
+                icon="search"
+              >
+                查询
+              </Button>
+              <Button onClick={this.onClear} icon="reload">重置并刷新</Button>
+            </Space>
+          </Space>
+        </Form>
+      )
     }
   }
 }

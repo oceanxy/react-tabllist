@@ -1,20 +1,20 @@
 @import '@/assets/styles/theme.scss';
 
-.fe-tree-container.fe-tree-container {
-  background: #ffffff;
+.tg-tree-container.tg-tree-container {
+  padding: 0 18px 12px 18px;
   @include container-border-radius;
-  gap: 0;
+  gap: 12px;
 
-  .fe-tree-content-container.fe-tree-content-container {
+  .tg-tree-content-container.tg-tree-content-container {
     box-sizing: border-box;
   }
 
-  .fe-tree-sider-container.fe-tree-sider-container {
+  .tg-tree-sider-container.tg-tree-sider-container {
     width: 260px;
     flex: none;
+    background: $module-background-color;
 
-    .fe-tree-data {
-      border-right: 1px solid #d9d9d9;
+    .tg-tree-data {
       height: 100%;
       padding: 10px;
       display: flex;
@@ -30,10 +30,6 @@
         flex: auto;
         overflow-x: hidden;
         overflow-y: auto;
-
-        .ant-tree {
-          padding-right: 10px;
-        }
 
         .ant-tree-treenode-switcher-open,
         .ant-tree-treenode-switcher-close {

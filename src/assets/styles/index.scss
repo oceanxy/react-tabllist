@@ -142,6 +142,22 @@ body {
   padding: 12px 20px;
   background: $module-background-color;
 
+  .tree-btn {
+    font-size: 1.8em;
+    opacity: 0.6;
+    cursor: pointer;
+    transition: opacity .2s;
+    color: $text-or-icon-color;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    &.reverse {
+      transform: rotateY(180deg);
+    }
+  }
+
   .row-up {
     display: flex;
     align-items: center;
@@ -275,7 +291,7 @@ body {
             gap: 5px;
             border: 1px solid #d9d9d9;
             border-radius: 4px;
-            transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+            transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
 
             &:hover {
               border-color: $primary-color;

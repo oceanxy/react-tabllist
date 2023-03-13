@@ -76,6 +76,16 @@ export default {
           {this.rightIcon}
         </div>
       )
+    },
+    _className() {
+      return `${this.contentClass ? `${this.contentClass} ` : ''}${this.showTitleLine ? 'line ' : ''}box-content`
+    },
+    _titleClassName() {
+      return `${this.titleClass ? `${this.titleClass} ` : ''}${
+        this.showTitleShape
+          ? 'divider padding-left '
+          : ''
+      }box-title`
     }
   },
   methods: {
@@ -92,17 +102,7 @@ export default {
         {
           this.modalTitle
             ? (
-              <div
-                class={`${
-                  this.titleClass
-                    ? `${this.titleClass} `
-                    : ''
-                }${
-                  this.showTitleShape
-                    ? 'divider padding-left '
-                    : ''
-                }box-title`}
-              >
+              <div class={this._titleClassName}>
                 {this.modalTitle}
                 {
                   this.showMore
@@ -123,21 +123,7 @@ export default {
         }
         {
           this.$slots.default
-            ? (
-              <div
-                class={`${
-                  this.contentClass
-                    ? `${this.contentClass} `
-                    : ''
-                }${
-                  this.showTitleLine
-                    ? 'line '
-                    : ''
-                }box-content`}
-              >
-                {this.$slots.default}
-              </div>
-            )
+            ? <div class={this._className}>{this.$slots.default}</div>
             : null
         }
       </div>
