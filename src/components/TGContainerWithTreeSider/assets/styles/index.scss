@@ -5,6 +5,11 @@
   @include container-border-radius;
   gap: 12px;
 
+  .tg-container {
+    // 消除本组件下 TGContainerWithTable 组件的内边距值
+    padding: 0;
+  }
+
   .tg-tree-content-container.tg-tree-content-container {
     box-sizing: border-box;
   }
