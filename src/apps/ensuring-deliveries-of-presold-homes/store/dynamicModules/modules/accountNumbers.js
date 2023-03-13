@@ -4,6 +4,7 @@ export default commitRootInModule =>
   createStoreModule(
     {
       state: {
+        treeIdField: '',
         roleTree: {
           loading: false,
           list: []
@@ -11,5 +12,5 @@ export default commitRootInModule =>
         visibilityOfResetPwd: false
       }
     },
-    ['treeIdField', 'sortFieldList', 'details']
+    ['details']
   )
