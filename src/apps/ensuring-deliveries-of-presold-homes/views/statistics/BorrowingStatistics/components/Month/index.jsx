@@ -62,7 +62,10 @@ export default {
               <Radio.Button value={1}>按年统计</Radio.Button>
               <Radio.Button value={2}>按月统计</Radio.Button>
             </Radio.Group>
-            <Select placeholder={this.dateType === 1 ? '选择年' : '选择月'} style={'width:100px'} onChange={this.onChange}>
+            <Select
+              placeholder={this.dateType === 1 ? '选择年' : '选择月'}
+              style={'width:160px'} onChange={this.onChange}
+              allowClear>
               {
                 this.isCountDate?.map(item => (
                   <Select.Option value={item.value}>{item.name}</Select.Option>
