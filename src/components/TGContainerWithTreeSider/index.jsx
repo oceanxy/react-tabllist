@@ -71,8 +71,8 @@ export default {
     },
     /**
      * 向树所在页面的 Table 组件注入搜索参数。注入到 store.state.search 对象。
-     * 一般的树不需要此操作，紧紧使用 getFieldNameForTreeId 参数即可，但是在某些特殊场景，
-     * 比如在操作树时需要传递多个字段给查询接口时，可以使用该字段来设置多余的参数。
+     * 一般的树不需要此操作，仅使用 getFieldNameForTreeId 参数即可，但是在某些特殊场景，
+     * 比如在操作树时需要传递多个字段给查询接口时，可以使用该prop来配置其余参数。
      * @param dataSource {Object} 用于渲染树节点的数据对象
      * @returns {Object} 需要合并注入到 search 的对象
      */
@@ -289,8 +289,6 @@ export default {
      * @param e {Object} 当前是否有被选中的结点
      */
     async onSelect(selectedKeys, e) {
-      console.log(selectedKeys, e)
-
       if (Object.keys(this.$route.query).length) {
         /**
          * #2 （一个书签，与本组件的 #1 配合）

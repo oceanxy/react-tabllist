@@ -336,6 +336,16 @@ body {
     }
   }
 
+  .ant-table.ant-table-small {
+    & > .ant-table-content > .ant-table-body > table > .ant-table-thead > tr > th {
+      background: $table-header-bg;
+      color: $text-or-icon-sub-color;
+      font-weight: bolder;
+      font-size: 12px;
+      border-color: $table-border-color;
+    }
+  }
+
   .ant-table {
     color: $text-or-icon-color;
 
@@ -348,6 +358,10 @@ body {
     .ant-table-thead > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td,
     .ant-table-tbody > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
       background-color: $table-tr-bg-hover;
+    }
+
+    .ant-form-item-required:before {
+      font-weight: normal;
     }
 
     .ant-table-thead > tr > th {
