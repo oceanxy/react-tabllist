@@ -27,12 +27,12 @@ export default {
           scopedSlots: { customRender: 'serialNumber' }
         },
         {
-          title: <span class={'ant-form-item-required'} style={'font-weight: normal'}>起止日期</span>,
+          title: <span class={'ant-form-item-required'}>起止日期</span>,
           width: 400,
           scopedSlots: { customRender: 'dateRange' }
         },
         {
-          title: <span class={'ant-form-item-required'} style={'font-weight: normal'}>利率</span>,
+          title: <span class={'ant-form-item-required'}>利率</span>,
           scopedSlots: { customRender: 'rateValue' }
         },
         {

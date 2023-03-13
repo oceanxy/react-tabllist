@@ -22,7 +22,7 @@ export default {
           moduleName: 'combination'
         }}
       >
-        <TGContainerWithTable class={'tg-container-with-sider-padding'}>
+        <TGContainerWithTable>
           <Functions slot={'functions'} />
           <Inquiry slot={'inquiry'} />
           <Table slot={'table'} />

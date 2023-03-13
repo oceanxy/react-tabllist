@@ -28,10 +28,12 @@ $module-background-color: #ffffff;
 $card-background-color: #f8fafc;
 $card-background-deepen-color: #eef2f6;
 
-// 边框
+// 边框/表格
 $border-color-default: #1018281f;
-$border-color-table: #1018280f;
+$table-border-color: #1018280e;
 $border-shadow-color: rgba(0, 0, 0, 0.03);
+$table-tr-bg-hover: $primary-hover-light-color;
+$table-header-bg: $card-background-color;
 
 // 文字
 $text-primary-color: #000000;

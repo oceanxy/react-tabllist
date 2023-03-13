@@ -1,3 +1,5 @@
+@import '@/assets/styles/theme.scss';
+
 .tg-login {
   position: relative;
   height: 100%;
@@ -6,43 +8,32 @@
   justify-content: center;
   align-items: flex-end;
   flex-direction: column;
+  min-height: 500px;
 
   .title {
-    width: 70%;
-    font-size: 32px;
-    font-family: DOUYU, Arial, 'Hiragino Sans GB', 'Microsoft Yahei', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;
-    color: #ffffff;
+    position: absolute;
     z-index: 100;
-    text-align: center;
-    margin-left: -7%;
-    margin-top: -3%;
-    align-self: flex-start;
+    width: 360px;
+    height: 34px;
+    left: 32px;
+    top: 32px;
+    display: block;
+    background: url(../images/logo.png) no-repeat left center / auto 100%;
   }
 
   &:before {
     position: absolute;
     content: '';
-    width: 70%;
+    width: 100%;
     height: 100%;
     left: 0;
     top: 0;
-    background: #c9e5e5 url(../images/login-bg.png) no-repeat left 40% top 60% / 800px auto;
-  }
-
-  &:after {
-    content: '';
-    position: absolute;
-    width: 30%;
-    height: 100%;
-    right: 0;
-    top: 0;
-    background: #16b364 url(../images/bg-right-top.png) no-repeat right top / auto 180px;
-    z-index: 100;
+    background: #e0e4f0 url(../images/login-bg.png) no-repeat left center / auto 100%;
   }
 
   .tg-login-box {
-    margin-top: 5%;
-    margin-right: 20%;
+    position: absolute;
+    right: 10%;
     z-index: 101;
 
     .login-box-content.login-box-content {
@@ -51,23 +42,14 @@
       background: #ffffff;
     }
 
-    .login-logo {
-      width: 100%;
-      height: 56px;
-      margin-bottom: 20px;
-      background: url(../images/logo.png) no-repeat left center;
-    }
-
     .login-subtitle {
-      font-size: 20px;
       font-family: 'Microsoft YaHei UI', serif;
-      font-weight: 500;
       text-align: left;
-      color: #344054;
-      line-height: 20px;
-      padding-bottom: 32px;
-      margin-bottom: 32px;
-      border-bottom: 1px solid rgba(16, 24, 40, 0.12);
+      margin-bottom: 40px;
+      font-size: 16px;
+      font-weight: 700;
+      color: $text-or-icon-color;
+      line-height: 24px;
     }
 
     .login-dividing-line {
@@ -89,7 +71,7 @@
         line-height: 48px;
         font-size: 14px;
         padding-left: 40px;
-        background: rgba(93,107,152,0.05);
+        background: rgba(93, 107, 152, 0.05);
         border: none;
         outline: none;
         box-sizing: border-box;
@@ -125,13 +107,17 @@
       .login-submit {
         width: 100%;
         height: 48px;
-        background: #16b364;
-        border: 1px solid #16b364;
+        background: $primary-color;
+        border: 1px solid $primary-color;
         border-radius: 2px;
         font-size: 16px;
         font-weight: bolder;
         color: #ffffff;
-        box-shadow: 0 4px 9px 0 rgba(22, 179, 100, 0.50);
+        opacity: .8;
+
+        &:hover {
+          opacity: 1;
+        }
 
         &:disabled {
           filter: grayscale(50%);
@@ -139,25 +125,14 @@
         }
       }
     }
-
-    &:before {
-      position: absolute;
-      bottom: 0;
-      content: '';
-      margin-left: 110px;
-      width: 200px;
-      height: 200px;
-      background: url(../images/bg-right-bottom.png) no-repeat right 50px bottom 80px / 110px;
-      z-index: 100;
-    }
   }
 
   .corporate-services {
     position: absolute;
-    width: 70%;
+    width: 100%;
     font-size: 12px;
     text-align: center;
-    color: #bbbbbb;
+    color: $text-primary-color;
     justify-content: flex-end;
     bottom: 46px;
     align-self: flex-start;
