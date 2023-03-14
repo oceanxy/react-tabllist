@@ -22,7 +22,7 @@ export default {
           },
           {
             title: '项目',
-            width: 80,
+            width: 180,
             dataIndex: 'projectName'
           },
           {
@@ -87,7 +87,6 @@ export default {
           {
             title: '操作',
             fixed: 'right',
-            align: 'center',
             width: 150,
             scopedSlots: { customRender: 'operation' }
           }
