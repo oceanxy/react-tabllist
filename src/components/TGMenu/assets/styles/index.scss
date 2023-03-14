@@ -1,40 +1,105 @@
 @import '@/assets/styles/theme.scss';
 
-.ant-menu.t-g-menu-container {
+.t-g-menu-container.ant-menu {
   overflow-x: hidden;
   overflow-y: auto;
   height: 100%;
   position: relative;
-  padding-top: 10px;
   z-index: 900;
   @include box-shadow($border-shadow-color);
+  padding: 10px 8px;
+
+  & > .ant-menu-item {
+    padding: 0 !important;
+    height: 50px;
+    margin: 0 !important;
+    display: flex;
+    align-items: center;
+    background: none;
+
+    .ant-menu-item-title {
+      transition: inherit;
+      padding: 0 16px 0 16px !important;
+    }
+  }
+
+  .ant-menu-item {
+    .ant-menu-item-title {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      width: 100%;
+      height: 40px;
+      line-height: 40px;
+      padding: 0 16px 0 0;
+    }
+  }
+
+  .ant-menu-submenu {
+    .ant-menu-submenu-title {
+      padding: 0 16px !important;
+    }
+  }
+
+  & > .ant-menu-item,
+  & > .ant-menu-submenu {
+    box-sizing: border-box;
+    border-bottom: 1px solid $border-color-default;
+  }
+
+  .ant-menu-submenu-vertical {
+
+  }
 }
 
+// 折叠状态下的子菜单
 .ant-menu-submenu.ant-menu-submenu-popup > .ant-menu {
   max-height: 100vh;
   overflow-y: auto;
+
+  .ant-menu-submenu-title {
+    padding-left: 16px;
+  }
 }
 
-.ant-menu.t-g-menu-container,
-.ant-menu-submenu.t-g-menu-popup {
+.t-g-menu-container.ant-menu,
+.t-g-menu-popup.ant-menu-submenu {
   .ant-menu-item {
     color: $text-or-icon-color;
     font-size: 14px;
     font-weight: 400;
+    border-radius: 4px;
 
     &.ant-menu-item-selected {
-      color: $primary-active-color;
-      background: $primary-hover-light-color;
-      font-weight: bolder;
+      // 去除菜单最后方的竖条
+      &::after {
+        opacity: 0;
+      }
+
+      .ant-menu-item-title,
+      .ant-menu-submenu-title {
+        color: $primary-active-color;
+        background: $primary-hover-light-color;
+        font-weight: bolder;
+      }
     }
   }
 
-  .ant-menu-submenu-selected {
-    color: $primary-active-color;
-    background: $primary-hover-light-color;;
+  & > .ant-menu-item .ant-menu-item-title,
+  .ant-menu-sub .ant-menu-item,
+  .ant-menu-submenu .ant-menu-submenu-title {
+    &:hover {
+      background: $primary-hover-light-color;
+    }
   }
 
+  .ant-menu-sub > .ant-menu-item,
   .ant-menu-submenu-title {
+    border-radius: 4px;
+    vertical-align: middle;
+    display: flex;
+    align-items: center;
+
     & > div {
       display: flex;
       align-items: center;
@@ -44,29 +109,16 @@
     }
   }
 
-  .ant-menu-item,
-  .ant-menu-submenu-title {
-    vertical-align: middle;
-    display: flex;
-    align-items: center;
-
-    &:hover {
-      background: $primary-hover-light-color;
+  .ant-menu-sub > .ant-menu-item {
+    span {
+      padding-left: 12px;
     }
-  }
-
-  .ant-menu-sub .ant-menu-item span {
-    padding-left: 12px;
   }
 
   .ant-menu-item .anticon,
   .ant-menu-submenu-title .anticon {
-    margin-right: 8px;
+    margin: 0 6px;
     font-size: 1.4em;
-  }
-
-  .ant-menu-selected::after,
-  .ant-menu-item-selected::after {
-    opacity: 0;
+    line-height: 0;
   }
 }

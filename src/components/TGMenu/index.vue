@@ -23,16 +23,18 @@
         :key="route.path"
         :style="route.meta.hide ? { display: 'none' } : ''"
       >
-        <a-icon
-          theme="filled"
-          v-if="route.meta.icon && typeof route.meta.icon !== 'string'"
-          :component="route.meta.icon"
-        />
-        <icon-font
-          v-else-if="route.meta.icon"
-          :type="route.meta.icon + (selectedKeys[0] === route.path ? '-active' : '')"
-        />
-        <span>{{ route.meta && route.meta.title }}</span>
+        <div class="ant-menu-item-title">
+          <a-icon
+            theme="filled"
+            v-if="route.meta.icon && typeof route.meta.icon !== 'string'"
+            :component="route.meta.icon"
+          />
+          <icon-font
+            v-else-if="route.meta.icon"
+            :type="route.meta.icon + (selectedKeys[0] === route.path ? '-active' : '')"
+          />
+          <span>{{ route.meta && route.meta.title }}</span>
+        </div>
       </a-menu-item>
     </template>
   </a-menu>
@@ -80,16 +82,18 @@ const TGSubMenu = {
         :key="route.path"
         :style="route.meta.hide ? { display: 'none' } : ''"
       >
-        <a-icon
-          theme="filled"
-          v-if="route.meta.icon && typeof route.meta.icon !== 'string'"
-          :component="route.meta.icon"
-        />
-        <icon-font
-          v-else-if="route.meta.icon"
-          :type="route.meta.icon + (selectedKeys[0] === route.path ? '-active' : '')"
-        />
-        <span>{{ route.meta && route.meta.title }}</span>
+        <div class="ant-menu-item-title">
+          <a-icon
+            theme="filled"
+            v-if="route.meta.icon && typeof route.meta.icon !== 'string'"
+            :component="route.meta.icon"
+          />
+          <icon-font
+            v-else-if="route.meta.icon"
+            :type="route.meta.icon + (selectedKeys[0] === route.path ? '-active' : '')"
+          />
+          <span>{{ route.meta && route.meta.title }}</span>
+        </div>
       </a-menu-item>
     </template>
     </a-sub-menu>
