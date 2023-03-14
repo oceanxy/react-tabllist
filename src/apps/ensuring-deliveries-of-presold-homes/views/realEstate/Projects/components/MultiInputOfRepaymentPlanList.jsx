@@ -42,17 +42,17 @@ export default {
           scopedSlots: { customRender: 'period' }
         },
         {
-          title: <span class={'ant-form-item-required'} style={'font-weight: normal'}>还款日期</span>,
+          title: <span class={'ant-form-item-required'}>还款日期</span>,
           width: 130,
           scopedSlots: { customRender: 'repaymentEndDay' }
         },
         {
-          title: <span class={'ant-form-item-required'} style={'font-weight: normal'}>资金类型</span>,
+          title: <span class={'ant-form-item-required'}>资金类型</span>,
           width: 100,
           scopedSlots: { customRender: 'repaymentType' }
         },
         {
-          title: <span class={'ant-form-item-required'} style={'font-weight: normal'}>还款金额</span>,
+          title: <span class={'ant-form-item-required'}>还款金额</span>,
           width: 120,
           scopedSlots: { customRender: 'money' }
         },

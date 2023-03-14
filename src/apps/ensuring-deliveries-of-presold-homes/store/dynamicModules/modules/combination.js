@@ -4,11 +4,12 @@ export default commitRootInModule =>
   createStoreModule(
     {
       state: {
+        treeIdField: '',
         organTree: {
           loading: false,
           list: []
         }
       }
     },
-    ['treeIdField', 'sortFieldList', 'details']
+    ['details']
   )

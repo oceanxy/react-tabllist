@@ -1,1 +1,18 @@
 @import '@/assets/styles/theme.scss';
+.count-page-body {
+  padding: 0 20px 20px;
+  overflow-y: auto;
+  .ant-space {
+    width: 100%;
+  }
+  .total-sum {
+    color: $text-primary-color;
+    padding: 15px 0;
+    label {
+      font-size: 14px;
+    }
+    strong {
+      font-size: 20px;
+    }
+  }
+}

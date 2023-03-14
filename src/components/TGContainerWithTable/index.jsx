@@ -4,10 +4,16 @@ export default {
   render() {
     return (
       <div class="tg-container">
-        <div class={'tg-content-title'}>
-          <span class={'title'}>{this.$route.meta.title}</span>
-          {this.$slots.functions}
-        </div>
+        {
+          this.$slots.functions
+            ? (
+              <div class={'tg-content-title'}>
+                <span class={'title'}>{this.$route.meta.title}</span>
+                {this.$slots.functions}
+              </div>
+            )
+            : null
+        }
         <div class="tg-container-content">
           {this.$slots.inquiry || this.$slots.others}
           {

@@ -1,3 +1,5 @@
+@import '@/assets/styles/theme.scss';
+
 .tg-container-with-sider {
   display: flex;
   gap: 10px;
@@ -22,7 +24,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    transition: width 0.2s ease;
+    transition: width .2s ease;
 
     & > .tg-container-trigger {
       position: absolute;
@@ -40,12 +42,13 @@
       color: #bfbfbf;
 
       &:hover {
-        color: #099250;
+        color: $primary-color;
       }
     }
 
     &.hide {
       width: 0 !important;
+      margin-left: -12px; // 抵消容器gap值对布局的影响
 
       & > *:not(.tg-container-trigger) {
         opacity: 0;

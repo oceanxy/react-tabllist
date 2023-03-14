@@ -1,8 +1,7 @@
-import { Input, Form, InputNumber, TreeSelect, Switch, Cascader } from 'ant-design-vue'
+import { Input, Form } from 'ant-design-vue'
 import forFormModal from '@/mixins/forModal/forFormModal'
 import DragModal from '@/components/DragModal'
 import { cloneDeep } from 'lodash'
-import apis from '@/apis'
 
 export default Form.create({})({
   mixins: [forFormModal()],

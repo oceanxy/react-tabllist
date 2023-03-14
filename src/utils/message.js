@@ -50,7 +50,7 @@ export async function verifySelected(selection, callback, content) {
 /**
  * 显示询问对话框
  * @param callback {Function} 询问内容对应的回调函数，回调函数返回一个布尔类型的值，表示成功或失败
- * @param content {string} 询问的内容
+ * @param content {string | JSX.Element} 询问的内容
  * @param [successfulPrompt] {string} 操作成功的提示内容
  * @returns {Promise<*>}
  */

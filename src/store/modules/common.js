@@ -8,8 +8,10 @@ import apis from '@/apis'
 export default {
   namespaced: true,
   state: {
-    // 菜单栏切换
+    // 菜单栏折叠与展开状态切换
     collapsed: false,
+    // 页面中的侧边树折叠与展开状态切换（如果有）
+    treeCollapsed: false,
     // 行政区划
     administrativeDivision: [],
     // 默认行政区划
