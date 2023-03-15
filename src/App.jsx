@@ -1,7 +1,7 @@
 import './assets/styles/index.scss'
 import zhCN from 'ant-design-vue/lib/locale-provider/zh_CN'
 import { ConfigProvider } from 'ant-design-vue'
-
+import { merge } from 'lodash'
 
 export default {
   name: 'TGApp',
@@ -12,11 +12,12 @@ export default {
   //   }
   // },
   async created() {
+    /* 从本地存储里还原刷新前存储的 state */
     const tempState = JSON.parse(localStorage.getItem('state'))
 
     if (tempState) {
       // 在页面加载时读取localStorage里的状态信息，还原store
-      this.$store.replaceState(tempState)
+      this.$store.replaceState(merge(tempState, this.$store.state))
 
       // 还原store后，删除localStorage里的备份状态信息
       localStorage.removeItem('state')
