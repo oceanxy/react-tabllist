@@ -69,7 +69,7 @@ export default {
           },
           {
             title: '编辑时间',
-            width: 120,
+            width: 140,
             dataIndex: 'lastOperateTimeStr'
           },
           {
