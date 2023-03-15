@@ -2,6 +2,7 @@ import apis from '@/apis'
 import router from '@/router'
 import JSEncrypt from 'jsencrypt'
 import config from '@/config'
+import { message } from 'ant-design-vue'
 
 let encryptor
 
@@ -14,12 +15,7 @@ export default {
   namespaced: true,
   state: {
     loading: false,
-    userInfo: {
-      parkId: '',
-      parkName: '',
-      fullName: '',
-      id: ''
-    },
+    userInfo: {},
     visibilityOfEditPassword: false,
     currentItem: {},
     codeKey: ''
@@ -83,18 +79,31 @@ export default {
       return Promise.resolve(response)
     },
     async logout({ commit, dispatch }) {
+      message.loading('正在注销，请稍候...', 0)
       commit('setLoading', true)
 
       const response = await apis.logout()
 
       // if (response.status) {
       await dispatch('clear')
+      message.destroy()
       await router.replace({ name: 'login' })
       // }
 
       commit('setLoading', false)
 
       return Promise.resolve(response)
+    },
+    async getUserInfo({ commit }) {
+      const response = await apis.getUserInfo()
+
+      const { status, data } = response
+
+      if (status) {
+        commit('setUserInfo', data)
+      }
+
+      return Promise.resolve(true)
     },
     async clear({ commit }) {
       commit('setUserInfo', {})

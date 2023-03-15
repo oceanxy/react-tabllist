@@ -31,8 +31,15 @@ export default {
     }
   },
   provide: { moduleName: 'login' },
+  watch: {
+    async userInfo(value) {
+      if (!Object.keys(value).length && localStorage.getItem('token')) {
+        await this.getUserInfo()
+      }
+    }
+  },
   methods: {
-    ...mapActions('login', { logout: 'logout' }),
+    ...mapActions('login', { logout: 'logout', getUserInfo: 'getUserInfo' }),
     async onLogOut() {
       await this.logout()
     },
