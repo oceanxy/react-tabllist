@@ -7,7 +7,7 @@ export default Form.create({})({
   mixins: [forFormModal()],
   data() {
     return {
-      modalProps: { width: 610 },
+      modalProps: { width: 610 }
     }
   },
   computed: {

@@ -21,6 +21,7 @@ export default Form.create({})({
         on: {
           cancel: () => this.onCancel(),
           ok: () => this.onSubmit({
+            customApiName: 'addMenus',
             customDataHandler: this.customDataHandler,
             done: this.done
           })
@@ -117,11 +118,12 @@ export default Form.create({})({
               )
             }
           </Form.Item>
-          <Form.Item label="路由名称(客户端)" class={'half'}>
+          <Form.Item maxLength={16} label="路由名称(客户端)" class={'half'}>
             {
               this.form.getFieldDecorator('name', { initialValue: this.currentItem.name })(
                 <Input
                   placeholder="请输入路由名称（小驼峰命名规则）"
+                  maxLength={50}
                   allowClear
                   title={'请输入路由名称(小驼峰命名规则）'}
                 />
@@ -130,9 +132,10 @@ export default Form.create({})({
           </Form.Item>
           <Form.Item label="path(客户端)">
             {
-              this.form.getFieldDecorator('seniorUrl', { initialValue: this.currentItem.seniorUrl })(
+              this.form.getFieldDecorator('menuUrl', { initialValue: this.currentItem.menuUrl })(
                 <Input
                   placeholder="请输入 path"
+                  maxLength={50}
                   allowClear
                 />
               )
@@ -146,6 +149,7 @@ export default Form.create({})({
               this.form.getFieldDecorator('component', { initialValue: this.currentItem.component })(
                 <Input
                   placeholder="请输入组件地址"
+                  maxLength={200}
                   allowClear
                 />
               )
@@ -183,6 +187,7 @@ export default Form.create({})({
               this.form.getFieldDecorator('menuShortName', { initialValue: this.currentItem.menuShortName })(
                 <Input
                   placeholder="请输入简称"
+                  maxLength={32}
                   allowClear
                 />
               )
@@ -193,6 +198,7 @@ export default Form.create({})({
               this.form.getFieldDecorator('menuIcon', { initialValue: this.currentItem.menuIcon })(
                 <Input
                   placeholder="请输入图标"
+                  maxLength={50}
                   allowClear
                 />
               )
@@ -292,6 +298,8 @@ export default Form.create({})({
                 ]
               })(
                 <InputNumber
+                  min={0}
+                  max={99999999}
                   style={{ width: '100%' }}
                   placeholder="请输入排序"
                 />

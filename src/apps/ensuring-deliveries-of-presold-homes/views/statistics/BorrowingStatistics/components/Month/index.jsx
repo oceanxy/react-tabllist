@@ -51,6 +51,11 @@ export default {
     },
     onChange(val) {
       this.getColumnarChatList(val)
+    },
+    tabRadioOnChange() {
+      const data = this.$refs['onSelect']
+
+      console.log(data)
     }
   },
   render() {
@@ -58,11 +63,12 @@ export default {
       <Spin spinning={this.columnarChatList.loading}>
         <Card>
           <Space size={20}>
-            <Radio.Group v-model={this.dateType}>
+            <Radio.Group v-model={this.dateType} onChange={this.tabRadioOnChange}>
               <Radio.Button value={1}>按年统计</Radio.Button>
               <Radio.Button value={2}>按月统计</Radio.Button>
             </Radio.Group>
             <Select
+              ref={'onSelect'}
               placeholder={this.dateType === 1 ? '选择年' : '选择月'}
               style={'width:160px'} onChange={this.onChange}
               allowClear>

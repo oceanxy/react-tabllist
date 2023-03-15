@@ -15,7 +15,7 @@ export function initializeDynamicRoutes(menu) {
     children,
     obj: {
       name: routeName,
-      seniorUrl: url,
+      menuUrl: url,
       redirect,
       extend2,
       component,
@@ -126,7 +126,7 @@ export function downFile(blob, fileName) {
     tmp.href = urlObj
     tmp.click() // 模拟点击实现下载
 
-    setTimeout(function() {
+    setTimeout(function () {
       // 延时释放
       URL.revokeObjectURL(urlObj)
     }, 1000)

@@ -88,7 +88,7 @@ export default Form.create({})({
                   }
                 ]
               })(
-                <Input placeholder="请输入功能名称" allowClear />
+                <Input maxLength={32} placeholder="请输入功能名称" allowClear />
               )
             }
           </Form.Item>
@@ -106,6 +106,8 @@ export default Form.create({})({
                 ]
               })(
                 <InputNumber
+                  min={0}
+                  max={999}
                   placeholder="数值越大排在越前"
                   allowClear
                   style={{ width: '100%' }}

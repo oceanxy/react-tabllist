@@ -20,7 +20,8 @@ export default [
         meta: {
           title: '网签',
           keepAlive: false,
-          requiresAuth: true
+          requiresAuth: true,
+          icon: 'icon-menu-wq-line'
         }
       },
       {
@@ -32,7 +33,8 @@ export default [
         meta: {
           title: '预告登记',
           keepAlive: false,
-          requiresAuth: true
+          requiresAuth: true,
+          icon: 'icon-menu-ygdj-line'
         }
       },
       {
@@ -42,7 +44,8 @@ export default [
         meta: {
           title: '抵押记录',
           keepAlive: false,
-          requiresAuth: true
+          requiresAuth: true,
+          icon: 'icon-menu-dyjl-line'
         }
       }
     ]
@@ -66,7 +69,8 @@ export default [
         meta: {
           title: '开发商',
           keepAlive: false,
-          requiresAuth: true
+          requiresAuth: true,
+          icon: 'icon-menu-kfs-line'
         }
       },
       {
@@ -76,7 +80,8 @@ export default [
         meta: {
           title: '项目',
           keepAlive: false,
-          requiresAuth: true
+          requiresAuth: true,
+          icon: 'icon-menu-xm-line'
         }
       },
       {
@@ -86,7 +91,8 @@ export default [
         meta: {
           title: '资产',
           keepAlive: false,
-          requiresAuth: true
+          requiresAuth: true,
+          icon: 'icon-menu-zc-line'
         }
       }
     ]
@@ -109,7 +115,8 @@ export default [
         meta: {
           title: '借款统计',
           keepAlive: false,
-          requiresAuth: true
+          requiresAuth: true,
+          icon: 'icon-menu-jktj-line'
         }
       },
       {
@@ -121,7 +128,8 @@ export default [
         meta: {
           title: '回款统计',
           keepAlive: false,
-          requiresAuth: true
+          requiresAuth: true,
+          icon: 'icon-menu-hktj-line'
         }
       },
       {
@@ -133,7 +141,8 @@ export default [
         meta: {
           title: '网签统计',
           keepAlive: false,
-          requiresAuth: true
+          requiresAuth: true,
+          icon: 'icon-menu-wqtj-line'
         }
       },
       {
@@ -145,7 +154,8 @@ export default [
         meta: {
           title: '预登记统计',
           keepAlive: false,
-          requiresAuth: true
+          requiresAuth: true,
+          icon: 'icon-menu-ydjtj-line'
         }
       }
     ]
@@ -168,7 +178,8 @@ export default [
         meta: {
           title: '菜单管理',
           keepAlive: false,
-          requiresAuth: true
+          requiresAuth: true,
+          icon: 'icon-menu-cdgl-line'
         }
       },
       {
@@ -178,7 +189,8 @@ export default [
         meta: {
           title: '功能管理',
           keepAlive: false,
-          requiresAuth: true
+          requiresAuth: true,
+          icon: 'icon-menu-gngl-line'
         }
       },
       {
@@ -188,7 +200,8 @@ export default [
         meta: {
           title: '组织结构',
           keepAlive: false,
-          requiresAuth: true
+          requiresAuth: true,
+          icon: 'icon-menu-zzjg-line'
         }
       },
       {
@@ -198,7 +211,8 @@ export default [
         meta: {
           title: '角色',
           keepAlive: false,
-          requiresAuth: true
+          requiresAuth: true,
+          icon: 'icon-menu-js-line'
         }
       },
       {
@@ -208,7 +222,8 @@ export default [
         meta: {
           title: '账号管理',
           keepAlive: false,
-          requiresAuth: true
+          requiresAuth: true,
+          icon: 'icon-menu-zhgl-line'
         }
       }
     ]

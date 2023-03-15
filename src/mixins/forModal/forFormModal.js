@@ -115,7 +115,6 @@ export default ({ disableSubmitButton = true } = {}) => {
         done
       } = {}) {
         this.form.validateFieldsAndScroll(async (err, values) => {
-
           let validation = true
 
           if (typeof customValidation === 'function') {
