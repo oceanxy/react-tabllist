@@ -59,7 +59,7 @@ export default Form.create({})({
           banner
           closable
           type={'info'}
-          style={{ marginBottom: '20px', marginLeft: '132px' }}
+          style={{ marginBottom: '20px' }}
         />
         <Form class="tg-form-grid" colon={false}>
           <Form.Item
@@ -303,7 +303,7 @@ export default Form.create({})({
               this.form.getFieldDecorator('menuDescribe', { initialValue: this.currentItem.menuDescribe })(
                 <Input.TextArea
                   placeholder="请输入描述"
-                  autoSize={{ minRows: 6 }}
+                  autoSize={{ minRows: 4 }}
                   allowClear
                 />
               )

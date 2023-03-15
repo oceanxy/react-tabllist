@@ -37,13 +37,13 @@ export default {
           {
             title: '是否隐藏(客户端控制)',
             align: 'center',
-            width: 100,
+            width: 160,
             scopedSlots: { customRender: 'hide' }
           },
           {
             title: '是否显示(服务端控制)',
             align: 'center',
-            width: 100,
+            width: 160,
             scopedSlots: { customRender: 'isShow' }
           },
           {

@@ -34,6 +34,7 @@ export default {
               icon={'plus'}
               onClick={this.onCreateRow}
               disabled={this.disabled}
+              size="small"
             />
           ),
           width: 60,
@@ -94,7 +95,7 @@ export default {
           pagination={false}
           rowKey="id"
           tableLayout={'fixed'}
-          size={'middle'}
+          size={'small'}
           scopedSlots={{
             fnUrl: (text, record) => (
               <Input
@@ -102,6 +103,7 @@ export default {
                 placeholder="请输入功能地址"
                 disabled={this.disabled}
                 onChange={debounce(this.emit, 300)}
+                size={'small'}
               />
             ),
             fnInfoDescribe: (text, record) => (
@@ -110,6 +112,7 @@ export default {
                 placeholder="请输入描述"
                 disabled={this.disabled}
                 onChange={debounce(this.emit, 300)}
+                size={'small'}
               />
             ),
             operation: (text, record, index) => (
@@ -117,6 +120,7 @@ export default {
                 icon="delete"
                 onClick={() => this.onDelClick(record.id, index)}
                 disabled={this.disabled}
+                size={'small'}
               />
             )
           }}
