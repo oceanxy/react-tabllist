@@ -61,7 +61,7 @@ export default {
    */
   exportMortgageRecords(request, params) {
     return request({
-      url: '/estate/foretell/exportExcel',
+      url: '/estate/hypothecateRecord/exportExcel',
       method: 'get',
       params,
       responseType: 'blob'

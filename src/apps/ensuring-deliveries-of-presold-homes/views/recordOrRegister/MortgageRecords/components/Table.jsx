@@ -100,7 +100,7 @@ export default {
       scopedSlots: {
         title: (text, record) => (
           <Space>
-            {/* <Button onClick={() => this.onExport()}>导出</Button> */}
+            <Button onClick={() => this.onCustomExport()}>导出</Button>
             <Button
               disabled={this.tableSelectedRowKeys}
               onClick={() => this.onCustomDeleteClick()

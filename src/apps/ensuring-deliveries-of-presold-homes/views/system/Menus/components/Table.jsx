@@ -1,5 +1,5 @@
 import forTable from '@/mixins/forTable'
-import { Button, Space, Switch } from 'ant-design-vue'
+import { Button, Space, Switch, Tag } from 'ant-design-vue'
 
 export default {
   mixins: [forTable()],

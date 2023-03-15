@@ -7,7 +7,6 @@ import Inquiry from './components/Inquiry'
 import Table from './components/Table'
 import TGPagination from '@/components/TGPagination'
 import ModalOfEdit from './components/ModalOfEdit'
-import ModalOfMenu from './components/ModalOfMenu'
 
 
 export default {
@@ -18,9 +17,9 @@ export default {
       <TGContainerWithTreeSider
         notNoneMode
         apiOptions={{
-          apiName: 'getOrganTree',
-          stateName: 'organTree',
-          moduleName: 'combination'
+          apiName: 'getMenuTree',
+          stateName: 'menuTree',
+          moduleName: 'menus'
         }}
       >
         <TGContainerWithTable>
@@ -29,8 +28,7 @@ export default {
           <Table slot={'table'} />
           <TGPagination slot={'pagination'} />
           <template slot={'modals'}>
-            <ModalOfEdit modalTitle={'{action}角色'} />
-            <ModalOfMenu modalTitle={'配置权限'} visibilityFieldName={'visibilityOfMenu'} />
+            <ModalOfEdit modalTitle={'{action}菜单功能'} />
           </template>
         </TGContainerWithTable>
       </TGContainerWithTreeSider>

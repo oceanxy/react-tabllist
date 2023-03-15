@@ -1,8 +1,8 @@
-import { Input, Form, InputNumber, TreeSelect, Switch } from 'ant-design-vue'
+import { Form, Input, InputNumber } from 'ant-design-vue'
 import forFormModal from '@/mixins/forModal/forFormModal'
 import DragModal from '@/components/DragModal'
-import { cloneDeep } from 'lodash'
-import apis from '@/apis'
+import MultiInput from './MultiInput'
+import { cloneDeep, omit } from 'lodash'
 
 export default Form.create({})({
   mixins: [forFormModal()],
@@ -11,61 +11,64 @@ export default Form.create({})({
       modalProps: {
         width: 810,
         destroyOnClose: true
-      },
-      menuTreeList: [],
-      roleTreeList: []
+      }
     }
   },
   computed: {
+    details() {
+      return this.$store.state[this.moduleName].details
+    },
     attributes() {
       return {
         attrs: this.modalProps,
         on: {
           cancel: () => this.onCancel(),
-          ok: () => this.onSubmit(
-            {
-              customDataHandler: value => {
-                const data = cloneDeep(value)
-
-                data.parentId = data.parent.value ?? this.currentItem?.parentId ?? ''
-                data.parentName = data.parent.label ?? this.currentItem?.parentName ?? ''
-                delete data.parent
-
-                return data
-              }
-            }
-          )
-
-
+          ok: () => this.onSubmit({ customDataHandler: this.customDataHandler })
+        }
+      }
+    },
+    search() {
+      return this.$store.state[this.moduleName].search
+    }
+  },
+  watch: {
+    details: {
+      deep: true,
+      handler(value) {
+        this.form.setFieldsValue({ functionInfoList: value || [] })
+      }
+    },
+    visible: {
+      immediate: true,
+      async handler(value) {
+        if (value && this.currentItem.id && !this.currentItem.functionInfoList?.length) {
+          await this.$store.dispatch('getDetails', {
+            moduleName: this.moduleName,
+            payload: { id: this.currentItem.id }
+          })
         }
       }
     }
   },
   methods: {
-    async getMenuTree() {
-      const res = await apis.getMenuTree()
+    customDataHandler(values) {
+      const data = cloneDeep(values)
 
-      if (res.status) {
-        this.menuTreeList = res.data || []
-      }
-    },
-    async getRoleTree() {
-      const res = await apis.getRoleTree()
+      return {
+        function: {
+          fnName: data.fnName,
+          fnDescribe: data.fnDescribe,
+          id: data.id,
+          menuId: this.currentItem.menuId || this.search.parentId,
+          sortIndex: data.sortIndex
+        },
+        functionInfoList: values.functionInfoList.map(item => {
+          if (!isNaN(item.id)) {
+            return omit(item, 'id')
+          }
 
-      if (res.status) {
-        this.roleTreeList = res.data || []
-      }
-    }
-
-  },
-  watch: {
-    visible: {
-      immediate: true,
-      async handler(value) {
-        if (value) {
-          this.getMenuTree()
-          this.getRoleTree()
-        }
+          return item
+        })
       }
     }
   },
@@ -73,80 +76,34 @@ export default Form.create({})({
     return (
       <DragModal {...this.attributes}>
         <Form class="tg-form-grid" colon={false}>
-          <Form.Item label="所属角色" class={'half'}>
+          <Form.Item label="功能名称" class={'half'}>
             {
-              this.form.getFieldDecorator('parent', {
-                initialValue: this.currentItem.parentId
-                  ? { label: this.currentItem.parentName, value: this.currentItem.parentId }
-                  : undefined,
+              this.form.getFieldDecorator('fnName', {
+                initialValue: this.currentItem.fnName,
                 rules: [
                   {
                     required: true,
-                    type: 'any',
-                    message: '请选所属角色',
-                    trigger: 'change'
-                  }
-                ]
-              })(
-                <TreeSelect
-                  allowClear
-                  treeNodeFilterProp={'title'}
-                  treeData={this.roleTreeList}
-                  labelInValue
-                  replaceFields={{
-                    children: 'children',
-                    title: 'name',
-                    key: 'id',
-                    value: 'id'
-                  }}
-                  placeholder={'请选择所属角色'}
-                />
-              )
-            }
-          </Form.Item>
-          <Form.Item label="角色名称" class={'half'}>
-            {
-              this.form.getFieldDecorator('fullName', {
-                initialValue: this.currentItem.fullName,
-                rules: [
-                  {
-                    required: true,
-                    message: '请输入角色名称！',
+                    message: '请输入功能名称!',
                     trigger: 'blur'
                   }
                 ]
               })(
-                <Input maxLength={16} placeholder="请输入角色名称" allowClear />
-              )
-            }
-          </Form.Item>
-          <Form.Item label="默认菜单" class={'half'}>
-            {
-              this.form.getFieldDecorator('indexMenuId', {
-                initialValue: this.currentItem.indexMenuId
-              })(
-                <TreeSelect
-                  allowClear
-                  dropdownClassName={'tg-select-dropdown'}
-                  dropdownStyle={{ maxHeight: '300px' }}
-                  treeData={this.menuTreeList}
-                  replaceFields={{
-                    children: 'children',
-                    title: 'name',
-                    key: 'id',
-                    value: 'id'
-                  }}
-                  treeNodeFilterProp={'title'}
-                  placeholder={'请选择父级菜单'}
-                  treeDefaultExpandedKeys={[this.currentItem.indexMenuId || this.menuTreeList?.[0]?.id]}
-                />
+                <Input placeholder="请输入功能名称" allowClear />
               )
             }
           </Form.Item>
           <Form.Item label="排序" class={'half'}>
             {
               this.form.getFieldDecorator('sortIndex', {
-                initialValue: this.currentItem.sortIndex ?? 0
+                initialValue: this.currentItem.sortIndex ?? 0,
+                rules: [
+                  {
+                    required: true,
+                    type: 'number',
+                    message: '请输入排序值!',
+                    trigger: 'blur'
+                  }
+                ]
               })(
                 <InputNumber
                   placeholder="数值越大排在越前"
@@ -156,29 +113,30 @@ export default Form.create({})({
               )
             }
           </Form.Item>
-          <Form.Item label="状态">
+          <Form.Item label="功能描述">
             {
-              this.form.getFieldDecorator('status', {
-                initialValue: !isNaN(this.currentItem.status) ? this.currentItem.status === 1 : true,
-                valuePropName: 'checked'
-              })(
-                <Switch />
+              this.form.getFieldDecorator('fnDescribe', { initialValue: this.currentItem.fnDescribe })(
+                <Input.TextArea placeholder="请输入描述内容" allowClear />
               )
             }
           </Form.Item>
-          <Form.Item label="描述">
+          <Form.Item>
             {
-              this.form.getFieldDecorator('description', {
-                initialValue: this.currentItem.description
+              this.form.getFieldDecorator('functionInfoList', {
+                initialValue: this.currentItem.functionInfoList || [],
+                rules: [
+                  {
+                    required: true,
+                    type: 'array',
+                    message: '请补全功能信息!',
+                    trigger: 'change'
+                  }
+                ]
               })(
-                <Input.TextArea
-                  placeholder="请输入"
-                  auto-size={{ minRows: 6 }}
-                />
+                <MultiInput />
               )
             }
           </Form.Item>
-
         </Form>
       </DragModal>
     )

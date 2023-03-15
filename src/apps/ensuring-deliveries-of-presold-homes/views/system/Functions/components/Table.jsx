@@ -1,5 +1,5 @@
+import { Button, Space, Tag } from 'ant-design-vue'
 import forTable from '@/mixins/forTable'
-import { Button, Space, Switch } from 'ant-design-vue'
 
 export default {
   mixins: [forTable()],
@@ -15,28 +15,36 @@ export default {
             scopedSlots: { customRender: 'serialNumber' }
           },
           {
-            title: '角色名',
-            width: 160,
-            dataIndex: 'fullName'
+            title: '所属菜单',
+            width: 140,
+            dataIndex: 'menuName'
+          },
+          {
+            title: '名称',
+            width: 100,
+            align: 'center',
+            dataIndex: 'fnName'
           },
           {
             title: '描述',
-            dataIndex: 'description'
+            dataIndex: 'fnDescribe'
           },
           {
             title: '排序',
+            width: 100,
             align: 'center',
-            width: 80,
             dataIndex: 'sortIndex'
           },
           {
             title: '状态',
             align: 'center',
             width: 80,
+            fixed: 'right',
             scopedSlots: { customRender: 'status' }
           },
           {
             title: '操作',
+            key: 'operation',
             fixed: 'right',
             align: 'center',
             width: 150,
@@ -45,20 +53,23 @@ export default {
         ]
       },
       scopedSlots: {
+        serialNumber: (text, record, index) => {
+          return <span>{index + 1}</span>
+        },
+        isShow: (text, record) => {
+          return record.isShow === 1 ? <Tag color="green">是</Tag> : <Tag color="red">否</Tag>
+        },
+        isDefault: (text, record) => {
+          return record.isDefault === 1 ? <Tag color="green">是</Tag> : <Tag color="red">否</Tag>
+        },
         status: (text, record) => {
-          return (
-            <Switch
-              checked={record.status === 1}
-              onChange={checked => this.onStatusChange({ checked, record })}
-            />
-          )
+          return record.status === 1 ? <Tag color="green">正常</Tag> : <Tag color="red">失效</Tag>
         },
         operation: (text, record) => (
           <Space>
             <Button
               type="link"
               size="small"
-              disabled={this.isFeatureDisabled}
               onClick={() => this.onEditClick(record)}
             >
               编辑
@@ -66,38 +77,13 @@ export default {
             <Button
               type="link"
               size="small"
-              disabled={this.isFeatureDisabled}
               onClick={() => this.onDeleteClick(record)}
             >
               删除
             </Button>
-            <Button
-              type="link"
-              size="small"
-              onClick={() => this._setVisibilityOfModal(record, 'visibilityOfMenu')}
-            >
-              配置权限
-            </Button>
-
           </Space>
         )
       }
     }
-  },
-  computed: {
-    // 学校及学校下级禁用新增、修改或删除等一切操作
-    isFeatureDisabled() {
-      const { type } = this.$store.state[this.moduleName].search
-
-      // 类型（1.区 2.职能部门 3.街道 4.学校顶级 5.学校 6.年级 7.班级）
-      return [4, 5, 6, 7].includes(type)
-    },
-    tableSelectedRowKeys() {
-      if (this.getState('selectedRowKeys', this.moduleName).length > 0) {
-        return false
-      } else {
-        return true
-      }
-    },
   }
 }
