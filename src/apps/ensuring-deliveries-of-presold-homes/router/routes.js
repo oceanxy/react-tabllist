@@ -162,6 +162,26 @@ export default [
     },
     children: [
       {
+        path: 'menus',
+        name: 'menus',
+        component: () => import('@/apps/ensuring-deliveries-of-presold-homes/views/system/Menus'),
+        meta: {
+          title: '菜单管理',
+          keepAlive: false,
+          requiresAuth: true
+        }
+      },
+      {
+        path: 'functions',
+        name: 'functions',
+        component: () => import('@/apps/ensuring-deliveries-of-presold-homes/views/system/Functions'),
+        meta: {
+          title: '功能管理',
+          keepAlive: false,
+          requiresAuth: true
+        }
+      },
+      {
         path: 'combination',
         name: 'combination',
         component: () => import('@/apps/ensuring-deliveries-of-presold-homes/views/system/Combination'),

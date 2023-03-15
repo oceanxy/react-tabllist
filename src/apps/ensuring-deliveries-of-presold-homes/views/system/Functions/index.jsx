@@ -11,19 +11,16 @@ import ModalOfMenu from './components/ModalOfMenu'
 
 
 export default {
-  name: 'Roles',
+  name: 'Functions',
   mixins: [dynamicState()],
   render() {
     return (
       <TGContainerWithTreeSider
         notNoneMode
         apiOptions={{
-          // apiName: 'getOrganTree',
-          // stateName: 'organTree',
-          // moduleName: 'combination'
-          apiName: 'getRoleTree',
-          stateName: 'roleTree',
-          moduleName: 'roles'
+          apiName: 'getOrganTree',
+          stateName: 'organTree',
+          moduleName: 'combination'
         }}
       >
         <TGContainerWithTable>

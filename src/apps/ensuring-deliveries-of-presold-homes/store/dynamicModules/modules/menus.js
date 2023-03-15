@@ -4,22 +4,11 @@ export default commitRootInModule =>
   createStoreModule({
     state: {
       treeIdField: '',
-      privilegeTreeList: {
-        loading: false,
-        list: []
-      },
-      roleMergerMenuList: {
-        loading: false,
-        list: []
-      },
-
-      visibilityOfMenu: false,
       roleTree: {
         loading: false,
         list: []
       },
-      // 配置菜单弹窗内的角色权限菜单数据
-      privilege: {
+      menuTree: {
         loading: false,
         list: []
       }
