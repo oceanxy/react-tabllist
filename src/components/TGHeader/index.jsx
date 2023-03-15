@@ -31,8 +31,15 @@ export default {
     }
   },
   provide: { moduleName: 'login' },
+  watch: {
+    async userInfo(value) {
+      if (!Object.keys(value).length && localStorage.getItem('token')) {
+        await this.getUserInfo()
+      }
+    }
+  },
   methods: {
-    ...mapActions('login', { logout: 'logout' }),
+    ...mapActions('login', { logout: 'logout', getUserInfo: 'getUserInfo' }),
     async onLogOut() {
       await this.logout()
     },
@@ -84,7 +91,7 @@ export default {
                           {this.userInfo.nickName || this.userInfo.fullName || '用户名'}
                         </div>
                         <div class={'tel'}>
-                          {this.userInfo.tel || '00000000000'}
+                          {this.userInfo.loginName || '00000000000'}
                         </div>
                       </div>
                       <IconFont type={'icon-global-down'} style={'color: #ffffff'} />
