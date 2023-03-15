@@ -64,6 +64,11 @@ export default {
             dataIndex: 'recordTotal'
           },
           {
+            title: '抵押时间',
+            width: 160,
+            dataIndex: 'createTimeStr'
+          },
+          {
             title: '备案单价(万元)',
             width: 120,
             dataIndex: 'recordSingle'
@@ -95,8 +100,11 @@ export default {
       scopedSlots: {
         title: (text, record) => (
           <Space>
-            <Button onClick={() => this.onExport()}>导出</Button>
-            <Button disabled={this.tableSelectedRowKeys} onClick={() => this.onDeleteClick()}>删除</Button>
+            <Button onClick={() => this.onCustomExport()}>导出</Button>
+            <Button
+              disabled={this.tableSelectedRowKeys}
+              onClick={() => this.onCustomDeleteClick()
+              }>删除</Button>
           </Space>
         ),
         operation: (text, record) => (

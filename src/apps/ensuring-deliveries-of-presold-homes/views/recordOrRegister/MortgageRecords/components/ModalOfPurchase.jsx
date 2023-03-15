@@ -81,7 +81,13 @@ export default Form.create({})({
                   }
                 ]
               })(
-                <Space><InputNumber max={9999999999999} placeholder="请输入单价" style={'width:100%'} allowClear addon-after="元" /><span>元</span></Space>
+                <Space><InputNumber
+                  max={9999999999999}
+                  min={0}
+                  placeholder="请输入单价"
+                  style={'width:100%'}
+                  allowClear
+                  addon-after="元" /><span>元</span></Space>
               )
             }
           </Form.Item>

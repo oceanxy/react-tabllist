@@ -12,11 +12,12 @@ export default Form.create({})({
         width: 810,
         destroyOnClose: true
       },
-      menuTreeList: [],
-      roleTreeList: []
     }
   },
   computed: {
+    roleTree() {
+      return this.$store.state[this.moduleName].roleTree?.list || []
+    },
     attributes() {
       return {
         attrs: this.modalProps,
@@ -49,13 +50,6 @@ export default Form.create({})({
         this.menuTreeList = res.data || []
       }
     },
-    async getRoleTree() {
-      const res = await apis.getRoleTree()
-
-      if (res.status) {
-        this.roleTreeList = res.data || []
-      }
-    }
 
   },
   watch: {
@@ -64,7 +58,6 @@ export default Form.create({})({
       async handler(value) {
         if (value) {
           this.getMenuTree()
-          this.getRoleTree()
         }
       }
     }
@@ -91,7 +84,7 @@ export default Form.create({})({
                 <TreeSelect
                   allowClear
                   treeNodeFilterProp={'title'}
-                  treeData={this.roleTreeList}
+                  treeData={this.roleTree}
                   labelInValue
                   replaceFields={{
                     children: 'children',

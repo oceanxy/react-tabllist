@@ -54,7 +54,7 @@ export default Form.create({})({
           </Form.Item>
           <Form.Item label={'关键字'}>
             {
-              this.form.getFieldDecorator('fullName', { initialValue: this.initialValues.fullName })(
+              this.form.getFieldDecorator('estateName', { initialValue: this.initialValues.estateName })(
                 <Input maxLength={10} placeholder="楼盘/开发商名称" allowClear />
               )
             }

@@ -88,7 +88,12 @@ export default Form.create({})({
                   }
                 ]
               })(
-                <InputNumber max={99999999} placeholder="请输入请输入总价" style={'width:100%'} allowClear />
+                <InputNumber
+                  max={99999999}
+                  min={0}
+                  placeholder="请输入请输入总价"
+                  style={'width:100%'}
+                  allowClear />
               )
             }
           </Form.Item>
@@ -105,7 +110,12 @@ export default Form.create({})({
                   }
                 ]
               })(
-                <InputNumber max={99999999} placeholder="请输入单价" style={'width:100%'} allowClear />
+                <InputNumber
+                  max={99999999}
+                  min={0}
+                  placeholder="请输入单价"
+                  style={'width:100%'}
+                  allowClear />
               )
             }
           </Form.Item>
@@ -123,7 +133,12 @@ export default Form.create({})({
                   }
                 ]
               })(
-                <InputNumber max={99999999999} placeholder="请输入单价" style={'width:100%'} allowClear />
+                <InputNumber
+                  max={99999999999}
+                  min={0}
+                  placeholder="请输入单价"
+                  style={'width:100%'}
+                  allowClear />
               )
             }
           </Form.Item>

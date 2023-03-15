@@ -66,6 +66,21 @@ export default {
       data: qs.stringify(data)
     })
   },
+
+  /**
+   * 导出抵押记录数据
+   * @param request
+   * @param params
+   * @returns {*}
+   */
+  exportSignUpOnline(request, params) {
+    return request({
+      url: '/estate/netSign/exportExcel',
+      method: 'get',
+      params,
+      responseType: 'blob'
+    })
+  },
   /**
    * 解除签约
    * @param request
