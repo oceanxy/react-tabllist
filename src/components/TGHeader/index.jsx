@@ -101,7 +101,7 @@ export default {
                       numberStyle={{
                         width: '20px',
                         height: '20px',
-                        fontSize: '12px',
+                        fontSize: '14px',
                         lineHeight: '20px',
                         padding: '0'
                       }}

@@ -34,11 +34,17 @@ export default {
   },
   render() {
     return (
-      <div class="pe-scrolling-number-container">
-        <div class="text">
-          {this.inner_text}
-        </div>
-        <div class="value">
+      <div class="tg-scrolling-number-container">
+        {
+          this.inner_text
+            ? (
+              <div class="tg-scrolling-number-text">
+                {this.inner_text}
+              </div>
+            )
+            : null
+        }
+        <div class="tg-scrolling-number-value">
           {
             this.inner_value.map(numStr => {
               return !isNaN(+numStr)

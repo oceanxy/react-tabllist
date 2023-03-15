@@ -31,16 +31,6 @@ export default {
     setUserInfo(state, payload) {
       state.userInfo = payload
     },
-    setParkList(state, payload) {
-      state.parkList = payload || []
-    },
-    setParkInfo(state, payload) {
-      state.userInfo = {
-        ...state.userInfo,
-        parkId: payload.id,
-        parkName: payload.fullName
-      }
-    },
     setAuthentication(state, payload) {
       if (payload) {
         localStorage.setItem('token', payload)
@@ -52,11 +42,9 @@ export default {
       if (payload) {
         localStorage.setItem('defaultRoute', payload.defaultMenuUrl)
         localStorage.setItem('menu', JSON.stringify(payload.menuList))
-        localStorage.setItem('parkList', JSON.stringify(payload.parkList))
       } else {
         localStorage.removeItem('defaultRoute')
         localStorage.removeItem('menu')
-        localStorage.removeItem('parkList')
       }
     }
   },
@@ -82,18 +70,12 @@ export default {
           userInfo,
           token,
           menuList,
-          defaultMenuUrl,
-          parkList
+          defaultMenuUrl
         } = response.data
 
         commit('setUserInfo', userInfo)
-        commit('setParkList', parkList)
         commit('setAuthentication', token)
-        commit('setSiteCache', {
-          menuList,
-          defaultMenuUrl,
-          parkList
-        })
+        commit('setSiteCache', { menuList, defaultMenuUrl })
       }
 
       commit('setLoading', false)
@@ -116,7 +98,6 @@ export default {
     },
     async clear({ commit }) {
       commit('setUserInfo', {})
-      commit('setParkList', [])
       commit('setAuthentication', null)
       commit('setSiteCache', null)
 

@@ -17,12 +17,16 @@ export default {
     if (submoduleName) {
       if (Object.prototype.toString.call(state[moduleName][submoduleName][stateName]) === '[object Object]') {
         state[moduleName][submoduleName][stateName].loading = value
+      } else if (Object.prototype.toString.call(state[moduleName][submoduleName][stateName]) === '[object Array]') {
+        state[moduleName][submoduleName].loading = value
       } else {
         state[moduleName][submoduleName][stateName || 'loading'] = value
       }
     } else {
       if (Object.prototype.toString.call(state[moduleName][stateName]) === '[object Object]') {
         state[moduleName][stateName].loading = value
+      } else if (Object.prototype.toString.call(state[moduleName][stateName]) === '[object Array]') {
+        state[moduleName].loading = value
       } else {
         state[moduleName][stateName || 'loading'] = value
       }

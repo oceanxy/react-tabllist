@@ -52,7 +52,7 @@ export default {
             title: '租售状态',
             width: 80,
             align: 'center',
-            dataIndex: 'salesStatus'
+            dataIndex: 'salesStatusStr'
           },
           {
             title: '建面(㎡)',

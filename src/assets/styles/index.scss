@@ -239,7 +239,7 @@ body {
       label {
         display: inline-block;
         width: 70px;
-        font-size: 12px;
+        font-size: 14px;
         color: rgba(52, 64, 84, 0.62);
         text-align: justify;
         text-align-last: justify;
@@ -333,7 +333,7 @@ body {
 
   .tg-table-field-highlight {
     color: #13c2c2;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: bolder;
   }
 
@@ -343,7 +343,7 @@ body {
 
       &.highlight {
         font-weight: 600;
-        font-size: 15px;
+        font-size: 16px;
       }
 
       &:last-child {
@@ -357,7 +357,7 @@ body {
       background: $table-header-bg;
       color: $text-or-icon-sub-color;
       font-weight: bolder;
-      font-size: 12px;
+      font-size: 14px;
       border-color: $table-border-color;
     }
   }
@@ -406,7 +406,7 @@ body {
 
       .ant-btn {
         padding: 0 2px;
-        font-size: 12px;
+        font-size: 14px;
         line-height: unset;
         height: unset;
       }
@@ -713,7 +713,7 @@ body {
 
 /********************************************************************/
 
-.bnm-tree-select-dropdown {
+.tg-tree-select-dropdown {
   max-height: 550px !important;
 }
 

@@ -149,27 +149,33 @@ export default ({ disableSubmitButton = true } = {}) => {
               payload = customDataHandler(payload)
             }
 
-            const response = await this.$store.dispatch(action, {
+            const options = {
               moduleName: this.moduleName,
               visibilityFieldName: this._visibilityFieldName,
               isFetchList,
               customApiName,
               // 请求参数
               payload,
-
-              // action 为 'custom' 时可用。是否重置表格行选择框的选中内容。
-              isResetSelectedRows,
-              // action 为 'export' 时可用。
-              // 请根据参数的取值和性质自行决定在混入组件的 data 内或 computed 内定义。
-              fileName: this.fileName,
-
               // 附加请求参数，获取子模块数据需要的额外参数，在引用该混合的子模块内覆盖设置。
               // 请根据参数的取值和性质自行决定在混入组件的 data 内或 computed 内定义。
               additionalQueryParameters: {
                 ...this.$route.query,
                 ...(this.additionalQueryParameters || {})
               }
-            })
+            }
+
+            // action 为 'custom' 时可用。是否重置表格行选择框的选中内容。
+            if (action === 'custom') {
+              options.isResetSelectedRows = isResetSelectedRows
+            }
+
+            // action 为 'export' 时可用。
+            // 请根据参数的取值和性质自行决定在混入组件的 data 内或 computed 内定义。
+            if (action === 'export') {
+              options.fileName = this.fileName
+            }
+
+            const response = await this.$store.dispatch(action, options)
 
             if (response.status) {
               // 操作提示消息

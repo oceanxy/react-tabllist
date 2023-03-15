@@ -1,51 +1,36 @@
 import TGContainer from '@/components/TGContainer'
 import { List, Tag } from 'ant-design-vue'
+import forModuleName from '@/mixins/forModuleName'
 
 export default {
+  name: 'News',
+  inject: ['moduleName'],
+  mixins: [forModuleName(true)],
   computed: {
-    dataSource() {
-      return [
-        {
-          title: '合同编号FWZO384729将于2022年12月30日到期，请及时处理',
-          status: 1,
-          time: '2023-02-23 15:06:06'
-        },
-        {
-          title: 'Ant Design Title 2',
-          status: 2,
-          time: '2023-02-23 15:06:06'
-        },
-        {
-          title: 'Ant Design Title 3',
-          status: 3,
-          time: '2023-02-23 15:06:06'
-        },
-        {
-          title: 'Ant Design Title 4',
-          status: 1,
-          time: '2023-02-23 15:06:06'
-        },
-        {
-          title: 'Ant Design Title 3',
-          status: 1,
-          time: '2023-02-23 15:06:06'
-        },
-        {
-          title: 'Ant Design Title 4',
-          status: 1,
-          time: '2023-02-23 15:06:06'
-        },
-        {
-          title: 'Ant Design Title 3',
-          status: 1,
-          time: '2023-02-23 15:06:06'
-        },
-        {
-          title: 'Ant Design Title 4',
-          status: 1,
-          time: '2023-02-23 15:06:06'
-        }
-      ]
+    news() {
+      return this.$store.state[this.moduleName][this.submoduleName].list
+    }
+  },
+  async created() {
+    await this.$store.dispatch('setSearch', {
+      moduleName: this.moduleName,
+      submoduleName: this.submoduleName,
+      payload: {}
+    })
+  },
+  methods: {
+    async onClick(targetAddress) {
+      const split = targetAddress.split('?')
+      const path = this.$router.resolve({ name: split[0] }).href
+      const paramArr = split[1].split('&')
+
+      const query = paramArr.reduce((params, str) => {
+        const p = str.split('=')
+
+        return { ...params, [p[0]]: p[1] }
+      }, {})
+
+      await this.$router.push({ path, query })
     }
   },
   render() {
@@ -61,17 +46,14 @@ export default {
         contentClass="news-container"
       >
         <List
-          dataSource={this.dataSource}
+          dataSource={this.news}
           renderItem={item => (
-            <List.Item>
-              <List.Item.Meta description={item.time}>
-                <Tag
-                  slot={'avatar'}
-                  class={`new-status ${['warn', 'info', 'error'][item.status - 1]}`}
-                >
-                  {['未读', '未读', '未读'][item.status - 1]}
+            <List.Item onClick={() => this.onClick(item.targetAddress)}>
+              <List.Item.Meta description={item.createTimeStr}>
+                <Tag slot={'avatar'} class={'new-status'}>
+                  {['未读', '未读'][item.isRead]}
                 </Tag>
-                <p slot={'title'}>{item.title}</p>
+                <p slot={'title'}>{item.noticeTitle}</p>
               </List.Item.Meta>
             </List.Item>
           )}

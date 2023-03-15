@@ -203,7 +203,7 @@ export default {
         })
 
         nodeData = {
-          ...nodeData, ...item 
+          ...nodeData, ...item
         }
       })
 
@@ -322,7 +322,7 @@ export default {
         margin-left: 20px;
 
         button {
-          font-size: 12px;
+          font-size: 14px;
           width: 20px;
           height: 20px;
         }

@@ -88,7 +88,8 @@ export default {
     commit('setLoading', {
       value: true,
       moduleName,
-      submoduleName
+      submoduleName,
+      stateName
     })
 
     let api = 'getList'
@@ -166,7 +167,8 @@ export default {
     commit('setLoading', {
       value: false,
       moduleName,
-      submoduleName
+      submoduleName,
+      stateName
     })
 
     return response.status
@@ -229,7 +231,7 @@ export default {
    * @param moduleName {string} 模块名
    * @param payload {Object} 参数
    * @param visibilityFieldName {string} 控制弹窗显示的字段名
-   * @param parametersOfGetListAction {...{
+   * @param parametersOfGetListAction {{
    *  moduleName: string;
    *  submoduleName: string;
    *  additionalQueryParameters: {};
@@ -242,7 +244,7 @@ export default {
     moduleName,
     payload,
     visibilityFieldName,
-    ...parametersOfGetListAction
+    parametersOfGetListAction
   }) {
     const response = await apis[`add${firstLetterToUppercase(moduleName)}`](payload)
 
@@ -274,13 +276,13 @@ export default {
    * @param [visibilityFieldName='visibilityOfEdit'] {string} 控制弹窗显示的字段名
    * @param customApiName {string} 自定义请求API
    * @param [isFetchList=false] {boolean} 默认 false。当为 true 时，请特别注意参数问题（parametersOfOtherAction）
-   * @param parametersOfGetListAction {...{
+   * @param parametersOfGetListAction {{
    *  moduleName: string;
    *  submoduleName: string;
    *  additionalQueryParameters: {};
    *  stateName: string;
    *  customApiName: string
-   * }} 用于操作后刷新列表的参数，依赖 isFetchList
+   * }} 用于操作后刷新列表的参数，依赖 isFetchList。parametersOfGetListAction.moduleName 默认为 moduleName
    * @returns {Promise<*>}
    */
   async update({ state, dispatch }, {
@@ -289,7 +291,7 @@ export default {
     visibilityFieldName,
     customApiName,
     isFetchList,
-    ...parametersOfGetListAction
+    parametersOfGetListAction
   }) {
     const response = await apis[customApiName || `update${firstLetterToUppercase(moduleName)}`](payload)
 
@@ -325,7 +327,7 @@ export default {
    * @param [stateName] {string} 用于接收接口返回值的 state 字段名称，该字段需要提前在相应模块的 store.state 内定义好
    * @param [submoduleName] {string} 子级模块名
    * @param [visibilityFieldName] {string} 成功执行操作后要关闭的弹窗的控制字段（定义在对应模块的 store.state 内）
-   * @param parametersOfGetListAction {...{
+   * @param parametersOfGetListAction {{
    *  additionalQueryParameters: {};
    *  stateName: string;
    *  customApiName: string
@@ -345,7 +347,7 @@ export default {
     submoduleName,
     isResetSelectedRows,
     stateName,
-    ...parametersOfGetListAction
+    parametersOfGetListAction
   }) {
     const response = await apis[customApiName](payload)
 

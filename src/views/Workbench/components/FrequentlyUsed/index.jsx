@@ -1,7 +1,44 @@
 import TGContainer from '@/components/TGContainer'
-import { Card } from 'ant-design-vue'
+import { Card, Empty, Spin } from 'ant-design-vue'
+import forIndex from '@/mixins/forIndex'
+import { mapGetters } from 'vuex'
+
+const ModalOfSetUpUsedFunctionsFrequently = () => import( '../ModalOfSetUpUsedFunctionsFrequently')
 
 export default {
+  mixins: [forIndex],
+  inject: ['moduleName'],
+  data() {
+    return { ModalOfSetUpUsedFunctionsFrequently: undefined }
+  },
+  computed: {
+    ...mapGetters({ getState: 'getState' }),
+    usedFunctionsFrequently() {
+      return this.getState('usedFunctionsFrequently', this.moduleName)
+    }
+  },
+  async created() {
+    await this.$store.dispatch('getListWithLoadingStatus', {
+      moduleName: this.moduleName,
+      stateName: 'usedFunctionsFrequently',
+      customApiName: 'getListOfUsedFunctionsFrequently'
+    })
+  },
+  methods: {
+    async setUpUsedFunctionsFrequently() {
+      await this.$store.dispatch('getListWithLoadingStatus', {
+        moduleName: this.moduleName,
+        submoduleName: this.submoduleName,
+        stateName: 'treeOfSetUpUsedFunctionsFrequently',
+        customApiName: 'getTreeOfUsedFunctionsFrequently'
+      })
+
+      await this._setVisibilityOfModal(null, 'visibilityOfSetUpUsedFunctionsFrequently')
+    },
+    async onCardClick(routeName) {
+      await this.$router.push({ name: routeName })
+    }
+  },
   render() {
     return (
       <TGContainer
@@ -13,34 +50,35 @@ export default {
           </div>
         }
         showMore
-        rightIcon={<IconFont title={'设置'} type={'icon-home-pz-fill'} />}
+        rightIcon={
+          <IconFont
+            onClick={this.setUpUsedFunctionsFrequently}
+            title={'设置'}
+            type={'icon-home-pz-fill'}
+          />
+        }
         showBoxShadow={false}
         contentClass="frequently-used-container"
       >
-        <Card.Meta title={'资产录入'}>
-          <IconFont type={'icon-cygn-zclr-line'} slot={'avatar'} />
-        </Card.Meta>
-        <Card.Meta title={'资产价值'}>
-          <IconFont type={'icon-cygn-zcjz-line'} slot={'avatar'} />
-        </Card.Meta>
-        <Card.Meta title={'资产审核'}>
-          <IconFont type={'icon-cygn-zcsh-line'} slot={'avatar'} />
-        </Card.Meta>
-        <Card.Meta title={'租赁合同'}>
-          <IconFont type={'icon-cygn-zlht-line'} slot={'avatar'} />
-        </Card.Meta>
-        <Card.Meta title={'在线招聘'}>
-          <IconFont type={'icon-cygn-zxzp-line'} slot={'avatar'} />
-        </Card.Meta>
-        <Card.Meta title={'预约信息'}>
-          <IconFont type={'icon-cygn-yyxx-line'} slot={'avatar'} />
-        </Card.Meta>
-        <Card.Meta title={'我的申请'}>
-          <IconFont type={'icon-cygn-wdsq-line'} slot={'avatar'} />
-        </Card.Meta>
-        <Card.Meta title={'我的待办'}>
-          <IconFont type={'icon-cygn-wddb-line'} slot={'avatar'} />
-        </Card.Meta>
+        <Spin spinning={this.usedFunctionsFrequently.loading}>
+          {
+            this.usedFunctionsFrequently.list.length
+              ? this.usedFunctionsFrequently.list.map(item => (
+                <Card.Meta title={item.functionName} onClick={() => this.onCardClick(item.routeName)}>
+                  <IconFont type={item.functionIcon} slot={'avatar'} />
+                </Card.Meta>
+              ))
+              : (
+                <div class={'ant-empty-container'}>
+                  <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={'您设置的功能将在这里显示'} />
+                </div>
+              )
+          }
+        </Spin>
+        <ModalOfSetUpUsedFunctionsFrequently
+          modalTitle={'设置常用功能'}
+          visibilityFieldName={'visibilityOfSetUpUsedFunctionsFrequently'}
+        />
       </TGContainer>
     )
   }

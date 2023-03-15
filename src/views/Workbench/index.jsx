@@ -1,15 +1,15 @@
 import './assets/styles/index.scss'
-import dynamicState from '@/mixins/dynamicState'
 import Concern from './components/Concern'
 import UserInfo from './components/UserInfo'
 import FrequentlyUsed from '@/views/Workbench/components/FrequentlyUsed'
 import Todo from './components/Todo'
 import News from './components/News'
 import TGContainer from '@/components/TGContainer'
+import forModuleName from '@/mixins/forModuleName'
 
 export default {
   name: 'Workbench',
-  mixins: [dynamicState()],
+  mixins: [forModuleName()],
   render() {
     return (
       <TGContainer class={'tg-workbench'} contentClass={'tg-workbench-container'}>
@@ -23,7 +23,7 @@ export default {
         <FrequentlyUsed class={'row-2 tg-workbench-frequently-used'} />
         <div class={'row-3'}>
           {/* 待办事项 */}
-          <Todo class={'tg-workbench-to-do'} />
+          {/* <Todo class={'tg-workbench-to-do'} /> */}
           {/* 审阅消息 */}
           <News class={'tg-workbench-news'} />
         </div>

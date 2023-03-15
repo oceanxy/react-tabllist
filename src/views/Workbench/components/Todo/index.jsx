@@ -1,60 +1,23 @@
 import TGContainer from '@/components/TGContainer'
 import { List, Tag } from 'ant-design-vue'
+import forModuleName from '@/mixins/forModuleName'
+import moment from 'moment'
 
 export default {
+  name: 'Todo',
+  inject: ['moduleName'],
+  mixins: [forModuleName(true)],
   computed: {
-    dataSource() {
-      return [
-        {
-          title: '您有新的审核任务，请及时处理',
-          description: '发起人：陈思睿',
-          status: 1,
-          time: '2023-02-23 15:06:06'
-        },
-        {
-          title: 'Ant Design Title 2',
-          description: '发起人：陈思睿',
-          status: 2,
-          time: '2023-02-23 15:06:06'
-        },
-        {
-          title: 'Ant Design Title 3',
-          description: '发起人：陈思睿',
-          status: 3,
-          time: '2023-02-23 15:06:06'
-        },
-        {
-          title: 'Ant Design Title 4',
-          description: '发起人：陈思睿',
-          status: 1,
-          time: '2023-02-23 15:06:06'
-        },
-        {
-          title: 'Ant Design Title 3',
-          description: '发起人：陈思睿',
-          status: 1,
-          time: '2023-02-23 15:06:06'
-        },
-        {
-          title: 'Ant Design Title 4',
-          description: '发起人：陈思睿',
-          status: 1,
-          time: '2023-02-23 15:06:06'
-        },
-        {
-          title: 'Ant Design Title 3',
-          description: '发起人：陈思睿',
-          status: 1,
-          time: '2023-02-23 15:06:06'
-        },
-        {
-          title: 'Ant Design Title 4',
-          description: '发起人：陈思睿',
-          status: 1,
-          time: '2023-02-23 15:06:06'
-        }
-      ]
+    todo() {
+      return this.$store.state[this.moduleName][this.submoduleName].list
     }
+  },
+  async created() {
+    await this.$store.dispatch('setSearch', {
+      moduleName: this.moduleName,
+      submoduleName: this.submoduleName,
+      payload: {}
+    })
   },
   render() {
     return (
@@ -69,19 +32,19 @@ export default {
         contentClass="to-do-container"
       >
         <List
-          dataSource={this.dataSource}
+          dataSource={this.todo}
           renderItem={item => (
             <List.Item>
               <List.Item.Meta description={item.description}>
                 <div slot={'avatar'} class={'calendar-for-list'}>
-                  <p class={'datetime'}>2023-02</p>
-                  <p class={'date'}>23</p>
+                  <p class={'datetime'}>{moment(item.createTime).format('YYYYMM')}</p>
+                  <p class={'date'}>{moment(item.createTime).format('DD')}</p>
                 </div>
                 <p slot={'title'}>
                   <Tag class={['warn', 'info', 'error'][item.status - 1]}>
                     {['待审核', '待审核', '紧急'][item.status - 1]}
                   </Tag>
-                  {item.title}
+                  {item.noticeTitle}
                 </p>
               </List.Item.Meta>
               <div slot={'extra'} class={'ant-list-item-meta-time'}>{item.time}</div>

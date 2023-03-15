@@ -14,13 +14,30 @@
     flex-direction: column;
     background: none !important;
 
+    .ant-empty-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .ant-empty {
+        width: 100%;
+        padding: 0;
+
+        .ant-empty-image {
+          height: 24px;
+          margin-bottom: 0;
+        }
+      }
+    }
+
     .container-title {
       display: flex;
       align-items: center;
       height: 20px;
       line-height: 20px;
       color: $text-or-icon-color;
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 500;
 
       .anticon {
@@ -66,13 +83,29 @@
           background: $card-background-color;
 
           .ant-card-body {
+            height: 100%;
             padding: 8px 16px;
             display: flex;
             flex-direction: column;
-            font-size: 12px;
+            font-size: 14px;
             color: $text-or-icon-slightly-color;
 
-            span {
+            .concern-cards-text {
+              flex: none;
+            }
+
+            .concern-cards-value {
+              flex: auto;
+              display: flex;
+              align-items: baseline;
+              gap: .5ic;
+              height: 30px;
+              overflow: hidden;
+            }
+
+            .tg-scrolling-number-value {
+              flex: auto;
+              width: auto;
               font-size: 24px;
               font-weight: bolder;
               color: $text-primary-color;
@@ -110,7 +143,7 @@
             }
 
             .ant-card-meta-title {
-              font-size: 16px;
+              font-size: 18px;
               font-weight: 700;
               color: $text-or-icon-color;
               margin-bottom: 0;
@@ -121,7 +154,7 @@
               display: inline-block;
               background: #84adff;
               border-radius: 3px;
-              font-size: 12px;
+              font-size: 14px;
               font-weight: 400;
               color: #ffffff;
               padding: 0 6px;
@@ -146,7 +179,7 @@
           flex: none;
           height: 30px;
           line-height: 40px;
-          font-size: 12px;
+          font-size: 14px;
           text-align: center;
           color: $text-or-icon-sub-color;
         }
@@ -159,147 +192,157 @@
       background: $module-background-color;
 
       .frequently-used-container {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
         padding: 0 16px 16px;
 
-        .ant-card-meta {
+        .ant-spin-container {
           display: flex;
-          height: 48px;
-          flex: auto;
           align-items: center;
-          overflow: hidden;
-          min-width: 130px;
-          border-radius: 4px;
+          justify-content: flex-start;
+          gap: 16px;
 
-          .ant-card-meta-avatar {
+          .ant-card-meta {
             display: flex;
-            align-items: center;
-            justify-content: flex-end;
+            height: 48px;
             flex: none;
-            margin-left: -48px;
-            width: 100px;
-            height: 100px;
-            color: #ffffff;
-            border-radius: 50%;
-            padding-right: 10px;
+            align-items: center;
+            overflow: hidden;
+            min-width: 130px;
+            width: calc((100% - 112px) / 8);
+            border-radius: 4px;
+            transition: transform .2s ease-out;
+            cursor: pointer;
 
-            .anticon {
+            &:hover {
+              transform: scale(.97) ;
+            }
+
+            .ant-card-meta-avatar {
               display: flex;
               align-items: center;
-              justify-content: center;
-              width: 32px;
-              height: 32px;
-              border-radius: 8px;
-              font-size: 1.6em;
-              vertical-align: unset;
-            }
-          }
-
-          .ant-card-meta-detail {
-            padding: 0 16px 0 12px;
-
-            .ant-card-meta-title {
-              font-size: 14px;
-              font-weight: 700;
-              color: $text-or-icon-color;
-            }
-          }
-
-          &:first-child {
-            background: #eff8ff;
-
-            .ant-card-meta-avatar {
-              background: rgba(132, 202, 255, 0.2);
+              justify-content: flex-end;
+              flex: none;
+              margin-left: -48px;
+              width: 100px;
+              height: 100px;
+              color: #ffffff;
+              border-radius: 50%;
+              padding-right: 10px;
 
               .anticon {
-                background: #53b1fd;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 32px;
+                height: 32px;
+                border-radius: 8px;
+                font-size: 1.6em;
+                vertical-align: unset;
               }
             }
-          }
 
-          &:nth-child(2) {
-            background: #edfcf2;
+            .ant-card-meta-detail {
+              padding: 0 16px 0 12px;
 
-            .ant-card-meta-avatar {
-              background: rgba(115, 226, 163, 0.2);
-
-              .anticon {
-                background: #3ccb7f;
+              .ant-card-meta-title {
+                font-size: 16px;
+                font-weight: 700;
+                color: $text-or-icon-color;
               }
             }
-          }
 
-          &:nth-child(3) {
-            background: #f4f3ff;
+            &:first-child {
+              background: #eff8ff;
 
-            .ant-card-meta-avatar {
-              background: rgba(189, 180, 254, 0.2);
+              .ant-card-meta-avatar {
+                background: rgba(132, 202, 255, 0.2);
 
-              .anticon {
-                background: #9b8afb;
+                .anticon {
+                  background: #53b1fd;
+                }
               }
             }
-          }
 
-          &:nth-child(4) {
-            background: #fef6ee;
+            &:nth-child(2) {
+              background: #edfcf2;
 
-            .ant-card-meta-avatar {
-              background: rgba(243, 135, 68, 0.2);
+              .ant-card-meta-avatar {
+                background: rgba(115, 226, 163, 0.2);
 
-              .anticon {
-                background: #f38744;
+                .anticon {
+                  background: #3ccb7f;
+                }
               }
             }
-          }
 
-          &:nth-child(5) {
-            background: #f0fdf9;
+            &:nth-child(3) {
+              background: #f4f3ff;
 
-            .ant-card-meta-avatar {
-              background: rgba(95, 233, 208, 0.2);
+              .ant-card-meta-avatar {
+                background: rgba(189, 180, 254, 0.2);
 
-              .anticon {
-                background: #2ed3b7;
+                .anticon {
+                  background: #9b8afb;
+                }
               }
             }
-          }
 
-          &:nth-child(6) {
-            background: #fefbe8;
+            &:nth-child(4) {
+              background: #fef6ee;
 
-            .ant-card-meta-avatar {
-              background: rgba(253, 226, 114, 0.2);
+              .ant-card-meta-avatar {
+                background: rgba(243, 135, 68, 0.2);
 
-              .anticon {
-                background: #fac515;
+                .anticon {
+                  background: #f38744;
+                }
               }
             }
-          }
 
-          &:nth-child(7) {
-            background: #eef4ff;
+            &:nth-child(5) {
+              background: #f0fdf9;
 
-            .ant-card-meta-avatar {
-              background: rgba(164, 188, 253, 0.2);
+              .ant-card-meta-avatar {
+                background: rgba(95, 233, 208, 0.2);
 
-              .anticon {
-                background: #8098f9;
+                .anticon {
+                  background: #2ed3b7;
+                }
               }
             }
-          }
 
-          &:nth-child(8) {
-            background: #fff1f3;
+            &:nth-child(6) {
+              background: #fefbe8;
 
-            .ant-card-meta-avatar {
-              background: rgba(254, 163, 180, 0.2);
+              .ant-card-meta-avatar {
+                background: rgba(253, 226, 114, 0.2);
 
-              .anticon {
-                background: #fd6f8e;
+                .anticon {
+                  background: #fac515;
+                }
+              }
+            }
+
+            &:nth-child(7) {
+              background: #eef4ff;
+
+              .ant-card-meta-avatar {
+                background: rgba(164, 188, 253, 0.2);
+
+                .anticon {
+                  background: #8098f9;
+                }
+              }
+            }
+
+            &:nth-child(8) {
+              background: #fff1f3;
+
+              .ant-card-meta-avatar {
+                background: rgba(254, 163, 180, 0.2);
+
+                .anticon {
+                  background: #fd6f8e;
+                }
               }
             }
           }
@@ -318,7 +361,7 @@
           background: $card-background-color;
 
           .datetime {
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 400;
             color: $text-or-icon-sub-color;
             height: 18px;
@@ -328,7 +371,7 @@
           }
 
           .date {
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 700;
             text-align: center;
             color: #4b5565;
@@ -337,7 +380,7 @@
         }
 
         .ant-list-item-meta-title {
-          font-size: 15px;
+          font-size: 16px;
           font-weight: 500;
           color: $text-or-icon-color;
 
@@ -363,13 +406,13 @@
         }
 
         .ant-list-item-meta-description {
-          font-size: 12px;
+          font-size: 14px;
           font-weight: 400;
           color: $text-or-icon-sub-color;
         }
 
         .ant-list-item-meta-time {
-          font-size: 12px;
+          font-size: 14px;
           font-weight: 400;
           text-align: right;
           color: $text-or-icon-sub-color;
@@ -393,13 +436,19 @@
         }
 
         .ant-list-item-meta-title {
-          font-size: 15px;
+          font-size: 16px;
           font-weight: 500;
           color: $text-or-icon-color;
+          cursor: pointer;
+          transition: color .2s ease-out;
+
+          &:hover {
+            color: $primary-hover-color;
+          }
         }
 
         .ant-list-item-meta-description {
-          font-size: 12px;
+          font-size: 14px;
           font-weight: 400;
           color: $text-or-icon-sub-color;
         }

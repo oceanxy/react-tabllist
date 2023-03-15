@@ -14,11 +14,13 @@ export default {
     itemHeight: 0
   }),
   watch: {
-    targetNumber(value) {
-      this.targetNumber = value
-
-      this.startDistance = this.targetDistance
-      this.targetDistance = this.$refs.container.clientHeight * this.targetNumber
+    targetNumber: {
+      immediate: true,
+      handler(value) {
+        this.targetNumber = value
+        this.startDistance = this.targetDistance
+        this.targetDistance = (this.$refs.container?.clientHeight ?? 1) * this.targetNumber
+      }
     }
   },
   mounted() {
@@ -34,12 +36,9 @@ export default {
   },
   render() {
     return (
-      <div
-        ref="container"
-        class="number-container"
-      >
+      <div ref="container" class="tg-scrolling-number-content">
         <div
-          class="scroll-container animation"
+          class="tg-scrolling-number-scroll-container animation"
           style={{
             '--height': `${this.itemHeight}px`,
             '--start': `-${this.startDistance}px`,

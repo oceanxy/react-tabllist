@@ -1,7 +1,21 @@
 import TGContainer from '@/components/TGContainer'
-import { Card } from 'ant-design-vue'
+import { Card, Empty } from 'ant-design-vue'
+import ScrollingNumber from '@/components/ScrollingNumber'
 
 export default {
+  inject: ['moduleName'],
+  computed: {
+    userConcern() {
+      return this.$store.state[this.moduleName].userConcern
+    }
+  },
+  async created() {
+    await this.$store.dispatch('getListWithLoadingStatus', {
+      moduleName: this.moduleName,
+      stateName: 'userConcern',
+      customApiName: 'getListOfUserConcern'
+    })
+  },
   render() {
     return (
       <TGContainer
@@ -11,39 +25,28 @@ export default {
             我的关注
           </div>
         }
-        showMore
+        // showMore
         rightIcon={<IconFont title={'设置'} type={'icon-home-pz-fill'} />}
         showBoxShadow={false}
         contentClass="concern-cards"
       >
-        <Card>
-          <p>土地资产总量</p>
-          <p><span>1280</span> 处</p>
-        </Card>
-        <Card>
-          <p>房屋资产总量</p>
-          <p><span>1280</span>处</p>
-        </Card>
-        <Card>
-          <p>空置房屋</p>
-          <p><span>1280</span> 处</p>
-        </Card>
-        <Card>
-          <p>租金欠收</p>
-          <p><span>1280</span> 元</p>
-        </Card>
-        <Card>
-          <p>合同逾期</p>
-          <p><span>1280</span> 份</p>
-        </Card>
-        <Card>
-          <p>当前隐患</p>
-          <p><span>1280</span> 处</p>
-        </Card>
-        <Card>
-          <p>本月巡查</p>
-          <p><span>1280</span> 次</p>
-        </Card>
+        {
+          this.userConcern.list.length
+            ? this.userConcern.list.map(item => (
+              <Card>
+                <p class={'concern-cards-text'}>{item.name}</p>
+                <p class={'concern-cards-value'}>
+                  <ScrollingNumber value={+item.value} />
+                  {item.unit}
+                </p>
+              </Card>
+            ))
+            : (
+              <div class={'ant-empty-container'}>
+                <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={'您关注的模块将在这里显示'} />
+              </div>
+            )
+        }
       </TGContainer>
     )
   }

@@ -2,6 +2,7 @@ import TGContainer from '@/components/TGContainer'
 import { Avatar, Card } from 'ant-design-vue'
 
 export default {
+  inject: ['moduleName'],
   computed: {
     userInfo() {
       return this.$store.state['login'].userInfo
@@ -17,9 +18,9 @@ export default {
       <TGContainer showBoxShadow={false} contentClass={'userinfo-container'}>
         <Card class={'userinfo-card'}>
           <Card.Meta
-            title={'陈思睿，祝您工作愉快，开心快乐每一天！'}
+            title={`${this.userInfo.fullName}，祝您工作愉快，开心快乐每一天！`}
             description={
-              <div>总公司/资产管理部/资管负责人</div>
+              <div>{this.userInfo.organName} / {this.userInfo.roleNames}</div>
             }
           >
             <Avatar
@@ -31,10 +32,10 @@ export default {
           </Card.Meta>
           <p class={'number-of-logins'}>
             <p>本月累积登录</p>
-            <span>25</span> 次
+            <span>{this.userInfo.monthLoginNum || 0}</span> 次
           </p>
         </Card>
-        <p class={'logon-time'}>上次登录时间：2022-12-18 17:50:22</p>
+        <p class={'logon-time'}>上次登录时间：{this.userInfo.lastLoginTime || '----/--/--'}</p>
       </TGContainer>
     )
   }

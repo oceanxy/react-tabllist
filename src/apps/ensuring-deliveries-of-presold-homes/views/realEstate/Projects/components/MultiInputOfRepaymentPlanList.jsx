@@ -52,14 +52,14 @@ export default {
           scopedSlots: { customRender: 'repaymentType' }
         },
         {
-          title: <span class={'ant-form-item-required'}>还款金额</span>,
-          width: 120,
-          scopedSlots: { customRender: 'money' }
-        },
-        {
           title: '本金比例',
           width: 100,
           scopedSlots: { customRender: 'percent' }
+        },
+        {
+          title: <span class={'ant-form-item-required'}>还款金额</span>,
+          width: 120,
+          scopedSlots: { customRender: 'money' }
         },
         {
           title: '备注',
