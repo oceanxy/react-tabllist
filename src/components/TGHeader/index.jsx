@@ -91,7 +91,7 @@ export default {
                           {this.userInfo.nickName || this.userInfo.fullName || '用户名'}
                         </div>
                         <div class={'tel'}>
-                          {this.userInfo.tel || '00000000000'}
+                          {this.userInfo.loginName || '00000000000'}
                         </div>
                       </div>
                       <IconFont type={'icon-global-down'} style={'color: #ffffff'} />
