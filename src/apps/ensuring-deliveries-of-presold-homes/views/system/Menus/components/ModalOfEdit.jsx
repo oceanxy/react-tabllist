@@ -21,7 +21,6 @@ export default Form.create({})({
         on: {
           cancel: () => this.onCancel(),
           ok: () => this.onSubmit({
-            customApiName: 'addMenus',
             customDataHandler: this.customDataHandler,
             done: this.done
           })

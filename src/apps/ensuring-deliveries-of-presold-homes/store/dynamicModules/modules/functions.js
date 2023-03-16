@@ -4,6 +4,5 @@ export default commitRootInModule =>
   createStoreModule({
     state: {
       treeIdField: ''
-      // details
     }
   })

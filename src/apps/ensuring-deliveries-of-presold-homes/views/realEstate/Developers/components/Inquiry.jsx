@@ -13,7 +13,7 @@ export default Form.create({})({
         class="tg-inquiry"
       >
         <Space>
-          <Form.Item label={'开发商名称'}>
+          <Form.Item label={'开发商'} style={'width:260px'}>
             {
               this.form.getFieldDecorator('fullName', { initialValue: this.initialValues.fullName })(
                 <Input placeholder="输入名称搜索" allowClear maxLength={30} />

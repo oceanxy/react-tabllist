@@ -3,7 +3,7 @@ import { Card, Empty, Spin } from 'ant-design-vue'
 import forIndex from '@/mixins/forIndex'
 import { mapGetters } from 'vuex'
 
-const ModalOfSetUpUsedFunctionsFrequently = () => import( '../ModalOfSetUpUsedFunctionsFrequently')
+const ModalOfSetUpUsedFunctionsFrequently = () => import('../ModalOfSetUpUsedFunctionsFrequently')
 
 export default {
   mixins: [forIndex],

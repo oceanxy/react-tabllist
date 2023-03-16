@@ -61,11 +61,13 @@ export default Form.create({})({
           </Form.Item>
           <Form.Item label={'状态'}>
             {
-              this.form.getFieldDecorator('status', { initialValue: this.initialValues.status })(
+              this.form.getFieldDecorator('rescindContractStatus', {
+                initialValue: this.initialValues.rescindContractStatus
+              })(
                 <Select placeholder="请选择" allowClear>
                   <Select.Option value={''}>全部</Select.Option>
-                  <Select.Option value={1}>正常</Select.Option>
-                  <Select.Option value={2}>停用</Select.Option>
+                  <Select.Option value={1}>未解除</Select.Option>
+                  <Select.Option value={2}>已解除</Select.Option>
                 </Select>
               )
             }
