@@ -4,7 +4,6 @@ export default commitRootInModule =>
   createStoreModule(
     {
       state: {
-        treeIdField: '',
         roleTree: {
           loading: false,
           list: []
