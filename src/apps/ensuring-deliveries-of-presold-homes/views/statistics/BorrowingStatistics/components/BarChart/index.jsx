@@ -27,7 +27,7 @@ export default {
         series:
         {
           name: '',
-          barWidth: '2%',
+          barWidth: '10%',
           type: 'bar',
           data: []
         }
