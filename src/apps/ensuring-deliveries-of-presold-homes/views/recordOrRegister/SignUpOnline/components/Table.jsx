@@ -56,7 +56,7 @@ export default {
           },
           {
             title: '项目',
-            width: 120,
+            width: 150,
             dataIndex: 'projectName'
           },
           {

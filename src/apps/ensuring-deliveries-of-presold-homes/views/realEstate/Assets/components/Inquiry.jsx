@@ -39,7 +39,7 @@ export default Form.create({})({
               )
             }
           </Form.Item>
-          <Form.Item label={'关键字'}>
+          <Form.Item label={'关键字'} style={'width:260px'}>
             {
               this.form.getFieldDecorator('queryName', { initialValue: this.initialValues.queryName })(
                 <Input placeholder="开发商/资产名称" allowClear />

@@ -85,7 +85,7 @@ export default {
             dataIndex: 'isEndStr'
           },
           {
-            title: <div>收购金额<span class={'unit-text'}>(万元)</span></div>,
+            title: <div>收购金额<span class={'unit-text'}>(元)</span></div>,
             width: 120,
             dataIndex: 'acquisitionMoney'
           },
