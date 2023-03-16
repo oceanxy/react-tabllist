@@ -48,7 +48,7 @@ export default Form.create({})({
           this.form.setFieldsValue({ functionInfoList: [] })
         }
       }
-    },
+    }
   },
   methods: {
     customDataHandler(values) {

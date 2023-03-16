@@ -20,8 +20,6 @@ export default {
       payload: { startDate: '', endDate: '' }
     })
   },
-  methods: {
-  },
   render() {
     return (
       <Spin spinning={this.threeChatList.loading}>

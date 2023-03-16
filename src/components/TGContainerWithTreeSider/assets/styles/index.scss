@@ -49,12 +49,14 @@
             // padding: 0;
             overflow: hidden;
 
-            &:hover {
-              background: #fff1e8;
+            &:hover,
+            &.ant-tree-node-selected {
+              background: $primary-hover-light-color;
             }
 
             &.ant-tree-node-selected {
-              background: #fdead7;
+
+              font-weight: 600;
             }
 
             .icon {

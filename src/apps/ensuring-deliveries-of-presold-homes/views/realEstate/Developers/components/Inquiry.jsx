@@ -1,4 +1,4 @@
-import { Button, Form, Input, Select, Space } from 'ant-design-vue'
+import { Button, Form, Input, Space } from 'ant-design-vue'
 import forInquiry from '@/mixins/forInquiry'
 
 export default Form.create({})({

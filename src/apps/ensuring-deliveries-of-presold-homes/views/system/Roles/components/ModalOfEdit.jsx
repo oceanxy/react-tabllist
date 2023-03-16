@@ -11,7 +11,7 @@ export default Form.create({})({
       modalProps: {
         width: 810,
         destroyOnClose: true
-      },
+      }
     }
   },
   computed: {
@@ -49,8 +49,7 @@ export default Form.create({})({
       if (res.status) {
         this.menuTreeList = res.data || []
       }
-    },
-
+    }
   },
   watch: {
     visible: {
@@ -115,9 +114,7 @@ export default Form.create({})({
           </Form.Item>
           <Form.Item label="默认菜单" class={'half'}>
             {
-              this.form.getFieldDecorator('indexMenuId', {
-                initialValue: this.currentItem.indexMenuId
-              })(
+              this.form.getFieldDecorator('indexMenuId', { initialValue: this.currentItem.indexMenuId })(
                 <TreeSelect
                   allowClear
                   dropdownClassName={'tg-select-dropdown'}
@@ -138,9 +135,7 @@ export default Form.create({})({
           </Form.Item>
           <Form.Item label="排序" class={'half'}>
             {
-              this.form.getFieldDecorator('sortIndex', {
-                initialValue: this.currentItem.sortIndex ?? 0
-              })(
+              this.form.getFieldDecorator('sortIndex', { initialValue: this.currentItem.sortIndex ?? 0 })(
                 <InputNumber
                   placeholder="数值越大排在越前"
                   allowClear
@@ -161,9 +156,7 @@ export default Form.create({})({
           </Form.Item>
           <Form.Item label="描述">
             {
-              this.form.getFieldDecorator('description', {
-                initialValue: this.currentItem.description
-              })(
+              this.form.getFieldDecorator('description', { initialValue: this.currentItem.description })(
                 <Input.TextArea
                   placeholder="请输入"
                   auto-size={{ minRows: 6 }}

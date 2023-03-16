@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App'
-import config from './config'
+import config from '@/config'
 import '@/utils/antvComponents'
 import { initializeDynamicRoutes } from '@/utils/utilityFunction'
 import router from '@/router'

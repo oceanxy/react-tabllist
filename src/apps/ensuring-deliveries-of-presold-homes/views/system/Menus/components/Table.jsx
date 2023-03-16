@@ -32,7 +32,7 @@ export default {
           {
             title: '重定向',
             width: 160,
-            dataIndex: 'extend1'
+            dataIndex: 'redirectName'
           },
           {
             title: <div>是否隐藏<span class={'unit-text'}>(客户端控制)</span></div>,
@@ -162,11 +162,7 @@ export default {
       return [4, 5, 6, 7].includes(type)
     },
     tableSelectedRowKeys() {
-      if (this.getState('selectedRowKeys', this.moduleName).length > 0) {
-        return false
-      } else {
-        return true
-      }
-    },
+      return this.getState('selectedRowKeys', this.moduleName).length <= 0
+    }
   }
 }

@@ -3,7 +3,6 @@
  */
 
 import './assets/styles/index.scss'
-import TGContainer from '@/components/TGContainer'
 import apis from '@/apis'
 
 export default {
