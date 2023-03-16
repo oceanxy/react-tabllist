@@ -55,13 +55,13 @@ export default {
             dataIndex: 'salesStatusStr'
           },
           {
-            title: '建面(㎡)',
+            title: <div>建面<span class={'unit-text'}>(㎡)</span></div>,
             width: 80,
             align: 'center',
             dataIndex: 'buildArea'
           },
           {
-            title: '套内(㎡)',
+            title: <div>套内<span class={'unit-text'}>(㎡)</span></div>,
             width: 80,
             align: 'center',
             dataIndex: 'indoorArea'

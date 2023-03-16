@@ -33,19 +33,19 @@ export default {
             scopedSlots: { customRender: 'salesStatus' }
           },
           {
-            title: '建面㎡',
+            title: <div>建面<span class={'unit-text'}>(㎡)</span></div>,
             width: 70,
             align: 'center',
             dataIndex: 'buildArea'
           },
           {
-            title: '套内㎡',
+            title: <div>套内<span class={'unit-text'}>(㎡)</span></div>,
             width: 70,
             align: 'center',
             dataIndex: 'infloorArea'
           },
           {
-            title: '备案总价(万元)',
+            title: <div>备案总价<span class={'unit-text'}>(万元)</span></div>,
             width: 120,
             dataIndex: 'recordTotal'
           },

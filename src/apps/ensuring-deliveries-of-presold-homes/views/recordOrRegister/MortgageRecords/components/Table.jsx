@@ -47,19 +47,19 @@ export default {
             dataIndex: 'easteDicName'
           },
           {
-            title: '建面㎡',
+            title: <div>建面<span class={'unit-text'}>(㎡)</span></div>,
             width: 70,
             align: 'center',
             dataIndex: 'buildArea'
           },
           {
-            title: '套内㎡',
+            title: <div>套内<span class={'unit-text'}>(㎡)</span></div>,
             width: 70,
             align: 'center',
             dataIndex: 'infloorArea'
           },
           {
-            title: '备案总价(万元)',
+            title: <div>备案总价<span class={'unit-text'}>(万元)</span></div>,
             width: 120,
             dataIndex: 'recordTotal'
           },
@@ -69,12 +69,12 @@ export default {
             dataIndex: 'createTimeStr'
           },
           {
-            title: '备案单价(万元)',
+            title: <div>备案单价<span class={'unit-text'}>(万元)</span></div>,
             width: 120,
             dataIndex: 'recordSingle'
           },
           {
-            title: '评估价值(万元)',
+            title: <div>评估价值<span class={'unit-text'}>(万元)</span></div>,
             width: 120,
             dataIndex: 'assessMoney'
           },
@@ -85,7 +85,7 @@ export default {
             dataIndex: 'isEndStr'
           },
           {
-            title: '收购金额(万元)',
+            title: <div>收购金额<span class={'unit-text'}>(万元)</span></div>,
             width: 120,
             dataIndex: 'acquisitionMoney'
           },
