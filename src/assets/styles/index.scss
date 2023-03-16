@@ -142,11 +142,14 @@ body {
   padding: 12px 20px;
   background: $module-background-color;
 
+  .ant-space {
+    flex-wrap: wrap;
+  }
   .tree-btn {
     font-size: 1.8em;
     opacity: 0.6;
     cursor: pointer;
-    transition: opacity .2s;
+    transition: opacity 0.2s;
     color: $text-or-icon-color;
 
     &:hover {
