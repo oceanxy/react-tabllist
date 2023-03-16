@@ -118,52 +118,52 @@ export default [
           requiresAuth: true,
           icon: 'icon-menu-jktj-line'
         }
+      },
+      {
+        path: 'payment-collection-statistics',
+        name: 'paymentCollectionStatistics',
+        // eslint-disable-next-line max-len
+        component: () =>
+          import('@/apps/ensuring-deliveries-of-presold-homes/views/statistics/PaymentCollectionStatistics'),
+        meta: {
+          title: '回款统计',
+          keepAlive: false,
+          requiresAuth: true,
+          icon: 'icon-menu-hktj-line'
+        }
+      },
+      {
+        path: 'statistics-of-sign-up-online',
+        name: 'statisticsOfSignUpOnline',
+        // eslint-disable-next-line max-len
+        component: () =>
+          import('@/apps/ensuring-deliveries-of-presold-homes/views/statistics/StatisticsOfSignUpOnline'),
+        meta: {
+          title: '网签统计',
+          keepAlive: false,
+          requiresAuth: true,
+          icon: 'icon-menu-wqtj-line'
+        }
+      },
+      {
+        path: 'pre-registration-statistics',
+        name: 'preRegistrationStatistics',
+        // eslint-disable-next-line max-len
+        component: () =>
+          import('@/apps/ensuring-deliveries-of-presold-homes/views/statistics/PreRegistrationStatistics'),
+        meta: {
+          title: '预登记统计',
+          keepAlive: false,
+          requiresAuth: true,
+          icon: 'icon-menu-ydjtj-line'
+        }
       }
-      // {
-      //   path: 'payment-collection-statistics',
-      //   name: 'paymentCollectionStatistics',
-      //   // eslint-disable-next-line max-len
-      //   component: () =>
-      //     import('@/apps/ensuring-deliveries-of-presold-homes/views/statistics/PaymentCollectionStatistics'),
-      //   meta: {
-      //     title: '回款统计',
-      //     keepAlive: false,
-      //     requiresAuth: true,
-      //     icon: 'icon-menu-hktj-line'
-      //   }
-      // },
-      // {
-      //   path: 'statistics-of-sign-up-online',
-      //   name: 'statisticsOfSignUpOnline',
-      //   // eslint-disable-next-line max-len
-      //   component: () =>
-      //     import('@/apps/ensuring-deliveries-of-presold-homes/views/statistics/StatisticsOfSignUpOnline'),
-      //   meta: {
-      //     title: '网签统计',
-      //     keepAlive: false,
-      //     requiresAuth: true,
-      //     icon: 'icon-menu-wqtj-line'
-      //   }
-      // },
-      // {
-      //   path: 'pre-registration-statistics',
-      //   name: 'preRegistrationStatistics',
-      //   // eslint-disable-next-line max-len
-      //   component: () =>
-      //     import('@/apps/ensuring-deliveries-of-presold-homes/views/statistics/PreRegistrationStatistics'),
-      //   meta: {
-      //     title: '预登记统计',
-      //     keepAlive: false,
-      //     requiresAuth: true,
-      //     icon: 'icon-menu-ydjtj-line'
-      //   }
-      // }
     ]
   },
   {
     path: 'edph/system',
     component: TGRouterView,
-    redirect: { name: 'combination' },
+    redirect: { name: 'menus' },
     meta: {
       title: '系统管理',
       keepAlive: false,
