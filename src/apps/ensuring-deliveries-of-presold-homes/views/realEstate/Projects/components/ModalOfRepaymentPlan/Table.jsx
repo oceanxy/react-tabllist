@@ -69,9 +69,16 @@ export default {
         rowSelection: null
       },
       scopedSlots: {
-        refundCertificate: (text, record) => (
-          <Button type={'link'} onClick={() => window.open(record.refundCertificate.path)}>预览</Button>
-        )
+        refundCertificate: (text, record) => record.refundCertificate?.path
+          ? (
+            <Button
+              type={'link'}
+              onClick={() => window.open(record.refundCertificate.path)}
+            >
+              预览
+            </Button>
+          )
+          : null
       }
     }
   }
