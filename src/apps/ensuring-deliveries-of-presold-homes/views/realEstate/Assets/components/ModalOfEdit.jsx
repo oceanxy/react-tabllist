@@ -359,6 +359,13 @@ export default Form.create({})({
               )
             }
           </Form.Item>
+          <Form.Item label="详细地址" class={'half'}>
+            {
+              this.form.getFieldDecorator('address', { initialValue: this.currentItem.address })(
+                <Input placeholder="请输入备注" allowClear max={100} />
+              )
+            }
+          </Form.Item>
           <Form.Item label="备注">
             {
               this.form.getFieldDecorator('remark', { initialValue: this.currentItem.remark })(

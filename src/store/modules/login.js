@@ -18,7 +18,12 @@ export default {
     userInfo: {},
     visibilityOfEditPassword: false,
     currentItem: {},
-    codeKey: ''
+    codeKey: '',
+    news: {
+      loading: false,
+      total: 0,
+      userRefundMessageList: []
+    }
   },
   mutations: {
     setLoading(state, payload) {

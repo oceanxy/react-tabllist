@@ -57,5 +57,29 @@ export default {
       url: '/auth/verifyCode/getVerifyCodeKey',
       method: 'post'
     })
+  },
+  /**
+   * 设置消息已读
+   * @param request
+   * @param data
+   * @returns {*}
+   */
+  setMessageToRead(request, data) {
+    return request({
+      url: '/system/home/messageRead',
+      method: 'post',
+      data: qs.stringify(data)
+    })
+  },
+  /**
+   * 获取消息
+   * @param request
+   * @returns {*}
+   */
+  getNews(request) {
+    return request({
+      url: '/system/home/messageRemind',
+      method: 'post'
+    })
   }
 }

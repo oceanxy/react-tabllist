@@ -340,8 +340,8 @@ export default {
     commit
   }, {
     customApiName,
-    moduleName,
     payload = {},
+    moduleName,
     isFetchList,
     visibilityFieldName,
     submoduleName,

@@ -1,5 +1,5 @@
 import './index.scss'
-import { Avatar, Badge, Button, Divider, Dropdown, Input, Layout, Menu, Popover, Tabs } from 'ant-design-vue'
+import { Avatar, Badge, Button, Divider, Dropdown, Input, Layout, Menu, Popover, Tag } from 'ant-design-vue'
 import Logo from '@/components/Logo'
 import { mapActions, mapGetters } from 'vuex'
 
@@ -24,6 +24,9 @@ export default {
     isLogin() {
       return !!window.localStorage.getItem('token')
     },
+    news() {
+      return this.getState('news', 'login')
+    },
     avatarForLetter() {
       const name = this.userInfo.nickName || this.userInfo.fullName
 
@@ -37,6 +40,13 @@ export default {
         await this.getUserInfo()
       }
     }
+  },
+  async created() {
+    await this.$store.dispatch('getListWithLoadingStatus', {
+      moduleName: 'login',
+      stateName: 'news',
+      customApiName: 'getNews'
+    })
   },
   methods: {
     ...mapActions('login', { logout: 'logout', getUserInfo: 'getUserInfo' }),
@@ -52,6 +62,26 @@ export default {
     },
     onChange(activeKey) {
       this.activeKey = activeKey
+    },
+    async onClick({ id, targetAddress }) {
+      if (targetAddress) {
+        const split = targetAddress.split('?')
+        const path = this.$router.resolve({ name: split[0] }).href
+        const paramArr = split[1].split('&')
+
+        const query = paramArr.reduce((params, str) => {
+          const p = str.split('=')
+
+          return { ...params, [p[0]]: p[1] }
+        }, {})
+
+        await this.$store.dispatch('custom', {
+          payload: { ids: id },
+          customApiName: 'setMessageToRead'
+        })
+
+        await this.$router.push({ path, query })
+      }
     }
   },
   render() {
@@ -103,7 +133,7 @@ export default {
                   <Divider type={'vertical'} class={'tg-header-divider'} />
                   <Popover overlayClassName={'tg-header-news-overlay'}>
                     <Badge
-                      count={99}
+                      count={this.news.total}
                       offset={[-12, 2]}
                       numberStyle={{
                         width: '20px',
@@ -117,35 +147,48 @@ export default {
                         <IconFont type={'icon-global-tz'} />
                       </Button>
                     </Badge>
-                    <div slot={'content'} class={'tg-header-news'}>
-                      <Tabs
-                        activeKey={this.activeKey}
-                        animated={true}
-                        size={'small'}
-                        onChange={this.onChange}
-                      >
-                        <Tabs.TabPane key={1} tab={<Badge count={99} offset={[12, 2]}>待办事项</Badge>}>
-                          <Menu>
-                            <Menu.Item>
-                              <div>陈思睿发起了新的审核任务，请及时处理</div>
-                              <div>2023-02-23 15:06:06</div>
-                            </Menu.Item>
-                            <Menu.Item>
-                              <div>陈思睿发起了新的审核任务，请及时处理</div>
-                              <div>2023-02-23 15:06:06</div>
-                            </Menu.Item>
-                          </Menu>
-                        </Tabs.TabPane>
-                        <Tabs.TabPane key={2} tab={<Badge count={99} offset={[12, 2]}>待阅消息</Badge>}>
-                          <Menu>
-                            <Menu.Item>
-                              <div>陈思睿发起了新的审核任务，请及时处理</div>
-                              <div>2023-02-23 15:06:06</div>
-                            </Menu.Item>
-                          </Menu>
-                        </Tabs.TabPane>
-                      </Tabs>
-                    </div>
+                    <Menu slot={'content'} class={'tg-header-news'}>
+                      {
+                        this.news.userRefundMessageList.map(item => (
+                          <Menu.Item onClick={() => this.onClick(item)}>
+                            <div>
+                              <Tag>{item.messageTypeStr}</Tag>
+                              {item.noticeTitle}
+                            </div>
+                            <div>{item.createTimeStr}</div>
+                          </Menu.Item>
+                        ))
+                      }
+                    </Menu>
+                    {/* <div slot={'content'} class={'tg-header-news'}> */}
+                    {/*   <Tabs */}
+                    {/*     activeKey={this.activeKey} */}
+                    {/*     animated={true} */}
+                    {/*     size={'small'} */}
+                    {/*     onChange={this.onChange} */}
+                    {/*   > */}
+                    {/*     <Tabs.TabPane key={1} tab={<Badge count={99} offset={[12, 2]}>待办事项</Badge>}> */}
+                    {/*       <Menu> */}
+                    {/*         <Menu.Item> */}
+                    {/*           <div>陈思睿发起了新的审核任务，请及时处理</div> */}
+                    {/*           <div>2023-02-23 15:06:06</div> */}
+                    {/*         </Menu.Item> */}
+                    {/*         <Menu.Item> */}
+                    {/*           <div>陈思睿发起了新的审核任务，请及时处理</div> */}
+                    {/*           <div>2023-02-23 15:06:06</div> */}
+                    {/*         </Menu.Item> */}
+                    {/*       </Menu> */}
+                    {/*     </Tabs.TabPane> */}
+                    {/*     <Tabs.TabPane key={2} tab={<Badge count={99} offset={[12, 2]}>待阅消息</Badge>}> */}
+                    {/*       <Menu> */}
+                    {/*         <Menu.Item> */}
+                    {/*           <div>陈思睿发起了新的审核任务，请及时处理</div> */}
+                    {/*           <div>2023-02-23 15:06:06</div> */}
+                    {/*         </Menu.Item> */}
+                    {/*       </Menu> */}
+                    {/*     </Tabs.TabPane> */}
+                    {/*   </Tabs> */}
+                    {/* </div> */}
                   </Popover>
                   <Button shape="circle" type={'link'} class={'tg-header-icon'}>
                     <IconFont type={'icon-global-hf'} />
