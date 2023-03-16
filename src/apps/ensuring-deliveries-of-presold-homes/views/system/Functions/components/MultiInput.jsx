@@ -45,13 +45,11 @@ export default {
       dataSource: []
     }
   },
-  details() {
-    return this.$store.state[this.moduleName].details
-  },
   watch: {
     value: {
       immediate: true,
       handler(value) {
+
         if (value.length) {
           this.dataSource = value.map(item => {
             item.id = item.id || Math.random()
@@ -104,7 +102,6 @@ export default {
                 disabled={this.disabled}
                 maxLength={200}
                 onChange={debounce(this.emit, 300)}
-                size={'small'}
               />
             ),
             fnInfoDescribe: (text, record) => (
@@ -114,7 +111,6 @@ export default {
                 disabled={this.disabled}
                 maxLength={32}
                 onChange={debounce(this.emit, 300)}
-                size={'small'}
               />
             ),
             operation: (text, record, index) => (
@@ -122,7 +118,6 @@ export default {
                 icon="delete"
                 onClick={() => this.onDelClick(record.id, index)}
                 disabled={this.disabled}
-                size={'small'}
               />
             )
           }}

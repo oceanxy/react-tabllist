@@ -32,23 +32,23 @@ export default Form.create({})({
     }
   },
   watch: {
-    details: {
-      deep: true,
-      handler(value) {
-        this.form.setFieldsValue({ functionInfoList: value || [] })
-      }
-    },
     visible: {
       immediate: true,
       async handler(value) {
-        if (value && this.currentItem.id && !this.currentItem.functionInfoList?.length) {
+        if (value && this.currentItem.id) {
           await this.$store.dispatch('getDetails', {
             moduleName: this.moduleName,
             payload: { id: this.currentItem.id }
           })
         }
+
+        if (this.details && this.details.length > 0) {
+          this.form.setFieldsValue({ functionInfoList: this.details })
+        } else {
+          this.form.setFieldsValue({ functionInfoList: [] })
+        }
       }
-    }
+    },
   },
   methods: {
     customDataHandler(values) {
@@ -59,7 +59,7 @@ export default Form.create({})({
           fnName: data.fnName,
           fnDescribe: data.fnDescribe,
           id: data.id,
-          menuId: this.currentItem.menuId || this.search.parentId,
+          menuId: this.currentItem.menuId || this.search.treeId,
           sortIndex: data.sortIndex
         },
         functionInfoList: values.functionInfoList.map(item => {

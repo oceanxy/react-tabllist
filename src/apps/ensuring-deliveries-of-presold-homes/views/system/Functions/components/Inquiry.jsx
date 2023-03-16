@@ -13,10 +13,10 @@ export default Form.create({})({
         class="tg-inquiry"
       >
         <Space>
-          <Form.Item label={'角色名称'}>
+          <Form.Item label={'功能名称'}>
             {
-              this.form.getFieldDecorator('fullName', { initialValue: this.initialValues.fullName })(
-                <Input maxLength={10} placeholder="角色名称" allowClear />
+              this.form.getFieldDecorator('fnName', { initialValue: this.initialValues.fnName })(
+                <Input maxLength={10} placeholder="功能名称" allowClear />
               )
             }
           </Form.Item>
