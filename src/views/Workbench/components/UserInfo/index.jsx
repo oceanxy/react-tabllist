@@ -32,7 +32,7 @@ export default {
           </Card.Meta>
           <p class={'number-of-logins'}>
             <p>本月累积登录</p>
-            <span>{this.userInfo.monthLoginNum || 0}</span> 次
+            <span>{this.userInfo.monthLoginNum || 0}</span> 天
           </p>
         </Card>
         <p class={'logon-time'}>上次登录时间：{this.userInfo.lastLoginTime || '----/--/--'}</p>

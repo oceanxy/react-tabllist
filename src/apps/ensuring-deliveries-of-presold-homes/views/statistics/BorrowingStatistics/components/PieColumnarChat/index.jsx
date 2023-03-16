@@ -9,9 +9,7 @@ export default {
         color: ['#68bbc4', '#ee752f', '#5087ec', '#56ad5a', '#f2bd42'],
         tooltip: {
           trigger: 'axis',
-          axisPointer: {
-            type: 'shadow'
-          }
+          axisPointer: { type: 'shadow' }
         },
         grid: {
           left: '5%',

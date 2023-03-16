@@ -6,7 +6,7 @@ export default {
   // mock请求延迟时间
   mockDelay: 400,
   // 动态路由（从后台获取权限菜单）
-  dynamicRouting: false,
+  dynamicRouting: true,
   // iconfont
   iconFontSymbol: '//at.alicdn.com/t/c/font_3919835_x22doxv1be.js',
   // 系统名称

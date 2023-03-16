@@ -101,6 +101,6 @@ export default {
       } else {
         return true
       }
-    },
+    }
   }
 }

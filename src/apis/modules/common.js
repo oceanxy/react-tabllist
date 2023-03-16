@@ -1,5 +1,3 @@
-import qs from 'qs'
-
 export default {
   /**
    * 获取省市区

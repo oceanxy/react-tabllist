@@ -15,7 +15,6 @@ export default {
   render() {
     return (
       <TGContainerWithTreeSider
-        // notNoneMode
         apiOptions={{
           apiName: 'getMenuTree',
           stateName: 'menuTree',

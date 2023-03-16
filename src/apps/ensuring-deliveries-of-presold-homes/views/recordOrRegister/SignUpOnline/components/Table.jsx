@@ -154,7 +154,7 @@ export default {
       } else {
         return true
       }
-    },
+    }
   },
   methods: {
     salesStatus(record) {

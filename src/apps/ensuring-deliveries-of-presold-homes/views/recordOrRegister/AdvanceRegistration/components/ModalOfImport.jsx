@@ -82,7 +82,7 @@ export default Form.create({})({
         {
           id: 6,
           name: '1'
-        },
+        }
       ]
     }
   },

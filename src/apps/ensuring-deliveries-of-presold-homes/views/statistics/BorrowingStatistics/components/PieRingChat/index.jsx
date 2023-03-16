@@ -18,9 +18,7 @@ export default {
             borderColor: '#fff',
             borderWidth: 2
           },
-          label: {
-            show: true,
-          },
+          label: { show: true }
         }
 
       }

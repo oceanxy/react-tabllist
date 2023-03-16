@@ -165,7 +165,10 @@ export default Form.create({})({
                   dropdownStyle={{ maxHeight: '300px' }}
                   treeData={this.menuTree.list}
                   replaceFields={{
-                    children: 'children', title: 'name', key: 'id', value: 'id'
+                    children: 'children',
+                    title: 'name',
+                    key: 'id',
+                    value: 'id'
                   }}
                   treeNodeFilterProp={'title'}
                   placeholder={'请选择父级菜单'}

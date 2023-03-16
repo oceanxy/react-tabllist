@@ -299,7 +299,7 @@ module.exports = {
     ],
     // 在大括号内换行规则
     'object-curly-newline': [
-      1,
+      0,
       {
         'ObjectExpression': {
           'multiline': true,

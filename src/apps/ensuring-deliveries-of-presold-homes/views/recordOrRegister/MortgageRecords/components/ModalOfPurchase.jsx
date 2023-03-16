@@ -6,9 +6,7 @@ import { cloneDeep } from 'lodash'
 export default Form.create({})({
   mixins: [forFormModal()],
   data() {
-    return {
-      modalProps: { width: 610 }
-    }
+    return { modalProps: { width: 610 } }
   },
   computed: {
     attributes() {

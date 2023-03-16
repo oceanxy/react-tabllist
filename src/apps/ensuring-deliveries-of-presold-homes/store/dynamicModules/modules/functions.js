@@ -1,8 +1,3 @@
 import { createStoreModule } from '@/store/template'
 
-export default commitRootInModule =>
-  createStoreModule({
-    state: {
-      treeIdField: ''
-    }
-  })
+export default commitRootInModule => createStoreModule()
