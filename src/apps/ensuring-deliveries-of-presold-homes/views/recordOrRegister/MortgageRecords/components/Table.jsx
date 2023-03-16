@@ -85,7 +85,7 @@ export default {
             dataIndex: 'isEndStr'
           },
           {
-            title: '收购金额(万元)',
+            title: '收购金额(元)',
             width: 120,
             dataIndex: 'acquisitionMoney'
           },

@@ -12,10 +12,10 @@ export default Form.create({})({
         class="tg-inquiry"
       >
         <Space>
-          <Form.Item label={'关键字'}>
+          <Form.Item label={'关键字'} style={'width:260px'}>
             {
               this.form.getFieldDecorator('projectName', { initialValue: this.initialValues.projectName })(
-                <Input placeholder="开发商/楼盘名称" allowClear />
+                <Input placeholder="开发商/项目名称" allowClear />
               )
             }
           </Form.Item>
