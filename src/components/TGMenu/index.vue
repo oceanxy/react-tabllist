@@ -85,11 +85,11 @@ const TGSubMenu = {
         <div class="ant-menu-item-title">
           <a-icon
             theme="filled"
-            v-if="route.meta.icon && typeof route.meta.icon !== 'string'"
+            v-if="showSubIcon && route.meta.icon && typeof route.meta.icon !== 'string'"
             :component="route.meta.icon"
           />
           <icon-font
-            v-else-if="route.meta.icon"
+            v-else-if="showSubIcon && route.meta.icon"
             :type="route.meta.icon + (selectedKeys[0] === route.path ? '-active' : '')"
           />
           <span>{{ route.meta && route.meta.title }}</span>
@@ -113,6 +113,10 @@ const TGSubMenu = {
     selectedKeys: {
       type: Array,
       required: true
+    },
+    showSubIcon: {
+      type: Boolean,
+      default: false
     }
   },
   components: {
