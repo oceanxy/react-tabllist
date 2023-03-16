@@ -323,10 +323,6 @@ body {
   flex: none;
 }
 
-.ant-table-title {
-  padding: 0 0 12px 0 !important;
-}
-
 .ant-table-wrapper {
   flex: auto;
   overflow: hidden;
@@ -364,6 +360,19 @@ body {
 
   .ant-table {
     color: $text-or-icon-color;
+
+    .ant-table-title {
+      padding: 0 0 16px 0;
+    }
+
+    .ant-table-content {
+      .ant-table-fixed-left,
+      .ant-table-fixed-right {
+        .ant-table-body-inner {
+          overflow-x: hidden;
+        }
+      }
+    }
 
     .table-row-background {
       background-color: $table-header-bg;

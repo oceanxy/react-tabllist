@@ -20,7 +20,7 @@ export default {
           <Card.Meta
             title={`${this.userInfo.fullName}，祝您工作愉快，开心快乐每一天！`}
             description={
-              <div>{this.userInfo.organName} / {this.userInfo.roleNames}</div>
+              <div>{[this.userInfo.organName, this.userInfo.roleNames].join(' / ')}</div>
             }
           >
             <Avatar
