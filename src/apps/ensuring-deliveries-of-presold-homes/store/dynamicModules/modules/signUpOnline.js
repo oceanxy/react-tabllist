@@ -12,5 +12,5 @@ export default commitRootInModule =>
         modalOfImportVisible: false //导入弹窗
       }
     },
-    ['details']
+    ['treeIdField', 'details']
   )

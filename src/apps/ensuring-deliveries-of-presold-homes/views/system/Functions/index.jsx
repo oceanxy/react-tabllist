@@ -28,7 +28,7 @@ export default {
           <Table slot={'table'} />
           <TGPagination slot={'pagination'} />
           <template slot={'modals'}>
-            <ModalOfEdit modalTitle={'{action}菜单功能'} />
+            <ModalOfEdit modalTitle={'{action}功能'} />
           </template>
         </TGContainerWithTable>
       </TGContainerWithTreeSider>

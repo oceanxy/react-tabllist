@@ -35,13 +35,13 @@ export default {
             dataIndex: 'extend1'
           },
           {
-            title: '是否隐藏(客户端控制)',
+            title: <div>是否隐藏<span class={'unit-text'}>(客户端控制)</span></div>,
             align: 'center',
             width: 160,
             scopedSlots: { customRender: 'hide' }
           },
           {
-            title: '是否显示(服务端控制)',
+            title: <div>是否显示<span class={'unit-text'}>(服务端控制)</span></div>,
             align: 'center',
             width: 160,
             scopedSlots: { customRender: 'isShow' }

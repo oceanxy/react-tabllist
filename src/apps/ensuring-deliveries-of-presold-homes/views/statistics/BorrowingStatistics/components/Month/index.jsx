@@ -6,7 +6,8 @@ export default {
   inject: ['moduleName'],
   data() {
     return {
-      dateType: 1
+      dateType: 1,
+      isCountDatePer: undefined
     }
   },
   computed: {
@@ -53,9 +54,7 @@ export default {
       this.getColumnarChatList(val)
     },
     tabRadioOnChange() {
-      const data = this.$refs['onSelect']
-
-      console.log(data)
+      this.isCountDatePer = undefined
     }
   },
   render() {
@@ -71,6 +70,7 @@ export default {
               ref={'onSelect'}
               placeholder={this.dateType === 1 ? '选择年' : '选择月'}
               style={'width:160px'} onChange={this.onChange}
+              vModel={this.isCountDatePer}
               allowClear>
               {
                 this.isCountDate?.map(item => (

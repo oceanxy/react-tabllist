@@ -395,6 +395,10 @@ body {
       font-weight: bolder;
       font-size: 14px;
       border-color: $table-border-color;
+
+      .unit-text {
+        color: $text-or-icon-light-color;
+      }
     }
 
     .ant-table-tbody > tr > th {

@@ -9,7 +9,7 @@ export default {
    */
   getFunctions(request, data) {
     return request({
-      url: '/system/menu/getMenuList',
+      url: '/system/function/getFunctionList',
       method: 'post',
       data: qs.stringify(data)
     })
@@ -22,7 +22,7 @@ export default {
    */
   addFunctions(request, data) {
     return request({
-      url: '/system/menu/add',
+      url: '/system/function/add',
       method: 'post',
       data
     })
@@ -35,7 +35,7 @@ export default {
    */
   updateFunctions(request, data) {
     return request({
-      url: '/system/menu/update',
+      url: '/system/function/update',
       method: 'post',
       data
     })
@@ -48,7 +48,7 @@ export default {
    */
   deleteFunctions(request, data) {
     return request({
-      url: '/system/menu/delete',
+      url: '/system/function/delete',
       method: 'post',
       data: qs.stringify(data, { arrayFormat: 'comma' })
     })
@@ -61,11 +61,26 @@ export default {
    */
   updateFunctionsStatus(request, data) {
     return request({
-      url: '/system/menu/updateStatus',
+      url: '/system/function/updateStatus',
       method: 'post',
       data: qs.stringify(data)
     })
   },
+
+  /**
+   * 获取系统功能详情
+   * @param request
+   * @param data
+   * @returns {*}
+   */
+  getDetailsOfFunctions(request, data) {
+    return request({
+      url: '/system/function/getFunctionInfoList',
+      method: 'post',
+      data: qs.stringify(data)
+    })
+  },
+
   /**
    * 获取菜单树
    * @param request

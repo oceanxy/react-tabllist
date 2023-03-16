@@ -1,4 +1,4 @@
-import { Form, Input, InputNumber } from 'ant-design-vue'
+import { Form, Input, InputNumber, TreeSelect } from 'ant-design-vue'
 import forFormModal from '@/mixins/forModal/forFormModal'
 import DragModal from '@/components/DragModal'
 import MultiInput from './MultiInput'
@@ -18,6 +18,9 @@ export default Form.create({})({
     details() {
       return this.$store.state[this.moduleName].details
     },
+    menuTree() {
+      return this.$store.state['menus'].menuTree?.list || []
+    },
     attributes() {
       return {
         attrs: this.modalProps,
@@ -32,23 +35,23 @@ export default Form.create({})({
     }
   },
   watch: {
-    details: {
-      deep: true,
-      handler(value) {
-        this.form.setFieldsValue({ functionInfoList: value || [] })
-      }
-    },
     visible: {
       immediate: true,
       async handler(value) {
-        if (value && this.currentItem.id && !this.currentItem.functionInfoList?.length) {
+        if (value && this.currentItem.id) {
           await this.$store.dispatch('getDetails', {
             moduleName: this.moduleName,
             payload: { id: this.currentItem.id }
           })
         }
+
+        if (this.details && this.details.length > 0) {
+          this.form.setFieldsValue({ functionInfoList: this.details })
+        } else {
+          this.form.setFieldsValue({ functionInfoList: [] })
+        }
       }
-    }
+    },
   },
   methods: {
     customDataHandler(values) {
@@ -59,7 +62,7 @@ export default Form.create({})({
           fnName: data.fnName,
           fnDescribe: data.fnDescribe,
           id: data.id,
-          menuId: this.currentItem.menuId || this.search.parentId,
+          menuId: data.menuId,
           sortIndex: data.sortIndex
         },
         functionInfoList: values.functionInfoList.map(item => {
@@ -76,6 +79,38 @@ export default Form.create({})({
     return (
       <DragModal {...this.attributes}>
         <Form class="tg-form-grid" colon={false}>
+          <Form.Item label="所属菜单">
+            {
+              this.form.getFieldDecorator('menuId', {
+                initialValue: this.currentItem.menuId || this.search.treeId,
+                rules: [
+                  {
+                    required: true,
+                    message: '请选择所属菜单!',
+                    trigger: 'change'
+                  }
+                ]
+              })(
+                <TreeSelect
+                  allowClear
+                  treeData={this.menuTree}
+                  replaceFields={{
+                    children: 'children',
+                    title: 'name',
+                    key: 'id',
+                    value: 'id'
+                  }}
+                  treeNodeFilterProp={'title'}
+                  placeholder={'请选择所属菜单'}
+                  treeDefaultExpandedKeys={[
+                    this.menuTree?.[0]?.id,
+                    this.currentItem.parentId,
+                    this.currentItem.id
+                  ]}
+                />
+              )
+            }
+          </Form.Item>
           <Form.Item label="功能名称" class={'half'}>
             {
               this.form.getFieldDecorator('fnName', {
