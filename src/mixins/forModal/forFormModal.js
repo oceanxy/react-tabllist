@@ -176,7 +176,15 @@ export default ({ disableSubmitButton = true } = {}) => {
 
             const response = await this.$store.dispatch(action, options)
 
-            if (response.status) {
+            let status
+
+            if (typeof response === 'boolean') {
+              status = response
+            } else {
+              status = response?.status
+            }
+
+            if (status) {
               // 操作提示消息
               message(response.status)
 
