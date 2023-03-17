@@ -25,6 +25,7 @@ export default {
         {
           type: 'value',
           axisLabel: {
+            rotate: 45,
             formatter: function (params) {
               let val = ''
 

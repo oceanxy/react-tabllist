@@ -59,7 +59,7 @@ export default {
             dataIndex: 'infloorArea'
           },
           {
-            title: <div>备案总价<span class={'unit-text'}>(万元)</span></div>,
+            title: <div>备案总价<span class={'unit-text'}>(元)</span></div>,
             width: 120,
             dataIndex: 'recordTotal'
           },
@@ -69,12 +69,12 @@ export default {
             dataIndex: 'createTimeStr'
           },
           {
-            title: <div>备案单价<span class={'unit-text'}>(万元)</span></div>,
+            title: <div>备案单价<span class={'unit-text'}>(元)</span></div>,
             width: 120,
             dataIndex: 'recordSingle'
           },
           {
-            title: <div>评估价值<span class={'unit-text'}>(万元)</span></div>,
+            title: <div>评估价值<span class={'unit-text'}>(元)</span></div>,
             width: 120,
             dataIndex: 'assessMoney'
           },

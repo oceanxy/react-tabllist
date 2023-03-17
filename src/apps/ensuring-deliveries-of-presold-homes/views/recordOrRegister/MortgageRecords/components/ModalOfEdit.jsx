@@ -1,7 +1,7 @@
-import { Form, InputNumber, Select, Switch } from 'ant-design-vue'
+import { Form, InputNumber, Select, Switch, Empty, Spin, Space } from 'ant-design-vue'
 import forFormModal from '@/mixins/forModal/forFormModal'
 import DragModal from '@/components/DragModal'
-import apis from '@/apis'
+import { debounce } from 'lodash'
 
 export default Form.create({})({
   mixins: [forFormModal()],
@@ -11,10 +11,13 @@ export default Form.create({})({
         width: 810,
         destroyOnClose: true
       },
-      estateListByName: []
+      keywordOfSearchDevelopers: []
     }
   },
   computed: {
+    estateListByName() {
+      return this.$store.state[this.moduleName].estateListByName
+    },
     natureOfTheEnterprise() {
       return this.$store.state[this.moduleName].natureOfTheEnterprise
     },
@@ -31,15 +34,47 @@ export default Form.create({})({
       }
     }
   },
+  methods: {
+    setState(stateName, value = []) {
+      this.$store.commit('setState', {
+        value: { loading: false, list: value },
+        moduleName: this.moduleName,
+        stateName
+      })
+    },
+    async onSearchForDeveloper(keyword) {
+      // 搜索前，先清空上一次搜索结果缓存
+      this.setState('estateListByName')
+      this.keywordOfSearchDevelopers = keyword
+
+      await this.$store.dispatch('getListWithLoadingStatus', {
+        moduleName: this.moduleName,
+        stateName: 'estateListByName',
+        customApiName: 'getEstateListByName',
+        payload: { estateName: keyword }
+      })
+    }
+  },
   watch: {
     visible: {
       immediate: true,
       async handler(value) {
         if (value) {
-          const res = await apis.getEstateListByName()
+          // 初始化表单内的模糊查询结果，编辑模式下用列表的值作为默认值
+          this.setState(
+            'estateListByName',
+            this.currentItem.id
+              ? [
+                {
+                  id: this.currentItem.estateId,
+                  fullName: this.currentItem.estateName
+                }
+              ]
+              : []
+          )
 
-          if (res.status) {
-            this.estateListByName = res.data || []
+          if (this.currentItem && this.currentItem.id) {
+            this.onSearchForDeveloper()
           }
         }
       }
@@ -63,14 +98,31 @@ export default Form.create({})({
                 ]
               })(
                 <Select
-                  placeholder="请选择资产"
+                  showSearch
+                  placeholder={'请选择资产（可搜索）'}
+                  onSearch={debounce(this.onSearchForDeveloper, 300)}
+                  filterOption={false}
+                  notFoundContent={
+                    this.estateListByName.loading
+                      ? <Spin />
+                      : this.keywordOfSearchDevelopers && !this.estateListByName.list.length
+                        ? (
+                          <span>查无此资产</span>
+                        )
+                        : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                  }
                 >
                   {
-                    this.estateListByName?.map(item => (
-                      <Select.Option value={item.id}>{item.easteName}</Select.Option>
+                    this.estateListByName?.list.map(item => (
+                      <Select.Option value={item.id}>
+                        <Space size={5}>
+                          <span>{item.easteName}</span>
+                          <span style={'font-size:26px'}>·</span>
+                          <span>{item.projectName}</span>
+                        </Space>
+                      </Select.Option>
                     ))
                   }
-
                 </Select>
               )
             }
@@ -93,6 +145,7 @@ export default Form.create({})({
                   min={0}
                   placeholder="请输入请输入总价"
                   style={'width:100%'}
+                  formatter={value => `${value}元`}
                   allowClear />
               )
             }
@@ -115,6 +168,7 @@ export default Form.create({})({
                   min={0}
                   placeholder="请输入单价"
                   style={'width:100%'}
+                  formatter={value => `${value}元`}
                   allowClear />
               )
             }
@@ -128,7 +182,7 @@ export default Form.create({})({
                   {
                     required: true,
                     type: 'number',
-                    message: '请输入单价！',
+                    message: '请输入金额！',
                     trigger: 'blur'
                   }
                 ]
@@ -136,8 +190,9 @@ export default Form.create({})({
                 <InputNumber
                   max={99999999999}
                   min={0}
-                  placeholder="请输入单价"
+                  placeholder="请输入金额"
                   style={'width:100%'}
+                  formatter={value => `${value}元`}
                   allowClear />
               )
             }
@@ -151,8 +206,8 @@ export default Form.create({})({
                   {
                     required: true,
                     type: 'number',
-                    message: '请输入单价！',
-                    trigger: 'blur'
+                    message: '请选择',
+                    trigger: 'change'
                   }
                 ]
               })(
