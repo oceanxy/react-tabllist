@@ -43,7 +43,6 @@ export default Form.create({})({
     }
   },
   methods: {
-
     async done() {
       await this.$store.dispatch('getList', {
         moduleName: this.moduleName,
@@ -74,18 +73,20 @@ export default Form.create({})({
                 rules: [
                   {
                     required: true,
-                    message: '请选择收购金额！',
+                    type: 'number',
+                    message: '请输入单价！',
                     trigger: 'blur'
                   }
                 ]
               })(
-                <Space><InputNumber
-                  max={9999999999999}
+                <InputNumber
+                  max={999999999999999}
                   min={0}
+                  formatter={value => `${value}元`}
+                  parser={value => value.replace('元', '')}
                   placeholder="请输入单价"
-                  style={'width:100%'}
-                  allowClear
-                  addon-after="元" /><span>元</span></Space>
+                  style={'width:60%'}
+                  allowClear />
               )
             }
           </Form.Item>

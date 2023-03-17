@@ -1,4 +1,4 @@
-import { DatePicker, Form, InputNumber, Select, Switch, Empty, Spin, Space } from 'ant-design-vue'
+import { DatePicker, Form, InputNumber, Select, Switch, Empty, Spin, Space, Checkbox } from 'ant-design-vue'
 import forFormModal from '@/mixins/forModal/forFormModal'
 import DragModal from '@/components/DragModal'
 import { cloneDeep, debounce } from 'lodash'
@@ -35,6 +35,7 @@ export default Form.create({})({
                 const data = cloneDeep(value)
                 const str = data.contractDate.replaceAll('-', '')
 
+                data.type = data.type.length > 1 ? 3 : data.type[0]
                 data.contractDate = Number(str)
 
                 return data
@@ -202,6 +203,27 @@ export default Form.create({})({
                   style="width: 100%"
                   allowClear
                 />
+              )
+            }
+          </Form.Item>
+
+          <Form.Item label="记录类型" class={'half'}>
+            {
+              this.form.getFieldDecorator('type', {
+                initialValue: this.currentItem.type,
+                rules: [
+                  {
+                    required: true,
+                    type: 'array',
+                    message: '请选记录类型！',
+                    trigger: 'change'
+                  }
+                ]
+              })(
+                <Checkbox.Group disabled={!this.currentItem.id}>
+                  <Checkbox value={1}>网签</Checkbox>
+                  <Checkbox value={2}>预告登记</Checkbox>
+                </Checkbox.Group>
               )
             }
           </Form.Item>
