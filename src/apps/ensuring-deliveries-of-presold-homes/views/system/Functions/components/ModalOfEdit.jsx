@@ -19,7 +19,7 @@ export default Form.create({})({
       return this.$store.state[this.moduleName].details
     },
     menuTree() {
-      return this.$store.state['menus'].menuTree?.list || []
+      return this.$store.state[this.moduleName].menuTree?.list || []
     },
     attributes() {
       return {

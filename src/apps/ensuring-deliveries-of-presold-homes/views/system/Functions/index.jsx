@@ -19,7 +19,7 @@ export default {
         apiOptions={{
           apiName: 'getMenuTree',
           stateName: 'menuTree',
-          moduleName: 'menus'
+          moduleName: 'functions'
         }}
       >
         <TGContainerWithTable>

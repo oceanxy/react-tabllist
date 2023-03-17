@@ -1,19 +1,17 @@
 import { Button, Form, Input, Select, Space, DatePicker } from 'ant-design-vue'
 import forInquiry from '@/mixins/forInquiry'
-import { mapGetters } from 'vuex'
 
 export default Form.create({})({
   mixins: [forInquiry()],
-  data: () => ({ initialValues: { dateRange: [], status: '' } }),
+  data: () => ({ initialValues: { dateRange: [], easteDicId: '', status: '' } }),
   computed: {
-    ...mapGetters({ getState: 'getState' }),
     estateTypeList() {
-      return this.getState('estateType', 'advanceRegistration')
-    }
+      return this.$store.state[this.moduleName].estateType?.list || []
+    },
   },
   async created() {
     await this.$store.dispatch('getListWithLoadingStatus', {
-      moduleName: 'advanceRegistration',
+      moduleName: this.moduleName,
       stateName: 'estateType',
       customApiName: 'getEstateType'
     })
@@ -41,10 +39,10 @@ export default Form.create({})({
           <Form.Item label={'不动产性质'}>
             {
               this.form.getFieldDecorator('easteDicId', { initialValue: this.initialValues.easteDicId })(
-                <Select>
-                  <Select.Option value={''}>全部</Select.Option>
+                <Select placeholder="请选择">
+                  <Select.Option value={''}>不限</Select.Option>
                   {
-                    this.estateTypeList.list?.map(item => (
+                    this.estateTypeList?.map(item => (
                       <Select.Option value={item.dicCode} > {item.dicName}</Select.Option>
                     ))
                   }
