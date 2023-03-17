@@ -19,7 +19,7 @@ export default Form.create({})({
               )
             }
           </Form.Item>
-          <Form.Item style={'width:260px'}>
+          <Form.Item style={'width: auto'}>
             {
               this.form.getFieldDecorator('isOutTime', {
                 initialValue: !!this.initialValues.isOutTime,
