@@ -8,6 +8,10 @@ export default commitRootInModule =>
           loading: false,
           list: []
         },
+        estateListByName: {
+          loading: false,
+          list: []
+        },
         modalOfPurchaseVisible: false, //解除弹窗
         modalOfImportVisible: false //导入弹窗
       }

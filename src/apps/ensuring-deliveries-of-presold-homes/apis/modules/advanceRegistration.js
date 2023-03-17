@@ -117,7 +117,7 @@ export default {
     return request({
       url: '/estate/estate/getEstateListByName',
       method: 'post',
-      data
+      data: qs.stringify(data)
     })
   }
 }
