@@ -19,13 +19,15 @@ import { cloneDeep, omit } from 'lodash'
  * @param [stateName='list'] {string} 表格数据在 store.state 里对应的名称
  * @param [customApiName] {string} 自定义请求接口名。
  *  TODO：一般在弹窗内使用；如果弹窗内的列表有增删改操作，目前未适配执行这些操作后的列表刷新，所以当存在这些操作时不要使用该参数。
+ * @param [injectQuery=true] {boolean} 是否自动注入路由的 query 参数，默认 true。注意此参数为 true 时，表格的请求参数会被路由 query 中的同名参数覆盖。
  * @returns {Object}
  */
 export default ({
   isInject = true,
   isFetchList = true,
   stateName = 'list',
-  customApiName
+  customApiName,
+  injectQuery = true
 } = {}) => {
   const _stateName = stateName
   const forTable = {
@@ -257,7 +259,7 @@ export default ({
            */
           stateName: this.stateName || _stateName,
           additionalQueryParameters: {
-            ...this.$route.query,
+            ...(injectQuery ? this.$route.query : {}),
             // 获取子模块数据需要的额外参数，在引用该混合的子模块内覆盖设置。
             // 请根据参数的取值和性质自行决定在 data 内或 computed 内定义。
             ...(this.additionalQueryParameters || {})
@@ -404,7 +406,7 @@ export default ({
               moduleName: this.moduleName,
               submoduleName: this.submoduleName,
               additionalQueryParameters: {
-                ...this.$route.query,
+                ...(injectQuery ? this.$route.query : {}),
                 // 获取子模块数据需要的额外参数，在引用该混合的子模块内覆盖设置。
                 // 请根据参数的取值和性质自行决定在 data 或 computed 内定义。
                 ...(this.additionalQueryParameters || {})

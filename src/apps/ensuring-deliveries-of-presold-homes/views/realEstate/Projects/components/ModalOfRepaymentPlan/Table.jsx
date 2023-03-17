@@ -1,8 +1,8 @@
 import forTable from '@/mixins/forTable'
-import { Button } from 'ant-design-vue'
+import { Button, Tag } from 'ant-design-vue'
 
 export default {
-  mixins: [forTable()],
+  mixins: [forTable({ injectQuery: false })],
   data() {
     return {
       tableProps: {
@@ -22,6 +22,7 @@ export default {
           },
           {
             title: '还款日期',
+            width: 200,
             dataIndex: 'repaymentEndDayStr'
           },
           {
@@ -49,6 +50,12 @@ export default {
             dataIndex: 'lastOperatorName'
           },
           {
+            title: '是否逾期',
+            width: 80,
+            align: 'center',
+            scopedSlots: { customRender: 'isOutTime' }
+          },
+          {
             title: '状态',
             width: 80,
             align: 'center',
@@ -69,6 +76,11 @@ export default {
         rowSelection: null
       },
       scopedSlots: {
+        isOutTime: (text, record) => (
+          <Tag color={record.isOutTime === 1 ? 'red' : ''}>
+            {record.isOutTimeStr}
+          </Tag>
+        ),
         refundCertificate: (text, record) => record.refundCertificate?.path
           ? (
             <Button

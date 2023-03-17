@@ -2,7 +2,7 @@ export default {
   getState: state => (stateName, moduleName, submoduleName = '') => {
     const _state = (state[moduleName][submoduleName] ?? state[moduleName])[stateName]
 
-    if (_state === undefined) {
+    if (_state === undefined && process.env.NODE_ENV !== 'production') {
       console.warn(
         `未从store（${moduleName}${submoduleName ? `.${submoduleName}` : ''}）中找到预定义的 "${stateName}" 字段。` +
         `请确保已预定义 store.${moduleName}${submoduleName ? `.${submoduleName}` : ''}.${stateName} 字段。` +

@@ -14,10 +14,9 @@ function getAvailableProjectNames() {
     if (process.argv[i].includes('--')) {
       if (process.argv[i] === '--proj') {
         projectNames = process.argv.slice(i + 1)
-        continue
+      } else {
+        projectNames = projectNames.slice(0, i)
       }
-
-      projectNames = projectNames.slice(0, i)
     }
   }
 

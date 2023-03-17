@@ -23,6 +23,5 @@ export default commitRootInModule => createStoreModule({
   }
 }, [
   'treeIdField',
-  'sortFieldList',
   'details'
 ])

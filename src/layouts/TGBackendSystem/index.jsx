@@ -26,10 +26,10 @@ export default {
             class={`tg-sider${this.collapsed ? ' collapsed' : ''}`}
             collapsible
           >
-            <div style={'padding:15px 20px 0 20px'}>
-              <h4 style={'font-size:16px;margin-bottom:0'}>保交楼信息管理系统</h4>
-              <div style={'font-size:12px;color:#ccc'}>V1.02</div>
-            </div>
+            {/* <div style={'padding:15px 20px 0 20px'}> */}
+            {/*   <h4 style={'font-size:16px;margin-bottom:0'}>保交楼信息管理系统</h4> */}
+            {/*   <div style={'font-size:12px;color:#ccc'}>V1.02</div> */}
+            {/* </div> */}
             <TGMenu />
           </Layout.Sider>
           <Layout.Content class="tg-content">

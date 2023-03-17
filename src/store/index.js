@@ -7,7 +7,7 @@ import actions from './actions'
 Vue.use(Vuex)
 
 // require.context 请参考：https://webpack.js.org/guides/dependency-management/#requirecontext
-// 框架测层通用模块
+// 框架层通用模块
 const modulesFiles = require.context('./modules', true, /\.js$/)
 // app通用模块
 const appModulesFiles = require.context('../apps', true, /store\/modules\/[a-zA-Z0-9-]+\.js$/)
@@ -55,6 +55,7 @@ const store = new Vuex.Store({
 })
 
 store._dynamicModules = dynamicModules
+store._commonModules = { ...modules, ...appModules }
 
 export { dynamicModules }
 

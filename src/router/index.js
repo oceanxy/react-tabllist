@@ -10,6 +10,12 @@ import VueRouter from 'vue-router'
 import constRoutes from './routes'
 import config from '@/config'
 
+const VueRouterPush = VueRouter.prototype.push
+
+VueRouter.prototype.push = function push(to) {
+  return VueRouterPush.call(this, to).catch(err => err)
+}
+
 Vue.use(VueRouter)
 
 export { constRoutes }
@@ -30,13 +36,14 @@ export function createRouter(routes) {
       constRoutes.splice(homeRoutesIndex, 1, routes)
     }
   } else {
-    // TODO 这里要获取所有子项目的路由，或者从启动命令参数获取指定项目的路由
-    // const mainRoutes = require('../apps/main/router/routes')
-    const edphRouter = require('../apps/ensuring-deliveries-of-presold-homes/router/routes')
-    // const appRoutes = [...new Set([...(mainRoutes.default), ...(edphRouter.default)])]
-    const appRoutes = [...new Set(edphRouter.default)]
+    const routeFiles = require.context('../apps', true, /router\/routes.js/)
+    const routeModules = routeFiles.keys().reduce((modules, modulePath) => {
+      modules.push(...routeFiles(modulePath).default)
 
-    constRoutes[homeRoutesIndex].children = constRoutes[homeRoutesIndex].children.concat(appRoutes)
+      return modules
+    }, [])
+
+    constRoutes[homeRoutesIndex].children = constRoutes[homeRoutesIndex].children.concat(routeModules)
   }
 
   return new VueRouter({

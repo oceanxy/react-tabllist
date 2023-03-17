@@ -432,6 +432,12 @@
 
           .new-status {
             margin: 0;
+
+            &.unread {
+              background: $primary-hover-color;
+              color: #ffffff;
+              border: 1px solid $primary-sub-color;
+            }
           }
         }
 
