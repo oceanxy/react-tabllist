@@ -19,7 +19,7 @@ export default Form.create({})({
   },
   computed: {
     organTree() {
-      return this.$store.state['combination'].organTree?.list || []
+      return this.$store.state[this.moduleName].organTree?.list || []
     },
     roleTree() {
       return this.$store.state[this.moduleName].roleTree?.list || []
