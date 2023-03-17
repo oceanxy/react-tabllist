@@ -32,7 +32,7 @@ export default {
           scopedSlots: { customRender: 'dateRange' }
         },
         {
-          title: <span class={'ant-form-item-required'}>利率</span>,
+          title: <span class={'ant-form-item-required'}>利率(%)</span>,
           scopedSlots: { customRender: 'rateValue' }
         },
         {

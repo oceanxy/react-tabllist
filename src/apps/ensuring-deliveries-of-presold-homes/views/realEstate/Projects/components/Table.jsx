@@ -26,7 +26,7 @@ export default {
             dataIndex: 'projectName'
           },
           {
-            title: <div>借款金额<span class={'unit-text'}>(万)</span></div>,
+            title: <div>借款金额<span class={'unit-text'}>(元)</span></div>,
             width: 100,
             align: 'center',
             dataIndex: 'moneyValue'
@@ -44,7 +44,7 @@ export default {
             dataIndex: 'nextTime'
           },
           {
-            title: <div>已还金额<span class={'unit-text'}>(万)</span></div>,
+            title: <div>已还金额<span class={'unit-text'}>(元)</span></div>,
             width: 100,
             align: 'center',
             dataIndex: 'refundAmount'

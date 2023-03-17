@@ -45,7 +45,7 @@ export default {
             dataIndex: 'infloorArea'
           },
           {
-            title: <div>备案总价<span class={'unit-text'}>(万元)</span></div>,
+            title: <div>备案总价<span class={'unit-text'}>(元)</span></div>,
             width: 120,
             dataIndex: 'recordTotal'
           },
