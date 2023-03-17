@@ -1,5 +1,5 @@
 import forTable from '@/mixins/forTable'
-import { Button, Space } from 'ant-design-vue'
+import { Button, Space, Tag } from 'ant-design-vue'
 import forFunction from '@/mixins/forFunction'
 
 export default {
@@ -33,8 +33,7 @@ export default {
           },
           {
             title: '还款计划',
-            width: 80,
-            align: 'center',
+            width: 120,
             scopedSlots: { customRender: 'refundPlan' }
           },
           {
@@ -101,11 +100,14 @@ export default {
             </Button>
           </Space>
         ),
-        refundPlan: (text, record) => (
+        refundPlan: (text, record) => [
           <Button type="link" onClick={() => this._setVisibilityOfModal(record, 'visibilityOfRepaymentPlan')}>
             {record.refundPlan}
-          </Button>
-        ),
+          </Button>,
+          record.isOutTime === 1
+            ? <Tag color={'red'} style={'margin-left: 10px'}>逾期</Tag>
+            : null
+        ],
         ctContract: (text, record) => record.ctContractUrl
           ? <Button type="link" onClick={() => window.open(record.ctContractUrl)}>预览</Button>
           : null,

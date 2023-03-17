@@ -1,4 +1,4 @@
-import { Button, Form, Input, Space } from 'ant-design-vue'
+import { Button, Checkbox, Form, Input, Space } from 'ant-design-vue'
 import forInquiry from '@/mixins/forInquiry'
 
 export default Form.create({})({
@@ -16,6 +16,16 @@ export default Form.create({})({
             {
               this.form.getFieldDecorator('projectName', { initialValue: this.initialValues.projectName })(
                 <Input placeholder="开发商/项目名称" allowClear />
+              )
+            }
+          </Form.Item>
+          <Form.Item style={'width:260px'}>
+            {
+              this.form.getFieldDecorator('isOutTime', {
+                initialValue: !!this.initialValues.isOutTime,
+                valuePropName: 'checked'
+              })(
+                <Checkbox>只看逾期</Checkbox>
               )
             }
           </Form.Item>

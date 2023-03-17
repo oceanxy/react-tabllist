@@ -11,7 +11,10 @@ export default {
     return request({
       url: '/estate/projectInfo/getProjectInfoPageList',
       method: 'post',
-      data: qs.stringify(data)
+      data: qs.stringify({
+        ...data,
+        isOutTime: Number(data.isOutTime)
+      })
     })
   },
   /**

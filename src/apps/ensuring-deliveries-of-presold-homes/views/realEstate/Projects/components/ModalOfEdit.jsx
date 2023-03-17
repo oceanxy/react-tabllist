@@ -286,7 +286,7 @@ export default Form.create({})({
                     placeholder="请输入项目名称"
                     allowClear
                     maxLength={30}
-                    disabled={this.currentItem.isEdit === 0}
+                    disabled={!this.form.getFieldValue('developerId') || this.currentItem.isEdit === 0}
                   />
                 )
               }
