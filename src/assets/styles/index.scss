@@ -252,73 +252,73 @@ body {
     }
 
     // 把搜索框的 label 放进框内
-    //.ant-form-item-control-wrapper {
-    //  flex: auto;
-    //  width: 100%;
-    //  margin-left: -70px;
-    //  z-index: 0;
-    //
-    //  .ant-select {
-    //    width: 100%;
-    //  }
-    //
-    //  .ant-form-item-control {
-    //    height: 100%;
-    //
-    //    // inquiry 组件内的行内表单防止样式错位，隐藏文字提示信息
-    //    &.has-error .ant-form-explain,
-    //    .ant-form-item-children + * {
-    //      display: none;
-    //    }
-    //
-    //    .ant-form-item-children {
-    //      display: flex;
-    //      height: 100%;
-    //
-    //      & > .ant-select .ant-select-selection,
-    //      & > .ant-input-affix-wrapper .ant-input,
-    //      & > .ant-input-number,
-    //      & > .ant-input,
-    //      & > .ant-calendar-picker .ant-calendar-picker-input,
-    //      & > .ant-input-group {
-    //        width: 100%;
-    //        padding-left: 80px;
-    //      }
-    //
-    //      & > .ant-calendar-picker {
-    //        width: 100%;
-    //      }
-    //
-    //      & > .ant-input-group {
-    //        display: flex;
-    //        align-items: center;
-    //        gap: 5px;
-    //        border: 1px solid #d9d9d9;
-    //        border-radius: 4px;
-    //        transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
-    //
-    //        &:hover {
-    //          border-color: $primary-color;
-    //        }
-    //
-    //        .ant-input-number {
-    //          border-color: transparent !important;
-    //          outline: none !important;
-    //          box-shadow: none !important;
-    //        }
-    //
-    //        .ant-input-number:first-child {
-    //          &:hover,
-    //          &:focus,
-    //          &:active {
-    //            border-color: transparent !important;
-    //            border-right: 1px solid #d9d9d9 !important;
-    //          }
-    //        }
-    //      }
-    //    }
-    //  }
-    //}
+    .ant-form-item-control-wrapper {
+      flex: auto;
+      width: 100%;
+      //margin-left: -70px;
+      z-index: 0;
+
+      .ant-select {
+        width: 100%;
+      }
+
+      .ant-form-item-control {
+        height: 100%;
+
+        // inquiry 组件内的行内表单防止样式错位，隐藏文字提示信息
+        &.has-error .ant-form-explain,
+        .ant-form-item-children + * {
+          display: none;
+        }
+
+        .ant-form-item-children {
+          display: flex;
+          height: 100%;
+
+          & > .ant-select .ant-select-selection,
+          & > .ant-input-affix-wrapper .ant-input,
+          & > .ant-input-number,
+          & > .ant-input,
+          & > .ant-calendar-picker .ant-calendar-picker-input,
+          & > .ant-input-group {
+            width: 100%;
+            //padding-left: 80px;
+          }
+
+          & > .ant-calendar-picker {
+            width: 100%;
+          }
+
+          & > .ant-input-group {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+
+            &:hover {
+              border-color: $primary-color;
+            }
+
+            .ant-input-number {
+              border-color: transparent !important;
+              outline: none !important;
+              box-shadow: none !important;
+            }
+
+            .ant-input-number:first-child {
+              &:hover,
+              &:focus,
+              &:active {
+                border-color: transparent !important;
+                border-right: 1px solid #d9d9d9 !important;
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
 
