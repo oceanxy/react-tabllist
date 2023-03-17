@@ -251,10 +251,11 @@ body {
       }
     }
 
+    // 把搜索框的 label 放进框内
     .ant-form-item-control-wrapper {
       flex: auto;
       width: 100%;
-      margin-left: -70px;
+      //margin-left: -70px;
       z-index: 0;
 
       .ant-select {
@@ -281,7 +282,7 @@ body {
           & > .ant-calendar-picker .ant-calendar-picker-input,
           & > .ant-input-group {
             width: 100%;
-            padding-left: 80px;
+            //padding-left: 80px;
           }
 
           & > .ant-calendar-picker {

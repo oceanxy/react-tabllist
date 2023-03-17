@@ -15,9 +15,6 @@ if (process.env.NODE_ENV === 'development' && config.mock) {
 
 if (localStorage.getItem('token') && config.dynamicRouting) {
   const menu = initializeDynamicRoutes()
-
-  console.log(menu)
-
   const homeRouteIndex = router.options.routes.findIndex(route => route.path === '/')
 
   router.matcher = createRouter(menu).matcher

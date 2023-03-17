@@ -57,8 +57,11 @@ export default {
           renderItem={item => (
             <List.Item onClick={() => this.onClick(item)}>
               <List.Item.Meta description={item.createTimeStr}>
-                <Tag slot={'avatar'} class={'new-status'}>
-                  {['未读', '未读'][item.isRead]}
+                <Tag
+                  slot={'avatar'}
+                  class={`new-status${item.isRead === 0 ? ' unread' : ''}`}
+                >
+                  {item.isRead === 0 ? '未读' : '已读'}
                 </Tag>
                 <p slot={'title'}>{item.noticeTitle}</p>
               </List.Item.Meta>

@@ -145,7 +145,10 @@ export default Form.create({})({
                   min={0}
                   placeholder="请输入请输入总价"
                   style={'width:100%'}
-                  allowClear />
+                  allowClear
+                  formatter={value => `${value} 元`}
+                  parser={value => value.replace(' 元', '')}
+                />
               )
             }
           </Form.Item>
@@ -167,7 +170,10 @@ export default Form.create({})({
                   min={0}
                   placeholder="请输入单价"
                   style={'width:100%'}
-                  allowClear />
+                  allowClear
+                  formatter={value => `${value} 元`}
+                  parser={value => value.replace(' 元', '')}
+                />
               )
             }
           </Form.Item>
@@ -180,7 +186,7 @@ export default Form.create({})({
                   {
                     required: true,
                     type: 'number',
-                    message: '请输入单价！',
+                    message: '请输入金额！',
                     trigger: 'blur'
                   }
                 ]
@@ -188,9 +194,12 @@ export default Form.create({})({
                 <InputNumber
                   max={99999999999}
                   min={0}
-                  placeholder="请输入单价"
+                  placeholder="请输入金额"
                   style={'width:100%'}
-                  allowClear />
+                  allowClear
+                  formatter={value => `${value} 元`}
+                  parser={value => value.replace(' 元', '')}
+                />
               )
             }
           </Form.Item>
@@ -203,8 +212,8 @@ export default Form.create({})({
                   {
                     required: true,
                     type: 'number',
-                    message: '请输入单价！',
-                    trigger: 'blur'
+                    message: '请选择',
+                    trigger: 'change'
                   }
                 ]
               })(
