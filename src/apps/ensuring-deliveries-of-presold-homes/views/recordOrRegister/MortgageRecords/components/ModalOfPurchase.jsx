@@ -80,7 +80,7 @@ export default Form.create({})({
                 ]
               })(
                 <InputNumber
-                  max={999999999999999}
+                  max={999999999999}
                   min={0}
                   formatter={value => `${value}元`}
                   parser={value => value.replace('元', '')}
