@@ -86,8 +86,19 @@ export default {
       scopedSlots: {
         title: (text, record) => (
           <Space>
-            <Button onClick={() => this.onCustomExport()}>导出</Button>
-            <Button disabled={this.tableSelectedRowKeys} onClick={() => this.onCustomDeleteClick()}>删除</Button>
+            <Button
+              type="primary"
+              disabled={this.editButtonDisabled}
+              onClick={() => this.onCustomEditClick()}
+              icon="edit"
+            >
+              编辑
+            </Button>
+            <Button
+              type="danger"
+              icon="delete"
+              disabled={this.tableSelectedRowKeys}
+              onClick={() => this.onCustomDeleteClick()}>删除</Button>
           </Space>
         ),
         salesStatus: (text, record) => (
@@ -112,15 +123,6 @@ export default {
                 编辑
               </Button> : ''
             }
-
-            <Button
-              type="link"
-              size="small"
-              disabled={this.isFeatureDisabled}
-              onClick={() => this.onDeleteClick(record)}
-            >
-              删除
-            </Button>
             {
               record.rescindContractStatus === 1 ? <Button
                 type="link"
@@ -131,6 +133,14 @@ export default {
                 解除
               </Button> : ''
             }
+            <Button
+              type="link"
+              size="small"
+              disabled={this.isFeatureDisabled}
+              onClick={() => this.onDeleteClick(record)}
+            >
+              删除
+            </Button>
 
           </Space>
         )

@@ -119,5 +119,63 @@ export default {
       method: 'post',
       data: qs.stringify(data)
     })
+  },
+
+  /**
+   * 上传导入文件
+   * @param [request]
+   * @param formData
+   * @returns {*}
+   */
+
+  foretellImportFile(request, formData) {
+    return request({
+      url: '/estate/foretell/importFile',
+      method: 'post',
+      data: formData
+    })
+  },
+
+  /**
+   * 导入成功数据
+   * @param [request]
+   * @param data
+   * @returns {*}
+   */
+  foretellImportSuccessData(request, data) {
+    return request({
+      url: '/estate/foretell/importSuccessData',
+      method: 'post',
+      data
+    })
+  },
+
+  /**
+   * 下载失败数据
+   * @param request
+   * @param params
+   * @returns {*}
+   */
+  foretellDownFailExcel(request, params) {
+    return request({
+      url: '/estate/foretell/downFailExcel',
+      method: 'get',
+      params,
+      responseType: 'blob'
+    })
+  },
+
+  /**
+   * 获取导入模板
+   * @param request
+   * @param data
+   * @returns {*}
+   */
+  foretellGetTemplateUrl(request, data) {
+    return request({
+      url: '/estate/netSign/getTemplateUrl',
+      method: 'post',
+      data
+    })
   }
 }

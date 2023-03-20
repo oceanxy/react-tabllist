@@ -24,6 +24,13 @@ export default Form.create({})({
     administrativeDivision() {
       return this.$store.state['common'].administrativeDivision
     },
+    selectTypeDisabled() {
+      if (this.currentItem.id) {
+        return true
+      } else {
+        return false
+      }
+    },
     attributes() {
       return {
         attrs: this.modalProps,
@@ -37,6 +44,11 @@ export default Form.create({})({
                 const str = data.contractDate.replaceAll('-', '')
 
                 data.type = data.type.length > 1 ? 3 : data.type[0]
+
+                if (this.currentItem.id) {
+                  delete data.type
+                }
+
                 data.contractDate = Number(str)
 
                 return data
@@ -216,7 +228,7 @@ export default Form.create({})({
           <Form.Item label="记录类型" class={'half'}>
             {
               this.form.getFieldDecorator('type', {
-                initialValue: this.currentItem.type,
+                initialValue: this.currentItem.type || [1],
                 rules: [
                   {
                     required: true,
@@ -226,7 +238,7 @@ export default Form.create({})({
                   }
                 ]
               })(
-                <Checkbox.Group disabled={this.currentItem.id} onChange={this.selectType} >
+                <Checkbox.Group disabled={this.selectTypeDisabled} onChange={this.selectType} >
                   <Checkbox value={1}>网签</Checkbox>
                   <Checkbox value={2}>预告登记</Checkbox>
                 </Checkbox.Group>

@@ -45,6 +45,11 @@ export default {
             dataIndex: 'infloorArea'
           },
           {
+            title: <div>备案单价<span class={'unit-text'}>(元)</span></div>,
+            width: 120,
+            dataIndex: 'recordSingle'
+          },
+          {
             title: <div>备案总价<span class={'unit-text'}>(元)</span></div>,
             width: 120,
             dataIndex: 'recordTotal'
@@ -86,8 +91,17 @@ export default {
       scopedSlots: {
         title: (text, record) => (
           <Space>
-            <Button onClick={() => this.onCustomExport()}>导出</Button>
             <Button
+              type="primary"
+              disabled={this.editButtonDisabled}
+              onClick={() => this.onCustomEditClick()}
+              icon="edit"
+            >
+              编辑
+            </Button>
+            <Button
+              type="danger"
+              icon="delete"
               disabled={this.deleteButtonDisabled}
               onClick={() => this.onCustomDeleteClick()}
             >删除</Button>
@@ -115,15 +129,6 @@ export default {
                 编辑
               </Button> : ''
             }
-
-            <Button
-              type="link"
-              size="small"
-              disabled={this.isFeatureDisabled}
-              onClick={() => this.onDeleteClick(record)}
-            >
-              删除
-            </Button>
             {
               record.rescindContractStatus === 1 ? <Button
                 type="link"
@@ -134,6 +139,14 @@ export default {
                 解除
               </Button> : ''
             }
+            <Button
+              type="link"
+              size="small"
+              disabled={this.isFeatureDisabled}
+              onClick={() => this.onDeleteClick(record)}
+            >
+              删除
+            </Button>
 
           </Space>
         )

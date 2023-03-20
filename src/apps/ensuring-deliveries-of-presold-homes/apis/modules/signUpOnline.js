@@ -81,6 +81,51 @@ export default {
       responseType: 'blob'
     })
   },
+
+  /**
+   * 上传导入文件
+   * @param [request]
+   * @param formData
+   * @returns {*}
+   */
+
+  netSignImportFile(request, formData) {
+    return request({
+      url: '/estate/netSign/importFile',
+      method: 'post',
+      data: formData
+    })
+  },
+
+  /**
+   * 导入成功数据
+   * @param [request]
+   * @param data
+   * @returns {*}
+   */
+  netSignImportSuccessData(request, data) {
+    return request({
+      url: '/estate/netSign/importSuccessData',
+      method: 'post',
+      data
+    })
+  },
+
+  /**
+   * 下载失败数据
+   * @param request
+   * @param params
+   * @returns {*}
+   */
+  netSignDownFailExcel(request, params) {
+    return request({
+      url: '/estate/netSign/downFailExcel',
+      method: 'get',
+      params,
+      responseType: 'blob'
+    })
+  },
+
   /**
    * 解除签约
    * @param request
@@ -92,6 +137,20 @@ export default {
       url: '/estate/netSign/rescindContract',
       method: 'post',
       data: qs.stringify(data)
+    })
+  },
+
+  /**
+   * 获取导入模板
+   * @param request
+   * @param data
+   * @returns {*}
+   */
+  netSignGetTemplateUrl(request, data) {
+    return request({
+      url: '/estate/netSign/getTemplateUrl',
+      method: 'post',
+      data
     })
   }
 }

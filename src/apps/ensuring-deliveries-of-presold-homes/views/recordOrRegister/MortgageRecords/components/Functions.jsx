@@ -15,12 +15,15 @@ export default {
   render() {
     return (
       <Space class="tg-function">
-        {/* <Button
+        <Button
+          icon="export"
+          onClick={() => this.onCustomExport()}>导出</Button>
+        <Button
           onClick={() => this._setVisibilityOfModal({}, 'modalOfImportVisible')}
         >
           <IconFont type={'icon-button-dr-line'} />
           导入
-        </Button> */}
+        </Button>
         <Button
           type="primary"
           disabled={this.isFeatureDisabled}
