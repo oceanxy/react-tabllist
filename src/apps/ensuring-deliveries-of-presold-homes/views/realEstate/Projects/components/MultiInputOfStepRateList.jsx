@@ -19,7 +19,14 @@ export default {
   },
   data() {
     return {
-      columns: [
+      dataSource: [],
+      dataSourceCache: [],
+      date: []
+    }
+  },
+  computed: {
+    columns() {
+      return [
         {
           title: '序号',
           width: 80,
@@ -48,10 +55,7 @@ export default {
           align: 'center',
           scopedSlots: { customRender: 'operation' }
         }
-      ],
-      dataSource: [],
-      dataSourceCache: [],
-      date: []
+      ]
     }
   },
   watch: {

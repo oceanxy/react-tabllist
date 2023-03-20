@@ -17,7 +17,9 @@ export default {
 
     // 获取普通模块（只还原普通模块，不还原动态模块）
     const newModules = Object.keys(this.$store._commonModules).reduce((newModules, key) => {
-      newModules[key] = tempState[key]
+      if (tempState) {
+        newModules[key] = tempState[key]
+      }
 
       return newModules
     }, {})

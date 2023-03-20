@@ -6,7 +6,6 @@ import { defineAsyncComponent } from 'vue'
 import TGUploadFile from '@/components/TGUploadFile'
 import MultiInputOfStepRateList from './MultiInputOfStepRateList'
 import MultiInputOfRepaymentPlanList from './MultiInputOfRepaymentPlanList'
-import moment from 'moment'
 
 export default Form.create({})({
   mixins: [forFormModal()],
@@ -81,14 +80,15 @@ export default Form.create({})({
         <ModalOfDeveloper modalTitle={'{action}开发商'} visibilityFieldName={'visibilityOfDeveloper'} />
       )
     },
-    dateRangeOfRepaymentPlan() {
-      const range = this.form.getFieldValue('projectSegmentRateList')
+    modalOfRepaymentPlanPreview() {
+      const ModalOfRepaymentPlanPreview = defineAsyncComponent(() => import('./ModalOfRepaymentPlanPreview'))
 
-      if (range?.[0]?.starDate && range?.at(-1)?.endDate) {
-        return [moment(range[0].starDate), moment(range.at(-1).endDate)]
-      }
-
-      return []
+      return () => (
+        <ModalOfRepaymentPlanPreview modalTitle={'预览还款计划'} visibilityFieldName={'visibilityOfRepaymentPlanPreview'} />
+      )
+    },
+    projectSegmentRateList() {
+      return this.form.getFieldValue('projectSegmentRateList')
     }
   },
   watch: {
@@ -410,7 +410,12 @@ export default Form.create({})({
                           }
                         ]
                       })(
-                        <MultiInputOfStepRateList disabled={this.currentItem.isEdit === 0} />
+                        <MultiInputOfStepRateList
+                          disabled={
+                            this.currentItem.isEdit === 0 ||
+                            !this.form.getFieldValue('moneyValue')
+                          }
+                        />
                       )
                     }
                   </Form.Item>,
@@ -424,12 +429,37 @@ export default Form.create({})({
                             type: 'array',
                             message: '请输入完整的还款计划！',
                             trigger: 'change'
+                          },
+                          {
+                            validator(rule, value, callback) {
+                              if (value) {
+                                const _value = value.reduce((total, item) => {
+                                  if (item.repaymentType === 1) {
+                                    total += item.percent
+                                  }
+
+                                  return total
+                                }, 0)
+
+                                // 校验还款本金比例是否等于100
+                                if (_value < 100) {
+                                  callback(new Error('本金比例之和应等于100%！'))
+                                }
+                              }
+
+                              callback()
+                            }
                           }
                         ]
                       })(
                         <MultiInputOfRepaymentPlanList
-                          disabled={this.currentItem.isEdit === 0 || !this.dateRangeOfRepaymentPlan.length}
-                          dateRange={this.dateRangeOfRepaymentPlan}
+                          disabled={
+                            this.currentItem.isEdit === 0 ||
+                            !this.projectSegmentRateList.length ||
+                            !this.form.getFieldValue('moneyValue')
+                          }
+                          projectSegmentRateList={this.projectSegmentRateList}
+                          amountBorrowed={this.form.getFieldValue('moneyValue') || 0}
                         />
                       )
                     }
@@ -526,6 +556,7 @@ export default Form.create({})({
           </Form>
         </Spin>
         {this.modalOfDeveloper()}
+        {this.modalOfRepaymentPlanPreview()}
       </DragModal>
     )
   }
