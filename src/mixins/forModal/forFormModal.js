@@ -184,8 +184,6 @@ export default ({ disableSubmitButton = true } = {}) => {
               status = response?.status
             }
 
-            console.log('status', status)
-
             if (status) {
               // 操作提示消息
               message(response.status)

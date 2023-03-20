@@ -92,5 +92,63 @@ export default {
       method: 'post',
       data: qs.stringify(data)
     })
+  },
+
+  /**
+   * 上传导入文件
+   * @param [request]
+   * @param formData
+   * @returns {*}
+   */
+
+  hypothecateRecordImportFile(request, formData) {
+    return request({
+      url: '/estate/hypothecateRecord/importFile',
+      method: 'post',
+      data: formData
+    })
+  },
+
+  /**
+   * 导入成功数据
+   * @param [request]
+   * @param data
+   * @returns {*}
+   */
+  hypothecateRecordImportSuccessData(request, data) {
+    return request({
+      url: '/estate/hypothecateRecord/importSuccessData',
+      method: 'post',
+      data
+    })
+  },
+
+  /**
+   * 下载失败数据
+   * @param request
+   * @param params
+   * @returns {*}
+   */
+  hypothecateRecordDownFailExcel(request, params) {
+    return request({
+      url: '/estate/hypothecateRecord/downFailExcel',
+      method: 'get',
+      params,
+      responseType: 'blob'
+    })
+  },
+
+  /**
+   * 获取导入模板
+   * @param request
+   * @param data
+   * @returns {*}
+   */
+  hypothecateRecordGetTemplateUrl(request, data) {
+    return request({
+      url: '/estate/hypothecateRecord/getTemplateUrl',
+      method: 'post',
+      data
+    })
   }
 }

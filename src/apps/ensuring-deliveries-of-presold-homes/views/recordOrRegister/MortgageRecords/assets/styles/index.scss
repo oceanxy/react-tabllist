@@ -43,3 +43,34 @@
     }
   }
 }
+.upload-file {
+  min-height: 300px;
+  h3 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #454545;
+    font-size: 18px;
+    margin-bottom: 20px;
+    .success {
+      color: $primary-color;
+    }
+    .fail {
+      color: $error-color;
+    }
+  }
+  .import-succeeded {
+    text-align: center;
+    padding: 70px 20px 40px 20px;
+  }
+  .well {
+    background-color: #f3f7f6;
+    border-color: #dbe3ec;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 15px;
+    p {
+      margin: 5px 0;
+    }
+  }
+}
