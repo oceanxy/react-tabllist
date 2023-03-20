@@ -37,6 +37,8 @@ export default Form.create({})({
         on: {
           cancel: () => this.onCancel(),
           ok: () => this.onSubmit(
+            console.log(this),
+
             {
               customDataHandler: value => {
                 const data = cloneDeep(value)
@@ -54,16 +56,11 @@ export default Form.create({})({
               }
             }
           )
-
-
         }
       }
     }
   },
   methods: {
-    done() {
-
-    },
     setState(stateName, value = []) {
       this.$store.commit('setState', {
         value: { loading: false, list: value },

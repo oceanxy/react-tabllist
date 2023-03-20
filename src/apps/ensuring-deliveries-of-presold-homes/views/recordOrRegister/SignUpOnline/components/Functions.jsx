@@ -16,6 +16,9 @@ export default {
     return (
       <Space class="tg-function">
         <Button
+          icon="export"
+          onClick={() => this.onCustomExport()}>导出</Button>
+        <Button
           onClick={() => this._setVisibilityOfModal({}, 'modalOfImportVisible')}
         >
           <IconFont type={'icon-button-dr-line'} />
