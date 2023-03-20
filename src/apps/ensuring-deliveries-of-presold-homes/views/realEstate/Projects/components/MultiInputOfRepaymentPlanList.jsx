@@ -37,9 +37,7 @@ export default {
   data() {
     return {
       dataSource: [],
-      dataSourceCache: [],
-      interest: 0,
-      principal: 0
+      dataSourceCache: []
     }
   },
   computed: {
@@ -127,7 +125,6 @@ export default {
         if (this.dataSourceCache.length) {
           this.dataSource = cloneDeep(this.dataSourceCache)
           this.dataSourceCache = []
-          this.count()
         } else {
           if (value.length) {
             this.dataSource = value.map(item => {
@@ -147,8 +144,6 @@ export default {
 
               return item
             })
-
-            this.count()
           } else {
             this.dataSource = []
             this.onCreateRow()
@@ -204,9 +199,6 @@ export default {
       }
 
       this.$nextTick(() => {
-        this.interest = 0
-        this.principal = 0
-
         if (!err) {
           this.$emit('change', this.dataSource)
         } else {
@@ -215,7 +207,7 @@ export default {
         }
       })
     },
-    onCompValueChange(field, value, index) {
+    async onCompValueChange(field, value, index) {
       if (field === 'repaymentEndDay') {
         this.dataSource[index][field] = value.format('YYYYMMDD')
       }
@@ -234,15 +226,6 @@ export default {
       }
 
       this.validator()
-    },
-    count() {
-      this.dataSource.forEach(item => {
-        if (item.repaymentType === 1) {
-          this.principal += +item.money.toFixed(2)
-        } else {
-          this.interest += +item.money.toFixed(2)
-        }
-      })
     },
     async getPreview() {
       await this._setVisibilityOfModal(
@@ -297,7 +280,7 @@ export default {
                 vModel={record.repaymentType}
                 class={record.repaymentType ? 'pass' : ''}
                 placeholder="请选择"
-                disabled={this.disabled}
+                disabled={this.disabled || !record.date}
                 onChange={value => this.onCompValueChange('repaymentType', value, index)}
               >
                 <Select.Option value={1}>本金</Select.Option>
@@ -313,7 +296,7 @@ export default {
                 max={100}
                 precision={0}
                 placeholder="本金比例"
-                disabled={this.disabled || record.repaymentType !== 1}
+                disabled={this.disabled || record.repaymentType !== 1 || !record.date}
                 formatter={value => `${value}%`}
                 parser={value => value.replace('%', '')}
                 onChange={debounce(value => this.onCompValueChange('percent', value, index), 300)}
@@ -355,23 +338,19 @@ export default {
             )
           }}
         />
-        <p style={'color: #ffa191; font-weight: bolder; font-size: 14px'}>
-          还款总计：利息{this.interest}元 + 本金{this.principal}元 = {this.interest + this.principal}元
-          {
-            this.totalPercent >= 100
-              ? (
-                <Button
-                  type={'link'}
-                  style={'margin-left: 10px'}
-                  title={'预览还款计划'}
-                  onClick={this.getPreview}
-                >
-                  预览还款计划
-                </Button>
-              )
-              : null
-          }
-        </p>
+        {
+          this.totalPercent >= 100
+            ? (
+              <Button
+                type={'link'}
+                title={'预览还款计划'}
+                onClick={this.getPreview}
+              >
+                预览还款计划
+              </Button>
+            )
+            : null
+        }
       </div>
     )
   }
