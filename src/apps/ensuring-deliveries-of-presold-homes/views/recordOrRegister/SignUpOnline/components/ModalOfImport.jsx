@@ -25,7 +25,7 @@ export default Form.create({})({
           dataIndex: 'developerName'
         },
         {
-          title: '开发商企业性质',
+          title: '企业性质',
           width: 100,
           dataIndex: 'typeName'
         },
@@ -37,19 +37,19 @@ export default Form.create({})({
         {
           title: '项目所在省份',
           align: 'center',
-          width: 100,
+          width: 120,
           dataIndex: 'provinceName'
         },
         {
           title: '项目所在市',
           align: 'center',
-          width: 100,
+          width: 120,
           dataIndex: 'cityName'
         },
         {
           title: '项目所在区',
           align: 'center',
-          width: 100,
+          width: 110,
           dataIndex: 'areaName'
         },
         {
@@ -61,7 +61,7 @@ export default Form.create({})({
         {
           title: '资产名称',
           align: 'center',
-          width: 180,
+          width: 220,
           dataIndex: 'estateName'
         },
         {
@@ -85,7 +85,7 @@ export default Form.create({})({
         {
           title: '楼栋详细地址',
           align: 'center',
-          width: 160,
+          width: 200,
           dataIndex: 'address'
         },
         {
@@ -103,13 +103,13 @@ export default Form.create({})({
         {
           title: <div>备案单价<span class={'unit-text'}>(元)</span></div>,
           align: 'center',
-          width: 100,
+          width: 120,
           dataIndex: 'recordSingle'
         },
         {
           title: <div>备案总价<span class={'unit-text'}>(元)</span></div>,
           align: 'center',
-          width: 100,
+          width: 120,
           dataIndex: 'recordTotal'
         },
         {
@@ -121,7 +121,7 @@ export default Form.create({})({
         {
           title: '是否解除',
           align: 'center',
-          width: 70,
+          width: 100,
           dataIndex: 'rescindContractStatus'
         },
         {
@@ -315,7 +315,7 @@ export default Form.create({})({
                         onClick={() => this.downloadErrorData()}>下载失败数据{this.tableData.failSize}条</Button>
                     </h3>
                     <Table
-                      scroll={{ x: '100%' | true }}
+                      scroll={{ x: '100%' | true, y: '500px' }}
                       dataSource={this.newTableData}
                       columns={this.columns}
                       rowKey={'id'}
