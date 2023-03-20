@@ -144,5 +144,15 @@ export default {
       method: 'post',
       data: qs.stringify(data)
     })
+  },
+  /**
+   * 获取还款计划列表预览
+   */
+  getRepaymentPlanPreviewOfProjects(request, data) {
+    return request({
+      url: '/estate/projectInfo/createRefundPlan',
+      method: 'post',
+      data
+    })
   }
 }
