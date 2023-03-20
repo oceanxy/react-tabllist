@@ -7,6 +7,10 @@
 
 const glob = require('glob')
 
+/**
+ * 打包时使用“--proj appName1 appName2 ...”指令可对指定的 app 分别打包，不带或无效的 appName 将对整体项目打包
+ * @returns {*[]}
+ */
 function getAvailableProjectNames() {
   let projectNames = []
 

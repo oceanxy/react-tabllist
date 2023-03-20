@@ -3,8 +3,8 @@ import App from './App'
 import config from '@/config'
 import '@/utils/antvComponents'
 import { initializeDynamicRoutes } from '@/utils/utilityFunction'
-import router from '@/router'
-import store from '@/store'
+import router from './router'
+import store from './store'
 
 Vue.config.productionTip = false
 

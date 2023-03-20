@@ -10,6 +10,12 @@ import VueRouter from 'vue-router'
 import constRoutes from '@/router/routes'
 import config from '@/config'
 
+const VueRouterPush = VueRouter.prototype.push
+
+VueRouter.prototype.push = function push(to) {
+  return VueRouterPush.call(this, to).catch(err => err)
+}
+
 Vue.use(VueRouter)
 
 export { constRoutes }

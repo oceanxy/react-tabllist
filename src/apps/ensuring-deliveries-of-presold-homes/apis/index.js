@@ -3,7 +3,6 @@ import service from '@/utils/request'
 const modulesFiles = require.context('./modules', true, /\.js$/)
 
 // 自动引入 './modules' 中的所有 api 模块
-// 不再需要`import app from './modules/app'`
 const apis = modulesFiles.keys().reduce((modules, modulePath) => {
   // eg. 设置 './app.js' => 'app'
   const value = modulesFiles(modulePath)

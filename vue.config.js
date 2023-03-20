@@ -1,13 +1,15 @@
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin // Webpack包文件分析器
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin // Webpack包文件分析器
 // const VConsolePlugin = require('vconsole-webpack-plugin') // 引入 移动端模拟开发者工具 插件 （另：https://github.com/liriliri/eruda）
 const CompressionPlugin = require('compression-webpack-plugin') // Gzip
 const { getAvailableProjectNames } = require('./build/configs')
+const webpack = require('webpack')
 
-let config = {} // 打包时使用“--proj appName1 appName2 ...”指令带可对指定的 app 统一打包，不带或无效的 appName 将对整体项目打包
+let config = {}
 
 const availableProjectNames = getAvailableProjectNames()
 
 if (availableProjectNames.length) {
+  // app 独立打包
   config = {
     pages: {
       index: {
@@ -60,6 +62,12 @@ module.exports = {
   // 生产环境是否生成 sourceMap 文件。设置为 false 以加速生产环境构建。
   // 默认 true
   productionSourceMap: process.env.NODE_ENV !== 'production',
+  // configureWebpack: {
+  //   plugins: [
+  //     // ant-design-vue中有强依赖该插件，所以在webpack的externals中配置moment会报错，现通过webpack中自带的插件减小引用文件的体积
+  //     new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /zh-cn/)
+  //   ]
+  // },
   // webpack配置
   // 对内部的 webpack 配置进行更细粒度的修改
   // https://github.com/neutrinojs/webpack-chain see https://github.com/vuejs/vue-cli/blob/dev/docs/webpack.md
@@ -98,10 +106,42 @@ module.exports = {
         }
       ])
 
-      //  Webpack包文件分析器(https://github.com/webpack-contrib/webpack-bundle-analyzer)
-      // config
-      //   .plugin('BundleAnalyzerPlugin')
-      //   .use(BundleAnalyzerPlugin)
+      // Webpack包文件分析器(https://github.com/webpack-contrib/webpack-bundle-analyzer)
+      config
+        .plugin('BundleAnalyzerPlugin')
+        .use(BundleAnalyzerPlugin)
+
+      // 排除指定包，采用 CND 方式
+      config.set('externals', {
+        'vue': 'Vue', // 成功
+        'vue-router': 'VueRouter', // 成功
+        'vuex': 'Vuex', // 成功
+        'lodash': '_', // 成功
+        'axios': 'axios', // 成功
+        'echarts': 'echarts', // 成功（大体积）
+        'ant-design-vue': 'antd' // 未成功
+      })
+
+      // 通过 html-webpack-plugin 将 cdn 注入到 index.html 之中
+      config.plugin('html')
+        .tap(args => {
+          args[0].cdn = {
+            css: [
+              'https://cdn.jsdelivr.net/npm/ant-design-vue@1.7.8/dist/antd.min.css'
+            ],
+            js: [
+              'https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.min.js',
+              'https://cdn.jsdelivr.net/npm/vuex@3.6.2/dist/vuex.min.js',
+              'https://cdn.jsdelivr.net/npm/vue-router@3.6.5/dist/vue-router.min.js',
+              'https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js',
+              'https://cdn.jsdelivr.net/npm/axios@1.3.4/dist/axios.min.js',
+              'https://cdn.jsdelivr.net/npm/echarts@5.4.1/dist/echarts.min.js',
+              'https://cdn.jsdelivr.net/npm/ant-design-vue@1.7.8/dist/antd.min.js'
+            ]
+          }
+
+          return args
+        })
     } else {
       // 移动端模拟开发者工具(https://github.com/diamont1001/vconsole-webpack-plugin https://github.com/Tencent/vConsole)
       // config.plugins.push(
