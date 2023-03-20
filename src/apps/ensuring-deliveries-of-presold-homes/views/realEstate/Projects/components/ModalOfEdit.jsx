@@ -483,6 +483,7 @@ export default Form.create({})({
                   <TGUploadFile
                     form={this.form}
                     limit={1}
+                    accept={'.doc,.docx,.pdf'}
                     disabled={this.currentItem.isEdit === 0}
                   />
                 )
@@ -504,6 +505,7 @@ export default Form.create({})({
                   <TGUploadFile
                     form={this.form}
                     limit={1}
+                    accept={'.doc,.docx,.pdf'}
                     disabled={this.currentItem.isEdit === 0}
                   />
                 )
