@@ -37,8 +37,6 @@ export default Form.create({})({
         on: {
           cancel: () => this.onCancel(),
           ok: () => this.onSubmit(
-            console.log(this),
-
             {
               customDataHandler: value => {
                 const data = cloneDeep(value)
