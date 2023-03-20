@@ -18,7 +18,7 @@ module.exports = {
         libraryDirectory: 'es',
         style: true
       }
-    ],
+    ]
     // lodash 按需引入
     // 'lodash'
   ]

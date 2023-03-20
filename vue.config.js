@@ -119,7 +119,7 @@ module.exports = {
         'lodash': '_', // 成功
         'axios': 'axios', // 成功
         'echarts': 'echarts', // 成功（大体积）
-        'ant-design-vue': 'antd' // 未成功
+        'ant-design-vue': 'antd' // 未成功 受 babel.config.js 里按需使用antd组件配置的影响
       })
 
       // 通过 html-webpack-plugin 将 cdn 注入到 index.html 之中
