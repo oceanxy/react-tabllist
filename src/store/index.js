@@ -15,7 +15,6 @@ const appModulesFiles = require.context('../apps', true, /store\/modules\/[a-zA-
 const dynamicModulesFiles = require.context('../apps', true, /store\/dynamicModules\/modules\/[a-zA-Z0-9-]+\.js/)
 
 // 自动引入 './modules' 中的所有 vuex 模块
-// 不再需要`import app from './modules/app'`
 const modules = modulesFiles.keys().reduce((modules, modulePath) => {
   // eg. 设置 './app.js' => 'app'
   const moduleName = modulePath.replace(/^\.\/(.*)\.\w+$/, '$1')

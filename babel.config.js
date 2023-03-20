@@ -4,7 +4,7 @@ module.exports = {
     // 支持jsx
     [
       '@vue/babel-preset-jsx',
-      {injectH: false}
+      { injectH: false }
     ]
   ],
   plugins: [
@@ -18,6 +18,8 @@ module.exports = {
         libraryDirectory: 'es',
         style: true
       }
-    ]
+    ],
+    // lodash 按需引入
+    // 'lodash'
   ]
 }
