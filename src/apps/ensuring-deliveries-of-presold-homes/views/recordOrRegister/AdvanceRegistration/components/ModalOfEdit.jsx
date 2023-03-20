@@ -61,6 +61,9 @@ export default Form.create({})({
     }
   },
   methods: {
+    done() {
+
+    },
     setState(stateName, value = []) {
       this.$store.commit('setState', {
         value: { loading: false, list: value },

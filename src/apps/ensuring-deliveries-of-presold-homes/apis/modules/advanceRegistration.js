@@ -173,7 +173,7 @@ export default {
    */
   foretellGetTemplateUrl(request, data) {
     return request({
-      url: '/estate/foretell/getTemplateUrl',
+      url: '/estate/netSign/getTemplateUrl',
       method: 'post',
       data
     })
