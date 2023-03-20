@@ -112,36 +112,36 @@ module.exports = {
         .use(BundleAnalyzerPlugin)
 
       // 排除指定包，采用 CND 方式
-      config.set('externals', {
-        'vue': 'Vue', // 成功
-        'vue-router': 'VueRouter', // 成功
-        'vuex': 'Vuex', // 成功
-        'lodash': '_', // 成功
-        'axios': 'axios', // 成功
-        'echarts': 'echarts', // 成功（大体积）
-        'ant-design-vue': 'antd' // 未成功 受 babel.config.js 里按需使用antd组件配置的影响
-      })
+      // config.set('externals', {
+      //   'vue': 'Vue', // 成功
+      //   'vue-router': 'VueRouter', // 成功
+      //   'vuex': 'Vuex', // 成功
+      //   'lodash': '_', // 成功
+      //   'axios': 'axios', // 成功
+      //   'echarts': 'echarts', // 成功（大体积）
+      //   'ant-design-vue': 'antd' // 未成功 受 babel.config.js 里按需使用antd组件配置的影响
+      // })
 
       // 通过 html-webpack-plugin 将 cdn 注入到 index.html 之中
-      config.plugin('html')
-        .tap(args => {
-          args[0].cdn = {
-            css: [
-              'https://cdn.jsdelivr.net/npm/ant-design-vue@1.7.8/dist/antd.min.css'
-            ],
-            js: [
-              'https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.min.js',
-              'https://cdn.jsdelivr.net/npm/vuex@3.6.2/dist/vuex.min.js',
-              'https://cdn.jsdelivr.net/npm/vue-router@3.6.5/dist/vue-router.min.js',
-              'https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js',
-              'https://cdn.jsdelivr.net/npm/axios@1.3.4/dist/axios.min.js',
-              'https://cdn.jsdelivr.net/npm/echarts@5.4.1/dist/echarts.min.js',
-              'https://cdn.jsdelivr.net/npm/ant-design-vue@1.7.8/dist/antd.min.js'
-            ]
-          }
-
-          return args
-        })
+      // config.plugin('html')
+      //   .tap(args => {
+      //     args[0].cdn = {
+      //       css: [
+      //         'https://cdn.jsdelivr.net/npm/ant-design-vue@1.7.8/dist/antd.min.css'
+      //       ],
+      //       js: [
+      //         'https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.min.js',
+      //         'https://cdn.jsdelivr.net/npm/vuex@3.6.2/dist/vuex.min.js',
+      //         'https://cdn.jsdelivr.net/npm/vue-router@3.6.5/dist/vue-router.min.js',
+      //         'https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js',
+      //         'https://cdn.jsdelivr.net/npm/axios@1.3.4/dist/axios.min.js',
+      //         'https://cdn.jsdelivr.net/npm/echarts@5.4.1/dist/echarts.min.js',
+      //         'https://cdn.jsdelivr.net/npm/ant-design-vue@1.7.8/dist/antd.min.js'
+      //       ]
+      //     }
+      //
+      //     return args
+      //   })
     } else {
       // 移动端模拟开发者工具(https://github.com/diamont1001/vconsole-webpack-plugin https://github.com/Tencent/vConsole)
       // config.plugins.push(

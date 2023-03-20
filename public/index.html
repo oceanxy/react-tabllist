@@ -6,11 +6,6 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
   <title>渝兴集团综合管理平台</title>
-  <% if (process.env.NODE_ENV === 'production') { %>
-  <% for(var css of htmlWebpackPlugin.options.cdn.css) { %>
-  <link rel="stylesheet" href="<%=css%>" as="style">
-  <% } %>
-  <% } %>
 </head>
 <body>
 <noscript>
@@ -20,11 +15,6 @@
   </strong>
 </noscript>
 <div id="app"></div>
-<% if (process.env.NODE_ENV === 'production') { %>
-<% for(var js of htmlWebpackPlugin.options.cdn.js) { %>
-<script src="<%=js%>"></script>
-<% } %>
-<% } %>
 <!-- built files will be auto injected -->
 </body>
 </html>
