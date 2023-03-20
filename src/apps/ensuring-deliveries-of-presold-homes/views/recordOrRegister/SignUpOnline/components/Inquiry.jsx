@@ -7,7 +7,7 @@ export default Form.create({})({
   computed: {
     estateTypeList() {
       return this.$store.state[this.moduleName].estateType?.list || []
-    },
+    }
   },
   async created() {
     await this.$store.dispatch('getListWithLoadingStatus', {
