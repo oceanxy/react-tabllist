@@ -348,7 +348,17 @@ export default Form.create({})({
             {
               this.form.getFieldDecorator(
                 'indoorArea',
-                { initialValue: this.currentItem.indoorArea ? +this.currentItem.indoorArea : undefined }
+                {
+                  initialValue: this.currentItem.indoorArea ? +this.currentItem.indoorArea : undefined,
+                  rules: [
+                    {
+                      required: true,
+                      type: 'number',
+                      message: '请输入套内面积！单位：平方米',
+                      trigger: 'blur'
+                    }
+                  ]
+                }
               )(
                 <InputNumber
                   placeholder="请输入套内面积"
