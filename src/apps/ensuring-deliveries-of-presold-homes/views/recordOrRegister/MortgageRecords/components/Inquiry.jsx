@@ -4,7 +4,7 @@ import { mapGetters } from 'vuex'
 
 export default Form.create({})({
   mixins: [forInquiry()],
-  data: () => ({ initialValues: { dateRange: [], status: '' } }),
+  data: () => ({ initialValues: { dateRange: [], easteDicId: '', status: '' } }),
   computed: {
     ...mapGetters({ getState: 'getState' }),
     estateTypeList() {
@@ -41,8 +41,8 @@ export default Form.create({})({
           <Form.Item label={'不动产性质'}>
             {
               this.form.getFieldDecorator('easteDicId', { initialValue: this.initialValues.easteDicId })(
-                <Select>
-                  <Select.Option value={''}>全部</Select.Option>
+                <Select placeholder="请选择">
+                  <Select.Option value={''}>不限</Select.Option>
                   {
                     this.estateTypeList.list?.map(item => (
                       <Select.Option value={item.dicCode} > {item.dicName}</Select.Option>
@@ -52,10 +52,23 @@ export default Form.create({})({
               )
             }
           </Form.Item>
-          <Form.Item label={'关键字'}>
+          <Form.Item label={'名称'}>
             {
               this.form.getFieldDecorator('estateName', { initialValue: this.initialValues.estateName })(
                 <Input maxLength={10} placeholder="项目/开发商名称" allowClear />
+              )
+            }
+          </Form.Item>
+          <Form.Item label={'状态'}>
+            {
+              this.form.getFieldDecorator('rescindContractStatus', {
+                initialValue: this.initialValues.rescindContractStatus
+              })(
+                <Select placeholder="请选择" allowClear>
+                  <Select.Option value={''}>全部</Select.Option>
+                  <Select.Option value={1}>未解除</Select.Option>
+                  <Select.Option value={2}>已解除</Select.Option>
+                </Select>
               )
             }
           </Form.Item>

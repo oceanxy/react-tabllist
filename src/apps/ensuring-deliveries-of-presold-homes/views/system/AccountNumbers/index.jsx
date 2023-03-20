@@ -20,7 +20,7 @@ export default {
         apiOptions={{
           apiName: 'getOrganTree',
           stateName: 'organTree',
-          moduleName: 'combination'
+          moduleName: 'accountNumbers'
         }}
       >
         <TGContainerWithTable>

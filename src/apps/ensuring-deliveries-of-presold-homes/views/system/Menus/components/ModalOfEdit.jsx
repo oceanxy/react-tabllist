@@ -301,7 +301,7 @@ export default Form.create({})({
               })(
                 <InputNumber
                   min={0}
-                  max={99999999}
+                  max={999999999999}
                   style={{ width: '100%' }}
                   placeholder="请输入排序"
                 />

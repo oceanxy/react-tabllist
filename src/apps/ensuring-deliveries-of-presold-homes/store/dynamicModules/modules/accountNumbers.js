@@ -8,6 +8,10 @@ export default commitRootInModule =>
           loading: false,
           list: []
         },
+        organTree: {
+          loading: false,
+          list: []
+        },
         visibilityOfResetPwd: false
       }
     },
