@@ -167,10 +167,12 @@ export default ({
 
         // 检测弹窗内的表格是否注册成为子模块
         if (this.inModal) {
-          console.error([
-            `如果在弹窗内的 Table 组件中引用了 forTable 混合，请务必将该弹窗组件注册为 ${this.moduleName} 页面的子模块，`,
-            '以防止弹窗内的表格组件和当前页面的表格组件的数据产生混淆。'
-          ].join(''))
+          console.error(
+            [
+              `如果在弹窗内的 Table 组件中引用了 forTable 混合，请务必将该弹窗组件注册为 ${this.moduleName} 页面的子模块，`,
+              '以防止弹窗内的表格组件和当前页面的表格组件的数据产生混淆。'
+            ].join('')
+          )
         }
       } else {
         this.$watch(
