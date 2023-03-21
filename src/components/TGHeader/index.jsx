@@ -102,9 +102,9 @@ export default {
                 )
                 : null
             }
-            <Input placeholder={'搜功能'} class={'search-input'}>
-              <IconFont type={'icon-global-search'} slot={'addonAfter'} />
-            </Input>
+            {/* <Input placeholder={'搜功能'} class={'search-input'}> */}
+            {/*   <IconFont type={'icon-global-search'} slot={'addonAfter'} /> */}
+            {/* </Input> */}
 
           </div>
           {
@@ -190,12 +190,12 @@ export default {
                     {/*   </Tabs> */}
                     {/* </div> */}
                   </Popover>
-                  <Button shape="circle" type={'link'} class={'tg-header-icon'}>
-                    <IconFont type={'icon-global-hf'} />
-                  </Button>
-                  <Button shape="circle" type={'link'} class={'tg-header-icon'}>
-                    <IconFont type={'icon-global-help'} />
-                  </Button>
+                  {/* <Button shape="circle" type={'link'} class={'tg-header-icon'}> */}
+                  {/*   <IconFont type={'icon-global-hf'} /> */}
+                  {/* </Button> */}
+                  {/* <Button shape="circle" type={'link'} class={'tg-header-icon'}> */}
+                  {/*   <IconFont type={'icon-global-help'} /> */}
+                  {/* </Button> */}
                 </div>
               ) : null
           }
