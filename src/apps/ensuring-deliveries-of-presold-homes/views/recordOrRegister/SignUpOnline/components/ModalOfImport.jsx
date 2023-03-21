@@ -159,9 +159,9 @@ export default Form.create({})({
   },
   methods: {
 
-    async done() {
+    // async done() {
 
-    },
+    // },
     // 上传文件
     async uploadFile() {
       const imFile = this.$refs.imFile

@@ -1,5 +1,5 @@
 import './index.scss'
-import { Avatar, Badge, Button, Divider, Dropdown, Input, Layout, Menu, Popover, Tag } from 'ant-design-vue'
+import { Avatar, Badge, Button, Divider, Dropdown, Layout, Menu, Popover, Tag } from 'ant-design-vue'
 import Logo from '@/components/Logo'
 import { mapActions, mapGetters } from 'vuex'
 

@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import '../assets/styles/index.scss'
 import { Form, Button, Space, message, Spin, Table } from 'ant-design-vue'
 import forFormModal from '@/mixins/forModal/forFormModal'
@@ -318,7 +319,9 @@ export default Form.create({})({
                         <span class="fail">{this.tableData.failSize}</span>
                         条！
                       </Space>
-                      <Button disabled={!this.tableData.failSize > 0} onClick={() => this.downloadErrorData()}>下载失败数据{this.tableData.failSize}条</Button>
+                      <Button disabled={!this.tableData.failSize > 0} onClick={() => this.downloadErrorData()}>
+                        下载失败数据{this.tableData.failSize}条
+                      </Button>
                     </h3>
                     <Table
                       scroll={{ x: '100%' | true, y: '500px' }}
