@@ -1,8 +1,12 @@
 import TGContainer from '@/components/TGContainer'
 import { Card, Empty } from 'ant-design-vue'
 import ScrollingNumber from '@/components/ScrollingNumber'
+// import forIndex from '@/mixins/forIndex'
+
+// const ModalOfSetUpConcerns = () => import('../ModalOfSetUpConcerns')
 
 export default {
+  // mixins: [forIndex],
   inject: ['moduleName'],
   computed: {
     userConcern() {
@@ -16,6 +20,11 @@ export default {
       customApiName: 'getListOfUserConcern'
     })
   },
+  // methods: {
+  //   async onClick() {
+  //     await this._setVisibilityOfModal(null, 'visibilityOfSetUpConcerns')
+  //   }
+  // },
   render() {
     return (
       <TGContainer
@@ -25,8 +34,14 @@ export default {
             我的关注
           </div>
         }
-        // showMore
-        rightIcon={<IconFont title={'设置'} type={'icon-home-pz-fill'} />}
+        showMore
+        // rightIcon={
+        //   <IconFont
+        //     title={'设置'}
+        //     type={'icon-home-pz-fill'}
+        //     onClick={this.onClick}
+        //   />
+        // }
         showBoxShadow={false}
         contentClass="concern-cards"
       >
@@ -47,6 +62,10 @@ export default {
               </div>
             )
         }
+        {/* <ModalOfSetUpConcerns */}
+        {/*   modalTitle={'设置我的关注'} */}
+        {/*   visibilityFieldName={'visibilityOfSetUpConcerns'} */}
+        {/* /> */}
       </TGContainer>
     )
   }

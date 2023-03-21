@@ -518,9 +518,8 @@ export default ({
             }
 
             // 这里配合了css的flex布局实现
-            if (HTML_TABLE_BODY_HEIGHT + HTML_TABLE_HEADER_HEIGHT > TABLE_CONTAINER_HEIGHT) {
-              // 多减去6像素是为了消除 '.ant-table-header.ant-table-hide-scrollbar' 元素上设置的 'margin: -6px;' 对布局的影响
-              scroll.y = TABLE_CONTAINER_HEIGHT - HTML_TABLE_HEADER_HEIGHT - FOOTER_HEIGHT - TABLE_TITLE_HEIGHT - 6
+            if (HTML_TABLE_BODY_HEIGHT + HTML_TABLE_HEADER_HEIGHT + TABLE_TITLE_HEIGHT > TABLE_CONTAINER_HEIGHT) {
+              scroll.y = TABLE_CONTAINER_HEIGHT - HTML_TABLE_HEADER_HEIGHT - FOOTER_HEIGHT - TABLE_TITLE_HEIGHT
             }
 
             this.tableProps.scroll = scroll
@@ -535,6 +534,7 @@ export default ({
           // 如果子模块内有且仅有一个表格组件时， tableName props 不是必需的，此时组件会根据 submoduleName 自动生成 tableName props。
           ref={this.tableName || `${this.submoduleName ? `${this.submoduleName}Of` : ''}${this.moduleName}Table`}
           scopedSlots={this.scopedSlots}
+          class={this.tableProps.scroll.x ? '' : 'not-set-x-scroll'}
           {...this.attributes}
         />
       )
