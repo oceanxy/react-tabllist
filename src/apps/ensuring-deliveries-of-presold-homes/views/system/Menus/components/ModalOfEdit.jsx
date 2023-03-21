@@ -47,6 +47,7 @@ export default Form.create({})({
       data.hideChildren = data.hideChildren ? 1 : 0
       data.isShow = data.isShow ? 1 : 0
       data.isDefault = data.isDefault ? 1 : 0
+      data.redirect = data.redirect || ''
 
       return data
     }
