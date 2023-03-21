@@ -150,7 +150,11 @@ export default {
       /**
        * 通知下层组件，当前页面是否启用侧边树
        */
-      inTree: true
+      inTree: true,
+      /**
+       * 向下层组件提供直接刷新左侧树的API
+       */
+      refreshTree: this.getTree
     }
   },
   watch: {

@@ -18,7 +18,19 @@ import { message } from 'ant-design-vue'
  * @returns {Object}
  */
 export default cb => ({
-  inject: ['moduleName'],
+  inject: {
+    moduleName: { default: null },
+    /**
+     * 判断本页面是否存在侧边树组件
+     * 来自于 @/src/components/TGContainerWithTreeSider 组件
+     */
+    inTree: { default: false },
+    /**
+     * 刷新侧边树的数据
+     * 来自于 @/src/components/TGContainerWithTreeSider 组件
+     */
+    refreshTree: { default: null }
+  },
   mixins: [forIndex],
   data() {
     return {
@@ -92,7 +104,13 @@ export default cb => ({
     async onCustomDeleteClick() {
       await verificationDialog(
         async () => {
-          return await this.$store.dispatch('delete', { moduleName: this.moduleName })
+          const status = await this.$store.dispatch('delete', { moduleName: this.moduleName })
+
+          if (status && this.inTree) {
+            this.refreshTree()
+          }
+
+          return Promise.resolve(status)
         },
         <div>
           <div>确定要批量删除已选中的数据吗？</div>

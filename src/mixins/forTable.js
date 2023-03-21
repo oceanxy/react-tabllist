@@ -36,10 +36,20 @@ export default ({
       // 通知组件在初始化阶段是否自动请求数据。
       // 该变量与 isFetchList 是相同的作用，区别在于 provide 和 inject 可以不限层级的传递数据。
       // 来自于 @/components/TGContainerWithTreeSider 组件。
-      notInitList: { default: undefined },
+      notInitList: { default: null },
       // 通知组件是否是弹窗内组件。
       // 来自于 @/mixins/forModal 混合。
-      inModal: { default: undefined }
+      inModal: { default: null },
+      /**
+       * 判断本页面是否存在侧边树组件
+       * 来自于 @/src/components/TGContainerWithTreeSider 组件
+       */
+      inTree: { default: false },
+      /**
+       * 刷新侧边树的数据
+       * 来自于 @/src/components/TGContainerWithTreeSider 组件
+       */
+      refreshTree: { default: null }
     },
     data() {
       return {
@@ -418,6 +428,11 @@ export default ({
                 <span style={{ color: 'blue' }}>{record.fullName}</span>,
                 ' 已成功删除！'
               ])
+
+              // 执行侧边树数据更新
+              if (this.inTree) {
+                this.refreshTree()
+              }
             }
 
             close()
