@@ -33,17 +33,9 @@ export default Form.create({})({
 
                 return data
               },
-              done: async () => {
-                // 更新左侧菜单树
-                await this.$store.dispatch('getListWithLoadingStatus', {
-                  moduleName: this.moduleName,
-                  stateName: 'organTree',
-                  customApiName: 'getOrganTree'
-                })
-              }
+              refreshTree: true
             }
           )
-
         }
       }
     }
