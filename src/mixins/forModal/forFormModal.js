@@ -17,6 +17,18 @@ import { message } from '@/utils/message'
 export default ({ disableSubmitButton = true } = {}) => {
   return {
     mixins: [forModal()],
+    inject: {
+      /**
+       * 判断本页面是否存在侧边树组件
+       * 来自于 @/src/components/TGContainerWithTreeSider 组件
+       */
+      inTree: { default: false },
+      /**
+       * 刷新侧边树的数据
+       * 来自于 @/src/components/TGContainerWithTreeSider 组件
+       */
+      refreshTree: { default: null }
+    },
     props: {
       /**
        * 用于替换 modalTitle 内的 {action} 的候选值
@@ -36,13 +48,6 @@ export default ({ disableSubmitButton = true } = {}) => {
     data() {
       return { modalProps: { okButtonProps: { props: { disabled: disableSubmitButton } } } }
     },
-    // computed: {
-    //   visibilityFieldName() {
-    //     const tag = this.$vnode.tag
-    //
-    //     return 'visibility' + tag.substring(tag.lastIndexOf('-') + 6)
-    //   }
-    // },
     watch: {
       visible: {
         immediate: true,
@@ -96,6 +101,7 @@ export default ({ disableSubmitButton = true } = {}) => {
        * 提交表单
        * 注意 isResetSelectedRows 参数很重要，该清空 selectedRowKeys 一定要清空，不然会造成下次请求时的参数重叠。
        * 主要应用在“删除”等会减少列表数据量的操作中
+       * @param [refreshTree=false] {boolean} 是否在成功提交表单后舒心对应的侧边树，默认 false。依赖 inject.inTree 和 inject.refreshTree
        * @param [isFetchList=true] {boolean} 是否在成功提交表单后刷新对应的列表，默认 true
        * @param [isResetSelectedRows] {boolean} 是否在成功提交表单后重置列表的选中行数据，默认 false
        * @param [customApiName] {string} 自定义请求API
@@ -106,6 +112,7 @@ export default ({ disableSubmitButton = true } = {}) => {
        * @param [done] {response => void} 提交成功后的回调函数
        */
       onSubmit({
+        refreshTree,
         isFetchList = true,
         isResetSelectedRows,
         customApiName,
@@ -188,7 +195,12 @@ export default ({ disableSubmitButton = true } = {}) => {
               // 操作提示消息
               message(response.status)
 
-              // 成功回调
+              // 执行侧边树刷新操作
+              if (refreshTree && this.inTree) {
+                this.refreshTree()
+              }
+
+              // 执行回调
               if (typeof done === 'function') {
                 done(response)
               }

@@ -21,22 +21,14 @@ export default Form.create({})({
         on: {
           cancel: () => this.onCancel(),
           ok: () => this.onSubmit({
-            customDataHandler: this.customDataHandler,
-            done: this.done
+            refreshTree: true,
+            customDataHandler: this.customDataHandler
           })
         }
       }
     }
   },
   methods: {
-    async done() {
-      // 更新左侧菜单树
-      await this.$store.dispatch('getListWithLoadingStatus', {
-        moduleName: this.moduleName,
-        stateName: 'menuTree',
-        customApiName: 'getMenuTree'
-      })
-    },
     customDataHandler(values) {
       const data = cloneDeep(values)
 
