@@ -62,12 +62,6 @@ module.exports = {
   // 生产环境是否生成 sourceMap 文件。设置为 false 以加速生产环境构建。
   // 默认 true
   productionSourceMap: process.env.NODE_ENV !== 'production',
-  // configureWebpack: {
-  //   plugins: [
-  //     // ant-design-vue中有强依赖该插件，所以在webpack的externals中配置moment会报错，现通过webpack中自带的插件减小引用文件的体积
-  //     new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /zh-cn/)
-  //   ]
-  // },
   // webpack配置
   // 对内部的 webpack 配置进行更细粒度的修改
   // https://github.com/neutrinojs/webpack-chain see https://github.com/vuejs/vue-cli/blob/dev/docs/webpack.md
@@ -113,11 +107,12 @@ module.exports = {
 
       // 排除指定包，采用 CND 方式
       // config.set('externals', {
-      //   'vue': 'Vue', // 成功
-      //   'vue-router': 'VueRouter', // 成功
-      //   'vuex': 'Vuex', // 成功
-      //   'lodash': '_', // 成功
-      //   'axios': 'axios', // 成功
+      //   'vue': 'Vue',
+      //   'vue-router': 'VueRouter',
+      //   'vuex': 'Vuex',
+      //   'lodash': '_',
+      //   'axios': 'axios',
+      //   'moment': 'moment',
       //   'echarts': 'echarts', // 成功（大体积）
       //   'ant-design-vue': 'antd' // 未成功 受 babel.config.js 里按需使用antd组件配置的影响
       // })
@@ -135,6 +130,7 @@ module.exports = {
       //         'https://cdn.jsdelivr.net/npm/vue-router@3.6.5/dist/vue-router.min.js',
       //         'https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js',
       //         'https://cdn.jsdelivr.net/npm/axios@1.3.4/dist/axios.min.js',
+      //         'https://cdn.jsdelivr.net/npm/moment@2.29.3/dist/moment.min.js',
       //         'https://cdn.jsdelivr.net/npm/echarts@5.4.1/dist/echarts.min.js',
       //         'https://cdn.jsdelivr.net/npm/ant-design-vue@1.7.8/dist/antd.min.js'
       //       ]

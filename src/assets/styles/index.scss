@@ -331,6 +331,17 @@ body {
   flex: auto;
   overflow: hidden;
 
+  &.not-set-x-scroll .ant-table {
+    .ant-table-content {
+      .ant-table-fixed-left,
+      .ant-table-fixed-right {
+        .ant-table-body-inner {
+          overflow-x: hidden;
+        }
+      }
+    }
+  }
+
   .tg-table-field-highlight {
     color: #13c2c2;
     font-size: 16px;
@@ -367,15 +378,6 @@ body {
 
     .ant-table-title {
       padding: 0 0 16px 0;
-    }
-
-    .ant-table-content {
-      .ant-table-fixed-left,
-      .ant-table-fixed-right {
-        .ant-table-body-inner {
-          overflow-x: hidden;
-        }
-      }
     }
 
     .table-row-background {
