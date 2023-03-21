@@ -89,10 +89,12 @@ export default {
    * @returns {*}
    */
   exportProjects(request, params) {
+    console.log(params)
+
     return request({
       url: '/estate/projectInfo/exportExcel',
       method: 'get',
-      params,
+      params: { ...params, isOutTime: Number(params.isOutTime) },
       responseType: 'blob'
     })
   },
