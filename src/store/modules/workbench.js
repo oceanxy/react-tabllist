@@ -14,6 +14,7 @@ export default {
       loading: false
     },
     visibilityOfSetUpUsedFunctionsFrequently: false,
+    visibilityOfSetUpConcerns: false,
     treeOfSetUpUsedFunctionsFrequently: {
       list: [],
       loading: false
