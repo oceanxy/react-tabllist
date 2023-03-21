@@ -17,7 +17,7 @@ export default {
           },
           {
             title: '不动产名称',
-            width: 120,
+            width: 160,
             dataIndex: 'estateName'
           },
           {

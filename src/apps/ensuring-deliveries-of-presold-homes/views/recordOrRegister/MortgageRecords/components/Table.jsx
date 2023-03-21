@@ -22,12 +22,12 @@ export default {
           },
           {
             title: '项目',
-            width: 180,
+            width: 160,
             dataIndex: 'projectName'
           },
           {
             title: '不动产名称',
-            width: 140,
+            width: 160,
             dataIndex: 'easteName'
           },
           {
