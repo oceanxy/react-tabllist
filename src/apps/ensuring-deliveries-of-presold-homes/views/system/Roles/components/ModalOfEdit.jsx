@@ -37,7 +37,17 @@ export default Form.create({})({
                 delete data.parent
 
                 return data
+              },
+
+              done: async () => {
+                // 更新左侧菜单树
+                await this.$store.dispatch('getListWithLoadingStatus', {
+                  moduleName: this.moduleName,
+                  stateName: 'roleTree',
+                  customApiName: 'getRoleTree'
+                })
               }
+
             }
           )
 

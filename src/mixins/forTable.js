@@ -157,10 +157,12 @@ export default ({
 
         // 检测弹窗内的表格是否注册成为子模块
         if (this.inModal) {
-          console.error([
-            `如果在弹窗内的 Table 组件中引用了 forTable 混合，请务必将该弹窗组件注册为 ${this.moduleName} 页面的子模块，`,
-            '以防止弹窗内的表格组件和当前页面的表格组件的数据产生混淆。'
-          ].join(''))
+          console.error(
+            [
+              `如果在弹窗内的 Table 组件中引用了 forTable 混合，请务必将该弹窗组件注册为 ${this.moduleName} 页面的子模块，`,
+              '以防止弹窗内的表格组件和当前页面的表格组件的数据产生混淆。'
+            ].join('')
+          )
         }
       } else {
         this.$watch(
@@ -203,9 +205,8 @@ export default ({
         const element = document.querySelector('.row-inquiry')
 
         if (element) {
-          const MutationObserver = window.MutationObserver ||
-            window.WebKitMutationObserver ||
-            window.MozMutationObserver
+          const MutationObserver =
+            window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver
 
           this.observer = new MutationObserver(() => {
             // 这置延迟是因为 .row-inquiry 的 css过渡动画时间为200ms
@@ -321,12 +322,7 @@ export default ({
             name = record[nameKey]
           }
 
-          message.success([
-            <span style={{ color: '#16b364' }}>
-              {name}
-            </span>,
-            ' 的状态已更新！'
-          ])
+          message.success([<span style={{ color: '#16b364' }}>{name}</span>, ' 的状态已更新！'])
         }
 
         if (optimisticUpdate) {
@@ -414,10 +410,7 @@ export default ({
             })
 
             if (status) {
-              message.success([
-                <span style={{ color: 'blue' }}>{record.fullName}</span>,
-                ' 已成功删除！'
-              ])
+              message.success([<span style={{ color: 'blue' }}>{record.fullName}</span>, ' 已成功删除！'])
             }
 
             close()
@@ -476,10 +469,7 @@ export default ({
           moduleName: this.moduleName,
           submoduleName: this.submoduleName,
           payload: {
-            orderBy: sorter.column.sortCode.replace(
-              /\$\{orderby}/,
-              sorter.order.substring(0, sorter.order.length - 3)
-            )
+            orderBy: sorter.column.sortCode.replace(/\$\{orderby}/, sorter.order.substring(0, sorter.order.length - 3))
           },
           isResetSelectedRows: true // 注意此参数要设置为 true。因为排序变了，序号也重新计算了，所以需要清空已选择的行数据
         })
@@ -506,7 +496,8 @@ export default ({
             const HTML_TABLE_BODY_HEIGHT = table.querySelector('.ant-table-body .ant-table-tbody')?.clientHeight ?? 0
             const HTML_TABLE_HEADER = table.querySelector('.ant-table-scroll .ant-table-header')
             // ant-design-vue Table 组件的内部结构会根据内容的多少而变化，以适应表格的内容区滚动，所以这里要分情况获取表格元素
-            const HTML_TABLE_HEADER_HEIGHT = HTML_TABLE_HEADER?.clientHeight ??
+            const HTML_TABLE_HEADER_HEIGHT =
+              HTML_TABLE_HEADER?.clientHeight ??
               table.querySelector('.ant-table-scroll .ant-table-thead')?.clientHeight ??
               0
             const FOOTER_HEIGHT = table.querySelector('.ant-table-footer')?.clientHeight ?? 0
