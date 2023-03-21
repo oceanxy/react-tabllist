@@ -2,7 +2,6 @@ import { Input, Form, InputNumber, TreeSelect, Switch } from 'ant-design-vue'
 import forFormModal from '@/mixins/forModal/forFormModal'
 import DragModal from '@/components/DragModal'
 import { cloneDeep } from 'lodash'
-import apis from '@/apis'
 
 export default Form.create({})({
   mixins: [forFormModal()],
@@ -18,6 +17,11 @@ export default Form.create({})({
     roleTree() {
       return this.$store.state[this.moduleName].roleTree?.list || []
     },
+    menuTree() {
+      return this.$store.state[this.moduleName].menuTree
+    },
+
+
     attributes() {
       return {
         attrs: this.modalProps,
@@ -42,21 +46,16 @@ export default Form.create({})({
       }
     }
   },
-  methods: {
-    async getMenuTree() {
-      const res = await apis.getMenuTree()
-
-      if (res.status) {
-        this.menuTreeList = res.data || []
-      }
-    }
-  },
   watch: {
     visible: {
       immediate: true,
       async handler(value) {
         if (value) {
-          this.getMenuTree()
+          await this.$store.dispatch('getListWithLoadingStatus', {
+            moduleName: this.moduleName,
+            stateName: 'menuTree',
+            customApiName: 'getMenuTree'
+          })
         }
       }
     }
@@ -119,7 +118,7 @@ export default Form.create({})({
                   allowClear
                   dropdownClassName={'tg-select-dropdown'}
                   dropdownStyle={{ maxHeight: '300px' }}
-                  treeData={this.menuTreeList}
+                  treeData={this.menuTree.list}
                   replaceFields={{
                     children: 'children',
                     title: 'name',
@@ -128,7 +127,7 @@ export default Form.create({})({
                   }}
                   treeNodeFilterProp={'title'}
                   placeholder={'请选择父级菜单'}
-                  treeDefaultExpandedKeys={[this.currentItem.indexMenuId || this.menuTreeList?.[0]?.id]}
+                  treeDefaultExpandedKeys={[this.currentItem.indexMenuId || this.menuTree.list?.[0]?.id]}
                 />
               )
             }

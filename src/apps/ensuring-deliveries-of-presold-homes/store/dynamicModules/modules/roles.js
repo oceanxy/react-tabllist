@@ -21,6 +21,10 @@ export default commitRootInModule =>
       privilege: {
         loading: false,
         list: []
+      },
+      menuTree: {
+        loading: false,
+        list: []
       }
     }
   })
