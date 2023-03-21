@@ -207,7 +207,7 @@ export default Form.create({})({
           <Form.Item label="签约时间" class={'half'}>
             {
               this.form.getFieldDecorator('contractDate', {
-                initialValue: this.currentItem.contractDate,
+                initialValue: this.currentItem.contractDateStr,
                 rules: [
                   {
                     required: true,
