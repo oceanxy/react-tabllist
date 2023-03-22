@@ -163,18 +163,22 @@ export default {
           this.dataSource[index].dateRange[0] = moment(this.dataSource[index].starDate)
           this.dataSource[index].endDate = value[1].format('YYYYMMDD')
         } else {
-          this.dataSource[index].starDate = value[0].format('YYYYMMDD')
-          this.dataSource[index].endDate = value[1].format('YYYYMMDD')
+          this.dataSource[index].starDate = value[0]?.format('YYYYMMDD') ?? null
+          this.dataSource[index].endDate = value[1]?.format('YYYYMMDD') ?? null
         }
+
+        this.$emit('dateChange', this.dataSource[index].dateRange)
       }
 
       this.validator()
     },
     count() {
-      this.date = [
-        this.dataSource[0].dateRange[0].format('yyyy年M月D日'),
-        this.dataSource.at(-1).dateRange[1].format('yyyy年M月D日')
-      ]
+      this.date = this.dataSource[0].dateRange[0] && this.dataSource.at(-1).dateRange[1]
+        ? [
+          this.dataSource[0].dateRange[0]?.format('yyyy年M月D日'),
+          this.dataSource.at(-1).dateRange[1].format('yyyy年M月D日')
+        ]
+        : []
     }
   },
   render() {

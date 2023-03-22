@@ -84,7 +84,10 @@ export default Form.create({})({
       const ModalOfRepaymentPlanPreview = defineAsyncComponent(() => import('./ModalOfRepaymentPlanPreview'))
 
       return () => (
-        <ModalOfRepaymentPlanPreview modalTitle={'预览还款计划'} visibilityFieldName={'visibilityOfRepaymentPlanPreview'} />
+        <ModalOfRepaymentPlanPreview
+          modalTitle={'预览还款计划'}
+          visibilityFieldName={'visibilityOfRepaymentPlanPreview'}
+        />
       )
     },
     projectSegmentRateList() {
@@ -221,6 +224,9 @@ export default Form.create({})({
         fullName: this.keywordOfSearchDevelopers,
         _currentItem: this.currentItem
       }, 'visibilityOfDeveloper')
+    },
+    onDateChange() {
+      this.form.setFieldsValue({ repaymentPlanList: [] })
     }
   },
   render() {
@@ -411,10 +417,8 @@ export default Form.create({})({
                         ]
                       })(
                         <MultiInputOfStepRateList
-                          disabled={
-                            this.currentItem.isEdit === 0 ||
-                            !this.form.getFieldValue('moneyValue')
-                          }
+                          disabled={this.currentItem.isEdit === 0 || !this.form.getFieldValue('moneyValue')}
+                          onDateChange={this.onDateChange}
                         />
                       )
                     }

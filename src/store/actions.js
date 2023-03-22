@@ -37,13 +37,6 @@ export default {
 
     if (isFetchList) {
       const targetModule = submoduleName ? state[moduleName][submoduleName] : state[moduleName]
-      const getListParams = {
-        ...fetchListParams,
-        additionalQueryParameters: {
-          ...fetchListParams.additionalQueryParameters,
-          ...('pagination' in targetModule ? { pageIndex: 0 } : {})
-        }
-      }
 
       if (isResetSelectedRows && 'selectedRowKeys' in targetModule && 'selectedRows' in targetModule) {
         commit('setRowSelected', {
@@ -54,6 +47,14 @@ export default {
             selectedRows: []
           }
         })
+      }
+
+      const getListParams = {
+        ...fetchListParams,
+        additionalQueryParameters: {
+          ...fetchListParams.additionalQueryParameters,
+          ...('pagination' in targetModule ? { pageIndex: 0 } : {})
+        }
       }
 
       await dispatch('getList', {

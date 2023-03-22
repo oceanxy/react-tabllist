@@ -21,12 +21,26 @@ export default {
             关闭
           </Button>
         )
-      },
-      interest: 0,
-      principal: 0
+      }
     }
   },
   computed: {
+    totalRepayment() {
+      const result = {
+        principal: 0,
+        interest: 0
+      }
+
+      this.$store.state[this.moduleName][this.submoduleName].list.forEach(item => {
+        if (item.repaymentType === 1) {
+          result.principal += +item.money.toFixed(2)
+        } else {
+          result.interest += +item.money.toFixed(2)
+        }
+      })
+
+      return result
+    },
     attributes() {
       return {
         attrs: this.modalProps,
@@ -39,8 +53,6 @@ export default {
       immediate: true,
       handler(value) {
         if (value) {
-          this.count()
-
           // 初始化子模块的搜索值
           this.$store.commit('setState', {
             value: {
@@ -65,18 +77,6 @@ export default {
       })
 
       this.onCancel(this.visibilityFieldName)
-    },
-    count() {
-      this.interest = 0
-      this.principal = 0
-
-      this.currentItem.repaymentPlanList.forEach(item => {
-        if (item.repaymentType === 1) {
-          this.principal += +item.money.toFixed(2)
-        } else {
-          this.interest += +item.money.toFixed(2)
-        }
-      })
     }
   },
   render() {
@@ -84,9 +84,11 @@ export default {
       <DragModal {...this.attributes} class={'tg-submodule-container'}>
         <Table />
         <p style={'color: #ffa191; font-weight: bolder; font-size: 16px'}>
-          还款总计：利息 {this.interest.toLocaleString()} 元 +
-          本金 {this.principal.toLocaleString()} 元 =
-          {' '}{(this.interest + this.principal).toLocaleString()} 元
+          还款总计：
+          利息 {this.totalRepayment.interest.toLocaleString()} 元 +
+          本金 {this.totalRepayment.principal.toLocaleString()} 元 =
+          {' '}
+          {(this.totalRepayment.interest + this.totalRepayment.principal).toLocaleString()} 元
         </p>
       </DragModal>
     )
