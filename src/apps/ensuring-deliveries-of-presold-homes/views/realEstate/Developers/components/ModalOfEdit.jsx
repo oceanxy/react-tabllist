@@ -169,16 +169,7 @@ export default Form.create({})({
           </Form.Item>
           <Form.Item label="联系人" class={'half'}>
             {
-              this.form.getFieldDecorator('leader', {
-                initialValue: this.currentItem.leader,
-                rules: [
-                  {
-                    required: true,
-                    message: '请输入联系人姓名！',
-                    trigger: 'blur'
-                  }
-                ]
-              })(
+              this.form.getFieldDecorator('leader', { initialValue: this.currentItem.leader })(
                 <Input placeholder="请输入联系人姓名" allowClear maxLength={30} />
               )
             }
@@ -187,14 +178,7 @@ export default Form.create({})({
             {
               this.form.getFieldDecorator('leaderTel', {
                 initialValue: this.currentItem.leaderTel,
-                rules: [
-                  {
-                    required: true,
-                    message: '请输入联系电话！',
-                    trigger: 'blur'
-                  },
-                  { validator: verifyPhoneNumber }
-                ]
+                rules: [{ validator: verifyPhoneNumber }]
               })(
                 <Input placeholder="请输入联系电话" allowClear maxLength={30} />
               )
@@ -204,14 +188,7 @@ export default Form.create({})({
             {
               this.form.getFieldDecorator('email', {
                 initialValue: this.currentItem.email,
-                rules: [
-                  {
-                    required: true,
-                    message: '请输入电子邮箱！',
-                    trigger: 'blur'
-                  },
-                  { validator: verifyEmail }
-                ]
+                rules: [{ validator: verifyEmail }]
               })(
                 <Input placeholder="请输入电子邮箱" allowClear maxLength={30} />
               )
@@ -220,14 +197,6 @@ export default Form.create({})({
           <Form.Item label="地址" class={'half'}>
             {
               this.form.getFieldDecorator('districtList', {
-                rules: [
-                  {
-                    required: true,
-                    type: 'array',
-                    message: '请选择地址！',
-                    trigger: 'change'
-                  }
-                ],
                 initialValue: this.currentItem.provinceId && this.currentItem.cityId && this.currentItem.areaId
                   ? [
                     { id: this.currentItem.provinceId, name: this.currentItem.provinceName },
@@ -257,16 +226,7 @@ export default Form.create({})({
           </Form.Item>
           <Form.Item label="详细地址">
             {
-              this.form.getFieldDecorator('address', {
-                initialValue: this.currentItem.address,
-                rules: [
-                  {
-                    required: true,
-                    message: '请输入详细地址！',
-                    trigger: 'blur'
-                  }
-                ]
-              })(
+              this.form.getFieldDecorator('address', { initialValue: this.currentItem.address })(
                 <Input placeholder="请输入详细地址" allowClear maxLength={30} />
               )
             }

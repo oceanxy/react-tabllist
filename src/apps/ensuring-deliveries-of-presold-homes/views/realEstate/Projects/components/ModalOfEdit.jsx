@@ -332,16 +332,7 @@ export default Form.create({})({
             </Form.Item>
             <Form.Item label="详细地址">
               {
-                this.form.getFieldDecorator('address', {
-                  initialValue: undefined,
-                  rules: [
-                    {
-                      required: true,
-                      message: '请输入详细地址！',
-                      trigger: 'blur'
-                    }
-                  ]
-                })(
+                this.form.getFieldDecorator('address', { initialValue: undefined })(
                   <Input
                     placeholder="请输入详细地址"
                     allowClear
