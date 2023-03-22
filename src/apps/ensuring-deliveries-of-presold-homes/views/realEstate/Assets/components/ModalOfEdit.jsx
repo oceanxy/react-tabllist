@@ -285,16 +285,7 @@ export default Form.create({})({
           </Form.Item>
           <Form.Item label="所在楼层" class={'half'}>
             {
-              this.form.getFieldDecorator('floorNum', {
-                initialValue: this.currentItem.floorNum,
-                rules: [
-                  {
-                    required: true,
-                    message: '请输入所在楼层！',
-                    trigger: 'blur'
-                  }
-                ]
-              })(
+              this.form.getFieldDecorator('floorNum', { initialValue: this.currentItem.floorNum })(
                 <Input
                   placeholder="请输入所在楼层"
                   maxLength={100}
@@ -346,20 +337,9 @@ export default Form.create({})({
           </Form.Item>
           <Form.Item label="套内面积(㎡)" class={'half'}>
             {
-              this.form.getFieldDecorator(
-                'indoorArea',
-                {
-                  initialValue: this.currentItem.indoorArea ? +this.currentItem.indoorArea : undefined,
-                  rules: [
-                    {
-                      required: true,
-                      type: 'number',
-                      message: '请输入套内面积！单位：平方米',
-                      trigger: 'blur'
-                    }
-                  ]
-                }
-              )(
+              this.form.getFieldDecorator('indoorArea', {
+                initialValue: this.currentItem.indoorArea ? +this.currentItem.indoorArea : undefined
+              })(
                 <InputNumber
                   placeholder="请输入套内面积"
                   style={'width: 100%'}
