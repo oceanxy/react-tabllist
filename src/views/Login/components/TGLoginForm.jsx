@@ -51,7 +51,19 @@ export default Form.create({ name: 'TGLoginForm' })({
               this.$router.options.routes.splice(1, 1, menu)
             }
 
-            await this.$router.replace({ name: 'home' })
+            // 检测登录页带过来的query参数是否存在重定向
+            const { redirect, ...query } = this.$route.query
+            // 检测本地存储是否存在保存的路由（意外退出的路由），如果有，则在登录成功后直接跳转到该路由
+            const path = localStorage.getItem('selectedKey')
+
+            if (redirect) {
+              await this.$router.replace({ path: `${redirect}`, query })
+            } else if (path) {
+              await this.$router.replace(path)
+            } else {
+              await this.$router.replace({ name: 'home' })
+            }
+
             this.hint = false
           }
         }

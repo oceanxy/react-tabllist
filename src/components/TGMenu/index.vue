@@ -160,7 +160,7 @@ export default {
       handler(value) {
         const keyPath = []
 
-        // 根据当前进入页面的路由设置菜单的selectedKeys和openKeys值
+        // 根据当前进入页面的路由设置菜单的 selectedKeys 和 openKeys 值
         for (let i = 0; i < value.matched.length; i++) {
           if (value.matched[i].path !== '') {
             keyPath.push(value.matched[i].path.substring((keyPath.at(-1) || '').length + i))
@@ -168,6 +168,7 @@ export default {
         }
 
         this.selectedKeys = keyPath
+        localStorage.setItem('selectedKey', value.fullPath)
 
         this.$nextTick(() => {
           this.openKeys = keyPath.reverse()
@@ -226,7 +227,7 @@ export default {
         this.menuScrollTop = this.$refs.menu.$el.scrollTop
 
         setTimeout(() => {
-          document.getElementById('menu').scrollTo({
+          document.getElementById('menu')?.scrollTo({
             top: this.menuScrollTop,
             behavior: 'smooth'
           })

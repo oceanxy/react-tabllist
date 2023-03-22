@@ -110,10 +110,21 @@ export default {
 
       return Promise.resolve(true)
     },
-    async clear({ commit }) {
+    /**
+     * 清除 store 和本地存储的信息
+     * @param commit
+     * @param isPassive {boolean} 是否是被动清除，除主动点击“注销”外的其他退出都是被动的
+     * @returns {Promise<boolean>}
+     */
+    async clear({ commit }, isPassive) {
       commit('setUserInfo', {})
       commit('setAuthentication', null)
       commit('setSiteCache', null)
+
+      if (!isPassive) {
+        localStorage.removeItem('openKeys')
+        localStorage.removeItem('selectedKey')
+      }
 
       return Promise.resolve(true)
     },
