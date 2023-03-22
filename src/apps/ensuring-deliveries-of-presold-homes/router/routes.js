@@ -209,7 +209,7 @@ export default [
         name: 'roles',
         component: () => import('@/apps/ensuring-deliveries-of-presold-homes/views/system/Roles'),
         meta: {
-          title: '角色',
+          title: '角色管理',
           keepAlive: false,
           requiresAuth: true,
           icon: 'icon-menu-js-line'
