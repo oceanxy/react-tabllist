@@ -212,13 +212,13 @@ export default {
         this.dataSource[index][field] = value.format('YYYYMMDD')
       }
 
-      if (field === 'percent') {
+      if ((field === 'repaymentType' && value === 1) || field === 'percent') {
         if (this.totalPercent > 100) {
           message.warn('已填写的本金比例之和已达最大值（100%）')
 
-          const percent = 100 - this.totalPercent + value
+          const percent = 100 - this.totalPercent + this.dataSource[index]['percent']
 
-          this.dataSource[index][field] = percent
+          this.dataSource[index]['percent'] = percent
           this.dataSource[index]['money'] = this.amountBorrowed * (percent / 100)
         } else {
           this.dataSource[index]['money'] = this.amountBorrowed * (value / 100)
