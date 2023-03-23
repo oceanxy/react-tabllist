@@ -48,6 +48,7 @@
 
     &.hide {
       width: 0 !important;
+      overflow: hidden;
       margin-left: -12px; // 抵消容器gap值对布局的影响
 
       & > *:not(.tg-container-trigger) {

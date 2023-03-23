@@ -1,7 +1,6 @@
 @import '@/assets/styles/theme.scss';
 
 .tg-tree-container.tg-tree-container {
-  padding: 0 12px 12px 12px;
   @include container-border-radius;
   gap: 12px;
 

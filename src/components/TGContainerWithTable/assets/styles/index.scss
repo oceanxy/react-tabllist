@@ -18,10 +18,15 @@
       font-size: 16px;
       font-weight: 700;
       color: $text-or-icon-color;
+
+      .anticon {
+        font-size: 20px;
+      }
     }
   }
 
-  & > .tg-container-content {
+  & > .tg-container-content,
+  .tg-tree-content-container {
     flex: auto;
     height: 0;
     overflow: auto;
