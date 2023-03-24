@@ -8,15 +8,6 @@ export default {
     showTree: {
       type: Boolean,
       default: false
-    },
-    // 导入侧边树的 props，通过本组件转发
-    ...TGContainerWithTreeSider.props
-  },
-  computed: {
-    treeProps() {
-      const { showTree, ...rest } = this.$props
-
-      return rest
     }
   },
   methods: {
@@ -61,7 +52,7 @@ export default {
         {
           this.showTree
             ? (
-              <TGContainerWithTreeSider props={{ ...this.treeProps }}>
+              <TGContainerWithTreeSider props={{ ...this.$attrs }}>
                 {this.filterSlots()}
               </TGContainerWithTreeSider>
             )
