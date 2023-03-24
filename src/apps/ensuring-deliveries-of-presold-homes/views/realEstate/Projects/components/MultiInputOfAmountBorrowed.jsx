@@ -33,13 +33,18 @@ export default {
           scopedSlots: { customRender: 'serialNumber' }
         },
         {
-          title: <span class={'ant-form-item-required'}>截止日期</span>,
-          width: 400,
-          scopedSlots: { customRender: '_endDate' }
+          title: <span class={'ant-form-item-required'}>借款金额</span>,
+          scopedSlots: { customRender: 'moneyValue' }
         },
         {
-          title: <span class={'ant-form-item-required'}>利率(%)</span>,
-          scopedSlots: { customRender: 'rateValue' }
+          title: <span class={'ant-form-item-required'}>开始日期</span>,
+          width: 200,
+          scopedSlots: { customRender: '_startDate' }
+        },
+        {
+          title: <span class={'ant-form-item-required'}>截止日期</span>,
+          width: 200,
+          scopedSlots: { customRender: '_endDate' }
         },
         {
           title: (
@@ -71,15 +76,27 @@ export default {
 
               // ===== 注意本组件内 dataSource 的一些字段的类型：======
               /**
-               * 格式化为“YYYYMMDD”的分段利率结束时间（用于前后端交互）
+               * 格式化为“YYYYMMDD”的借款开始时间（用于前后端交互）
+               * @type {string}
+               */
+              item.starDate = `${item.starDate}`
+              /**
+               * 格式化为“YYYYMMDD”的借款结束时间（用于前后端交互）
                * @type {string}
                */
               item.endDate = `${item.endDate}`
               /**
-               * 分段利率截止时间（用于组件内交互）
-               * @type {moment.Moment | null}
+               * 借款开始时间（用于组件内交互）
+               * @type {moment.Moment}
+               * @private
                */
-              item._endDate = item.endDate ? moment(item.endDate) : null
+              item._startDate = moment(item.starDate)
+              /**
+               * 借款结束时间（用于组件内交互）
+               * @type {moment.Moment}
+               * @private
+               */
+              item._endDate = moment(item.endDate)
 
               return item
             })
@@ -92,15 +109,20 @@ export default {
     }
   },
   methods: {
+    disabledDate(current, index) {
+      return current < moment(this.dataSource[index]._startDate).add(1, 'years').subtract(1, 'days')
+    },
     onDelClick(id, index) {
       this.dataSource.splice(index, 1)
       this.validator()
     },
     onCreateRow(e) {
       const row = {
-        rateValue: 0,
+        starDate: undefined,
+        endDate: undefined,
+        moneyValue: 0,
+        _startDate: null,
         _endDate: null,
-        endDate: '',
         id: Math.random()
       }
 
@@ -114,14 +136,17 @@ export default {
       let err = false
 
       this.dataSource.forEach(item => {
-        if (!item._endDate || !item.rateValue) {
+        if (!item.starDate || !item.endDate || !item.moneyValue) {
           err = true
         }
       })
 
       this.$nextTick(() => {
         if (!err) {
-          this.$emit('change', this.dataSource)
+          this.$emit('change', this.dataSource.map((item, index) => ({
+            ...item,
+            moneyPeriod: index + 1
+          })))
         } else {
           this.dataSourceCache = this.dataSource
           this.$emit('change', [])
@@ -129,6 +154,19 @@ export default {
       })
     },
     onCompValueChange(field, value, index) {
+      if (field === '_startDate') {
+        const _endDate = value
+          ? moment(value).add(1, 'years').subtract(1, 'days')
+          : null
+
+        this.dataSource[index] = {
+          ...this.dataSource[index],
+          starDate: value?.format('YYYYMMDD'),
+          endDate: _endDate?.format('YYYYMMDD'),
+          _endDate
+        }
+      }
+
       if (field === '_endDate') {
         this.dataSource[index].endDate = value?.format('YYYYMMDD')
       }
@@ -150,27 +188,39 @@ export default {
           bordered
           scopedSlots={{
             serialNumber: (text, record, index) => index + 1,
+            moneyValue: (text, record, index) => (
+              <InputNumber
+                vModel={record.moneyValue}
+                placeholder="请输入借款金额"
+                style={'width: 100%'}
+                class={record.moneyValue ? 'pass' : ''}
+                allowClear
+                disabled={this.disabled}
+                precision={2}
+                formatter={value => `￥ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                parser={value => value.replace(/￥\s?|(,*)/g, '')}
+                max={1000000000000}
+                min={0}
+                onChange={debounce(value => this.onCompValueChange('moneyValue', value, index), 300)}
+              />
+            ),
+            _startDate: (text, record, index) => (
+              <DatePicker
+                class={record._startDate ? 'pass' : ''}
+                vModel={record._startDate}
+                placeholder={'开始日期'}
+                disabled={this.disabled}
+                onChange={value => this.onCompValueChange('_startDate', value, index)}
+              />
+            ),
             _endDate: (text, record, index) => (
               <DatePicker
                 class={record._endDate ? 'pass' : ''}
-                style={'width: 100%'}
                 vModel={record._endDate}
                 placeholder={'截止日期'}
-                disabled={this.disabled}
+                disabled={this.disabled || !record._startDate}
+                disabledDate={current => this.disabledDate(current, index)}
                 onChange={value => this.onCompValueChange('_endDate', value, index)}
-              />
-            ),
-            rateValue: (text, record, index) => (
-              <InputNumber
-                vModel={record.rateValue}
-                class={record.rateValue ? 'pass' : ''}
-                style={'width: 100%'}
-                min={0}
-                max={100}
-                precision={2}
-                placeholder="利率"
-                disabled={this.disabled}
-                onChange={debounce(value => this.onCompValueChange('rateValue', value, index), 300)}
               />
             ),
             operation: (text, record, index) => (

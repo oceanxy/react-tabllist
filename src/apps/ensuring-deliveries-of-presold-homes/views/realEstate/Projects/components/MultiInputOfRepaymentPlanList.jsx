@@ -1,7 +1,8 @@
-import { Button, DatePicker, Input, InputNumber, message, Select, Table } from 'ant-design-vue'
+import { Button, DatePicker, Input, InputNumber, message, Space, Table, Tabs } from 'ant-design-vue'
 import { cloneDeep, debounce } from 'lodash'
 import moment from 'moment'
 import forIndex from '@/mixins/forIndex'
+import { TabPane } from 'ant-design-vue/lib/tabs'
 
 export default {
   mixins: [forIndex],
@@ -27,6 +28,13 @@ export default {
       default: () => []
     },
     /**
+     * 借款金额数据
+     */
+    moneyValueList: {
+      type: Array,
+      default: () => [[]]
+    },
+    /**
      * 总借款金额
      */
     amountBorrowed: {
@@ -37,7 +45,8 @@ export default {
   data() {
     return {
       dataSource: [],
-      dataSourceCache: []
+      dataSourceCache: [[]],
+      activeKey: 0
     }
   },
   computed: {
@@ -51,23 +60,13 @@ export default {
         },
         {
           title: <span class={'ant-form-item-required'}>还款日期</span>,
-          width: 130,
-          scopedSlots: { customRender: 'repaymentEndDay' }
-        },
-        {
-          title: <span class={'ant-form-item-required'}>资金类型</span>,
-          width: 90,
-          scopedSlots: { customRender: 'repaymentType' }
-        },
-        {
-          title: '本金比例',
-          width: 80,
-          scopedSlots: { customRender: 'percent' }
-        },
-        {
-          title: '还款金额',
           width: 150,
-          scopedSlots: { customRender: 'money' }
+          scopedSlots: { customRender: '_repaymentEndDay' }
+        },
+        {
+          title: <span class={'ant-form-item-required'}>本金比例</span>,
+          width: 150,
+          scopedSlots: { customRender: 'percent' }
         },
         {
           title: '备注',
@@ -106,28 +105,33 @@ export default {
      * @returns {*}
      */
     totalPercent() {
-      return this.dataSource.reduce((total, item) => {
-        if (item.repaymentType === 1) {
-          total += item.percent
-        }
+      return this.dataSource.map(item => {
+        return item.reduce((total, i) => {
+          total += i.percent
 
-        return total
-      }, 0)
+          return total
+        }, 0)
+      })
     },
     currentItem() {
       return this.$store.state[this.moduleName].currentItem
+    },
+    _moneyValueList() {
+      return this.moneyValueList.length > 0
+        ? this.moneyValueList
+        : [[]]
     }
   },
   watch: {
     value: {
       immediate: true,
       handler(value) {
-        if (this.dataSourceCache.length) {
-          this.dataSource = cloneDeep(this.dataSourceCache)
-          this.dataSourceCache = []
+        if (this.dataSourceCache[this.activeKey]?.length) {
+          this.dataSource[this.activeKey] = cloneDeep(this.dataSourceCache[this.activeKey])
+          this.dataSourceCache[this.activeKey] = []
         } else {
-          if (value.length) {
-            this.dataSource = value.map(item => {
+          if (value[this.activeKey]?.length) {
+            this.dataSource[this.activeKey] = value[this.activeKey].map(item => {
               item.id = item.id || Math.random()
 
               // ===== 注意本组件内 dataSource 的一些字段的类型：======
@@ -140,12 +144,12 @@ export default {
                * 还款日期（用于组件内交互）
                * @type {moment.Moment}
                */
-              item.date = moment(item.repaymentEndDay)
+              item._repaymentEndDay = moment(item.repaymentEndDay)
 
               return item
             })
           } else {
-            this.dataSource = []
+            this.dataSource[this.activeKey] = []
             this.onCreateRow()
           }
         }
@@ -162,66 +166,64 @@ export default {
     },
     onDelClick(id, index) {
       // 更新期数
-      for (let i = index, l = this.dataSource.length; i < l; i++) {
-        this.dataSource[i].period -= 1
+      for (let i = index, l = this.dataSource[this.activeKey].length; i < l; i++) {
+        this.dataSource[this.activeKey][i].period -= 1
       }
 
-      this.dataSource.splice(index, 1)
+      this.dataSource[this.activeKey].splice(index, 1)
 
       this.validator()
     },
     onCreateRow(e) {
       const row = {
-        period: this.dataSource.length + 1,
+        period: this.dataSource[this.activeKey].length + 1,
         repaymentEndDay: '',
-        date: null,
-        repaymentType: 1,
-        money: 0,
+        _repaymentEndDay: null,
         percent: 0,
         remark: '',
         id: Math.random()
       }
 
-      this.dataSource.push(row)
+      this.dataSource[this.activeKey].push(row)
 
       if (e) {
         this.validator()
       }
     },
     validator() {
-      let err = false
+      const err = new Array(this.moneyValueList.length).fill(false)
 
-      for (const ds of this.dataSource) {
-        if (!ds.repaymentEndDay || !ds.repaymentType || (ds.repaymentType === 1 && !ds.percent)) {
-          err = true
-          break
+      OUT:
+      for (const [index, dataSourceItem] of this.dataSource.entries()) {
+        for (const ds of dataSourceItem) {
+          if (!ds.repaymentEndDay || !ds.percent) {
+            err[index] = true
+            this.activeKey = index
+            break OUT
+          }
         }
       }
 
       this.$nextTick(() => {
-        if (!err) {
+        if (!err.includes(true)) {
           this.$emit('change', this.dataSource)
         } else {
-          this.dataSourceCache = this.dataSource
+          this.dataSourceCache = [...this.dataSource]
           this.$emit('change', [])
         }
       })
     },
     async onCompValueChange(field, value, index) {
-      if (field === 'repaymentEndDay') {
-        this.dataSource[index][field] = value.format('YYYYMMDD')
+      if (field === '_repaymentEndDay') {
+        this.dataSource[this.activeKey][index].repaymentEndDay = value.format('YYYYMMDD')
       }
 
-      if ((field === 'repaymentType' && value === 1) || field === 'percent') {
-        if (this.totalPercent > 100) {
+      if (field === 'percent') {
+        if (this.totalPercent[this.activeKey] > 100) {
           message.warn('已填写的本金比例之和已达最大值（100%）')
 
-          const percent = 100 - this.totalPercent + this.dataSource[index]['percent']
-
-          this.dataSource[index]['percent'] = percent
-          this.dataSource[index]['money'] = this.amountBorrowed * (percent / 100)
-        } else {
-          this.dataSource[index]['money'] = this.amountBorrowed * (value / 100)
+          this.dataSource[this.activeKey][index].percent =
+            100 - this.totalPercent[this.activeKey] + this.dataSource[this.activeKey][index].percent
         }
       }
 
@@ -233,7 +235,7 @@ export default {
           _currentItem: this.currentItem,
           moneyValue: this.amountBorrowed,
           projectSegmentRateList: this.projectSegmentRateList,
-          repaymentPlanList: this.dataSource
+          repaymentPlanList: this.dataSource[this.activeKey]
         },
         'visibilityOfRepaymentPlanPreview'
       )
@@ -242,115 +244,115 @@ export default {
   render() {
     return (
       <div class="tg-multi-input">
-        <Table
-          class="multi-input-table"
-          columns={this.columns}
-          dataSource={this.dataSource}
-          pagination={false}
-          rowKey="id"
-          tableLayout={'fixed'}
+        <Tabs
+          activeKey={this.activeKey}
+          onChange={key => this.activeKey = key}
           size={'small'}
-          bordered
-          scopedSlots={{
-            period: (text, record) => (
-              <Input
-                disabled
-                vModel={record.period}
-                style={{
-                  textAlign: 'center',
-                  background: 'none',
-                  border: 'none',
-                  color: '#000000a6',
-                  cursor: 'text'
-                }}
-              />
-            ),
-            repaymentEndDay: (text, record, index) => (
-              <DatePicker
-                vModel={record.date}
-                class={record.repaymentEndDay ? 'pass' : ''}
-                placeholder="还款日期"
-                disabledDate={this.disabledDate}
-                disabled={this.disabled}
-                onChange={value => this.onCompValueChange('repaymentEndDay', value, index)}
-              />
-            ),
-            repaymentType: (text, record, index) => (
-              <Select
-                vModel={record.repaymentType}
-                class={record.repaymentType ? 'pass' : ''}
-                placeholder="请选择"
-                disabled={this.disabled || !record.date}
-                onChange={value => this.onCompValueChange('repaymentType', value, index)}
-              >
-                <Select.Option value={1}>本金</Select.Option>
-                <Select.Option value={2}>利息</Select.Option>
-              </Select>
-            ),
-            percent: (text, record, index) => (
-              <InputNumber
-                vModel={record.percent}
-                class={record.repaymentType === 1 && !record.percent ? '' : 'pass'}
-                style={'width: 100%'}
-                min={0}
-                max={100}
-                precision={0}
-                placeholder="本金比例"
-                disabled={this.disabled || record.repaymentType !== 1 || !record.date}
-                formatter={value => `${value}%`}
-                parser={value => value.replace('%', '')}
-                onChange={debounce(value => this.onCompValueChange('percent', value, index), 300)}
-              />
-            ),
-            money: (text, record, index) => (
-              <InputNumber
-                vModel={record.money}
-                class={'pass'}
-                style={'width: 100%'}
-                min={0}
-                max={1000000000000}
-                precision={2}
-                placeholder="还款金额"
-                disabled
-                formatter={value => `￥ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                parser={value => value.replace(/￥\s?|(,*)/g, '')}
-                onChange={debounce(value => this.onCompValueChange('money', value, index), 300)}
-              />
-            ),
-            remark: (text, record, index) => (
-              <Input
-                vModel={record.remark}
-                class={'pass'}
-                allowClear
-                maxLength={30}
-                placeholder="备注"
-                disabled={this.disabled}
-                onChange={debounce(this.onCompValueChange, 300)}
-              />
-            ),
-            operation: (text, record, index) => (
-              <Button
-                icon="delete"
-                title={'移除本行'}
-                onClick={() => this.onDelClick(record.id, index)}
-                disabled={this.disabled}
-              />
-            )
-          }}
-        />
-        {
-          this.totalPercent >= 100
-            ? (
-              <Button
-                type={'link'}
-                title={'预览还款计划'}
-                onClick={this.getPreview}
-              >
-                预览还款计划
-              </Button>
-            )
-            : null
-        }
+        >
+          {
+            this._moneyValueList.map((item, index) => (
+              <TabPane key={index} tab={`第${index + 1}笔借款`}>
+                <Table
+                  class="multi-input-table"
+                  columns={this.columns}
+                  dataSource={this.dataSource[this.activeKey]}
+                  pagination={false}
+                  rowKey="id"
+                  tableLayout={'fixed'}
+                  size={'small'}
+                  bordered
+                  scopedSlots={{
+                    period: (text, record) => (
+                      <Input
+                        disabled
+                        vModel={record.period}
+                        style={{
+                          textAlign: 'center',
+                          background: 'none',
+                          border: 'none',
+                          color: '#000000a6',
+                          cursor: 'text'
+                        }}
+                      />
+                    ),
+                    _repaymentEndDay: (text, record, index) => (
+                      <DatePicker
+                        vModel={record._repaymentEndDay}
+                        class={record._repaymentEndDay ? 'pass' : ''}
+                        placeholder="还款日期"
+                        // disabledDate={this.disabledDate}
+                        disabled={this.disabled}
+                        onChange={value => this.onCompValueChange('_repaymentEndDay', value, index)}
+                      />
+                    ),
+                    percent: (text, record, index) => (
+                      <InputNumber
+                        vModel={record.percent}
+                        class={!record.percent ? '' : 'pass'}
+                        style={'width: 100%'}
+                        min={0}
+                        max={100}
+                        precision={0}
+                        placeholder="本金比例"
+                        disabled={this.disabled || !record._repaymentEndDay}
+                        formatter={value => `${value}%`}
+                        parser={value => value.replace('%', '')}
+                        onChange={debounce(value => this.onCompValueChange('percent', value, index), 300)}
+                      />
+                    ),
+                    remark: (text, record, index) => (
+                      <Input
+                        vModel={record.remark}
+                        class={'pass'}
+                        allowClear
+                        maxLength={30}
+                        placeholder="备注"
+                        disabled={this.disabled}
+                        onChange={debounce(this.onCompValueChange, 300)}
+                      />
+                    ),
+                    operation: (text, record, index) => (
+                      <Button
+                        icon="delete"
+                        title={'移除本行'}
+                        onClick={() => this.onDelClick(record.id, index)}
+                        disabled={this.disabled}
+                      />
+                    )
+                  }}
+                />
+              </TabPane>
+            ))
+          }
+        </Tabs>
+        <Space>
+          {
+            this.moneyValueList.length > 1 && this.activeKey > 0
+              ? (
+                <Button
+                  type={'link'}
+                  title={'带入上一笔借款的设置'}
+                  onClick={this.getPreview}
+                >
+                  带入上一笔借款的设置
+                </Button>
+              )
+              : null
+          }
+          {
+            this.totalPercent[this.activeKey] >= 100
+              ? (
+                <Button
+                  type={'link'}
+                  title={'预览还款计划'}
+                  onClick={this.getPreview}
+                >
+                  预览还款计划
+                </Button>
+              )
+              : null
+          }
+        </Space>
       </div>
     )
   }

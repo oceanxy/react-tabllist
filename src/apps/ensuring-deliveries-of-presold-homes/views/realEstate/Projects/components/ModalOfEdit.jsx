@@ -1,10 +1,12 @@
 import { Button, Cascader, Empty, Form, Input, InputNumber, Radio, Select, Spin, Switch } from 'ant-design-vue'
 import forFormModal from '@/mixins/forModal/forFormModal'
 import DragModal from '@/components/DragModal'
-import { cloneDeep, debounce } from 'lodash'
+import { cloneDeep, debounce, range } from 'lodash'
 import { defineAsyncComponent } from 'vue'
 import TGUploadFile from '@/components/TGUploadFile'
 import MultiInputOfStepRateList from './MultiInputOfStepRateList'
+import MultiInputOfAmountBorrowed from './MultiInputOfAmountBorrowed'
+import MultiInputOfSettlementDate from './MultiInputOfSettlementDate'
 import MultiInputOfRepaymentPlanList from './MultiInputOfRepaymentPlanList'
 
 export default Form.create({})({
@@ -51,8 +53,9 @@ export default Form.create({})({
               data.cityName = value.districtList[1].name
               data.areaId = value.districtList[2].id
               data.areaName = value.districtList[2].name
-              data.ctContract = value.ctContract[0].response?.data[0] ?? value.ctContract[0].raw
-              data.devContract = value.devContract[0].response?.data[0] ?? value.devContract[0].raw
+              data.contract = value.contract[0].response?.data[0] ?? value.contract[0].raw
+
+              debugger
 
               return data
             },
@@ -89,9 +92,6 @@ export default Form.create({})({
           visibilityFieldName={'visibilityOfRepaymentPlanPreview'}
         />
       )
-    },
-    projectSegmentRateList() {
-      return this.form.getFieldValue('projectSegmentRateList')
     }
   },
   watch: {
@@ -132,30 +132,33 @@ export default Form.create({})({
               ],
               address: this.details.address,
               status: !isNaN(this.details.status) ? this.details.status === 1 : true,
-              repaymentPlanList: this.details.repaymentPlanList || [],
+              moneyValueList: this.details.moneyValueList || [],
+              principalRepaymentPlanList: this.details.principalRepaymentPlanList || [],
               projectSegmentRateList: this.details.projectSegmentRateList || [],
-              ctContract: this.details.ctContract
+              interestRepaymentPlanList: this.details.interestRepaymentPlanList ||
+                range(0, 2).map((item, index) => ({
+                  period: index + 1,
+                  repaymentEndDay: ['0613', '1213'][index]
+                })),
+              contract: this.details.contract
                 ? [
                   {
-                    uid: 'ct-contract',
-                    key: this.details.ctContract.key,
-                    url: this.details.ctContract.path,
+                    uid: 'contract',
+                    key: this.details.contract.key,
+                    url: this.details.contract.path,
                     status: 'done',
-                    name: this.details.ctContract.fileName,
-                    raw: this.details.ctContract
-                  }
-                ] : [],
-              devContract: this.details.devContract
-                ? [
-                  {
-                    uid: 'dev-contract',
-                    key: this.details.devContract.key,
-                    url: this.details.devContract.path,
-                    status: 'done',
-                    name: this.details.devContract.fileName,
-                    raw: this.details.devContract
+                    name: this.details.contract.fileName,
+                    raw: this.details.contract
                   }
                 ] : []
+            })
+          } else {
+            this.form.setFieldsValue({
+              interestRepaymentPlanList: this.details.interestRepaymentPlanList ||
+                range(0, 2).map((item, index) => ({
+                  period: index + 1,
+                  repaymentEndDay: ['0613', '1213'][index]
+                }))
             })
           }
         }
@@ -224,9 +227,6 @@ export default Form.create({})({
         fullName: this.keywordOfSearchDevelopers,
         _currentItem: this.currentItem
       }, 'visibilityOfDeveloper')
-    },
-    onDateChange() {
-      this.form.setFieldsValue({ repaymentPlanList: [] })
     }
   },
   render() {
@@ -342,7 +342,7 @@ export default Form.create({})({
                 )
               }
             </Form.Item>
-            <Form.Item label="有无借款" class={this.form.getFieldValue('isBorrow') === 1 ? 'half' : ''}>
+            <Form.Item label="有无借款" class={'half'}>
               {
                 this.form.getFieldDecorator(
                   'isBorrow',
@@ -368,29 +368,42 @@ export default Form.create({})({
             {
               this.form.getFieldValue('isBorrow') === 1
                 ? [
-                  <Form.Item label="借款金额" class={'half'}>
+                  <Form.Item label="借款合同" class={'half'}>
                     {
-                      this.form.getFieldDecorator('moneyValue', {
-                        initialValue: this.currentItem.moneyValue,
+                      this.form.getFieldDecorator('contract', {
+                        initialValue: [],
                         rules: [
                           {
                             required: true,
-                            type: 'number',
-                            message: '请输入合法的借款金额（最大值一万亿）！',
-                            trigger: 'blur'
+                            type: 'array',
+                            message: '请上传借款合同！',
+                            trigger: 'change'
                           }
                         ]
                       })(
-                        <InputNumber
-                          placeholder="请输入借款金额"
-                          style={'width: 100%'}
-                          allowClear
+                        <TGUploadFile
+                          form={this.form}
+                          limit={1}
+                          accept={'.doc,.docx,.pdf'}
                           disabled={this.currentItem.isEdit === 0}
-                          precision={2}
-                          formatter={value => `￥ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                          parser={value => value.replace(/￥\s?|(,*)/g, '')}
-                          max={1000000000000}
                         />
+                      )
+                    }
+                  </Form.Item>,
+                  <Form.Item label="借款金额">
+                    {
+                      this.form.getFieldDecorator('moneyValueList', {
+                        initialValue: [],
+                        rules: [
+                          {
+                            required: true,
+                            type: 'array',
+                            message: '请输入完整的借款金额！',
+                            trigger: 'change'
+                          }
+                        ]
+                      })(
+                        <MultiInputOfAmountBorrowed disabled={this.currentItem.isEdit === 0} />
                       )
                     }
                   </Form.Item>,
@@ -408,15 +421,33 @@ export default Form.create({})({
                         ]
                       })(
                         <MultiInputOfStepRateList
-                          disabled={this.currentItem.isEdit === 0 || !this.form.getFieldValue('moneyValue')}
-                          onDateChange={this.onDateChange}
+                          disabled={this.currentItem.isEdit === 0}
                         />
                       )
                     }
                   </Form.Item>,
-                  <Form.Item label="还款计划">
+                  <Form.Item label="结息日">
                     {
-                      this.form.getFieldDecorator('repaymentPlanList', {
+                      this.form.getFieldDecorator('interestRepaymentPlanList', {
+                        initialValue: [],
+                        rules: [
+                          {
+                            required: true,
+                            type: 'array',
+                            message: '请输入完整的结息日信息！',
+                            trigger: 'change'
+                          }
+                        ]
+                      })(
+                        <MultiInputOfSettlementDate
+                          disabled={this.currentItem.isEdit === 0}
+                        />
+                      )
+                    }
+                  </Form.Item>,
+                  <Form.Item label="本金还款日">
+                    {
+                      this.form.getFieldDecorator('principalRepaymentPlanList', {
                         initialValue: [],
                         rules: [
                           {
@@ -426,19 +457,24 @@ export default Form.create({})({
                             trigger: 'change'
                           },
                           {
-                            validator(rule, value, callback) {
-                              if (value) {
-                                const _value = value.reduce((total, item) => {
-                                  if (item.repaymentType === 1) {
-                                    total += item.percent
-                                  }
+                            validator: (rule, value, callback) => {
+                              if (Array.isArray(value)) {
+                                const _value = value.map(item => {
+                                  return item.reduce((total, i) => {
+                                    total += i.percent
 
-                                  return total
-                                }, 0)
+                                    return total
+                                  }, 0)
+                                }).filter(item => item === 100)
+
+                                const moneyValueListLength = this.form.getFieldValue('moneyValueList').length
 
                                 // 校验还款本金比例是否等于100
-                                if (_value < 100) {
-                                  callback(new Error('本金比例之和应等于100%！'))
+                                if (
+                                  (moneyValueListLength && _value.length !== moneyValueListLength) ||
+                                  !_value.length
+                                ) {
+                                  callback(new Error('每一笔借款的本金比例之和应等于100%！'))
                                 }
                               }
 
@@ -448,13 +484,9 @@ export default Form.create({})({
                         ]
                       })(
                         <MultiInputOfRepaymentPlanList
-                          disabled={
-                            this.currentItem.isEdit === 0 ||
-                            !this.projectSegmentRateList.length ||
-                            !this.form.getFieldValue('moneyValue')
-                          }
-                          projectSegmentRateList={this.projectSegmentRateList}
-                          amountBorrowed={this.form.getFieldValue('moneyValue') || 0}
+                          disabled={this.currentItem.isEdit === 0}
+                          projectSegmentRateList={this.form.getFieldValue('projectSegmentRateList')}
+                          moneyValueList={this.form.getFieldValue('moneyValueList')}
                         />
                       )
                     }
@@ -462,50 +494,6 @@ export default Form.create({})({
                 ]
                 : null
             }
-            <Form.Item label="市城投合同" class={'half'}>
-              {
-                this.form.getFieldDecorator('ctContract', {
-                  initialValue: [],
-                  rules: [
-                    {
-                      required: true,
-                      type: 'array',
-                      message: '请上传市城投合同！',
-                      trigger: 'change'
-                    }
-                  ]
-                })(
-                  <TGUploadFile
-                    form={this.form}
-                    limit={1}
-                    accept={'.doc,.docx,.pdf'}
-                    disabled={this.currentItem.isEdit === 0}
-                  />
-                )
-              }
-            </Form.Item>
-            <Form.Item label="开发商合同" class={'half'}>
-              {
-                this.form.getFieldDecorator('devContract', {
-                  initialValue: [],
-                  rules: [
-                    {
-                      required: true,
-                      type: 'array',
-                      message: '请上传开发商合同！',
-                      trigger: 'change'
-                    }
-                  ]
-                })(
-                  <TGUploadFile
-                    form={this.form}
-                    limit={1}
-                    accept={'.doc,.docx,.pdf'}
-                    disabled={this.currentItem.isEdit === 0}
-                  />
-                )
-              }
-            </Form.Item>
             <Form.Item label="备注">
               {
                 this.form.getFieldDecorator('remark', { initialValue: this.currentItem.remark })(
