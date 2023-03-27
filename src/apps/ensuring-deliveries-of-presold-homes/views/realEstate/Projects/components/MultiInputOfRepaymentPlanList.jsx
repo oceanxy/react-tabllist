@@ -45,7 +45,7 @@ export default {
   data() {
     return {
       dataSource: [],
-      dataSourceCache: [[]],
+      dataSourceCache: [],
       activeKey: 0
     }
   },
@@ -53,7 +53,7 @@ export default {
     columns() {
       return [
         {
-          title: '期数',
+          title: '序号',
           width: 80,
           align: 'center',
           scopedSlots: { customRender: 'period' }
@@ -77,7 +77,7 @@ export default {
             <Button
               icon={'plus'}
               title={'插入新行'}
-              onClick={this.onCreateRow}
+              onClick={e => this.onCreateRow(e, this.activeKey)}
               disabled={this.disabled}
             />
           ),
@@ -119,39 +119,47 @@ export default {
     _moneyValueList() {
       return this.moneyValueList.length > 0
         ? this.moneyValueList
-        : [[]]
+        : [{ moneyPeriod: 1 }]
     }
   },
   watch: {
     value: {
       immediate: true,
       handler(value) {
-        if (this.dataSourceCache[this.activeKey]?.length) {
-          this.dataSource[this.activeKey] = cloneDeep(this.dataSourceCache[this.activeKey])
-          this.dataSourceCache[this.activeKey] = []
+        if (this.dataSourceCache?.length) {
+          this.dataSourceCache.forEach((item, index) => {
+            this.dataSource[index] = cloneDeep(item)
+          })
+
+          this.dataSourceCache = []
         } else {
-          if (value[this.activeKey]?.length) {
-            this.dataSource[this.activeKey] = value[this.activeKey].map(item => {
-              item.id = item.id || Math.random()
+          this._moneyValueList.forEach((item, index) => {
+            if (value[index]?.length > 0) {
+              this.dataSource[index] = value[index].map(i => {
+                i.id = i.id || Math.random()
 
-              // ===== 注意本组件内 dataSource 的一些字段的类型：======
-              /**
-               * 格式化为“YYYYMMDD”的还款日期（用于前后端交互）
-               * @type {string}
-               */
-              item.repaymentEndDay = `${item.repaymentEndDay}`
-              /**
-               * 还款日期（用于组件内交互）
-               * @type {moment.Moment}
-               */
-              item._repaymentEndDay = moment(item.repaymentEndDay)
+                // ===== 注意本组件内 dataSource 的一些字段的类型：======
+                /**
+                 * 格式化为“YYYYMMDD”的还款日期（用于前后端交互）
+                 * @type {string}
+                 */
+                i.repaymentEndDay = `${i.repaymentEndDay}`
+                /**
+                 * 还款日期（用于组件内交互）
+                 * @type {moment.Moment}
+                 */
+                i._repaymentEndDay = moment(i.repaymentEndDay)
 
-              return item
-            })
-          } else {
-            this.dataSource[this.activeKey] = []
-            this.onCreateRow()
-          }
+                i.money = item.money
+                i.moneyPeriod = item.moneyPeriod
+
+                return i
+              })
+            } else {
+              this.dataSource[index] = []
+              this.onCreateRow(null, index)
+            }
+          })
         }
       }
     }
@@ -174,9 +182,9 @@ export default {
 
       this.validator()
     },
-    onCreateRow(e) {
+    onCreateRow(e, index = 0) {
       const row = {
-        period: this.dataSource[this.activeKey].length + 1,
+        period: this.dataSource[index].length + 1,
         repaymentEndDay: '',
         _repaymentEndDay: null,
         percent: 0,
@@ -184,7 +192,7 @@ export default {
         id: Math.random()
       }
 
-      this.dataSource[this.activeKey].push(row)
+      this.dataSource[index].push(row)
 
       if (e) {
         this.validator()
@@ -250,8 +258,8 @@ export default {
           size={'small'}
         >
           {
-            this._moneyValueList.map((item, index) => (
-              <TabPane key={index} tab={`第${index + 1}笔借款`}>
+            this._moneyValueList.map(item => (
+              <TabPane key={item.moneyPeriod - 1} tab={`第${item.moneyPeriod}笔借款`}>
                 <Table
                   class="multi-input-table"
                   columns={this.columns}

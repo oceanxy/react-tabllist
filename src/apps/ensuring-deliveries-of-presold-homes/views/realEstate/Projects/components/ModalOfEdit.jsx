@@ -1,7 +1,7 @@
 import { Button, Cascader, Empty, Form, Input, InputNumber, Radio, Select, Spin, Switch } from 'ant-design-vue'
 import forFormModal from '@/mixins/forModal/forFormModal'
 import DragModal from '@/components/DragModal'
-import { cloneDeep, debounce, range } from 'lodash'
+import { cloneDeep, debounce, flatten, range } from 'lodash'
 import { defineAsyncComponent } from 'vue'
 import TGUploadFile from '@/components/TGUploadFile'
 import MultiInputOfStepRateList from './MultiInputOfStepRateList'
@@ -54,8 +54,7 @@ export default Form.create({})({
               data.areaId = value.districtList[2].id
               data.areaName = value.districtList[2].name
               data.contract = value.contract[0].response?.data[0] ?? value.contract[0].raw
-
-              debugger
+              data.principalRepaymentPlanList = flatten(value.principalRepaymentPlanList)
 
               return data
             },
@@ -133,7 +132,11 @@ export default Form.create({})({
               address: this.details.address,
               status: !isNaN(this.details.status) ? this.details.status === 1 : true,
               moneyValueList: this.details.moneyValueList || [],
-              principalRepaymentPlanList: this.details.principalRepaymentPlanList || [],
+              principalRepaymentPlanList: this.details.principalRepaymentPlanList.reduce((result, item) => {
+                result[item.moneyPeriod - 1].push(item)
+
+                return result
+              }, []) ?? [],
               projectSegmentRateList: this.details.projectSegmentRateList || [],
               interestRepaymentPlanList: this.details.interestRepaymentPlanList ||
                 range(0, 2).map((item, index) => ({

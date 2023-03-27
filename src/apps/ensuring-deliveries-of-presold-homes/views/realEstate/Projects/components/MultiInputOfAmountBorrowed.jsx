@@ -79,7 +79,7 @@ export default {
                * 格式化为“YYYYMMDD”的借款开始时间（用于前后端交互）
                * @type {string}
                */
-              item.starDate = `${item.starDate}`
+              item.startDate = `${item.startDate}`
               /**
                * 格式化为“YYYYMMDD”的借款结束时间（用于前后端交互）
                * @type {string}
@@ -90,7 +90,7 @@ export default {
                * @type {moment.Moment}
                * @private
                */
-              item._startDate = moment(item.starDate)
+              item._startDate = moment(item.startDate)
               /**
                * 借款结束时间（用于组件内交互）
                * @type {moment.Moment}
@@ -118,7 +118,7 @@ export default {
     },
     onCreateRow(e) {
       const row = {
-        starDate: undefined,
+        startDate: undefined,
         endDate: undefined,
         moneyValue: 0,
         _startDate: null,
@@ -136,7 +136,7 @@ export default {
       let err = false
 
       this.dataSource.forEach(item => {
-        if (!item.starDate || !item.endDate || !item.moneyValue) {
+        if (!item.startDate || !item.endDate || !item.moneyValue) {
           err = true
         }
       })
@@ -161,7 +161,7 @@ export default {
 
         this.dataSource[index] = {
           ...this.dataSource[index],
-          starDate: value?.format('YYYYMMDD'),
+          startDate: value?.format('YYYYMMDD'),
           endDate: _endDate?.format('YYYYMMDD'),
           _endDate
         }

@@ -38,7 +38,8 @@ export default {
    */
   getDetailsOfProjects(request, data) {
     return request({
-      url: '/estate/projectInfo/getProjectInfo',
+      // url: '/estate/projectInfo/getProjectInfo',
+      url: '/estate/projectInfo/getProjectInfov2',
       method: 'post',
       data: qs.stringify(data)
     })
@@ -51,7 +52,8 @@ export default {
    */
   addProjects(request, data) {
     return request({
-      url: '/estate/projectInfo/add',
+      // url: '/estate/projectInfo/add',
+      url: '/estate/projectInfo/addv2',
       method: 'post',
       data
     })
@@ -64,7 +66,8 @@ export default {
    */
   updateProjects(request, data) {
     return request({
-      url: '/estate/projectInfo/update',
+      // url: '/estate/projectInfo/update',
+      url: '/estate/projectInfo/updatev2',
       method: 'post',
       data
     })
@@ -89,8 +92,6 @@ export default {
    * @returns {*}
    */
   exportProjects(request, params) {
-    console.log(params)
-
     return request({
       url: '/estate/projectInfo/exportExcel',
       method: 'get',
@@ -112,7 +113,7 @@ export default {
     })
   },
   /**
-   * 获取还款计划列表
+   * 还款弹窗-获取还款期次下拉列表
    * @param request
    * @param data
    * @returns {*}
@@ -125,7 +126,7 @@ export default {
     })
   },
   /**
-   * 还款
+   * 还款操作
    * @param request
    * @param data
    * @returns {*}
@@ -148,11 +149,12 @@ export default {
     })
   },
   /**
-   * 获取还款计划列表预览
+   * 新增/编辑时的还款计划预览
    */
   getRepaymentPlanPreviewOfProjects(request, data) {
     return request({
-      url: '/estate/projectInfo/createRefundPlan',
+      // url: '/estate/projectInfo/createRefundPlan',
+      url: '/estate/projectInfo/createRefundPlanv2',
       method: 'post',
       data
     })

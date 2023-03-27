@@ -55,8 +55,6 @@ export default {
     value: {
       immediate: true,
       handler(value) {
-        console.log(value)
-
         if (this.dataSourceCache.length) {
           this.dataSource = cloneDeep(this.dataSourceCache)
           this.dataSourceCache = []
