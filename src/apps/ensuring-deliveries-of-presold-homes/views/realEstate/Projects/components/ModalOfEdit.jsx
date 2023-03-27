@@ -7,7 +7,7 @@ import TGUploadFile from '@/components/TGUploadFile'
 import MultiInputOfStepRateList from './MultiInputOfStepRateList'
 import MultiInputOfAmountBorrowed from './MultiInputOfAmountBorrowed'
 import MultiInputOfSettlementDate from './MultiInputOfSettlementDate'
-import MultiInputOfRepaymentPlanList from './MultiInputOfRepaymentPlanList'
+import MultiInputOfPrincipalRepayment from './MultiInputOfPrincipalRepayment'
 
 export default Form.create({})({
   mixins: [forFormModal()],
@@ -230,6 +230,19 @@ export default Form.create({})({
         fullName: this.keywordOfSearchDevelopers,
         _currentItem: this.currentItem
       }, 'visibilityOfDeveloper')
+    },
+    async onPreview() {
+      await this._setVisibilityOfModal(
+        {
+          _currentItem: this.currentItem,
+          moneyValueList: this.form.getFieldValue('moneyValueList'),
+          projectSegmentRateList: this.form.getFieldValue('projectSegmentRateList'),
+          interestRepaymentPlanList: this.form.getFieldValue('interestRepaymentPlanList'),
+          principalRepaymentPlanList: flatten(this.form.getFieldValue('principalRepaymentPlanList')),
+          isBorrow: this.form.getFieldValue('isBorrow')
+        },
+        'visibilityOfRepaymentPlanPreview'
+      )
     }
   },
   render() {
@@ -424,7 +437,8 @@ export default Form.create({})({
                         ]
                       })(
                         <MultiInputOfStepRateList
-                          disabled={this.currentItem.isEdit === 0}
+                          amountBorrowed={this.form.getFieldValue('moneyValueList')}
+                          disabled={this.currentItem.isEdit === 0 || !this.form.getFieldValue('moneyValueList').length}
                         />
                       )
                     }
@@ -443,7 +457,7 @@ export default Form.create({})({
                         ]
                       })(
                         <MultiInputOfSettlementDate
-                          disabled={this.currentItem.isEdit === 0}
+                          disabled={this.currentItem.isEdit === 0 || !this.form.getFieldValue('moneyValueList').length}
                         />
                       )
                     }
@@ -486,10 +500,10 @@ export default Form.create({})({
                           }
                         ]
                       })(
-                        <MultiInputOfRepaymentPlanList
-                          disabled={this.currentItem.isEdit === 0}
-                          projectSegmentRateList={this.form.getFieldValue('projectSegmentRateList')}
-                          moneyValueList={this.form.getFieldValue('moneyValueList')}
+                        <MultiInputOfPrincipalRepayment
+                          disabled={this.currentItem.isEdit === 0 || !this.form.getFieldValue('moneyValueList').length}
+                          amountBorrowed={this.form.getFieldValue('moneyValueList')}
+                          onPreview={this.onPreview}
                         />
                       )
                     }

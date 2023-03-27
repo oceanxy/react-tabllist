@@ -15,6 +15,10 @@ export default {
     disabled: {
       type: Boolean,
       default: false
+    },
+    amountBorrowed: {
+      type: Array,
+      required: true
     }
   },
   data() {
@@ -55,6 +59,9 @@ export default {
           scopedSlots: { customRender: 'operation' }
         }
       ]
+    },
+    _amountBorrowed() {
+      return [this.amountBorrowed[0]?._startDate ?? null, this.amountBorrowed.at(-1)?._endDate.endOf('day') ?? null]
     }
   },
   watch: {
@@ -156,6 +163,7 @@ export default {
                 style={'width: 100%'}
                 vModel={record._endDate}
                 placeholder={'截止日期'}
+                disabledDate={current => !current.isBetween(...this._amountBorrowed, null, '[]')}
                 disabled={this.disabled}
                 onChange={value => this.onCompValueChange('_endDate', value, index)}
               />
