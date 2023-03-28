@@ -98,6 +98,17 @@ export default [
     ]
   },
   {
+    path: 'edph/employer-side-contracts',
+    name: 'employerSideContracts',
+    component: () => import('@/apps/ensuring-deliveries-of-presold-homes/views/EmployerSideContracts'),
+    meta: {
+      title: '资方合同管理',
+      keepAlive: false,
+      requiresAuth: true,
+      icon: 'icon-menu-employer-side-contracts'
+    }
+  },
+  {
     path: 'edph/statistics',
     component: TGRouterView,
     redirect: { name: 'borrowingStatistics' },

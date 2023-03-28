@@ -16,20 +16,25 @@ export default {
             scopedSlots: { customRender: 'serialNumber' }
           },
           {
-            title: '开发商',
+            title: '合同编号',
             width: 200,
-            dataIndex: 'developerName'
+            dataIndex: 'contractNo'
           },
           {
-            title: '项目',
+            title: '合同名称',
             width: 200,
-            dataIndex: 'projectName'
+            dataIndex: 'contractName'
           },
           {
-            title: <div>借款金额<span class={'unit-text'}>(元)</span></div>,
+            title: <div>放款全额<span class={'unit-text'}>(元)</span></div>,
             width: 100,
             align: 'center',
             dataIndex: 'moneyValue'
+          },
+          {
+            title: '签约起止日期',
+            width: 200,
+            scopedSlots: { customRender: 'startEndTime' }
           },
           {
             title: '还款计划',
@@ -37,25 +42,13 @@ export default {
             scopedSlots: { customRender: 'refundPlan' }
           },
           {
-            title: '下期还款时间',
-            width: 100,
-            align: 'center',
-            dataIndex: 'nextTime'
-          },
-          {
-            title: <div>已还金额<span class={'unit-text'}>(元)</span></div>,
+            title: <div>已还款金额<span class={'unit-text'}>(元)</span></div>,
             width: 100,
             align: 'center',
             dataIndex: 'refundAmount'
           },
           {
-            title: '资产收购',
-            width: 80,
-            align: 'center',
-            dataIndex: 'acquisition'
-          },
-          {
-            title: '借款合同',
+            title: '合同',
             width: 100,
             align: 'center',
             scopedSlots: { customRender: 'contract' }

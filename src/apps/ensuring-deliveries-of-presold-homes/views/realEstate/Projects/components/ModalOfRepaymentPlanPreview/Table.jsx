@@ -8,13 +8,6 @@ export default {
       tableProps: {
         columns: [
           {
-            title: '序号',
-            width: 60,
-            align: 'center',
-            fixed: true,
-            scopedSlots: { customRender: 'serialNumber' }
-          },
-          {
             title: '期数',
             width: 60,
             align: 'center',

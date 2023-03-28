@@ -107,7 +107,8 @@ export default {
       return totalPercent && totalPercent === this.dataSource.length * 100 && this.isPreview
     },
     _isCopySettings() {
-      return this.activeKey > 0 &&
+      return !this.disabled &&
+        this.activeKey > 0 &&
         this.dataSource[this.activeKey - 1].length &&
         this.totalPercent[this.activeKey - 1] === 100
     }
