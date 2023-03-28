@@ -1,5 +1,5 @@
 import { Button, DatePicker, Input, InputNumber, message, Space, Table, Tabs } from 'ant-design-vue'
-import { debounce } from 'lodash'
+import { cloneDeep, debounce } from 'lodash'
 import forIndex from '@/mixins/forIndex'
 import { TabPane } from 'ant-design-vue/lib/tabs'
 import moment from 'moment'
@@ -25,6 +25,13 @@ export default {
      */
     amountBorrowed: {
       type: Array,
+      required: true
+    },
+    /**
+     * 预览还款的前置条件：借款金额、分段利率、结息日皆有合法数据
+     */
+    isPreview: {
+      type: Boolean,
       required: true
     }
   },
@@ -90,31 +97,32 @@ export default {
      * 当前是否可预览（要求每一笔借款的比例都达到100%即可预览）
      * @returns {boolean}
      */
-    isPreview() {
-      return this.totalPercent.reduce((total, i) => {
+    _isPreview() {
+      const totalPercent = this.totalPercent.reduce((total, i) => {
         total += i
 
         return total
-      }, 0) === this.dataSource.length * 100
+      }, 0)
+
+      return totalPercent && totalPercent === this.dataSource.length * 100 && this.isPreview
+    },
+    _isCopySettings() {
+      return this.activeKey > 0 &&
+        this.dataSource[this.activeKey - 1].length &&
+        this.totalPercent[this.activeKey - 1] === 100
     }
   },
   watch: {
     amountBorrowed(value) {
-      this.$nextTick(() => {
-        value.forEach((item, index) => {
-          if (Array.isArray(this.dataSource[index])) {
-            if (this.dataSource[index].length) {
-              this.dataSource[index] = this.dataSource[index].map((item, i) => ({
-                ...item,
-                money: value[i].moneyValue,
-                moneyPeriod: value[i].moneyPeriod
-              }))
-            }
-          } else {
-            this.dataSource[index] = []
-            this.onCreateRow(null, index, item)
-          }
-        })
+      value.forEach((item, index) => {
+        if (Array.isArray(this.dataSource[index])) {
+          this.dataSource[index].forEach(d => {
+            d.money = item.moneyValue
+            d.moneyPeriod = item.moneyPeriod
+          })
+        } else {
+          this.onCreateRow(null, index, item)
+        }
       })
     },
     value: {
@@ -122,31 +130,56 @@ export default {
       handler(value) {
         if (this.dataSourceCache?.length) {
           this.dataSource = [...this.dataSourceCache]
-
           this.dataSourceCache = []
         } else {
-          this.dataSource = value.map(item => item.map(i => {
-            i.id = i.id || Math.random()
+          if (!value.length) {
+            this.onCreateRow(null, 0, this.amountBorrowed?.[0] ?? {})
+          } else {
+            this.dataSource = value.map(item => item.map(i => {
+              i.id = i.id || Math.random()
 
-            // ===== 注意本组件内 dataSource 的一些字段的类型：======
-            /**
-             * 格式化为“YYYYMMDD”的还款日期（用于前后端交互）
-             * @type {string}
-             */
-            i.repaymentEndDay = `${i.repaymentEndDay}`
-            /**
-             * 还款日期（用于组件内交互）
-             * @type {moment.Moment}
-             */
-            i._repaymentEndDay = moment(i.repaymentEndDay)
+              // ===== 注意本组件内 dataSource 的一些字段的类型：======
+              /**
+               * 格式化为“YYYYMMDD”的还款日期（用于前后端交互）
+               * @type {string}
+               */
+              i.repaymentEndDay = `${i.repaymentEndDay}`
+              /**
+               * 还款日期（用于组件内交互）
+               * @type {moment.Moment}
+               */
+              i._repaymentEndDay = moment(i.repaymentEndDay)
 
-            return i
-          }))
+              return i
+            }))
+          }
         }
       }
     }
   },
   methods: {
+    onCreateRow(e, index = 0, amountBorrowed) {
+      const row = {
+        period: e ? (this.dataSource[index].length + 1) : 1,
+        money: amountBorrowed.moneyValue,
+        moneyPeriod: amountBorrowed.moneyPeriod,
+        repaymentEndDay: '',
+        _repaymentEndDay: null,
+        percent: 0,
+        remark: '',
+        id: Math.random()
+      }
+
+      this.$set(
+        this.dataSource,
+        index,
+        e ? [...this.dataSource[index], row] : [row]
+      )
+
+      if (e) {
+        this.validator()
+      }
+    },
     disabledDate(current) {
       if (this.dateRange.length === 2) {
         return !current.isBetween(this.dateRange[0], this.dateRange[1].endOf('day'))
@@ -163,24 +196,6 @@ export default {
       this.dataSource[this.activeKey].splice(index, 1)
 
       this.validator()
-    },
-    onCreateRow(e, index = 0, amountBorrowed) {
-      const row = {
-        period: this.dataSource[index].length + 1,
-        money: amountBorrowed.moneyValue,
-        moneyPeriod: amountBorrowed.moneyPeriod,
-        repaymentEndDay: '',
-        _repaymentEndDay: null,
-        percent: 0,
-        remark: '',
-        id: Math.random()
-      }
-
-      this.$set(this.dataSource, index, [...this.dataSource[index], row])
-
-      if (e) {
-        this.validator()
-      }
     },
     validator() {
       const err = new Array(this.amountBorrowed.length).fill(false)
@@ -212,7 +227,7 @@ export default {
 
       if (field === 'percent') {
         if (this.totalPercent[this.activeKey] > 100) {
-          message.warn(`第${this.activeKey}笔借款的本金比例之和已达最大值（100%）`)
+          message.warn(`第${this.activeKey + 1}笔借款的本金比例之和已达最大值（100%）`)
 
           this.dataSource[this.activeKey][index].percent =
             100 - this.totalPercent[this.activeKey] + this.dataSource[this.activeKey][index].percent
@@ -223,6 +238,16 @@ export default {
     },
     async getPreview() {
       this.$emit('preview')
+    },
+    copySettings() {
+      this.$set(this.dataSource, this.activeKey, cloneDeep(this.dataSource[this.activeKey - 1]).map(item => ({
+        ...item,
+        money: this.amountBorrowed[this.activeKey].moneyValue,
+        moneyPeriod: this.amountBorrowed[this.activeKey].moneyPeriod,
+        id: Math.random()
+      })))
+
+      this.validator()
     }
   },
   render() {
@@ -320,21 +345,21 @@ export default {
                 }
               </Tabs>,
               <Space>
-                {/* { */}
-                {/*   this.amountBorrowed.length > 1 && this.activeKey > 0 */}
-                {/*     ? ( */}
-                {/*       <Button */}
-                {/*         type={'link'} */}
-                {/*         title={'带入上一笔借款的设置'} */}
-                {/*         onClick={this.getPreview} */}
-                {/*       > */}
-                {/*         带入上一笔借款的设置 */}
-                {/*       </Button> */}
-                {/*     ) */}
-                {/*     : null */}
-                {/* } */}
                 {
-                  this.isPreview
+                  this._isCopySettings
+                    ? (
+                      <Button
+                        type={'link'}
+                        title={'带入上一笔借款的设置'}
+                        onClick={this.copySettings}
+                      >
+                        带入上一笔设置
+                      </Button>
+                    )
+                    : null
+                }
+                {
+                  this._isPreview
                     ? (
                       <Button
                         type={'link'}

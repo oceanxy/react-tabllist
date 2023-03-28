@@ -55,16 +55,10 @@ export default {
             dataIndex: 'acquisition'
           },
           {
-            title: '市城投合同',
+            title: '借款合同',
             width: 100,
             align: 'center',
-            scopedSlots: { customRender: 'ctContract' }
-          },
-          {
-            title: '开发商合同',
-            width: 100,
-            align: 'center',
-            scopedSlots: { customRender: 'devContract' }
+            scopedSlots: { customRender: 'contract' }
           },
           {
             title: '编辑时间',
@@ -108,11 +102,8 @@ export default {
             ? <Tag color={'red'} style={'margin-left: 10px'}>逾期</Tag>
             : null
         ],
-        ctContract: (text, record) => record.ctContractUrl
-          ? <Button type="link" onClick={() => window.open(record.ctContractUrl)}>预览</Button>
-          : null,
-        devContract: (text, record) => record.devContractUrl
-          ? <Button type="link" onClick={() => window.open(record.devContractUrl)}>预览</Button>
+        contract: (text, record) => record.contractUrl
+          ? <Button type="link" onClick={() => window.open(record.contractUrl)}>预览</Button>
           : null,
         operation: (text, record) => (
           <Space>

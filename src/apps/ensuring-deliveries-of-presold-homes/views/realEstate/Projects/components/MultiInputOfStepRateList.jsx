@@ -104,10 +104,12 @@ export default {
       this.validator()
     },
     onCreateRow(e) {
+      const _endDate = e ? moment(this.dataSource.at(-1)._endDate).add(1, 'days') : null
+
       const row = {
         rateValue: 0,
-        _endDate: null,
-        endDate: '',
+        _endDate,
+        endDate: e ? _endDate.format('YYYYMMDD') : '',
         id: Math.random()
       }
 

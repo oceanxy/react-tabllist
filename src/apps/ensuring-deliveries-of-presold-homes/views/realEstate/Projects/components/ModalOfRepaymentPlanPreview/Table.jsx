@@ -47,6 +47,7 @@ export default {
           },
           {
             title: '备注',
+            width: 150,
             dataIndex: 'remark'
           }
         ],

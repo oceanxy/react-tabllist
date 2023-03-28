@@ -69,7 +69,7 @@ export default {
               return item
             })
           } else {
-            this.dataSource[this.activeKey] = []
+            this.dataSource = []
             this.onCreateRow()
           }
         }

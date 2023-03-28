@@ -133,6 +133,10 @@ export default Form.create({})({
               status: !isNaN(this.details.status) ? this.details.status === 1 : true,
               moneyValueList: this.details.moneyValueList || [],
               principalRepaymentPlanList: this.details.principalRepaymentPlanList.reduce((result, item) => {
+                if (!Array.isArray(result[item.moneyPeriod - 1])) {
+                  result[item.moneyPeriod - 1] = []
+                }
+
                 result[item.moneyPeriod - 1].push(item)
 
                 return result
@@ -470,7 +474,7 @@ export default Form.create({})({
                           {
                             required: true,
                             type: 'array',
-                            message: '请输入完整的还款计划！',
+                            message: '请输入完整的本金还款计划！',
                             trigger: 'change'
                           },
                           {
@@ -491,7 +495,7 @@ export default Form.create({})({
                                   (moneyValueListLength && _value.length !== moneyValueListLength) ||
                                   !_value.length
                                 ) {
-                                  callback(new Error('每一笔借款的本金比例之和应等于100%！'))
+                                  callback(new Error('每一笔借款的本金比例之和都应等于100%！'))
                                 }
                               }
 
@@ -501,8 +505,13 @@ export default Form.create({})({
                         ]
                       })(
                         <MultiInputOfPrincipalRepayment
-                          disabled={this.currentItem.isEdit === 0 || !this.form.getFieldValue('moneyValueList').length}
+                          disabled={this.currentItem.isEdit === 0}
                           amountBorrowed={this.form.getFieldValue('moneyValueList')}
+                          isPreview={
+                            !!this.form.getFieldValue('moneyValueList').length &&
+                            !!this.form.getFieldValue('projectSegmentRateList').length &&
+                            !!this.form.getFieldValue('interestRepaymentPlanList').length
+                          }
                           onPreview={this.onPreview}
                         />
                       )

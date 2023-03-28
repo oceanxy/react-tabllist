@@ -10,7 +10,7 @@ export default {
   data() {
     return {
       modalProps: {
-        width: 900,
+        width: 1000,
         destroyOnClose: true,
         footer: (
           <Button
@@ -25,6 +25,22 @@ export default {
     }
   },
   computed: {
+    totalRepayment() {
+      const result = {
+        principal: 0,
+        interest: 0
+      }
+
+      this.$store.state[this.moduleName][this.submoduleName].list.forEach(item => {
+        if (item.repaymentType === 1) {
+          result.principal += +item.money.toFixed(2)
+        } else {
+          result.interest += +item.money.toFixed(2)
+        }
+      })
+
+      return result
+    },
     attributes() {
       return {
         attrs: this.modalProps,
@@ -69,13 +85,12 @@ export default {
     return (
       <DragModal {...this.attributes} class={'tg-submodule-container'}>
         <Table />
-        {/* <p style={'color: #ffa191; font-weight: bolder; font-size: 16px'}> */}
-        {/*   还款总计： */}
-        {/*   利息 {this.totalRepayment.interest.toLocaleString()} 元 + */}
-        {/*   本金 {this.totalRepayment.principal.toLocaleString()} 元 = */}
-        {/*   {' '} */}
-        {/*   {(this.totalRepayment.interest + this.totalRepayment.principal).toLocaleString()} 元 */}
-        {/* </p> */}
+        <p style={'color: #ffa191; font-weight: bolder; font-size: 16px'}>
+          还款总计：
+          ￥ {this.totalRepayment.interest.toLocaleString()} (利息) +
+          ￥ {this.totalRepayment.principal.toLocaleString()} (本金) =
+          ￥ {(this.totalRepayment.interest + this.totalRepayment.principal).toLocaleString()}
+        </p>
       </DragModal>
     )
   }
