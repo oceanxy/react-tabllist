@@ -21,14 +21,14 @@ export default {
       default: false
     },
     /**
-     * 总借款金额数据
+     * 总金额数据
      */
     amountBorrowed: {
       type: Array,
       required: true
     },
     /**
-     * 预览还款的前置条件：借款金额、分段利率、结息日皆有合法数据
+     * 预览还款的前置条件：金额、分段利率、结息日皆有合法数据
      */
     isPreview: {
       type: Boolean,
@@ -94,7 +94,7 @@ export default {
       })
     },
     /**
-     * 当前是否可预览（要求每一笔借款的比例都达到100%即可预览）
+     * 当前是否可预览（要求每一笔金额的比例都达到100%即可预览）
      * @returns {boolean}
      */
     _isPreview() {
@@ -181,12 +181,12 @@ export default {
         this.validator()
       }
     },
-    disabledDate(current) {
-      if (this.dateRange.length === 2) {
-        return !current.isBetween(this.dateRange[0], this.dateRange[1].endOf('day'))
-      }
-
-      return false
+    disabledDate(current, index) {
+      return !current.isBetween(
+        this.amountBorrowed[index]?._startDate ?? null,
+        this.amountBorrowed[index]?._endDate.endOf('day') ?? null,
+        null, '[]'
+      )
     },
     onDelClick(id, index) {
       // 更新期数
@@ -228,7 +228,7 @@ export default {
 
       if (field === 'percent') {
         if (this.totalPercent[this.activeKey] > 100) {
-          message.warn(`第${this.activeKey + 1}笔借款的本金比例之和已达最大值（100%）`)
+          message.warn(`第${this.activeKey + 1}笔金额的本金比例之和已达最大值（100%）`)
 
           this.dataSource[this.activeKey][index].percent =
             100 - this.totalPercent[this.activeKey] + this.dataSource[this.activeKey][index].percent
@@ -266,7 +266,7 @@ export default {
                   this.dataSource.map((item, _index) => (
                     <TabPane
                       key={this.amountBorrowed[_index].moneyPeriod - 1}
-                      tab={`第${this.amountBorrowed[_index].moneyPeriod}笔借款`}
+                      tab={`第${this.amountBorrowed[_index].moneyPeriod}笔金额`}
                     >
                       <Table
                         class="multi-input-table"
@@ -296,11 +296,7 @@ export default {
                               vModel={record._repaymentEndDay}
                               class={record._repaymentEndDay ? 'pass' : ''}
                               placeholder="还款日期"
-                              disabledDate={current => !current.isBetween(
-                                this.amountBorrowed[_index]?._startDate ?? null,
-                                this.amountBorrowed[_index]?._endDate.endOf('day') ?? null,
-                                null, '[]'
-                              )}
+                              disabledDate={current => this.disabledDate(current, _index)}
                               disabled={this.disabled}
                               onChange={value => this.onCompValueChange('_repaymentEndDay', value, index)}
                             />
@@ -351,7 +347,7 @@ export default {
                     ? (
                       <Button
                         type={'link'}
-                        title={'带入上一笔借款的设置'}
+                        title={'带入上一笔金额的设置'}
                         onClick={this.copySettings}
                       >
                         带入上一笔设置
@@ -374,7 +370,7 @@ export default {
                 }
               </Space>
             ]
-            : '正确填写借款金额后显示'
+            : '正确填写金额后显示'
         }
       </div>
     )

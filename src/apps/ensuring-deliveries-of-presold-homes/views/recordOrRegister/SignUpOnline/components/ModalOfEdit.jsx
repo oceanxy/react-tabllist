@@ -170,8 +170,8 @@ export default Form.create({})({
                 <InputNumber
                   max={999999999999}
                   min={0}
-                  formatter={value => `${value}元`}
-                  parser={value => value.replace('元', '')}
+                  formatter={value => `￥ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                  parser={value => value.replace(/￥\s?|(,*)/g, '')}
                   placeholder="请输入单价"
                   style={'width:100%'}
                   allowClear
@@ -195,8 +195,8 @@ export default Form.create({})({
                 <InputNumber
                   max={999999999999}
                   min={0}
-                  formatter={value => `${value}元`}
-                  parser={value => value.replace('元', '')}
+                  formatter={value => `￥ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                  parser={value => value.replace(/￥\s?|(,*)/g, '')}
                   placeholder="请输入总价"
                   style={'width:100%'}
                   allowClear

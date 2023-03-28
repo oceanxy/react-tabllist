@@ -61,7 +61,30 @@ export default {
       ]
     },
     _amountBorrowed() {
-      return [this.amountBorrowed[0]?._startDate ?? null, this.amountBorrowed.at(-1)?._endDate.endOf('day') ?? null]
+      let maxDateRange = [null, null]
+
+      if (this.amountBorrowed.length === 1) {
+        maxDateRange = [
+          this.amountBorrowed[0]?._startDate ?? null,
+          this.amountBorrowed.at(-1)?._endDate.endOf('day') ?? null
+        ]
+      } else if (this.amountBorrowed.length > 1) {
+        this.amountBorrowed.forEach(item => {
+          if (!maxDateRange[0]) {
+            maxDateRange[0] = item._startDate?.startOf('day') ?? null
+          } else if (maxDateRange[0] > item._startDate?.startOf('day')) {
+            maxDateRange[0] = item._startDate?.startOf('day')
+          }
+
+          if (!maxDateRange[1]) {
+            maxDateRange[1] = item._endDate?.endOf('day') ?? null
+          } else if (maxDateRange[1] < item._endDate?.endOf('day')) {
+            maxDateRange[1] = item._endDate?.endOf('day')
+          }
+        })
+      }
+
+      return maxDateRange
     }
   },
   watch: {

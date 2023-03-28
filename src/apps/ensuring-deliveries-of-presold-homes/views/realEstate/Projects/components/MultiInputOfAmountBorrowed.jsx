@@ -33,7 +33,7 @@ export default {
           scopedSlots: { customRender: 'serialNumber' }
         },
         {
-          title: <span class={'ant-form-item-required'}>借款金额</span>,
+          title: <span class={'ant-form-item-required'}>金额</span>,
           scopedSlots: { customRender: 'moneyValue' }
         },
         {
@@ -191,7 +191,7 @@ export default {
             moneyValue: (text, record, index) => (
               <InputNumber
                 vModel={record.moneyValue}
-                placeholder="请输入借款金额"
+                placeholder="请输入金额"
                 style={'width: 100%'}
                 class={record.moneyValue ? 'pass' : ''}
                 allowClear
