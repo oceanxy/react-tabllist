@@ -15,7 +15,7 @@ export default {
           },
           {
             title: '还款日期',
-            width: 200,
+            width: 100,
             dataIndex: 'repaymentEndDayStr'
           },
           {
@@ -50,13 +50,13 @@ export default {
           },
           {
             title: '状态',
-            width: 80,
+            width: 70,
             align: 'center',
             dataIndex: 'repaymentStatusStr'
           },
           {
             title: '凭证',
-            width: 80,
+            width: 60,
             align: 'center',
             scopedSlots: { customRender: 'refundCertificate' }
           },

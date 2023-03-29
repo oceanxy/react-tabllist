@@ -9,7 +9,7 @@ export default {
   data() {
     return {
       modalProps: {
-        width: 900,
+        width: 940,
         destroyOnClose: true
       }
     }
