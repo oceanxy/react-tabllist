@@ -8,7 +8,7 @@ export default {
   // 动态路由（从后台获取权限菜单）
   dynamicRouting: true,
   // iconfont
-  iconFontSymbol: '//at.alicdn.com/t/c/font_3919835_8sxn6man9q.js',
+  iconFontSymbol: '//at.alicdn.com/t/c/font_3919835_h8szzvuloe9.js',
   // 面包屑分隔符，如：首页 / 首页
   breadCrumbSeparator: '/',
   // 统一上传地址
