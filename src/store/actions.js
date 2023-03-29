@@ -2,6 +2,7 @@ import apis from '@/apis'
 import { cloneDeep, omit } from 'lodash'
 import { downFile, firstLetterToUppercase } from '@/utils/utilityFunction'
 import config from '@/config'
+import Vue from 'vue'
 
 export default {
   /**
@@ -128,7 +129,19 @@ export default {
     }
 
     if (response.status) {
-      const data = response.data.paginationObj || response.data
+      let data = response.data.paginationObj || response.data
+
+      // 指定字段非可用的数据数组，则在 response.data 对象内寻找数组作为结果返回，其他字段注入到该模块的store中
+      if (!Array.isArray(data)) {
+        Object.entries(response.data).forEach(([key, value]) => {
+          if (Array.isArray(value)) {
+            data = value || []
+          } else {
+            Vue.set(targetModuleName, key, value)
+          }
+        })
+      }
+
       const sortFieldList = response.data.sortFieldList || []
       let rows = data.rows || data
 

@@ -25,21 +25,8 @@ export default {
     }
   },
   computed: {
-    totalRepayment() {
-      const result = {
-        principal: 0,
-        interest: 0
-      }
-
-      this.$store.state[this.moduleName][this.submoduleName].list.forEach(item => {
-        if (item.repaymentType === 1) {
-          result.principal += +item.money.toFixed(2)
-        } else {
-          result.interest += +item.money.toFixed(2)
-        }
-      })
-
-      return result
+    description() {
+      return this.$store.state[this.moduleName][this.submoduleName].description || ''
     },
     attributes() {
       return {
@@ -86,10 +73,7 @@ export default {
       <DragModal {...this.attributes} class={'tg-submodule-container'}>
         <Table />
         <p style={'color: #ffa191; font-weight: bolder; font-size: 16px'}>
-          还款总计：
-          ￥ {this.totalRepayment.interest.toLocaleString()} (利息) +
-          ￥ {this.totalRepayment.principal.toLocaleString()} (本金) =
-          ￥ {(this.totalRepayment.interest + this.totalRepayment.principal).toLocaleString()}
+          {this.description}
         </p>
       </DragModal>
     )

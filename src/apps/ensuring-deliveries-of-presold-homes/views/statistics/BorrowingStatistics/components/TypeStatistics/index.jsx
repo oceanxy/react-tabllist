@@ -1,7 +1,7 @@
 import '../../assets/styles/index.scss'
 import { Card, Col, Row, Spin } from 'ant-design-vue'
 import PieEnterpriseChart from '../PieEnterpriseChart/index'
-import PieRingChat from '../PieRingChat/index'
+// import PieRingChat from '../PieRingChat/index'
 import PieColumnarChat from '../PieColumnarChat/index'
 import Inquiry from './Inquiry'
 
@@ -30,13 +30,13 @@ export default {
             <strong>{this.threeChatList.total}</strong>
           </div>
           <Row>
-            <Col span={8} >
+            <Col span={12} >
               <PieEnterpriseChart />
             </Col>
-            <Col span={8}>
-              <PieRingChat />
-            </Col>
-            <Col span={8}>
+            {/* <Col span={8}> */}
+            {/*   <PieRingChat /> */}
+            {/* </Col> */}
+            <Col span={12}>
               <PieColumnarChat />
             </Col>
           </Row>
