@@ -1,5 +1,6 @@
 import { Icon, message, Modal, Upload } from 'ant-design-vue'
 import { getBase64 } from '@/utils/utilityFunction'
+import config from '@/config'
 
 export default {
   model: {
@@ -18,7 +19,7 @@ export default {
     },
     action: {
       type: String,
-      default: '/api/system/upload/image'
+      default: config.imageUploadPath
     },
     disabled: {
       type: Boolean,

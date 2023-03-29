@@ -1,4 +1,5 @@
 import { Button, Icon, message, Upload } from 'ant-design-vue'
+import config from '@/config'
 
 export default {
   model: {
@@ -17,7 +18,7 @@ export default {
     },
     action: {
       type: String,
-      default: '/mgapi/system/upload/fileUpload'
+      default: config.fileUploadPath
     },
     accept: {
       type: String,

@@ -11,6 +11,12 @@ export default {
   iconFontSymbol: '//at.alicdn.com/t/c/font_3919835_8sxn6man9q.js',
   // 面包屑分隔符，如：首页 / 首页
   breadCrumbSeparator: '/',
+  // 统一上传地址
+  uploadPath: '/mgapi/system/upload/upload',
+  // 文件上传地址
+  fileUploadPath: '/mgapi/system/upload/fileUpload',
+  // 图片上传地址
+  imageUploadPath: '/mgapi/system/upload/imageUpload',
   // 系统名称
   systemName: '渝兴集团综合管理平台',
   systemNameEn: '',

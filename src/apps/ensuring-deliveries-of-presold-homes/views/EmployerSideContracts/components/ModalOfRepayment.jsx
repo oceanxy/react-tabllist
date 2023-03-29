@@ -4,6 +4,7 @@ import DragModal from '@/components/DragModal'
 import { cloneDeep } from 'lodash'
 import TGUploadFile from '@/components/TGUploadFile'
 import moment from 'moment'
+import config from '@/config'
 
 export default Form.create({})({
   mixins: [forFormModal()],
@@ -142,7 +143,7 @@ export default Form.create({})({
                 <TGUploadFile
                   limit={1}
                   form={this.form}
-                  action={'/mgapi/system/upload/upload'}
+                  action={config.uploadPath}
                   accept={'.pdf,.jpg,.png,.jpeg'}
                 />
               )
