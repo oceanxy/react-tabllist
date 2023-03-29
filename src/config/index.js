@@ -9,6 +9,8 @@ export default {
   dynamicRouting: true,
   // iconfont
   iconFontSymbol: '//at.alicdn.com/t/c/font_3919835_8sxn6man9q.js',
+  // 面包屑分隔符，如：首页 / 首页
+  breadCrumbSeparator: '/',
   // 系统名称
   systemName: '渝兴集团综合管理平台',
   systemNameEn: '',

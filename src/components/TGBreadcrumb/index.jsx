@@ -1,6 +1,7 @@
 import './index.scss'
 import { Breadcrumb, Button } from 'ant-design-vue'
 import { RouterLink } from 'vue-router'
+import config from '@/config'
 
 export default {
   name: 'TGBreadcrumb',
@@ -22,11 +23,16 @@ export default {
       }
 
       // 处理面包屑出现最后两级重名的情况
-      // 主要出现在父级菜单设置“hideChildren: true”，不在左侧菜单展示子级，同时子级路由的path字段为空字符串的情况
+      // 主要出现在父级菜单设置“hideChildren: true”（不在左侧菜单展示子级），同时子级路由的 path 字段为空字符串的情况
       const pathOfLastRoute = matchedRoutes[matchedRoutes.length - 1].path
 
       if (pathOfLastRoute.substring(pathOfLastRoute.length - 1) === '/') {
         matchedRoutes.pop()
+      }
+
+      // 替换面包屑第一级的名称
+      if (matchedRoutes[0].path === '') {
+        matchedRoutes[0].meta.title = this.$router.resolve({ name: matchedRoutes[0].redirect.name }).route.meta.title
       }
 
       return matchedRoutes
@@ -63,7 +69,7 @@ export default {
         <IconFont type={'icon-global-home'} class={'tg-breadcrumb-btn-home'} />
         <Breadcrumb
           routes={this.matchedRoutes}
-          separator={'/'}
+          separator={config.breadcrumbSeparator}
           itemRender={this.itemRender}
         />
         {

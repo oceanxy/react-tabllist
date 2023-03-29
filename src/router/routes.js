@@ -23,10 +23,10 @@ export default [
     // 选择布局组件
     component: () => import('@/layouts/TGBackendSystem'),
     meta: {
-      title: '工作台',
+      title: '后台',
       keepAlive: false,
       requiresAuth: true,
-      // icon: () => import('@/assets/images/console.svg') // svg 图表方式
+      // icon: () => import('@/assets/images/console.svg') // svg 图标方式
       icon: 'icon-menu-workbench' // icon-font symbol 方式
     },
     children: [
