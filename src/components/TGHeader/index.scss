@@ -1,7 +1,7 @@
 @import '@/assets/styles/theme.scss';
 
 .tg-layout-header {
-  height: 56px;
+  height: 50px;
   padding: 0;
   background: $primary-color;
   line-height: unset;
@@ -157,12 +157,12 @@
 
 .tg-header-user-overlay {
   padding: 0;
-  top: 64px !important;
+  top: 52px !important;
 }
 
 .tg-header-news-overlay {
   padding: 0;
-  top: 64px !important;
+  top: 52px !important;
 
   .ant-popover-inner-content {
     padding: 0;
