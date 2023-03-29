@@ -29,7 +29,7 @@
   height: 100%;
 
   .tg-scrolling-number-scroll-container {
-    transition: all 1.5s;
+    transition: all var(--duration) cubic-bezier(0.32, 1.05, 0.74, 0.99);
     transform: translateY(var(--start));
     opacity: 0;
 
@@ -39,8 +39,9 @@
     }
 
     .number-item {
-      height: var(--height);
-      line-height: var(--height);
+      //height: calc(100% / 10);
+      //height: var(--height);
+      //line-height: var(--height);
     }
   }
 }

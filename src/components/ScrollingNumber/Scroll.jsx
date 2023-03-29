@@ -3,6 +3,9 @@ import _ from 'lodash'
 
 export default {
   props: {
+    /**
+     * 滚动目标数字
+     */
     targetNumber: {
       type: Number,
       default: 0
@@ -10,39 +13,41 @@ export default {
   },
   data: () => ({
     startDistance: 0,
-    targetDistance: 0,
-    itemHeight: 0
+    targetDistance: 100, // 初始值，随意设置（解决初始数字为0时没有动画的问题）
+    duration: 0
   }),
   watch: {
     targetNumber: {
       immediate: true,
       handler(value) {
-        this.targetNumber = value
-        this.startDistance = this.targetDistance
-        this.targetDistance = (this.$refs.container?.clientHeight ?? 1) * this.targetNumber
+        this.$nextTick(() => {
+          this.duration = this.getRandom(1000, 2000)
+          this.startDistance = this.targetDistance
+          this.targetDistance = this.$refs.container.children[value].offsetTop
+        })
       }
     }
   },
-  mounted() {
-    this.itemHeight = this.$refs.container.clientHeight
+  methods: {
+    getRandom(min, max) {
+      const floatRandom = Math.random()
+      const difference = max - min
+      // 介于 0 和差值之间的随机数
+      const random = Math.round(difference * floatRandom)
 
-    if (this.targetNumber) {
-      this.startDistance = 0
-      this.targetDistance = this.targetNumber * this.itemHeight
-    } else {
-      this.startDistance = 9 * this.itemHeight
-      this.targetDistance = 0
+      return random + min
     }
   },
   render() {
     return (
-      <div ref="container" class="tg-scrolling-number-content">
+      <div class="tg-scrolling-number-content">
         <div
+          ref="container"
           class="tg-scrolling-number-scroll-container animation"
           style={{
-            '--height': `${this.itemHeight}px`,
-            '--start': `-${this.startDistance}px`,
-            '--target': `-${this.targetDistance}px`
+            '--duration': `${this.duration}ms`,
+            '--start': `${-this.startDistance}px`,
+            '--target': `${-this.targetDistance}px`
           }}
         >
           {

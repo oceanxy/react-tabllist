@@ -4,8 +4,8 @@ import Scroll from './Scroll'
 export default {
   data() {
     return {
-      inner_text: '',
-      inner_value: ''
+      innerText: '',
+      innerValue: ''
     }
   },
   props: {
@@ -22,13 +22,13 @@ export default {
     text: {
       immediate: true,
       handler(value) {
-        this.inner_text = value
+        this.innerText = value
       }
     },
     value: {
       immediate: true,
       handler(value) {
-        this.inner_value = value.toLocaleString().split('')
+        this.innerValue = value.toLocaleString().split('')
       }
     }
   },
@@ -36,17 +36,17 @@ export default {
     return (
       <div class="tg-scrolling-number-container">
         {
-          this.inner_text
+          this.innerText
             ? (
               <div class="tg-scrolling-number-text">
-                {this.inner_text}
+                {this.innerText}
               </div>
             )
             : null
         }
         <div class="tg-scrolling-number-value">
           {
-            this.inner_value.map(numStr => {
+            this.innerValue.map(numStr => {
               return !isNaN(+numStr)
                 ? <Scroll targetNumber={+numStr} />
                 : <div>{numStr}</div>
