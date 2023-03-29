@@ -129,21 +129,24 @@ export default {
     }
 
     if (response.status) {
-      let data = response.data.paginationObj || response.data
+      const data = response.data?.paginationObj ?? response.data
+      const sortFieldList = response.data?.sortFieldList ?? []
+      let rows = data?.rows ?? data
 
-      // 指定字段非可用的数据数组，则在 response.data 对象内寻找数组作为结果返回，其他字段注入到该模块的store中
-      if (!Array.isArray(data)) {
-        Object.entries(response.data).forEach(([key, value]) => {
+      // 若指定字段不是可用的数据数组，则在 rows 对象内寻找数组作为结果返回，其他字段注入到该模块的 store 中
+      if (Object.prototype.toString.call(rows) === '[object Object]') {
+        Object.entries(rows).forEach(([key, value]) => {
           if (Array.isArray(value)) {
-            data = value || []
+            rows = value
           } else {
             Vue.set(targetModuleName, key, value)
           }
         })
       }
 
-      const sortFieldList = response.data.sortFieldList || []
-      let rows = data.rows || data
+      if (!rows) {
+        rows = []
+      }
 
       if ('pagination' in targetModuleName) {
         commit('setPagination', {
