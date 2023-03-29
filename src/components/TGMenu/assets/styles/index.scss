@@ -19,7 +19,7 @@
 
     .ant-menu-item-title {
       transition: inherit;
-      padding: 0 16px 0 16px !important;
+      padding: 0 16px !important;
     }
   }
 
@@ -116,7 +116,7 @@
 
   .ant-menu-item .anticon,
   .ant-menu-submenu-title .anticon {
-    margin: 0 6px;
+    margin: 0 10px 0 0;
     font-size: 1.4em;
     line-height: 0;
   }

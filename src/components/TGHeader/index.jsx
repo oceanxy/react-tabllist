@@ -134,12 +134,12 @@ export default {
                   <Popover overlayClassName={'tg-header-news-overlay'}>
                     <Badge
                       count={this.news.total}
-                      offset={[-12, 2]}
+                      offset={[-12, 4]}
                       numberStyle={{
-                        width: '20px',
-                        height: '20px',
-                        fontSize: '14px',
-                        lineHeight: '20px',
+                        width: '18px',
+                        height: '18px',
+                        fontSize: '12px',
+                        lineHeight: '18px',
                         padding: '0'
                       }}
                     >
