@@ -3,6 +3,7 @@ import forInquiry from '@/mixins/forInquiry'
 
 export default Form.create({})({
   mixins: [forInquiry()],
+  data: () => ({ initialValues: { dateRange: [] } }),
   render() {
     return (
       <Form
@@ -17,7 +18,7 @@ export default Form.create({})({
               this.form.getFieldDecorator('dateRange', { initialValue: this.initialValues.dateRange })(
                 <DatePicker.RangePicker
                   placeholder={['开始时间', '结束时间']}
-                  valueFormat={'YYYY-MM-DD'}
+                  valueFormat={'YYYYMMDD'}
                   allowClear
                 />
               )

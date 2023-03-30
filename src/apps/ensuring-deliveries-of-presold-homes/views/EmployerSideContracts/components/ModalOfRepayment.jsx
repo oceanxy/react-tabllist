@@ -26,7 +26,7 @@ export default Form.create({})({
         on: {
           cancel: () => this.onCancel(this.visibilityFieldName),
           ok: () => this.onSubmit({
-            customApiName: 'repayment',
+            customApiName: 'repaymentOfEmployerSideContracts',
             customDataHandler: value => {
               const data = cloneDeep(value)
 
@@ -50,7 +50,7 @@ export default Form.create({})({
             moduleName: this.moduleName,
             payload: { id: this.currentItem.id },
             stateName: 'repaymentPlanList',
-            customApiName: 'getListOfRepaymentPlan'
+            customApiName: 'getListOfRepaymentPlanOfEmployerSideContracts'
           })
         }
       }
