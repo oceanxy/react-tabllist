@@ -114,13 +114,19 @@ export default {
             >
               删除
             </Button>
-            <Button
-              type="link"
-              size="small"
-              onClick={() => this._setVisibilityOfModal(record, 'visibilityOfRepayment')}
-            >
-              还款
-            </Button>
+            {
+              record.isRefund === 1
+                ? (
+                  <Button
+                    type="link"
+                    size="small"
+                    onClick={() => this._setVisibilityOfModal(record, 'visibilityOfRepayment')}
+                  >
+                    还款
+                  </Button>
+                )
+                : null
+            }
           </Space>
         )
       }
