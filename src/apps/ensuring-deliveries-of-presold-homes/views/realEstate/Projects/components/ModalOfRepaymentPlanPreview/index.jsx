@@ -72,7 +72,7 @@ export default {
     return (
       <DragModal {...this.attributes} class={'tg-submodule-container'}>
         <Table />
-        <p style={'color: #ffa191; font-weight: bolder; font-size: 16px'}>
+        <p style={'color: #ffa191; font-weight: bolder; font-size: 16px; flex: none'}>
           {this.description}
         </p>
       </DragModal>

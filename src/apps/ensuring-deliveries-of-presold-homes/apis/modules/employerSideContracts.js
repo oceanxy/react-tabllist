@@ -102,7 +102,7 @@ export default {
    * @param data
    * @returns {*}
    */
-  getListOfRepaymentPlan(request, data) {
+  getListOfRepaymentPlanOfEmployerSideContracts(request, data) {
     return request({
       url: '/estate/capitalContractInfo/getWaitRefundPlanList',
       method: 'post',
@@ -115,7 +115,7 @@ export default {
    * @param data
    * @returns {*}
    */
-  repayment(request, data) {
+  repaymentOfEmployerSideContracts(request, data) {
     return request({
       url: '/estate/capitalContractInfo/refund',
       method: 'post',

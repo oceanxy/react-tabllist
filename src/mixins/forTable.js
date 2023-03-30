@@ -524,7 +524,7 @@ export default ({
             const HTML_TABLE_HEADER = table.querySelector('.ant-table-scroll .ant-table-header')
             // ant-design-vue Table 组件的内部结构会根据内容的多少而变化，以适应表格的内容区滚动，所以这里要分情况获取表格元素
             const HTML_TABLE_HEADER_HEIGHT = HTML_TABLE_HEADER?.clientHeight ??
-              table.querySelector('.ant-table-scroll .ant-table-thead')?.clientHeight ??
+              table.querySelector('.ant-table-thead')?.clientHeight ??
               0
             const FOOTER_HEIGHT = table.querySelector('.ant-table-footer')?.clientHeight ?? 0
             const scroll = { scrollToFirstRowOnChange: true }
