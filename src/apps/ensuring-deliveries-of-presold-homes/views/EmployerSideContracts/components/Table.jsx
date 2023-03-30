@@ -17,33 +17,33 @@ export default {
           },
           {
             title: '合同编号',
-            width: 200,
+            width: 150,
             dataIndex: 'contractNo'
           },
           {
             title: '合同名称',
-            width: 200,
+            width: 180,
             dataIndex: 'contractName'
           },
           {
             title: <div>放款全额<span class={'unit-text'}>(元)</span></div>,
-            width: 100,
+            width: 180,
             align: 'center',
             dataIndex: 'moneyValue'
           },
-          {
-            title: '签约起止日期',
-            width: 200,
-            scopedSlots: { customRender: 'startEndTime' }
-          },
+          // {
+          //   title: '签约起止日期',
+          //   width: 200,
+          //   scopedSlots: { customRender: 'startEndTime' }
+          // },
           {
             title: '还款计划',
-            width: 120,
+            width: 100,
             scopedSlots: { customRender: 'refundPlan' }
           },
           {
             title: <div>已还款金额<span class={'unit-text'}>(元)</span></div>,
-            width: 100,
+            width: 120,
             align: 'center',
             dataIndex: 'refundAmount'
           },
