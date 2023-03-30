@@ -402,13 +402,21 @@ export default {
      * @param treeNode
      * @returns {*|(function(): Promise<*>)|undefined}
      */
-    // getIcon(treeNode) {
-    //   return Object.prototype.toString.call(this.getCustomIcon) === '[object Function]'
-    //     ? this.getCustomIcon(treeNode)
-    //     : treeNode.obj.menuIcon
-    //       ? () => import(`@/assets/images/${treeNode.obj.menuIcon}.svg`)
-    //       : undefined // todo 此处设置为默认图标
-    // },
+    getIcon(treeNode) {
+      return Object.prototype.toString.call(this.getCustomIcon) === '[object Function]'
+        ? <span slot={'icon'}>this.getCustomIcon(treeNode)</span>
+        : treeNode.obj?.menuIcon?.includes?.('.svg')
+          ? (
+            <Icon
+              slot={'slot'}
+              class={'icon'}
+              component={() => import(`@/assets/images/${treeNode.obj.menuIcon}`)}
+            />
+          )
+          // : <Icon slot={'slot'} type="caret-right" />
+          // : <IconFont slot={'slot'} type="caret-right" />
+          : undefined
+    },
     /**
      * 获取树节点集合（注意此处有递归）
      * @param dataSource {Array} 生成树节点的数据源
@@ -420,11 +428,25 @@ export default {
           key={item.id}
           dataSource={item}
         >
-          {/* <Icon
-            slot={'icon'}
-            class={'icon'}
-            component={this.getIcon(item)}
-          /> */}
+          {
+            !Array.isArray(item?.children) || !item.children.length
+              ? <span slot={'switcherIcon'} class={'ant-tree-switcher'} style={'visibility: visible'}>
+                <i class={'anticon anticon-file ant-tree-switcher-line-icon'}>
+                  <svg
+                    viewBox="200 200 650 650"
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1em"
+                    height="1em"
+                    fill="currentColor"
+                  >
+                    <path d="M512 601.6a89.6 89.6 0 1 0-89.6-89.6 89.59 89.59 0 0 0 89.6 89.6z m0 0" />
+                  </svg>
+                </i>
+              </span>
+              : null
+          }
+          {this.getIcon(item)}
           {this.highlight(item)}
           {
             Array.isArray(item?.children)
@@ -480,6 +502,7 @@ export default {
                   <Tree
                     showLine
                     showIcon
+                    switcherIcon={<Icon type="caret-down" />}
                     selectedKeys={this.treeId}
                     onSelect={this.onSelect}
                     expandedKeys={this.expandedKeys}
