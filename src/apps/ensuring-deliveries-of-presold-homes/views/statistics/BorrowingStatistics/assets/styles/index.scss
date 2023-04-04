@@ -1,16 +1,21 @@
-@import '@/assets/styles/theme/themeFromLess.scss';
+@import '@/assets/styles/themeFromLess.scss';
+
 .count-page-body {
   padding: 0 12px 12px;
   overflow-y: auto;
+
   .ant-space {
     width: 100%;
   }
+
   .total-sum {
     color: $heading-color;
     padding: 15px 0;
+
     label {
-      font-size: 14px;
+      // font-size: 14px; // 全局默认字号为14号
     }
+
     strong {
       font-size: 20px;
     }

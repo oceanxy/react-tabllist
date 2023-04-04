@@ -2,12 +2,21 @@
 // ant design vue 相关的颜色请勿在本文件修改，请在 @/assets/styles/theme.less 文件修改。
 
 // 主题色配置
+$primary-1: var(--primary-1);
+$primary-2: var(--primary-2);
+$primary-3: var(--primary-3);
+$primary-4: var(--primary-4);
+$primary-5: var(--primary-5);
 $primary-color: var(--primary-color);
+$primary-7: var(--primary-7);
+$primary-8: var(--primary-8);
+$primary-9: var(--primary-9);
 
-$primary-active-color: var(--primary-1);
-$primary-hover-color: var(--primary-5);
-$primary-hover-light-color: var(--primary-9);
-$primary-sub-color: var(--primary-7);
+$primary-color-active: $primary-7;
+$primary-color-disabled: $primary-3;
+$primary-color-hover: $primary-5;
+$primary-color-light-hover: $primary-1;
+$primary-color-sub: $primary-9;
 
 // 布局相关颜色
 $layout-header-background: $primary-color;
@@ -15,6 +24,8 @@ $background-color-base: var(--background-color-base);
 
 // 文字或者图标
 $font-size-base: var(--font-size-base);
+$font-size-lg: var(--font-size-lg);
+$font-size-sm: var(--font-size-sm);
 $heading-color: var(--heading-color);
 $text-color: var(--text-color);
 $text-color-secondary: var(--text-color-secondary);

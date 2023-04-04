@@ -1,4 +1,4 @@
-@import '@/assets/styles/theme/themeFromLess.scss';
+@import '@/assets/styles/themeFromLess.scss';
 .ant-breadcrumb{
   font-size: 12px;
 }
@@ -19,7 +19,7 @@
 
   .ant-breadcrumb-link a {
     font-weight: 400;
-    color: $text-color-secondary;
+    color: $text-color;
 
     &:hover {
       color: $primary-color;
@@ -27,7 +27,7 @@
   }
 
   .tg-breadcrumb-last-title {
-    color: $text-color;
+    color: $text-color-secondary;
   }
 
   .tg-breadcrumb-guide {

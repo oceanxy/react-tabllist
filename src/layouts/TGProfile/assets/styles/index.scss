@@ -1,3 +1,5 @@
+@import '@/assets/styles/themeFromLess';
+
 #tg-profile-layout {
   position: relative;
   overflow: hidden;
@@ -40,7 +42,7 @@
     flex: none;
     background: #ffffff;
     border-radius: 4px;
-    font-size: 16px;
+    font-size: $font-size-lg; // 全局默认字号+2px
     color: #262626;
     padding: 8px;
     box-sizing: border-box;

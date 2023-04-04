@@ -322,7 +322,7 @@ export default {
         margin-left: 20px;
 
         button {
-          font-size: 14px;
+          // font-size: 14px; // 全局默认字号为14号
           width: 20px;
           height: 20px;
         }

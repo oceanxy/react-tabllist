@@ -1,3 +1,5 @@
+@import '@/assets/styles/themeFromLess';
+
 .tg-scrolling-number-container {
   display: inline-flex;
   flex-direction: column;
@@ -6,7 +8,7 @@
   height: 100%;
 
   .tg-scrolling-number-text {
-    font-size: 16px;
+    font-size: $font-size-lg; // 全局默认字号+2px
     white-space: nowrap;
     font-weight: 500;
     text-align: left;

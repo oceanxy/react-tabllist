@@ -19,6 +19,8 @@ export default {
   imageUploadPath: '/mgapi/system/upload/imageUpload',
   // 系统名称
   systemName: '渝兴集团综合管理平台',
+  // 项目主题文件夹名称（位于 @/assets/styles/theme）
+  themeFileName: 'yx.less',
   systemNameEn: '',
   // 全局消息最大显示个数
   maxMessageCount: 1,

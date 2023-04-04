@@ -1,4 +1,4 @@
-@import '@/assets/styles/theme/themeFromLess.scss';
+@import '@/assets/styles/themeFromLess.scss';
 
 .t-g-menu-container.ant-menu {
   overflow-x: hidden;
@@ -65,7 +65,7 @@
 .t-g-menu-popup.ant-menu-submenu {
   .ant-menu-item {
     color: $text-color;
-    font-size: 14px;
+    // font-size: 14px; // 全局默认字号为14号
     font-weight: 400;
     border-radius: 4px;
 
@@ -77,8 +77,8 @@
 
       .ant-menu-item-title,
       .ant-menu-submenu-title {
-        color: $primary-active-color;
-        background: $primary-hover-light-color;
+        color: $primary-color-active;
+        background: $primary-color-light-hover;
         font-weight: bolder;
       }
     }
@@ -87,8 +87,10 @@
   & > .ant-menu-item .ant-menu-item-title,
   .ant-menu-sub .ant-menu-item,
   .ant-menu-submenu .ant-menu-submenu-title {
+    border-radius: $border-radius-base;
+
     &:hover {
-      background: $primary-hover-light-color;
+      background: $primary-color-light-hover;
     }
   }
 
@@ -103,7 +105,7 @@
       display: flex;
       align-items: center;
       color: $text-color;
-      font-size: 14px;
+      // font-size: 14px; // 全局默认字号为14号
       // font-weight: 500;
     }
   }

@@ -1,3 +1,5 @@
+@import '@/assets/styles/themeFromLess';
+
 #tg-responsive-layout {
   position: relative;
   overflow: hidden;
@@ -8,7 +10,6 @@
   .logo {
     height: 32px;
     margin: 16px;
-    background: rgba(255, 255, 255, 0.2);
   }
 
   .trigger {
@@ -28,7 +29,7 @@
     flex-direction: column;
     height: 100%;
     overflow: hidden;
-    background: #f2f4f7;
+    background: $background-color-base;
     //min-width: 1106px;
   }
 
@@ -40,7 +41,7 @@
   .ant-menu-inline-collapsed{
     width: 68px;
   }
-  
+
   @media screen and (max-width: 892px) {
     .tg-layout-header {
       .tg-logo {
@@ -62,7 +63,7 @@
     .tg-content {
       .tg-breadcrumb {
         padding: 10px 20px;
-        font-size: 14px;
+        // font-size: 14px; // 全局默认字号为14号
       }
 
       .fe-tree-content-container {
@@ -93,12 +94,12 @@
 
       .ant-menu-item,
       .ant-menu-submenu-title {
-        font-size: 14px;
+        // font-size: 14px; // 全局默认字号为14号
         height: 32px;
         line-height: 32px;
 
         .anticon {
-          font-size: 16px;
+          font-size: $font-size-lg; // 全局默认字号+2px
         }
       }
     }
@@ -107,14 +108,14 @@
       width: 190px;
 
       .ant-tree {
-        font-size: 14px;
+        // font-size: 14px; // 全局默认字号为14号
       }
 
       .tg-container-trigger {
         width: 14px;
         height: 36px;
         right: -12px;
-        font-size: 14px;
+        // font-size: 14px; // 全局默认字号为14号
       }
     }
   }

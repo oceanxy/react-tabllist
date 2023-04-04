@@ -1,4 +1,4 @@
-@import '@/assets/styles/theme/themeFromLess.scss';
+@import '@/assets/styles/themeFromLess.scss';
 
 .tg-container {
   display: flex;
@@ -15,7 +15,7 @@
     align-items: center;
 
     .title {
-      font-size: 16px;
+      font-size: $font-size-lg; // 全局默认字号+2px
       font-weight: 700;
       color: $text-color;
 

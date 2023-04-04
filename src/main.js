@@ -1,4 +1,3 @@
-import './assets/styles/theme/variables.less'
 import './assets/styles/app.scss'
 import Vue from 'vue'
 import App from './App'
@@ -8,10 +7,15 @@ import router, { createRouter } from './router'
 import store from './store'
 import { initializeDynamicRoutes } from '@/utils/utilityFunction'
 
+const { mock, themeFileName } = config
+
+// require(`@/assets/styles/themes/${themeFileName}`)
+localStorage.setItem('themeFileName', themeFileName)
+
 Vue.config.productionTip = false
 
 // 预载mock数据（开发环境下并启用mock时执行）
-if (process.env.NODE_ENV === 'development' && config.mock) {
+if (process.env.NODE_ENV === 'development' && mock) {
   require('../mock/index.js')
 }
 

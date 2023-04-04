@@ -1,4 +1,4 @@
-@import '@/assets/styles/theme/themeFromLess.scss';
+@import '@/assets/styles/themeFromLess.scss';
 
 .tg-layout-header {
   height: 50px;
@@ -53,11 +53,11 @@
           }
 
           .ant-input {
-            background: $primary-hover-color;
+            background: $primary-color-hover;
             height: 29px;
             line-height: 29px;
             color: #ffffff;
-            font-size: 14px;
+            // font-size: 14px; // 全局默认字号为14号
             border: none;
 
             &:focus {
@@ -71,7 +71,7 @@
 
           .ant-input-group-addon {
             border: none;
-            background: $primary-hover-color;
+            background: $primary-color-hover;
 
             .anticon {
               color: #ffffff;
@@ -103,23 +103,23 @@
 
         &.tg-header-user-content {
           .tg-avatar {
-            background: $primary-hover-color;
+            background: $primary-color-hover;
           }
 
           .tg-user-info {
             padding-left: 12px;
-            font-size: 16px;
+            font-size: $font-size-lg; // 全局默认字号+2px
             padding-right: 16px;
 
             .username {
-              color: #ffffff;
-              font-size: 14px;
+              color: $white;
+              // font-size: 14px; // 全局默认字号为14号
               font-weight: 500;
               line-height: 18px;
             }
 
             .tel {
-              color: $primary-sub-color;
+              color: $primary-color-disabled;
               font-size: 12px;
               font-weight: 400;
               line-height: 15px;
@@ -130,7 +130,7 @@
 
       .tg-header-divider {
         height: 24px;
-        background: $primary-sub-color;
+        background: $primary-color-disabled;
         opacity: 0.5;
         margin-left: 16px;
         margin-right: 24px;
@@ -169,16 +169,16 @@
 
     .tg-header-news {
       width: 240px;
-      background: #ffffff;
+      background: $white;
       border-right: 0;
 
       //.ant-tabs-nav-container {
       //  line-height: 42px;
       //
       //  .ant-badge {
-      //    font-size: 14px;
+      //    // font-size: 14px; // 全局默认字号为14号
       //    font-weight: 700;
-      //    color: $primary-active-color;
+      //    color: $primary-color-active;
       //  }
       //}
 
@@ -198,18 +198,18 @@
 
         &:hover {
           color: inherit;
-          background: $primary-hover-light-color;
+          background: $primary-color-light-hover;
         }
 
         div:first-child {
-          font-size: 14px;
+          // font-size: 14px; // 全局默认字号为14号
           font-weight: 400;
           color: $text-color;
           padding-bottom: 8px;
         }
 
         div:last-child {
-          font-size: 14px;
+          // font-size: 14px; // 全局默认字号为14号
           font-weight: 400;
           color: $text-color-secondary;
         }

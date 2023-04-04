@@ -1,4 +1,4 @@
-@import '@/assets/styles/theme/themeFromLess.scss';
+@import '@/assets/styles/themeFromLess.scss';
 
 html,
 body,
@@ -18,7 +18,7 @@ body {
 
 #app {
   position: relative;
-  font-family: pingfang SC,helvetica neue,arial,hiragino sans gb,microsoft yahei ui,microsoft yahei,simsun,sans-serif!important;
+  font-family: pingfang SC, helvetica neue, arial, hiragino sans gb, microsoft yahei ui, microsoft yahei, simsun, sans-serif !important;
   // font-family: Avenir, Helvetica, Arial, sans-serif;
   color: #2c3e50;
 
@@ -46,7 +46,7 @@ body {
       span {
         width: 6px;
         height: 100%;
-        border-radius: 3px;
+        border-radius: $border-radius-base;
         background: $primary-color;
         -webkit-animation: load 1s ease infinite;
 
@@ -76,25 +76,12 @@ body {
           50% {
             height: 40px;
             margin: -10px 0;
-            background: $primary-hover-color;
+            background: $primary-color-hover;
           }
         }
       }
     }
   }
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: $primary-color;
 }
 
 @font-face {
@@ -128,7 +115,7 @@ body {
       max-height: 600px;
       min-height: 400px;
       padding-top: 400px;
-      font-size: 16px;
+      font-size: $font-size-lg; // 全局默认字号+2px
       background: url('../images/notFound.png') no-repeat center top / auto 70%;
     }
   }
@@ -146,6 +133,7 @@ body {
   .ant-space {
     flex-wrap: wrap;
   }
+
   .tree-btn {
     font-size: 1.8em;
     opacity: 0.6;
@@ -187,7 +175,7 @@ body {
             margin-left: 0;
 
             .ant-select-selection-selected-value {
-              font-size: 14px;
+              // font-size: 14px; // 全局默认字号为14号
               color: rgba(52, 64, 84, 0.8);
             }
           }
@@ -243,8 +231,6 @@ body {
       label {
         display: inline-block;
         min-width: 70px;
-        font-size: 14px;
-        color: rgba(52, 64, 84, 0.62);
         text-align: justify;
         text-align-last: justify;
         padding-left: 10px;
@@ -345,7 +331,7 @@ body {
 
   .tg-table-field-highlight {
     color: #13c2c2;
-    font-size: 16px;
+    font-size: $font-size-lg; // 全局默认字号+2px
     font-weight: bolder;
   }
 
@@ -355,7 +341,7 @@ body {
 
       &.highlight {
         font-weight: 600;
-        font-size: 16px;
+        font-size: $font-size-lg; // 全局默认字号+2px
       }
 
       &:last-child {
@@ -369,7 +355,7 @@ body {
       background: $table-header-bg;
       color: $text-color-secondary;
       font-weight: bolder;
-      font-size: 14px;
+      // font-size: 14px; // 全局默认字号为14号
       border-color: $border-color-base;
     }
   }
@@ -411,7 +397,7 @@ body {
 
       .ant-btn {
         padding: 0 2px;
-        font-size: 14px;
+        // font-size: 14px; // 全局默认字号为14号
         line-height: unset;
         height: unset;
       }
@@ -426,12 +412,12 @@ body {
 
     .ant-descriptions-item-label {
       flex: none;
-      font-size: 14px;
+      // font-size: 14px; // 全局默认字号为14号
       color: #595959;
     }
 
     .ant-descriptions-item-content {
-      font-size: 14px;
+      // font-size: 14px; // 全局默认字号为14号
       color: #434343;
       flex: auto;
     }
@@ -450,7 +436,7 @@ body {
     transform: var(--transform);
 
     .ant-modal-header {
-      background: linear-gradient(to bottom, $primary-hover-light-color, #ffffff);
+      background: linear-gradient(to bottom, $primary-color-light-hover, #ffffff);
     }
 
     .ant-modal-body {
@@ -464,7 +450,7 @@ body {
     }
 
     .ant-modal-footer {
-      background: $primary-hover-light-color;
+      background: $primary-color-light-hover;
       border: none;
       text-align: center;
     }

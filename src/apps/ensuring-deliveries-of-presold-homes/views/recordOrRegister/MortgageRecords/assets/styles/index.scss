@@ -1,10 +1,10 @@
-@import '@/assets/styles/theme/themeFromLess.scss';
+@import '@/assets/styles/themeFromLess.scss';
 
 .import-box {
   .import-btn-box {
     background-color: rgba($color: $primary-color, $alpha: 0.03);
     padding: 35px;
-    font-size: 14px;
+    // font-size: 14px; // 全局默认字号为14号
     border-radius: 3px;
     color: $primary-color;
     width: 100%;
@@ -23,7 +23,7 @@
 
     .link {
       flex-shrink: 0;
-      font-size: 16px;
+      font-size: $font-size-lg; // 全局默认字号+2px
       margin: 3px;
       padding-right: 10px;
     }

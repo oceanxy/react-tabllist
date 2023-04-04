@@ -2,6 +2,11 @@ import variablesStyle from '@/assets/styles'
 import zhCN from 'ant-design-vue/lib/locale-provider/zh_CN'
 import { ConfigProvider } from 'ant-design-vue'
 import { merge } from 'lodash'
+import config from '@/config'
+
+const { themeFileName } = config
+
+require(`@/assets/styles/themes/${themeFileName}`)
 
 export default {
   name: 'TGApp',

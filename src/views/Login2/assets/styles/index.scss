@@ -1,3 +1,5 @@
+@import '@/assets/styles/themeFromLess';
+
 .bn-login-container {
   display: flex;
   gap: 16px;
@@ -118,7 +120,7 @@
     .ant-tabs-tab {
       margin: 0;
       padding: 10px;
-      font-size: 16px;
+      font-size: $font-size-lg; // 全局默认字号+2px
       line-height: 24px;
       width: 200px;
       text-align: center;
@@ -184,14 +186,14 @@
       background: #1890ff;
       border: 1px solid #096dd9;
       border-radius: 2px;
-      font-size: 16px;
+      font-size: $font-size-lg; // 全局默认字号+2px
       font-weight: bolder;
       color: #ffffff;
     }
   }
 
   .login-log-on {
-    font-size: 14px;
+    // font-size: 14px; // 全局默认字号为14号
     text-align: center;
     color: #1890ff;
     line-height: 20px;

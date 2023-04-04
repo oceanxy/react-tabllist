@@ -1,3 +1,5 @@
+@import '@/assets/styles/themeFromLess';
+
 .tg-universal-box {
   overflow: hidden;
   width: var(--box-width);
@@ -19,7 +21,7 @@
     box-sizing: border-box;
     display: flex;
     align-items: center;
-    font-size: 16px;
+    font-size: $font-size-lg; // 全局默认字号+2px
     font-weight: bolder;
     color: #344054;
     flex: none;

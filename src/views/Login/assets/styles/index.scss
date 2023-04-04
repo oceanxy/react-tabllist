@@ -1,4 +1,4 @@
-@import '@/assets/styles/theme/themeFromLess.scss';
+@import '@/assets/styles/themeFromLess.scss';
 
 .tg-login {
   position: relative;
@@ -46,7 +46,7 @@
       font-family: 'Microsoft YaHei UI', serif;
       text-align: left;
       margin-bottom: 40px;
-      font-size: 16px;
+      font-size: $font-size-lg; // 全局默认字号+2px
       font-weight: 700;
       color: $text-color;
       line-height: 24px;
@@ -69,7 +69,7 @@
         height: 48px;
         width: 98%;
         line-height: 48px;
-        font-size: 16px;
+        font-size: $font-size-lg; // 全局默认字号+2px
         padding-left: 40px;
         background: rgba(93, 107, 152, 0.05);
         border: none;
@@ -130,7 +130,7 @@
   .corporate-services {
     position: absolute;
     width: 100%;
-    font-size: 14px;
+    // font-size: 14px; // 全局默认字号为14号
     text-align: center;
     color: $heading-color;
     justify-content: flex-end;

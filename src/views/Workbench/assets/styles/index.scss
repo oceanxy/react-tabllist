@@ -1,4 +1,4 @@
-@import '@/assets/styles/theme/themeFromLess.scss';
+@import '@/assets/styles/themeFromLess.scss';
 
 .tg-workbench {
   width: 100% !important;
@@ -36,15 +36,14 @@
       align-items: center;
       height: 20px;
       line-height: 20px;
-      color: $text-color;
-      font-size: 16px;
-      font-weight: 500;
+      color: $heading-color;
+      font-size: $font-size-base;
+      font-weight: 700;
 
       .anticon {
         color: $primary-color;
         // font-size: 1.4ic;
         font-size: 20px;
-        margin-right: 8px;
       }
     }
 
@@ -87,11 +86,12 @@
             padding: 8px 16px;
             display: flex;
             flex-direction: column;
-            font-size: 14px;
+            // font-size: 14px; // 全局默认字号为14号
             color: $text-color-secondary;
 
             .concern-cards-text {
               flex: none;
+              color: $text-color;
             }
 
             .concern-cards-value {
@@ -101,6 +101,7 @@
               gap: .5ic;
               height: 30px;
               overflow: hidden;
+              color: $text-color;
             }
 
             .tg-scrolling-number-value {
@@ -145,24 +146,25 @@
             .ant-card-meta-title {
               font-size: 18px;
               font-weight: 700;
-              color: $text-color;
+              color: $heading-color;
               margin-bottom: 0;
               padding-top: 4px;
             }
 
             .ant-card-meta-description {
               display: inline-block;
-              background: #84adff;
-              border-radius: 3px;
-              font-size: 14px;
+              background: $primary-color-disabled;
+              border-radius: $border-radius-base;
+              font-size: $font-size-sm;
               font-weight: 400;
-              color: #ffffff;
-              padding: 0 6px;
+              color: $white;
+              padding: 2px 8px;
             }
 
             .number-of-logins {
               padding: 20px 10px 10px 70px;
               color: $text-color-secondary;
+              font-size: $font-size-sm;
 
               span {
                 font-size: 40px;
@@ -179,7 +181,7 @@
           flex: none;
           height: 30px;
           line-height: 40px;
-          font-size: 14px;
+          font-size: $font-size-sm;
           text-align: center;
           color: $text-color-secondary;
         }
@@ -244,9 +246,9 @@
               padding: 0 16px 0 12px;
 
               .ant-card-meta-title {
-                font-size: 16px;
                 font-weight: 700;
-                color: $text-color;
+                font-size: $font-size-base;
+                color: $heading-color;
               }
             }
 
@@ -361,7 +363,7 @@
           background: $card-background;
 
           .datetime {
-            font-size: 14px;
+            // font-size: 14px; // 全局默认字号为14号
             font-weight: 400;
             color: $text-color-secondary;
             height: 18px;
@@ -371,7 +373,7 @@
           }
 
           .date {
-            font-size: 14px;
+            // font-size: 14px; // 全局默认字号为14号
             font-weight: 700;
             text-align: center;
             color: #4b5565;
@@ -380,7 +382,7 @@
         }
 
         .ant-list-item-meta-title {
-          font-size: 14px;
+          // font-size: 14px; // 全局默认字号为14号
           font-weight: 500;
           color: $text-color;
 
@@ -406,13 +408,13 @@
         }
 
         .ant-list-item-meta-description {
-          font-size: 14px;
+          // font-size: 14px; // 全局默认字号为14号
           font-weight: 400;
           color: $text-color-secondary;
         }
 
         .ant-list-item-meta-time {
-          font-size: 14px;
+          // font-size: 14px; // 全局默认字号为14号
           font-weight: 400;
           text-align: right;
           color: $text-color-secondary;
@@ -434,27 +436,26 @@
             margin: 0;
 
             &.unread {
-              background: $primary-hover-color;
+              background: $primary-color-hover;
               color: #ffffff;
-              border: 1px solid $primary-sub-color;
             }
           }
         }
 
         .ant-list-item-meta-title {
-          font-size: 14px;
+          // font-size: 14px; // 全局默认字号为14号
           font-weight: 500;
           color: $text-color;
           cursor: pointer;
           transition: color .2s ease-out;
 
           &:hover {
-            color: $primary-hover-color;
+            color: $primary-color-hover;
           }
         }
 
         .ant-list-item-meta-description {
-          font-size: 14px;
+          // font-size: 14px; // 全局默认字号为14号
           font-weight: 400;
           color: $text-color-secondary;
         }
