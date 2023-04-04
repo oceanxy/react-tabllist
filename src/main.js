@@ -1,3 +1,5 @@
+import './assets/styles/theme/variables.less'
+import './assets/styles/app.scss'
 import Vue from 'vue'
 import App from './App'
 import config from './config'

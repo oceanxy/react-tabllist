@@ -551,7 +551,7 @@ export default ({
           // 如果子模块内有且仅有一个表格组件时， tableName props 不是必需的，此时组件会根据 submoduleName 自动生成 tableName props。
           ref={this.tableName || `${this.submoduleName ? `${this.submoduleName}Of` : ''}${this.moduleName}Table`}
           scopedSlots={this.scopedSlots}
-          class={this.tableProps.scroll.x ? '' : 'not-set-x-scroll'}
+          class={`tg-table${this.tableProps.scroll.x ? '' : ' not-set-x-scroll'}`}
           {...this.attributes}
         />
       )

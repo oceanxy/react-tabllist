@@ -8,6 +8,7 @@ import config from '@/config'
 const IconFont = Icon.createFromIconfontCN({ scriptUrl: config.iconFontSymbol })
 
 // 按需注册特定组件
+Vue.component(Layout.name, Layout)
 Vue.component(Avatar.name, Avatar)
 Vue.component(Badge.name, Badge)
 Vue.component(Collapse.name, Collapse)

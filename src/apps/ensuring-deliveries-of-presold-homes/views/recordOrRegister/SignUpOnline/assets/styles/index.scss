@@ -1,7 +1,7 @@
-@import '@/assets/styles/theme.scss';
+@import '@/assets/styles/theme/themeFromLess.scss';
 .import-box {
   .import-btn-box {
-    background-color: rgba($color: $primary-color, $alpha: 0.03);
+    //background-color: rgba($color: $primary-color, $alpha: 0.03);
     padding: 35px;
     font-size: 14px;
     border-radius: 3px;
@@ -39,7 +39,7 @@
   .point-out {
     display: flex;
     p {
-      color: $text-or-icon-color;
+      color: $text-color;
     }
   }
 }

@@ -1,4 +1,4 @@
-@import '@/assets/styles/theme.scss';
+@import '@/assets/styles/theme/themeFromLess.scss';
 
 .tg-login {
   position: relative;
@@ -48,7 +48,7 @@
       margin-bottom: 40px;
       font-size: 16px;
       font-weight: 700;
-      color: $text-or-icon-color;
+      color: $text-color;
       line-height: 24px;
     }
 
@@ -132,7 +132,7 @@
     width: 100%;
     font-size: 14px;
     text-align: center;
-    color: $text-primary-color;
+    color: $heading-color;
     justify-content: flex-end;
     bottom: 46px;
     align-self: flex-start;

@@ -1,4 +1,4 @@
-@import '@/assets/styles/theme.scss';
+@import '@/assets/styles/theme/themeFromLess.scss';
 
 .tg-layout-header {
   height: 50px;
@@ -8,7 +8,7 @@
   display: flex;
   position: relative;
   z-index: 1000;
-  @include box-shadow($primary-shadow-color);
+  @include box-shadow($primary-color);
 
   .tg-layout-header-content {
     height: 100%;
@@ -65,7 +65,7 @@
             }
 
             &::placeholder {
-              color: $primary-placeholder-color;
+              color: $input-placeholder-color;
             }
           }
 
@@ -194,7 +194,7 @@
         overflow: hidden;
         white-space: break-spaces;
         transition: background .2s;
-        border-bottom: 1px solid $border-color-default;
+        border-bottom: 1px solid $box-shadow-base;
 
         &:hover {
           color: inherit;
@@ -204,14 +204,14 @@
         div:first-child {
           font-size: 14px;
           font-weight: 400;
-          color: $text-or-icon-color;
+          color: $text-color;
           padding-bottom: 8px;
         }
 
         div:last-child {
           font-size: 14px;
           font-weight: 400;
-          color: $text-or-icon-sub-color;
+          color: $text-color-secondary;
         }
       }
     }

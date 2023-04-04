@@ -1,0 +1,74 @@
+// 主题颜色配置，主要用于非 ant design vue 官方变量以外的颜色控制。
+// ant design vue 相关的颜色请勿在本文件修改，请在 @/assets/styles/theme.less 文件修改。
+
+// 主题色配置
+$primary-color: var(--primary-color);
+
+$primary-active-color: var(--primary-1);
+$primary-hover-color: var(--primary-5);
+$primary-hover-light-color: var(--primary-9);
+$primary-sub-color: var(--primary-7);
+
+// 布局相关颜色
+$layout-header-background: $primary-color;
+$background-color-base: var(--background-color-base);
+
+// 文字或者图标
+$font-size-base: var(--font-size-base);
+$heading-color: var(--heading-color);
+$text-color: var(--text-color);
+$text-color-secondary: var(--text-color-secondary);
+
+// input
+$input-placeholder-color: var(--input-placeholder-color);
+
+// Card
+$card-background: var(--card-background);
+$card-background-deepen-color: #eef2f6;
+
+// 边框相关
+$border-radius-base: var(--border-radius-base);
+$border-color-base: var(--border-color-base);
+$box-shadow-base: var(--box-shadow-base);
+
+@mixin box-shadow($color) {
+  box-shadow: 2px 0 6px 0 $color;
+}
+
+// 表格
+$table-header-bg: var(--table-header-bg);
+$table-header-color: var(--table-header-color);
+$table-row-hover-bg: var(--table-row-hover-bg);
+$table-selected-row-bg: var(--table-selected-row-bg);
+
+// link
+$link-color: var(--link-color);
+
+// 状态色
+$error-color: var(--error-color);
+$error-color-light: var(--error-color-light);
+$warning-color: var(--warning-color);
+$warning-color-light: var(--warning-color);
+$success-color: var(--success-color);
+$success-color-light: var(--success-color-light);
+$info-color: var(--info-color);
+$info-color-light: var(--info-color-light);
+$disabled-color: var(--disabled-color);
+$disabled-bg: var(--disabled-bg);
+$disabled-color-dark: var(--disabled-color-dark);
+$processing-color: var(--processing-color);
+$highlight-color: var(--highlight-color);
+$normal-color: var(--normal-color);
+$white: var(--white);
+$black: var(--black);
+
+// 滚动条主题色配置
+$scrollbar-track-color: #eff1f5;
+$scrollbar-track-shadow-color: rgba(91, 91, 91, 0.3);
+$scrollbar-thumb-color: rgba(185, 192, 212, 0.6);
+$scrollbar-thumb-hover-color: rgba(185, 192, 212, 1);
+$scrollbar-thumb-shadow-color: rgba(211, 211, 211, 0.3);
+
+@mixin container-border-radius($value: 4px) {
+  border-radius: $value;
+}

@@ -16,7 +16,7 @@ module.exports = {
       {
         libraryName: 'ant-design-vue',
         libraryDirectory: 'es',
-        style: true
+        style: true // 不按需引入组件样式文件。如果按需引用组件样式会导致全局定制的主题文件被覆盖。(@/assets/styles/themes.less)
       }
     ]
     // lodash 按需引入

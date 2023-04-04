@@ -1,4 +1,4 @@
-@import '@/assets/styles/theme.scss';
+@import '@/assets/styles/theme/themeFromLess.scss';
 .count-page-body {
   padding: 0 12px 12px;
   overflow-y: auto;
@@ -6,7 +6,7 @@
     width: 100%;
   }
   .total-sum {
-    color: $text-primary-color;
+    color: $heading-color;
     padding: 15px 0;
     label {
       font-size: 14px;

@@ -1,4 +1,4 @@
-@import '@/assets/styles/theme.scss';
+@import '@/assets/styles/theme/themeFromLess.scss';
 
 .tg-workbench {
   width: 100% !important;
@@ -36,7 +36,7 @@
       align-items: center;
       height: 20px;
       line-height: 20px;
-      color: $text-or-icon-color;
+      color: $text-color;
       font-size: 16px;
       font-weight: 500;
 
@@ -65,7 +65,7 @@
     .tg-workbench-concern {
       flex: auto;
       min-width: 222px;
-      background: $module-background-color;
+      background: $white;
 
       .concern-cards {
         display: flex;
@@ -80,7 +80,7 @@
           box-sizing: border-box;
           overflow: hidden;
           border: none;
-          background: $card-background-color;
+          background: $card-background;
 
           .ant-card-body {
             height: 100%;
@@ -88,7 +88,7 @@
             display: flex;
             flex-direction: column;
             font-size: 14px;
-            color: $text-or-icon-slightly-color;
+            color: $text-color-secondary;
 
             .concern-cards-text {
               flex: none;
@@ -108,7 +108,7 @@
               width: auto;
               font-size: 20px;
               font-weight: bolder;
-              color: $text-primary-color;
+              color: $heading-color;
             }
           }
         }
@@ -120,7 +120,7 @@
       min-width: 490px;
       flex: none;
       height: 222px;
-      background: $module-background-color;
+      background: $white;
 
       .userinfo-container {
         display: flex;
@@ -129,7 +129,7 @@
         .userinfo-card {
           flex: auto;
           border: none;
-          border-bottom: 1px solid $border-color-default;
+          border-bottom: 1px solid $box-shadow-base;
           background: url('../../assets/images/user.png') no-repeat right center / auto 100%;
 
           .ant-card-body {
@@ -145,7 +145,7 @@
             .ant-card-meta-title {
               font-size: 18px;
               font-weight: 700;
-              color: $text-or-icon-color;
+              color: $text-color;
               margin-bottom: 0;
               padding-top: 4px;
             }
@@ -162,12 +162,12 @@
 
             .number-of-logins {
               padding: 20px 10px 10px 70px;
-              color: $text-or-icon-sub-color;
+              color: $text-color-secondary;
 
               span {
                 font-size: 40px;
                 font-weight: 700;
-                color: $text-primary-color;
+                color: $heading-color;
                 display: inline-block;
                 line-height: 50px;
               }
@@ -181,7 +181,7 @@
           line-height: 40px;
           font-size: 14px;
           text-align: center;
-          color: $text-or-icon-sub-color;
+          color: $text-color-secondary;
         }
       }
     }
@@ -189,7 +189,7 @@
     .row-2.tg-workbench-frequently-used {
       flex: none;
       height: 116px;
-      background: $module-background-color;
+      background: $white;
 
       .frequently-used-container {
         padding: 0 16px 16px;
@@ -246,7 +246,7 @@
               .ant-card-meta-title {
                 font-size: 16px;
                 font-weight: 700;
-                color: $text-or-icon-color;
+                color: $text-color;
               }
             }
 
@@ -352,18 +352,18 @@
 
     .tg-workbench-to-do {
       flex: auto;
-      background: $module-background-color;
+      background: $white;
 
       .to-do-container {
         .calendar-for-list {
           width: 56px;
           height: 46px;
-          background: $card-background-color;
+          background: $card-background;
 
           .datetime {
             font-size: 14px;
             font-weight: 400;
-            color: $text-or-icon-sub-color;
+            color: $text-color-secondary;
             height: 18px;
             line-height: 18px;
             text-align: center;
@@ -382,25 +382,25 @@
         .ant-list-item-meta-title {
           font-size: 14px;
           font-weight: 500;
-          color: $text-or-icon-color;
+          color: $text-color;
 
           .ant-tag {
             &.warn {
-              color: $warn-color;
-              border: 1px solid $warn-color;
-              background: $warn-light-color;
+              color: $warning-color;
+              border: 1px solid $warning-color;
+              background: $warning-color-light;
             }
 
             &.info {
               color: $info-color;
               border: 1px solid $info-color;
-              background: $info-light-color;
+              background: $info-color-light;
             }
 
             &.error {
               color: $error-color;
               border: 1px solid $error-color;
-              background: $error-light-color;
+              background: $error-color-light;
             }
           }
         }
@@ -408,21 +408,21 @@
         .ant-list-item-meta-description {
           font-size: 14px;
           font-weight: 400;
-          color: $text-or-icon-sub-color;
+          color: $text-color-secondary;
         }
 
         .ant-list-item-meta-time {
           font-size: 14px;
           font-weight: 400;
           text-align: right;
-          color: $text-or-icon-sub-color;
+          color: $text-color-secondary;
         }
       }
     }
 
     .tg-workbench-news {
       flex: auto;
-      background: $module-background-color;
+      background: $white;
 
       .news-container {
         .ant-list-item-meta-avatar {
@@ -444,7 +444,7 @@
         .ant-list-item-meta-title {
           font-size: 14px;
           font-weight: 500;
-          color: $text-or-icon-color;
+          color: $text-color;
           cursor: pointer;
           transition: color .2s ease-out;
 
@@ -456,7 +456,7 @@
         .ant-list-item-meta-description {
           font-size: 14px;
           font-weight: 400;
-          color: $text-or-icon-sub-color;
+          color: $text-color-secondary;
         }
       }
     }

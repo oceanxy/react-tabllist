@@ -1,4 +1,4 @@
-@import '@/assets/styles/theme.scss';
+@import '@/assets/styles/theme/themeFromLess.scss';
 
 .tg-container {
   display: flex;
@@ -17,7 +17,7 @@
     .title {
       font-size: 16px;
       font-weight: 700;
-      color: $text-or-icon-color;
+      color: $text-color;
 
       .anticon {
         font-size: 20px;
@@ -55,7 +55,7 @@
       height: 100%;
       //min-height: 400px;
       gap: 14px;
-      background: $module-background-color;
+      background: $white;
       padding: 16px 20px;
 
       .ant-table-wrapper {

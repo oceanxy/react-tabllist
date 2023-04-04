@@ -1,16 +1,17 @@
-import '@/assets/styles/index.scss'
+import '@/assets/styles/app.scss'
+import variablesStyle from '@/assets/styles'
 import zhCN from 'ant-design-vue/lib/locale-provider/zh_CN'
 import { ConfigProvider } from 'ant-design-vue'
 
-
 export default {
   name: 'TGApp',
-  // data() {
-  //   return {
-  //     ratioX: 1,
-  //     ratioY: 1
-  //   }
-  // },
+  data() {
+    return {
+      ratioX: 1,
+      ratioY: 1,
+      ...variablesStyle
+    }
+  },
   async created() {
     const tempState = JSON.parse(localStorage.getItem('state'))
 

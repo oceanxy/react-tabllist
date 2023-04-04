@@ -1,4 +1,4 @@
-@import '@/assets/styles/theme.scss';
+@import '@/assets/styles/theme/themeFromLess.scss';
 
 .tg-tree-container.tg-tree-container {
   @include container-border-radius;
@@ -16,7 +16,7 @@
   .tg-tree-sider-container.tg-tree-sider-container {
     width: 260px;
     flex: none;
-    background: $module-background-color;
+    background: $white;
 
     .tg-tree-data {
       height: 100%;

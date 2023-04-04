@@ -2,7 +2,9 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 // const VConsolePlugin = require('vconsole-webpack-plugin') // 引入 移动端模拟开发者工具 插件 （另：https://github.com/liriliri/eruda）
 const CompressionPlugin = require('compression-webpack-plugin') // Gzip
 const { getAvailableProjectNames } = require('./build/configs')
-const webpack = require('webpack')
+const AntdThemeWebpackPlugin = require('./build/antd-theme-webpack-plugin')
+const { join } = require('path')
+// const webpack = require('webpack')
 
 let config = {}
 
@@ -45,23 +47,26 @@ module.exports = {
     requireModuleExtension: true,
     loaderOptions: {
       // 引入sass全局变量文件
-      sass: { sassOptions: { prependData: '@import "@/assets/styles/theme.scss"' } },
+      sass: { sassOptions: { prependData: '@import "~@/assets/styles/themeFromLess.scss"' } }, // 未生效
       // 启用内联JavaScript。ant-design-vue使用less编写，且使用了内联写法，所以需要开启
-      less: {
-        lessOptions: {
-          modifyVars: {
-            'primary-color': '#2970ff',
-            'link-color': '#2970ff'
-            // 'border-radius-base': '2px'
-          },
-          javascriptEnabled: true
-        }
-      }
+      less: { lessOptions: { javascriptEnabled: true, math: 'always' } }
     }
   },
   // 生产环境是否生成 sourceMap 文件。设置为 false 以加速生产环境构建。
   // 默认 true
   productionSourceMap: process.env.NODE_ENV !== 'production',
+  configureWebpack: {
+    plugins: [new AntdThemeWebpackPlugin({
+      antDir: join(__dirname, './node_modules/ant-design-vue'), // antd 包位置
+      styleDir: join(__dirname, './src/assets/styles/theme'), // 主题文件所在文件夹
+      varFile: join(__dirname, './src/assets/styles/theme/variables.less'), // 自定义默认主题色
+      mainLessFile: join(__dirname, './src/assets/styles/theme/index.scss'), // 项目中其他自定义样式（该文件可为空）
+      outputFilePath: join(__dirname, './public/css/color.less'), // 提取的less文件输出目录
+      lessUrl: 'https://cdn.bootcss.com/less.js/2.7.2/less.min.js',
+      themeVariables: ['@primary-color', '@table-header-sort-active-bg'], // 要改变的主题变量
+      generateOnce: false // 是否只生成一次
+    })]
+  },
   // webpack配置
   // 对内部的 webpack 配置进行更细粒度的修改
   // https://github.com/neutrinojs/webpack-chain see https://github.com/vuejs/vue-cli/blob/dev/docs/webpack.md

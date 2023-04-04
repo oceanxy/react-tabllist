@@ -143,7 +143,12 @@ export default {
                         padding: '0'
                       }}
                     >
-                      <Button shape="circle" type={'link'} class={'tg-header-icon'}>
+                      <Button
+                        title={'通知'}
+                        shape="circle"
+                        type={'link'}
+                        class={'tg-header-icon'}
+                      >
                         <IconFont type={'icon-global-tz'} />
                       </Button>
                     </Badge>
@@ -190,9 +195,14 @@ export default {
                     {/*   </Tabs> */}
                     {/* </div> */}
                   </Popover>
-                  {/* <Button shape="circle" type={'link'} class={'tg-header-icon'}> */}
-                  {/*   <IconFont type={'icon-global-hf'} /> */}
-                  {/* </Button> */}
+                  <Button
+                    title={'更换主题颜色'}
+                    shape="circle"
+                    type={'link'}
+                    class={'tg-header-icon'}
+                  >
+                    <IconFont type={'icon-global-hf'} />
+                  </Button>
                   {/* <Button shape="circle" type={'link'} class={'tg-header-icon'}> */}
                   {/*   <IconFont type={'icon-global-help'} /> */}
                   {/* </Button> */}

@@ -1,4 +1,4 @@
-@import '@/assets/styles/theme.scss';
+@import '@/assets/styles/theme/themeFromLess.scss';
 
 html,
 body,
@@ -129,7 +129,7 @@ body {
       min-height: 400px;
       padding-top: 400px;
       font-size: 16px;
-      background: url('../notFound.png') no-repeat center top / auto 70%;
+      background: url('../images/notFound.png') no-repeat center top / auto 70%;
     }
   }
 }
@@ -141,7 +141,7 @@ body {
   row-gap: 8px;
   column-gap: 16px;
   padding: 12px 20px;
-  background: $module-background-color;
+  background: $white;
 
   .ant-space {
     flex-wrap: wrap;
@@ -151,7 +151,7 @@ body {
     opacity: 0.6;
     cursor: pointer;
     transition: opacity 0.2s;
-    color: $text-or-icon-color;
+    color: $text-color;
 
     &:hover {
       opacity: 1;
@@ -328,7 +328,7 @@ body {
   flex: none;
 }
 
-.ant-table-wrapper {
+.tg-table.ant-table-wrapper {
   flex: auto;
   overflow: hidden;
 
@@ -367,29 +367,18 @@ body {
   .ant-table.ant-table-small {
     & > .ant-table-content > .ant-table-body > table > .ant-table-thead > tr > th {
       background: $table-header-bg;
-      color: $text-or-icon-sub-color;
+      color: $text-color-secondary;
       font-weight: bolder;
       font-size: 14px;
-      border-color: $table-border-color;
+      border-color: $border-color-base;
     }
   }
 
   .ant-table {
-    color: $text-or-icon-color;
+    color: $text-color;
 
     .ant-table-title {
       padding: 0 0 16px 0;
-    }
-
-    .table-row-background {
-      background-color: $table-header-bg;
-    }
-
-    .ant-table-thead > tr.ant-table-row-hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td,
-    .ant-table-tbody > tr.ant-table-row-hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td,
-    .ant-table-thead > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td,
-    .ant-table-tbody > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
-      background-color: $table-tr-bg-hover;
     }
 
     .ant-form-item-required:before {
@@ -397,20 +386,16 @@ body {
     }
 
     .ant-table-thead > tr > th {
-      background: $table-header-bg;
-      color: $text-or-icon-color;
       font-weight: bolder;
-      font-size: 14px;
-      border-color: $table-border-color;
 
       .unit-text {
-        color: $text-or-icon-light-color;
+        color: $text-color-secondary;
       }
     }
 
     .ant-table-tbody > tr > th {
-      border-right: 1px solid $table-border-color;
-      border-bottom: 1px solid $table-border-color;
+      border-right: 1px solid $border-color-base;
+      border-bottom: 1px solid $border-color-base;
     }
 
     &.ant-table-bordered .ant-table-thead {
@@ -639,7 +624,7 @@ body {
 .has-error .ant-input-number.pass,
 .has-error .ant-time-picker-input.pass,
 .has-error .ant-calendar-picker.pass .ant-calendar-picker-input {
-  border-color: $border-color-default;
+  border-color: $box-shadow-base;
 }
 
 .has-error .ant-select.pass .ant-select-selection .ant-select-arrow {

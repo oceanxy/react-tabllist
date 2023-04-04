@@ -1,16 +1,17 @@
-import './assets/styles/index.scss'
+import variablesStyle from '@/assets/styles'
 import zhCN from 'ant-design-vue/lib/locale-provider/zh_CN'
 import { ConfigProvider } from 'ant-design-vue'
 import { merge } from 'lodash'
 
 export default {
   name: 'TGApp',
-  // data() {
-  //   return {
-  //     ratioX: 1,
-  //     ratioY: 1
-  //   }
-  // },
+  data() {
+    return {
+      ratioX: 1,
+      ratioY: 1,
+      ...variablesStyle
+    }
+  },
   async created() {
     /* 从本地存储里还原刷新前存储的 state */
     const tempState = JSON.parse(localStorage.getItem('state'))

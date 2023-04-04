@@ -6,7 +6,6 @@ const modulesFiles = require.context('./modules', true, /\.js$/)
 const dynamicModulesFiles = require.context('../apps', true, /apis\/modules\/[a-zA-Z0-9-]+\.js/)
 
 const apis = modulesFiles.keys().reduce((modules, modulePath) => {
-  // eg. 设置 './app.js' => 'app'
   const value = modulesFiles(modulePath)
 
   modules = {
@@ -29,7 +28,7 @@ const appApis = dynamicModulesFiles.keys().reduce((modules, modulePath) => {
 }, {})
 
 // 动态注入参数
-Object.entries({...apis, ...appApis}).forEach(([apiName, api]) => {
+Object.entries({ ...apis, ...appApis }).forEach(([apiName, api]) => {
   apis[apiName] = parameter => api(service, parameter)
 })
 

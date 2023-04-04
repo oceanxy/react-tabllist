@@ -1,3 +1,5 @@
+@import '@/assets/styles/theme/themeFromLess.scss';
+
 .tg-logo {
   display: flex;
   line-height: 1;
@@ -11,7 +13,7 @@
   font-size: 16px;
   font-family: Source Han Sans SC, Source Han Sans SC-Medium, Microsoft YaHei UI, serif;
   font-weight: bolder;
-  color: #ffffff;
+  color: $white;
   overflow: hidden;
 
   &:hover {

@@ -1,4 +1,4 @@
-@import '@/assets/styles/theme.scss';
+@import '@/assets/styles/theme/themeFromLess.scss';
 .ant-breadcrumb{
   font-size: 12px;
 }
@@ -12,14 +12,14 @@
   line-height: 24px;
 
   .tg-breadcrumb-btn-home {
-    color: $text-or-icon-sub-color;
+    color: $text-color-secondary;
     font-size: 1.2em;
     margin-right: 4px;
   }
 
   .ant-breadcrumb-link a {
     font-weight: 400;
-    color: $text-or-icon-light-color;
+    color: $text-color-secondary;
 
     &:hover {
       color: $primary-color;
@@ -27,7 +27,7 @@
   }
 
   .tg-breadcrumb-last-title {
-    color: $text-or-icon-color;
+    color: $text-color;
   }
 
   .tg-breadcrumb-guide {
@@ -36,7 +36,7 @@
     align-items: center;
 
     .tg-breadcrumb-btn-question {
-      color: $text-or-icon-color;
+      color: $text-color;
       font-size: 1.3em;
     }
 
@@ -49,7 +49,7 @@
     .tg-breadcrumb-btn-right {
       margin-top: 0.125em;
       margin-left: 2px;
-      color: $text-or-icon-color;
+      color: $text-color;
     }
   }
 }

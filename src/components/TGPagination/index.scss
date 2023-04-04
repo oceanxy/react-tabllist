@@ -1,4 +1,4 @@
-@import '@/assets/styles/theme.scss';
+@import '@/assets/styles/theme/themeFromLess.scss';
 
 .tg-pagination {
   flex: none;
@@ -64,7 +64,7 @@
   //    }
   //
   //    input:focus {
-  //      box-shadow: 0 0 0 2px $primary-shadow-color;
+  //      box-shadow: 0 0 0 2px $primary-color;
   //    }
   //  }
   //}

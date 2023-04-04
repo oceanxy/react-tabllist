@@ -1,4 +1,4 @@
-@import '@/assets/styles/theme.scss';
+@import '@/assets/styles/theme/themeFromLess.scss';
 
 .t-g-menu-container.ant-menu {
   overflow-x: hidden;
@@ -6,7 +6,7 @@
   height: 100%;
   position: relative;
   z-index: 900;
-  @include box-shadow($border-shadow-color);
+  @include box-shadow(rgba(0, 0, 0, 0.03));
   padding: 10px 8px;
 
   & > .ant-menu-item {
@@ -64,7 +64,7 @@
 .t-g-menu-container.ant-menu,
 .t-g-menu-popup.ant-menu-submenu {
   .ant-menu-item {
-    color: $text-or-icon-color;
+    color: $text-color;
     font-size: 14px;
     font-weight: 400;
     border-radius: 4px;
@@ -102,7 +102,7 @@
     & > div {
       display: flex;
       align-items: center;
-      color: $text-or-icon-color;
+      color: $text-color;
       font-size: 14px;
       // font-weight: 500;
     }
