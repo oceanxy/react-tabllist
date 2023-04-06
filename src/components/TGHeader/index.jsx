@@ -2,6 +2,7 @@ import './index.scss'
 import { Avatar, Badge, Button, Divider, Dropdown, Layout, Menu, Popover, Tag } from 'ant-design-vue'
 import Logo from '@/components/Logo'
 import { mapActions, mapGetters } from 'vuex'
+import config from '@/config'
 
 export default {
   name: 'TGHeader',
@@ -31,6 +32,9 @@ export default {
       const name = this.userInfo.nickName || this.userInfo.fullName
 
       return name ? name.at(-1).toUpperCase() : ''
+    },
+    theme() {
+      return this.$store.state?.login?.userInfo?.themeFileName ?? config.theme.fileName
     }
   },
   provide: { moduleName: 'login' },
@@ -42,11 +46,13 @@ export default {
     }
   },
   async created() {
-    await this.$store.dispatch('getListWithLoadingStatus', {
-      moduleName: 'login',
-      stateName: 'news',
-      customApiName: 'getNews'
-    })
+    if (config.news.show) {
+      await this.$store.dispatch('getListWithLoadingStatus', {
+        moduleName: 'login',
+        stateName: 'news',
+        customApiName: 'getNews'
+      })
+    }
   },
   methods: {
     ...mapActions('login', { logout: 'logout', getUserInfo: 'getUserInfo' }),
@@ -82,6 +88,25 @@ export default {
 
         await this.$router.push({ path, query })
       }
+    },
+    async switchThemes(themeFileName) {
+      document.querySelector('#tg-responsive-layout').style.display = 'none'
+
+      await this.$store.dispatch('custom', {
+        customApiName: 'setThemeFileName',
+        payload: { themeFileName }
+      })
+
+      this.$store.commit('setState', {
+        stateName: 'userInfo',
+        value: { themeFileName },
+        moduleName: 'login',
+        merge: true
+      })
+
+      localStorage.setItem('theme', themeFileName)
+
+      window.location.reload()
     }
   },
   render() {
@@ -105,7 +130,6 @@ export default {
             {/* <Input placeholder={'搜功能'} class={'search-input'}> */}
             {/*   <IconFont type={'icon-global-search'} slot={'addonAfter'} /> */}
             {/* </Input> */}
-
           </div>
           {
             this.isLogin
@@ -131,78 +155,109 @@ export default {
                     </Menu>
                   </Dropdown>
                   <Divider type={'vertical'} class={'tg-header-divider'} />
-                  <Popover overlayClassName={'tg-header-news-overlay'}>
-                    <Badge
-                      count={this.news.total}
-                      offset={[-12, 4]}
-                      numberStyle={{
-                        width: '18px',
-                        height: '18px',
-                        fontSize: '12px',
-                        lineHeight: '18px',
-                        padding: '0'
-                      }}
-                    >
-                      <Button
-                        title={'通知'}
-                        shape="circle"
-                        type={'link'}
-                        class={'tg-header-icon'}
-                      >
-                        <IconFont type={'icon-global-tz'} />
-                      </Button>
-                    </Badge>
-                    <Menu slot={'content'} class={'tg-header-news'}>
-                      {
-                        this.news.userRefundMessageList.map(item => (
-                          <Menu.Item onClick={() => this.onClick(item)}>
-                            <div>
-                              <Tag>{item.messageTypeStr}</Tag>
-                              {item.noticeTitle}
-                            </div>
-                            <div>{item.createTimeStr}</div>
-                          </Menu.Item>
-                        ))
-                      }
-                    </Menu>
-                    {/* <div slot={'content'} class={'tg-header-news'}> */}
-                    {/*   <Tabs */}
-                    {/*     activeKey={this.activeKey} */}
-                    {/*     animated={true} */}
-                    {/*     size={'small'} */}
-                    {/*     onChange={this.onChange} */}
-                    {/*   > */}
-                    {/*     <Tabs.TabPane key={1} tab={<Badge count={99} offset={[12, 2]}>待办事项</Badge>}> */}
-                    {/*       <Menu> */}
-                    {/*         <Menu.Item> */}
-                    {/*           <div>陈思睿发起了新的审核任务，请及时处理</div> */}
-                    {/*           <div>2023-02-23 15:06:06</div> */}
-                    {/*         </Menu.Item> */}
-                    {/*         <Menu.Item> */}
-                    {/*           <div>陈思睿发起了新的审核任务，请及时处理</div> */}
-                    {/*           <div>2023-02-23 15:06:06</div> */}
-                    {/*         </Menu.Item> */}
-                    {/*       </Menu> */}
-                    {/*     </Tabs.TabPane> */}
-                    {/*     <Tabs.TabPane key={2} tab={<Badge count={99} offset={[12, 2]}>待阅消息</Badge>}> */}
-                    {/*       <Menu> */}
-                    {/*         <Menu.Item> */}
-                    {/*           <div>陈思睿发起了新的审核任务，请及时处理</div> */}
-                    {/*           <div>2023-02-23 15:06:06</div> */}
-                    {/*         </Menu.Item> */}
-                    {/*       </Menu> */}
-                    {/*     </Tabs.TabPane> */}
-                    {/*   </Tabs> */}
-                    {/* </div> */}
-                  </Popover>
-                  {/* <Button */}
-                  {/*   title={'更换主题颜色'} */}
-                  {/*   shape="circle" */}
-                  {/*   type={'link'} */}
-                  {/*   class={'tg-header-icon'} */}
-                  {/* > */}
-                  {/*   <IconFont type={'icon-global-hf'} /> */}
-                  {/* </Button> */}
+                  {
+                    config.news.show
+                      ? (
+                        <Popover overlayClassName={'tg-header-news-overlay'}>
+                          <Badge
+                            count={this.news.total}
+                            offset={[-12, 4]}
+                            numberStyle={{
+                              width: '18px',
+                              height: '18px',
+                              fontSize: '12px',
+                              lineHeight: '18px',
+                              padding: '0'
+                            }}
+                          >
+                            <Button
+                              title={'通知'}
+                              shape="circle"
+                              type={'link'}
+                              class={'tg-header-icon'}
+                            >
+                              <IconFont type={'icon-global-tz'} />
+                            </Button>
+                          </Badge>
+                          <Menu slot={'content'} class={'tg-header-news'}>
+                            {
+                              this.news.userRefundMessageList.map(item => (
+                                <Menu.Item onClick={() => this.onClick(item)}>
+                                  <div>
+                                    <Tag>{item.messageTypeStr}</Tag>
+                                    {item.noticeTitle}
+                                  </div>
+                                  <div>{item.createTimeStr}</div>
+                                </Menu.Item>
+                              ))
+                            }
+                          </Menu>
+                          {/* <div slot={'content'} class={'tg-header-news'}> */}
+                          {/*   <Tabs */}
+                          {/*     activeKey={this.activeKey} */}
+                          {/*     animated={true} */}
+                          {/*     size={'small'} */}
+                          {/*     onChange={this.onChange} */}
+                          {/*   > */}
+                          {/*     <Tabs.TabPane key={1} tab={<Badge count={99} offset={[12, 2]}>待办事项</Badge>}> */}
+                          {/*       <Menu> */}
+                          {/*         <Menu.Item> */}
+                          {/*           <div>陈思睿发起了新的审核任务，请及时处理</div> */}
+                          {/*           <div>2023-02-23 15:06:06</div> */}
+                          {/*         </Menu.Item> */}
+                          {/*         <Menu.Item> */}
+                          {/*           <div>陈思睿发起了新的审核任务，请及时处理</div> */}
+                          {/*           <div>2023-02-23 15:06:06</div> */}
+                          {/*         </Menu.Item> */}
+                          {/*       </Menu> */}
+                          {/*     </Tabs.TabPane> */}
+                          {/*     <Tabs.TabPane key={2} tab={<Badge count={99} offset={[12, 2]}>待阅消息</Badge>}> */}
+                          {/*       <Menu> */}
+                          {/*         <Menu.Item> */}
+                          {/*           <div>陈思睿发起了新的审核任务，请及时处理</div> */}
+                          {/*           <div>2023-02-23 15:06:06</div> */}
+                          {/*         </Menu.Item> */}
+                          {/*       </Menu> */}
+                          {/*     </Tabs.TabPane> */}
+                          {/*   </Tabs> */}
+                          {/* </div> */}
+                        </Popover>
+                      )
+                      : null
+                  }
+                  {
+                    config.theme.show
+                      ? (
+                        <Dropdown
+                          class={'tg-header-themes'}
+                          overlayClassName={'tg-header-themes-overlay'}
+                        >
+                          <Button
+                            title={'切换主题'}
+                            shape="circle"
+                            type={'link'}
+                            class={'tg-header-icon'}
+                          >
+                            <IconFont type={'icon-global-hf'} />
+                          </Button>
+                          <Menu slot={'overlay'}>
+                            <Menu.Item
+                              disabled={this.theme === 'yx.less'}
+                              onClick={() => this.switchThemes('yx.less')}
+                            >
+                              蓝色
+                            </Menu.Item>
+                            <Menu.Item
+                              disabled={this.theme === 'xzl.less'}
+                              onClick={() => this.switchThemes('xzl.less')}
+                            >
+                              红色
+                            </Menu.Item>
+                          </Menu>
+                        </Dropdown>
+                      )
+                      : null
+                  }
                   {/* <Button shape="circle" type={'link'} class={'tg-header-icon'}> */}
                   {/*   <IconFont type={'icon-global-help'} /> */}
                   {/* </Button> */}

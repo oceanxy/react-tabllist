@@ -8,8 +8,8 @@
 import variablesScss from './themeFromLess.scss'
 import config from '@/config'
 
-const { themeFileName } = config
-const variablesLess = () => require(`./themes/${themeFileName}`)
+const { fileName } = config.theme
+const variablesLess = require(`./themes/${fileName}`)
 
 // 导出变量
 export default {

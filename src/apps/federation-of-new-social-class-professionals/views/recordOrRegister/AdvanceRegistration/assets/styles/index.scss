@@ -1,0 +1,51 @@
+@import '@/assets/styles/themeFromLess.scss';
+.import-btn-box {
+  // font-size: 14px; // 全局默认字号为14号
+  border-radius: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  height: auto;
+  .ant-upload {
+    color: $primary-color;
+    padding: 20px 0;
+  }
+  .icon {
+    font-size: 30px;
+    margin-bottom: 6px;
+  }
+}
+.point-out {
+  display: flex;
+}
+
+.upload-file {
+  min-height: 300px;
+  h3 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #454545;
+    font-size: 18px;
+    margin-bottom: 20px;
+    .success {
+      color: $primary-color;
+    }
+    .fail {
+      color: $error-color;
+    }
+  }
+  .import-succeeded {
+    text-align: center;
+    padding: 70px 20px 40px 20px;
+  }
+  .well {
+    background-color: #f3f7f6;
+    border-color: #dbe3ec;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 15px;
+    p {
+      margin: 5px 0;
+    }
+  }
+}

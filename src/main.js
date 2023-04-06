@@ -1,4 +1,4 @@
-import './assets/styles/app.scss'
+import '@/assets/styles/app.scss'
 import Vue from 'vue'
 import App from './App'
 import config from './config'
@@ -7,15 +7,16 @@ import router, { createRouter } from './router'
 import store from './store'
 import { initializeDynamicRoutes } from '@/utils/utilityFunction'
 
-const { mock, themeFileName } = config
+// 加载主题
+const { fileName } = config.theme
+const theme = localStorage.getItem('theme') || fileName
 
-// require(`@/assets/styles/themes/${themeFileName}`)
-localStorage.setItem('themeFileName', themeFileName)
+require(`@/assets/styles/themes/${theme}`)
 
 Vue.config.productionTip = false
 
 // 预载mock数据（开发环境下并启用mock时执行）
-if (process.env.NODE_ENV === 'development' && mock) {
+if (process.env.NODE_ENV === 'development' && config.mock) {
   require('../mock/index.js')
 }
 

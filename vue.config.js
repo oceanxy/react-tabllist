@@ -33,8 +33,13 @@ module.exports = {
     open: false,
     proxy: {
       '/mgapi': {
-        target: 'http://10.100.1.94:44100',
+        // 新专联
+        target: 'http://10.100.1.94:47910',
+
+        // 渝兴
+        // target: 'http://10.100.1.94:44100',
         // target: 'http://10.100.1.101:44100',
+
         changeOrigin: true,
         secure: false
       }

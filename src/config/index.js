@@ -6,7 +6,7 @@ export default {
   // mock请求延迟时间
   mockDelay: 400,
   // 动态路由（从后台获取权限菜单）
-  dynamicRouting: true,
+  dynamicRouting: false,
   // iconfont
   iconFontSymbol: '//at.alicdn.com/t/c/font_3919835_h8szzvuloe9.js',
   // 面包屑分隔符，如：首页 / 首页
@@ -18,10 +18,20 @@ export default {
   // 图片上传地址
   imageUploadPath: '/mgapi/system/upload/imageUpload',
   // 系统名称
-  systemName: '渝兴集团综合管理平台',
-  // 项目主题文件夹名称（位于 @/assets/styles/theme）
-  themeFileName: 'yx.less',
+  systemName: '新的社会阶层专业人士联合会',
   systemNameEn: '',
+  // 主题
+  theme: {
+    // 是否在header中显示切换主题按钮
+    show: true,
+    // 主题文件名（位于 @/assets/styles/theme）
+    fileName: 'xzl.less'
+  },
+  // 消息
+  news: {
+    // 是否在header中显示消息通知
+    show: false
+  },
   // 全局消息最大显示个数
   maxMessageCount: 1,
   // 账号密码加密key

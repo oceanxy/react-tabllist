@@ -81,5 +81,18 @@ export default {
       url: '/system/home/messageRemind',
       method: 'post'
     })
+  },
+  /**
+   * 设置主题
+   * @param request
+   * @param data
+   * @returns {*}
+   */
+  setThemeFileName(request, data) {
+    return request({
+      url: '/system/employee/updateThemeFileName',
+      method: 'post',
+      data: qs.stringify(data)
+    })
   }
 }

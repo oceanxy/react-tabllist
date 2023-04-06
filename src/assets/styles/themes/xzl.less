@@ -3,7 +3,7 @@
 @import 'ant-design-vue/dist/antd.less'; // 引入官方提供的 less 样式入口文件
 
 // 主题色配置
-@primary-color: red; // 全局主色
+@primary-color: #C02524; // 全局主色
 
 // 布局相关颜色
 @layout-header-background: @primary-color;
@@ -12,11 +12,11 @@
 // 文字
 @font-size-base: 14px; // 主字号
 @heading-color: #18181b; // 标题色
-@text-color: tint(@heading-color, 80%); // 主文本色
-@text-color-secondary: #18181b9e; // 次文本色
+@text-color: fade(@heading-color, 80%); // 主文本色
+@text-color-secondary: fade(@heading-color, 62%); // 次文本色
 
 // input
-@input-placeholder-color: @primary-7;
+@input-placeholder-color: fade(@heading-color, 35%);
 
 // Card
 @card-background: #f8fafc;
@@ -57,14 +57,20 @@
 
 // 注入网页供 scss 使用
 :root {
-  --primary-color: @primary-color;
   --primary-1: @primary-1;
   --primary-2: @primary-2;
+  --primary-3: @primary-3;
+  --primary-4: @primary-4;
   --primary-5: @primary-5;
+  --primary-color: @primary-color; // @primary-6
   --primary-7: @primary-7;
+  --primary-8: @primary-8;
   --primary-9: @primary-9;
   --layout-header-background: @layout-header-background;
+  --background-color-base: @background-color-base;
   --font-size-base: @font-size-base;
+  --font-size-lg: @font-size-lg;
+  --font-size-sm: @font-size-sm;
   --heading-color: @heading-color;
   --text-color: @text-color;
   --text-color-secondary: @text-color-secondary;
@@ -98,14 +104,20 @@
 
 // 导出变量供 javascript 使用
 :export {
-  primaryColor: @primary-color;
   primary1: @primary-1;
   primary2: @primary-2;
+  primary3: @primary-3;
+  primary4: @primary-4;
   primary5: @primary-5;
+  primaryColor: @primary-color;
   primary7: @primary-7;
+  primary8: @primary-8;
   primary9: @primary-9;
   layoutHeaderBackground: @layout-header-background;
+  backgroundColorBase: @background-color-base;
   fontSizeBase: @font-size-base;
+  fontSizeLg: @font-size-lg;
+  fontSizeSm: @font-size-sm;
   headingColor: @heading-color;
   textColor: @text-color;
   textColorSecondary: @text-color-secondary;

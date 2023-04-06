@@ -77,6 +77,7 @@ export default {
         commit('setUserInfo', userInfo)
         commit('setAuthentication', token)
         commit('setSiteCache', { menuList, defaultMenuUrl })
+        localStorage.setItem('theme', userInfo.themeFileName)
       }
 
       commit('setLoading', false)
@@ -124,6 +125,7 @@ export default {
       if (!isPassive) {
         localStorage.removeItem('openKeys')
         localStorage.removeItem('selectedKey')
+        localStorage.removeItem('theme')
       }
 
       return Promise.resolve(true)
