@@ -104,7 +104,7 @@ export default {
         merge: true
       })
 
-      localStorage.setItem('theme', themeFileName)
+      localStorage.setItem('theme', themeFileName || '')
 
       window.location.reload()
     }

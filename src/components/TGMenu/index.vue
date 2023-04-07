@@ -31,7 +31,7 @@
           />
           <icon-font
             v-else-if="route.meta.icon"
-            :type="route.meta.icon + (selectedKeys[0] === route.path ? '-active' : '')"
+            :type="route.meta.icon + (selectedKeys[0] === route.path ? config.activeSuffixForMenuIcon : '')"
           />
           <span>{{ route.meta && route.meta.title }}</span>
         </div>
@@ -65,7 +65,10 @@ const TGSubMenu = {
       />
       <icon-font
         v-else-if="menuInfo.meta.icon"
-        :type="menuInfo.meta.icon + (menuInfo.children.map(i => i.path).includes(selectedKeys[0]) ? '-active' : '')"
+        :type="menuInfo.meta.icon + (menuInfo.children.map(i => i.path).includes(selectedKeys[0])
+          ? config.activeSuffixForMenuIcon
+          : ''
+        )"
       />
       <span>{{ menuInfo.meta && menuInfo.meta.title }}</span>
     </div>
@@ -90,7 +93,7 @@ const TGSubMenu = {
           />
           <icon-font
             v-else-if="showSubIcon && route.meta.icon"
-            :type="route.meta.icon + (selectedKeys[0] === route.path ? '-active' : '')"
+            :type="route.meta.icon + (selectedKeys[0] === route.path ? config.activeSuffixForMenuIcon : '')"
           />
           <span>{{ route.meta && route.meta.title }}</span>
         </div>
@@ -119,6 +122,11 @@ const TGSubMenu = {
       default: false
     }
   },
+  computed: {
+    config() {
+      return config
+    }
+  },
   components: {
     [Menu.Item.name]: Menu.Item,
     [Menu.SubMenu.name]: Menu.SubMenu
@@ -132,6 +140,11 @@ const TGSubMenu = {
 
 export default {
   name: 'TGMenu',
+  computed: {
+    config() {
+      return config
+    }
+  },
   components: {
     TGSubMenu,
     [Menu.name]: Menu,

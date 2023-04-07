@@ -77,7 +77,7 @@ export default {
         commit('setUserInfo', userInfo)
         commit('setAuthentication', token)
         commit('setSiteCache', { menuList, defaultMenuUrl })
-        localStorage.setItem('theme', userInfo.themeFileName)
+        localStorage.setItem('theme', userInfo.themeFileName || '')
       }
 
       commit('setLoading', false)

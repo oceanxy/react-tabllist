@@ -34,7 +34,8 @@ module.exports = {
     proxy: {
       '/mgapi': {
         // 新专联
-        target: 'http://10.100.1.94:47910',
+        // target: 'http://10.100.1.94:47910',
+        target: 'http://10.100.1.101:47910',
 
         // 渝兴
         // target: 'http://10.100.1.94:44100',

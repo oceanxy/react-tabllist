@@ -20,6 +20,10 @@
     .ant-menu-item-title {
       transition: inherit;
       padding: 0 16px !important;
+
+      .anticon {
+        font-size: 1.4em;
+      }
     }
   }
 
@@ -38,6 +42,12 @@
   .ant-menu-submenu {
     .ant-menu-submenu-title {
       padding: 0 16px !important;
+    }
+
+    &.ant-menu-submenu-selected {
+      .anticon {
+        color: $primary-color-active;
+      }
     }
   }
 
@@ -108,18 +118,17 @@
       // font-size: 14px; // 全局默认字号为14号
       // font-weight: 500;
     }
+
+    .anticon {
+      margin: 0 10px 0 0;
+      font-size: 1.4em;
+      line-height: 0;
+    }
   }
 
   .ant-menu-sub > .ant-menu-item {
     span {
       padding-left: 12px;
     }
-  }
-
-  .ant-menu-item .anticon,
-  .ant-menu-submenu-title .anticon {
-    margin: 0 10px 0 0;
-    font-size: 1.4em;
-    line-height: 0;
   }
 }
