@@ -15,8 +15,8 @@ pnpm-debug.log*
 
 # Editor directories and files
 .idea
-src/apps/*/.idea/**
-src/apps/*/.vscode/**
+src/apps/**/.idea/**
+src/apps/**/.vscode/**
 .vscode
 *.suo
 *.ntvs*
