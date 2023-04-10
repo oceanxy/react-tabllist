@@ -35,6 +35,10 @@ export default {
     // 是否在header中显示消息通知
     show: true
   },
+  // 需要在 header 内传递的参数（下拉列表）
+  headerParams: {
+    show: false
+  },
   // 全局消息最大显示个数
   maxMessageCount: 1,
   // 登录成功后默认跳转页面

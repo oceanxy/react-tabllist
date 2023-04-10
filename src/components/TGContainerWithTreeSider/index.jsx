@@ -1,5 +1,4 @@
 import './assets/styles/index.scss'
-import { mapGetters } from 'vuex'
 import { Empty, Icon, Input, Spin, Tree } from 'ant-design-vue'
 import TGContainerWithSider from '@/components/TGContainerWithSider'
 import { cloneDeep, debounce } from 'lodash'
@@ -110,15 +109,17 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({ getState: 'getState' }),
     dataSource() {
-      return this.getState(this.apiOptions.stateName, this.apiOptions.moduleName || this.moduleName)
+      return this.$store.state[this.apiOptions.moduleName || this.moduleName][this.apiOptions.stateName]
+    },
+    primaryColor() {
+      return this.$store.state['common'].variables?.less?.primaryColor
     },
     treeIdField() {
-      return this.getState('treeIdField', this.moduleName)
+      return this.$store.state[this.moduleName]['treeIdField']
     },
     treeId() {
-      return [this.getState('search', this.moduleName)[this.treeIdField]]
+      return [this.$store.state[this.moduleName]['search'][this.treeIdField]]
     },
     expandedKeys() {
       if (this.expandedKeysFormEvent.length) {
@@ -312,13 +313,7 @@ export default {
         })
       } else {
         let payload
-        let treeIdField
-
-        if (e.selected) {
-          treeIdField = this.getFieldNameForTreeId(e.node.pos.split('-').length - 1)
-        } else {
-          treeIdField = this.notNoneMode ? this.getFieldNameForTreeId(1) : ''
-        }
+        const treeIdField = this.getFieldNameForTreeId(e.node.pos.split('-').length - 1)
 
         if (this.oldTreeIdField !== treeIdField) {
           // 清空search内上一次树操作的键与值
@@ -383,7 +378,7 @@ export default {
             domPropsInnerHTML={
               treeNode.name.replace(
                 this.searchValue,
-                `<span style="color: #16b364">${this.searchValue}</span>`
+                `<span style="color: ${this.primaryColor}">${this.searchValue}</span>`
               ) + childrenNumber
             }
           />

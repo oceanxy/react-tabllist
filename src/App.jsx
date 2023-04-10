@@ -8,8 +8,7 @@ export default {
   data() {
     return {
       ratioX: 1,
-      ratioY: 1,
-      ...variablesStyle
+      ratioY: 1
     }
   },
   async created() {
@@ -32,6 +31,12 @@ export default {
       // 还原store后，删除localStorage里的备份状态信息
       localStorage.removeItem('state')
     }
+
+    this.$store.commit('setState', {
+      value: variablesStyle,
+      stateName: 'variables',
+      moduleName: 'common'
+    })
 
     // 在页面刷新时将store里的信息保存到localStorage里，以便刷新页面后还原store
     window.addEventListener('beforeunload', this.setStore)

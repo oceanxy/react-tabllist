@@ -9,10 +9,10 @@ import variablesScss from './themeFromLess.scss'
 import config from '@/config'
 
 const { fileName } = config.theme
-const variablesLess = require(`./themes/${fileName}`)
+const less = require(`./themes/${fileName}`)
 
 // 导出变量
 export default {
-  variablesScss,
-  variablesLess
+  scss: variablesScss,
+  less
 }
