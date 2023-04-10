@@ -29,7 +29,8 @@ export default {
               {this.$slots.default}
             </div>
           )
-          : null
+          : null,
+        <div class="tg-container-modals">{this.$slots.modals}</div>
       ]
     }
   },
@@ -62,7 +63,6 @@ export default {
               </div>
             )
         }
-        <div class="tg-container-modals">{this.$slots.modals}</div>
       </div>
     )
   }

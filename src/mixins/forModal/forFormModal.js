@@ -101,7 +101,7 @@ export default ({ disableSubmitButton = true } = {}) => {
        * 提交表单
        * 注意 isResetSelectedRows 参数很重要，该清空 selectedRowKeys 一定要清空，不然会造成下次请求时的参数重叠。
        * 主要应用在“删除”等会减少列表数据量的操作中
-       * @param [refreshTree=false] {boolean} 是否在成功提交表单后舒心对应的侧边树，默认 false。依赖 inject.inTree 和 inject.refreshTree
+       * @param [refreshTree=false] {boolean} 是否在成功提交表单后刷新对应的侧边树，默认 false。依赖 inject.inTree 和 inject.refreshTree()
        * @param [isFetchList=true] {boolean} 是否在成功提交表单后刷新对应的列表，默认 true
        * @param [isResetSelectedRows] {boolean} 是否在成功提交表单后重置列表的选中行数据，默认 false
        * @param [customApiName] {string} 自定义请求API

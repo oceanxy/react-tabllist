@@ -13,6 +13,11 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    overflow: hidden;
+
+    & > .tg-container-modals {
+      margin-bottom: -12px; // 抵消空元素造成的底部 gap 值
+    }
   }
 
   & > .tg-container-with-sider--sider {

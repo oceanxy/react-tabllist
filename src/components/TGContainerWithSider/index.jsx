@@ -51,15 +51,18 @@ export default {
       return this.siderClass ? ` ${this.siderClass}` : ''
     }
   },
-  methods: {
-    onTrigger() {
-      this.treeCollapsed = !this.treeCollapsed
-
+  watch: {
+    treeCollapsed() {
       // 设置 200ms 的延迟是因为 css 动画的持续时间设置为如下：
       // transition: width .2s ease;
       setTimeout(() => {
         this.$emit('sidebarSwitch')
       }, 200)
+    }
+  },
+  methods: {
+    onTrigger() {
+      this.treeCollapsed = !this.treeCollapsed
     }
   },
   render() {
