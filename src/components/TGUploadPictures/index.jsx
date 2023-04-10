@@ -31,7 +31,7 @@ export default {
       fileList: [],
       previewImage: '',
       previewVisible: false,
-      name: 'files',
+      name: 'file',
       headers: { token: localStorage.getItem('token') }
     }
   },
@@ -79,14 +79,32 @@ export default {
       this.previewVisible = true
     },
     handleChange({ file, fileList }) {
-      if (fileList.length > this.limit) {
-        fileList = fileList.slice(0, this.limit)
+      this.fileList = []
+      let err = false
+
+      for (const file of fileList) {
+        if ('response' in file && !file.response.status) {
+          file.status = 'error'
+          file.response = file.response.message
+          err = true
+        }
+
+        this.fileList.push(file)
       }
 
-      this.fileList = fileList
+      if (!err) {
+        if (this.fileList.length >= this.limit) {
+          this.fileList = this.fileList.slice(0, this.limit)
+        }
 
-      if (file.status === 'done') {
         this.$emit('change', this.fileList)
+      } else {
+        this.form.setFields({
+          [this.$attrs.id]: {
+            value: this.fileList,
+            errors: [new Error('请上传合法的文件！')]
+          }
+        })
       }
     }
   },
@@ -100,7 +118,7 @@ export default {
         }}
       >
         <Upload
-          accept={'.png,.jpg'}
+          accept={'.png,.jpg,.jpeg'}
           action={this.action}
           listType="picture-card"
           name={this.name}

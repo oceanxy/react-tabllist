@@ -154,11 +154,11 @@ export default {
               )
               : null
           }
-          <div class={'tg-layout-header-search'}>
-            <Input placeholder={'搜功能'} class={'search-input'}>
-              <IconFont type={'icon-global-search'} slot={'addonAfter'} />
-            </Input>
-          </div>
+          {/* <div class={'tg-layout-header-search'}> */}
+          {/*   <Input placeholder={'搜功能'} class={'search-input'}> */}
+          {/*     <IconFont type={'icon-global-search'} slot={'addonAfter'} /> */}
+          {/*   </Input> */}
+          {/* </div> */}
           {
             this.isLogin
               ? (

@@ -83,7 +83,6 @@ export function verifyPhoneNumber(rule, value, callback) {
     const MOBILE_NUMBER_REG = /^1[3-9]\d{9}$/
     const LANDLINE_NUMBER_REG = /^0\d{2,3}-?[1-9]\d{6,7}$/
 
-    // 校验身份证：
     if (!MOBILE_NUMBER_REG.test(value) && !LANDLINE_NUMBER_REG.test(value)) {
       callback(new Error('电话号码格式有误！'))
     }
