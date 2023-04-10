@@ -3,7 +3,6 @@ import Vuex from 'vuex'
 import getters from './getters'
 import mutations from './mutations'
 import actions from './actions'
-import config from '@/config'
 
 Vue.use(Vuex)
 
@@ -28,7 +27,17 @@ const modules = modulesFiles.keys().reduce((modules, modulePath) => {
 
 const appModules = appModulesFiles.keys().reduce((modules, modulePath) => {
   // eg. 设置 './app.js' => 'app'
-  const moduleName = modulePath.replace(/^\.\/(.*)\.\w+$/, '$1')
+  let moduleName = modulePath.replace(/^\.\/(.*)\.\w+$/, '$1')
+
+  moduleName =
+    // apps 下的文件夹名称通常比较长，取其每个单词的首字母组合当作store内每个app的前缀
+    moduleName
+      .substring(0, moduleName.indexOf('/'))
+      .split('-')
+      .map(i => i[0])
+      .join('') + '/' +
+    moduleName.substring(moduleName.lastIndexOf('/') + 1)
+
   const value = appModulesFiles(modulePath)
 
   modules[moduleName] = value.default

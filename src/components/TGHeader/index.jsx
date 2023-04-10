@@ -1,5 +1,5 @@
 import './index.scss'
-import { Avatar, Badge, Button, Divider, Dropdown, Layout, Menu, Popover, Tag } from 'ant-design-vue'
+import { Avatar, Badge, Button, Divider, Dropdown, Input, Layout, Menu, Popover, Select, Space, Tag } from 'ant-design-vue'
 import Logo from '@/components/Logo'
 import { mapActions, mapGetters } from 'vuex'
 import config from '@/config'
@@ -26,7 +26,23 @@ export default {
       return !!window.localStorage.getItem('token')
     },
     news() {
-      return this.getState('news', 'login')
+      return this.getState('news', 'common')
+    },
+    organListForHeader() {
+      return this.getState('organListForHeader', 'common')
+    },
+    headerId: {
+      get() {
+        return this.getState('headerId', 'common')
+      },
+      set(value) {
+        localStorage.setItem('headerId', value)
+        this.$store.commit('setState', {
+          value,
+          moduleName: 'common',
+          stateName: 'headerId'
+        })
+      }
     },
     avatarForLetter() {
       const name = this.userInfo.nickName || this.userInfo.fullName
@@ -43,14 +59,26 @@ export default {
       if (!Object.keys(value).length && localStorage.getItem('token')) {
         await this.getUserInfo()
       }
+    },
+    headerId() {
+      document.querySelector('#tg-responsive-layout').style.display = 'none'
+      window.location.reload()
     }
   },
   async created() {
-    if (config.news.show) {
+    if (config.news?.show) {
       await this.$store.dispatch('getListWithLoadingStatus', {
-        moduleName: 'login',
+        moduleName: 'common',
         stateName: 'news',
         customApiName: 'getNews'
+      })
+    }
+
+    if (config.headerParams?.show && !this.organListForHeader.list) {
+      await this.$store.dispatch('getListWithLoadingStatus', {
+        moduleName: 'common',
+        stateName: 'organListForHeader',
+        customApiName: 'getSitesOfStaff'
       })
     }
   },
@@ -113,28 +141,47 @@ export default {
     return (
       <Layout.Header class={'tg-layout-header'}>
         <Logo />
-        <div class={'tg-layout-header-content'}>
+        <Space class={'tg-layout-header-content'}>
+          {
+            this.page === 'normal'
+              ? (
+                <IconFont
+                  type={'icon-global-sq'}
+                  class={`tg-layout-header-menu-btn menu-btn-fold${this.collapsed ? ' reverse' : ''}`}
+                  onClick={this.onMenuFold}
+                  title={!this.collapsed ? '折叠菜单' : '展开菜单'}
+                />
+              )
+              : null
+          }
           <div class={'tg-layout-header-search'}>
-            {
-              this.page === 'normal'
-                ? (
-                  <IconFont
-                    type={'icon-global-sq'}
-                    class={`menu-btn menu-btn-fold${this.collapsed ? ' reverse' : ''}`}
-                    onClick={this.onMenuFold}
-                    title={!this.collapsed ? '折叠菜单' : '展开菜单'}
-                  />
-                )
-                : null
-            }
-            {/* <Input placeholder={'搜功能'} class={'search-input'}> */}
-            {/*   <IconFont type={'icon-global-search'} slot={'addonAfter'} /> */}
-            {/* </Input> */}
+            <Input placeholder={'搜功能'} class={'search-input'}>
+              <IconFont type={'icon-global-search'} slot={'addonAfter'} />
+            </Input>
           </div>
           {
             this.isLogin
               ? (
                 <div class={'tg-header-info'}>
+                  {
+                    config.headerParams?.show
+                      ? [
+                        <Select
+                          vModel={this.headerId}
+                          placeholder={'请选择站点'}
+                          class={'tg-header-params'}
+                          suffixIcon={<IconFont type={'icon-global-down'} />}
+                        >
+                          {
+                            this.organListForHeader.list.map(item => (
+                              <Select.Option value={item.id}>{item.organName}</Select.Option>
+                            ))
+                          }
+                        </Select>,
+                        <Divider type={'vertical'} class={'tg-header-divider'} />
+                      ]
+                      : null
+                  }
                   <Dropdown class={'tg-header-user'} overlayClassName={'tg-header-user-overlay'}>
                     <div class={'tg-header-user-content'}>
                       <Avatar class={'tg-avatar'} shape={'circle'}>
@@ -156,7 +203,7 @@ export default {
                   </Dropdown>
                   <Divider type={'vertical'} class={'tg-header-divider'} />
                   {
-                    config.news.show
+                    config.news?.show
                       ? (
                         <Popover overlayClassName={'tg-header-news-overlay'}>
                           <Badge
@@ -226,7 +273,7 @@ export default {
                       : null
                   }
                   {
-                    config.theme.show
+                    config.theme?.show
                       ? (
                         <Dropdown
                           class={'tg-header-themes'}
@@ -258,13 +305,13 @@ export default {
                       )
                       : null
                   }
-                  {/* <Button shape="circle" type={'link'} class={'tg-header-icon'}> */}
-                  {/*   <IconFont type={'icon-global-help'} /> */}
-                  {/* </Button> */}
+                  <Button shape="circle" type={'link'} class={'tg-header-icon'}>
+                    <IconFont type={'icon-global-help'} />
+                  </Button>
                 </div>
               ) : null
           }
-        </div>
+        </Space>
       </Layout.Header>
     )
   }

@@ -1,12 +1,12 @@
 import axios from 'axios'
-import config from '@/config'
+import conf from '@/config'
 import router from '@/router'
 import store from '@/store'
 import { showMessage } from '@/utils/message'
 
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API,
-  timeout: config.timeout
+  timeout: conf.timeout
 })
 
 // request interceptor
@@ -16,6 +16,14 @@ service.interceptors.request.use(
 
     if (token) {
       config.headers.token = token
+    }
+
+    if (conf.headerParams?.show) {
+      if (conf.headerParams.fieldName) {
+        config.headers[conf.headerParams.fieldName] = localStorage.getItem('headerId')
+      } else {
+        throw new Error('未在 src/config/index.js 中配置 headerParams.fieldName 字段。')
+      }
     }
 
     return config

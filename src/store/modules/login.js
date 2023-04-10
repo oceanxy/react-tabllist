@@ -18,12 +18,7 @@ export default {
     userInfo: {},
     visibilityOfEditPassword: false,
     currentItem: {},
-    codeKey: '',
-    news: {
-      loading: false,
-      total: 0,
-      userRefundMessageList: []
-    }
+    codeKey: ''
   },
   mutations: {
     setLoading(state, payload) {
@@ -78,6 +73,23 @@ export default {
         commit('setAuthentication', token)
         commit('setSiteCache', { menuList, defaultMenuUrl })
         localStorage.setItem('theme', userInfo.themeFileName || '')
+
+        if (config.headerParams?.show) {
+          localStorage.setItem('headerId', userInfo.organId || '')
+
+          commit('setState', {
+            value: userInfo.organId,
+            stateName: 'headerId',
+            moduleName: 'common'
+          }, { root: true })
+
+          commit('setState', {
+            value: { list: userInfo.organList },
+            stateName: 'organListForHeader',
+            moduleName: 'common',
+            merge: true
+          }, { root: true })
+        }
       }
 
       commit('setLoading', false)
@@ -126,6 +138,23 @@ export default {
         localStorage.removeItem('openKeys')
         localStorage.removeItem('selectedKey')
         localStorage.removeItem('theme')
+
+        if (config.headerParams?.show) {
+          localStorage.removeItem('headerId')
+
+          commit('setState', {
+            value: undefined,
+            stateName: 'headerId',
+            moduleName: 'common'
+          }, { root: true })
+
+          commit('setState', {
+            value: { list: [] },
+            stateName: 'organListForHeader',
+            moduleName: 'common',
+            merge: true
+          }, { root: true })
+        }
       }
 
       return Promise.resolve(true)

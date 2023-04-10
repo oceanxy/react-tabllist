@@ -15,7 +15,19 @@ export default {
     // 行政区划
     administrativeDivision: [],
     // 默认行政区划
-    defaultAdministrativeDivision: []
+    defaultAdministrativeDivision: [],
+    // header 内的站点切换数据源
+    organListForHeader: {
+      loading: false,
+      list: []
+    },
+    // header 内的当前选中站点
+    headerId: undefined,
+    news: {
+      loading: false,
+      total: 0,
+      userRefundMessageList: []
+    }
   },
   mutations: {
     setAdministrativeDivision(state, payload) {
