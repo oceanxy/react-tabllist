@@ -8,7 +8,7 @@ export default {
   // 动态路由（从后台获取权限菜单）
   dynamicRouting: false,
   // iconfont
-  iconFontSymbol: '//at.alicdn.com/t/c/font_3996750_9d8my5ryrqi.js',
+  iconFontSymbol: '//at.alicdn.com/t/c/font_3996750_ubb4tykiqzs.js',
   // iconfont菜单图标在 active 状态下的后缀（该后缀会直接加到iconfont图标名称的最后，需在iconfont中预先定义好该图标；
   // 如果留空则自动根据主题色填充该图标在active状态下的颜色）
   activeSuffixForMenuIcon: '-active',

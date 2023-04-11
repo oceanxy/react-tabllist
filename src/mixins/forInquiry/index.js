@@ -183,7 +183,7 @@ export default ({
                 ? (
                   <IconFont
                     class={`tree-btn${this.treeCollapsed ? ' reverse' : ''}`}
-                    type={'icon-menu-zk-line'}
+                    type={'icon-side-tree-toggle'}
                     onClick={this.onTreeFold}
                     title={!this.treeCollapsed ? '折叠树' : '展开树'}
                   />

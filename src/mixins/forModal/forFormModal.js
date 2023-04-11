@@ -107,9 +107,9 @@ export default ({ disableSubmitButton = true } = {}) => {
        * @param [customApiName] {string} 自定义请求API
        * @param [customAction='custom'] {string} 自定义请求 action。默认 'custom'，依赖 customApiName。
        *    (action 列表请在 /src/store/actions.js 内查看，TODO 目前只适配了部分 action)
-       * @param [customValidation] {() => boolean} 自定义验证函数
-       * @param [customDataHandler] {(values) => Object} 自定义参数处理
-       * @param [done] {response => void} 提交成功后的回调函数
+       * @param [customValidation] {() => boolean} 自定义验证函数（请使用箭头函数）
+       * @param [customDataHandler] {values => Object} 自定义参数处理（请使用箭头函数）
+       * @param [done] {response => void} 提交成功后的回调函数（请使用箭头函数）
        */
       onSubmit({
         refreshTree,

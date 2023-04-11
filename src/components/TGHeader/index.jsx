@@ -1,5 +1,5 @@
 import './index.scss'
-import { Avatar, Badge, Button, Divider, Dropdown, Input, Layout, Menu, Popover, Select, Space, Tag } from 'ant-design-vue'
+import { Avatar, Badge, Button, Divider, Dropdown, Layout, Menu, Popover, Select, Space, Tag } from 'ant-design-vue'
 import Logo from '@/components/Logo'
 import { mapActions, mapGetters } from 'vuex'
 import config from '@/config'
@@ -33,7 +33,7 @@ export default {
     },
     headerId: {
       get() {
-        return this.getState('headerId', 'common')
+        return this.getState('headerId', 'common') || localStorage.getItem('headerId')
       },
       set(value) {
         localStorage.setItem('headerId', value)
@@ -74,7 +74,7 @@ export default {
       })
     }
 
-    if (config.headerParams?.show && !this.organListForHeader.list) {
+    if (config.headerParams?.show && !this.organListForHeader.list.length) {
       await this.$store.dispatch('getListWithLoadingStatus', {
         moduleName: 'common',
         stateName: 'organListForHeader',
@@ -305,9 +305,9 @@ export default {
                       )
                       : null
                   }
-                  <Button shape="circle" type={'link'} class={'tg-header-icon'}>
-                    <IconFont type={'icon-global-help'} />
-                  </Button>
+                  {/* <Button shape="circle" type={'link'} class={'tg-header-icon'}> */}
+                  {/*   <IconFont type={'icon-global-help'} /> */}
+                  {/* </Button> */}
                 </div>
               ) : null
           }

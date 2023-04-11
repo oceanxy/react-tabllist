@@ -99,15 +99,20 @@ export default cb => ({
     },
     /**
      * 删除
+     * @param done {() => void} 成功执行删除的回调
      * @returns {Promise<void>}
      */
-    async onCustomDeleteClick() {
+    async onCustomDeleteClick(done) {
       await verificationDialog(
         async () => {
           const status = await this.$store.dispatch('delete', { moduleName: this.moduleName })
 
           if (status && this.inTree) {
             this.refreshTree()
+          }
+
+          if (status && typeof done === 'function') {
+            done()
           }
 
           return Promise.resolve(status)

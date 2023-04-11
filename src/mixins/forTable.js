@@ -104,6 +104,9 @@ export default ({
       sortFieldList() {
         return this.getState('sortFieldList', this.moduleName, this.submoduleName)
       },
+      primaryColor() {
+        return this.$store.state['common'].variables?.less?.primaryColor
+      },
       attributes() {
         const events = {}
 
@@ -334,7 +337,7 @@ export default ({
           }
 
           message.success([
-            <span style={{ color: '#16b364' }}>
+            <span style={{ color: `${this.primaryColor}` }}>
               {name}
             </span>,
             ' 的状态已更新！'
@@ -401,8 +404,13 @@ export default ({
        * 删除
        * @param record {Object} 列表数据对象
        * @param [params] {Object} 删除参数，默认 { ids: [record.id] }
+       * @param [done] {() => void} 成功执行删除的回调
        */
-      onDeleteClick(record, params = {}) {
+      onDeleteClick(record, params = {}, done) {
+        if (typeof params === 'function') {
+          [params, done] = [{}, params]
+        }
+
         Modal.confirm({
           title: '确认',
           content: '确定要删除吗？',
@@ -434,6 +442,10 @@ export default ({
               // 执行侧边树数据更新
               if (this.inTree) {
                 this.refreshTree()
+              }
+
+              if (typeof done === 'function') {
+                done()
               }
             }
 
