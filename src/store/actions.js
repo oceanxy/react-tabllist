@@ -697,7 +697,7 @@ export default {
   /**
    * 设置新增/编辑弹窗可见状态
    * @param commit
-   * @param [statusField] {string} store里要设置的状态字段名称
+   * @param [statusField] {string} 弹窗显示字段名称。需预先在对应的store模块中定义，默认 visibilityOfEdit（新增/编辑弹窗）
    * @param statusValue {*} store里要设置的状态字段对应的值
    * @param moduleName {string} 要设置的状态所在的store模块的名称
    * @param submoduleName {string} 要设置的状态所在的store子模块的名称，依赖 moduleName

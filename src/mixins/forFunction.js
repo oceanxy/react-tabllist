@@ -91,7 +91,7 @@ export default cb => ({
     },
     /**
      * 审核或相关意见填写的批量操作
-     * @param visibilityFieldName {string}
+     * @param [visibilityFieldName] {string} 弹窗控制字段 默认 visibilityOfEdit
      * @returns {Promise<void>}
      */
     async onCustomAuditClick(visibilityFieldName) {

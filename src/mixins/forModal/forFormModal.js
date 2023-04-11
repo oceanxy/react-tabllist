@@ -141,6 +141,10 @@ export default ({ disableSubmitButton = true } = {}) => {
                 // 存在 ID 为编辑模式
                 action = 'update'
                 payload.id = this.currentItem.id
+              } else if (this.currentItem?.ids) {
+                // 存在ids为批量操作
+                action = 'custom'
+                payload.ids = this.currentItem.ids
               } else {
                 // 不存在 ID 则为新增模式
                 action = 'add'
