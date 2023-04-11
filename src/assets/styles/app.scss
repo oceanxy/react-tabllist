@@ -123,12 +123,16 @@ body {
 
 .tg-inquiry.tg-inquiry {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: flex-start;
-  row-gap: 8px;
-  column-gap: 16px;
+  row-gap: 10px;
+  column-gap: 10px;
   padding: 12px 20px;
   background: $white;
+
+  .tg-inquiry-side-toggle {
+    padding: 6px 0;
+  }
 
   .ant-space {
     flex-wrap: wrap;

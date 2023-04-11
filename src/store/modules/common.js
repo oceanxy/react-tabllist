@@ -29,12 +29,27 @@ export default {
       loading: false,
       total: 0,
       userRefundMessageList: []
-    }
+    },
+    // 民族数据
+    nations: [],
+    // 政治面貌数据
+    politicalStatus: [],
+    // 阶级数据
+    castes: []
   },
   mutations: {
     setAdministrativeDivision(state, payload) {
       state.administrativeDivision = payload || []
       state.defaultAdministrativeDivision = payload.defaultIds || []
+    },
+    setNations(state, payload) {
+      state.nations = payload || []
+    },
+    setPoliticalStatus(state, payload) {
+      state.politicalStatus = payload || []
+    },
+    setCastes(state, payload) {
+      state.castes = payload || []
     }
   },
   actions: {
@@ -48,6 +63,27 @@ export default {
 
       if (response.status) {
         commit('setAdministrativeDivision', response.data)
+      }
+    },
+    async getNations({ commit }) {
+      const response = await apis.getNations()
+
+      if (response.status) {
+        commit('setNations', response.data)
+      }
+    },
+    async getPoliticalStatus({ commit }) {
+      const response = await apis.getPoliticalStatus()
+
+      if (response.status) {
+        commit('setPoliticalStatus', response.data)
+      }
+    },
+    async getCastes({ commit }) {
+      const response = await apis.getCastes()
+
+      if (response.status) {
+        commit('setCastes', response.data)
       }
     }
   }

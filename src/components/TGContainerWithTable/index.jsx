@@ -37,19 +37,18 @@ export default {
   render() {
     return (
       <div class="tg-container">
-        {
-          this.$slots.functions
-            ? (
-              <div class={'tg-content-title'}>
-                <Space class={'title'}>
-                  <IconFont type={this.$route.meta.icon} />
-                  {this.$route.meta.title}
-                </Space>
-                {this.$slots.functions}
-              </div>
-            )
-            : null
-        }
+        <div class={'tg-content-title'}>
+          <Space class={'title'}>
+            <IconFont type={this.$route.meta.icon} />
+            {this.$route.meta.title}
+          </Space>
+          {
+            this.$slots.functions
+              ? this.$slots.functions
+              : null
+          }
+        </div>
+
         {
           this.showTree
             ? (

@@ -21,6 +21,7 @@ export default {
         onClick={this.goBackHome}
         title={config.systemName}
       >
+        <Icon-font type={'icon-logo'} />
         {config.systemName}
       </div>
     )

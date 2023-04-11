@@ -177,7 +177,7 @@ export default ({
           colon={false}
           class="tg-inquiry"
         >
-          <Space>
+          <div class={'tg-inquiry-side-toggle'}>
             {
               this.inTree
                 ? (
@@ -190,6 +190,8 @@ export default ({
                 )
                 : null
             }
+          </div>
+          <Space>
             {this.forRender}
             <Space>
               <Button
