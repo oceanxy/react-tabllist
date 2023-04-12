@@ -6,9 +6,10 @@
  */
 
 import { mapGetters } from 'vuex'
-import { message, Modal, Table } from 'ant-design-vue'
+import { message, Table } from 'ant-design-vue'
 import forIndex from '@/mixins/forIndex'
 import { cloneDeep, omit } from 'lodash'
+import { verificationDialog } from '@/utils/message'
 
 /**
  * 用于 table 的混合
@@ -406,17 +407,13 @@ export default ({
        * @param [params] {Object} 删除参数，默认 { ids: [record.id] }
        * @param [done] {() => void} 成功执行删除的回调
        */
-      onDeleteClick(record, params = {}, done) {
+      async onDeleteClick(record, params = {}, done) {
         if (typeof params === 'function') {
           [params, done] = [{}, params]
         }
 
-        Modal.confirm({
-          title: '确认',
-          content: '确定要删除吗？',
-          okText: '确认',
-          cancelText: '取消',
-          onOk: async close => {
+        await verificationDialog(
+          async () => {
             const status = await this.$store.dispatch('delete', {
               payload: {
                 ...params,
@@ -434,11 +431,6 @@ export default ({
             })
 
             if (status) {
-              message.success([
-                <span style={{ color: 'blue' }}>{record.fullName}</span>,
-                ' 已成功删除！'
-              ])
-
               // 执行侧边树数据更新
               if (this.inTree) {
                 this.refreshTree()
@@ -449,9 +441,14 @@ export default ({
               }
             }
 
-            close()
-          }
-        })
+            return status
+          },
+          '确定要删除吗？',
+          [
+            <span style={{ color: this.primaryColor }}>{record.fullName}</span>,
+            ' 已成功删除！'
+          ]
+        )
       },
       /**
        * 表格行change事件回调

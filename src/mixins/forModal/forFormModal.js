@@ -105,7 +105,7 @@ export default ({ disableSubmitButton = true } = {}) => {
        * @param [isFetchList=true] {boolean} 是否在成功提交表单后刷新对应的列表，默认 true
        * @param [isResetSelectedRows] {boolean} 是否在成功提交表单后重置列表的选中行数据，默认 false
        * @param [customApiName] {string} 自定义请求API
-       * @param [customAction='custom'] {string} 自定义请求 action。默认 'custom'，依赖 customApiName。
+       * @param [customAction] {string} 自定义请求 action。默认根据是否存在 id、ids 字段自动判断
        *    (action 列表请在 /src/store/actions.js 内查看，TODO 目前只适配了部分 action)
        * @param [customValidation] {() => boolean} 自定义验证函数（请使用箭头函数）
        * @param [customDataHandler] {values => Object} 自定义参数处理（请使用箭头函数）
@@ -116,7 +116,7 @@ export default ({ disableSubmitButton = true } = {}) => {
         isFetchList = true,
         isResetSelectedRows,
         customApiName,
-        customAction = 'custom',
+        customAction,
         customValidation,
         customDataHandler,
         done
@@ -134,24 +134,23 @@ export default ({ disableSubmitButton = true } = {}) => {
             let action
             let payload = this.transformValue(values)
 
-            // 根据 this.currentItem.id 判断当前表单的提交模式，
-            // 如果存在 customApiName，则可自定义请求模式
-            if (!customApiName) {
-              if (this.currentItem?.id) {
-                // 存在 ID 为编辑模式
-                action = 'update'
-                payload.id = this.currentItem.id
-              } else if (this.currentItem?.ids) {
-                // 存在ids为批量操作
-                action = 'custom'
-                payload.ids = this.currentItem.ids
-              } else {
-                // 不存在 ID 则为新增模式
-                action = 'add'
-              }
+            // 根据 this.currentItem.id 判断当前表单的提交模式，并为 request 的参数设置对应的ID
+            if (this.currentItem?.id) {
+              // 存在 ID 为编辑模式
+              action = 'update'
+              payload.id = this.currentItem.id
+            } else if (this.currentItem?.ids) {
+              // 存在ids为批量操作
+              action = 'custom'
+              payload.ids = this.currentItem.ids
             } else {
-              // 自定义表单提交模式
-              action = customAction || 'custom'
+              // 不存在 ID 则为新增模式
+              action = 'add'
+            }
+
+            // 如果存在 customAction，则强制重置 action 字段。
+            if (customAction) {
+              action = customAction
             }
 
             // 自定义处理请求参数

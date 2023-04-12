@@ -71,7 +71,7 @@ export default {
    * @param commit
    * @param moduleName {string} 模块名
    * @param [submoduleName] {string} 子模块名
-   * @param [additionalQueryParameters] {Object} 附加查询参数。例如分页相关参数、其他页面跳转过来时携带的参数 ID 等非 state.search 固有的查询参数。
+   * @param [additionalQueryParameters] {Object} 附加查询参数。例如自定义分页相关参数、其他页面跳转过来时携带的参数(如：ID)等非 state.search 固有的查询参数。
    * @param [stateName] {string} 需要设置的字段，默认 state.list
    * @param [customApiName] {string} 自定义请求api的名字
    * @param [merge] {boolean} 是否合并数据，默认false，主要用于“加载更多”功能
@@ -198,13 +198,15 @@ export default {
    * @param [submoduleName] {string} 子模块名
    * @param [payload] {Object} 查询参数
    * @param [stateName='details'] {string} 需要设置的字段，默认 store.state.details
+   * @param [merge] {boolean} 如果stateName 指定的字段存在旧数据，是否使用新值对其进行合并
    * @returns {Promise<void>}
    */
   async getDetails({ state, commit }, {
     moduleName,
     submoduleName,
     payload = {},
-    stateName = 'details'
+    stateName = 'details',
+    merge = false
   }) {
     commit('setLoading', {
       value: true,
@@ -228,7 +230,8 @@ export default {
         value: res.data,
         moduleName,
         submoduleName,
-        stateName: stateName
+        stateName: stateName,
+        merge
       })
     }
 
@@ -678,6 +681,7 @@ export default {
     }
 
     const params = cloneDeep({ ...additionalQueryParameters, ...payload })
+
     const buffer = await apis[api]({ ...targetModuleName.search, ...params })
     const blob = new Blob([buffer])
 

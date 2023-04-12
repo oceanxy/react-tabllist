@@ -35,7 +35,13 @@ export default {
     // 政治面貌数据
     politicalStatus: [],
     // 阶级数据
-    castes: []
+    castes: [],
+    // 行政级别数据
+    administrativeRanks: [],
+    // 学历数据
+    degrees: [],
+    // 省数据
+    provinces: []
   },
   mutations: {
     setAdministrativeDivision(state, payload) {
@@ -50,6 +56,15 @@ export default {
     },
     setCastes(state, payload) {
       state.castes = payload || []
+    },
+    setAdministrativeRanks(state, payload) {
+      state.administrativeRanks = payload || []
+    },
+    setDegrees(state, payload) {
+      state.degrees = payload || []
+    },
+    setProvinces(state, payload) {
+      state.provinces = payload || []
     }
   },
   actions: {
@@ -84,6 +99,27 @@ export default {
 
       if (response.status) {
         commit('setCastes', response.data)
+      }
+    },
+    async getAdministrativeRanks({ commit }) {
+      const response = await apis.getAdministrativeRanks()
+
+      if (response.status) {
+        commit('setAdministrativeRanks', response.data)
+      }
+    },
+    async getDegrees({ commit }) {
+      const response = await apis.getDegrees()
+
+      if (response.status) {
+        commit('setDegrees', response.data)
+      }
+    },
+    async getProvinces({ commit }) {
+      const response = await apis.getProvinces()
+
+      if (response.status) {
+        commit('setProvinces', response.data)
       }
     }
   }

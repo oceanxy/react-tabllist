@@ -99,7 +99,7 @@ export default cb => ({
     },
     /**
      * 删除
-     * @param done {() => void} 成功执行删除的回调
+     * @param [done] {() => void} 成功执行删除的回调
      * @returns {Promise<void>}
      */
     async onCustomDeleteClick(done) {
