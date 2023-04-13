@@ -26,10 +26,15 @@ export default ({
       moduleName: { default: '' },
       submoduleName: { default: '' },
       /**
-       * 注入树标识：判断当前页面是否启用侧边树
+       * 注入树标识：判断当前组件是否启用侧边树
        * 来自于 @/components/TGContainerWithTreeSider
        */
-      inTree: { default: false }
+      inTree: { default: false },
+      /**
+       * 注入弹窗标识：判断当前组件是否在弹窗内
+       * 来自于 @/mixins/forModal
+       */
+      inModal: { default: false }
     },
     data() {
       return {
@@ -177,20 +182,20 @@ export default ({
           colon={false}
           class="tg-inquiry"
         >
-          <div class={'tg-inquiry-side-toggle'}>
-            {
-              this.inTree
-                ? (
+          {
+            this.inTree && !this.inModal
+              ? (
+                <div class={'tg-inquiry-side-toggle'}>
                   <IconFont
                     class={`tree-btn${this.treeCollapsed ? ' reverse' : ''}`}
                     type={'icon-side-tree-toggle'}
                     onClick={this.onTreeFold}
                     title={!this.treeCollapsed ? '折叠树' : '展开树'}
                   />
-                )
-                : null
-            }
-          </div>
+                </div>
+              )
+              : null
+          }
           <div class={'tg-inquiry-form-content'}>
             {this.forRender}
             <Space class={'tg-inquiry-form-buttons'}>
@@ -202,7 +207,10 @@ export default ({
               >
                 查询
               </Button>
-              <Button onClick={this.onClear} icon="reload">重置并刷新</Button>
+              <Button
+                onClick={this.onClear}
+                icon="reload"
+              >重置并刷新</Button>
             </Space>
           </div>
         </Form>
