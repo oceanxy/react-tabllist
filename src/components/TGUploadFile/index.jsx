@@ -32,12 +32,22 @@ export default {
       type: Boolean,
       default: false
     },
+    // ant-design Button 组件的 type prop
+    buttonType: {
+      type: String, // 'primary', 'dashed', 'danger', 'link'
+      required: false
+    },
+    // ant-design Button 组件的 size prop
+    buttonSize: {
+      type: String, // 'small', 'large'
+      required: false
+    },
     /**
      * 上传组件所在表单的实例对象（form，用于验证文件并反馈给表单信息）
      */
     form: {
       type: Object,
-      required: true
+      required: false
     }
   },
   data() {
@@ -109,7 +119,7 @@ export default {
 
         this.$emit('change', this.fileList)
       } else {
-        this.form.setFields({
+        this.form?.setFields({
           [this.$attrs.id]: {
             value: this.fileList,
             errors: [new Error('请上传合法的文件！')]
@@ -142,7 +152,7 @@ export default {
         >
           {
             this.limit > this.fileList.length ? (
-              <Button disabled={this.disabled}>
+              <Button disabled={this.disabled} type={this.buttonType} size={this.buttonSize}>
                 <Icon type="upload" />
                 {this.placeholder}
               </Button>
