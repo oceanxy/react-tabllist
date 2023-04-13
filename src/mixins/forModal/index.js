@@ -5,7 +5,6 @@
  * @Date: 2022-05-31 周二 17:39:54
  */
 
-import { mapGetters } from 'vuex'
 import forIndex from '@/mixins/forIndex'
 
 export default customModuleName => {
@@ -50,19 +49,21 @@ export default customModuleName => {
       }
     },
     computed: {
-      ...mapGetters({ getState: 'getState' }),
       currentItem() {
-        return this.getState('currentItem', this.moduleName)
+        return this.$store.state[this.moduleName].currentItem
+      },
+      selectedRowKeys() {
+        return this.$store.state[this.moduleName].selectedRowKeys
       },
       details() {
-        return this.getState('details', this.moduleName) || {}
+        return this.$store.state[this.moduleName].details
       },
       _visibilityFieldName() {
         return this.$parent.$attrs.visibilityFieldName || this.visibilityFieldName
       },
       visible() {
-        return this.getState(this._visibilityFieldName, this.moduleName) ??
-          this.getState(this._visibilityFieldName, this.moduleName, this.submoduleName)
+        return this.$store.state[this.moduleName][this._visibilityFieldName] ??
+          this.$store.state[this.moduleName][this.submoduleName][this._visibilityFieldName]
       },
       attributes() {
         return {

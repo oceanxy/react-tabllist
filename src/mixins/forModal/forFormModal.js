@@ -105,8 +105,13 @@ export default ({ disableSubmitButton = true } = {}) => {
        * @param [isFetchList=true] {boolean} 是否在成功提交表单后刷新对应的列表，默认 true
        * @param [isResetSelectedRows] {boolean} 是否在成功提交表单后重置列表的选中行数据，默认 false
        * @param [customApiName] {string} 自定义请求API
-       * @param [customAction] {string} 自定义请求 action。默认根据是否存在 id、ids 字段自动判断
-       *    (action 列表请在 /src/store/actions.js 内查看，TODO 目前只适配了部分 action)
+       * @param [customAction] {string} 自定义请求 action。
+       *  可选值 'add'/'update'/'custom'：
+       *  新增弹窗时的默认 'add'，编辑弹窗时的默认 'update'，非以上二者时默认为 'custom'，此时需要配合 customApiName 一起使用。
+       *  特例（批量更新），需要明确指定为 'update'。
+       *  默认值判断具体规则：
+       *  优先根据当前被操作的数据是否存在 id 字段来判断，
+       *  如果不存在，则根据 customAction 字段来判断。
        * @param [customValidation] {() => boolean} 自定义验证函数（请使用箭头函数）
        * @param [customDataHandler] {values => Object} 自定义参数处理（请使用箭头函数）
        * @param [done] {response => void} 提交成功后的回调函数（请使用箭头函数）
@@ -121,6 +126,10 @@ export default ({ disableSubmitButton = true } = {}) => {
         customDataHandler,
         done
       } = {}) {
+        if (customAction && !['add', 'update', 'custom'].includes(customAction)) {
+          customAction = 'custom'
+        }
+
         this.form.validateFieldsAndScroll(async (err, values) => {
           let validation = true
 
@@ -134,23 +143,29 @@ export default ({ disableSubmitButton = true } = {}) => {
             let action
             let payload = this.transformValue(values)
 
-            // 根据 this.currentItem.id 判断当前表单的提交模式，并为 request 的参数设置对应的ID
+            // 优先根据 this.currentItem.id 判断当前表单的提交模式，customAction 字段次之。
+            // 并为 request 的参数设置对应的 ID。
             if (this.currentItem?.id) {
-              // 存在 ID 为编辑模式
+              // 为编辑模式
               action = 'update'
               payload.id = this.currentItem.id
-            } else if (this.currentItem?.ids) {
-              // 存在ids为批量操作
-              action = 'custom'
-              payload.ids = this.currentItem.ids
+              payload.ids = payload.id // 兼容批量操作的情况
             } else {
-              // 不存在 ID 则为新增模式
-              action = 'add'
+              if (!customAction || customAction === 'add') {
+                // 新增模式
+                action = 'add'
+              } else {
+                // 默认为自定义模式
+                // 这里存在一个特例——批量更新（update）——需要明确定义 customAction 为 'update' 才会触发更新操作，
+                // 否则会触发自定义操作（custom）
+                action = customAction || 'custom'
+                payload.id = this.selectedRowKeys?.join?.(',')
+                payload.ids = payload.id // 兼容批量操作的情况
+              }
             }
 
-            // 如果存在 customAction，则强制重置 action 字段。
-            if (customAction) {
-              action = customAction
+            if (action === 'custom' && !customApiName) {
+              throw new Error(`${this.moduleName}内有表单弹窗设置错误：未定义自定义的接口名称（customApiName）！`)
             }
 
             // 自定义处理请求参数
