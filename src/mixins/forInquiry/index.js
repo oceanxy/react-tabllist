@@ -191,9 +191,9 @@ export default ({
                 : null
             }
           </div>
-          <Space>
+          <div class={'tg-inquiry-form-content'}>
             {this.forRender}
-            <Space>
+            <Space class={'tg-inquiry-form-buttons'}>
               <Button
                 loading={this.loading}
                 htmlType="submit"
@@ -204,7 +204,7 @@ export default ({
               </Button>
               <Button onClick={this.onClear} icon="reload">重置并刷新</Button>
             </Space>
-          </Space>
+          </div>
         </Form>
       )
     }
