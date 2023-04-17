@@ -1,6 +1,6 @@
 import apis from '@/apis'
 import { cloneDeep, omit } from 'lodash'
-import { downFile, firstLetterToUppercase } from '@/utils/utilityFunction'
+import { downloadFile, firstLetterToUppercase } from '@/utils/utilityFunction'
 import config from '@/config'
 import Vue from 'vue'
 
@@ -462,7 +462,7 @@ export default {
       if (Array.isArray(data)) {
         result = data
       } else {
-        if (data && 'rows' in data) {
+        if (Object.prototype.toString.call(data) === '[object Object]' && 'rows' in data) {
           result = data.rows || []
         } else {
           result = data
@@ -685,7 +685,7 @@ export default {
     const buffer = await apis[api]({ ...targetModuleName.search, ...params })
     const blob = new Blob([buffer])
 
-    downFile(blob, `${fileName}.xlsx`)
+    downloadFile(blob, `${fileName}.xlsx`)
 
     if (visibilityFieldName) {
       dispatch('setModalVisible', {

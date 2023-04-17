@@ -157,8 +157,10 @@ export default {
               ...value
             }
           }
-        } else {
+        } else if (Array.isArray(value)) {
           state[moduleName][stateName].list = value
+        } else {
+          state[moduleName][stateName].data = value
         }
       } else {
         state[moduleName][stateName || 'list'] = value
@@ -175,8 +177,10 @@ export default {
               ...value
             }
           }
-        } else {
+        } else if (Array.isArray(value)) {
           state[moduleName][submoduleName][stateName].list = value
+        } else {
+          state[moduleName][submoduleName][stateName].data = value
         }
       } else {
         state[moduleName][submoduleName][stateName || 'list'] = value
