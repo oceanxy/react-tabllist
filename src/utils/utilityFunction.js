@@ -118,19 +118,24 @@ export function firstLetterToUppercase(str) {
 
 /**
  * 下载文件
- * @param {*} blob
+ * @param {*} blobOrUrl
  * @param {*} fileName
  */
-export function downFile(blob, fileName) {
-  if (window.navigator.msSaveBlob) {
-    window.navigator.msSaveBlob(blob, fileName)
+export function downloadFile(blobOrUrl, fileName) {
+  if (blobOrUrl instanceof Blob && window.navigator.msSaveBlob) {
+    window.navigator.msSaveBlob(blobOrUrl, fileName)
   } else {
-    const urlObj = URL.createObjectURL(blob)
+    const urlObj = blobOrUrl instanceof Blob ? URL.createObjectURL(blobOrUrl) : blobOrUrl
     const tmp = document.createElement('a')
+    const body = document.querySelector('body')
 
+    tmp.style.display = 'none'
     tmp.download = fileName
     tmp.href = urlObj
+    body.appendChild(tmp)
+
     tmp.click() // 模拟点击实现下载
+    body.removeChild(tmp)
 
     setTimeout(function() {
       // 延时释放
