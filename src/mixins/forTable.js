@@ -82,28 +82,28 @@ export default ({
     computed: {
       ...mapGetters({ getState: 'getState' }),
       loading() {
-        return this.getState('loading', this.moduleName, this.submoduleName)
+        return this.getState('loading', this.moduleName, this.submoduleName, false)
       },
       currentItem() {
-        return this.getState('currentItem', this.moduleName, this.submoduleName)
+        return this.getState('currentItem', this.moduleName, this.submoduleName, false)
       },
       rowKey() {
-        return this.getState('rowKey', this.moduleName, this.submoduleName) || 'id'
+        return this.getState('rowKey', this.moduleName, this.submoduleName, false) || 'id'
       },
       /**
        * 当前页起始序号（一般在存在分页的页面使用）
        * @returns {number}
        */
       currentPageStartNumber() {
-        const pagination = this.getState('pagination', this.moduleName, this.submoduleName)
+        const pagination = this.getState('pagination', this.moduleName, this.submoduleName, false)
 
         return (pagination?.pageIndex ?? 0) * (pagination?.pageSize ?? 10)
       },
       selectedRowKeys() {
-        return this.getState('selectedRowKeys', this.moduleName, this.submoduleName)
+        return this.getState('selectedRowKeys', this.moduleName, this.submoduleName, false)
       },
       sortFieldList() {
-        return this.getState('sortFieldList', this.moduleName, this.submoduleName)
+        return this.getState('sortFieldList', this.moduleName, this.submoduleName, false)
       },
       primaryColor() {
         return this.$store.state['common'].variables?.less?.primaryColor

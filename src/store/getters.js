@@ -1,8 +1,14 @@
 export default {
-  getState: state => (stateName, moduleName, submoduleName = '') => {
+  /**
+   * 获取状态
+   * @param state
+   * detectPresence {boolean} 检测store模块内是否存在该参数。默认true，共用模块内建议设为false
+   * @returns {function(*, *, string=, boolean=): *}
+   */
+  getState: state => (stateName, moduleName, submoduleName = '', detectPresence = true) => {
     const _state = (state[moduleName][submoduleName] ?? state[moduleName])[stateName]
 
-    if (_state === undefined && process.env.NODE_ENV !== 'production') {
+    if (detectPresence && _state === undefined && process.env.NODE_ENV !== 'production') {
       console.warn(
         `未从store（${moduleName}${submoduleName ? `.${submoduleName}` : ''}）中找到预定义的 "${stateName}" 字段。` +
         `请确保已预定义 store.${moduleName}${submoduleName ? `.${submoduleName}` : ''}.${stateName} 字段。` +
