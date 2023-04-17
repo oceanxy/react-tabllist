@@ -85,23 +85,27 @@ export default {
       this.style = value
     }
   },
+  computed: {
+    attributes() {
+      const titleAttribute = {
+        props: { isShow: this.$attrs.visible },
+        on: { move: this.onMove }
+      }
+
+      return {
+        props: {
+          ..._.omit(this.$attrs, ['title', 'dialogStyle']),
+          title: <Title {...titleAttribute}>{this.$attrs.title}</Title>,
+          dialogStyle: { ...this.$attrs.dialogStyle, ...this.style },
+          footer: this.$slots.footer || this.$attrs.footer // 优先使用slot方式传递的值
+        },
+        on: this.$listeners
+      }
+    }
+  },
   render() {
-    const titleAttribute = {
-      props: { isShow: this.$attrs.visible },
-      on: { move: this.onMove }
-    }
-
-    const attributes = {
-      props: {
-        ..._.omit(this.$attrs, ['title', 'dialogStyle']),
-        title: <Title {...titleAttribute}>{this.$attrs.title}</Title>,
-        dialogStyle: { ...this.$attrs.dialogStyle, ...this.style }
-      },
-      on: this.$listeners
-    }
-
     return (
-      <Modal {...attributes}>
+      <Modal {...this.attributes}>
         {...this.$slots.default}
       </Modal>
     )
