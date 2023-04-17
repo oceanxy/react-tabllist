@@ -63,7 +63,35 @@ export default {
         statusValue: true,
         moduleName: moduleName || this.moduleName,
         // 子模块只能通过传参获取，不然会造成bug
-        submoduleName: submoduleName
+        submoduleName
+      })
+    },
+    /**
+     * 关闭弹窗操作
+     *  1、清空 currentItem 数据。
+     *  2、设置对应弹窗的可见性为false，弹窗的控制字段请对应store内定义的字段
+     * @param [visibilityFieldName] {string} 默认值为打开编辑弹窗的可见性控制字段：visibilityOfEdit
+     * @param [moduleName] {string} 目标模块名，在一个模块内调用另外一个模块的 state 时，需要传递对应模块的 moduleName
+     * @param [submoduleName] {string} 子模块模块名，依赖 moduleName
+     * @returns {Promise<void>}
+     * @private
+     */
+    async _hideVisibilityOfModal(visibilityFieldName, submoduleName, moduleName) {
+      moduleName = moduleName || this.moduleName
+
+      if (Object.prototype.toString.call(this.$store.state[moduleName].currentItem) === '[object Object]') {
+        await this.$store.dispatch('setCurrentItem', {
+          value: {},
+          moduleName: this.moduleName
+        })
+      }
+
+      await this.$store.dispatch('setModalVisible', {
+        statusField: visibilityFieldName,
+        statusValue: false,
+        moduleName,
+        // 子模块只能通过传参获取，不然会造成bug
+        submoduleName
       })
     },
     /**
