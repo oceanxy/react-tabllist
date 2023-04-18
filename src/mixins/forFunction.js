@@ -8,7 +8,7 @@
 import forIndex from '@/mixins/forIndex'
 import { verificationDialog, verifySelected } from '@/utils/message'
 import { mapGetters } from 'vuex'
-import { message } from 'ant-design-vue'
+import { Button, message, Space } from 'ant-design-vue'
 
 /**
  * 为表格功能按钮生成 mixin
@@ -173,5 +173,19 @@ export default cb => ({
       this.exportButtonDisabled = false
       message.destroy()
     }
+  },
+  render() {
+    return (
+      <Space class="tg-function">
+        <Button
+          type="primary"
+          onClick={() => this.onCustomAddClick()}
+          icon="plus"
+        >
+          新增
+        </Button>
+        {this.forRender}
+      </Space>
+    )
   }
 })
