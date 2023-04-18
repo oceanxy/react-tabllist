@@ -152,6 +152,8 @@ body {
 
   .tg-inquiry-form-content {
     display: flex;
+    flex-wrap: wrap;
+    row-gap: 12px;
 
     .tg-inquiry-form-buttons {
       padding: 0 10px;
@@ -601,6 +603,10 @@ body {
 
     &.one-third {
       width: calc((100% - 48px) / 3);
+    }
+
+    &.two-third {
+      width: calc((100% - 48px) / 3 * 2 + 24px);
     }
 
     &.combo {
