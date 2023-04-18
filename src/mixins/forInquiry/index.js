@@ -5,7 +5,7 @@
  * @Date: 2022-03-14 周一 15:33:20
  */
 
-import { cloneDeep, omit } from 'lodash'
+import { cloneDeep, isBoolean, omit } from 'lodash'
 import moment from 'moment'
 import { Button, Form, Space } from 'ant-design-vue'
 
@@ -91,17 +91,30 @@ export default ({
     },
     mounted() {
       if (!isInitializeFromStore) {
-        this.search = cloneDeep(this.form.getFieldsValue())
+        this.search = this.convertBoolean(cloneDeep(this.form.getFieldsValue()))
       }
     },
     methods: {
+      convertBoolean(value) {
+        const temp = {}
+
+        Object.entries(value).forEach(([k, v]) => {
+          if (isBoolean(v)) {
+            temp[k] = v ? 1 : 0
+          } else {
+            temp[k] = v
+          }
+        }, {})
+
+        return temp
+      },
       /**
        * 此函数值保留一些高频共用类参数的处理
        * @param values
        * @returns {{}}
        */
       transformValue(values) {
-        let temp = cloneDeep(values)
+        let temp = this.convertBoolean(cloneDeep(values))
 
         if ('dateRange' in temp) {
           temp.startTime = temp.dateRange[0] ? moment(temp.dateRange[0]).format('YYYYMMDD') : ''
