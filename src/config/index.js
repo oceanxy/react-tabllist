@@ -20,6 +20,8 @@ export default {
   fileUploadPath: '/mgapi/system/upload/fileUpload',
   // 图片上传地址
   imageUploadPath: '/mgapi/system/upload/imageUpload',
+  // 视频上传地址
+  videoUploadPath: '/mgapi/system/upload/videoUpload',
   // 系统名称
   systemName: '新的社会阶层专业人士联合会',
   systemNameEn: '',

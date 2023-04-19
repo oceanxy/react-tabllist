@@ -1,4 +1,4 @@
-import { Button, Icon, message, Upload } from 'ant-design-vue'
+import { Button, Icon, Upload } from 'ant-design-vue'
 import config from '@/config'
 
 export default {
@@ -31,6 +31,11 @@ export default {
     disabled: {
       type: Boolean,
       default: false
+    },
+    // 限制文件大小，单位 Mb
+    fileSize: {
+      type: Number,
+      required: false
     },
     // ant-design Button 组件的 type prop
     buttonType: {
@@ -85,8 +90,18 @@ export default {
   },
   methods: {
     beforeUpload(file, fileList) {
-      if (this.fileList.length >= this.limit) {
-        message.warning(`上传数量限制为${this.limit}个`)
+      if (fileList.length > this.limit) {
+        this.form?.setFields({
+          [this.$attrs.id]: { errors: [new Error(`上传失败，上传数量限制为${this.limit}个`)] }
+        })
+
+        return false
+      }
+
+      if (this.fileSize && file.size / 1024 / 1024 > this.fileSize) {
+        this.form?.setFields({
+          [this.$attrs.id]: { errors: [new Error(`上传失败，文件大小限制为${this.fileSize}M！`)] }
+        })
 
         return false
       }
@@ -103,28 +118,43 @@ export default {
       let err = false
 
       for (const file of fileList) {
-        if ('response' in file && !file.response.status) {
-          file.status = 'error'
-          file.response = file.response.message
-          err = true
+        if (file.status === 'error' || file.status === 'done') {
+          // 监测后端返回的上传失败信息
+          if ('response' in file && !file.response.status) {
+            file.status = 'error'
+            err = true
+
+            this.form?.setFields({
+              [this.$attrs.id]: {
+                errors: [new Error(file.response.message)]
+              }
+            })
+
+            continue
+          }
+
+          // 如果该文件不是新上传的文件且文件路径不存在则判断为上传失败
+          if (!('status' in file)) {
+            err = true
+
+            // 错误提示已在 beforeUpload 方法中提示，此处不再重复提示
+
+            continue
+          }
         }
 
-        this.fileList.push(file)
+        if ('status' in file) {
+          this.fileList.push(file)
+        }
       }
 
       if (!err) {
+        // 防止用户多次上传以超过限制个数
         if (this.fileList.length >= this.limit) {
           this.fileList = this.fileList.slice(0, this.limit)
         }
 
         this.$emit('change', this.fileList)
-      } else {
-        this.form?.setFields({
-          [this.$attrs.id]: {
-            value: this.fileList,
-            errors: [new Error('请上传合法的文件！')]
-          }
-        })
       }
     }
   },
@@ -152,7 +182,11 @@ export default {
         >
           {
             this.limit > this.fileList.length ? (
-              <Button disabled={this.disabled} type={this.buttonType} size={this.buttonSize}>
+              <Button
+                disabled={this.disabled}
+                type={this.buttonType}
+                size={this.buttonSize}
+              >
                 <Icon type="upload" />
                 {this.placeholder}
               </Button>
