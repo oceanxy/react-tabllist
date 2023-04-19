@@ -33,12 +33,14 @@ module.exports = {
     open: false,
     proxy: {
       '/mgapi': {
+        // target: process.env.VUE_APP_PUBLIC_PATH, // todo 通过配置引入
+
         // 新专联
         target: 'http://10.100.1.93:47910',
         // target: 'http://10.100.1.101:47910',
 
         // 渝兴
-        // target: 'http://10.100.1.94:44100',
+        // target: 'http://10.100.1.93:44100',
         // target: 'http://10.100.1.101:44100',
 
         changeOrigin: true,
