@@ -1,0 +1,13 @@
+@import '@/assets/styles/themeFromLess.scss';
+
+.tg-editor {
+  height: auto;
+  border: 1px solid $border-color-base;
+  border-radius: $border-radius-base;
+  overflow: hidden;
+
+  &.w-e-full-screen-container {
+    z-index: 1001;
+    // 全屏模式下置于最顶层，因 ant-design-vue Modal 组件设置了 zIndex 的值为 1000
+  }
+}
