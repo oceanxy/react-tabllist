@@ -1,4 +1,16 @@
-export default {
+module.exports = {
+  devServer: {
+    port: '8190',
+    open: false,
+    proxy: {
+      '/mgapi': {
+        target: 'http://10.100.1.93:47910',
+        // target: 'http://10.100.1.101:47910',
+        changeOrigin: true,
+        secure: false
+      }
+    }
+  },
   // mock数据开关。开发模式下生效
   mock: false,
   // 请求超时时间

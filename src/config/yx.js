@@ -1,4 +1,16 @@
-export default {
+module.exports = {
+  devServer: {
+    port: '8190',
+    open: false,
+    proxy: {
+      '/mgapi': {
+        target: 'http://10.100.1.93:44100',
+        // target: 'http://10.100.1.101:44100',
+        changeOrigin: true,
+        secure: false
+      }
+    }
+  },
   // mock数据开关。开发模式下生效
   mock: false,
   // 请求超时时间
@@ -20,6 +32,8 @@ export default {
   fileUploadPath: '/mgapi/system/upload/fileUpload',
   // 图片上传地址
   imageUploadPath: '/mgapi/system/upload/imageUpload',
+  // 视频上传地址
+  videoUploadPath: '/mgapi/system/upload/videoUpload',
   // 系统名称
   systemName: '渝兴集团综合管理平台',
   systemNameEn: '',

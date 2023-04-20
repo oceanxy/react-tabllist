@@ -3,6 +3,8 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 const CompressionPlugin = require('compression-webpack-plugin') // Gzip
 const { getAvailableProjectNames } = require('./build/configs')
 const webpack = require('webpack')
+const devServer = require('./src/config/index').devServer
+
 
 let config = {}
 
@@ -28,26 +30,7 @@ module.exports = {
   // 是否使用包含运行时编译器的 Vue 构建版本。设置为 true 后可以在 Vue 组件中使用 template 选项，但应用会额外增加 10kb 左右。
   // 默认值是false
   runtimeCompiler: true,
-  devServer: {
-    port: '8190',
-    open: false,
-    proxy: {
-      '/mgapi': {
-        // target: process.env.VUE_APP_PUBLIC_PATH, // todo 通过配置引入
-
-        // 新专联
-        target: 'http://10.100.1.93:47910',
-        // target: 'http://10.100.1.101:47910',
-
-        // 渝兴
-        // target: 'http://10.100.1.93:44100',
-        // target: 'http://10.100.1.101:44100',
-
-        changeOrigin: true,
-        secure: false
-      }
-    }
-  },
+  devServer,
   css: {
     // css 样式与 html 代码分离
     requireModuleExtension: true,
