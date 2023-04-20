@@ -18,7 +18,7 @@
     left: 32px;
     top: 32px;
     display: block;
-    background: url(../images/logo.png) no-repeat left center / auto 100%;
+    //background: url(../images/logo.png) no-repeat left center / auto 100%;
   }
 
   &:before {
@@ -28,7 +28,8 @@
     height: 100%;
     left: 0;
     top: 0;
-    background: #e0e4f0 url(../images/login-bg.png) no-repeat left center / auto 100%;
+    background: $primary-1;
+    //background: #e0e4f0 url(../images/login-bg.png) no-repeat left center / auto 100%;
   }
 
   .tg-login-box {
@@ -54,76 +55,6 @@
 
     .login-dividing-line {
       margin: 40px 0;
-    }
-
-    .ant-form-item {
-      .ant-form-item-control {
-        line-height: 50px;
-      }
-
-      .anticon {
-        font-size: 18px;
-      }
-
-      .ant-input {
-        height: 48px;
-        width: 98%;
-        line-height: 48px;
-        font-size: $font-size-lg; // 全局默认字号+2px
-        padding-left: 40px;
-        background: rgba(93, 107, 152, 0.05);
-        border: none;
-        outline: none;
-        box-sizing: border-box;
-      }
-
-      &.code {
-        .ant-form-item-children {
-          display: flex;
-
-          .ant-input-affix-wrapper {
-            flex-grow: 1;
-            flex-shrink: 1;
-
-            .ant-input {
-              border-radius: 4px;
-            }
-          }
-
-          img {
-            flex-grow: 0;
-            flex-shrink: 0;
-            width: 90px;
-            height: 48px;
-            outline: none;
-            border: none;
-            background: #f1f7ff;
-            margin-right: 4px;
-            border-radius: 4px;
-          }
-        }
-      }
-
-      .login-submit {
-        width: 100%;
-        height: 48px;
-        background: $primary-color;
-        border: 1px solid $primary-color;
-        border-radius: 2px;
-        font-size: 18px;
-        font-weight: bolder;
-        color: #ffffff;
-        opacity: .8;
-
-        &:hover {
-          opacity: 1;
-        }
-
-        &:disabled {
-          filter: grayscale(50%);
-          pointer-events: none;
-        }
-      }
     }
   }
 

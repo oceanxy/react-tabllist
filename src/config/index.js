@@ -1,63 +1,17 @@
-module.exports = {
-  devServer: {
-    port: '8190',
-    open: false,
-    proxy: {
-      '/mgapi': {
-        target: 'http://10.100.1.93:47910',
-        // target: 'http://10.100.1.101:47910',
-        changeOrigin: true,
-        secure: false
-      }
-    }
-  },
-  // mock数据开关。开发模式下生效
-  mock: false,
-  // 请求超时时间
-  timeout: 30000,
-  // mock请求延迟时间
-  mockDelay: 400,
-  // 动态路由（从后台获取权限菜单）
-  dynamicRouting: false,
-  // iconfont
-  iconFontSymbol: '//at.alicdn.com/t/c/font_3996750_sgcx6ewq6y.js',
-  // iconfont菜单图标在 active 状态下的后缀（该后缀会直接加到iconfont图标名称的最后，需在iconfont中预先定义好该图标；
-  // 如果留空则自动根据主题色填充该图标在active状态下的颜色）
-  activeSuffixForMenuIcon: '-active',
-  // 面包屑分隔符，如：首页 / 首页
-  breadCrumbSeparator: '/',
-  // 统一上传地址
-  uploadPath: '/mgapi/system/upload/upload',
-  // 文件上传地址
-  fileUploadPath: '/mgapi/system/upload/fileUpload',
-  // 图片上传地址
-  imageUploadPath: '/mgapi/system/upload/imageUpload',
-  // 视频上传地址
-  videoUploadPath: '/mgapi/system/upload/videoUpload',
-  // 系统名称
-  systemName: '新的社会阶层专业人士联合会',
-  systemNameEn: '',
-  // 主题
-  theme: {
-    // 是否在header中显示切换主题按钮
-    show: true,
-    // 主题文件名（位于 @/assets/styles/theme）
-    fileName: 'xzl.less'
-  },
-  // 消息
-  news: {
-    // 是否在header中显示消息通知
-    show: false
-  },
-  // 需要在 header 内传递的参数（下拉列表）
-  headerParams: {
-    show: true,
-    fieldName: 'organId'
-  },
-  // 全局消息最大显示个数
-  maxMessageCount: 1,
-  // 账号密码加密key
-  publicKey:
-    'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCs7Iu8OPMKCt38fCWV5PdA7+TA+vxgNFnAiC+9xw8F4JifCKNRg07w3zxbSoUmW7dN3NMubM' +
-    'E9hQQizmx7IJk3hn91ieVg+CiYdA9MwpEThezYPsJ6+Oj9RsVPOCAsXa5+XRlc1lbmo7b21n5SVSkbog2OMqB2OlZK+SdwY+vrhQIDAQAB'
+import { merge } from 'lodash'
+import _conf from './config'
+
+const appConfigFiles = require.context('../apps', true, /config\/index.js$/) // 获取所有子系统的配置文件
+let config = {}
+
+for (const item of appConfigFiles.keys()) {
+  // 读取子系统的配置文件，
+  // 如果子系统不存在配置文件，则取 src/config 为项目的配置文件，
+  // 如果多个子系统的config中都存在相同值的appPrefix字段，则取最先遍历到config为项目最终使用的配置文件。
+  if (_conf.appPrefix === appConfigFiles(item).appPrefix) {
+    config = appConfigFiles(item)
+    break
+  }
 }
+
+export default merge(_conf, config)

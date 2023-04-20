@@ -143,3 +143,16 @@ export function downloadFile(blobOrUrl, fileName) {
     }, 1000)
   }
 }
+
+/**
+ * 获取应用名称每个单词的首字母组成的字符串
+ * 比如 'create-a-new-projects' => 'canp'
+ * @param appName
+ * @returns {string}
+ */
+export function getFirstLetterOfEachWordOfAppName(appName) {
+  return appName
+    .split('-')
+    .map(i => i[0])
+    .join('')
+}

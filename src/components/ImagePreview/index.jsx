@@ -72,7 +72,7 @@ export default {
     }
 
     return (
-      <div class="bn-image-preview">
+      <div class="tg-image-preview">
         {
           this.imageUrls.length
             ? [
@@ -98,7 +98,7 @@ export default {
               </Badge>,
               <Modal
                 visible={this.visible}
-                wrapClassName="bn-image-preview-modal"
+                wrapClassName="tg-image-preview-modal"
                 width="90%"
                 footer={null}
                 oncancel={this.onCancel}

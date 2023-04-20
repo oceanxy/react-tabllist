@@ -4,12 +4,31 @@
  * @Email: xyzsyx@163.com
  * @Date: 2023-02-23 周四 10:46:26
  */
+import _conf from '@/config/config'
+
+const appConfigFiles = require.context('../apps', true, /config\/index.js/)
+let appName = ''
+
+for (const item of appConfigFiles.keys()) {
+  // 如果子系统不存在配置文件，则取 ''，
+  // 如果多个子系统的config中都存在相同值的appPrefix字段，则取最先遍历到的项
+  if (_conf.appPrefix === appConfigFiles(item).appPrefix) {
+    appName = item.split('/')[1]
+    break
+  }
+}
 
 export default [
   {
     path: '/login',
     name: 'login',
-    component: () => import('@/views/Login'),
+    component: () => {
+      if (_conf.appPrefix !== 'index' && appName) {
+        return import((`@/apps/${appName}/views/Login`))
+      }
+
+      return import('@/views/Login')
+    },
     meta: {
       title: '登录',
       keepAlive: false,

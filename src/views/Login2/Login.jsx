@@ -4,7 +4,7 @@
 
 import './assets/styles/index.scss'
 import { Tabs } from 'ant-design-vue'
-import TGLoginForm from '@/views/Login/components/TGLoginForm'
+import TGLoginForm from '@/components/TGLoginForm'
 import TGTabPane from '@/components/TGTabPane'
 import TGContainer from '@/components/TGContainer'
 import { createNamespacedHelpers } from 'vuex'

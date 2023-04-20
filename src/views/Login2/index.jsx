@@ -58,7 +58,7 @@ export default {
   },
   render() {
     return (
-      <div class="bn-login-container">
+      <div class="tg-login-container">
         <BNContainer
           modalTitle="通知公告"
           width={390}

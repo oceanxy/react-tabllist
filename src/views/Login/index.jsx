@@ -3,7 +3,7 @@
  */
 
 import './assets/styles/index.scss'
-import ULLoginForm from '@/views/Login/components/TGLoginForm'
+import TGLoginForm from '@/components/TGLoginForm'
 import TGContainer from '@/components/TGContainer'
 import config from '@/config'
 
@@ -35,7 +35,7 @@ export default {
             <p>您好!</p>
             <p>欢迎登录{config.systemName}</p>
           </div>
-          <ULLoginForm />
+          <TGLoginForm />
         </TGContainer>
         {/* <div class={'corporate-services'}>重庆蓝桥科技有限公司技术支持</div> */}
       </div>

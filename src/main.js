@@ -11,7 +11,11 @@ import { initializeDynamicRoutes } from '@/utils/utilityFunction'
 const { fileName } = config.theme
 const theme = localStorage.getItem('theme') || fileName
 
-require(`@/assets/styles/themes/${theme}`)
+try {
+  require(`@/assets/styles/themes/${theme}`)
+} catch (e) {
+  require('@/assets/styles/themes/blue.less')
+}
 
 Vue.config.productionTip = false
 

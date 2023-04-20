@@ -289,14 +289,14 @@ export default {
                           </Button>
                           <Menu slot={'overlay'}>
                             <Menu.Item
-                              disabled={this.theme === 'yx.less'}
-                              onClick={() => this.switchThemes('yx.less')}
+                              disabled={this.theme === 'blue.less'}
+                              onClick={() => this.switchThemes('blue.less')}
                             >
                               蓝色
                             </Menu.Item>
                             <Menu.Item
-                              disabled={this.theme === 'xzl.less'}
-                              onClick={() => this.switchThemes('xzl.less')}
+                              disabled={this.theme === 'red.less'}
+                              onClick={() => this.switchThemes('red.less')}
                             >
                               红色
                             </Menu.Item>

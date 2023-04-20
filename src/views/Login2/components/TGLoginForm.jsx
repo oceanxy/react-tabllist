@@ -43,7 +43,7 @@ export default Form.create({ name: 'TGLoginForm' })({
   },
   render() {
     return (
-      <Form form={this.form} class="bn-login-form" onSubmit={this.handleSubmit}>
+      <Form form={this.form} class="tg-login-form" onSubmit={this.handleSubmit}>
         <Form.Item>
           {
             this.form.getFieldDecorator('username', {

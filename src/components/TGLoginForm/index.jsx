@@ -1,11 +1,14 @@
+import './index.scss'
 import { createNamespacedHelpers } from 'vuex'
-import { Button, Form, Icon, Input } from 'ant-design-vue'
+import { Button, Form, Input } from 'ant-design-vue'
 import { initializeDynamicRoutes } from '@/utils/utilityFunction'
 import { createRouter } from '@/router'
 import config from '@/config'
 
 const {
-  mapState, mapActions, mapMutations
+  mapState,
+  mapActions,
+  mapMutations
 } = createNamespacedHelpers('login')
 
 export default Form.create({ name: 'TGLoginForm' })({
@@ -79,7 +82,7 @@ export default Form.create({ name: 'TGLoginForm' })({
     return (
       <Form
         form={this.form}
-        class="bn-login-form"
+        class={'tg-login-form'}
         onSubmit={this.handleSubmit}
       >
         <Form.Item>
@@ -94,12 +97,10 @@ export default Form.create({ name: 'TGLoginForm' })({
               ]
             })(
               <Input placeholder="请输入账号">
-                <template slot="prefix">
-                  <a-icon
-                    style={{ color: '#1890ff' }}
-                    type="user"
-                  />
-                </template>
+                <IconFont
+                  slot="prefix"
+                  type={'icon-login-user'}
+                />
               </Input>
             )
           }
@@ -115,12 +116,10 @@ export default Form.create({ name: 'TGLoginForm' })({
                 placeholder="请输入密码"
                 type="password"
               >
-                <template slot="prefix">
-                  <Icon
-                    style={{ color: '#1890ff' }}
-                    type="lock"
-                  />
-                </template>
+                <IconFont
+                  slot="prefix"
+                  type={'icon-login-pwd'}
+                />
               </Input>
             )
           }
@@ -133,12 +132,10 @@ export default Form.create({ name: 'TGLoginForm' })({
               ]
             })(
               <Input placeholder="请输入验证码">
-                <template slot="prefix">
-                  <Icon
-                    style={{ color: '#1890ff' }}
-                    type="code"
-                  />
-                </template>
+                <IconFont
+                  slot="prefix"
+                  type={'icon-login-captcha'}
+                />
               </Input>
             )
           }

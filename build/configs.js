@@ -6,22 +6,18 @@
  */
 
 const glob = require('glob')
+const args = require('minimist')(process.argv.slice(2))
 
 /**
- * 打包时使用“--proj appName1 appName2 ...”指令可对指定的 app 分别打包，不带或无效的 appName 将对整体项目打包
+ * 打包时使用“--app-proj appName1,appName2,...”指令可对指定的 app 分别打包，逗号分割 appName,
+ * 不带或无效的 appName 将对整体项目打包
  * @returns {*[]}
  */
 function getAvailableProjectNames() {
   let projectNames = []
 
-  for (let i = 0; i < process.argv.length; i++) {
-    if (process.argv[i].includes('--')) {
-      if (process.argv[i] === '--proj') {
-        projectNames = process.argv.slice(i + 1)
-      } else {
-        projectNames = projectNames.slice(0, i)
-      }
-    }
+  if (Object.prototype.toString.call(args['app-proj']) === '[object String]' && args['app-proj'].length) {
+    projectNames = args['app-proj'].split(',')
   }
 
   const temp = []
