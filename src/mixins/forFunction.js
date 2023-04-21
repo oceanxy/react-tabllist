@@ -69,6 +69,8 @@ export default ({ controlButtonPermissions, overrideDefaultButtons } = {}) => ({
 
         if (selectedRows.length === 1) {
           this.editedRow = selectedRows[0]
+        } else {
+          this.editedRow = {}
         }
 
         this.ids = selectedRows.map(item => item.id).join()
