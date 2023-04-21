@@ -2,7 +2,12 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 // const VConsolePlugin = require('vconsole-webpack-plugin') // 引入 移动端模拟开发者工具 插件 （另：https://github.com/liriliri/eruda）
 const CompressionPlugin = require('compression-webpack-plugin') // Gzip
 const { getAvailableProjectNames } = require('./build/configs')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const webpack = require('webpack')
+const { resolve } = require('path')
+const { readFileSync } = require('fs')
+const { appPrefix } = require('./src/config/config')
+const files = require('glob').sync('./src/apps/*/config/index.js') // 获取所有子仓库的配置文件
 
 let config = {}
 
@@ -76,6 +81,37 @@ module.exports = {
     svgRule.uses.clear()
 
     svgRule.use('vue-svg-loader').loader('vue-svg-loader')
+
+    /* ========================   复制 favicon.ico 图标    ===================================== */
+    let faviconPath = 'public/favicon.ico'
+
+    for (const filePath of files) {
+      const data = readFileSync(resolve(filePath), 'utf-8')
+
+      // 读取子系统的配置文件，
+      // 如果子系统不存在配置文件，则取 src/config 为项目的配置文件，
+      // 如果多个子系统的config中都存在相同值的appPrefix字段，则取最先遍历到config为项目最终使用的配置文件。
+      if (appPrefix === data.match(/appPrefix:\s?'([a-zA-Z0-9]+)'/)[1]) {
+        faviconPath = filePath.match(/(src\/apps\/[a-zA-Z0-9-]+)\/config\/index\.js/)[1] + '/assets/images/favicon.ico'
+
+        break
+      }
+    }
+
+    // 复制 icon 图标
+    config.plugin('copyWebpackPlugin').use(CopyWebpackPlugin, [
+      {
+        patterns: [
+          {
+            force: true,
+            from: resolve(__dirname, faviconPath),
+            to: resolve(__dirname, 'dist/favicon.ico')
+          }
+        ]
+      }
+    ])
+
+    /* ======================================================================================== */
 
     if (process.env.NODE_ENV === 'production') {
       config.optimization.minimizer('terser').tap(args => {
