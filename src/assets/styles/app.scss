@@ -130,6 +130,10 @@ body {
   padding: 12px 20px;
   background: $white;
 
+  &.ant-form-inline .ant-form-item-with-help {
+    margin-bottom: 0;
+  }
+
   .tg-inquiry-side-toggle {
     padding: 6px 0;
 
