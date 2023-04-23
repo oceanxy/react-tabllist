@@ -1,3 +1,5 @@
+import { cloneDeep } from 'lodash'
+
 export default {
   /**
    * 设置数据列表的loading
@@ -74,7 +76,7 @@ export default {
    * @param moduleName {string}
    */
   setCurrentItem(state, { value, moduleName }) {
-    state[moduleName].currentItem = value
+    state[moduleName].currentItem = { ...cloneDeep(value) }
   },
   /**
    * 设置表格选中的行数据

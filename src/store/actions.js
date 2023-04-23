@@ -230,7 +230,7 @@ export default {
         value: res.data,
         moduleName,
         submoduleName,
-        stateName: stateName,
+        stateName,
         merge
       })
     }
@@ -735,14 +735,14 @@ export default {
     if (!merge) {
       commit('setCurrentItem', {
         moduleName,
-        value: cloneDeep(value) || {}
+        value: value || {}
       })
     } else {
       commit('setCurrentItem', {
         moduleName,
         value: {
           ...state[moduleName].currentItem,
-          ...cloneDeep(value)
+          value
         } || {}
       })
     }
