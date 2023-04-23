@@ -1,4 +1,4 @@
-import { Modal } from 'ant-design-vue'
+import { Modal, Spin } from 'ant-design-vue'
 import _ from 'lodash'
 
 const Title = {
@@ -94,7 +94,7 @@ export default {
 
       return {
         props: {
-          ..._.omit(this.$attrs, ['title', 'dialogStyle']),
+          ..._.omit(this.$attrs, ['title', 'dialogStyle', 'loading']),
           title: <Title {...titleAttribute}>{this.$attrs.title}</Title>,
           dialogStyle: { ...this.$attrs.dialogStyle, ...this.style },
           footer: this.$slots.footer || this.$attrs.footer // 优先使用slot方式传递的值
@@ -106,7 +106,9 @@ export default {
   render() {
     return (
       <Modal {...this.attributes}>
-        {...this.$slots.default}
+        <Spin spinning={this.$attrs.loading}>
+          {...this.$slots.default}
+        </Spin>
       </Modal>
     )
   }

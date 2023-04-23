@@ -35,6 +35,7 @@ export default customModuleName => {
       return {
         inModal: true,
         modalProps: {
+          loading: false,
           visible: false,
           title: '',
           okText: '提交',
@@ -49,6 +50,9 @@ export default customModuleName => {
       }
     },
     computed: {
+      loading() {
+        return this.$store.state[this.moduleName].loadingDetails
+      },
       currentItem() {
         return this.$store.state[this.moduleName].currentItem
       },
@@ -95,6 +99,9 @@ export default customModuleName => {
 
           this.modalProps.visible = value
         }
+      },
+      loading() {
+        this.modalProps.loading = this.loading
       }
     },
     methods: {
@@ -106,18 +113,6 @@ export default customModuleName => {
        * @returns {Promise<void>}
        */
       async onCancel(visibilityFieldName, submoduleName, callback) {
-        await this._dispatch(
-          'setModalVisible',
-          {
-            statusField: this._visibilityFieldName || visibilityFieldName,
-            statusValue: false
-          },
-          {
-            root: true,
-            submoduleName: submoduleName
-          }
-        )
-
         if ('disabled' in (this.modalProps.okButtonProps?.props || {})) {
           this.modalProps.okButtonProps = {
             ...this.modalProps.okButtonProps,
@@ -127,6 +122,8 @@ export default customModuleName => {
             }
           }
         }
+
+        await this._hideVisibilityOfModal(this._visibilityFieldName || visibilityFieldName, submoduleName)
 
         if (typeof callback === 'function') {
           callback()

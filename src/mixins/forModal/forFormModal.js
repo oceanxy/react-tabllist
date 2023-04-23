@@ -73,7 +73,8 @@ export default ({ disableSubmitButton = true } = {}) => {
           () => this.form?.isFieldsTouched(),
           () => {
             this.modalProps.okButtonProps.props.disabled = false
-          }
+          },
+          { deep: true }
         )
       }
     },

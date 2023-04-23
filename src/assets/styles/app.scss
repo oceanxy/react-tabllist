@@ -541,7 +541,7 @@ body {
 
 /********************************* 子模块容器 *************************************/
 .ant-modal-root.tg-submodule-container {
-  .ant-modal-body {
+  .ant-modal-body .ant-spin-container {
     overflow: hidden;
     display: flex;
     flex-direction: column;
