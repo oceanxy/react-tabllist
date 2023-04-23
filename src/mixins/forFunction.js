@@ -12,9 +12,10 @@ import { Button, message, Space } from 'ant-design-vue'
 
 /**
  * 为表格功能按钮生成 mixin
- * @param [controlButtonPermissions] {function} 用于控制按钮禁用权限的回调函数。
- *  接收一个参数。当前选中行数组。
- *  返回一个对象，对象的键为控制禁用权限的字段名，对象的值为布尔值。
+ *
+ * @param [controlButtonPermissions] {selectedRows => ({[fieldName]: boolean})} 用于控制按钮禁用权限的回调函数。
+ *  接收一个参数 selectedRows。当前选中行数组。
+ *  返回一个对象，对象的键（fieldName）为控制禁用权限的字段名（如： 'editButtonDisabled'），对象的值为布尔值。
  *  默认不传，相当于至少勾选了一行列表即解除禁用。
  * @param [overrideDefaultButtons] {boolean} 混入组件内 forRender 函数的返回值是否覆盖本混合内 render 函数的内容。默认 false
  * @returns {Object}
@@ -91,7 +92,7 @@ export default ({ controlButtonPermissions, overrideDefaultButtons } = {}) => ({
      * @returns {Promise<void>}
      */
     async onCustomEditClick() {
-      await this._setVisibilityOfModal(this.editedRow)
+      await this._setVisibilityOfModal({ ...this.editedRow, _isBulkOperations: true })
     },
     /**
      * 审核或相关意见填写的批量操作

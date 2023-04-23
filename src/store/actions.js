@@ -291,11 +291,13 @@ export default {
    * 更新数据（仅做数据更新及刷新列表使用，如果需要保存返回的数据请使用 custom）
    * @param state
    * @param dispatch
+   * @param commit
    * @param moduleName {string} 模块名
    * @param [payload={}] {Object} 参数
    * @param [visibilityFieldName='visibilityOfEdit'] {string} 控制弹窗显示的字段名
    * @param customApiName {string} 自定义请求API
-   * @param [isFetchList=false] {boolean} 默认 false。当为 true 时，请特别注意参数问题（parametersOfOtherAction）
+   * @param [isFetchList] {boolean} 默认 false。当为 true 时，请特别注意参数问题（parametersOfOtherAction）
+   * @param [isResetSelectedRows] {boolean} 默认false（批量操作默认true），是都在成功执行后清空已选中行（批量更新时很重要）
    * @param parametersOfGetListAction {{
    *  moduleName: string;
    *  submoduleName: string;
@@ -305,12 +307,13 @@ export default {
    * }} 用于操作后刷新列表的参数，依赖 isFetchList。parametersOfGetListAction.moduleName 默认为 moduleName
    * @returns {Promise<*>}
    */
-  async update({ state, dispatch }, {
+  async update({ state, dispatch, commit }, {
     moduleName,
     payload = {},
     visibilityFieldName,
     customApiName,
     isFetchList,
+    isResetSelectedRows,
     parametersOfGetListAction
   }) {
     const response = await apis[customApiName || `update${firstLetterToUppercase(moduleName)}`](payload)
@@ -321,6 +324,16 @@ export default {
         statusValue: false,
         moduleName
       })
+
+      if (isResetSelectedRows) {
+        commit('setRowSelected', {
+          moduleName,
+          payload: {
+            selectedRowKeys: [],
+            selectedRows: []
+          }
+        })
+      }
 
       if (isFetchList) {
         dispatch('getList', {
