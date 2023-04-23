@@ -8,6 +8,34 @@
 import '@wangeditor/editor/dist/css/style.css'
 import './index.scss'
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
+import config from '@/config'
+import { message } from 'ant-design-vue'
+
+// 图片和视频上传共同配置部分
+const fileOrVideoCommonConfig = {
+  // form-data fieldName ，默认值 'wangeditor-uploaded-video'
+  fieldName: 'file',
+  // 自定义增加 http  header
+  headers: {
+    token: localStorage.getItem('token')
+  },
+  // 单个文件上传失败
+  onFailed(file, res) {
+    message.error(`${file.name} 上传失败，${res.message}`)
+  },
+  // 上传错误，或者触发 timeout 超时
+  onError(file, err, res) {
+    message.error(`${file.name} 上传出错，${err}，${res.message}`)
+  },
+  customInsert(res, insertFn) {
+    const { status, data } = res
+
+    // 从 res 中找到 url alt href ，然后插入图片
+    if (status && data[0]) {
+      insertFn(data[0].path, data[0].fileName, data[0].key)
+    }
+  }
+}
 
 export default {
   model: {
@@ -23,9 +51,31 @@ export default {
   data() {
     return {
       editor: null,
-      html: '',
       toolbarConfig: {},
-      editorConfig: { placeholder: '请输入内容...' },
+      editorConfig: {
+        placeholder: '请输入内容...',
+        MENU_CONF: {
+          // 上传图片的配置
+          uploadImage: {
+            ...fileOrVideoCommonConfig,
+            // 上传地址
+            server: config.imageUploadPath,
+            // 单个文件的最大体积限制，默认为 2M
+            maxFileSize: 20 * 1024 * 1024, // 20M
+            // 最多可上传几个文件，默认为 100
+            maxNumberOfFiles: 10
+          },
+          uploadVideo: {
+            ...fileOrVideoCommonConfig,
+            // 上传地址
+            server: config.videoUploadPath,
+            // 单个文件的最大体积限制，默认为 10M
+            maxFileSize: 20 * 1024 * 1024, // 100M
+            // 最多可上传几个文件，默认为 5
+            maxNumberOfFiles: 3
+          }
+        }
+      },
       mode: 'default' // or 'simple'
     }
   },
@@ -67,7 +117,7 @@ export default {
         />
         <Editor
           style="height: 500px; overflow-y: hidden;"
-          v-model={this.html}
+          vModel={this.html}
           defaultConfig={this.editorConfig}
           mode={this.mode}
           onOnCreated={this.onCreated}
