@@ -224,7 +224,7 @@ export default ({
             window.MozMutationObserver
 
           this.observer = new MutationObserver(() => {
-            // 这置延迟是因为 .row-inquiry 的 css过渡动画时间为200ms
+            // 设置延迟是因为 .row-inquiry 的 css过渡动画时间为200ms
             setTimeout(this.resize, 200)
           })
 
@@ -235,9 +235,13 @@ export default ({
         }
       })
 
-      // 为 /src/components/TGContainerWithSider 组件注入获取 table ref 的逻辑
+      // 为上级组件注入获取 table ref 的逻辑
       if (this.getRefOfChild instanceof Function) {
-        this.getRefOfChild(this.$refs[`${this.moduleName}Table`])
+        this.getRefOfChild(
+          this.tableName
+            ? this.$refs[this.tableName]
+            : this.$refs[`${this.submoduleName ? `${this.submoduleName}Of` : ''}${this.moduleName}Table`]
+        )
       }
     },
     methods: {
@@ -469,10 +473,11 @@ export default ({
       /**
        * 导出数据
        * @param payload {Object} 参数
-       * @param fileName {string} 文件名称
+       * @param [fileName] {string} 文件名称，默认路由名称（route.meta.title）
+       * @param [visibilityFieldName] 成功导出后需要关闭的弹窗控制字段，一般在弹出
        * @returns {Promise<void>}
        */
-      async onExport(payload, fileName) {
+      async onExport({payload, fileName, visibilityFieldName}) {
         message.loading({
           content: '正在导出，请稍候...',
           duration: 0
@@ -483,7 +488,8 @@ export default ({
           moduleName: this.moduleName,
           submoduleName: this.submoduleName,
           additionalQueryParameters: payload,
-          fileName: fileName
+          fileName: fileName || this.$route.meta.title,
+          visibilityFieldName
         })
 
         this.exportButtonDisabled = false

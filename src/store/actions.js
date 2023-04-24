@@ -662,7 +662,7 @@ export default {
    * @param dispatch
    * @param moduleName {string}
    * @param submoduleName {string}
-   * @param payload {Object} 参数。不从 store.state.search 直接获取，因为 store.state.search 对象在未点击搜索按钮之前是没有值的
+   * @param payload {Object} 参数。不能从 store.state.search 直接获取，因为 store.state.search 对象在未点击搜索按钮之前是没有值的
    * @param additionalQueryParameters {Object} 附加参数。例如其他页面跳转带过来的参数
    * @param fileName {string} 不包含后缀名
    * @param [customApiName] {string} 自定义请求api的名字
@@ -694,19 +694,29 @@ export default {
     }
 
     const params = cloneDeep({ ...additionalQueryParameters, ...payload })
+    let buffer
 
-    const buffer = await apis[api]({ ...targetModuleName.search, ...params })
-    const blob = new Blob([buffer])
+    if (apis[api]) {
+      buffer = await apis[api]?.({ ...targetModuleName.search, ...params })
+    } else {
+      console.error(`接口未定义：${moduleName} 页面${submoduleName
+        ? ` ${submoduleName} 模块`
+        : ''}的 ${api} 接口未定义！`)
+    }
 
-    downloadFile(blob, `${fileName}.xlsx`)
+    if (buffer) {
+      const blob = new Blob([buffer])
 
-    if (visibilityFieldName) {
-      dispatch('setModalVisible', {
-        statusField: visibilityFieldName,
-        statusValue: false,
-        moduleName,
-        submoduleName
-      })
+      downloadFile(blob, `${fileName}.xlsx`)
+
+      if (visibilityFieldName) {
+        dispatch('setModalVisible', {
+          statusField: visibilityFieldName,
+          statusValue: false,
+          moduleName,
+          submoduleName
+        })
+      }
     }
 
     return buffer

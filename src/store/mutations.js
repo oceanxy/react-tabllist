@@ -241,7 +241,12 @@ export default {
     if (!submoduleName) {
       state[moduleName][field] = value
     } else {
-      state[moduleName][submoduleName][field] = value
+      if (field in state[moduleName][submoduleName]) {
+        state[moduleName][submoduleName][field] = value
+      } else if (field in state[moduleName]) {
+        // 容错处理：当在子模块内没找到需要设置的弹窗控制字段时，往当前模块的父级state里面去查找
+        state[moduleName][field] = value
+      }
     }
   }
 }
