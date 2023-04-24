@@ -29,7 +29,7 @@
   .tg-tree-content-container {
     flex: auto;
     height: 0;
-    overflow: auto;
+    //overflow: auto;
     display: flex;
     gap: 12px;
     flex-direction: column;
@@ -61,6 +61,10 @@
       .ant-table-wrapper {
         height: 0;
       }
+    }
+
+    .tg-container-modals {
+      margin-bottom: -12px; // 抵消空元素造成的底部 gap 值
     }
   }
 }

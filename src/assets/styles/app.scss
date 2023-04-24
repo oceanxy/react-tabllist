@@ -541,15 +541,31 @@ body {
 
 /********************************* 子模块容器 *************************************/
 .ant-modal-root.tg-submodule-container {
-  .ant-modal-body .ant-spin-container {
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+  .ant-modal-body {
+    & > .ant-spin-nested-loading {
+      height: 100%;
 
-    .tg-inquiry {
-      padding: 0;
-      flex-direction: row;
+      & > .ant-spin-container {
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        flex-basis: 100%;
+        gap: 16px;
+
+        .tg-inquiry {
+          flex: none;
+          padding: 0;
+          flex-direction: row;
+        }
+
+        .tg-table {
+          flex: auto;
+        }
+
+        .tg-pagination {
+          flex: none;
+        }
+      }
     }
   }
 }
