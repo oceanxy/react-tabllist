@@ -407,7 +407,11 @@ export default ({
       },
       /**
        * 删除
-       * @param record {Object} 列表数据对象
+       * @param record {{_isFreshTree: boolean, [key: string]: any }} 列表数据对象
+       *  {
+       *    ...record,
+       *    _isFreshTree: boolean // 是否刷新侧边树，默认false; 当在本表格组件处于侧边树的下级时默认true，所以此时需要显示定义该字段为 false
+       *  }
        * @param [params] {Object} 删除参数，默认 { ids: [record.id] }
        * @param [done] {() => void} 成功执行删除的回调
        */
@@ -436,7 +440,7 @@ export default ({
 
             if (status) {
               // 执行侧边树数据更新
-              if (this.inTree) {
+              if (this.inTree && (record._isFreshTree !== false)) {
                 this.refreshTree()
               }
 
@@ -477,7 +481,7 @@ export default ({
        * @param [visibilityFieldName] 成功导出后需要关闭的弹窗控制字段，一般在弹出
        * @returns {Promise<void>}
        */
-      async onExport({payload, fileName, visibilityFieldName}) {
+      async onExport({ payload, fileName, visibilityFieldName }) {
         message.loading({
           content: '正在导出，请稍候...',
           duration: 0
