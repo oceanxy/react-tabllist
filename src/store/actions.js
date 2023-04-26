@@ -198,6 +198,7 @@ export default {
    * @param [submoduleName] {string} 子模块名
    * @param [payload] {Object} 查询参数
    * @param [stateName='details'] {string} 需要设置的字段，默认 store.state.details
+   * @param [customApiName] {string} 自定义接口名称，默认根据 moduleName 和 submoduleName 生成
    * @param [merge] {boolean} 如果stateName 指定的字段存在旧数据，是否使用新值对其进行合并
    * @returns {Promise<void>}
    */
@@ -206,6 +207,7 @@ export default {
     submoduleName,
     payload = {},
     stateName = 'details',
+    customApiName,
     merge = false
   }) {
     commit('setLoading', {
@@ -218,7 +220,7 @@ export default {
     let api = 'getDetails'
 
     if (!config.mock) {
-      api = `getDetailsOf${firstLetterToUppercase(moduleName)}${
+      api = customApiName || `getDetailsOf${firstLetterToUppercase(moduleName)}${
         submoduleName ? firstLetterToUppercase(submoduleName) : ''
       }`
     }
