@@ -10,6 +10,8 @@ module.exports = {
   mockDelay: 400,
   // 动态路由（从后台获取权限菜单）
   dynamicRouting: false,
+  // 默认首页（登录之后默认跳转的页面 route.name）
+  defaultRouteName: 'home',
   // iconfont
   iconFontSymbol: '//at.alicdn.com/t/c/font_3996750_sgcx6ewq6y.js',
   // iconfont菜单图标在 active 状态下的后缀（该后缀会直接加到iconfont图标名称的最后，需在iconfont中预先定义好该图标；

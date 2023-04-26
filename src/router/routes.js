@@ -5,6 +5,7 @@
  * @Date: 2023-02-23 周四 10:46:26
  */
 import _conf from '@/config/config'
+import config from '@/config'
 
 const appConfigFiles = require.context('../apps', true, /config\/index.js/)
 let appName = ''
@@ -38,7 +39,7 @@ export default [
   {
     path: '/',
     name: 'home',
-    redirect: { name: 'workbench' },
+    redirect: { name: config.defaultRouteName },
     // 选择布局组件
     component: () => import('@/layouts/TGBackendSystem'),
     meta: {
@@ -48,20 +49,7 @@ export default [
       // icon: () => import('@/assets/images/console.svg') // svg 图标方式
       icon: 'icon-menu-workbench' // icon-font symbol 方式
     },
-    children: [
-      {
-        path: 'workbench',
-        name: 'workbench',
-        // 选择布局组件
-        component: () => import('@/views/Workbench'),
-        meta: {
-          title: '工作台',
-          keepAlive: false,
-          requiresAuth: true,
-          icon: 'icon-menu-workbench'
-        }
-      }
-    ]
+    children: []
   },
   {
     path: '/404',
