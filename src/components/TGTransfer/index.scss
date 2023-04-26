@@ -1,0 +1,26 @@
+.tg-transfer {
+  display: flex;
+  justify-content: center;
+
+  .ant-transfer-list-content-item {
+    display: flex;
+    flex-wrap: wrap;
+
+    .ant-checkbox-wrapper {
+      flex: none;
+    }
+
+    .ant-transfer-list-content-item-text {
+      flex: auto;
+
+      .tg-transfer-custom-item {
+        display: flex;
+        flex-wrap: wrap;
+
+        .tg-transfer-right {
+          margin-left: auto;
+        }
+      }
+    }
+  }
+}
