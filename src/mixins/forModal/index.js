@@ -128,6 +128,18 @@ export default customModuleName => {
         if (typeof callback === 'function') {
           callback()
         }
+      },
+      /**
+       * 为弹窗的按钮增加loading状态
+       * @param callback {() => Promise<any>} 点击弹窗要执行的逻辑
+       * @returns {Promise<void>}
+       */
+      async onConfirmLoading(callback) {
+        this.modalProps.confirmLoading = true
+
+        await callback?.()
+
+        this.modalProps.confirmLoading = false
       }
     }
   }

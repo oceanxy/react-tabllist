@@ -139,90 +139,88 @@ export default ({ disableSubmitButton = true } = {}) => {
           }
 
           if (!err && validation) {
-            this.modalProps.confirmLoading = true
+            await this.onConfirmLoading(async () => {
+              let action
+              let payload = this.transformValue(values)
 
-            let action
-            let payload = this.transformValue(values)
-
-            // 优先根据 this.currentItem.id 判断当前表单的提交模式，customAction 字段次之。
-            // 并为 request 的参数设置对应的 ID。
-            if (this.currentItem?.id) {
-              // 为单个编辑模式
-              action = 'update'
-              payload.id = this.currentItem.id
-              payload.ids = payload.id // 兼容批量操作的情况
-            } else {
-              if (!customAction || customAction === 'add') {
-                // 新增模式
-                action = 'add'
-              } else {
-                // 默认为自定义模式
-                // 这里存在一个特例——批量更新（update）——需要明确定义 customAction 为 'update' 才会触发更新操作，
-                // 否则会触发自定义操作（custom）
-                isResetSelectedRows = true
-                action = customAction || 'custom'
-                payload.id = this.selectedRowKeys?.join?.(',')
+              // 优先根据 this.currentItem.id 判断当前表单的提交模式，customAction 字段次之。
+              // 并为 request 的参数设置对应的 ID。
+              if (this.currentItem?.id) {
+                // 为单个编辑模式
+                action = 'update'
+                payload.id = this.currentItem.id
                 payload.ids = payload.id // 兼容批量操作的情况
+              } else {
+                if (!customAction || customAction === 'add') {
+                  // 新增模式
+                  action = 'add'
+                } else {
+                  // 默认为自定义模式
+                  // 这里存在一个特例——批量更新（update）——需要明确定义 customAction 为 'update' 才会触发更新操作，
+                  // 否则会触发自定义操作（custom）
+                  isResetSelectedRows = true
+                  action = customAction || 'custom'
+                  payload.id = this.selectedRowKeys?.join?.(',')
+                  payload.ids = payload.id // 兼容批量操作的情况
+                }
               }
-            }
 
-            if (action === 'custom' && !customApiName) {
-              throw new Error(`${this.moduleName}内有表单弹窗设置错误：未定义自定义的接口名称（customApiName）！`)
-            }
+              if (action === 'custom' && !customApiName) {
+                throw new Error(`${this.moduleName}内有表单弹窗设置错误：需要自定义接口名称（customApiName）！`)
+              }
 
-            // 自定义处理请求参数
-            if (typeof customDataHandler === 'function') {
-              payload = customDataHandler(payload)
-            }
+              // 自定义处理请求参数
+              if (typeof customDataHandler === 'function') {
+                payload = customDataHandler(payload)
+              }
 
-            const options = {
-              moduleName: this.moduleName,
-              visibilityFieldName: this._visibilityFieldName,
-              isFetchList,
-              customApiName,
-              // 请求参数
-              payload,
-              isResetSelectedRows,
-              // 附加请求参数，获取子模块数据需要的额外参数，在引用该混合的子模块内覆盖设置。
+              const options = {
+                moduleName: this.moduleName,
+                visibilityFieldName: this._visibilityFieldName,
+                isFetchList,
+                customApiName,
+                // 请求参数
+                payload,
+                isResetSelectedRows,
+                // 附加请求参数，获取子模块数据需要的额外参数，在引用该混合的子模块内覆盖设置。
+                // 请根据参数的取值和性质自行决定在混入组件的 data 内或 computed 内定义。
+                additionalQueryParameters: {
+                  ...this.$route.query,
+                  ...(this.additionalQueryParameters || {})
+                }
+              }
+
+              // action 为 'export' 时可用。
               // 请根据参数的取值和性质自行决定在混入组件的 data 内或 computed 内定义。
-              additionalQueryParameters: {
-                ...this.$route.query,
-                ...(this.additionalQueryParameters || {})
-              }
-            }
-
-            // action 为 'export' 时可用。
-            // 请根据参数的取值和性质自行决定在混入组件的 data 内或 computed 内定义。
-            if (action === 'export') {
-              options.fileName = this.fileName
-            }
-
-            const response = await this.$store.dispatch(action, options)
-
-            let status
-
-            if (typeof response === 'boolean') {
-              status = response
-            } else {
-              status = response?.status
-            }
-
-            if (status) {
-              // 操作提示消息
-              message(response.status)
-
-              // 执行侧边树刷新操作
-              if (refreshTree && this.inTree) {
-                this.refreshTree()
+              if (action === 'export') {
+                options.fileName = this.fileName
               }
 
-              // 执行回调
-              if (typeof done === 'function') {
-                done(response)
-              }
-            }
+              const response = await this.$store.dispatch(action, options)
 
-            this.modalProps.confirmLoading = false
+              let status
+
+              if (typeof response === 'boolean') {
+                status = response
+              } else {
+                status = response?.status
+              }
+
+              if (status) {
+                // 操作提示消息
+                message(response.status)
+
+                // 执行侧边树刷新操作
+                if (refreshTree && this.inTree) {
+                  this.refreshTree()
+                }
+
+                // 执行回调
+                if (typeof done === 'function') {
+                  done(response)
+                }
+              }
+            })
           }
         })
       }
