@@ -29,6 +29,13 @@ export default customModuleName => {
       visibilityFieldName: {
         type: String,
         default: ''
+      },
+      /**
+       * 在弹窗初始化阶段不清空 store 内存储的详情数据（如果 details 字段存在于 store 内）
+       */
+      notClear: {
+        type: Boolean,
+        default: false
       }
     },
     data() {
@@ -88,7 +95,7 @@ export default customModuleName => {
             this.modalProps.title = this.$parent.$attrs.modalTitle || this.modalTitle
 
             // 如果存在未清空的详情数据，则清空
-            if (this.details) {
+            if (this.details && !this.notClear) {
               this.$store.commit('setState', {
                 value: {},
                 moduleName: this.moduleName,
