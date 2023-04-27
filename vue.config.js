@@ -20,7 +20,7 @@ if (availableProjectNames.length) {
       index: {
         entry: `src/apps/${availableProjectNames[0]}/main.js`,
         // title: '',
-        chunks: [availableProjectNames[0], 'chunk-vendors', 'chunk-common']
+        // chunks: [availableProjectNames[0], 'chunk-vendors', 'chunk-common']
       }
     },
     outputDir: `dist/${availableProjectNames[0]}`
@@ -105,7 +105,7 @@ module.exports = {
           {
             force: true,
             from: resolve(__dirname, faviconPath),
-            to: resolve(__dirname, 'dist/favicon.ico')
+            to: resolve(__dirname, `dist/${availableProjectNames?.[0] || 'favicon.ico'}`)
           }
         ]
       }

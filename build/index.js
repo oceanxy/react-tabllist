@@ -19,7 +19,7 @@ async function build() {
       availableProjectNames.forEach((filepath, index) => {
         console.log(`正在打包第 ${index + 1}/${availableProjectNames.length} 个APP(${filepath})...`)
 
-        on(child_process.exec(`vue-cli-service build --proj ${filepath}`), index + 1, filepath)
+        on(child_process.exec(`vue-cli-service build --app-proj ${filepath}`), index + 1, filepath)
       })
     } catch (err) {
       throw new Error(err)
