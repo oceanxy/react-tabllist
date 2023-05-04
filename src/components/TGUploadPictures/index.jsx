@@ -1,6 +1,5 @@
 import { Icon, message, Modal, Upload } from 'ant-design-vue'
 import { getBase64 } from '@/utils/utilityFunction'
-import config from '@/config'
 
 export default {
   model: {
@@ -17,9 +16,10 @@ export default {
       type: Number,
       default: 5
     },
+    // 默认 config.imageUploadPath
     action: {
       type: String,
-      default: config.imageUploadPath
+      default: ''
     },
     disabled: {
       type: Boolean,
@@ -119,7 +119,7 @@ export default {
       >
         <Upload
           accept={'.png,.jpg,.jpeg'}
-          action={this.action}
+          action={this.action || this.$config.imageUploadPath}
           listType="picture-card"
           name={this.name}
           fileList={this.fileList}

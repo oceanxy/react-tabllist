@@ -8,7 +8,6 @@
 import '@wangeditor/editor/dist/css/style.css'
 import './index.scss'
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
-import config from '@/config'
 import { message } from 'ant-design-vue'
 
 // 图片和视频上传共同配置部分
@@ -59,7 +58,7 @@ export default {
           uploadImage: {
             ...fileOrVideoCommonConfig,
             // 上传地址
-            server: config.imageUploadPath,
+            server: this.$config.imageUploadPath,
             // 单个文件的最大体积限制，默认为 2M
             maxFileSize: 20 * 1024 * 1024, // 20M
             // 最多可上传几个文件，默认为 100
@@ -68,7 +67,7 @@ export default {
           uploadVideo: {
             ...fileOrVideoCommonConfig,
             // 上传地址
-            server: config.videoUploadPath,
+            server: this.$config.videoUploadPath,
             // 单个文件的最大体积限制，默认为 10M
             maxFileSize: 20 * 1024 * 1024, // 100M
             // 最多可上传几个文件，默认为 5

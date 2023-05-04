@@ -31,7 +31,7 @@
           />
           <icon-font
             v-else-if="route.meta.icon"
-            :type="route.meta.icon + (selectedKeys[0] === route.path ? config.activeSuffixForMenuIcon : '')"
+            :type="route.meta.icon + (selectedKeys[0] === route.path ? $config.activeSuffixForMenuIcon : '')"
           />
           <span>{{ route.meta && route.meta.title }}</span>
         </div>
@@ -44,8 +44,7 @@
 import './assets/styles/index.scss'
 import { Menu } from 'ant-design-vue'
 import { initializeDynamicRoutes } from '@/utils/utilityFunction'
-import config from '@/config'
-import { constRoutes } from '@/router'
+import getBaseRoutes from '@/router/routes'
 
 // 函数组件 自定义子菜单
 const TGSubMenu = {
@@ -66,7 +65,7 @@ const TGSubMenu = {
       <icon-font
         v-else-if="menuInfo.meta.icon"
         :type="menuInfo.meta.icon + (menuInfo.children.map(i => i.path).includes(selectedKeys[0])
-          ? config.activeSuffixForMenuIcon
+          ? $config.activeSuffixForMenuIcon
           : ''
         )"
       />
@@ -93,7 +92,7 @@ const TGSubMenu = {
           />
           <icon-font
             v-else-if="showSubIcon && route.meta.icon"
-            :type="route.meta.icon + (selectedKeys[0] === route.path ? config.activeSuffixForMenuIcon : '')"
+            :type="route.meta.icon + (selectedKeys[0] === route.path ? $config.activeSuffixForMenuIcon : '')"
           />
           <span>{{ route.meta && route.meta.title }}</span>
         </div>
@@ -122,11 +121,6 @@ const TGSubMenu = {
       default: false
     }
   },
-  computed: {
-    config() {
-      return config
-    }
-  },
   components: {
     [Menu.Item.name]: Menu.Item,
     [Menu.SubMenu.name]: Menu.SubMenu
@@ -140,11 +134,6 @@ const TGSubMenu = {
 
 export default {
   name: 'TGMenu',
-  computed: {
-    config() {
-      return config
-    }
-  },
   components: {
     TGSubMenu,
     [Menu.name]: Menu,
@@ -197,9 +186,11 @@ export default {
       this.openKeys = JSON.parse(openKeys)
     }
 
-    if (config.dynamicRouting) {
+    if (this.$config.dynamicRouting) {
       this.getMenuRoutes()
     } else {
+      const constRoutes = getBaseRoutes(this.$config)
+
       this.menuRoutes = constRoutes[1].children
     }
   },

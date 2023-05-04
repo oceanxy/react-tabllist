@@ -5,7 +5,6 @@
 import './assets/styles/index.scss'
 import TGLoginForm from '@/components/TGLoginForm'
 import TGContainer from '@/components/TGContainer'
-import config from '@/config'
 
 export default {
   name: 'Login',
@@ -33,7 +32,7 @@ export default {
         >
           <div class={'login-subtitle'}>
             <p>您好!</p>
-            <p>欢迎登录{config.systemName}</p>
+            <p>欢迎登录{this.$config.systemName}</p>
           </div>
           <TGLoginForm />
         </TGContainer>

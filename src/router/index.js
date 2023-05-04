@@ -7,9 +7,10 @@
 
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import constRoutes from './routes'
+import getBaseRoutes from './routes'
 import config from '@/config'
 
+const constRoutes = getBaseRoutes(config)
 const VueRouterPush = VueRouter.prototype.push
 
 VueRouter.prototype.push = function push(to) {
@@ -18,32 +19,25 @@ VueRouter.prototype.push = function push(to) {
 
 Vue.use(VueRouter)
 
-export { constRoutes }
-
 /**
  * 立即创建一个路由器
  * @param [routes] {Object<Route>[] | Object<Route>} 路由数组或一个包含子路由的根路由
  * @returns {VueRouter}
  */
-export function createRouter(routes) {
+function createRouter(routes) {
   const homeRoutesIndex = constRoutes.findIndex(route => route.path === '/')
 
   // 动态路由
-  if (config.dynamicRouting && routes) {
+  if (this.dynamicRouting && routes) {
     if (Array.isArray(routes)) {
       constRoutes[homeRoutesIndex].children = constRoutes[homeRoutesIndex].children.concat(routes)
     } else {
       constRoutes.splice(homeRoutesIndex, 1, routes)
     }
   } else {
-    const routeFiles = require.context('../apps', true, /router\/routes.js/)
-    const routeModules = routeFiles.keys().reduce((modules, modulePath) => {
-      modules.push(...routeFiles(modulePath).default)
+    const routeFiles = require(`../apps/${this.appName}/router/routes.js`).default
 
-      return modules
-    }, [])
-
-    constRoutes[homeRoutesIndex].children = constRoutes[homeRoutesIndex].children.concat(routeModules)
+    constRoutes[homeRoutesIndex].children = constRoutes[homeRoutesIndex].children.concat(routeFiles)
   }
 
   return new VueRouter({
@@ -54,7 +48,9 @@ export function createRouter(routes) {
 }
 
 // 创建路由器
-const router = createRouter()
+const router = createRouter.call(config)
+
+router.createRouter = createRouter
 
 router.beforeEach((to, from, next) => {
   let title = to.meta.title || ''

@@ -1,7 +1,11 @@
-import service from '@/utils/request'
+import getService from '@/utils/request'
+import config from '@/config'
+import router from '@/router'
+import store from '@/store'
 
 // 加载框架内的apis
 const modulesFiles = require.context('./modules', true, /\.js$/)
+
 // 加载app内的apis
 const dynamicModulesFiles = require.context('../apps', true, /apis\/modules\/[a-zA-Z0-9-]+\.js/)
 
@@ -29,7 +33,7 @@ const appApis = dynamicModulesFiles.keys().reduce((modules, modulePath) => {
 
 // 动态注入参数
 Object.entries({ ...apis, ...appApis }).forEach(([apiName, api]) => {
-  apis[apiName] = parameter => api(service, parameter)
+  apis[apiName] = parameter => api(getService(config, router, store), parameter)
 })
 
 export default apis

@@ -6,7 +6,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const webpack = require('webpack')
 const { resolve } = require('path')
 const { readFileSync } = require('fs')
-const { appPrefix } = require('./src/config/config')
+const { appPrefix } = require('./src/config/config') // 这里仅仅为了取值appPrefix
 const files = require('glob').sync('./src/apps/*/config/index.js') // 获取所有子仓库的配置文件
 
 let config = {}

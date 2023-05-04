@@ -6,13 +6,13 @@
  */
 
 import variablesScss from './themeFromLess.scss'
-import config from '@/config'
 
-const { fileName } = config.theme
-const less = require(`./themes/${fileName}`)
+export default function getVariablesStyle(config) {
+  const { fileName } = config.theme
+  const less = require(`./themes/${fileName}`)
 
-// 导出变量
-export default {
-  scss: variablesScss,
-  less
+  return {
+    scss: variablesScss,
+    less
+  }
 }

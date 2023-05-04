@@ -4,13 +4,6 @@ import JSEncrypt from 'jsencrypt'
 import config from '@/config'
 import { message } from 'ant-design-vue'
 
-let encryptor
-
-if (!encryptor) {
-  encryptor = new JSEncrypt()
-  encryptor.setPublicKey(config.publicKey)
-}
-
 export default {
   namespaced: true,
   state: {
@@ -45,8 +38,13 @@ export default {
     }
   },
   actions: {
-    async login({ commit, state }, payload) {
+    async login({ commit, state }, options) {
       commit('setLoading', true)
+
+      const { payload, config } = options
+      const encryptor = new JSEncrypt()
+
+      encryptor.setPublicKey(config.publicKey)
 
       const response = await apis.login({
         up: encryptor.encrypt(

@@ -2,7 +2,6 @@ import './index.scss'
 import { Avatar, Badge, Button, Divider, Dropdown, Layout, Menu, Popover, Select, Space, Tag } from 'ant-design-vue'
 import Logo from '@/components/Logo'
 import { mapActions, mapGetters } from 'vuex'
-import config from '@/config'
 
 export default {
   name: 'TGHeader',
@@ -50,7 +49,7 @@ export default {
       return name ? name.at(-1).toUpperCase() : ''
     },
     theme() {
-      return this.$store.state?.login?.userInfo?.themeFileName ?? config.theme.fileName
+      return this.$store.state?.login?.userInfo?.themeFileName ?? this.$config.theme.fileName
     }
   },
   provide: { moduleName: 'login' },
@@ -61,12 +60,15 @@ export default {
       }
     },
     headerId() {
-      document.querySelector('#tg-responsive-layout').style.display = 'none'
+      if (document.querySelector('#tg-responsive-layout')) {
+        document.querySelector('#tg-responsive-layout').style.display = 'none'
+      }
+
       window.location.reload()
     }
   },
   async created() {
-    if (config.news?.show) {
+    if (this.$config.news?.show) {
       await this.$store.dispatch('getListWithLoadingStatus', {
         moduleName: 'common',
         stateName: 'news',
@@ -74,7 +76,7 @@ export default {
       })
     }
 
-    if (config.headerParams?.show && !this.organListForHeader.list.length) {
+    if (this.$config.headerParams?.show && !this.organListForHeader.list.length) {
       await this.$store.dispatch('getListWithLoadingStatus', {
         moduleName: 'common',
         stateName: 'organListForHeader',
@@ -118,7 +120,9 @@ export default {
       }
     },
     async switchThemes(themeFileName) {
-      document.querySelector('#tg-responsive-layout').style.display = 'none'
+      if (document.querySelector('#tg-responsive-layout')) {
+        document.querySelector('#tg-responsive-layout').style.display = 'none'
+      }
 
       await this.$store.dispatch('custom', {
         customApiName: 'setThemeFileName',
@@ -164,7 +168,7 @@ export default {
               ? (
                 <div class={'tg-header-info'}>
                   {
-                    config.headerParams?.show
+                    this.$config.headerParams?.show
                       ? [
                         <Select
                           vModel={this.headerId}
@@ -203,7 +207,7 @@ export default {
                   </Dropdown>
                   <Divider type={'vertical'} class={'tg-header-divider'} />
                   {
-                    config.news?.show
+                    this.$config.news?.show
                       ? (
                         <Popover overlayClassName={'tg-header-news-overlay'}>
                           <Badge
@@ -273,7 +277,7 @@ export default {
                       : null
                   }
                   {
-                    config.theme?.show
+                    this.$config.theme?.show
                       ? (
                         <Dropdown
                           class={'tg-header-themes'}

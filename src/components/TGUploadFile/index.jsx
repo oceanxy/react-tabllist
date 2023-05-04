@@ -1,5 +1,4 @@
 import { Button, Icon, Upload } from 'ant-design-vue'
-import config from '@/config'
 
 export default {
   model: {
@@ -16,9 +15,10 @@ export default {
       type: Number,
       default: 5
     },
+    // 默认 config.fileUploadPath
     action: {
       type: String,
-      default: config.fileUploadPath
+      default: ''
     },
     accept: {
       type: String,
@@ -169,7 +169,7 @@ export default {
       >
         <Upload
           accept={this.accept}
-          action={this.action}
+          action={this.action || this.$config.fileUploadPath}
           listType="text"
           name={this.name}
           fileList={this.fileList}

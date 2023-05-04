@@ -1,4 +1,4 @@
-import variablesStyle from '@/assets/styles'
+import getVariablesStyle from '@/assets/styles'
 import zhCN from 'ant-design-vue/lib/locale-provider/zh_CN'
 import { ConfigProvider } from 'ant-design-vue'
 import { merge } from 'lodash'
@@ -33,7 +33,7 @@ export default {
     }
 
     this.$store.commit('setState', {
-      value: variablesStyle,
+      value: getVariablesStyle(this.$config),
       stateName: 'variables',
       moduleName: 'common'
     })

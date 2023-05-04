@@ -1,8 +1,4 @@
 import { message as Message, Modal } from 'ant-design-vue'
-import config from '@/config'
-
-// 全局消息弹窗设置
-Message.config({ maxCount: config.maxMessageCount })
 
 export function showMessage(option) {
   if (!option.message) {

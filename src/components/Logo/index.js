@@ -1,6 +1,5 @@
 import './styles/index.scss'
 import { mapGetters } from 'vuex'
-import config from '@/config'
 
 export default {
   computed: {
@@ -19,10 +18,10 @@ export default {
       <div
         class={'tg-logo'}
         onClick={this.goBackHome}
-        title={config.systemName}
+        title={this.$config.systemName}
       >
         <Icon-font type={'icon-logo'} />
-        {config.systemName}
+        {this.$config.systemName}
       </div>
     )
   }

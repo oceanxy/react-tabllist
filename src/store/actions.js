@@ -1,7 +1,6 @@
 import apis from '@/apis'
 import { cloneDeep, omit } from 'lodash'
 import { downloadFile, firstLetterToUppercase } from '@/utils/utilityFunction'
-import config from '@/config'
 import Vue from 'vue'
 
 export default {
@@ -97,16 +96,14 @@ export default {
     let api = 'getList'
     let response = {}
 
-    if (!config.mock) {
-      if (customApiName) {
-        api = customApiName
-      } else {
-        api = `get${
-          submoduleName
-            ? `${firstLetterToUppercase(submoduleName)}Of`
-            : ''
-        }${firstLetterToUppercase(moduleName)}`
-      }
+    if (customApiName) {
+      api = customApiName
+    } else {
+      api = `get${
+        submoduleName
+          ? `${firstLetterToUppercase(submoduleName)}Of`
+          : ''
+      }${firstLetterToUppercase(moduleName)}`
     }
 
     if (apis[api]) {
@@ -219,11 +216,9 @@ export default {
 
     let api = 'getDetails'
 
-    if (!config.mock) {
-      api = customApiName || `getDetailsOf${firstLetterToUppercase(moduleName)}${
-        submoduleName ? firstLetterToUppercase(submoduleName) : ''
-      }`
-    }
+    api = customApiName || `getDetailsOf${firstLetterToUppercase(moduleName)}${
+      submoduleName ? firstLetterToUppercase(submoduleName) : ''
+    }`
 
     const res = await apis[api](payload)
 
@@ -683,16 +678,14 @@ export default {
     let api = 'export'
     const targetModuleName = state[moduleName][submoduleName] ?? state[moduleName]
 
-    if (!config.mock) {
-      if (customApiName) {
-        api = customApiName
-      } else {
-        api = `export${submoduleName ? `${
-          firstLetterToUppercase(submoduleName)}Of` : ''
-        }${
-          firstLetterToUppercase(moduleName)
-        }`
-      }
+    if (customApiName) {
+      api = customApiName
+    } else {
+      api = `export${submoduleName ? `${
+        firstLetterToUppercase(submoduleName)}Of` : ''
+      }${
+        firstLetterToUppercase(moduleName)
+      }`
     }
 
     const params = cloneDeep({ ...additionalQueryParameters, ...payload })

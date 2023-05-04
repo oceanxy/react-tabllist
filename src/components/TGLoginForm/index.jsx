@@ -2,8 +2,6 @@ import './index.scss'
 import { createNamespacedHelpers } from 'vuex'
 import { Button, Form, Input } from 'ant-design-vue'
 import { initializeDynamicRoutes } from '@/utils/utilityFunction'
-import { createRouter } from '@/router'
-import config from '@/config'
 
 const {
   mapState,
@@ -39,18 +37,18 @@ export default Form.create({ name: 'TGLoginForm' })({
 
       this.form.validateFieldsAndScroll(async (err, values) => {
         if (!err) {
-          const { status } = await this.login(values)
+          const { status } = await this.login({ payload: values, config: this.$config })
 
           if (!status) {
             await this.genCode()
           } else {
             this.hint = true
 
-            if (config.dynamicRouting) {
+            if (this.$config.dynamicRouting) {
               const menu = initializeDynamicRoutes()
 
               // 生成动态路由
-              this.$router.matcher = createRouter(menu).matcher
+              this.$router.matcher = this.$router.createRouter.call(this.$config, menu).matcher
               this.$router.options.routes.splice(1, 1, menu)
             }
 

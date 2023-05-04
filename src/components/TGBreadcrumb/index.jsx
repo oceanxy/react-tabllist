@@ -1,7 +1,6 @@
 import './index.scss'
 import { Breadcrumb, Button } from 'ant-design-vue'
 import { RouterLink } from 'vue-router'
-import config from '@/config'
 
 export default {
   name: 'TGBreadcrumb',
@@ -69,7 +68,7 @@ export default {
         <IconFont type={'icon-global-home'} class={'tg-breadcrumb-btn-home'} />
         <Breadcrumb
           routes={this.matchedRoutes}
-          separator={config.breadcrumbSeparator}
+          separator={this.$config.breadcrumbSeparator}
           itemRender={this.itemRender}
         />
         {
