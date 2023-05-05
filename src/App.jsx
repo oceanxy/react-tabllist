@@ -33,7 +33,7 @@ export default {
     }
 
     this.$store.commit('setState', {
-      value: getVariablesStyle(this.$config),
+      value: getVariablesStyle(this.$config, this.$store),
       stateName: 'variables',
       moduleName: 'common'
     })

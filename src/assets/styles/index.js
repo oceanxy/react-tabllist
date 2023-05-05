@@ -7,9 +7,17 @@
 
 import variablesScss from './themeFromLess.scss'
 
-export default function getVariablesStyle(config) {
+export default function getVariablesStyle(config, store) {
+  // 加载主题
   const { fileName } = config.theme
-  const less = require(`./themes/${fileName}`)
+  const theme = localStorage.getItem('theme') || store?.state?.login?.userInfo?.themeFileName || fileName
+  let less
+
+  try {
+    less = require(`./themes/${theme}`)
+  } catch (e) {
+    less = require('./themes/blue.less') // 默认值
+  }
 
   return {
     scss: variablesScss,
