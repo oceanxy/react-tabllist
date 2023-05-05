@@ -3,9 +3,11 @@ import Vuex from 'vuex'
 import getters from './getters'
 import mutations from './mutations'
 import actions from './actions'
-import { getFirstLetterOfEachWordOfAppName } from '@/utils/utilityFunction'
+import getApis from '@/apis'
+import { getStoreModulesFromFiles, injectApisForModules } from '@/utils/store'
 
 Vue.use(Vuex)
+const apis = getApis()
 
 // require.context 请参考：https://webpack.js.org/guides/dependency-management/#requirecontext
 // 框架层通用模块
@@ -16,49 +18,21 @@ const appModulesFiles = require.context('../apps', true, /store\/modules\/[a-zA-
 const dynamicModulesFiles = require.context('../apps', true, /store\/dynamicModules\/modules\/[a-zA-Z0-9-]+\.js/)
 
 // 自动引入 './modules' 中的所有 vuex 模块
-const modules = modulesFiles.keys().reduce((modules, modulePath) => {
-  // eg. 设置 './app.js' => 'app'
-  const moduleName = modulePath.replace(/^\.\/(.*)\.\w+$/, '$1')
-  const value = modulesFiles(modulePath)
-
-  modules[moduleName] = value.default
-
-  return modules
-}, {})
-
-const appModules = appModulesFiles.keys().reduce((modules, modulePath) => {
-  // eg. 设置 './app.js' => 'app'
-  let moduleName = modulePath.replace(/^\.\/(.*)\.\w+$/, '$1')
-  // apps 下的文件夹名称通常比较长，取其每个单词的首字母组合当作store内每个app的前缀
-  const newName = getFirstLetterOfEachWordOfAppName(moduleName.substring(0, moduleName.indexOf('/')))
-  const value = appModulesFiles(modulePath)
-
-  moduleName = newName + '/' + moduleName.substring(moduleName.lastIndexOf('/') + 1)
-  modules[moduleName] = value.default
-
-  return modules
-}, {})
-
-const dynamicModules = dynamicModulesFiles.keys().reduce((modules, modulePath) => {
-  // eg. 设置 './app.js' => 'app'
-  const moduleName = modulePath.replace(/^.*\/(\w+)\.\w+$/, '$1')
-  const value = dynamicModulesFiles(modulePath)
-
-  modules[moduleName] = value.default
-
-  return modules
-}, {})
+const modules = getStoreModulesFromFiles(modulesFiles, apis, /^\.\/(.*)\.\w+$/)
+const appModules = getStoreModulesFromFiles(appModulesFiles, apis, /^\.\/(.*)\.\w+$/, true)
+const dynamicModules = getStoreModulesFromFiles(dynamicModulesFiles, apis, /^.*\/(\w+)\.\w+$/)
 
 const store = new Vuex.Store({
   state: {},
   mutations,
-  actions,
+  actions: injectApisForModules(actions, apis),
   modules: { ...modules, ...appModules },
   getters
 })
 
 store._dynamicModules = dynamicModules
 store._commonModules = { ...modules, ...appModules }
+store._apis = apis
 
 export { dynamicModules }
 

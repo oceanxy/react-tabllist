@@ -1,4 +1,3 @@
-import apis from '@/apis'
 import { cloneDeep, omit } from 'lodash'
 import { downloadFile, firstLetterToUppercase } from '@/utils/utilityFunction'
 import Vue from 'vue'
@@ -106,8 +105,8 @@ export default {
       }${firstLetterToUppercase(moduleName)}`
     }
 
-    if (apis[api]) {
-      response = await apis[api]?.(
+    if (this.apis[api]) {
+      response = await this.apis[api]?.(
         omit(
           {
             ...targetModuleName.pagination,
@@ -220,7 +219,7 @@ export default {
       submoduleName ? firstLetterToUppercase(submoduleName) : ''
     }`
 
-    const res = await apis[api](payload)
+    const res = await this.apis[api](payload)
 
     if (res.status) {
       commit('setState', {
@@ -263,7 +262,7 @@ export default {
     visibilityFieldName,
     parametersOfGetListAction
   }) {
-    const response = await apis[`add${firstLetterToUppercase(moduleName)}`](payload)
+    const response = await this.apis[`add${firstLetterToUppercase(moduleName)}`](payload)
 
     if (response.status) {
       dispatch('setModalVisible', {
@@ -313,7 +312,7 @@ export default {
     isResetSelectedRows,
     parametersOfGetListAction
   }) {
-    const response = await apis[customApiName || `update${firstLetterToUppercase(moduleName)}`](payload)
+    const response = await this.apis[customApiName || `update${firstLetterToUppercase(moduleName)}`](payload)
 
     if (response.status) {
       dispatch('setModalVisible', {
@@ -379,7 +378,7 @@ export default {
     stateName,
     parametersOfGetListAction
   }) {
-    const response = await apis[customApiName](payload)
+    const response = await this.apis[customApiName](payload)
 
     if (response.status) {
       if (visibilityFieldName) {
@@ -463,7 +462,7 @@ export default {
       stateName: stateName
     })
 
-    const response = await apis[customApiName](payload)
+    const response = await this.apis[customApiName](payload)
 
     if (response.status) {
       const data = response.data
@@ -529,7 +528,7 @@ export default {
     }${
       firstLetterToUppercase(customFieldName)
     }`
-    const { status } = await apis[api](payload)
+    const { status } = await this.apis[api](payload)
 
     commit('setLoading', {
       value: false,
@@ -585,7 +584,7 @@ export default {
       isBatchDeletion = true
     }
 
-    const response = await apis[`delete${
+    const response = await this.apis[`delete${
       submoduleName
         ? `${firstLetterToUppercase(submoduleName)}Of`
         : ''
@@ -691,8 +690,8 @@ export default {
     const params = cloneDeep({ ...additionalQueryParameters, ...payload })
     let buffer
 
-    if (apis[api]) {
-      buffer = await apis[api]?.({ ...targetModuleName.search, ...params })
+    if (this.apis[api]) {
+      buffer = await this.apis[api]?.({ ...targetModuleName.search, ...params })
     } else {
       console.error(`接口未定义：${moduleName} 页面${submoduleName
         ? ` ${submoduleName} 模块`

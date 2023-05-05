@@ -1,5 +1,3 @@
-import apis from '@/apis'
-import router from '@/router'
 import JSEncrypt from 'jsencrypt'
 import config from '@/config'
 import { message } from 'ant-design-vue'
@@ -46,7 +44,7 @@ export default {
 
       encryptor.setPublicKey(config.publicKey)
 
-      const response = await apis.login({
+      const response = await this.apis.login({
         up: encryptor.encrypt(
           JSON.stringify({
             u: payload.username,
@@ -98,12 +96,11 @@ export default {
       message.loading('正在注销，请稍候...', 0)
       commit('setLoading', true)
 
-      const response = await apis.logout()
+      const response = await this.apis.logout()
 
       // if (response.status) {
       await dispatch('clear')
       message.destroy()
-      await router.replace({ name: 'login' })
       // }
 
       commit('setLoading', false)
@@ -111,7 +108,7 @@ export default {
       return Promise.resolve(response)
     },
     async getUserInfo({ commit }) {
-      const response = await apis.getUserInfo()
+      const response = await this.apis.getUserInfo()
 
       const { status, data } = response
 
@@ -158,7 +155,7 @@ export default {
       return Promise.resolve(true)
     },
     async getCodeKey({ commit }) {
-      const response = await apis.getCodeKey()
+      const response = await this.apis.getCodeKey()
 
       if (response.status) {
         commit('setState', {

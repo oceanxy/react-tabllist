@@ -1,5 +1,3 @@
-
-
 function getLoginComponent() {
   return import(`@/apps${this.appName ? `/${this.appName}/views` : ''}/Login`)
 }

@@ -6,7 +6,6 @@
  */
 
 import { dispatch } from '@/utils/store'
-import { cloneDeep } from 'lodash'
 
 export default {
   methods: {

@@ -3,8 +3,6 @@
  * 包括各种枚举、省市区数据等
  */
 
-import apis from '@/apis'
-
 export default {
   namespaced: true,
   state: {
@@ -74,49 +72,49 @@ export default {
      * @returns {Promise<void>}
      */
     async getAdministrativeDivision({ commit }) {
-      const response = await apis.getAdministrativeDivision()
+      const response = await this.apis.getAdministrativeDivision()
 
       if (response.status) {
         commit('setAdministrativeDivision', response.data)
       }
     },
     async getNations({ commit }) {
-      const response = await apis.getNations()
+      const response = await this.apis.getNations()
 
       if (response.status) {
         commit('setNations', response.data)
       }
     },
     async getPoliticalStatus({ commit }) {
-      const response = await apis.getPoliticalStatus()
+      const response = await this.apis.getPoliticalStatus()
 
       if (response.status) {
         commit('setPoliticalStatus', response.data)
       }
     },
     async getCastes({ commit }) {
-      const response = await apis.getCastes()
+      const response = await this.apis.getCastes()
 
       if (response.status) {
         commit('setCastes', response.data)
       }
     },
     async getAdministrativeRanks({ commit }) {
-      const response = await apis.getAdministrativeRanks()
+      const response = await this.apis.getAdministrativeRanks()
 
       if (response.status) {
         commit('setAdministrativeRanks', response.data)
       }
     },
     async getDegrees({ commit }) {
-      const response = await apis.getDegrees()
+      const response = await this.apis.getDegrees()
 
       if (response.status) {
         commit('setDegrees', response.data)
       }
     },
     async getProvinces({ commit }) {
-      const response = await apis.getProvinces()
+      const response = await this.apis.getProvinces()
 
       if (response.status) {
         commit('setProvinces', response.data)

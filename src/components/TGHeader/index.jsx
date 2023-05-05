@@ -87,7 +87,11 @@ export default {
   methods: {
     ...mapActions('login', { logout: 'logout', getUserInfo: 'getUserInfo' }),
     async onLogOut() {
-      await this.logout()
+      const response = await this.logout()
+
+      if (response.status) {
+        await this.$router.replace({ name: 'login' })
+      }
     },
     onMenuFold() {
       this.$store.commit('setState', {
