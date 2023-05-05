@@ -5,13 +5,13 @@
   flex-direction: column;
   height: 0;
   flex: auto;
-  gap: 12px;
   padding: 0 12px 12px;
 
   & > .tg-content-title {
     flex: none;
     display: flex;
-    height: 34px;
+    height: 50px;
+    line-height: 50px;
     align-items: center;
 
     .title {

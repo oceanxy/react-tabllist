@@ -8,11 +8,15 @@ import TGBreadcrumb from '@/components/TGBreadcrumb'
 
 export default {
   name: 'TGBackendSystemLayout',
+  props: {},
   computed: {
     ...mapGetters({ getState: 'getState' }),
     collapsed() {
       return this.getState('collapsed', 'common')
     }
+  },
+  mounted() {
+    console.log(this.$config)
   },
   render() {
     return (
@@ -33,7 +37,11 @@ export default {
             <TGMenu />
           </Layout.Sider>
           <Layout.Content class="tg-content">
-            <TGBreadcrumb />
+            {
+              this.$config.hideBreadCrumb
+                ? null
+                : <TGBreadcrumb />
+            }
             <TGRouterView />
           </Layout.Content>
         </Layout>
