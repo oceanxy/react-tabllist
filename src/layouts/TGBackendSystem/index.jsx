@@ -15,9 +15,6 @@ export default {
       return this.getState('collapsed', 'common')
     }
   },
-  mounted() {
-    console.log(this.$config)
-  },
   render() {
     return (
       <Layout id="tg-responsive-layout">
