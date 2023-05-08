@@ -19,20 +19,6 @@ export function commitRootInModule(moduleName, commit, mutation, payload) {
 }
 
 /**
- * 封装的全局dispatch
- * 直接在组件内调用自身对应的store module
- * @param moduleName
- * @param action
- * @param [payload]
- * @returns {Promise<any>}
- */
-export async function dispatch(moduleName, action, payload) {
-  const store = await import('../store')
-
-  return await store.default.dispatch(`${moduleName}/${action}`, payload)
-}
-
-/**
  * 为自定义 Vuex.store 模块注入 apis
  * @param actions
  * @param apis
