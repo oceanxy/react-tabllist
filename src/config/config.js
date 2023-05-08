@@ -44,10 +44,15 @@ module.exports = {
     // 是否在header中显示消息通知
     show: false
   },
-  // 需要在 header 内传递的参数（下拉列表）
+  // 需要在 HTTP Request Header 内携带额外参数的字段名（下拉列表）
+  // 注意：本框架会始终在 HTTP Request Header 中携带 token 字段，不受此处配置影响。
   headerParams: {
-    show: true,
-    fieldName: 'organId'
+    // 是否需要在 HTTP Request Header 内携带额外参数
+    show: false,
+    // src/components/TGHeader 组件对对应下拉列表的占位符提示语
+    placeholder: '请选择',
+    // 需要在 HTTP Request Header 内携带额外参数的字段名，其值为 src/components/TGHeader 组件内对应下拉列表的值
+    fieldName: ''
   },
   // 全局消息最大显示个数
   maxMessageCount: 1,

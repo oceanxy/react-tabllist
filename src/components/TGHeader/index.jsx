@@ -176,7 +176,7 @@ export default {
                       ? [
                         <Select
                           vModel={this.headerId}
-                          placeholder={'请选择站点'}
+                          placeholder={this.$config.headerParams?.placeholder ?? '请选择'}
                           class={'tg-header-params'}
                           suffixIcon={<IconFont type={'icon-global-down'} />}
                         >
