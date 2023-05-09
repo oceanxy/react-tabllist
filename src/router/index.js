@@ -25,17 +25,18 @@ Vue.use(VueRouter)
  * @returns {VueRouter}
  */
 function createRouter(routes) {
+  const _config = config
   const homeRoutesIndex = constRoutes.findIndex(route => route.path === '/')
 
   // 动态路由
-  if (this.dynamicRouting && routes) {
+  if (config.dynamicRouting && routes) {
     if (Array.isArray(routes)) {
       constRoutes[homeRoutesIndex].children = constRoutes[homeRoutesIndex].children.concat(routes)
     } else {
       constRoutes.splice(homeRoutesIndex, 1, routes)
     }
   } else {
-    const routeFiles = require(`../apps/${this.appName}/router/routes.js`).default
+    const routeFiles = require(`../apps/${_config.appName}/router/routes.js`).default
 
     constRoutes[homeRoutesIndex].children = constRoutes[homeRoutesIndex].children.concat(routeFiles)
   }
@@ -48,7 +49,7 @@ function createRouter(routes) {
 }
 
 // 创建路由器
-const router = createRouter.call(config)
+const router = createRouter()
 
 router.createRouter = createRouter
 

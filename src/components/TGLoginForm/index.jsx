@@ -48,7 +48,7 @@ export default Form.create({ name: 'TGLoginForm' })({
               const menu = initializeDynamicRoutes()
 
               // 生成动态路由
-              this.$router.matcher = this.$router.createRouter.call(this.$config, menu).matcher
+              this.$router.matcher = this.$router.createRouter(menu).matcher
               this.$router.options.routes.splice(1, 1, menu)
             }
 

@@ -22,7 +22,7 @@ if (localStorage.getItem('token') && config.dynamicRouting) {
   const menu = initializeDynamicRoutes()
   const homeRouteIndex = router.options.routes.findIndex(route => route.path === '/')
 
-  router.matcher = router.createRouter.call(config, menu).matcher
+  router.matcher = router.createRouter(menu).matcher
   router.options.routes.splice(homeRouteIndex, 1, menu)
 }
 

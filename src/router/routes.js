@@ -1,13 +1,17 @@
-function getLoginComponent() {
-  return import(`@/apps${this.appName ? `/${this.appName}/views` : ''}/Login`)
-}
-
 export default function getBaseRoutes(config) {
   return [
     {
       path: '/login',
       name: 'login',
-      component: getLoginComponent.bind(config),
+      component: () => {
+        const _config = config
+
+        if (config.appName) {
+          return import(`@/apps/${_config.appName}/views/Login`)
+        } else {
+          return import('@/views/Login')
+        }
+      },
       meta: {
         title: '登录',
         keepAlive: false,
@@ -27,7 +31,20 @@ export default function getBaseRoutes(config) {
         // icon: () => import('@/assets/images/console.svg') // svg 图标方式
         icon: '' // icon-font symbol 方式
       },
-      children: []
+      children: [
+        {
+          path: '',
+          name: config.defaultRouteName,
+          // 选择布局组件
+          component: () => import('@/views/Home'),
+          meta: {
+            title: '首页',
+            keepAlive: false,
+            requiresAuth: true,
+            icon: ''
+          }
+        }
+      ]
     },
     {
       path: '/404',
