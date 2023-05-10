@@ -3,13 +3,12 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 const CompressionPlugin = require('compression-webpack-plugin') // Gzip
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const { resolve } = require('path')
-const { getAvailableProjectNames, getConfig } = require('./build/configs')
+const { getBuildConfig } = require('./build/configs')
 
-const availableProjectNames = getAvailableProjectNames()
-const config = getConfig(availableProjectNames)
+const buildConfig = getBuildConfig()
 
 module.exports = {
-  ...config,
+  ...buildConfig.config,
   publicPath: process.env.VUE_APP_PUBLIC_PATH,
   // 是否使用包含运行时编译器的 Vue 构建版本。设置为 true 后可以在 Vue 组件中使用 template 选项，但应用会额外增加 10kb 左右。
   // 默认值是false
@@ -42,6 +41,21 @@ module.exports = {
       less: { lessOptions: { javascriptEnabled: true, math: 'always' } }
     }
   },
+  configureWebpack: {
+    externals: [
+      {
+        //   'vue': 'Vue',
+        //   'vue-router': 'VueRouter',
+        //   'vuex': 'Vuex',
+        //   'lodash': '_',
+        //   'axios': 'axios',
+        //   'moment': 'moment',
+        //   'echarts': 'echarts', // 成功（大体积）
+        //   'ant-design-vue': 'antd' // 未成功 受 babel.config.js 里按需使用antd组件配置的影响
+      },
+      buildConfig.externals
+    ]
+  },
   // 生产环境是否生成 sourceMap 文件。设置为 false 以加速生产环境构建。
   // 默认 true
   productionSourceMap: process.env.NODE_ENV !== 'production',
@@ -60,7 +74,6 @@ module.exports = {
     const svgRule = config.module.rule('svg')
 
     svgRule.uses.clear()
-
     svgRule.use('vue-svg-loader').loader('vue-svg-loader')
 
     /* ========================   复制 favicon.ico 图标    ===================================== */
@@ -70,11 +83,8 @@ module.exports = {
         patterns: [
           {
             force: true,
-            from: resolve(__dirname, availableProjectNames[0]
-              ? `src/apps/${availableProjectNames[0]}/assets/images/favicon.ico`
-              : 'public/favicon.ico'
-            ),
-            to: resolve(__dirname, `dist/${availableProjectNames?.[0] || 'favicon.ico'}`)
+            from: resolve(__dirname, `src/apps/${buildConfig.availableProjectName}/assets/images/favicon.ico`),
+            to: resolve(__dirname, `dist/${!buildConfig.appPrefix ? buildConfig.availableProjectName : 'favicon.ico'}`)
           }
         ]
       }
@@ -107,19 +117,7 @@ module.exports = {
         .plugin('BundleAnalyzerPlugin')
         .use(BundleAnalyzerPlugin)
 
-      // 排除指定包，采用 CND 方式
-      // config.set('externals', {
-      //   'vue': 'Vue',
-      //   'vue-router': 'VueRouter',
-      //   'vuex': 'Vuex',
-      //   'lodash': '_',
-      //   'axios': 'axios',
-      //   'moment': 'moment',
-      //   'echarts': 'echarts', // 成功（大体积）
-      //   'ant-design-vue': 'antd' // 未成功 受 babel.config.js 里按需使用antd组件配置的影响
-      // })
-
-      // 通过 html-webpack-plugin 将 cdn 注入到 index.html 之中
+      // 通过 html-webpack-plugin 将 cdn 注入到 index.html 之中，配合 configureWebpack.externals 使用
       // config.plugin('html')
       //   .tap(args => {
       //     args[0].cdn = {
