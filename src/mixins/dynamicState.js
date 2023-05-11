@@ -5,7 +5,7 @@
  * @Date: 2022-03-10 周四 16:31:00
  */
 
-import { commitRootInModule } from '@/utils/store'
+import { commitRootInModule, injectApisForModules } from '@/utils/store'
 import { firstLetterToUppercase } from '@/utils/utilityFunction'
 import forModuleName from './forModuleName'
 
@@ -33,14 +33,14 @@ export default (
         if (this.$store._dynamicModules[customModuleName]) {
           // 判断是否已经注册了该模块
           if (!this.$store.hasModule(customModuleName)) {
-            this.$store.registerModule(
+            const storeModule = this.$store._dynamicModules[customModuleName]?.(commitRootInModule.bind(
+              null,
               customModuleName,
-              this.$store._dynamicModules[customModuleName]?.(commitRootInModule.bind(
-                null,
-                customModuleName,
-                this.$store.commit
-              ))
-            )
+              this.$store.commit
+            ))
+
+            storeModule.actions = injectApisForModules(storeModule.actions, this.$store._apis)
+            this.$store.registerModule(customModuleName, storeModule)
 
             if (isRequestData) {
               // 动态注册store模块后，立即请求该模块的数据
@@ -82,14 +82,14 @@ export default (
           if (this.$store._dynamicModules[this.moduleName]) {
             // 判断是否已经注册了该模块
             if (!this.$store.hasModule(this.moduleName)) {
-              this.$store.registerModule(
+              const storeModule = this.$store._dynamicModules[this.moduleName]?.(commitRootInModule.bind(
+                null,
                 this.moduleName,
-                this.$store._dynamicModules[this.moduleName]?.(commitRootInModule.bind(
-                  null,
-                  this.moduleName,
-                  this.$store.commit
-                ))
-              )
+                this.$store.commit
+              ))
+
+              storeModule.actions = injectApisForModules(storeModule.actions, this.$store._apis)
+              this.$store.registerModule(this.moduleName, storeModule)
             }
           } else {
             console.error(`未在vuex store(store/dynamicModules/modules)中找到与“${this.moduleName}”对应的名称，vuex 动态模块将不会创建！`)

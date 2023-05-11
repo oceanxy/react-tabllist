@@ -129,9 +129,15 @@ function getBuildConfig() {
           typeof context === 'string' && context.includes('apps') &&
           typeof request === 'string' && request.includes(external)
         ) {
-          // 排除 src/apps 下不需要打包的子仓库，为了防止报错，这些被 webpack 排除打包的文件的引用全部用404页面来代替（可以理解成
-          // 占位符，并无实际意义，也不会在系统中出现）
-          return callback(null, 'import src/views/NotFound')
+          // 重置 src/apps 下不需要打包的子仓库的文件
+          // https://v4.webpack.docschina.org/configuration/externals/#externals
+          if (request.includes('/config/index.js')) {
+            return callback(null, 'require {}')
+          } else if (request.includes('/routes.js')) {
+            return callback(null, 'import []')
+          } else {
+            return callback(null, 'import {}')
+          }
         }
       }
 

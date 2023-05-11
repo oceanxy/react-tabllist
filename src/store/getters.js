@@ -6,9 +6,9 @@ export default {
    * @returns {function(*, *, string=, boolean=): *}
    */
   getState: state => (stateName, moduleName, submoduleName = '', detectPresence = true) => {
-    const _state = (state[moduleName][submoduleName] ?? state[moduleName])[stateName]
+    const module = state[moduleName][submoduleName] ?? state[moduleName]
 
-    if (detectPresence && _state === undefined && process.env.NODE_ENV !== 'production') {
+    if (detectPresence && !(stateName in module) && process.env.NODE_ENV !== 'production') {
       console.warn(
         `未从store（${moduleName}${submoduleName ? `.${submoduleName}` : ''}）中找到预定义的 "${stateName}" 字段。` +
         `请确保已预定义 store.${moduleName}${submoduleName ? `.${submoduleName}` : ''}.${stateName} 字段。` +
@@ -16,7 +16,7 @@ export default {
       )
     }
 
-    return _state
+    return module[stateName]
   },
   // ==============以下函数式getter可能会被取消，不建议使用=============
   getLoading: state => (moduleName, submoduleName = '') => {

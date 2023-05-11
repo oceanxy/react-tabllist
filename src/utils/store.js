@@ -37,33 +37,35 @@ export function injectApisForModules(actions, apis) {
  * @param modulesFiles 从 require.context 导入的文件
  * @param apis {Object} 全局apis
  * @param regular {RegExp} 从导入文件的路径中获取名称的正则表达式
- * @param [initials] {boolean} 以首字母命名，默认 false（当模块名称过长时，可以设置为true）
+ * @param [initials] {boolean} 是否取名称中每个单词的首字母来命名模块，默认 false（当模块名称过长时，建议设置为 true）
  * @returns {Object}
  */
 export function getStoreModulesFromFiles(modulesFiles, apis, regular, initials) {
   return modulesFiles.keys().reduce((modules, modulePath) => {
-    let moduleName
-
-    if (!initials) {
-      // eg. 设置 './app.js' => 'app'
-      moduleName = modulePath.replace(regular, '$1')
-    } else {
-      moduleName = modulePath.replace(/^\.\/(.*)\.\w+$/, '$1')
-
-      // apps 下的文件夹名称通常比较长，取其每个单词的首字母组合当作store内每个app的前缀
-      const newName = getFirstLetterOfEachWordOfAppName(moduleName.substring(0, moduleName.indexOf('/')))
-
-      moduleName = newName + '/' + moduleName.substring(moduleName.lastIndexOf('/') + 1)
-    }
-
     const value = modulesFiles(modulePath)
 
-    // 向 module 中的 actions 注入 apis
-    if (value.default.actions) {
+    if (value.default?.actions) {
       value.default.actions = injectApisForModules(value.default.actions, apis)
     }
 
-    modules[moduleName] = value.default
+    // 向 module 中的 actions 注入 apis
+    if (value.default) {
+      let moduleName
+
+      if (!initials) {
+        // eg. 设置 './app.js' => 'app'
+        moduleName = modulePath.replace(regular, '$1')
+      } else {
+        moduleName = modulePath.replace(/^\.\/(.*)\.\w+$/, '$1')
+
+        // apps 下的文件夹名称通常比较长，取其每个单词的首字母组合当作store内每个app的前缀
+        const newName = getFirstLetterOfEachWordOfAppName(moduleName.substring(0, moduleName.indexOf('/')))
+
+        moduleName = newName + '/' + moduleName.substring(moduleName.lastIndexOf('/') + 1)
+      }
+
+      modules[moduleName] = value.default
+    }
 
     return modules
   }, {})
@@ -79,9 +81,11 @@ export function getApisFromFiles(modulesFiles) {
     // eg. 设置 './app.js' => 'app'
     const value = modulesFiles(modulePath)
 
-    modules = {
-      ...modules,
-      ...value.default
+    if (value.default) {
+      modules = {
+        ...modules,
+        ...value.default
+      }
     }
 
     return modules

@@ -3,11 +3,10 @@ import Vuex from 'vuex'
 import getters from './getters'
 import mutations from './mutations'
 import actions from './actions'
-import getApis from '@/apis'
+import apis from '@/apis'
 import { getStoreModulesFromFiles, injectApisForModules } from '@/utils/store'
 
 Vue.use(Vuex)
-const apis = getApis()
 
 // require.context 请参考：https://webpack.js.org/guides/dependency-management/#requirecontext
 // 框架层通用模块
