@@ -49,7 +49,7 @@ export default {
       return name ? name.at(-1).toUpperCase() : ''
     },
     theme() {
-      return this.$store.state?.login?.userInfo?.themeFileName ?? this.$config.theme.fileName
+      return this.$store.state?.login?.userInfo?.themeFileName ?? this.$config.theme.default
     }
   },
   provide: { moduleName: 'login' },
@@ -296,18 +296,16 @@ export default {
                             <IconFont type={'icon-global-hf'} />
                           </Button>
                           <Menu slot={'overlay'}>
-                            <Menu.Item
-                              disabled={this.theme === 'blue.less'}
-                              onClick={() => this.switchThemes('blue.less')}
-                            >
-                              蓝色
-                            </Menu.Item>
-                            <Menu.Item
-                              disabled={this.theme === 'red.less'}
-                              onClick={() => this.switchThemes('red.less')}
-                            >
-                              红色
-                            </Menu.Item>
+                            {
+                              this.$config.theme?.availableThemes.map(item => (
+                                <Menu.Item
+                                  disabled={this.theme === 'blue.less'}
+                                  onClick={() => this.switchThemes(item.fileName)}
+                                >
+                                  {item.name}
+                                </Menu.Item>
+                              ))
+                            }
                           </Menu>
                         </Dropdown>
                       )

@@ -36,8 +36,10 @@ module.exports = {
   theme: {
     // 是否在header中显示切换主题按钮
     show: true,
-    // 主题文件名（位于 @/assets/styles/theme）
-    fileName: 'blue.less'
+    // 默认主题文件名
+    default: 'blue.less',
+    // 可用的主题文件 （位于 @/assets/styles/theme）
+    availableThemes: [{ name: '蓝色', fileName: 'blue.less' }]
   },
   // 消息
   news: {
