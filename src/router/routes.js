@@ -4,10 +4,23 @@ export default function getBaseRoutes(config) {
       path: '/login',
       name: 'login',
       component: () => {
-        const _config = config
+        let componentPath
 
-        if (config.appName) {
-          return import(`@/apps/${_config.appName}/views/Login`)
+        /* 在所有可用的子仓库里循环查找登录组件，找到第一个可用的组件则终止循环，如果未找到则使用 src/views/Login*/
+
+        const loginFiles = require.context('@/apps', true, /views\/Login\/index\.jsx$/)
+
+        for (const filepath of loginFiles.keys()) {
+          const loginComponent = loginFiles(filepath).default
+
+          if (loginComponent) {
+            componentPath = filepath
+            break
+          }
+        }
+
+        if (componentPath) {
+          return import(`@/apps${componentPath.substring(1)}`)
         } else {
           return import('@/views/Login')
         }
