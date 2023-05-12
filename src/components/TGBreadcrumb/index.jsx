@@ -30,7 +30,7 @@ export default {
       }
 
       // 替换面包屑第一级的名称
-      if (matchedRoutes[0].path === '') {
+      if (matchedRoutes[0]?.path === '') {
         matchedRoutes[0].meta.title = this.$router.resolve({ name: matchedRoutes[0].redirect.name }).route.meta.title
       }
 
