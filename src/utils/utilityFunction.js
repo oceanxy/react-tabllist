@@ -145,6 +145,24 @@ export function downloadFile(blobOrUrl, fileName) {
 }
 
 /**
+ * 获取当前项目下所有可用的子项目的路由表
+ * @returns {VueRouter.route[]}
+ */
+export function getRoutes() {
+  const routeFiles = require.context('@/apps', true, /router\/routes\.js$/)
+
+  return routeFiles.keys().reduce((menuRoutes, filepath) => {
+    const routes = routeFiles(filepath).default
+
+    if (routes) {
+      menuRoutes.push(...routes)
+    }
+
+    return menuRoutes
+  }, [])
+}
+
+/**
  * 获取应用名称每个单词的首字母组成的字符串
  * 比如 'create-a-new-projects' => 'canp'
  * @param appName

@@ -43,8 +43,7 @@
 <script>
 import './assets/styles/index.scss'
 import { Menu } from 'ant-design-vue'
-import { initializeDynamicRoutes } from '@/utils/utilityFunction'
-import getBaseRoutes from '@/router/routes'
+import { getRoutes, initializeDynamicRoutes } from '@/utils/utilityFunction'
 
 // 函数组件 自定义子菜单
 const TGSubMenu = {
@@ -189,9 +188,7 @@ export default {
     if (this.$config.dynamicRouting) {
       this.getMenuRoutes()
     } else {
-      const constRoutes = getBaseRoutes(this.$config)
-
-      this.menuRoutes = constRoutes[1].children
+      this.menuRoutes = getRoutes()
     }
   },
   methods: {

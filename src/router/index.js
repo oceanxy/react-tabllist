@@ -9,6 +9,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import getBaseRoutes from './routes'
 import config from '@/config'
+import { getRoutes } from '@/utils/utilityFunction'
 
 const constRoutes = getBaseRoutes(config)
 const VueRouterPush = VueRouter.prototype.push
@@ -25,20 +26,18 @@ Vue.use(VueRouter)
  * @returns {VueRouter}
  */
 function createRouter(routes) {
-  const _config = config
   const homeRoutesIndex = constRoutes.findIndex(route => route.path === '/')
+  const newRoutes = [...constRoutes]
 
   // 动态路由
   if (config.dynamicRouting && routes) {
     if (Array.isArray(routes)) {
-      constRoutes[homeRoutesIndex].children = constRoutes[homeRoutesIndex].children.concat(routes)
+      newRoutes[homeRoutesIndex].children = routes
     } else {
       constRoutes.splice(homeRoutesIndex, 1, routes)
     }
   } else {
-    const routeFiles = require(`../apps/${_config.appName}/router/routes.js`).default
-
-    constRoutes[homeRoutesIndex].children = constRoutes[homeRoutesIndex].children.concat(routeFiles)
+    newRoutes[homeRoutesIndex].children = getRoutes()
   }
 
   return new VueRouter({
