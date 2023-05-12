@@ -39,7 +39,10 @@ module.exports = {
     // 默认主题文件名
     default: 'blue.less',
     // 可用的主题文件 （位于 @/assets/styles/theme）
-    availableThemes: [{ name: '蓝色', fileName: 'blue.less' }]
+    availableThemes: [
+      { name: '蓝色', fileName: 'blue.less' },
+      { name: '红色', fileName: 'red.less' }
+    ]
   },
   // 消息
   news: {
