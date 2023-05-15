@@ -1,4 +1,4 @@
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin // Webpack包文件分析器
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin // Webpack包文件分析器
 // const VConsolePlugin = require('vconsole-webpack-plugin') // 引入 移动端模拟开发者工具 插件 （另：https://github.com/liriliri/eruda）
 const CompressionPlugin = require('compression-webpack-plugin') // Gzip
 const CopyWebpackPlugin = require('copy-webpack-plugin')
@@ -84,7 +84,11 @@ module.exports = {
           {
             force: true,
             from: resolve(__dirname, `src/apps/${buildConfig.availableProjectName}/assets/images/favicon.ico`),
-            to: resolve(__dirname, `dist/${!buildConfig.appPrefix ? buildConfig.availableProjectName : 'favicon.ico'}`)
+            to: resolve(__dirname, `dist/${
+              +buildConfig.appSeparately === 1
+                ? buildConfig.appPrefix || buildConfig.availableProjectName
+                : 'favicon.ico'
+            }`)
           }
         ]
       }
@@ -113,9 +117,9 @@ module.exports = {
       ])
 
       // Webpack包文件分析器(https://github.com/webpack-contrib/webpack-bundle-analyzer)
-      config
-        .plugin('BundleAnalyzerPlugin')
-        .use(BundleAnalyzerPlugin)
+      // config
+      //   .plugin('BundleAnalyzerPlugin')
+      //   .use(BundleAnalyzerPlugin)
 
       // 通过 html-webpack-plugin 将 cdn 注入到 index.html 之中，配合 configureWebpack.externals 使用
       // config.plugin('html')
