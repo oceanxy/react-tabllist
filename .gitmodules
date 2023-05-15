@@ -1,6 +1,0 @@
-[submodule "src/apps/ensuring-deliveries-of-presold-homes"]
-	path = src/apps/ensuring-deliveries-of-presold-homes
-	url = ssh://git@git.lanjor.cn:52202/fed/pdb/yuxing/ensuring-deliveries-of-presold-homes.git
-[submodule "src/apps/federation-of-new-social-class-professionals"]
-	path = src/apps/federation-of-new-social-class-professionals
-	url = ssh://git@git.lanjor.cn:52202/fed/pdb/xzl/federation-of-new-social-class-professionals.git
