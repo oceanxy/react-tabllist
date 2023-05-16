@@ -36,7 +36,7 @@ export default function getBaseRoutes(config) {
       name: 'home',
       redirect: { name: config.defaultRouteName },
       // 选择布局组件
-      component: () => import('@/layouts/TGBackendSystem'),
+      component: () => import(`@/layouts/${config.layout}`),
       meta: {
         title: '后台',
         keepAlive: false,

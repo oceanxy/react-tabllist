@@ -2,6 +2,8 @@ module.exports = {
   // 当前生效配置的前缀，默认 'index'，代表取 src/config/index.js 作为项目运行的配置文件。
   // 为其他有效值时，则取对应的文件作为项目运行的配置文件。位于 src/apps/子系统/config/index.js 中的 appPrefix 字段值。
   appPrefix: 'xzl',
+  // 布局组件（src/layouts）默认 TGBackendSystem 组件。后台管理系统
+  layout: 'TGBackendSystem',
   // mock数据开关。开发模式下生效
   mock: false,
   // 请求超时时间
