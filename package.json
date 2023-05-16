@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "node ./build --app-mode dev",
+    "dev": "vue-cli-service serve --app-pref crv --app-proj visualization",
+    "devx": "node ./build --app-mode dev",
     "build": "node ./build --app-mode build",
     "lint": "vue-cli-service lint"
   },
