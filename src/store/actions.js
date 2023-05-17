@@ -14,7 +14,6 @@ export default {
    * @param [isFetchList=true] {boolean} 是否触发页面列表数据更新的请求，默认true
    * @param [isResetSelectedRows] {boolean} 是否在成功执行后重置对应 store 内 selectedRows，默认false。一般在批量操作时使用。依赖 isFetchList
    * @param [fetchListParams] {...fetchListParams} 传递给获取列表数据(actions.getList)的参数，详情见 actions.getList 参数。依赖 isFetchList
-   *
    */
   async setSearch({
     state,

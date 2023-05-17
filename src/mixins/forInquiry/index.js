@@ -106,6 +106,20 @@ export default ({
       this.initialValues = { ...this.initialValues, ...cloneDeep(this.search) }
     }
 
+    // 监听搜索表单的值的变化，与 store 做同步。以便其他组件执行表格查询时的参数统一
+    this.$watch(
+      () => this.form.getFieldsValue(),
+      async value => {
+        await this.$store.commit('setState', {
+          value,
+          moduleName: this.moduleName,
+          submoduleName: this.submoduleName,
+          stateName: 'search',
+          merge: true
+        })
+      }
+    )
+
     this.search = this.initialValues
   },
   mounted() {
