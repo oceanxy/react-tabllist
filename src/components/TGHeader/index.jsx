@@ -299,7 +299,7 @@ export default {
                             {
                               this.$config.theme?.availableThemes.map(item => (
                                 <Menu.Item
-                                  disabled={this.theme === 'blue.less'}
+                                  disabled={this.theme === item.fileName}
                                   onClick={() => this.switchThemes(item.fileName)}
                                 >
                                   {item.name}
