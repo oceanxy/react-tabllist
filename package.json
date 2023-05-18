@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "vue-cli-service serve --app-pref crv --app-proj rongchang-visualization",
+    "dev": "vue-cli-service serve --app-pref rc --app-proj rongchang-visualization",
+    "dev-rcc": "vue-cli-service serve --app-pref rc --app-proj rongchang-comprehensive-management-platform",
     "dev-xzl": "vue-cli-service serve --app-pref xzl --app-proj federation-of-new-social-class-professionals",
     "dev-yx": "vue-cli-service serve --app-pref yx --app-proj ensuring-deliveries-of-presold-homes",
     "devx": "node ./build --app-mode dev",
