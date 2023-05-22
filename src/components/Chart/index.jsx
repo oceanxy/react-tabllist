@@ -54,6 +54,7 @@ export default {
   render() {
     return (
       <div ref="chartContainer" class="tg-chart-container">
+        {this.$slots.default}
         <div ref="chart" class="chart-container" />
       </div>
     )
