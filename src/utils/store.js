@@ -50,18 +50,17 @@ export function getStoreModulesFromFiles(modulesFiles, apis, regular, initials) 
 
     // 向 module 中的 actions 注入 apis
     if (value.default) {
-      let moduleName
+      let moduleName = modulePath.replace(regular, '$1')
 
-      if (!initials) {
-        // eg. 设置 './app.js' => 'app'
-        moduleName = modulePath.replace(regular, '$1')
-      } else {
-        moduleName = modulePath.replace(/^\.\/(.*)\.\w+$/, '$1')
+      if (initials) {
+        let tempName = modulesFiles.id.split('/')
+        const index = tempName.findIndex(item => item === 'apps')
 
-        // apps 下的文件夹名称通常比较长，取其每个单词的首字母组合当作store内每个app的前缀
-        const newName = getFirstLetterOfEachWordOfAppName(moduleName.substring(0, moduleName.indexOf('/')))
-
-        moduleName = newName + '/' + moduleName.substring(moduleName.lastIndexOf('/') + 1)
+        if (index > -1) {
+          tempName = tempName[index + 1]
+          // apps 下的文件夹名称通常比较长，取其每个单词的首字母组合当作store内每个app的前缀
+          moduleName = getFirstLetterOfEachWordOfAppName(tempName) + '/' + moduleName
+        }
       }
 
       modules[moduleName] = value.default
