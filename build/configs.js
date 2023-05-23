@@ -105,6 +105,15 @@ function getBuildConfig() {
 
   const config = {}
 
+  config.pages = {
+    index: {
+      entry: `src/apps/${availableProjectNames[0]}/main.js`
+      // title: '',
+      // chunks: [availableProjectNames[0], 'chunk-vendors', 'chunk-common']
+    }
+  }
+
+  // 分别独立打包时，使用各自 apps 下的 main.js
   if (+appSeparately === 1) {
     config.outputDir = `dist/${appPrefix || availableProjectNames[0]}`
   }

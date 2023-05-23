@@ -53,7 +53,7 @@ function dev(params) {
 
   if (availableProjectNames?.length) {
     try {
-      // 如果有多个子项目的appPrefix都为顶级config的指定值，将将这些项目同时启动
+      // 如果有多个子项目的appPrefix值都为顶级config的指定值，将将这些项目同时启动
       if (appPrefix) {
         on(
           child_process.exec(
