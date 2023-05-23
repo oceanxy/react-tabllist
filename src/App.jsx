@@ -5,12 +5,12 @@ import { merge } from 'lodash'
 
 export default {
   name: 'TGApp',
-  data() {
-    return {
-      ratioX: 1,
-      ratioY: 1
-    }
-  },
+  // data() {
+  //   return {
+  //     ratioX: 1,
+  //     ratioY: 1
+  //   }
+  // },
   async created() {
     /* 从本地存储里还原刷新前存储的 state */
     const tempState = JSON.parse(localStorage.getItem('state'))
@@ -62,6 +62,9 @@ export default {
       <div
         id="app"
         // style={{
+        //   width: '1920px',
+        //   height: '1080px',
+        //   overflow: 'hidden',
         //   transform: `scale(${this.ratioX}, ${this.ratioY})`,
         //   transformOrigin: 'left top'
         // }}
