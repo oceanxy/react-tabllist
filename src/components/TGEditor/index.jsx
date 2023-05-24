@@ -42,6 +42,10 @@ export default {
     event: 'change'
   },
   props: {
+    disabled: {
+      type: Boolean,
+      default: false
+    },
     value: {
       type: String,
       default: ''
@@ -95,6 +99,7 @@ export default {
       immediate: true,
       handler(value) {
         this.html = value
+        this.editorConfig.readOnly = this.disabled
       }
     }
   },
@@ -107,7 +112,7 @@ export default {
   },
   render() {
     return (
-      <div class={'tg-editor ant-input'}>
+      <div class={`tg-editor ant-input${this.disabled ? ' disabled' : ''}`}>
         <Toolbar
           style={'border-bottom: 1px solid #ccc'}
           editor={this.editor}
