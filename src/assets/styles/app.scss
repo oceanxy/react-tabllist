@@ -426,6 +426,17 @@ body {
       padding: 0 0 16px 0;
     }
 
+    .table-row-background {
+      background-color: $table-header-bg;
+    }
+
+    .ant-table-thead > tr.ant-table-row-hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td,
+    .ant-table-tbody > tr.ant-table-row-hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td,
+    .ant-table-thead > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td,
+    .ant-table-tbody > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
+      background-color: $table-row-hover-bg;
+    }
+
     .ant-form-item-required:before {
       font-weight: normal;
     }
