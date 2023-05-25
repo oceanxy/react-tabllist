@@ -88,6 +88,10 @@ function getAvailableNamesFromProjectConfig() {
   ]
 }
 
+function getDevServer(buildConfig) {
+  return require(`../src/apps/${buildConfig.availableProjectName}/config/devServer.js`)
+}
+
 function getBuildConfig() {
   const files = glob.sync('src/apps/*/config/index.js')
   let availableProjectNames = []
@@ -158,4 +162,9 @@ function getBuildConfig() {
   }
 }
 
-module.exports = { getAvailableProjectNames, getBuildConfig, getAvailableNamesFromProjectConfig }
+module.exports = {
+  getAvailableProjectNames,
+  getBuildConfig,
+  getAvailableNamesFromProjectConfig,
+  getDevServer
+}

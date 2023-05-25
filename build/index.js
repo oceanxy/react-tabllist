@@ -67,7 +67,7 @@ function dev(params) {
       throw new Error(err)
     }
   } else {
-    throw new Error('未找到可以打包的文件，请确保 src/apps 下存在有效的子系统！')
+    throw new Error(`请确保 src/apps 下存在有效的子系统（${availableProjectNames[0]}），appPrefix：${appPrefix}！`)
   }
 }
 
@@ -101,7 +101,7 @@ function build(params) {
             )
           }
         } else {
-          throw new Error('未找到可以打包的文件，请确保 src/apps 下存在有效的子系统！')
+          throw new Error(`请确保 src/apps 下存在有效的子系统（${availableProjectNames[0]}），appPrefix：${appPrefix}！`)
         }
       })
     })
