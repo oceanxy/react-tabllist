@@ -61,7 +61,7 @@ export default ({
       set(value) {
         if (Object.keys(value || {}).length) {
           this.$store.commit('setState', {
-            value: value,
+            value: this.transformValue(value),
             moduleName: this.moduleName,
             submoduleName: this.submoduleName,
             stateName: 'search',
