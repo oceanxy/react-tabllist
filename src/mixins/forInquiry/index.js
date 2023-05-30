@@ -111,7 +111,7 @@ export default ({
       () => this.form.getFieldsValue(),
       async value => {
         await this.$store.commit('setState', {
-          value,
+          value: this.transformValue(value),
           moduleName: this.moduleName,
           submoduleName: this.submoduleName,
           stateName: 'search',
