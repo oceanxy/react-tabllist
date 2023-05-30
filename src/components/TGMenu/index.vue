@@ -16,7 +16,7 @@
         :menu-info="route"
         @subMenuClick="titleClick"
         :style="route.meta.hide ? { display: 'none' } : ''"
-        :selectedKeys="selectedKeys"
+        :selected-keys="selectedKeys"
       />
       <a-menu-item
         v-else
@@ -24,16 +24,18 @@
         :style="route.meta.hide ? { display: 'none' } : ''"
       >
         <div class="ant-menu-item-title">
-          <a-icon
-            theme="filled"
-            v-if="route.meta.icon && typeof route.meta.icon !== 'string'"
-            :component="route.meta.icon"
-          />
-          <icon-font
-            v-else-if="route.meta.icon"
-            :type="route.meta.icon + (selectedKeys[0] === route.path ? $config.activeSuffixForMenuIcon : '')"
-          />
-          <span>{{ route.meta && route.meta.title }}</span>
+          <div>
+            <a-icon
+              theme="filled"
+              v-if="route.meta.icon && typeof route.meta.icon !== 'string'"
+              :component="route.meta.icon"
+            />
+            <icon-font
+              v-else-if="route.meta.icon"
+              :type="route.meta.icon + (selectedKeys.includes(route.path) ? $config.activeSuffixForMenuIcon : '')"
+            />
+            <span>{{ route.meta && route.meta.title }}</span>
+          </div>
         </div>
       </a-menu-item>
     </template>
@@ -63,7 +65,7 @@ const TGSubMenu = {
       />
       <icon-font
         v-else-if="menuInfo.meta.icon"
-        :type="menuInfo.meta.icon + (menuInfo.children.map(i => i.path).includes(selectedKeys[0])
+        :type="menuInfo.meta.icon + (selectedKeys.includes(menuInfo.path)
           ? $config.activeSuffixForMenuIcon
           : ''
         )"
@@ -77,6 +79,7 @@ const TGSubMenu = {
         :menu-info="route"
         @subMenuClick="titleClick"
         :style="route.meta.hide ? { display: 'none' } : ''"
+        :selected-keys="selectedKeys"
       />
       <a-menu-item
         v-else
@@ -84,16 +87,18 @@ const TGSubMenu = {
         :style="route.meta.hide ? { display: 'none' } : ''"
       >
         <div class="ant-menu-item-title">
-          <a-icon
-            theme="filled"
-            v-if="showSubIcon && route.meta.icon && typeof route.meta.icon !== 'string'"
-            :component="route.meta.icon"
-          />
-          <icon-font
-            v-else-if="showSubIcon && route.meta.icon"
-            :type="route.meta.icon + (selectedKeys[0] === route.path ? $config.activeSuffixForMenuIcon : '')"
-          />
-          <span>{{ route.meta && route.meta.title }}</span>
+          <div>
+            <a-icon
+              theme="filled"
+              v-if="showSubIcon && route.meta.icon && typeof route.meta.icon !== 'string'"
+              :component="route.meta.icon"
+            />
+            <icon-font
+              v-else-if="showSubIcon && route.meta.icon"
+              :type="route.meta.icon + (selectedKeys.includes(route.path) ? $config.activeSuffixForMenuIcon : '')"
+            />
+            <span>{{ route.meta && route.meta.title }}</span>
+          </div>
         </div>
       </a-menu-item>
     </template>
@@ -110,7 +115,7 @@ const TGSubMenu = {
       type: Object,
       required: true
     },
-    // 当前选中菜单的数组
+    // 选中的key（routes.js 中的 path 字段，注意不是 $route 中的 path 字段）
     selectedKeys: {
       type: Array,
       required: true
@@ -145,11 +150,9 @@ export default {
       collapsed: false,
       // 展开的父菜单项
       openKeys: [],
-      // 选中的key（routes 中的 path 字段）
+      // 选中的key（routes.js 中的 path 字段，注意不是 $route 中的 path 字段）
       selectedKeys: [],
-      /**
-       * 生成用于菜单显示的路由，根据 routes 生成
-       */
+      // 生成用于菜单显示的路由，根据 routes 生成
       menuRoutes: [],
       // 菜单滚动条距离顶部的初始值
       menuScrollTop: 0
@@ -164,7 +167,7 @@ export default {
         // 根据当前进入页面的路由设置菜单的 selectedKeys 和 openKeys 值
         for (let i = 0; i < value.matched.length; i++) {
           if (value.matched[i].path !== '') {
-            keyPath.push(value.matched[i].path.substring((keyPath.at(-1) || '').length + i))
+            keyPath.push(value.matched[i].path.substring(keyPath.join('').length + i))
           }
         }
 
@@ -172,7 +175,7 @@ export default {
         localStorage.setItem('selectedKey', value.fullPath)
 
         this.$nextTick(() => {
-          this.openKeys = keyPath.reverse()
+          this.openKeys = keyPath.reverse().slice(1)
         })
       }
     }
@@ -250,13 +253,18 @@ export default {
 
       // ------------------------------------------------------------------------
 
-      let keyPath
+      let keyPath = []
 
       if (e.key) {
         if (this.openKeys.includes(e.key)) {
-          keyPath = []
+          keyPath = [...this.openKeys]
+          keyPath.splice(this.openKeys.findIndex(i => i === e.key), 1)
         } else {
-          keyPath = [e.key]
+          if (e.domEvent.currentTarget?.parentNode?.parentNode?.classList?.contains('ant-menu-sub')) {
+            keyPath = [e.key].concat(this.openKeys)
+          } else {
+            keyPath = [e.key]
+          }
         }
       } else {
         // 获取当前点击的折叠菜单的keyPath
