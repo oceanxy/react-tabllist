@@ -12,9 +12,18 @@ import { message } from '@/utils/message'
 
 /**
  * @param [disableSubmitButton=true] {boolean} 加载表单后，在未修改表单内任一项的值之前，禁用提交按钮
+ * @param [fetchDetailsFn] {() => ({express: boolean, params: Object}) } 请求本页列表某一项数据详细信息的配置函数。
+ * 注意，如果要使用关键字 this，请不要使用箭头函数。
+ * 请求得到的数据会被合并到本页面对应模块的 store.state.currentItem 对象内。
+ *    express: 请求详细信息的条件表达式，当条件满足时才执行请求；
+ *    params：请求详细信息的参数。
+ * （一般用在编辑弹窗内，请求详细信息的接口请在 apis 文件夹下对应模块内定义，定义规则请参考 全局 action： getDetails）
  * @returns {Object}
  */
-export default ({ disableSubmitButton = true } = {}) => {
+export default ({
+  disableSubmitButton = true,
+  fetchDetailsFn = {}
+} = {}) => {
   return {
     mixins: [forModal()],
     inject: {
@@ -51,7 +60,7 @@ export default ({ disableSubmitButton = true } = {}) => {
     watch: {
       visible: {
         immediate: true,
-        handler(value) {
+        async handler(value) {
           if (value) {
             this.modalProps.okButtonProps.props.disabled = disableSubmitButton
             this.modalProps.title = (this.$parent.$attrs.modalTitle || this.modalTitle).replace(
@@ -60,6 +69,19 @@ export default ({ disableSubmitButton = true } = {}) => {
                 ? this.$parent.$attrs.candidateTitle?.[0] || this.candidateTitle[0]
                 : this.$parent.$attrs.candidateTitle?.[1] || this.candidateTitle[1]
             )
+
+            if (typeof fetchDetailsFn === 'function') {
+              const options = fetchDetailsFn.call(this)
+
+              if (options.express) {
+                await this.$store.dispatch('getDetails', {
+                  moduleName: this.moduleName,
+                  payload: options.params,
+                  stateName: 'currentItem',
+                  merge: true
+                })
+              }
+            }
           } else {
             this.form.resetFields()
           }
