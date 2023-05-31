@@ -206,9 +206,11 @@ export default ({
                 isResetSelectedRows,
                 // 附加请求参数，获取子模块数据需要的额外参数，在引用该混合的子模块内覆盖设置。
                 // 请根据参数的取值和性质自行决定在混入组件的 data 内或 computed 内定义。
-                additionalQueryParameters: {
-                  ...this.$route.query,
-                  ...(this.additionalQueryParameters || {})
+                parametersOfGetListAction: {
+                  additionalQueryParameters: {
+                    ...this.$route.query,
+                    ...(this.additionalQueryParameters || {})
+                  }
                 }
               }
 
