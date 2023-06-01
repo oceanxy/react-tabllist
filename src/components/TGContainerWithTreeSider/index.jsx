@@ -259,7 +259,7 @@ export default {
       let ids = []
 
       for (const item of treeDataSource) {
-        if (item.isParent && item.children?.length) {
+        if (item.isParent || (Array.isArray(item.children) && item.children?.length)) {
           ids.push(item.id)
           ids = ids.concat(this.getAllParentIds(item.children, onlyFirstParentNode))
         }
