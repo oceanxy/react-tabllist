@@ -207,10 +207,12 @@ export default {
   }) {
     if (!submoduleName) {
       state[moduleName][stateName] = merge
-        ? {
-          ...state[moduleName][stateName],
-          ...value
-        }
+        ? Array.isArray(state[moduleName][stateName])
+          ? state[moduleName][stateName].concat(value)
+          : {
+            ...state[moduleName][stateName],
+            ...value
+          }
         : value
     } else {
       state[moduleName][submoduleName][stateName] = merge
