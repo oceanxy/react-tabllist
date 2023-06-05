@@ -70,12 +70,15 @@ export function verificationDialog(callback, content, successfulPrompt) {
 
 /**
  * 消息框
- * @param status 操作状态
- * @param [successfulPrompt] 操作成功的提示内容
+ * @param status {boolean} 操作状态
+ * @param [prompt] {string} 提示内容
+ * @param [force=false] {boolean} 强制显示错误信息
  */
-export function message(status, successfulPrompt) {
+export function message(status, prompt, force) {
   if (status) {
-    Message.success(successfulPrompt || '操作成功！')
+    Message.success(prompt || '操作成功！')
+  } else if (force) {
+    Message.error(prompt || '操作失败！')
   } else {
     // 全局拦截有对失败的处理，这里不再重复处理
     // Message.error('操作失败！')

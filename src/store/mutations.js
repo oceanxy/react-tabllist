@@ -192,7 +192,7 @@ export default {
   /**
    * 设置数据
    * @param state {Object}
-   * @param value {Object[]} 设置的值
+   * @param value {Array || Object} 设置的值
    * @param moduleName {string} 模块名
    * @param [submoduleName] {string} 子模块名
    * @param stateName {string} 需要设置的字段，默认 state.details
@@ -207,17 +207,21 @@ export default {
   }) {
     if (!submoduleName) {
       state[moduleName][stateName] = merge
-        ? {
-          ...state[moduleName][stateName],
-          ...value
-        }
+        ? Array.isArray(state[moduleName][stateName])
+          ? state[moduleName][stateName].concat(value)
+          : {
+            ...state[moduleName][stateName],
+            ...value
+          }
         : value
     } else {
       state[moduleName][submoduleName][stateName] = merge
-        ? {
-          ...state[moduleName][submoduleName][stateName],
-          ...value
-        }
+        ? Array.isArray(state[moduleName][stateName])
+          ? state[moduleName][submoduleName][stateName].concat(value)
+          : {
+            ...state[moduleName][submoduleName][stateName],
+            ...value
+          }
         : value
     }
   },
