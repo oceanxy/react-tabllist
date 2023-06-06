@@ -129,9 +129,10 @@ export default ({
        * @param [isResetSelectedRows] {boolean} 是否在成功提交表单后重置列表的选中行数据，默认 false
        * @param [customApiName] {string} 自定义请求API
        * @param [customAction] {string} 自定义请求 action。
-       *  可选值 'add'/'update'/'custom'：
+       *  该参数仅在 this.currentItem.id 不存在时可用；反之则一定走 update Action，此时仍可自定义 customApiName。
+       *  可选值 'add'/'update'/'custom'/'export'：
        *  新增弹窗时的默认 'add'，编辑弹窗时的默认 'update'，非以上二者时默认为 'custom'，此时需要配合 customApiName 一起使用。
-       *  特例（批量更新），需要明确指定为 'update'。
+       *  特例（批量更新），需要明确指定为 'update'；导出文件的弹窗需要明确指定为 'export'。
        *  默认值判断具体规则：
        *  优先根据当前被操作的数据是否存在 id 字段来判断，
        *  如果不存在，则根据 customAction 字段来判断。
@@ -149,7 +150,7 @@ export default ({
         customDataHandler,
         done
       } = {}) {
-        if (customAction && !['add', 'update', 'custom'].includes(customAction)) {
+        if (customAction && !['add', 'update', 'custom', 'export'].includes(customAction)) {
           customAction = 'custom'
         }
 
@@ -218,6 +219,8 @@ export default ({
               // 请根据参数的取值和性质自行决定在混入组件的 data 内或 computed 内定义。
               if (action === 'export') {
                 options.fileName = this.fileName
+                options.additionalQueryParameters = options.parametersOfGetListAction.additionalQueryParameters
+                delete options.parametersOfGetListAction
               }
 
               const response = await this.$store.dispatch(action, options)
