@@ -32,7 +32,7 @@ body {
     justify-content: center;
     align-items: center;
 
-    &>div {
+    & > div {
       width: 64px;
       height: 20px;
       display: flex;
@@ -160,7 +160,7 @@ body {
       flex-wrap: wrap;
     }
 
-    &>.ant-form-item:not(.activity) {
+    & > .ant-form-item:not(.activity) {
       flex: none;
       width: 220px;
       box-sizing: border-box;
@@ -207,7 +207,7 @@ body {
 
           // inquiry 组件内的行内表单防止样式错位，隐藏文字提示信息
           &.has-error .ant-form-explain,
-          .ant-form-item-children+* {
+          .ant-form-item-children + * {
             display: none;
           }
 
@@ -215,21 +215,21 @@ body {
             display: flex;
             height: 100%;
 
-            &>.ant-select .ant-select-selection,
-            &>.ant-input-affix-wrapper .ant-input,
-            &>.ant-input-number,
-            &>.ant-input,
-            &>.ant-calendar-picker .ant-calendar-picker-input,
-            &>.ant-input-group {
+            & > .ant-select .ant-select-selection,
+            & > .ant-input-affix-wrapper .ant-input,
+            & > .ant-input-number,
+            & > .ant-input,
+            & > .ant-calendar-picker .ant-calendar-picker-input,
+            & > .ant-input-group {
               width: 100%;
               //padding-left: 80px;
             }
 
-            &>.ant-calendar-picker {
+            & > .ant-calendar-picker {
               width: 100%;
             }
 
-            &>.ant-input-group {
+            & > .ant-input-group {
               display: flex;
               align-items: center;
               gap: 5px;
@@ -375,7 +375,8 @@ body {
   flex: none;
 }
 
-.tg-table.ant-table-wrapper {
+.tg-table.ant-table-wrapper,
+.multi-input-table.ant-table-wrapper {
   flex: auto;
   overflow: hidden;
 
@@ -413,8 +414,8 @@ body {
   }
 
   .ant-table.ant-table-small {
-    &>.ant-table-content>.ant-table-body>table>.ant-table-thead>tr>th {
-      background: $table-header-bg;
+    & > .ant-table-content > .ant-table-body > table > .ant-table-thead > tr > th {
+      background-color: $table-header-bg;
       color: $text-color-secondary;
       font-weight: bolder;
       // font-size: 14px; // 全局默认字号为14号
@@ -433,10 +434,10 @@ body {
       background-color: $table-header-bg;
     }
 
-    .ant-table-thead>tr.ant-table-row-hover:not(.ant-table-expanded-row):not(.ant-table-row-selected)>td,
-    .ant-table-tbody>tr.ant-table-row-hover:not(.ant-table-expanded-row):not(.ant-table-row-selected)>td,
-    .ant-table-thead>tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected)>td,
-    .ant-table-tbody>tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected)>td {
+    .ant-table-thead > tr.ant-table-row-hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td,
+    .ant-table-tbody > tr.ant-table-row-hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td,
+    .ant-table-thead > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td,
+    .ant-table-tbody > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
       background-color: $table-row-hover-bg;
     }
 
@@ -444,21 +445,23 @@ body {
       font-weight: normal;
     }
 
-    .ant-table-thead>tr>th {
+    .ant-table-footer,
+    .ant-table-thead > tr > th {
       font-weight: bolder;
+      background: $table-header-bg;
 
       .unit-text {
         color: $text-color-secondary;
       }
     }
 
-    .ant-table-tbody>tr>th {
+    .ant-table-tbody > tr > th {
       border-right: 1px solid $border-color-base;
       border-bottom: 1px solid $border-color-base;
     }
 
     &.ant-table-bordered .ant-table-thead {
-      &>tr>th {
+      & > tr > th {
         box-sizing: border-box;
       }
     }
@@ -551,10 +554,10 @@ body {
 /********************************* 子模块容器 *************************************/
 .ant-modal-root.tg-submodule-container {
   .ant-modal-body {
-    &>.ant-spin-nested-loading {
+    & > .ant-spin-nested-loading {
       height: 100%;
 
-      &>.ant-spin-container {
+      & > .ant-spin-container {
         overflow: hidden;
         display: flex;
         flex-direction: column;
@@ -760,14 +763,6 @@ body {
     td {
       padding: 6px;
     }
-  }
-}
-
-.tg-multi-head-footer-bg {
-
-  .ant-table-thead,
-  .ant-table-footer {
-    background-color: #fafafa !important;
   }
 }
 
