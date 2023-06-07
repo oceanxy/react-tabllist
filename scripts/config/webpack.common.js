@@ -203,7 +203,7 @@ module.exports = {
      */
     splitChunks: {
       chunks: 'all',
-      name: true
+      name: false
     }
   }
 }

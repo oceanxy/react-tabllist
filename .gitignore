@@ -330,3 +330,7 @@ tags
 .idea/vcs.xml
 /.idea/watcherTasks.xml
 /.idea/jsLibraryMappings.xml
+/.idea/.gitignore
+/.idea/git_toolbox_prj.xml
+/.idea/markdown.xml
+/.idea/prettier.xml
