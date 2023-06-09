@@ -1,11 +1,9 @@
 import '@/assets/styles/app.scss'
 import Vue from 'vue'
-import App from './App'
 import config from './config'
 import useComponents from '@/utils/antvComponents'
-import router from './router'
+import router, { resetRoutes } from './router'
 import store from './store'
-import { initializeDynamicRoutes } from '@/utils/utilityFunction'
 
 useComponents(config)
 
@@ -18,16 +16,12 @@ if (process.env.NODE_ENV === 'development' && config.mock) {
   require('../mock/index.js')
 }
 
-if (localStorage.getItem('token') && config.dynamicRouting) {
-  const menu = initializeDynamicRoutes()
-  const homeRouteIndex = router.options.routes.findIndex(route => route.path === '/')
-
-  router.matcher = router.createRouter(menu).matcher
-  router.options.routes.splice(homeRouteIndex, 1, menu)
+if (localStorage.getItem('token')) {
+  resetRoutes()
 }
 
 new Vue({
   router,
   store,
-  render: h => h(App)
+  render: h => h(APP_COMPONENT.default)
 }).$mount('#app')

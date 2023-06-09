@@ -1,76 +1,4 @@
 /**
- * 生成路由
- * @param [menu]
- * @returns {{children: *[], meta: {}}}
- */
-export function initializeDynamicRoutes(menu) {
-  if (!menu) {
-    menu = JSON.parse(localStorage.getItem('menu'))[0]
-  }
-
-  const route = { meta: {}, children: [] }
-  const {
-    name,
-    icon,
-    children,
-    obj: {
-      name: routeName,
-      menuUrl: url,
-      redirect,
-      redirectRouteName,
-      component,
-      keepAlive,
-      requiresAuth,
-      hideBreadCrumb,
-      hideChildren,
-      hide
-    }
-  } = menu
-
-  route.path = url || ''
-  route.meta.title = name
-  route.meta.keepAlive = !!keepAlive
-  route.meta.requiresAuth = !!requiresAuth
-  route.meta.hideBreadCrumb = !!hideBreadCrumb
-  route.meta.hideChildren = !!hideChildren
-  route.meta.hide = !!hide
-
-  if (name) {
-    route.name = routeName
-  }
-
-  if (!component || component === '@/components/TGRouterView') {
-    route.component = () => import('@/components/TGRouterView')
-  } else {
-    if (component.includes('layouts')) {
-      route.component = () => import('@/layouts/' + component.slice(10))
-    } else if (component.includes('apps')) {
-      route.component = () => import('@/apps/' + component.slice(7))
-    } else {
-      route.component = () => import('@/views/' + component.slice(8))
-    }
-  }
-
-  if (icon && /\.(svg|png|jpg|jpeg)$/.test(icon)) {
-    route.meta.icon = () => import(`@/assets/images/${icon}`)
-  } else {
-    route.meta.icon = icon
-  }
-
-  if (redirect) {
-    route.redirect = { name: redirectRouteName }
-  }
-
-  if (children?.length) {
-    children.forEach(child => {
-      route.children.push(initializeDynamicRoutes(child))
-    })
-  }
-
-  return route
-}
-
-/**
  * 连字符转驼峰
  * 例如：my-profile -> myProfile
  * @param name
@@ -145,24 +73,6 @@ export function downloadFile(blobOrUrl, fileName) {
 }
 
 /**
- * 获取当前项目下所有可用的子项目的路由表
- * @returns {VueRouter.route[]}
- */
-export function getRoutes() {
-  const routeFiles = require.context('@/apps', true, /router\/routes\.js$/)
-
-  return routeFiles.keys().reduce((menuRoutes, filepath) => {
-    const routes = routeFiles(filepath).default
-
-    if (routes) {
-      menuRoutes.push(...routes)
-    }
-
-    return menuRoutes
-  }, [])
-}
-
-/**
  * 获取应用名称每个单词的首字母组成的字符串
  * 比如 'create-a-new-projects' => 'canp'
  * @param appName
@@ -211,4 +121,3 @@ export function uuid(len = 16, radix = 16) {
 
   return uuid.join('')
 }
-

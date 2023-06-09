@@ -9,8 +9,9 @@ import variablesScss from './themeFromLess.scss'
 
 export default function getVariablesStyle(config, store) {
   // 加载主题
-  const fileName = config.theme.default
-  const theme = localStorage.getItem('theme') || store?.state?.login?.userInfo?.themeFileName || fileName
+  const theme = localStorage.getItem('theme') ||
+    store?.state?.login?.userInfo?.themeFileName ||
+    config.theme.default
   let less
 
   try {

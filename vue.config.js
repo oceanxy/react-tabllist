@@ -2,8 +2,10 @@
 // const VConsolePlugin = require('vconsole-webpack-plugin') // 引入 移动端模拟开发者工具 插件 （另：https://github.com/liriliri/eruda）
 const CompressionPlugin = require('compression-webpack-plugin') // Gzip
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const { resolve } = require('path')
+const { resolve, join } = require('path')
 const { getBuildConfig, getDevServer } = require('./build/configs')
+const { ProvidePlugin } = require('webpack')
+const { accessSync, constants, readdirSync } = require('fs')
 
 const buildConfig = getBuildConfig()
 const devServer = getDevServer(buildConfig)
@@ -48,6 +50,7 @@ module.exports = {
   // https://github.com/neutrinojs/webpack-chain see https://github.com/vuejs/vue-cli/blob/dev/docs/webpack.md
   chainWebpack: config => {
     /**
+     * =======================================================================================
      * 删除懒加载模块的prefetch，降低带宽压力
      * https://cli.vuejs.org/zh/guide/html-and-static-assets.html#prefetch
      * 而且预渲染时生成的prefetch标签是modern版本的，低版本浏览器是不需要的
@@ -75,6 +78,72 @@ module.exports = {
             }`)
           }
         ]
+      }
+    ])
+
+    /* ======================================================================================== */
+
+    /* ==================================   定义全局变量    ===================================== */
+    // 检测子项目是否定义了 Login 组件，否则使用主框架的默认登录组件
+    let LOGIN_COMPONENT = ''
+
+    try {
+      accessSync(
+        join(__dirname, `src/apps/${buildConfig.availableProjectName}/views/Login/index.jsx`),
+        constants.F_OK
+      )
+
+      LOGIN_COMPONENT = resolve(join(__dirname, `src/apps/${buildConfig.availableProjectName}/views/Login/index.jsx`))
+    } catch (e) {
+      LOGIN_COMPONENT = resolve(join(__dirname, 'src/views/Login/index.jsx'))
+    }
+
+    // 加载子项目的 store 模块
+    // const storeModules = {}
+    //
+    // readdirSync(
+    //   join(__dirname, `src/apps/${buildConfig.availableProjectName}/store`),
+    //   { withFileTypes: true }
+    // ).forEach(Dirent => {
+    //   if (Dirent.isDirectory()) {
+    //     let files
+    //
+    //     if (Dirent.name === 'modules') {
+    //       const alias = buildConfig.availableProjectName.split('-').map(i => i[0]).join('')
+    //
+    //       files = readdirSync(join(__dirname, `src/apps/${buildConfig.availableProjectName}/store`, Dirent.name))
+    //       files.forEach(file => {
+    //         storeModules[`${alias}/${file.substring(0, file.length - 3)}`] =
+    //           `@/apps/${buildConfig.availableProjectName}/store/${Dirent.name}/${file}`
+    //       })
+    //     } else {
+    //       files = readdirSync(join(
+    //         __dirname,
+    //         `src/apps/${buildConfig.availableProjectName}/store`,
+    //         Dirent.name,
+    //         'modules'
+    //       ))
+    //
+    //       files.forEach(file => {
+    //         storeModules[file.substring(0, file.length - 3)] =
+    //           `@/apps/${buildConfig.availableProjectName}/store/${Dirent.name}/modules/${file}`
+    //       })
+    //     }
+    //   }
+    // })
+
+    config.plugin('ProvidePlugin').use(ProvidePlugin, [
+      {
+        // 预加载子项目配置文件
+        APP_CONFIG: resolve(join(__dirname, `src/apps/${buildConfig.availableProjectName}/config/index.js`)),
+        // 预加载子项目入口组件
+        APP_COMPONENT: buildConfig.availableProjectName
+          ? resolve(join(__dirname, `src/apps/${buildConfig.availableProjectName}/App.jsx`))
+          : resolve(join(__dirname, 'src/App.jsx')),
+        // 预加载子项目路由
+        APP_ROUTES: resolve(join(__dirname, `src/apps/${buildConfig.availableProjectName}/router/routes.js`)),
+        // 预加载子项目登录组件
+        LOGIN_COMPONENT
       }
     ])
 

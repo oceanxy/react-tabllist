@@ -1,9 +1,9 @@
 import Mock from 'mockjs'
-import appConfig from '@/config'
+import APP_CONFIG from '@/config'
 
 const URL = require('url')
 
-Mock.setup({ timeout: appConfig.mockDelay })
+Mock.setup({ timeout: APP_CONFIG.mockDelay })
 const { mock } = Mock
 
 const modulesFiles = require.context('./modules', true, /\.js$/)

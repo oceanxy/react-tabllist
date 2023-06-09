@@ -1,64 +1,43 @@
-export default function getBaseRoutes(config) {
+import config from '@/config'
+
+export default function getBaseRoutes(routes) {
+  const _config = config
+
+  let rootRoute = {
+    path: '/',
+    name: 'home',
+    component: () => import('@/views/Home'),
+    meta: {
+      title: '后台',
+      keepAlive: false,
+      requiresAuth: true,
+      // icon: () => import('@/assets/images/console.svg') // svg 图标方式
+      icon: '' // icon-font symbol 方式
+    }
+  }
+
+  if (routes) {
+    rootRoute = {
+      ...rootRoute,
+      redirect: { name: config.defaultRouteName },
+      // 选择布局组件
+      component: () => import(`@/layouts/${_config.layout}`),
+      children: routes
+    }
+  }
+
   return [
     {
       path: '/login',
       name: 'login',
-      component: () => {
-        let componentPath
-
-        /* 在所有可用的子仓库里循环查找登录组件，找到第一个可用的组件则终止循环，如果未找到则使用 src/views/Login*/
-
-        const loginFiles = require.context('@/apps', true, /views\/Login\/index\.jsx$/)
-
-        for (const filepath of loginFiles.keys()) {
-          const loginComponent = loginFiles(filepath).default
-
-          if (loginComponent) {
-            componentPath = filepath
-            break
-          }
-        }
-
-        if (componentPath) {
-          return import(`@/apps${componentPath.substring(1)}`)
-        } else {
-          return import('@/views/Login')
-        }
-      },
+      component: () => Promise.resolve(LOGIN_COMPONENT),
       meta: {
         title: '登录',
         keepAlive: false,
         requiresAuth: false
       }
     },
-    {
-      path: '/',
-      name: 'home',
-      redirect: { name: config.defaultRouteName },
-      // 选择布局组件
-      component: () => import(`@/layouts/${config.layout}`),
-      meta: {
-        title: '后台',
-        keepAlive: false,
-        requiresAuth: true,
-        // icon: () => import('@/assets/images/console.svg') // svg 图标方式
-        icon: '' // icon-font symbol 方式
-      },
-      children: [
-        {
-          path: '',
-          name: config.defaultRouteName,
-          // 选择布局组件
-          component: () => import('@/views/Home'),
-          meta: {
-            title: '首页',
-            keepAlive: false,
-            requiresAuth: true,
-            icon: ''
-          }
-        }
-      ]
-    },
+    rootRoute,
     {
       path: '/404',
       name: 'notFound',

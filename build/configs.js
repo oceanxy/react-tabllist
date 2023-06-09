@@ -10,6 +10,7 @@ const { readFileSync } = require('fs')
 const { resolve } = require('path')
 const args = require('minimist')(process.argv.slice(2))
 const projConfig = require('../src/config/config')
+const { merge } = require('lodash')
 
 /**
  * 打包时使用“--app-proj appName1,appName2,appPrefix1,appPrefix2...”指令可对指定的 APP 分别打包，逗号分割 appName 或 appPrefix
@@ -89,7 +90,19 @@ function getAvailableNamesFromProjectConfig() {
 }
 
 function getDevServer(buildConfig) {
-  return require(`../src/apps/${buildConfig.availableProjectName}/config/devServer.js`)
+  const availableProjectNames = buildConfig.availableProjectName.split(',')
+  const devServers = []
+
+  if (availableProjectNames.length > 1 && process.env.NODE_ENV === 'development') {
+    // 多个子项目一起打包，合并每个项目的 devServer
+    console.info('请注意：同时启动多个子项目时，devServer 配置会被合并，相同的字段会被后面遍历到的配置覆盖！')
+  }
+
+  availableProjectNames.forEach(item => {
+    devServers.push(require(`../src/apps/${item}/config/devServer.js`))
+  })
+
+  return merge({}, ...devServers)
 }
 
 function getBuildConfig() {
@@ -109,13 +122,13 @@ function getBuildConfig() {
 
   const config = {}
 
-  config.pages = {
-    index: {
-      entry: `src/apps/${availableProjectNames[0]}/main.js`
-      // title: '',
-      // chunks: [availableProjectNames[0], 'chunk-vendors', 'chunk-common']
-    }
-  }
+  // config.pages = {
+  //   index: {
+  //     entry: `src/apps/${availableProjectNames[0]}/main.js`
+  //     // title: '',
+  //     // chunks: [availableProjectNames[0], 'chunk-vendors', 'chunk-common']
+  //   }
+  // }
 
   // 分别独立打包时，使用各自 apps 下的 main.js
   if (+appSeparately === 1) {

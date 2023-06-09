@@ -1,7 +1,6 @@
 import './index.scss'
 import { createNamespacedHelpers } from 'vuex'
 import { Button, Form, Input } from 'ant-design-vue'
-import { initializeDynamicRoutes } from '@/utils/utilityFunction'
 
 const {
   mapState,
@@ -43,14 +42,7 @@ export default Form.create({ name: 'TGLoginForm' })({
             await this.genCode()
           } else {
             this.hint = true
-
-            if (this.$config.dynamicRouting) {
-              const menu = initializeDynamicRoutes()
-
-              // 生成动态路由
-              this.$router.matcher = this.$router.createRouter(menu).matcher
-              this.$router.options.routes.splice(1, 1, menu)
-            }
+            this.$router.resetRoutes()
 
             // 检测登录页带过来的query参数是否存在重定向
             const { redirect, ...query } = this.$route.query

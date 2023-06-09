@@ -5,6 +5,12 @@ module.exports = {
     es2021: true,
     node: true
   },
+  globals: {
+    APP_CONFIG: true,
+    APP_COMPONENT: true,
+    APP_ROUTES: true,
+    LOGIN_COMPONENT: true
+  },
   extends: [
     'plugin:vue/essential',
     // eslint 官方规则。

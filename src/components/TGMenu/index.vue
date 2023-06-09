@@ -45,7 +45,6 @@
 <script>
 import './assets/styles/index.scss'
 import { Menu } from 'ant-design-vue'
-import { getRoutes, initializeDynamicRoutes } from '@/utils/utilityFunction'
 
 // 函数组件 自定义子菜单
 const TGSubMenu = {
@@ -188,32 +187,9 @@ export default {
       this.openKeys = JSON.parse(openKeys)
     }
 
-    if (this.$config.dynamicRouting) {
-      this.getMenuRoutes()
-    } else {
-      this.menuRoutes = getRoutes()
-    }
+    this.menuRoutes = this.$router.options.routes.find(route => route.path === '/').children
   },
   methods: {
-    getMenuRoutes() {
-      const menu = initializeDynamicRoutes()
-
-      const routes = menu.children
-      const rootRoute = {
-        ...menu,
-        children: undefined
-      }
-
-      this.menuRoutes = routes.reduce((menuRoutes, route) => {
-        if (!route.path) {
-          menuRoutes.push(rootRoute)
-        } else {
-          menuRoutes.push(route)
-        }
-
-        return menuRoutes
-      }, [])
-    },
     // 点击菜单，路由跳转，当点击 MenuItem 才会触发此函数
     menuClick({ keyPath }) {
       const toPath = `/${[...keyPath]

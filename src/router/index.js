@@ -9,9 +9,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import getBaseRoutes from './routes'
 import config from '@/config'
-import { getRoutes } from '@/utils/utilityFunction'
 
-const constRoutes = getBaseRoutes(config)
+const constRoutes = getBaseRoutes()
 const VueRouterPush = VueRouter.prototype.push
 
 VueRouter.prototype.push = function push(to) {
@@ -21,36 +20,114 @@ VueRouter.prototype.push = function push(to) {
 Vue.use(VueRouter)
 
 /**
- * 立即创建一个路由器
- * @param [routes] {Object<Route>[] | Object<Route>} 路由数组或一个包含子路由的根路由
- * @returns {VueRouter}
+ * 根据后台数据生成路由
+ * @param [menu]
+ * @returns {{children: *[], meta: {}}}
  */
-function createRouter(routes) {
-  const homeRoutesIndex = constRoutes.findIndex(route => route.path === '/')
-  const newRoutes = [...constRoutes]
-
-  // 动态路由
-  if (config.dynamicRouting && routes) {
-    if (Array.isArray(routes)) {
-      newRoutes[homeRoutesIndex].children = routes
-    } else {
-      constRoutes.splice(homeRoutesIndex, 1, routes)
-    }
-  } else {
-    newRoutes[homeRoutesIndex].children = getRoutes()
+function initializeDynamicRoutes(menu) {
+  if (!menu) {
+    menu = JSON.parse(localStorage.getItem('menu'))[0]
   }
 
+  const route = { meta: {}, children: [] }
+  const {
+    name,
+    icon,
+    children,
+    obj: {
+      name: routeName,
+      menuUrl: url,
+      redirect,
+      redirectRouteName,
+      component,
+      keepAlive,
+      requiresAuth,
+      hideBreadCrumb,
+      hideChildren,
+      hide
+    }
+  } = menu
+
+  route.path = url || ''
+  route.meta.title = name
+  route.meta.keepAlive = !!keepAlive
+  route.meta.requiresAuth = !!requiresAuth
+  route.meta.hideBreadCrumb = !!hideBreadCrumb
+  route.meta.hideChildren = !!hideChildren
+  route.meta.hide = !!hide
+
+  if (name) {
+    route.name = routeName
+  }
+
+  if (!component || component === '@/components/TGRouterView') {
+    route.component = () => import('@/components/TGRouterView')
+  } else {
+    if (component.includes('layouts')) {
+      route.component = () => import('@/layouts/' + component.slice(10))
+    } else if (component.includes('apps')) {
+      route.component = () => import('@/apps/' + component.slice(7))
+    } else {
+      route.component = () => import('@/views/' + component.slice(8))
+    }
+  }
+
+  if (icon && /\.(svg|png|jpg|jpeg)$/.test(icon)) {
+    route.meta.icon = () => import(`@/assets/images/${icon}`)
+  } else {
+    route.meta.icon = icon
+  }
+
+  if (redirect) {
+    route.redirect = { name: redirectRouteName }
+  }
+
+  if (children?.length) {
+    children.forEach(child => {
+      route.children.push(initializeDynamicRoutes(child))
+    })
+  }
+
+  return route
+}
+
+/**
+ * 立即创建一个路由器
+ * @param [rootRoute] {Route} 根路由
+ * @returns {VueRouter}
+ */
+function createRouter(rootRoute) {
   return new VueRouter({
-    routes: constRoutes,
+    routes: rootRoute || constRoutes,
     base: process.env.VUE_APP_PUBLIC_PATH,
     mode: 'history'
   })
 }
 
+/**
+ * 获取当前项目下所有可用的子项目的路由表
+ * @returns {VueRouter.route[]}
+ */
+function getRoutes() {
+  if (config.dynamicRouting) {
+    return getBaseRoutes(initializeDynamicRoutes())
+  } else {
+    return getBaseRoutes(APP_ROUTES.default)
+  }
+}
+
+/**
+ * 重置路由
+ */
+function resetRoutes() {
+  const menus = getRoutes()
+
+  router.matcher = createRouter(menus).matcher
+  router.options.routes = menus
+}
+
 // 创建路由器
 const router = createRouter()
-
-router.createRouter = createRouter
 
 router.beforeEach((to, from, next) => {
   let title = to.meta.title || ''
@@ -86,5 +163,14 @@ router.beforeEach((to, from, next) => {
     }
   }
 })
+
+router.resetRoutes = resetRoutes
+
+export {
+  createRouter,
+  getRoutes,
+  initializeDynamicRoutes,
+  resetRoutes
+}
 
 export default router

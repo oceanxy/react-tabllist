@@ -53,14 +53,10 @@ export function getStoreModulesFromFiles(modulesFiles, apis, regular, initials) 
       let moduleName = modulePath.replace(regular, '$1')
 
       if (initials) {
-        let tempName = modulesFiles.id.split('/')
-        const index = tempName.findIndex(item => item === 'apps')
+        const tempName = moduleName.split('/')
 
-        if (index > -1) {
-          tempName = tempName[index + 1]
-          // apps 下的文件夹名称通常比较长，取其每个单词的首字母组合当作store内每个app的前缀
-          moduleName = getFirstLetterOfEachWordOfAppName(tempName) + '/' + moduleName
-        }
+        // apps 下的文件夹名称通常比较长，取其每个单词的首字母组合当作store内每个app的前缀
+        moduleName = getFirstLetterOfEachWordOfAppName(tempName[0]) + '/' + tempName.at(-1)
       }
 
       modules[moduleName] = value.default
@@ -89,92 +85,4 @@ export function getApisFromFiles(modulesFiles) {
 
     return modules
   }, {})
-}
-
-/**
- * 返回store模块状态
- * @param {string[]} keys 状态的键名
- * @param {string} [submoduleName] 子模块名称
- * @return {Object}
- */
-export const mapState = (keys, submoduleName) => {
-  return keys.reduce((modules, item) => {
-    modules[item] = function() {
-      const moduleNameData = this.$store.state[this.moduleName]
-
-      if (submoduleName) {
-        return moduleNameData[submoduleName][item]
-      } else {
-        return moduleNameData[item]
-      }
-    }
-
-    return modules
-  }, {})
-}
-
-/**
- * @description: 返回store模块getter
- * @param {Array} keys [string]
- * @param {string} submoduleName 子模块名称
- * @return {object}
- */
-export const mapGetter = (keys, submoduleName) => {
-  const result = keys.reduce((modules, item) => {
-    modules[item] = function() {
-      const moduleNameData = this.$store.getters
-
-      if (submoduleName) {
-        return moduleNameData[`${this.moduleName}/${this.submoduleName}/${item}`]
-      } else {
-        return moduleNameData[`${this.moduleName}/${item}`]
-      }
-    }
-
-    return modules
-  }, {})
-
-  return result
-}
-
-/**
- * @description: 返回store模块方法
- * @param {Array} actions [string]
- * @return {object} { [key]:function(payload,submoduleName) }
- */
-export const mapAction = actions => {
-  const result = actions.reduce((modules, item) => {
-    modules[item] = function(payload, submoduleName) {
-      if (submoduleName) {
-        return this.$store.dispatch(`${this.moduleName}/${submoduleName}/${item}`, payload)
-      } else {
-        return this.$store.dispatch(`${this.moduleName}/${item}`, payload)
-      }
-    }
-
-    return modules
-  }, {})
-
-  return result
-}
-
-/**
- * @description: 返回store模块同步方法
- * @param {Array} actions [string]
- * @return {object} { [key]:function(payload,submoduleName) }
- */
-export const mapMutation = actions => {
-  const result = actions.reduce((modules, item) => {
-    modules[item] = function(payload, submoduleName) {
-      if (submoduleName) {
-        this.$store.commit(`${this.moduleName}/${submoduleName}/${item}`, payload)
-      } else {
-        this.$store.commit(`${this.moduleName}/${item}`, payload)
-      }
-    }
-
-    return modules
-  }, {})
-
-  return result
 }
