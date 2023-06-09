@@ -12,6 +12,34 @@ const args = require('minimist')(process.argv.slice(2))
 const projConfig = require('../src/config/config')
 const { merge } = require('lodash')
 
+function on(workerProcess, ordinal, filepath) {
+  workerProcess.stdout.on('data', function(data) {
+    if (data.replace(/\+/g, '').replace(/[\r\n]/g, '')) {
+      if (ordinal) {
+        console.info(`第${ordinal}个APP(${filepath})信息: ${data}`)
+      } else {
+        console.info(data)
+      }
+    }
+  })
+
+  workerProcess.stderr.on('data', function(data) {
+    if (ordinal) {
+      console.info(`第${ordinal}个APP(${filepath})信息: ${data}`)
+    } else {
+      console.info(data)
+    }
+  })
+
+  workerProcess.on('close', function(code) {
+    if (ordinal) {
+      console.info(`第${ordinal}个APP(${filepath})已打包完成，退出码: ${code}`)
+    } else {
+      console.info('退出码：' + code)
+    }
+  })
+}
+
 /**
  * 打包时使用“--app-proj appName1,appName2,appPrefix1,appPrefix2...”指令可对指定的 APP 分别打包，逗号分割 appName 或 appPrefix
  * 不带或 appName 或 appPrefix 全部无效时将对整体项目打包，至少有一个可用的 appName 或 appPrefix 将使用该有效值进行打包
@@ -176,6 +204,7 @@ function getBuildConfig() {
 }
 
 module.exports = {
+  on,
   getAvailableProjectNames,
   getBuildConfig,
   getAvailableNamesFromProjectConfig,

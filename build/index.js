@@ -19,9 +19,9 @@
 const rimraf = require('rimraf')
 const path = require('path')
 const child_process = require('child_process')
-const { getAvailableProjectNames } = require('./configs')
-const { getAvailableNamesFromProjectConfig } = require('./configs')
+const { on, getAvailableProjectNames, getAvailableNamesFromProjectConfig } = require('./configs')
 const args = require('minimist')(process.argv.slice(2))
+const dotenv = require('dotenv')
 
 function start() {
   let mode = ''
@@ -60,6 +60,8 @@ function dev(params) {
             `vue-cli-service serve --app-pref ${appPrefix} --app-proj ${availableProjectNames.join(',')}`)
         )
       } else {
+        dotenv.config({ path: `src/apps/${availableProjectNames[0]}/config/.env.development` })
+
         // 未找到有效的 appName，将采用顶级config的appPrefix指定的项目为启动项目
         on(child_process.exec(`vue-cli-service serve --app-proj ${availableProjectNames[0]}`))
       }
@@ -91,6 +93,8 @@ function build(params) {
               appPrefix
             )
           } else {
+            dotenv.config({ path: `src/apps/${availableProjectNames[0]}/config/.env.development` })
+
             // 不存在 appPrefix，则取 availableProjectNames[0] 打包
             on(
               child_process.exec(
@@ -108,34 +112,6 @@ function build(params) {
   } catch (err) {
     throw new Error(err)
   }
-}
-
-function on(workerProcess, ordinal, filepath) {
-  workerProcess.stdout.on('data', function(data) {
-    if (data.replace(/\+/g, '').replace(/[\r\n]/g, '')) {
-      if (ordinal) {
-        console.info(`第${ordinal}个APP(${filepath})信息: ${data}`)
-      } else {
-        console.info(data)
-      }
-    }
-  })
-
-  workerProcess.stderr.on('data', function(data) {
-    if (ordinal) {
-      console.info(`第${ordinal}个APP(${filepath})信息: ${data}`)
-    } else {
-      console.info(data)
-    }
-  })
-
-  workerProcess.on('close', function(code) {
-    if (ordinal) {
-      console.info(`第${ordinal}个APP(${filepath})已打包完成，退出码: ${code}`)
-    } else {
-      console.info('退出码：' + code)
-    }
-  })
 }
 
 start()

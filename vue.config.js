@@ -5,7 +5,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const { resolve, join } = require('path')
 const { getBuildConfig, getDevServer } = require('./build/configs')
 const { ProvidePlugin } = require('webpack')
-const { accessSync, constants, readdirSync } = require('fs')
+const { accessSync, constants } = require('fs')
 
 const buildConfig = getBuildConfig()
 const devServer = getDevServer(buildConfig)
