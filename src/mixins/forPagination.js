@@ -69,9 +69,8 @@ export default {
         additionalQueryParameters: {
           pageIndex: page - 1,
           pageSize,
-          ...this.submoduleName
-            ? this.$store.state[this.moduleName].search
-            : {}
+          ...this.$route.query,
+          ...(this.submoduleName ? this.$store.state[this.moduleName].search : {})
         }
       })
     },
@@ -86,6 +85,7 @@ export default {
         moduleName: this.moduleName,
         submoduleName: this.submoduleName,
         additionalQueryParameters: {
+          ...this.$route.query,
           pageIndex: 0,
           pageSize: size
         }
