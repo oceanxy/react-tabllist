@@ -10,7 +10,7 @@ export default function getBaseRoutes(routes) {
     meta: {
       title: '后台',
       keepAlive: false,
-      requiresAuth: true,
+      requiresAuth: config.homePermissions,
       // icon: () => import('@/assets/images/console.svg') // svg 图标方式
       icon: '' // icon-font symbol 方式
     }

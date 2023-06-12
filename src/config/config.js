@@ -14,6 +14,8 @@ module.exports = {
   dynamicRouting: false,
   // 默认首页（登录之后默认跳转的页面 route.name）
   defaultRouteName: 'home',
+  // 首页是否需要权限才能访问
+  homePermissions: true,
   // iconfont
   iconFontSymbol: '//at.alicdn.com/t/c/font_3996750_sgcx6ewq6y.js',
   // iconfont菜单图标在 active 状态下的后缀（该后缀会直接加到iconfont图标名称的最后，需在iconfont中预先定义好该图标；
