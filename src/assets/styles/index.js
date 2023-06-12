@@ -9,16 +9,16 @@ import variablesScss from './themeFromLess.scss'
 
 export default function getVariablesStyle(config, store) {
   // 加载主题
-  const theme = localStorage.getItem('theme') ||
-    store?.state?.login?.userInfo?.themeFileName ||
-    config.theme.default
-  let less
-
-  try {
-    less = require(`./themes/${theme}`)
-  } catch (e) {
-    less = require('./themes/blue.less') // 默认值
-  }
+  const less = require('./themes/blue.less')
+  // const theme = localStorage.getItem('theme') ||
+  //   store?.state?.login?.userInfo?.themeFileName ||
+  //   config.theme.default
+  //
+  // if (!theme) {
+  //   less = import('./themes/blue.less') // 默认值
+  // } else {
+  //   less = import(`./themes/${theme}`)
+  // }
 
   return {
     scss: variablesScss,

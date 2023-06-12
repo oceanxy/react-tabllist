@@ -49,7 +49,9 @@ export default {
       return name ? name.at(-1).toUpperCase() : ''
     },
     theme() {
-      return this.$store.state?.login?.userInfo?.themeFileName ?? this.$config.theme.default
+      return localStorage.getItem('theme') ||
+        this.$store.state?.login?.userInfo?.themeFileName ||
+        this.$config.theme.default
     }
   },
   provide: { moduleName: 'login' },
