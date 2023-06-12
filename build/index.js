@@ -93,7 +93,7 @@ function build(params) {
               appPrefix
             )
           } else {
-            dotenv.config({ path: `src/apps/${availableProjectNames[0]}/config/.env.development` })
+            dotenv.config({ path: `src/apps/${availableProjectNames[0]}/config/.env.production` })
 
             // 不存在 appPrefix，则取 availableProjectNames[0] 打包
             on(
