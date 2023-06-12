@@ -10,7 +10,14 @@ import VueRouter from 'vue-router'
 import getBaseRoutes from './routes'
 import config from '@/config'
 
-const constRoutes = getBaseRoutes()
+let constRoutes
+
+if (!config.homePermissions) {
+  constRoutes = getBaseRoutes(APP_ROUTES.default)
+} else {
+  constRoutes = getBaseRoutes()
+}
+
 const VueRouterPush = VueRouter.prototype.push
 
 VueRouter.prototype.push = function push(to) {
