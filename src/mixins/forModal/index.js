@@ -73,8 +73,10 @@ export default customModuleName => {
         return this.$parent.$attrs.visibilityFieldName || this.visibilityFieldName
       },
       visible() {
-        return this.$store.state[this.moduleName][this._visibilityFieldName] ??
+        return (
+          this.$store.state[this.moduleName][this._visibilityFieldName] ??
           this.$store.state[this.moduleName][this.submoduleName][this._visibilityFieldName]
+        )
       },
       attributes() {
         return {
@@ -117,9 +119,10 @@ export default customModuleName => {
        * @param [visibilityFieldName] {string} 对应store模块内控制该弹窗的字段名。默认为新增/编辑弹窗的字段名：visibilityOfEdit
        * @param [submoduleName] {string} 子模块名，必须通过参数传入（在需要时传入），否则会引起bug
        * @param [callback] {Function} 关闭后的回调函数
+       * @param [isClearCurrentItem] {boolean} 是否清空currentItem数据，默认true
        * @returns {Promise<void>}
        */
-      async onCancel(visibilityFieldName, submoduleName, callback) {
+      async onCancel(visibilityFieldName, submoduleName, callback, isClearCurrentItem) {
         if ('disabled' in (this.modalProps.okButtonProps?.props || {})) {
           this.modalProps.okButtonProps = {
             ...this.modalProps.okButtonProps,
@@ -130,11 +133,16 @@ export default customModuleName => {
           }
         }
 
-        await this._hideVisibilityOfModal(this._visibilityFieldName || visibilityFieldName, submoduleName)
-
         if (typeof callback === 'function') {
           callback()
         }
+
+        await this._hideVisibilityOfModal(
+          this._visibilityFieldName || visibilityFieldName,
+          submoduleName,
+          null,
+          isClearCurrentItem
+        )
       },
       /**
        * 为弹窗的按钮增加loading状态

@@ -42,17 +42,20 @@ export default {
      * @param [visibilityFieldName] {string} 默认值为打开编辑弹窗的可见性控制字段：visibilityOfEdit
      * @param [moduleName] {string} 目标模块名，在一个模块内调用另外一个模块的 state 时，需要传递对应模块的 moduleName
      * @param [submoduleName] {string} 子模块模块名，依赖 moduleName
+     * @param [isClearCurrentItem] {boolean} 是否清空currentItem数据，默认true
      * @returns {Promise<void>}
      * @private
      */
-    async _hideVisibilityOfModal(visibilityFieldName, submoduleName, moduleName) {
+    async _hideVisibilityOfModal(visibilityFieldName, submoduleName, moduleName, isClearCurrentItem = true) {
       moduleName = moduleName || this.moduleName
 
       if (Object.prototype.toString.call(this.$store.state[moduleName].currentItem) === '[object Object]') {
-        await this.$store.dispatch('setCurrentItem', {
-          value: {},
-          moduleName: this.moduleName
-        })
+        if (isClearCurrentItem) {
+          await this.$store.dispatch('setCurrentItem', {
+            value: {},
+            moduleName: this.moduleName
+          })
+        }
       }
 
       await this.$store.dispatch('setModalVisible', {
