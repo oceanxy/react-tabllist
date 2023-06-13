@@ -17,12 +17,16 @@ export default function getBaseRoutes(routes) {
   }
 
   if (routes) {
-    rootRoute = {
-      ...rootRoute,
-      redirect: { name: config.defaultRouteName },
-      // 选择布局组件
-      component: () => import(`@/layouts/${_config.layout}`),
-      children: routes
+    if (Array.isArray(routes)) {
+      rootRoute = {
+        ...rootRoute,
+        redirect: { name: config.defaultRouteName },
+        // 选择布局组件
+        component: () => import(`@/layouts/${_config.layout}`),
+        children: routes
+      }
+    } else {
+      rootRoute = routes
     }
   }
 
