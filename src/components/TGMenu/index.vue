@@ -175,6 +175,7 @@ export default {
 
         this.$nextTick(() => {
           this.openKeys = keyPath.reverse().slice(1)
+          localStorage.setItem('openKeys', JSON.stringify(this.openKeys))
         })
       }
     }
