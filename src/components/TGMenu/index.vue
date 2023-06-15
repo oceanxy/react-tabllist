@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import './assets/styles/index.scss'
+import '@/components/TGMenu/assets/styles/index.scss'
 import { Menu } from 'ant-design-vue'
 
 // 函数组件 自定义子菜单
