@@ -138,10 +138,11 @@ export default Form.create({ name: 'TGLoginForm' })({
         <Form.Item>
           <Button
             class="login-submit"
-            loading={this.loading}
+            loading={this.loading || this.hint}
+            icon={this.loading || this.hint ? 'loading' : ''}
             htmlType="submit"
             type="primary"
-            disabled={this.hint}
+            disabled={this.loading || this.hint}
           >
             {
               this.hint
