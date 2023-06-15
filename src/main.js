@@ -4,6 +4,7 @@ import config from './config'
 import useComponents from '@/utils/antvComponents'
 import router, { resetRoutes } from './router'
 import store from './store'
+import getVariablesStyle from '@/assets/styles'
 
 useComponents(config)
 
@@ -23,5 +24,18 @@ if (localStorage.getItem('token')) {
 new Vue({
   router,
   store,
-  render: h => h(APP_COMPONENT.default)
+  render: h => h(APP_COMPONENT.default),
+  watch: {
+    $route() {
+      // 加载主题
+
+      this.$store.commit('setState', {
+        value: getVariablesStyle(this.$config, this.$store),
+        stateName: 'variables',
+        moduleName: 'common'
+      })
+
+      document.querySelector('html').className = localStorage.getItem('theme').replace('.less', '')
+    }
+  }
 }).$mount('#app')

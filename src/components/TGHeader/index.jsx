@@ -142,8 +142,7 @@ export default {
         merge: true
       })
 
-      localStorage.setItem('theme', themeFileName || '')
-
+      localStorage.setItem('theme', themeFileName || this.$config.theme.default)
       window.location.reload()
     }
   },

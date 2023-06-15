@@ -68,7 +68,7 @@ export default {
         commit('setUserInfo', userInfo)
         commit('setAuthentication', token)
         commit('setSiteCache', { menuList, defaultMenuUrl })
-        localStorage.setItem('theme', userInfo.themeFileName || '')
+        localStorage.setItem('theme', userInfo.themeFileName || config.theme.default)
 
         if (config.headerParams?.show) {
           localStorage.setItem('headerId', userInfo.organId || '')
@@ -132,7 +132,7 @@ export default {
       if (!isPassive) {
         localStorage.removeItem('openKeys')
         localStorage.removeItem('selectedKey')
-        localStorage.removeItem('theme')
+        localStorage.setItem('theme', config.theme.default)
 
         if (config.headerParams?.show) {
           localStorage.removeItem('headerId')

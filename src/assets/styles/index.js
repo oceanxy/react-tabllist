@@ -8,17 +8,16 @@
 import variablesScss from './themeFromLess.scss'
 
 export default function getVariablesStyle(config, store) {
+  let _theme = localStorage.getItem('theme')
+
+  if (!_theme) {
+    _theme = config.theme.default
+    localStorage.setItem('theme', _theme)
+  }
+
   // 加载主题
-  const less = require('./themes/blue.less')
-  // const theme = localStorage.getItem('theme') ||
-  //   store?.state?.login?.userInfo?.themeFileName ||
-  //   config.theme.default
-  //
-  // if (!theme) {
-  //   less = import('./themes/blue.less') // 默认值
-  // } else {
-  //   less = import(`./themes/${theme}`)
-  // }
+  const theme = store?.state?.login?.userInfo?.themeFileName || _theme
+  const less = require(`./themes/${theme}`)
 
   return {
     scss: variablesScss,
