@@ -81,7 +81,9 @@ function initializeDynamicRoutes(menu) {
     } else {
       route.component = () => {
         if (process.env.NODE_ENV !== 'production') {
-          window.open(`http://localhost:8193${component}/`)
+          const token = localStorage.getItem('token')
+
+          window.open(`http://localhost:8193${component}/?token=${token}`)
         } else {
           window.open(component)
         }
