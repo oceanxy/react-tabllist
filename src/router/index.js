@@ -70,12 +70,22 @@ function initializeDynamicRoutes(menu) {
   if (!component || component === '@/components/TGRouterView') {
     route.component = () => import('@/components/TGRouterView')
   } else {
-    if (component.includes('layouts')) {
-      route.component = () => import('@/layouts/' + component.slice(10))
-    } else if (component.includes('apps')) {
-      route.component = () => import('@/apps/' + component.slice(7))
+    if (component.includes('@/')) {
+      if (component.includes('layouts')) {
+        route.component = () => import('@/layouts/' + component.slice(10))
+      } else if (component.includes('apps')) {
+        route.component = () => import('@/apps/' + component.slice(7))
+      } else {
+        route.component = () => import('@/views/' + component.slice(8))
+      }
     } else {
-      route.component = () => import('@/views/' + component.slice(8))
+      route.component = () => {
+        if (process.env.NODE_ENV !== 'production') {
+          window.open(`http://localhost:8193${component}/`)
+        } else {
+          window.open(component)
+        }
+      }
     }
   }
 
