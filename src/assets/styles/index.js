@@ -17,7 +17,8 @@ export default function getVariablesStyle(config, store) {
 
   // 加载主题
   const theme = store?.state?.login?.userInfo?.themeFileName || _theme
-  const less = require(`./themes/${theme}`)
+  // const less = require(`./themes/${theme}`)
+  const less = require('./themes/blue.less')
 
   return {
     scss: variablesScss,
