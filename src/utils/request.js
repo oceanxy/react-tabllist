@@ -48,10 +48,25 @@ export default function getService(conf, router, store) {
         return Promise.resolve(res)
       }
 
-      showMessage({
-        message: res.message,
-        type: 'error'
-      })
+      if (!('status' in res)) {
+        if (res.code !== 200) {
+          showMessage({
+            message: '第三方接口调用失败！',
+            type: 'error'
+          })
+        } else {
+          return Promise.resolve({
+            code: 10000,
+            status: true,
+            data: res.data
+          })
+        }
+      } else {
+        showMessage({
+          message: res.message,
+          type: 'error'
+        })
+      }
 
       // 登录失效，需要重新登录
       if (+res.code === 30001) {
