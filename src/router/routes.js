@@ -18,10 +18,7 @@ export default function getBaseRoutes(routes) {
       rootRoutes[homeIndex] = {
         ...routes[homeIndex],
         name: 'home',
-        redirect: {
-          name: JSON.parse(localStorage.getItem('defaultRoute')) ??
-            config.defaultRouteName
-        },
+        redirect: { name: localStorage.getItem('defaultRoute') },
         meta: {
           ...routes[homeIndex].meta,
           requiresAuth: config.homePermissions || routes[homeIndex].meta.requiresAuth

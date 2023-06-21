@@ -27,7 +27,7 @@ export default {
     },
     setSiteCache(state, payload) {
       if (payload) {
-        localStorage.setItem('defaultRoute', payload.defaultMenuUrl)
+        localStorage.setItem('defaultRoute', payload.defaultMenuUrl || '')
         localStorage.setItem('menu', JSON.stringify(payload.menuList))
       } else {
         localStorage.removeItem('defaultRoute')
