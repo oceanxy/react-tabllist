@@ -12,9 +12,9 @@ module.exports = {
   mockDelay: 400,
   // 动态路由（从后台获取权限菜单）
   dynamicRouting: false,
-  // 默认首页（登录之后默认跳转的页面 route.name）
+  // 默认首页（登录之后默认跳转的页面 route.name。这仅仅是一个默认值，如果启用了动态路由，优先以后台设置的数据为准）
   defaultRouteName: 'home',
-  // 首页是否需要权限才能访问
+  // 首页是否需要权限才能访问（该配置可能会被移除）
   homePermissions: true,
   // iconfont
   iconFontSymbol: '//at.alicdn.com/t/c/font_3996750_sgcx6ewq6y.js',

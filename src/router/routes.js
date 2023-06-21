@@ -1,33 +1,65 @@
 import config from '@/config'
 
+/**
+ *
+ * @param [routes] {Array}
+ * @returns {Route[]}
+ */
 export default function getBaseRoutes(routes) {
+  let rootRoutes
   const _config = config
 
-  let rootRoute = {
-    path: '/',
-    name: 'home',
-    component: () => import('@/views/Home'),
-    meta: {
-      title: '后台',
-      keepAlive: false,
-      requiresAuth: config.homePermissions,
-      // icon: () => import('@/assets/images/console.svg') // svg 图标方式
-      icon: '' // icon-font symbol 方式
-    }
-  }
+  if (Array.isArray(routes) && routes.length) {
+    const homeIndex = routes.findIndex(route => route.path === '/')
 
-  if (routes) {
-    if (Array.isArray(routes)) {
-      rootRoute = {
-        ...rootRoute,
-        redirect: { name: config.defaultRouteName },
-        // 选择布局组件
-        component: () => import(`@/layouts/${_config.layout}`),
-        children: routes
+    // 检查路由数据是否包含根路由
+    if (homeIndex > -1) {
+      rootRoutes = routes
+      rootRoutes[homeIndex] = {
+        ...routes[homeIndex],
+        name: 'home',
+        redirect: {
+          name: JSON.parse(localStorage.getItem('defaultRoute')) ??
+            config.defaultRouteName
+        },
+        meta: {
+          ...routes[homeIndex].meta,
+          requiresAuth: config.homePermissions || routes[homeIndex].meta.requiresAuth
+        }
       }
     } else {
-      rootRoute = routes
+      rootRoutes = [
+        {
+          path: '/',
+          name: 'home',
+          component: () => import(`@/layouts/${_config.layout}`),
+          redirect: { name: config.defaultRouteName },
+          children: routes,
+          meta: {
+            title: '后台',
+            keepAlive: false,
+            requiresAuth: config.homePermissions,
+            // icon: () => import('@/assets/images/console.svg') // svg 图标方式
+            icon: '' // icon-font symbol 方式
+          }
+        }
+      ]
     }
+  } else {
+    rootRoutes = [
+      {
+        path: '/',
+        name: 'home',
+        component: () => import('@/views/Home'),
+        meta: {
+          title: '后台',
+          keepAlive: false,
+          requiresAuth: config.homePermissions,
+          // icon: () => import('@/assets/images/console.svg') // svg 图标方式
+          icon: '' // icon-font symbol 方式
+        }
+      }
+    ]
   }
 
   return [
@@ -41,7 +73,7 @@ export default function getBaseRoutes(routes) {
         requiresAuth: false
       }
     },
-    rootRoute,
+    ...rootRoutes,
     {
       path: '/no-access',
       name: 'noAccess',
