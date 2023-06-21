@@ -43,6 +43,16 @@ export default function getBaseRoutes(routes) {
     },
     rootRoute,
     {
+      path: '/no-access',
+      name: 'noAccess',
+      component: () => import('@/views/NoAccess'),
+      meta: {
+        title: '无访问权限',
+        keep: false,
+        requiresAuth: false
+      }
+    },
+    {
       path: '/404',
       name: 'notFound',
       component: () => import('@/views/NotFound'),

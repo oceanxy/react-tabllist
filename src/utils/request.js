@@ -68,13 +68,15 @@ export default function getService(conf, router, store) {
         })
       }
 
-      // 登录失效，需要重新登录
+      // 未登录或登录失效，需要重新登录
       if (+res.code === 30001) {
-        // 检测是否已经跳转到login页面，避免多个接口同时报 30001，导致重复跳转到登录页
         if (localStorage.getItem('token')) {
           await store.dispatch('login/clear', true)
-          await router.replace({ name: 'login' })
         }
+
+        await router.replace({ name: 'login' })
+      } else if (/*无权限*/+res.code === 40006) {
+        await router.replace({ name: 'noAccess' })
       }
 
       return Promise.resolve({
