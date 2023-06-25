@@ -15,6 +15,11 @@ export default {
       return this.getState('collapsed', 'common')
     }
   },
+  mounted() {
+    this.$nextTick(async () => {
+      await import('@/extend')
+    })
+  },
   render() {
     return (
       <Layout id="tg-responsive-layout">
@@ -42,6 +47,7 @@ export default {
             <TGRouterView />
           </Layout.Content>
         </Layout>
+        <div id="global-modal"></div>
       </Layout>
     )
   }

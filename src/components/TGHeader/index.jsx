@@ -2,9 +2,11 @@ import './index.scss'
 import { Avatar, Badge, Button, Divider, Dropdown, Layout, Menu, Popover, Select, Space, Tag } from 'ant-design-vue'
 import Logo from '@/components/Logo'
 import { mapActions, mapGetters } from 'vuex'
+import forIndex from '@/mixins/forIndex'
 
 export default {
   name: 'TGHeader',
+  mixins: [forIndex],
   props: {
     page: {
       // 'normal' || 'not-found'
@@ -88,6 +90,9 @@ export default {
   },
   methods: {
     ...mapActions('login', { logout: 'logout', getUserInfo: 'getUserInfo' }),
+    async resetPwd() {
+      await this._setVisibilityOfModal('', 'visibilityOfResetPwd', null, 'rcmp/common')
+    },
     async onLogOut() {
       const response = await this.logout()
 
@@ -207,6 +212,9 @@ export default {
                       <IconFont type={'icon-global-down'} style={'color: #ffffff'} />
                     </div>
                     <Menu slot={'overlay'}>
+                      {
+                        this.$config.resetPwd ? <Menu.Item onClick={this.resetPwd}>重置密码</Menu.Item> : null
+                      }
                       <Menu.Item onClick={this.onLogOut}>注销</Menu.Item>
                     </Menu>
                   </Dropdown>

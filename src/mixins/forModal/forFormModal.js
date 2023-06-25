@@ -65,7 +65,7 @@ export default ({
             this.modalProps.okButtonProps.props.disabled = disableSubmitButton
             this.modalProps.title = (this.$parent.$attrs.modalTitle || this.modalTitle).replace(
               '{action}',
-              this.currentItem.id
+              this.currentItem?.id
                 ? this.$parent.$attrs.candidateTitle?.[0] || this.candidateTitle[0]
                 : this.$parent.$attrs.candidateTitle?.[1] || this.candidateTitle[1]
             )
@@ -222,6 +222,8 @@ export default ({
                 options.additionalQueryParameters = options.parametersOfGetListAction.additionalQueryParameters
                 delete options.parametersOfGetListAction
               }
+
+              debugger
 
               const response = await this.$store.dispatch(action, options)
 

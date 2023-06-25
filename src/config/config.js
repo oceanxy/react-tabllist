@@ -53,6 +53,11 @@ module.exports = {
     // 是否在header中显示消息通知
     show: false
   },
+  // 消息
+  resetPwd: {
+    // 是否在header中显示修改密码图标
+    show: false
+  },
   // 需要在 HTTP Request Header 内携带额外参数的字段名（下拉列表）
   // 注意：本框架会始终在 HTTP Request Header 中携带 token 字段，不受此处配置影响。
   headerParams: {
