@@ -4,7 +4,7 @@ const CompressionPlugin = require('compression-webpack-plugin') // Gzip
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const { resolve, join } = require('path')
 const { getBuildConfig, getDevServer } = require('./build/configs')
-const { ProvidePlugin } = require('webpack')
+const { ProvidePlugin, DefinePlugin } = require('webpack')
 const { accessSync, constants } = require('fs')
 
 const buildConfig = getBuildConfig()
@@ -58,6 +58,7 @@ module.exports = {
     config.plugins.delete('preload')
     config.plugins.delete('prefetch')
 
+    // 替换svg loader
     const svgRule = config.module.rule('svg')
 
     svgRule.uses.clear()
@@ -144,6 +145,13 @@ module.exports = {
         APP_ROUTES: resolve(join(__dirname, `src/apps/${buildConfig.availableProjectName}/router/routes.js`)),
         // 预加载子项目登录组件
         LOGIN_COMPONENT
+      }
+    ])
+
+    config.plugin('DefinePlugin').use(DefinePlugin, [
+      {
+        // 注入项目名称
+        PROJ_APP_NAME: JSON.stringify(buildConfig.availableProjectName)
       }
     ])
 

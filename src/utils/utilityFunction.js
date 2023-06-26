@@ -75,10 +75,10 @@ export function downloadFile(blobOrUrl, fileName) {
 /**
  * 获取应用名称每个单词的首字母组成的字符串
  * 比如 'create-a-new-projects' => 'canp'
- * @param appName
+ * @param [appName] {string} 默认当前项目名：PROJ_APP_NAME（src/apps 下的文件夹名），由 webpack 的 DefinePlugin 插件注入
  * @returns {string}
  */
-export function getFirstLetterOfEachWordOfAppName(appName) {
+export function getFirstLetterOfEachWordOfAppName(appName = PROJ_APP_NAME) {
   return appName
     .split('-')
     .map(i => i[0])

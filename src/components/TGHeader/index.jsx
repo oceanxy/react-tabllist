@@ -3,6 +3,7 @@ import { Avatar, Badge, Button, Divider, Dropdown, Layout, Menu, Popover, Select
 import Logo from '@/components/Logo'
 import { mapActions, mapGetters } from 'vuex'
 import forIndex from '@/mixins/forIndex'
+import { getFirstLetterOfEachWordOfAppName } from '@/utils/utilityFunction'
 
 export default {
   name: 'TGHeader',
@@ -91,7 +92,12 @@ export default {
   methods: {
     ...mapActions('login', { logout: 'logout', getUserInfo: 'getUserInfo' }),
     async resetPwd() {
-      await this._setVisibilityOfModal('', 'visibilityOfResetPwd', null, 'rcmp/common')
+      await this._setVisibilityOfModal(
+        '',
+        'visibilityOfResetPwd',
+        null,
+        `${getFirstLetterOfEachWordOfAppName()}/common`
+      )
     },
     async onLogOut() {
       const response = await this.logout()
