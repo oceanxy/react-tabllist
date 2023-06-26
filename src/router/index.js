@@ -69,11 +69,11 @@ function initializeDynamicRoutes(menus) {
     } else {
       if (component.includes('@/')) {
         if (component.includes('layouts')) {
-          route.component = () => import('@/layouts/' + component.slice(10) + '.jsx')
+          route.component = () => import('@/layouts/' + component.slice(10))
         } else if (component.includes('apps')) {
-          route.component = () => import('@/apps/' + component.slice(7) + '.jsx')
+          route.component = () => import('@/apps/' + component.slice(7))
         } else {
-          route.component = () => import('@/views/' + component.slice(8) + '.jsx')
+          route.component = () => import('@/views/' + component.slice(8))
         }
       } else {
         route.component = () => {
