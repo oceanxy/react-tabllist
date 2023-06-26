@@ -223,8 +223,6 @@ export default ({
                 delete options.parametersOfGetListAction
               }
 
-              debugger
-
               const response = await this.$store.dispatch(action, options)
 
               let status
@@ -237,7 +235,7 @@ export default ({
 
               if (status) {
                 // 操作提示消息
-                message(response.status)
+                message(status)
 
                 // 执行侧边树刷新操作
                 if (refreshTree && this.inTree) {
