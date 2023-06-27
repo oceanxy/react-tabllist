@@ -59,9 +59,12 @@ export default {
   },
   provide: { moduleName: 'login' },
   watch: {
-    async userInfo(value) {
-      if (!Object.keys(value).length && localStorage.getItem('token')) {
-        await this.getUserInfo()
+    userInfo: {
+      immediate: true,
+      async handler(value) {
+        if (!Object.keys(value).length && localStorage.getItem('token')) {
+          await this.getUserInfo()
+        }
       }
     },
     headerId() {
