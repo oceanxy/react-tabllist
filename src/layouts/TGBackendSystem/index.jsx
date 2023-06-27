@@ -40,7 +40,7 @@ export default {
           </Layout.Sider>
           <Layout.Content class="tg-content">
             {
-              this.$config.hideBreadCrumb
+              this.$config.hideBreadCrumb || this.$route.meta.hideBreadCrumb
                 ? null
                 : <TGBreadcrumb />
             }
