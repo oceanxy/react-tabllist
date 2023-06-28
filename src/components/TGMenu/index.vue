@@ -12,7 +12,7 @@
     <template v-for="route in menuRoutes">
       <t-g-sub-menu
         v-if="!route.meta.hideChildren && route.children && route.children.length"
-        :key="route.path"
+        :key="route.key"
         :menu-info="route"
         @subMenuClick="titleClick"
         :style="route.meta.hide ? { display: 'none' } : ''"
@@ -20,7 +20,7 @@
       />
       <a-menu-item
         v-else
-        :key="route.path"
+        :key="route.key"
         :style="route.meta.hide ? { display: 'none' } : ''"
       >
         <div class="ant-menu-item-title">
@@ -32,7 +32,10 @@
             />
             <icon-font
               v-else-if="route.meta.icon"
-              :type="route.meta.icon + (selectedKeys.includes(route.path) ? $config.activeSuffixForMenuIcon : '')"
+              :type="route.meta.icon + (selectedKeys.includes(route.key)
+                ? $config.activeSuffixForMenuIcon
+                : ''
+              )"
             />
             <span>{{ route.meta && route.meta.title }}</span>
           </div>
@@ -50,7 +53,7 @@ import { Menu } from 'ant-design-vue'
 const TGSubMenu = {
   template: `
     <a-sub-menu
-      :key="menuInfo.path"
+      :key="menuInfo.key"
       v-bind="$props"
       v-on="$listeners"
       @titleClick="titleClick"
@@ -64,7 +67,7 @@ const TGSubMenu = {
       />
       <icon-font
         v-else-if="menuInfo.meta.icon"
-        :type="menuInfo.meta.icon + (selectedKeys.includes(menuInfo.path)
+        :type="menuInfo.meta.icon + (selectedKeys.includes(menuInfo.key)
           ? $config.activeSuffixForMenuIcon
           : ''
         )"
@@ -74,7 +77,7 @@ const TGSubMenu = {
     <template v-for="route in menuInfo.children">
       <t-g-sub-menu
         v-if="!route.meta.hideChildren && route.children && route.children.length"
-        :key="route.path"
+        :key="route.key"
         :menu-info="route"
         @subMenuClick="titleClick"
         :style="route.meta.hide ? { display: 'none' } : ''"
@@ -82,7 +85,7 @@ const TGSubMenu = {
       />
       <a-menu-item
         v-else
-        :key="route.path"
+        :key="route.key"
         :style="route.meta.hide ? { display: 'none' } : ''"
       >
         <div class="ant-menu-item-title">
@@ -94,7 +97,10 @@ const TGSubMenu = {
             />
             <icon-font
               v-else-if="showSubIcon && route.meta.icon"
-              :type="route.meta.icon + (selectedKeys.includes(route.path) ? $config.activeSuffixForMenuIcon : '')"
+              :type="route.meta.icon + (selectedKeys.includes(route.key)
+                ? $config.activeSuffixForMenuIcon
+                : ''
+              )"
             />
             <span>{{ route.meta && route.meta.title }}</span>
           </div>
@@ -149,7 +155,7 @@ export default {
       collapsed: false,
       // 展开的父菜单项
       openKeys: [],
-      // 选中的key（routes.js 中的 path 字段，注意不是 $route 中的 path 字段）
+      // 选中的key（$route.path）
       selectedKeys: [],
       // 生成用于菜单显示的路由，根据 routes 生成
       menuRoutes: [],
@@ -166,15 +172,15 @@ export default {
         // 根据当前进入页面的路由设置菜单的 selectedKeys 和 openKeys 值
         for (let i = 0; i < value.matched.length; i++) {
           if (value.matched[i].path !== '') {
-            keyPath.push(value.matched[i].path.substring(keyPath.join('').length + i))
+            keyPath.push(value.matched[i].path)
           }
         }
 
         this.selectedKeys = keyPath
-        localStorage.setItem('selectedKey', value.fullPath)
+        localStorage.setItem('selectedKey', value.path)
 
         this.$nextTick(() => {
-          this.openKeys = keyPath.reverse().slice(1)
+          this.openKeys = keyPath.reverse().slice(1) // 排除最后一级（最后一级一般不是可展开的菜单层级）
           localStorage.setItem('openKeys', JSON.stringify(this.openKeys))
         })
       }
@@ -188,15 +194,23 @@ export default {
       this.openKeys = JSON.parse(openKeys)
     }
 
-    this.menuRoutes = this.$router.options.routes.find(route => route.path === '/').children
+    this.menuRoutes = this.addKey(this.$router.options.routes.find(route => route.path === '/').children)
   },
   methods: {
+    addKey(menuRoutes, parent = '/') {
+      return menuRoutes.map(route => {
+        route.key = `${parent}/${route.path}`.replace('//', '/')
+
+        if (Array.isArray(route.children) && route.children.length) {
+          route.children = this.addKey(route.children, route.key)
+        }
+
+        return route
+      })
+    },
     // 点击菜单，路由跳转，当点击 MenuItem 才会触发此函数
-    menuClick({ keyPath }) {
-      const toPath = `/${[...keyPath]
-        .map(key => (key ? key : '/'))
-        .reverse()
-        .join('/')}`
+    menuClick({ key }) {
+      const toPath = key
         // 替换path中所有 '//'
         .replaceAll('//', '/')
         // 替换以 '/' 结尾的 path
@@ -204,7 +218,7 @@ export default {
 
       // 检测是否是跳转到本路由
       if (toPath !== this.$route.path) {
-        this.$router.push({ path: toPath })
+        this.$router.push(toPath)
         this.menuScrollTop = this.$refs.menu.$el.scrollTop
 
         setTimeout(() => {
