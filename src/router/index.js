@@ -19,9 +19,14 @@ if (!config.homePermissions) {
 }
 
 const VueRouterPush = VueRouter.prototype.push
+const VueRouterReplace = VueRouter.prototype.replace
 
 VueRouter.prototype.push = function push(to) {
-  return VueRouterPush.call(this, to, null, err => err)
+  return VueRouterPush.call(this, to, null, () => {/**/})
+}
+
+VueRouter.prototype.replace = function replace(to) {
+  return VueRouterReplace.call(this, to, null, () => {/**/})
 }
 
 Vue.use(VueRouter)
