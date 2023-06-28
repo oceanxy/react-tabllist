@@ -153,6 +153,11 @@ router.beforeEach((to, from, next) => {
 
   document.title = title + config.systemName
 
+  // 非生产环境通过地址栏传递token的情况，优先使用地址栏的token。因为本地存储的token可能为过期token（上一次页面关闭时未清空的）
+  if (process.env.NODE_ENV !== 'production' && to.query.token) {
+    localStorage.setItem('token', to.query.token)
+  }
+
   // 判断该路由是否需要登录权限
   // 获取存储在localStorage内的token，防止刷新页面导致vuex被清空而跳转到登录页
   const token = localStorage.getItem('token')
