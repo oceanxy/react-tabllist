@@ -166,21 +166,12 @@ export default {
   watch: {
     $route: {
       immediate: true,
-      handler(value) {
-        const keyPath = []
-
-        // 根据当前进入页面的路由设置菜单的 selectedKeys 和 openKeys 值
-        for (let i = 0; i < value.matched.length; i++) {
-          if (value.matched[i].path !== '') {
-            keyPath.push(value.matched[i].path)
-          }
-        }
-
-        this.selectedKeys = keyPath
-        localStorage.setItem('selectedKey', value.path)
+      handler(route) {
+        this.selectedKeys = this.getSelectedKeys(route)
+        localStorage.setItem('selectedKey', route.path)
 
         this.$nextTick(() => {
-          this.openKeys = keyPath.reverse().slice(1) // 排除最后一级（最后一级一般不是可展开的菜单层级）
+          this.openKeys = this.selectedKeys.toReversed().slice(1) // 排除最后一级（最后一级一般不是可展开的菜单层级）
           localStorage.setItem('openKeys', JSON.stringify(this.openKeys))
         })
       }
@@ -208,6 +199,18 @@ export default {
         return route
       })
     },
+    getSelectedKeys(route) {
+      const keyPath = []
+
+      // 根据当前进入页面的路由设置菜单的 selectedKeys 和 openKeys 值
+      for (let i = 0; i < route.matched.length; i++) {
+        if (route.matched[i].path !== '') {
+          keyPath.push(route.matched[i].path)
+        }
+      }
+
+      return keyPath
+    },
     // 点击菜单，路由跳转，当点击 MenuItem 才会触发此函数
     menuClick({ key }) {
       const toPath = key
@@ -222,6 +225,10 @@ export default {
         this.menuScrollTop = this.$refs.menu.$el.scrollTop
 
         setTimeout(() => {
+          if (this.$route.path !== key) {
+            this.selectedKeys = this.getSelectedKeys(this.$route)
+          }
+
           document.getElementById('menu')?.scrollTo({
             top: this.menuScrollTop,
             behavior: 'smooth'
