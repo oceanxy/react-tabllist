@@ -82,12 +82,21 @@ function initializeDynamicRoutes(menus) {
         }
       } else {
         route.component = () => {
+          let target = '_blank'
+          const defaultRoute = localStorage.getItem('defaultRoute') || config.defaultRouteName
+
+          // 检测系统的默认首页是否是需要通过 window.open 跳转，并且是否是从登录页直接跳转的，
+          // 如果以上条件成立，则采用 “_self” 模式，否则采用 “_blank” 模式
+          if (router.history.current.name === 'login' && defaultRoute === route.name) {
+            target = '_self'
+          }
+
           if (process.env.NODE_ENV !== 'production') {
             const token = localStorage.getItem('token')
 
-            window.open(`http://localhost:8193${component}/?token=${token}`)
+            window.open(`http://localhost:8193${component}/?token=${token}`, target)
           } else {
-            window.open(component)
+            window.open(component, target)
           }
         }
       }

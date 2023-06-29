@@ -18,7 +18,7 @@ export default function getBaseRoutes(routes) {
       rootRoutes[homeIndex] = {
         ...routes[homeIndex],
         name: 'home',
-        redirect: { name: localStorage.getItem('defaultRoute') },
+        redirect: { name: localStorage.getItem('defaultRoute') || config.defaultRouteName },
         meta: {
           ...routes[homeIndex].meta,
           requiresAuth: config.homePermissions || routes[homeIndex].meta.requiresAuth
@@ -30,7 +30,7 @@ export default function getBaseRoutes(routes) {
           path: '/',
           name: 'home',
           component: () => import(`@/layouts/${_config.layout}`),
-          redirect: { name: config.defaultRouteName },
+          redirect: { name: localStorage.getItem('defaultRoute') || config.defaultRouteName },
           children: routes,
           meta: {
             title: '后台',
