@@ -1,6 +1,13 @@
 .tg-image-preview {
   position: relative;
 
+  // .drag-element-box {
+  //   overflow: hidden;
+  //   width: 100%;
+  //   height: 100%;
+
+  // }
+
   .img {
     display: block;
     object-fit: cover;
@@ -9,6 +16,11 @@
 }
 
 .tg-image-preview-modal {
+
+  .ant-modal-close-x {
+    background: rgba(255, 255, 255, .3);
+  }
+
   .ant-modal-body {
     display: flex;
     justify-content: center;
@@ -32,3 +44,9 @@
     }
   }
 }
+
+// .move-body {
+//   .ant-modal-body {
+//     overflow: hidden !important
+//   }
+// }

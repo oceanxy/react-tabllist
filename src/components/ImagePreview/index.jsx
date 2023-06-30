@@ -5,12 +5,30 @@ export default {
   props: {
     imageUrls: Array,
     width: Number,
-    height: Number
+    height: Number,
+    isScaleDrag: {
+      type: Boolean,
+      default: false
+    },
+    scaleZoom: {
+      type: Object,
+      default() {
+        return {
+          max: 5,
+          min: 0.4
+        }
+      }
+    }
   },
   data() {
     return {
       curIndex: 0,
-      visible: false
+      visible: false,
+      isDragging: false,
+      dragElement: null,
+      translate: { x: 0, y: 0 },
+      moveStart: {},
+      scale: 1
     }
   },
   computed: {
@@ -33,10 +51,58 @@ export default {
       return url
     }
   },
+  beforeDestroy() {
+    //   document.removeEventListener('mousedown', this.start)
+    //   document.removeEventListener('mouseup', this.docMouseUp)
+    //   document.removeEventListener('mousemove', this.docMove)
+    document.removeEventListener('mousewheel', this.handleScroll)
+  },
   methods: {
+    getElement() {
+      this.dragElement = this.$refs['dragElement']
+      this.dragElement.addEventListener('mousewheel', this.handleScroll)
+      // this.dragElement.addEventListener('mousedown', this.start)
+      // document.addEventListener('mouseup', this.docMouseUp)
+    },
+    // start(event) {
+    //   // 记录初始拖拽位置
+    //   event.preventDefault()
+    //   this.moveStart.x = event.clientX
+    //   this.moveStart.y = event.clientY
+    //   document.addEventListener('mousemove', this.docMove)
+    // },
+    // docMouseUp(event) {
+    //   // 停止拖拽
+    //   document.removeEventListener('mousemove', this.docMove)
+    // },
+    // docMove(event) {
+    //   event.preventDefault()
+    //   // 拖拽中，更新图片位置
+    //   const x = event.clientX - this.moveStart.x
+    //   const y = event.clientY - this.moveStart.y
+
+    //   this.$refs.dragElement.style.transform = `scale(${this.scale}) translate(${x}px, ${y}px)`
+    // },
+    handleScroll(event) {
+      const speed = event.wheelDelta / 120
+
+      if (event.wheelDelta > 0 && this.scale < this.scaleZoom.max) {
+        this.scale += 0.2 * speed
+        this.$refs.dragElement.style.transform = `scale(${this.scale}) translate(${this.translate.x}px, ${this.translate.y}px)`
+      } else if (event.wheelDelta < 0 && this.scale > this.scaleZoom.min) {
+        this.scale += 0.2 * speed
+        this.$refs.dragElement.style.transform = `scale(${this.scale}) translate(${this.translate.x}px, ${this.translate.y}px)`
+      }
+    },
     onClickImg() {
       if (this.imageUrls.length) {
         this.visible = true
+
+        if (this.visible && this.isScaleDrag) {
+          this.$nextTick(() => {
+            this.getElement()
+          })
+        }
       }
     },
     onCancel() {
@@ -97,10 +163,11 @@ export default {
               visible={this.visible}
               zIndex={10000}
               wrapClassName="tg-image-preview-modal"
+              class={this.isScaleDrag ? 'move-body' : ''}
               width="90%"
               footer={null}
               oncancel={this.onCancel}>
-              <img src={this.curUrl} />
+              <img ref="dragElement" src={this.curUrl} style={{ cursor: this.isScaleDrag ? 'move' : '' }} />
               {this.imageUrls.length > 1
                 ? [
                   <div class="btn up">
