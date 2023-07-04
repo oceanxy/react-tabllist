@@ -24,11 +24,12 @@ export default {
     return {
       curIndex: 0,
       visible: false,
-      isDragging: false,
       dragElement: null,
       translate: { x: 0, y: 0 },
       moveStart: {},
-      scale: 1
+      scale: 1,
+      storageX: 0,
+      storageY: 0
     }
   },
   computed: {
@@ -52,39 +53,50 @@ export default {
     }
   },
   beforeDestroy() {
-    //   document.removeEventListener('mousedown', this.start)
-    //   document.removeEventListener('mouseup', this.docMouseUp)
-    //   document.removeEventListener('mousemove', this.docMove)
+    document.removeEventListener('mousedown', this.start)
+    document.removeEventListener('mouseup', this.docMouseUp)
+    document.removeEventListener('mousemove', this.docMove)
     document.removeEventListener('mousewheel', this.handleScroll)
   },
   methods: {
     getElement() {
       this.dragElement = this.$refs['dragElement']
       this.dragElement.addEventListener('mousewheel', this.handleScroll)
-      // this.dragElement.addEventListener('mousedown', this.start)
-      // document.addEventListener('mouseup', this.docMouseUp)
+      this.dragElement.addEventListener('mousedown', this.start)
+      document.addEventListener('mouseup', this.docMouseUp)
     },
-    // start(event) {
-    //   // 记录初始拖拽位置
-    //   event.preventDefault()
-    //   this.moveStart.x = event.clientX
-    //   this.moveStart.y = event.clientY
-    //   document.addEventListener('mousemove', this.docMove)
-    // },
-    // docMouseUp(event) {
-    //   // 停止拖拽
-    //   document.removeEventListener('mousemove', this.docMove)
-    // },
-    // docMove(event) {
-    //   event.preventDefault()
-    //   // 拖拽中，更新图片位置
-    //   const x = event.clientX - this.moveStart.x
-    //   const y = event.clientY - this.moveStart.y
+    start(event) {
+      // 记录初始拖拽位置
+      event.preventDefault()
+      this.fatre = false
+      this.moveStart.x = event.clientX
+      this.moveStart.y = event.clientY
+      document.addEventListener('mousemove', this.docMove)
+    },
+    docMouseUp(event) {
+      // 停止拖拽
+      document.removeEventListener('mousemove', this.docMove)
+      this.x += this.translate.x
+      this.y += this.translate.y
+    },
+    docMove(event) {
+      event.preventDefault()
+      // 拖拽中，更新图片位置
+      const x = event.clientX - this.moveStart.x
+      const y = event.clientY - this.moveStart.y
 
-    //   this.$refs.dragElement.style.transform = `scale(${this.scale}) translate(${x}px, ${y}px)`
-    // },
+      this.translate.x = x
+      this.translate.y = y
+
+      this.$refs.dragElement.style.transform = `scale(${this.scale}) translate(${this.translate.x + this.storageX}px, ${
+        this.translate.y + this.storageY
+      }px)`
+    },
     handleScroll(event) {
       const speed = event.wheelDelta / 120
+
+      this.x = 0
+      this.y = 0
 
       if (event.wheelDelta > 0 && this.scale < this.scaleZoom.max) {
         this.scale += 0.2 * speed
@@ -163,7 +175,6 @@ export default {
               visible={this.visible}
               zIndex={10000}
               wrapClassName="tg-image-preview-modal"
-              class={this.isScaleDrag ? 'move-body' : ''}
               width="90%"
               footer={null}
               oncancel={this.onCancel}>
