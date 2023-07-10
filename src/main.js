@@ -46,11 +46,13 @@ const { NODE_ENV, VUE_APP_PUBLIC_PATH } = process.env
 
 // 加载主题（生产环境和开发环境因为webpack打包机制的不同，所以采用不同的方式实现）
 if (NODE_ENV === 'production') {
+  const theme = localStorage.getItem('theme') || config.theme.default
+
   fetch(VUE_APP_PUBLIC_PATH + '/manifest.json')
     .then(response => response.json())
     .then(async data => {
-      loadStyle(`${VUE_APP_PUBLIC_PATH}/${data[`${localStorage.getItem('theme')}.css`]}`)
-      loadScript(`${VUE_APP_PUBLIC_PATH}/${data[`${localStorage.getItem('theme')}.js`]}`)
+      loadStyle(`${VUE_APP_PUBLIC_PATH}/${data[`${theme}.css`]}`)
+      loadScript(`${VUE_APP_PUBLIC_PATH}/${data[`${theme}.js`]}`)
     })
 } else {
   getVariablesStyle(config, store)
