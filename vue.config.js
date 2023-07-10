@@ -9,7 +9,7 @@ const { accessSync, constants, readdirSync } = require('fs')
 const WebpackAssetsManifest = require('webpack-assets-manifest')
 
 const buildConfig = getBuildConfig()
-const devServer = getDevServer(buildConfig)
+const { account, password, ...devServer } = getDevServer(buildConfig)
 
 module.exports = {
   ...buildConfig.config,
@@ -181,7 +181,9 @@ module.exports = {
     config.plugin('DefinePlugin').use(DefinePlugin, [
       {
         // 注入项目名称
-        PROJ_APP_NAME: JSON.stringify(buildConfig.availableProjectName)
+        PROJ_APP_NAME: JSON.stringify(buildConfig.availableProjectName),
+        DEV_DEFAULT_ACCOUNT: JSON.stringify(process.env.NODE_ENV === 'development' ? account : ''),
+        DEV_DEFAULT_PASSWORD: JSON.stringify(process.env.NODE_ENV === 'development' ? password : '')
       }
     ])
 

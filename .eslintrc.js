@@ -10,7 +10,9 @@ module.exports = {
     APP_COMPONENT: true,
     APP_ROUTES: true,
     LOGIN_COMPONENT: true,
-    PROJ_APP_NAME: true
+    PROJ_APP_NAME: true,
+    DEV_DEFAULT_ACCOUNT: true,
+    DEV_DEFAULT_PASSWORD: true
   },
   extends: [
     'plugin:vue/essential',

@@ -20,13 +20,15 @@ export default Form.create({ name: 'TGLoginForm' })({
     if (process.env.NODE_ENV === 'development') {
       // 开发模式默认账号密码
       this.form.setFieldsValue({
-        username: 'sysadmin',
-        password: '123456',
-        picCode: 'LANJOR'
+        username: DEV_DEFAULT_ACCOUNT,
+        password: DEV_DEFAULT_PASSWORD,
+        picCode: this.$config.enableLoginVerification ? 'LANJOR' : ''
       })
     }
 
-    await this.genCode()
+    if (this.$config.enableLoginVerification) {
+      await this.genCode()
+    }
   },
   methods: {
     ...mapMutations({ setLoading: 'setLoading' }),
@@ -39,7 +41,9 @@ export default Form.create({ name: 'TGLoginForm' })({
           const { status } = await this.login({ payload: values, config: this.$config })
 
           if (!status) {
-            await this.genCode()
+            if (this.$config.enableLoginVerification) {
+              await this.genCode()
+            }
           } else {
             this.hint = true
             this.$router.resetRoutes()
@@ -114,27 +118,33 @@ export default Form.create({ name: 'TGLoginForm' })({
             )
           }
         </Form.Item>
-        <Form.Item class="code">
-          {
-            this.form.getFieldDecorator('picCode', {
-              rules: [
-                { required: true, message: '请输入验证码!' }
-              ]
-            })(
-              <Input placeholder="请输入验证码">
-                <IconFont
-                  slot="prefix"
-                  type={'icon-login-captcha'}
+        {
+          this.$config.enableLoginVerification
+            ? (
+              <Form.Item class="code">
+                {
+                  this.form.getFieldDecorator('picCode', {
+                    rules: [
+                      { required: true, message: '请输入验证码!' }
+                    ]
+                  })(
+                    <Input placeholder="请输入验证码">
+                      <IconFont
+                        slot="prefix"
+                        type={'icon-login-captcha'}
+                      />
+                    </Input>
+                  )
+                }
+                <img
+                  src={this.picCodePath}
+                  alt=""
+                  onClick={this.genCode}
                 />
-              </Input>
+              </Form.Item>
             )
-          }
-          <img
-            src={this.picCodePath}
-            alt=""
-            onClick={this.genCode}
-          />
-        </Form.Item>
+            : null
+        }
         <Form.Item>
           <Button
             class="login-submit"
