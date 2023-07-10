@@ -19,6 +19,10 @@ export default function getVariablesStyle(config, store) {
   const theme = store?.state?.login?.userInfo?.themeFileName || _theme
 
   if (process.env.NODE_ENV !== 'production') {
-    window.themeVariables = require(`./themes/${theme}/index.less`)
+    try {
+      window.themeVariables = require(`./themes/${theme}/index.less`)
+    } catch (e) {
+      window.themeVariables = require(`./themes/${config.theme.default}/index.less`)
+    }
   }
 }

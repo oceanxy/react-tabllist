@@ -1,0 +1,151 @@
+// https://github.com/vueComponent/ant-design-vue/blob/master/components/style/themes/default.less
+@import 'ant-design-vue/dist/antd.less'; // 引入官方提供的 less 样式入口文件
+
+// 主题色配置
+@primary-color: #13C2C2; // 全局主色
+
+// 布局相关颜色
+@layout-header-background: @primary-color;
+@background-color-base: #f2f4f7;
+
+// 文字
+@font-size-base: 14px; // 主字号
+@heading-color: #18181b; // 标题色
+@text-color: fade(@heading-color, 80%); // 主文本色
+@text-color-secondary: fade(@heading-color, 62%); // 次文本色
+
+// input
+@input-placeholder-color: fade(@heading-color, 35%);
+@input-placeholder-color-light: fade(@background-color-base, 35%);
+
+// Card
+@card-background: #f8fafc;
+
+// 边框相关
+@border-radius-base: 4px; // 组件/浮层圆角
+@border-color-base: #1018280e; // 边框色
+@box-shadow-base: 0 2px 8px rgba(0, 0, 0, 0.15); // 浮层阴影
+@border-color-split: #1018281f; // split border inside a component
+
+// 表格
+@table-header-bg: #f8fafc;
+@table-header-color: @heading-color;
+@table-row-hover-bg: @primary-1;
+@table-selected-row-bg: @primary-2;
+
+// 链接色
+@link-color: @primary-color;
+
+// 状态色
+@success-color: #12b76a; // 成功色
+@success-color-light: #f6fef9ff;
+@warning-color: #f79009; // 警告色
+@warning-color-light: #fffcf5ff;
+@error-color: #f04438; // 错误色
+@error-color-light: #fffbfaff;
+@info-color: @primary-color;
+@info-color-light: #f5f8ffff;
+@disabled-color: #10182859;
+@disabled-bg: #f2f4f7;
+@disabled-color-dark: #1018280a;
+@processing-color: @primary-color;
+@highlight-color: @error-color;
+@normal-color: #d9d9d9;
+@white: #ffffff;
+@black: #000000;
+
+// 注入网页供 scss 使用
+:root {
+  --primary-1: @primary-1;
+  --primary-2: @primary-2;
+  --primary-3: @primary-3;
+  --primary-4: @primary-4;
+  --primary-5: @primary-5;
+  --primary-color: @primary-color; // @primary-6
+  --primary-7: @primary-7;
+  --primary-8: @primary-8;
+  --primary-9: @primary-9;
+  --layout-header-background: @layout-header-background;
+  --background-color-base: @background-color-base;
+  --font-size-base: @font-size-base;
+  --font-size-lg: @font-size-lg;
+  --font-size-sm: @font-size-sm;
+  --heading-color: @heading-color;
+  --text-color: @text-color;
+  --text-color-secondary: @text-color-secondary;
+  --input-placeholder-color: @input-placeholder-color;
+  --input-placeholder-color-light: @input-placeholder-color-light;
+  --card-background: @card-background;
+  --border-radius-base: @border-radius-base;
+  --border-color-base: @border-color-base;
+  --box-shadow-base: @box-shadow-base;
+  --table-header-bg: @table-header-bg;
+  --table-header-color: @table-header-color;
+  --table-row-hover-bg: @table-row-hover-bg;
+  --table-selected-row-bg: @table-selected-row-bg;
+  --link-color: @link-color;
+  --success-color: @success-color;
+  --success-color-light: @success-color-light;
+  --warning-color: @warning-color;
+  --warning-color-light: @warning-color-light;
+  --error-color: @error-color;
+  --error-color-light: @error-color-light;
+  --info-color: @info-color;
+  --info-color-light: @info-color-light;
+  --disabled-color: @disabled-color;
+  --disabled-bg: @disabled-bg;
+  --disabled-color-dark: @disabled-color-dark;
+  --processing-color: @processing-color;
+  --highlight-color: @highlight-color;
+  --normal-color: @normal-color;
+  --white: @white;
+  --black: @black;
+}
+
+// 导出变量供 javascript 使用
+:export {
+  primary1: @primary-1;
+  primary2: @primary-2;
+  primary3: @primary-3;
+  primary4: @primary-4;
+  primary5: @primary-5;
+  primaryColor: @primary-color;
+  primary7: @primary-7;
+  primary8: @primary-8;
+  primary9: @primary-9;
+  layoutHeaderBackground: @layout-header-background;
+  backgroundColorBase: @background-color-base;
+  fontSizeBase: @font-size-base;
+  fontSizeLg: @font-size-lg;
+  fontSizeSm: @font-size-sm;
+  headingColor: @heading-color;
+  textColor: @text-color;
+  textColorSecondary: @text-color-secondary;
+  inputPlaceholderColor: @input-placeholder-color;
+  inputPlaceholderColorLight: @input-placeholder-color-light;
+  cardBackground: @card-background;
+  borderRadiusBase: @border-radius-base;
+  borderColorBase: @border-color-base;
+  boxShadowBase: @box-shadow-base;
+  tableHeaderBg: @table-header-bg;
+  tableHeaderColor: @table-header-color;
+  tableRowHoverBg: @table-row-hover-bg;
+  tableSelectedRowBg: @table-selected-row-bg;
+  linkColor: @link-color;
+  successColor: @success-color;
+  successColorLight: @success-color-light;
+  warningColor: @warning-color;
+  warningColorLight: @warning-color-light;
+  errorColor: @error-color;
+  errorColorLight: @error-color-light;
+  infoColor: @info-color;
+  infoColorLight: @info-color-light;
+  disabledColor: @disabled-color;
+  disabledBg: @disabled-bg;
+  disabledColorDark: @disabled-color-dark;
+  processingColor: @processing-color;
+  highlightColor: @highlight-color;
+  normalColor: @normal-color;
+  white: @white;
+  black: @black;
+}
