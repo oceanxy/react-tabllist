@@ -113,7 +113,7 @@ export default {
       return this.$store.state[this.apiOptions.moduleName || this.moduleName][this.apiOptions.stateName]
     },
     primaryColor() {
-      return this.$store.state['common'].variables?.less?.primaryColor
+      return window.themeVariables?.primaryColor
     },
     treeIdField() {
       return this.$store.state[this.moduleName]['treeIdField']

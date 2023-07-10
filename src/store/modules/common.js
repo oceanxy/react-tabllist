@@ -6,8 +6,6 @@
 export default {
   namespaced: true,
   state: {
-    // 主题颜色变量
-    variables: {},
     // 菜单栏折叠与展开状态切换
     collapsed: false,
     // 页面中的侧边树折叠与展开状态切换（如果有）

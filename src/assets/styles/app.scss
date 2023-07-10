@@ -1,4 +1,4 @@
-@import '@/assets/styles/themeFromLess.scss';
+@import './themeFromLess.scss';
 
 html,
 body,
@@ -82,12 +82,12 @@ body {
 
 @font-face {
   font-family: DOUYU;
-  src: url(../fonts/douyuFont-2.otf);
+  src: url('~@/assets/fonts/douyuFont-2.otf');
 }
 
 @font-face {
   font-family: BigruixianBlackGBV;
-  src: url(../fonts/BigruixianBlackGBV.TTF);
+  src: url('~@/assets/fonts/BigruixianBlackGBV.TTF');
 }
 
 .tg-not-found {
@@ -112,7 +112,7 @@ body {
       min-height: 400px;
       padding-top: 400px;
       font-size: $font-size-lg; // 全局默认字号+2px
-      background: url('../images/notFound.png') no-repeat center top / auto 70%;
+      background: url('~@/assets/images/notFound.png') no-repeat center top / auto 70%;
     }
   }
 }

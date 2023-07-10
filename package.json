@@ -9,7 +9,8 @@
     "dev-yx": "dotenv -e ./src/apps/ensuring-deliveries-of-presold-homes/config/.env.development -- vue-cli-service serve --app-proj ensuring-deliveries-of-presold-homes --app-separately 1",
     "dev.auto": "node ./build --app-mode dev",
     "build": "node ./build --app-mode build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "insp": "vue-cli-service inspect --mode production --app-proj rongchang-comprehensive-management-platform --app-separately 1"
   },
   "dependencies": {
     "@wangeditor/editor": "^5.1.23",
@@ -66,7 +67,8 @@
     "vue-svg-loader": "^0.16.0",
     "vue-template-compiler": "^2.7.14",
     "webpack": "^4.46.0",
-    "webpack-bundle-analyzer": "^4.8.0",
+    "webpack-assets-manifest": "^4.0.6",
+    "webpack-bundle-analyzer": "^4.9.0",
     "webpack-cli": "^4.10.0"
   }
 }

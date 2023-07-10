@@ -5,7 +5,7 @@
  * @Date: 2023-03-31 周五 10:09:08
  */
 
-import variablesScss from './themeFromLess.scss'
+import './themeFromLess.scss'
 
 export default function getVariablesStyle(config, store) {
   let _theme = localStorage.getItem('theme')
@@ -16,12 +16,9 @@ export default function getVariablesStyle(config, store) {
   }
 
   // 加载主题
-  // const theme = store?.state?.login?.userInfo?.themeFileName || _theme
-  // const less = require(`./themes/${theme}`)
-  const less = require('./themes/blue.less')
+  const theme = store?.state?.login?.userInfo?.themeFileName || _theme
 
-  return {
-    scss: variablesScss,
-    less
+  if (process.env.NODE_ENV !== 'production') {
+    window.themeVariables = require(`./themes/${theme}/index.less`)
   }
 }

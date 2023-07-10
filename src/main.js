@@ -21,21 +21,43 @@ if (localStorage.getItem('token')) {
   resetRoutes()
 }
 
+function loadStyle(url) {
+  const link = document.createElement('link')
+
+  link.type = 'text/css'
+  link.rel = 'stylesheet'
+  link.href = url
+
+  const head = document.getElementsByTagName('head')[0]
+
+  head.appendChild(link)
+}
+
+function loadScript(url) {
+  const script = document.createElement('script')
+
+  script.type = 'text/javascript'
+  script.src = url
+
+  document.body.appendChild(script)
+}
+
+const { NODE_ENV, VUE_APP_PUBLIC_PATH } = process.env
+
+// 加载主题（生产环境和开发环境因为webpack打包机制的不同，所以采用不同的方式实现）
+if (NODE_ENV === 'production') {
+  fetch(VUE_APP_PUBLIC_PATH + '/manifest.json')
+    .then(response => response.json())
+    .then(async data => {
+      loadStyle(`${VUE_APP_PUBLIC_PATH}/${data[`${localStorage.getItem('theme')}.css`]}`)
+      loadScript(`${VUE_APP_PUBLIC_PATH}/${data[`${localStorage.getItem('theme')}.js`]}`)
+    })
+} else {
+  getVariablesStyle(config, store)
+}
+
 new Vue({
   router,
   store,
-  render: h => h(APP_COMPONENT.default),
-  watch: {
-    $route() {
-      // 加载主题
-
-      this.$store.commit('setState', {
-        value: getVariablesStyle(this.$config, this.$store),
-        stateName: 'variables',
-        moduleName: 'common'
-      })
-
-      document.querySelector('html').className = localStorage.getItem('theme').replace('.less', '')
-    }
-  }
+  render: h => h(APP_COMPONENT.default)
 }).$mount('#app')

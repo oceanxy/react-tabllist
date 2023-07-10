@@ -137,6 +137,7 @@ function getBuildConfig() {
   const files = glob.sync('src/apps/*/config/index.js')
   let availableProjectNames = []
   let appPrefix = ''
+  const appConfig = {}
   const appSeparately = args['app-separately']
   const externals = []
 
@@ -144,19 +145,35 @@ function getBuildConfig() {
     availableProjectNames = args['app-proj'].split(' ')
   }
 
+  availableProjectNames.forEach(apn => {
+    appConfig[apn] = require(resolve(__dirname, `../src/apps/${apn}/config/index.js`))
+  })
+
   if (Object.prototype.toString.call(args['app-pref']) === '[object String]') {
     appPrefix = args['app-pref']
   }
 
   const config = {}
 
-  // config.pages = {
-  //   index: {
-  //     entry: `src/apps/${availableProjectNames[0]}/main.js`
-  //     // title: '',
-  //     // chunks: [availableProjectNames[0], 'chunk-vendors', 'chunk-common']
-  //   }
-  // }
+  if (process.env.NODE_ENV === 'production') {
+    config.pages = {
+      index: {
+        entry: 'src/main.js',
+        title: '',
+        chunks: ['chunk-vendors', 'chunk-commons', 'index']
+        // chunks: ['index']
+      },
+      ...appConfig[availableProjectNames[0]].theme.availableThemes.reduce((themes, cur) => {
+        themes[cur.fileName] = `src/assets/styles/themes/${cur.fileName}`
+
+        return themes
+      }, {})
+    }
+  } else {
+    config.pages = {
+      index: 'src/main.js'
+    }
+  }
 
   // 分别独立打包时，使用各自 apps 下的 main.js
   if (+appSeparately === 1) {
@@ -177,6 +194,7 @@ function getBuildConfig() {
   return {
     config,
     appPrefix,
+    appConfig,
     appSeparately,
     availableProjectName: availableProjectNames[0],
     externals(context, request, callback) {

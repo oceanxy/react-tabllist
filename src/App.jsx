@@ -32,12 +32,6 @@ export default {
       localStorage.removeItem('state')
     }
 
-    this.$store.commit('setState', {
-      value: getVariablesStyle(this.$config, this.$store),
-      stateName: 'variables',
-      moduleName: 'common'
-    })
-
     // 在页面刷新时将store里的信息保存到localStorage里，以便刷新页面后还原store
     window.addEventListener('beforeunload', this.setStore)
   },

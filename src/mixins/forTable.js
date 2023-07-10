@@ -106,7 +106,7 @@ export default ({
         return this.getState('sortFieldList', this.moduleName, this.submoduleName, false)
       },
       primaryColor() {
-        return this.$store.state['common'].variables?.less?.primaryColor
+        return window.themeVariables?.primaryColor
       },
       attributes() {
         const events = {}

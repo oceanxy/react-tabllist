@@ -142,22 +142,22 @@ export default {
     async switchThemes(themeFileName) {
       if (document.querySelector('#tg-responsive-layout')) {
         document.querySelector('#tg-responsive-layout').style.display = 'none'
+
+        await this.$store.dispatch('custom', {
+          customApiName: 'setThemeFileName',
+          payload: { themeFileName }
+        })
+
+        this.$store.commit('setState', {
+          stateName: 'userInfo',
+          value: { themeFileName },
+          moduleName: 'login',
+          merge: true
+        })
+
+        localStorage.setItem('theme', themeFileName || this.$config.theme.default)
+        window.location.reload()
       }
-
-      await this.$store.dispatch('custom', {
-        customApiName: 'setThemeFileName',
-        payload: { themeFileName }
-      })
-
-      this.$store.commit('setState', {
-        stateName: 'userInfo',
-        value: { themeFileName },
-        moduleName: 'login',
-        merge: true
-      })
-
-      localStorage.setItem('theme', themeFileName || this.$config.theme.default)
-      window.location.reload()
     }
   },
   render() {

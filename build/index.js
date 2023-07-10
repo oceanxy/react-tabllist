@@ -22,6 +22,8 @@ const child_process = require('child_process')
 const { on, getAvailableProjectNames, getAvailableNamesFromProjectConfig } = require('./configs')
 const args = require('minimist')(process.argv.slice(2))
 const dotenv = require('dotenv')
+const { unlinkSync, readdirSync, readdir } = require('fs')
+const { resolve } = require('path')
 
 function start() {
   let mode = ''

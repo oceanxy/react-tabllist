@@ -5,7 +5,8 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const { resolve, join } = require('path')
 const { getBuildConfig, getDevServer } = require('./build/configs')
 const { ProvidePlugin, DefinePlugin } = require('webpack')
-const { accessSync, constants } = require('fs')
+const { accessSync, constants, readdirSync } = require('fs')
+const WebpackAssetsManifest = require('webpack-assets-manifest')
 
 const buildConfig = getBuildConfig()
 const devServer = getDevServer(buildConfig)
@@ -49,14 +50,43 @@ module.exports = {
   // 对内部的 webpack 配置进行更细粒度的修改
   // https://github.com/neutrinojs/webpack-chain see https://github.com/vuejs/vue-cli/blob/dev/docs/webpack.md
   chainWebpack: config => {
+    const themeNames = []
+
     /**
      * =======================================================================================
      * 删除懒加载模块的prefetch，降低带宽压力
      * https://cli.vuejs.org/zh/guide/html-and-static-assets.html#prefetch
      * 而且预渲染时生成的prefetch标签是modern版本的，低版本浏览器是不需要的
      */
-    config.plugins.delete('preload')
-    config.plugins.delete('prefetch')
+    config.plugins.delete('preload-index')
+    config.plugins.delete('prefetch-index')
+
+    if (process.env.NODE_ENV === 'production') {
+      buildConfig.appConfig[buildConfig.availableProjectName].theme.availableThemes.forEach(t => {
+        config.plugins.delete(`preload-${t.fileName}`)
+        config.plugins.delete(`prefetch-${t.fileName}`)
+
+        // 删除多余的 html-webpack-plugin 配置，（自定义主题入口来打包编译less文件，vue-cli自动添加的冗余配置）
+        config.plugins.delete(`html-${t.fileName}`)
+
+        themeNames.push(t.fileName)
+      })
+
+      // 在index.html中排除对主题样式文件的引用
+      config.plugin('html-index').tap(config => {
+        config[0].excludeChunks = themeNames
+        config[0].title = buildConfig.appConfig[buildConfig.availableProjectName].systemName
+
+        return config
+      })
+    } else {
+      // 在index.html中排除对主题样式文件的引用
+      config.plugin('html-index').tap(config => {
+        config[0].title = buildConfig.appConfig[buildConfig.availableProjectName].systemName
+
+        return config
+      })
+    }
 
     // 替换svg loader
     const svgRule = config.module.rule('svg')
@@ -166,6 +196,43 @@ module.exports = {
         return args
       })
 
+      /* ===============================   抽取主题样式为单独的文件    ================================== */
+      const themeGroups = {}
+
+      buildConfig.appConfig[buildConfig.availableProjectName].theme.availableThemes.forEach(t => {
+        themeGroups[`${t.fileName}Theme`] = {
+          name: t.fileName,
+          test: (module, chunk, entry = t.fileName) => {
+            const reg = new RegExp('[\\\\/]src[\\\\/]assets[\\\\/]styles[\\\\/]themes[\\\\/]' + entry)
+
+            return reg.test(module.resource)
+          },
+          chunks: 'all',
+          enforce: true,
+          priority: 50
+        }
+      })
+
+      config.optimization.splitChunks({
+        cacheGroups: {
+          vendors: {
+            name: 'chunk-vendors',
+            test: /[\\/]node_modules[\\/]/,
+            priority: -10, // 缓存组权重，数字越大优先级越高
+            chunks: 'initial' // 只处理初始 chunk
+          },
+          common: {
+            name: 'chunk-commons',
+            minChunks: 2, // common 组的模块必须至少被 2 个 chunk 共用 (本次分割前)
+            priority: -20,
+            chunks: 'initial', // 只针对同步 chunk
+            reuseExistingChunk: true // 复用已被拆出的依赖模块，而不是继续包含在该组一起生成
+          },
+          ...themeGroups
+        }
+      })
+      /* ======================================================================================== */
+
       // 文件开启Gzip，也可以通过服务端(如：nginx)(https://github.com/webpack-contrib/compression-webpack-plugin)
       config.plugin('compressionPlugin').use(CompressionPlugin, [
         {
@@ -176,6 +243,9 @@ module.exports = {
           minRatio: 0.8
         }
       ])
+
+      // 默认在dist目录下生成 manifest.json（追踪所有模块到输出 bundle 之间的映射）
+      config.plugin('manifest').use(WebpackAssetsManifest)
 
       // Webpack包文件分析器(https://github.com/webpack-contrib/webpack-bundle-analyzer)
       // config
