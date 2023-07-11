@@ -33,7 +33,7 @@
             <icon-font
               v-else-if="route.meta.icon"
               :type="route.meta.icon + (selectedKeys.includes(route.key)
-                ? $config.activeSuffixForMenuIcon
+                ? activeSuffixForMenuIcon
                 : ''
               )"
             />
@@ -68,7 +68,7 @@ const TGSubMenu = {
       <icon-font
         v-else-if="menuInfo.meta.icon"
         :type="menuInfo.meta.icon + (selectedKeys.includes(menuInfo.key)
-          ? $config.activeSuffixForMenuIcon
+          ? activeSuffixForMenuIcon
           : ''
         )"
       />
@@ -98,7 +98,7 @@ const TGSubMenu = {
             <icon-font
               v-else-if="showSubIcon && route.meta.icon"
               :type="route.meta.icon + (selectedKeys.includes(route.key)
-                ? $config.activeSuffixForMenuIcon
+                ? activeSuffixForMenuIcon
                 : ''
               )"
             />
@@ -134,6 +134,14 @@ const TGSubMenu = {
     [Menu.Item.name]: Menu.Item,
     [Menu.SubMenu.name]: Menu.SubMenu
   },
+  computed: {
+    activeSuffixForMenuIcon() {
+      return this.$config.activeSuffixForMenuIcon.replace(
+        '{themeName}',
+        `-${localStorage.getItem('theme') || this.$config.theme.default}`
+      )
+    }
+  },
   methods: {
     titleClick(e) {
       this.$emit('subMenuClick', e)
@@ -161,6 +169,14 @@ export default {
       menuRoutes: [],
       // 菜单滚动条距离顶部的初始值
       menuScrollTop: 0
+    }
+  },
+  computed: {
+    activeSuffixForMenuIcon() {
+      return this.$config.activeSuffixForMenuIcon.replace(
+        '{themeName}',
+        `-${localStorage.getItem('theme') || this.$config.theme.default}`
+      )
     }
   },
   watch: {

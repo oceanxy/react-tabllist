@@ -18,8 +18,12 @@ module.exports = {
   homePermissions: true,
   // iconfont
   iconFontSymbol: '//at.alicdn.com/t/c/font_3996750_sgcx6ewq6y.js',
-  // iconfont菜单图标在 active 状态下的后缀（该后缀会直接加到iconfont图标名称的最后，需在iconfont中预先定义好该图标；
-  // 如果留空则自动根据主题色填充该图标在active状态下的颜色）
+  /**
+   * iconfont菜单图标在 active 状态下的后缀（该后缀会直接加到iconfont图标名称的最后，需在iconfont中预先定义好该图标；
+   * - 如果留空则自动根据主题色填充该图标在active状态下的颜色）；
+   * - 可根据主题色动态设置选中态的图标，'{themeName}'为当前主题色占位符；
+   *   例如：'{themeName}-active'
+   */
   activeSuffixForMenuIcon: '-active',
   // 是否启用登录验证码功能
   enableLoginVerification: true,
