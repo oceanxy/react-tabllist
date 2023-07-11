@@ -11,7 +11,10 @@
 
   &.ant-menu-inline-collapsed {
     & > .ant-menu-submenu-selected {
-      background: $primary-color-light-hover;
+      .ant-menu-item-title,
+      .ant-menu-submenu-title {
+        background: $primary-color-light-hover;
+      }
     }
 
     & > .ant-menu-item,
@@ -22,11 +25,16 @@
 
       .anticon {
         line-height: 0;
+
+        svg {
+          width: 1.4em !important;
+          height: 1.4em !important;
+        }
       }
     }
   }
 
-  & .ant-menu-item {
+  .ant-menu-item {
     position: relative;
     overflow: unset;
 
@@ -53,13 +61,14 @@
     }
   }
 
-  .ant-menu-item,
-  .ant-menu-submenu .ant-menu-submenu-title {
-    &:hover {
-      border-radius: $border-radius-base;
-      background: $primary-color-light-hover;
-    }
+  .ant-menu-item:hover,
+  .ant-menu-submenu .ant-menu-submenu-title:hover {
+    border-radius: $border-radius-base;
+    background: $primary-color-light-hover;
+  }
 
+  .ant-menu-item,
+  .ant-menu-submenu {
     .ant-menu-item-title,
     .ant-menu-submenu-title {
       div {
@@ -68,6 +77,12 @@
 
         .anticon {
           font-size: $font-size-lg;
+          margin-right: 8px;
+
+          svg {
+            width: 1.1em;
+            height: 1.1em
+          }
         }
 
         span {
