@@ -16,6 +16,16 @@ export default {
     value: {
       type: Number,
       default: 0
+    },
+    // 值的高度
+    valueHeight: {
+      type: Number,
+      default: 40
+    },
+    // 文本预值的间隔
+    gap: {
+      type: Number,
+      default: 10
     }
   },
   watch: {
@@ -34,7 +44,7 @@ export default {
   },
   render() {
     return (
-      <div class="tg-scrolling-number-container">
+      <div class="tg-scrolling-number-container" style={{ gap: this.gap + 'px' }}>
         {
           this.innerText
             ? (
@@ -44,11 +54,18 @@ export default {
             )
             : null
         }
-        <div class="tg-scrolling-number-value">
+        <div
+          class="tg-scrolling-number-value"
+          style={
+            {
+              height: this.valueHeight + 'px'
+            }
+          }
+        >
           {
             this.innerValue.map(numStr => {
               return !isNaN(+numStr)
-                ? <Scroll targetNumber={+numStr} />
+                ? <Scroll targetNumber={+numStr} itemHeight={this.valueHeight} />
                 : <div>{numStr}</div>
             })
           }

@@ -3,6 +3,10 @@ import _ from 'lodash'
 
 export default {
   props: {
+    itemHeight: {
+      type: Number,
+      required: true
+    },
     /**
      * 滚动目标数字
      */
@@ -51,7 +55,13 @@ export default {
           }}
         >
           {
-            _.range(0, 10).map(num => <div class="number-item">{num}</div>)
+            _.range(0, 10).map(num => {
+              return (
+                <div class="number-item" style={`height: ${this.itemHeight}px;line-height: ${this.itemHeight}px`}>
+                  {num}
+                </div>
+              )
+            })
           }
         </div>
       </div>
