@@ -398,7 +398,7 @@ export default {
      */
     getIcon(treeNode) {
       return Object.prototype.toString.call(this.getCustomIcon) === '[object Function]'
-        ? <span slot={'icon'}>this.getCustomIcon(treeNode)</span>
+        ? <span slot={'icon'}>{this.getCustomIcon(treeNode)}</span>
         : treeNode.obj?.menuIcon?.includes?.('.svg')
           ? (
             <Icon
