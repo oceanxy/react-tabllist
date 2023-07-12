@@ -72,6 +72,7 @@ export default {
    * @param [stateName] {string} 需要设置的字段，默认 state.list
    * @param [customApiName] {string} 自定义请求api的名字
    * @param [merge] {boolean} 是否合并数据，默认false，主要用于“加载更多”功能
+   * @param [raw] {boolean} 原样输出接口返回的数据结构到页面对应的store中。（专用于非增删改查的非列表页面，比如首页、控制台等定制化页面）
    * @returns {Promise<void>}
    */
   async getList({ state, commit }, {
@@ -80,7 +81,8 @@ export default {
     additionalQueryParameters = {},
     stateName,
     customApiName,
-    merge
+    merge,
+    raw
   }) {
     const targetModuleName = state[moduleName][submoduleName] ?? state[moduleName]
 
@@ -124,56 +126,62 @@ export default {
     }
 
     if (response.status) {
-      const data = response.data?.paginationObj ?? response.data
-      const sortFieldList = response.data?.sortFieldList ?? []
-      let rows = data?.rows ?? data
-
-      // 若指定字段不是可用的数据数组，则在 rows 对象内寻找数组作为结果返回，其他字段注入到该模块的 store 中
-      if (Object.prototype.toString.call(rows) === '[object Object]') {
-        Object.entries(rows).forEach(([key, value]) => {
-          if (Array.isArray(value)) {
-            rows = value
-          } else {
-            Vue.set(targetModuleName, key, value)
-          }
+      if (raw) {
+        Object.entries(response.data).forEach(([key, value]) => {
+          Vue.set(targetModuleName, key, value)
         })
-      }
+      } else {
+        const data = response.data?.paginationObj ?? response.data
+        const sortFieldList = response.data?.sortFieldList ?? []
+        let rows = data?.rows ?? data
 
-      if (!rows) {
-        rows = []
-      }
+        // 若指定字段不是可用的数据数组，则在 rows 对象内寻找数组作为结果返回，其他字段注入到该模块的 store 中
+        if (Object.prototype.toString.call(rows) === '[object Object]') {
+          Object.entries(rows).forEach(([key, value]) => {
+            if (Array.isArray(value)) {
+              rows = value
+            } else {
+              Vue.set(targetModuleName, key, value)
+            }
+          })
+        }
 
-      if ('pagination' in targetModuleName) {
-        commit('setPagination', {
+        if (!rows) {
+          rows = []
+        }
+
+        if ('pagination' in targetModuleName) {
+          commit('setPagination', {
+            moduleName,
+            submoduleName,
+            value: {
+              pageIndex: data.pageIndex,
+              pageSize: data.pageSize,
+              total: data.totalNum
+            }
+          })
+        }
+
+        if (merge) {
+          rows = [...targetModuleName[stateName || 'list'], ...rows]
+        }
+
+        if (sortFieldList?.length) {
+          commit('setState', {
+            value: sortFieldList,
+            moduleName,
+            submoduleName,
+            stateName: 'sortFieldList'
+          })
+        }
+
+        commit('setList', {
+          value: rows,
           moduleName,
           submoduleName,
-          value: {
-            pageIndex: data.pageIndex,
-            pageSize: data.pageSize,
-            total: data.totalNum
-          }
+          stateName
         })
       }
-
-      if (merge) {
-        rows = [...targetModuleName[stateName || 'list'], ...rows]
-      }
-
-      if (sortFieldList?.length) {
-        commit('setState', {
-          value: sortFieldList,
-          moduleName,
-          submoduleName,
-          stateName: 'sortFieldList'
-        })
-      }
-
-      commit('setList', {
-        value: rows,
-        moduleName,
-        submoduleName,
-        stateName
-      })
     }
 
     commit('setLoading', {
