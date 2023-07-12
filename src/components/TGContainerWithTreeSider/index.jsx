@@ -1,5 +1,6 @@
 import './assets/styles/index.scss'
 import { Empty, Icon, Input, Spin, Tree } from 'ant-design-vue'
+import { getFirstLetterOfEachWordOfAppName } from '@/utils/utilityFunction'
 import TGContainerWithSider from '@/components/TGContainerWithSider'
 import { cloneDeep, debounce } from 'lodash'
 
@@ -109,8 +110,11 @@ export default {
     }
   },
   computed: {
+    _moduleName() {
+      return this.apiOptions.moduleName.replace('{appName}', getFirstLetterOfEachWordOfAppName())
+    },
     dataSource() {
-      return this.$store.state[this.apiOptions.moduleName || this.moduleName][this.apiOptions.stateName]
+      return this.$store.state[this._moduleName || this.moduleName][this.apiOptions.stateName]
     },
     primaryColor() {
       return window.themeVariables?.primaryColor
@@ -244,7 +248,7 @@ export default {
      */
     async getTree() {
       return await this.$store.dispatch('getListWithLoadingStatus', {
-        moduleName: this.apiOptions.moduleName || this.moduleName,
+        moduleName: this._moduleName || this.moduleName,
         stateName: this.apiOptions.stateName,
         customApiName: this.apiOptions.apiName
       })
