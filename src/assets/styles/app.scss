@@ -160,9 +160,9 @@ body {
       flex-wrap: wrap;
     }
 
-    & > .ant-form-item:not(.activity) {
+    .ant-form-item:not(.activity) {
       flex: none;
-      width: 220px;
+      width: 240px;
       box-sizing: border-box;
       display: flex;
       align-items: center;
@@ -172,7 +172,7 @@ body {
       }
 
       &.span-2 {
-        width: 452px;
+        width: 508px;
       }
 
       .ant-form-item-label {
@@ -182,7 +182,7 @@ body {
 
         label {
           display: inline-block;
-          min-width: 70px;
+          min-width: 94px;
           text-align: justify;
           text-align-last: justify;
           padding-left: 10px;
@@ -315,6 +315,8 @@ body {
       display: flex;
       align-items: center;
       gap: 6px;
+      //width: 100%;
+      flex: auto;
 
       .icon {
         font-size: 24px;
@@ -350,6 +352,7 @@ body {
     }
 
     .row-down {
+      flex: auto;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
