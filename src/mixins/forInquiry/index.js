@@ -108,7 +108,7 @@ export default ({
         this.forRender.children.push(this.operationButtons)
       } else {
         for (const [index, VNode] of this.forRender.entries()) {
-          if (VNode.data.class === 'row-down' || index === this.forRender.length - 1) {
+          if (VNode.data.class === 'inquiry-row-for-fields' || index === this.forRender.length - 1) {
             VNode.children.push(this.operationButtons)
             break
           }
