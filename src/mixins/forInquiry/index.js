@@ -108,8 +108,11 @@ export default ({
         this.forRender.children.push(this.operationButtons)
       } else {
         for (const [index, VNode] of this.forRender.entries()) {
-          if (VNode.data.class === 'inquiry-row-for-fields' || index === this.forRender.length - 1) {
-            VNode.children.push(this.operationButtons)
+          if (VNode.tag.includes('AFormItem')) {
+            this.forRender.push(this.operationButtons)
+            break
+          } else if (VNode.data?.class === 'inquiry-row-for-fields' || index === this.forRender.length - 1) {
+            VNode.children?.push(this.operationButtons)
             break
           }
         }
@@ -127,9 +130,7 @@ export default ({
 
           this.$nextTick(() => {
             // 仅仅为了使用 Form 组件的检验功能来改变必填框的错误状态
-            this.form.validateFields(() => {
-              // 写一个空函数，不然控制台会有错误信息输出
-            })
+            this.form.validateFields(() => {/*写一个空函数，不然控制台会有错误信息输出*/})
           })
         }
       )
