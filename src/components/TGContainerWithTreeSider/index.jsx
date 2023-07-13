@@ -110,11 +110,11 @@ export default {
     }
   },
   computed: {
-    _moduleName() {
-      return this.apiOptions.moduleName.replace('{appName}', getFirstLetterOfEachWordOfAppName())
+    moduleNameForTree() {
+      return this.apiOptions?.moduleName?.replace('{appName}', getFirstLetterOfEachWordOfAppName()) ?? this.moduleName
     },
     dataSource() {
-      return this.$store.state[this._moduleName || this.moduleName][this.apiOptions.stateName]
+      return this.$store.state[this.moduleNameForTree][this.apiOptions.stateName]
     },
     primaryColor() {
       return window.themeVariables?.primaryColor
@@ -248,7 +248,7 @@ export default {
      */
     async getTree() {
       return await this.$store.dispatch('getListWithLoadingStatus', {
-        moduleName: this._moduleName || this.moduleName,
+        moduleName: this.moduleNameForTree,
         stateName: this.apiOptions.stateName,
         customApiName: this.apiOptions.apiName
       })
