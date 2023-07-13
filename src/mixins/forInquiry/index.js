@@ -81,6 +81,41 @@ export default ({
           stateName: 'treeCollapsed'
         })
       }
+    },
+    operationButtons() {
+      return (
+        <Space class={'tg-inquiry-form-buttons'}>
+          <Button
+            disabled={this.buttonDisabled}
+            loading={this.loading}
+            htmlType="submit"
+            type="primary"
+            icon="search"
+          >
+            查询
+          </Button>
+          <Button
+            onClick={this.onClear}
+            icon="reload"
+          >
+            重置并刷新
+          </Button>
+        </Space>
+      )
+    },
+    content() {
+      if (!Array.isArray(this.forRender)) {
+        this.forRender.children.push(this.operationButtons)
+      } else {
+        for (const [index, VNode] of this.forRender.entries()) {
+          if (VNode.data.class === 'row-down' || index === this.forRender.length - 1) {
+            VNode.children.push(this.operationButtons)
+            break
+          }
+        }
+      }
+
+      return this.forRender
     }
   },
   created() {
@@ -243,24 +278,7 @@ export default ({
             : null
         }
         <div class={'tg-inquiry-form-content'}>
-          {this.forRender}
-          <Space class={'tg-inquiry-form-buttons'}>
-            <Button
-              disabled={this.buttonDisabled}
-              loading={this.loading}
-              htmlType="submit"
-              type="primary"
-              icon="search"
-            >
-              查询
-            </Button>
-            <Button
-              onClick={this.onClear}
-              icon="reload"
-            >
-              重置并刷新
-            </Button>
-          </Space>
+          {this.content}
         </div>
       </Form>
     )
