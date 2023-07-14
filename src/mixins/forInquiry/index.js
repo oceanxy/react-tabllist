@@ -11,9 +11,10 @@ import { Button, Form, Space } from 'ant-design-vue'
 
 /**
  * 生成用于表格搜索的混合
- * @param [isFetchList=true] {boolean} 是否通过本组件的搜索按钮来请求数据，默认 true。
+ * @param [isFetchList=true] {boolean} 是否通过本组件的搜索按钮来请求数据，默认 true。设置为 false 时，将隐藏搜索按钮。
  *  在一些特殊场景，搜索按钮只负责改变 store 内的值，例如：
- *  如果其他组件（如左侧树、页面列表等）有请求数据的逻辑，此处请设置为 false，搜索按钮仅仅用来控制 store.state.search 的值
+ *  如果其他组件（如左侧树、页面列表等）有请求数据的逻辑，此处请设置为 false，搜索按钮仅仅用来控制 store.state.search 的值，
+ *  发送请求的逻辑交由这些组件来完成。
  * @param [isInitializeFromStore=false] {boolean} 在组件加载成功时，是否把 store 内对应本组件的模块的搜索参数映射到 Form 组件内，默认 false
  * @param [buttonDisabled] {() => boolean} 禁用查询按钮的方法
  * @returns {Object}
@@ -104,16 +105,18 @@ export default ({
       )
     },
     content() {
-      if (!Array.isArray(this.forRender)) {
-        this.forRender.children.push(this.operationButtons)
-      } else {
-        for (const [index, VNode] of this.forRender.entries()) {
-          if (VNode.tag.includes('AFormItem')) {
-            this.forRender.push(this.operationButtons)
-            break
-          } else if (VNode.data?.class === 'inquiry-row-for-fields' || index === this.forRender.length - 1) {
-            VNode.children?.push(this.operationButtons)
-            break
+      if (isFetchList) {
+        if (!Array.isArray(this.forRender)) {
+          this.forRender?.children.push(this.operationButtons)
+        } else {
+          for (const [index, VNode] of this.forRender.entries()) {
+            if (VNode.tag.includes('AFormItem')) {
+              this.forRender.push(this.operationButtons)
+              break
+            } else if (VNode.data?.class === 'inquiry-row-for-fields' || index === this.forRender.length - 1) {
+              VNode.children?.push(this.operationButtons)
+              break
+            }
           }
         }
       }
