@@ -83,6 +83,18 @@ export default ({
         })
       }
     },
+    sideToggle() {
+      return (
+        <div class={'tg-inquiry-side-toggle'}>
+          <IconFont
+            class={`tree-btn${this.treeCollapsed ? ' reverse' : ''}`}
+            type={'icon-side-tree-toggle'}
+            onClick={this.onTreeFold}
+            title={!this.treeCollapsed ? '折叠树' : '展开树'}
+          />
+        </div>
+      )
+    },
     operationButtons() {
       return (
         <Space class={'tg-inquiry-form-buttons'}>
@@ -105,13 +117,34 @@ export default ({
       )
     },
     content() {
+      if (!this.forRender) {
+        console.error(`未检测到 ${this.moduleName}${this.submoduleName
+          ? `.${this.submoduleName}`
+          : ''
+        } 内 Inquiry 组件的 forRender 计算属性，请确认！`)
+
+        return undefined
+      }
+
+      if (this.inTree && !this.inModal) {
+        if (!Array.isArray(this.forRender)) {
+          this.forRender?.children.unshift(this.sideToggle)
+        } else {
+          if (this.forRender[0]?.tag?.includes('AFormItem')) {
+            this.forRender?.unshift(this.sideToggle)
+          } else {
+            this.forRender[0]?.children?.unshift(this.sideToggle)
+          }
+        }
+      }
+
       if (isFetchList) {
         if (!Array.isArray(this.forRender)) {
           this.forRender?.children.push(this.operationButtons)
         } else {
           for (const [index, VNode] of this.forRender.entries()) {
             if (VNode.tag.includes('AFormItem')) {
-              this.forRender.push(this.operationButtons)
+              this.forRender?.push(this.operationButtons)
               break
             } else if (VNode.data?.class === 'inquiry-row-for-fields' || index === this.forRender.length - 1) {
               VNode.children?.push(this.operationButtons)
@@ -267,23 +300,7 @@ export default ({
         colon={false}
         class="tg-inquiry"
       >
-        {
-          this.inTree && !this.inModal
-            ? (
-              <div class={'tg-inquiry-side-toggle'}>
-                <IconFont
-                  class={`tree-btn${this.treeCollapsed ? ' reverse' : ''}`}
-                  type={'icon-side-tree-toggle'}
-                  onClick={this.onTreeFold}
-                  title={!this.treeCollapsed ? '折叠树' : '展开树'}
-                />
-              </div>
-            )
-            : null
-        }
-        <div class={'tg-inquiry-form-content'}>
-          {this.content}
-        </div>
+        {this.content}
       </Form>
     )
   }

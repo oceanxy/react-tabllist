@@ -119,7 +119,7 @@ body {
 
 .tg-inquiry.tg-inquiry {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: flex-start;
   row-gap: 10px;
   column-gap: 10px;
@@ -131,7 +131,9 @@ body {
   }
 
   .tg-inquiry-side-toggle {
-    padding: 6px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     .tree-btn {
       font-size: 1.8em;
@@ -150,221 +152,216 @@ body {
     }
   }
 
-  .tg-inquiry-form-content {
-    display: flex;
+  .tg-inquiry-form-buttons {
+    padding: 0 10px;
     flex-wrap: wrap;
-    row-gap: 12px;
+  }
 
-    .tg-inquiry-form-buttons {
-      padding: 0 10px;
-      flex-wrap: wrap;
+  .ant-form-item:not(.activity) {
+    margin-right: 0;
+    flex: none;
+    //min-width: 200px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+
+    &.ant-form-item-with-help {
+      margin-bottom: 0;
     }
 
-    .ant-form-item:not(.activity) {
+    &.span-2 {
+      //min-width: 300px;
+    }
+
+    .ant-form-item-label {
+      z-index: 1;
       flex: none;
-      width: 240px;
-      box-sizing: border-box;
-      display: flex;
-      align-items: center;
+      overflow: initial;
 
-      &.ant-form-item-with-help {
-        margin-bottom: 0;
+      label {
+        display: inline-block;
+        //min-width: 94px;
+        //text-align: justify;
+        //text-align-last: justify;
+        padding-left: 10px;
+        padding-right: 4px;
+      }
+    }
+
+    // 把搜索框的 label 放进框内
+    .ant-form-item-control-wrapper {
+      flex: auto;
+      width: 100%;
+      //margin-left: -70px;
+      z-index: 0;
+      overflow: hidden;
+
+      .ant-select {
+        min-width: 80px;
       }
 
-      &.span-2 {
-        width: 508px;
-      }
+      .ant-form-item-control {
+        height: 100%;
 
-      .ant-form-item-label {
-        z-index: 1;
-        flex: none;
-        overflow: initial;
-
-        label {
-          display: inline-block;
-          min-width: 94px;
-          text-align: justify;
-          text-align-last: justify;
-          padding-left: 10px;
-          padding-right: 4px;
-        }
-      }
-
-      // 把搜索框的 label 放进框内
-      .ant-form-item-control-wrapper {
-        flex: auto;
-        width: 100%;
-        //margin-left: -70px;
-        z-index: 0;
-        overflow: hidden;
-
-        .ant-select {
-          width: 100%;
+        // inquiry 组件内的行内表单防止样式错位，隐藏文字提示信息
+        &.has-error .ant-form-explain,
+        .ant-form-item-children + * {
+          display: none;
         }
 
-        .ant-form-item-control {
+        .ant-form-item-children {
+          display: flex;
           height: 100%;
 
-          // inquiry 组件内的行内表单防止样式错位，隐藏文字提示信息
-          &.has-error .ant-form-explain,
-          .ant-form-item-children + * {
-            display: none;
+          & > .ant-select .ant-select-selection,
+          & > .ant-input-affix-wrapper .ant-input,
+          & > .ant-input-number,
+          & > .ant-input,
+          & > .ant-calendar-picker .ant-calendar-picker-input,
+          & > .ant-input-group {
+            width: 100%;
+            //padding-left: 80px;
           }
 
-          .ant-form-item-children {
+          & > .ant-calendar-picker {
+            width: 100%;
+          }
+
+          & > .ant-input-group {
             display: flex;
-            height: 100%;
+            align-items: center;
+            gap: 5px;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
 
-            & > .ant-select .ant-select-selection,
-            & > .ant-input-affix-wrapper .ant-input,
-            & > .ant-input-number,
-            & > .ant-input,
-            & > .ant-calendar-picker .ant-calendar-picker-input,
-            & > .ant-input-group {
-              width: 100%;
-              //padding-left: 80px;
+            &:hover {
+              border-color: $primary-color;
             }
 
-            & > .ant-calendar-picker {
-              width: 100%;
+            .ant-input-number {
+              border-color: transparent !important;
+              outline: none !important;
+              box-shadow: none !important;
             }
 
-            & > .ant-input-group {
-              display: flex;
-              align-items: center;
-              gap: 5px;
-              border: 1px solid #d9d9d9;
-              border-radius: 4px;
-              transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+            .ant-input-number:first-child {
 
-              &:hover {
-                border-color: $primary-color;
-              }
-
-              .ant-input-number {
+              &:hover,
+              &:focus,
+              &:active {
                 border-color: transparent !important;
-                outline: none !important;
-                box-shadow: none !important;
-              }
-
-              .ant-input-number:first-child {
-
-                &:hover,
-                &:focus,
-                &:active {
-                  border-color: transparent !important;
-                  border-right: 1px solid #d9d9d9 !important;
-                }
+                border-right: 1px solid #d9d9d9 !important;
               }
             }
           }
         }
       }
     }
+  }
 
-    .number-range.number-range {
+  .number-range.number-range {
+    display: flex;
+    align-items: center;
+    width: auto;
+
+    .ant-form-item-children {
       display: flex;
       align-items: center;
-      width: auto;
 
-      .ant-form-item-children {
-        display: flex;
-        align-items: center;
+      .ant-form-item {
+        margin-right: 0;
+        width: 80px;
 
-        .ant-form-item {
-          margin-right: 0;
-          width: 80px;
+        &:first-child,
+        &:last-child {
+          flex: auto;
+        }
 
-          &:first-child,
-          &:last-child {
-            flex: auto;
-          }
-
-          &:first-child {
-            .ant-input-number {
-              border-top-right-radius: 0;
-              border-bottom-right-radius: 0;
-            }
-          }
-
-          &:last-child {
-            .ant-input-number {
-              border-top-left-radius: 0;
-              border-bottom-left-radius: 0;
-            }
+        &:first-child {
+          .ant-input-number {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
           }
         }
 
-        .identifier {
+        &:last-child {
+          .ant-input-number {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+          }
+        }
+      }
+
+      .identifier {
+        flex: none;
+        width: 40px;
+
+        .ant-input {
+          text-align: center;
           flex: none;
-          width: 40px;
-
-          .ant-input {
-            text-align: center;
-            flex: none;
-            padding: 0 4px;
-            border-left: none;
-            border-right: none;
-            border-radius: 0;
-          }
+          padding: 0 4px;
+          border-left: none;
+          border-right: none;
+          border-radius: 0;
         }
       }
     }
+  }
 
-    .inquiry-row-for-activities {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      //width: 100%;
-      flex: auto;
+  .inquiry-row-for-other {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    //width: 100%;
+    flex: auto;
 
-      .icon {
-        font-size: 24px;
-      }
+    .icon {
+      font-size: 24px;
+    }
 
-      .activity {
-        min-width: 220px;
+    .activity {
+      min-width: 220px;
 
-        .ant-form-item-control-wrapper {
-          width: 100%;
+      .ant-form-item-control-wrapper {
+        width: 100%;
 
-          .ant-select-selection {
-            border: none;
-            outline: none;
-            box-shadow: unset;
+        .ant-select-selection {
+          border: none;
+          outline: none;
+          box-shadow: unset;
 
-            .ant-select-selection__rendered {
-              margin-right: 30px;
-              margin-left: 0;
+          .ant-select-selection__rendered {
+            margin-right: 30px;
+            margin-left: 0;
 
-              .ant-select-selection-selected-value {
-                // font-size: 14px; // 全局默认字号为14号
-                color: rgba(52, 64, 84, 0.8);
-              }
+            .ant-select-selection-selected-value {
+              // font-size: 14px; // 全局默认字号为14号
+              color: rgba(52, 64, 84, 0.8);
             }
           }
         }
       }
     }
+  }
 
-    .inquiry-row-for-fields {
-      flex: auto;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 12px;
+  .inquiry-row-for-fields {
+    flex: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
 
-      .form-item-btn {
-        width: auto !important;
+    .form-item-btn {
+      width: auto !important;
 
-        .ant-form-item-control-wrapper {
-          z-index: 11 !important;
-        }
+      .ant-form-item-control-wrapper {
+        z-index: 11 !important;
       }
+    }
 
-      .return {
-        margin-left: auto;
-      }
+    .return {
+      margin-left: auto;
     }
   }
 }
