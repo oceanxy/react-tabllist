@@ -17,15 +17,6 @@ export default Form.create({ name: 'TGLoginForm' })({
   async mounted() {
     this.setLoading(false)
 
-    if (process.env.NODE_ENV === 'development') {
-      // 开发模式默认账号密码
-      this.form.setFieldsValue({
-        username: DEV_DEFAULT_ACCOUNT,
-        password: DEV_DEFAULT_PASSWORD,
-        picCode: this.$config.enableLoginVerification ? 'LANJOR' : ''
-      })
-    }
-
     if (this.$config.enableLoginVerification) {
       await this.genCode()
     }
@@ -82,6 +73,7 @@ export default Form.create({ name: 'TGLoginForm' })({
         <Form.Item>
           {
             this.form.getFieldDecorator('username', {
+              initialValue: process.env.NODE_ENV === 'development' ? DEV_DEFAULT_ACCOUNT : '',
               rules: [
                 {
                   required: true,
@@ -102,6 +94,7 @@ export default Form.create({ name: 'TGLoginForm' })({
         <Form.Item>
           {
             this.form.getFieldDecorator('password', {
+              initialValue: process.env.NODE_ENV === 'development' ? DEV_DEFAULT_PASSWORD : '',
               rules: [
                 { required: true, message: '请输入密码!' }
               ]
@@ -124,6 +117,7 @@ export default Form.create({ name: 'TGLoginForm' })({
               <Form.Item class="code">
                 {
                   this.form.getFieldDecorator('picCode', {
+                    initialValue: this.$config.enableLoginVerification ? 'LANJOR' : '',
                     rules: [
                       { required: true, message: '请输入验证码!' }
                     ]
