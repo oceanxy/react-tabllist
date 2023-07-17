@@ -51,8 +51,13 @@ if (NODE_ENV === 'production') {
   fetch(VUE_APP_PUBLIC_PATH + '/manifest.json')
     .then(response => response.json())
     .then(async data => {
-      loadStyle(`${VUE_APP_PUBLIC_PATH}/${data[`${theme}.css`]}`)
-      loadScript(`${VUE_APP_PUBLIC_PATH}/${data[`${theme}.js`]}`)
+      if (!data[`${theme}.css`]) {
+        loadStyle(`${VUE_APP_PUBLIC_PATH}/${data[config.theme.default]}`)
+        loadScript(`${VUE_APP_PUBLIC_PATH}/${data[config.theme.default]}`)
+      } else {
+        loadStyle(`${VUE_APP_PUBLIC_PATH}/${data[`${theme}.css`]}`)
+        loadScript(`${VUE_APP_PUBLIC_PATH}/${data[`${theme}.js`]}`)
+      }
     })
 } else {
   getVariablesStyle(config, store)

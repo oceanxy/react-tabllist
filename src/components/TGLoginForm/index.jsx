@@ -13,7 +13,17 @@ export default Form.create({ name: 'TGLoginForm' })({
     picCodePath: '',
     hint: false
   }),
-  computed: mapState({ loading: 'loading', codeKey: 'codeKey' }),
+  computed: {
+    ...mapState({ loading: 'loading', codeKey: 'codeKey' }),
+    userTheme() {
+      return localStorage.getItem('theme') ||
+        this.$store.state?.login?.userInfo?.themeFileName ||
+        this.$config.theme.default
+    },
+    currentTheme() {
+      return window.themeVariables.themeFileName
+    }
+  },
   async mounted() {
     this.setLoading(false)
 
@@ -50,6 +60,10 @@ export default Form.create({ name: 'TGLoginForm' })({
               await this.$router.replace(path)
             } else {
               await this.$router.replace({ name: 'home' })
+            }
+
+            if (this.userTheme !== this.currentTheme) {
+              window.location.reload() // to switch theme
             }
 
             this.hint = false
@@ -143,7 +157,7 @@ export default Form.create({ name: 'TGLoginForm' })({
           <Button
             class="login-submit"
             loading={this.loading || this.hint}
-            icon={this.loading || this.hint ? 'loading' : ''}
+            icon={(this.loading || this.hint) ? 'loading' : ''}
             htmlType="submit"
             type="primary"
             disabled={this.loading || this.hint}
