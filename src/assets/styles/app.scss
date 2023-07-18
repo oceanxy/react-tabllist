@@ -146,11 +146,11 @@ body {
       &:hover {
         opacity: 1;
       }
-
-      &.reverse {
-        transform: rotateY(180deg);
-      }
     }
+  }
+
+  &.tg-inquiry-side-toggle-reverse .tg-inquiry-side-toggle .tree-btn {
+    transform: rotateY(180deg);
   }
 
   .tg-inquiry-form-buttons {

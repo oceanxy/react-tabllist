@@ -87,7 +87,7 @@ export default ({
       return (
         <div class={'tg-inquiry-side-toggle'}>
           <IconFont
-            class={`tree-btn${this.treeCollapsed ? ' reverse' : ''}`}
+            class={'tree-btn'}
             type={'icon-side-tree-toggle'}
             onClick={this.onTreeFold}
             title={!this.treeCollapsed ? '折叠树' : '展开树'}
@@ -117,7 +117,9 @@ export default ({
       )
     },
     content() {
-      if (!this.forRender) {
+      let content = this.forRender
+
+      if (!content) {
         console.error(`未检测到 ${this.moduleName}${this.submoduleName
           ? `.${this.submoduleName}`
           : ''
@@ -126,50 +128,26 @@ export default ({
         return undefined
       }
 
-      let content
+      // 将渲染内容统一转换为数组以便后续处理
+      if (!Array.isArray(content)) {
+        content = [content]
+      }
 
-      if (this.inTree && !this.inModal) {
-        if (!Array.isArray(this.forRender)) {
-          if (this.forRender?.tag?.includes('AFormItem')) {
-            content = (
-              <div class={'inquiry-row-for-fields'}>
-                {this.sideToggle}
-                {this.forRender}
-              </div>
-            )
-          } else {
-            this.forRender?.children.unshift(this.sideToggle)
-            content = this.forRender
-          }
-        } else {
-          // 至少存在一个表单项
-          if (this.forRender.find(VNode => VNode?.tag?.includes('AFormItem'))) {
-            content = (
-              <div class={'inquiry-row-for-fields'}>
-                {this.sideToggle}
-                {this.forRender}
-              </div>
-            )
-          } else {
-            this.forRender[0]?.children?.unshift(this.sideToggle)
-
-            content = this.forRender
-          }
-        }
-      } else {
-        content = (
+      // 当渲染数组中至少存在一个表单项时，将其内容全部放进 .inquiry-row-for-fields 容器
+      if (content.find(VNode => VNode?.tag?.includes('AFormItem'))) {
+        content = [
           <div class={'inquiry-row-for-fields'}>
-            {this.forRender}
+            {content}
           </div>
-        )
+        ]
+      }
+
+      if (this.inTree && !this.inModal && !content[0]?.children[0]?.data?.class?.includes('tg-inquiry-side-toggle')) {
+        content.at(0)?.children?.unshift(this.sideToggle)
       }
 
       if (isFetchList) {
-        if (!Array.isArray(content)) {
-          content?.children?.push(this.operationButtons)
-        } else {
-          content.at(-1)?.children?.push(this.operationButtons)
-        }
+        content.at(-1)?.children?.push(this.operationButtons)
       }
 
       return content
@@ -312,7 +290,7 @@ export default ({
         layout="inline"
         onSubmit={this.onSubmit}
         colon={false}
-        class="tg-inquiry"
+        class={`tg-inquiry${this.treeCollapsed ? ' tg-inquiry-side-toggle-reverse' : ''}`}
       >
         {this.content}
       </Form>
