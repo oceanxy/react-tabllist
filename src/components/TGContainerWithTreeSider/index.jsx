@@ -372,7 +372,9 @@ export default {
      * @returns {JSX.Element}
      */
     highlight(treeNode) {
-      const childrenNumber = treeNode.isParent ? `(${treeNode.children?.length ?? 0})` : ''
+      const childrenNumber = Array.isArray(treeNode?.children) && treeNode.children.length
+        ? `(${treeNode.children.length})`
+        : ''
 
       return this.searchValue ? (
         <span
