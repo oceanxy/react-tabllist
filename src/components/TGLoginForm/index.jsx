@@ -131,7 +131,9 @@ export default Form.create({ name: 'TGLoginForm' })({
               <Form.Item class="code">
                 {
                   this.form.getFieldDecorator('picCode', {
-                    initialValue: this.$config.enableLoginVerification ? 'LANJOR' : '',
+                    initialValue: process.env.NODE_ENV === 'development' && this.$config.enableLoginVerification
+                      ? 'LANJOR'
+                      : '',
                     rules: [
                       { required: true, message: '请输入验证码!' }
                     ]
