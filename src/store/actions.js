@@ -72,7 +72,7 @@ export default {
    * @param [stateName] {string} 需要设置的字段，默认 state.list
    * @param [customApiName] {string} 自定义请求api的名字
    * @param [merge] {boolean} 是否合并数据，默认false，主要用于“加载更多”功能
-   * @param [raw] {boolean} 原样输出接口返回的数据结构到页面对应的store中。（专用于非增删改查的非列表页面，比如首页、控制台等定制化页面）
+   * @param [raw] {boolean} 原样输出接口返回的数据结构到页面对应的store中。（专用于非增删改查的非列表页面，比如首页、控制台和统计等定制化页面）
    * @returns {Promise<void>}
    */
   async getList({ state, commit }, {
