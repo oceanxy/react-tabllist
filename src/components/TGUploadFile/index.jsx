@@ -37,6 +37,10 @@ export default {
       type: Number,
       required: false
     },
+    listType: {
+      type: String,
+      default: 'text'
+    },
     // ant-design Button 组件的 type prop
     buttonType: {
       type: String, // 'primary', 'dashed', 'danger', 'link'
@@ -165,12 +169,11 @@ export default {
           margin: '4px 0',
           lineHeight: 0,
           flex: 'auto'
-        }}
-      >
+        }}>
         <Upload
           accept={this.accept}
           action={this.action || this.$config.fileUploadPath}
-          listType="text"
+          listType={this.listType}
           name={this.name}
           fileList={this.fileList}
           onPreview={this.handlePreview}
@@ -178,20 +181,20 @@ export default {
           onChange={this.handleChange}
           headers={this.headers}
           multiple={true}
-          disabled={this.disabled}
-        >
-          {
-            this.limit > this.fileList.length ? (
-              <Button
-                disabled={this.disabled}
-                type={this.buttonType}
-                size={this.buttonSize}
-              >
+          disabled={this.disabled}>
+          {this.limit > this.fileList.length ? (
+            this.listType === 'picture-card' ? (
+              <div>
+                <Icon type="plus"></Icon>
+                <p>{this.placeholder}</p>
+              </div>
+            ) : (
+              <Button disabled={this.disabled} type={this.buttonType} size={this.buttonSize}>
                 <Icon type="upload" />
                 {this.placeholder}
               </Button>
-            ) : null
-          }
+            )
+          ) : null}
         </Upload>
       </div>
     )
