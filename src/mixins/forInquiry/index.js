@@ -126,35 +126,55 @@ export default ({
         return undefined
       }
 
+      let content
+
       if (this.inTree && !this.inModal) {
         if (!Array.isArray(this.forRender)) {
-          this.forRender?.children.unshift(this.sideToggle)
+          if (this.forRender?.tag?.includes('AFormItem')) {
+            content = (
+              <div class={'inquiry-row-for-fields'}>
+                {this.sideToggle}
+                {this.forRender}
+              </div>
+            )
+          } else {
+            this.forRender?.children.unshift(this.sideToggle)
+            content = this.forRender
+          }
         } else {
-          if (this.forRender[0]?.tag?.includes('AFormItem')) {
-            this.forRender?.unshift(this.sideToggle)
+          // 至少存在一个表单项
+          if (this.forRender.find(VNode => VNode?.tag?.includes('AFormItem'))) {
+            content = (
+              <div class={'inquiry-row-for-fields'}>
+                {this.sideToggle}
+                {this.forRender}
+              </div>
+            )
           } else {
             this.forRender[0]?.children?.unshift(this.sideToggle)
+
+            content = this.forRender
           }
         }
+      } else {
+        content = (
+          <div class={'inquiry-row-for-fields'}>
+            {this.forRender}
+          </div>
+        )
       }
 
       if (isFetchList) {
-        if (!Array.isArray(this.forRender)) {
-          this.forRender?.children.push(this.operationButtons)
+        if (!Array.isArray(content)) {
+          content?.children?.push(this.operationButtons)
         } else {
-          for (const [index, VNode] of this.forRender.entries()) {
-            if (VNode.tag.includes('AFormItem')) {
-              this.forRender?.push(this.operationButtons)
-              break
-            } else if (VNode.data?.class === 'inquiry-row-for-fields' || index === this.forRender.length - 1) {
-              VNode.children?.push(this.operationButtons)
-              break
-            }
-          }
+          content.at(-1)?.children?.push(this.operationButtons)
         }
       }
 
-      return this.forRender
+      console.log(content)
+
+      return content
     }
   },
   created() {
@@ -285,11 +305,7 @@ export default ({
       })
     },
     onTreeFold() {
-      this.$store.commit('setState', {
-        value: !this.treeCollapsed,
-        moduleName: 'common',
-        stateName: 'treeCollapsed'
-      })
+      this.treeCollapsed = !this.treeCollapsed
     }
   },
   render() {

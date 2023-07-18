@@ -26,13 +26,16 @@
   }
 
   & > .tg-container-content,
-  .tg-tree-content-container {
+  .tg-tree-container > .tg-tree-content-container {
     flex: auto;
-    height: 0;
     //overflow: auto;
     display: flex;
     gap: 12px;
     flex-direction: column;
+
+    &.tg-tree-container {
+      height: 0;
+    }
 
     & > *:not(.tg-container-table-container) {
       flex: none;
