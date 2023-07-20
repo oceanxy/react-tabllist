@@ -235,19 +235,20 @@ body {
             border: 1px solid #d9d9d9;
             border-radius: 4px;
             transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+            top: 0;
 
             &:hover {
               border-color: $primary-color;
             }
 
             .ant-input-number {
-              border-color: transparent !important;
+              height: 30px;
+              border: 0 !important;
               outline: none !important;
               box-shadow: none !important;
             }
 
             .ant-input-number:first-child {
-
               &:hover,
               &:focus,
               &:active {
