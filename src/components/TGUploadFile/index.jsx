@@ -158,8 +158,6 @@ export default {
           this.fileList = this.fileList.slice(0, this.limit)
         }
 
-        console.log(this.fileList)
-
         this.$emit('change', this.fileList)
       }
     }
