@@ -90,7 +90,7 @@ export default ({
             class={'tree-btn'}
             type={'icon-side-tree-toggle'}
             onClick={this.onTreeFold}
-            title={!this.treeCollapsed ? '折叠树' : '展开树'}
+            title={'折叠/展开 左侧树'}
           />
         </div>
       )
