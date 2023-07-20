@@ -21,7 +21,7 @@ module.exports = {
   // 在对象前后添加空格，默认true eg: { foo: bar }
   bracketSpacing: true,
   // 多属性html标签的‘>’折行放置
-  jsxBracketSameLine: true,
+  jsxBracketSameLine: false,
   // 无需顶部注释即可格式化
   requirePragma: false,
   // 在已被 prettier 格式化的文件顶部加上标注
