@@ -149,8 +149,8 @@ export default ({
        *  优先根据当前被操作的数据是否存在 id 字段来判断，
        *  如果不存在，则根据 customAction 字段来判断。
        * @param [customValidation] {() => boolean} 自定义验证函数（请使用箭头函数）
-       * @param [customDataHandler] {values => Object} 自定义参数处理（请使用箭头函数）
-       * @param [done] {response => void} 提交成功后的回调函数（请使用箭头函数）
+       * @param [customDataHandler] {(values) => Object} 自定义参数处理（请使用箭头函数）
+       * @param [done] {(response) => void} 提交成功后的回调函数（请使用箭头函数）
        */
       onSubmit({
         refreshTree,
