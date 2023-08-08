@@ -2,7 +2,7 @@
   <a-menu
     ref="menu"
     id="menu"
-    :class="['t-g-menu-container', this.$config.menuStyle]"
+    :class="['t-g-menu-container', $config.menuStyle]"
     v-model="selectedKeys"
     :inline-collapsed="collapsed"
     :open-keys.sync="openKeys"
@@ -50,7 +50,7 @@ const TGSubMenu = {
       v-bind="$props"
       v-on="$listeners"
       @titleClick="titleClick"
-      popupClassName="t-g-menu-popup"
+      :popupClassName="popupSubMenuClassName"
     >
     <div slot="title">
       <a-icon
@@ -133,6 +133,9 @@ const TGSubMenu = {
         '{themeName}',
         `-${localStorage.getItem('theme') || this.$config.theme.default}`
       )
+    },
+    popupSubMenuClassName() {
+      return `t-g-menu-popup ${this.$config.menuStyle}`
     }
   },
   methods: {

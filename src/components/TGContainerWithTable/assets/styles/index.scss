@@ -46,9 +46,16 @@
       padding: 24px;
       position: relative;
 
+      .fold-left-text {
+        font-size: 14px;
+        text-align: center;
+        transition: height .3s;
+        opacity: .7;
+      }
+
       .fold-btn {
         position: absolute;
-        top: 20px;
+        top: 14px;
         right: 20px;
         z-index: 1111;
       }
@@ -58,9 +65,10 @@
       }
 
       &.chart-none {
+
         .tg-chart-container {
-          padding-top: 30px;
-          height: 0;
+          height: 0 !important;
+          transition: height .3s;
         }
       }
     }

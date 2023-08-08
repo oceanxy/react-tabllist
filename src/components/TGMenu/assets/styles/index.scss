@@ -37,13 +37,14 @@
       }
     }
 
-    &.ant-menu-inline-collapsed {
-      &>.ant-menu-submenu-selected {
+  }
 
-        .ant-menu-item-title,
-        .ant-menu-submenu-title {
-          background: $primary-color-light-hover;
-        }
+  &.ant-menu-inline-collapsed {
+    &>.ant-menu-submenu-selected {
+
+      .ant-menu-item-title,
+      .ant-menu-submenu-title {
+        background: $primary-color-light-hover;
       }
     }
   }
@@ -54,6 +55,12 @@
     &>.ant-menu-item-group>.ant-menu-item-group-list>.ant-menu-item,
     &>.ant-menu-item-group>.ant-menu-item-group-list>.ant-menu-submenu>.ant-menu-submenu-title,
     &>.ant-menu-submenu>.ant-menu-submenu-title {
+
+      &>div {
+        justify-content: center;
+
+      }
+
       padding: 0 16px !important;
 
       .anticon {
@@ -112,37 +119,61 @@
 
       &,
       &>.ant-menu-submenu-title {
-        color: $primary-color-active;
-        // background: $primary-color-light-hover;
+        // color: $primary-color-active;
+        background: $primary-color-light-hover;
+        border-radius: 4px;
         font-weight: bolder;
       }
     }
   }
 
   &.background {
-    &:not(.ant-menu-horizontal) .ant-menu-item-selected {
-      background: none;
-    }
+    // &:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    //   background: none;
+    // }
 
     .ant-menu-submenu-selected {
       .ant-menu-submenu-title {
-        background: $primary-color-light-hover;
+        // background: $primary-color-light-hover;
         border-radius: 4px;
       }
     }
 
     .ant-menu-sub {
       background: #f9f9f9;
+      box-shadow: inset -22px 22px 19px -30px rgba(0, 0, 0, 0.1);
     }
   }
 }
 
 // 折叠状态下的子菜单
-.ant-menu-submenu.ant-menu-submenu-popup>.ant-menu {
-  max-height: 100vh;
-  overflow-y: auto;
+.ant-menu-submenu.ant-menu-submenu-popup {
+  &>.ant-menu {
+    max-height: 100vh;
+    overflow-y: auto;
 
-  //.ant-menu-submenu-title {
-  //  padding-left: 16px;
-  //}
+    .ant-menu-item-selected {
+      .ant-menu-item-title {
+        span {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+  &.t-g-menu-popup.background {
+    &>.ant-menu {
+
+      // &:not(.ant-menu-horizontal) .ant-menu-item-selected {
+      //   background: none;
+
+
+      // }
+
+      //.ant-menu-submenu-title {
+      //  padding-left: 16px;
+      //}
+    }
+
+  }
 }

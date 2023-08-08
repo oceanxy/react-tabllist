@@ -34,12 +34,13 @@ export default {
               <Button
                 class={`fold-btn${this.isFoldPanel ? ' down' : ''}`}
                 size="small"
-                title={this.isFoldPanel ? '展开筛选' : '折叠筛选'}
+                title={this.isFoldPanel ? '展开' : '折叠'}
                 onClick={this.onFold}
               >
                 <Icon type={this.isFoldPanel ? 'down' : 'up'} />
               </Button>
             ) : null}
+            {this.isFoldPanel ? <div class="fold-left-text">展开统计图</div> : ''}
             {this.$slots.chart}
           </div>
         ) : null,
