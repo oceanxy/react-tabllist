@@ -42,6 +42,12 @@ module.exports = {
   // 系统名称
   systemName: '蓝桥后台管理系统快速启动模版',
   systemNameEn: 'vue-template-generator',
+  /**
+   * 菜单样式配置，可选值：
+   * - bordered 边框线 默认边框显示
+   * - background 背景颜色
+   */
+  menuStyle: 'bordered',
   // 主题
   theme: {
     // 是否在header中显示切换主题按钮

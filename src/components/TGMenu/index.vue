@@ -2,7 +2,7 @@
   <a-menu
     ref="menu"
     id="menu"
-    class="t-g-menu-container"
+    :class="['t-g-menu-container', this.$config.menuStyle]"
     v-model="selectedKeys"
     :inline-collapsed="collapsed"
     :open-keys.sync="openKeys"
@@ -18,11 +18,7 @@
         :style="route.meta.hide ? { display: 'none' } : ''"
         :selected-keys="selectedKeys"
       />
-      <a-menu-item
-        v-else
-        :key="route.key"
-        :style="route.meta.hide ? { display: 'none' } : ''"
-      >
+      <a-menu-item v-else :key="route.key" :style="route.meta.hide ? { display: 'none' } : ''">
         <div class="ant-menu-item-title">
           <div>
             <a-icon
@@ -32,10 +28,7 @@
             />
             <icon-font
               v-else-if="route.meta.icon"
-              :type="route.meta.icon + (selectedKeys.includes(route.key)
-                ? activeSuffixForMenuIcon
-                : ''
-              )"
+              :type="route.meta.icon + (selectedKeys.includes(route.key) ? activeSuffixForMenuIcon : '')"
             />
             <span>{{ route.meta && route.meta.title }}</span>
           </div>
@@ -272,7 +265,10 @@ export default {
       if (e.key) {
         if (this.openKeys.includes(e.key)) {
           keyPath = [...this.openKeys]
-          keyPath.splice(this.openKeys.findIndex(i => i === e.key), 1)
+          keyPath.splice(
+            this.openKeys.findIndex(i => i === e.key),
+            1
+          )
         } else {
           if (e.domEvent.currentTarget?.parentNode?.parentNode?.classList?.contains('ant-menu-sub')) {
             keyPath = [e.key].concat(this.openKeys)
