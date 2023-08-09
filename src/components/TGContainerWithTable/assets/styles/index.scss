@@ -37,11 +37,16 @@
       height: 0;
     }
 
-    & > *:not(.tg-container-table-container) {
+    & > *:not(.tg-container-table-container, .tg-container-chart-container) {
       flex: none;
     }
 
-    .tg-container-table-container {
+    & > .tg-container-chart-container {
+      flex: auto;
+      height: 0;
+    }
+
+    & > .tg-container-table-container {
       flex: auto;
       overflow: hidden;
       display: flex;
@@ -57,7 +62,7 @@
       }
     }
 
-    .tg-container-modals {
+    & > .tg-container-modals {
       position: absolute; // 使该容器脱离文档，抵消该元素造成的底部 gap 值
     }
   }

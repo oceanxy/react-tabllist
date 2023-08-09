@@ -1,20 +1,19 @@
 .tg-container-chart-container {
   height: auto;
   padding: 24px;
-  min-height: 50px;
   position: relative;
+  min-height: 300px;
 
   &.tg-no-table {
     flex: auto;
   }
 
   &.tg-collapsed-chart {
-    max-height: 400px;
-    transition: max-height .2s;
+    transition: min-height .2s;
     overflow: hidden;
 
     &.collapsed {
-      max-height: 50px;
+      min-height: 50px;
 
       & > .chart {
         opacity: 0;
