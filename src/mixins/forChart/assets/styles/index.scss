@@ -1,0 +1,46 @@
+.tg-container-chart-container {
+  height: auto;
+  padding: 24px;
+  min-height: 50px;
+  position: relative;
+
+  &.tg-no-table {
+    flex: auto;
+  }
+
+  &.tg-collapsed-chart {
+    max-height: 400px;
+    transition: max-height .2s;
+    overflow: hidden;
+
+    &.collapsed {
+      max-height: 50px;
+
+      & > .chart {
+        opacity: 0;
+      }
+    }
+  }
+
+  .tg-collapsed-chart-title {
+    position: absolute;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: bolder;
+    opacity: 0;
+    transition: .2s all cubic-bezier(0.18, 0.93, 0.38, 0.99);
+    transform: translateX(50%);
+
+    &.parent-collapsed {
+      transform: translateX(20px);
+      opacity: 1;
+    }
+  }
+
+  .tg-collapse-switch {
+    position: absolute;
+    top: 14px;
+    right: 20px;
+    z-index: 1111;
+  }
+}

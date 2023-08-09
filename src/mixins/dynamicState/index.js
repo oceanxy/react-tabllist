@@ -7,7 +7,7 @@
 
 import { commitRootInModule, injectApisForModules } from '@/utils/store'
 import { firstLetterToUppercase } from '@/utils/utilityFunction'
-import forModuleName from './forModuleName'
+import forModuleName from '../forModuleName'
 
 /**
  * 创建动态vuex模块

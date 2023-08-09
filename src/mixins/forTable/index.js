@@ -76,7 +76,8 @@ export default ({
         },
         scopedSlots: { serialNumber: this.getConsecutiveSerialNumber },
         exportButtonDisabled: false,
-        observer: null
+        observer: null,
+        timer: null
       }
     },
     computed: {
@@ -202,12 +203,13 @@ export default ({
         await this.fetchList()
       }
 
-      window.addEventListener('resize', this.resize)
+      window.addEventListener('resize', this.delayResize)
 
       this.$on('hook:beforeDestroy', () => {
-        window.removeEventListener('resize', this.resize)
+        window.removeEventListener('resize', this.delayResize)
 
         if (this.observer) {
+          this.timer = null
           this.observer.disconnect()
           this.observer.takeRecords()
           this.observer = null
@@ -216,19 +218,24 @@ export default ({
 
       // row-inquiry 为可变高度的容器，这里监听一下该容器的高度变化，用来重置表格的高度
       this.$nextTick(() => {
-        const element = document.querySelector('.row-inquiry')
+        const rowInquiry = document.querySelector('.row-inquiry')
+        const collapsedChart = document.querySelector('.tg-collapsed-chart')
 
-        if (element) {
+        if (rowInquiry || collapsedChart) {
           const MutationObserver = window.MutationObserver ||
             window.WebKitMutationObserver ||
             window.MozMutationObserver
 
           this.observer = new MutationObserver(() => {
-            // 设置延迟是因为 .row-inquiry 的 css过渡动画时间为200ms
-            setTimeout(this.resize, 200)
+            this.delayResize()
           })
 
-          this.observer.observe(element, {
+          rowInquiry && this.observer.observe(rowInquiry, {
+            attributes: true,
+            attributeFilter: ['class']
+          })
+
+          collapsedChart && this.observer.observe(collapsedChart, {
             attributes: true,
             attributeFilter: ['class']
           })
@@ -561,6 +568,10 @@ export default ({
             this.tableProps.scroll = scroll
           })
         }
+      },
+      delayResize() {
+        // 设置延迟是因为 .row-inquiry 容器 和 .tg-collapsed-chart 容器 的 css过渡动画时间为200ms
+        this.timer = setTimeout(this.resize, 200)
       }
     },
     render() {
