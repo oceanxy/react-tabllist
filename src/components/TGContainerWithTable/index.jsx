@@ -38,15 +38,17 @@ export default {
     return (
       <div class="tg-container">
         <div class={'tg-content-title'}>
-          <Space class={'title'}>
+          <Space class={'tg-content-title-space'}>
             <IconFont type={this.$route.meta.icon} />
             {this.$route.meta.title}
           </Space>
-          {
-            this.$slots.functions
-              ? this.$slots.functions
-              : null
-          }
+          <div class={'tg-content-function'}>
+            {
+              this.$slots.functions
+                ? this.$slots.functions
+                : null
+            }
+          </div>
         </div>
         {
           this.showTree

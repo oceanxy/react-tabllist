@@ -42,17 +42,10 @@
     width: 68px;
   }
 
-  @media screen and (max-width: 892px) {
-    .tg-layout-header {
-      .tg-logo {
-        width: 52px;
-      }
-    }
-  }
   @media screen and (max-width: 1366px) {
     .tg-layout-header {
-      height: 50px;
-      line-height: 50px;
+      //height: 50px;
+      //line-height: 50px;
 
       // .tg-logo {
       //   width: 205px;

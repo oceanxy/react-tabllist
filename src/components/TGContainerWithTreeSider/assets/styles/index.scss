@@ -10,13 +10,12 @@
     padding: 0;
   }
 
-  & > .tg-tree-content-container {
+  & > .tg-container-with-sider--main.tg-tree-content-container {
     box-sizing: border-box;
   }
 
-  & > .tg-tree-sider-container {
+  & > .tg-container-with-sider--sider.tg-tree-sider-container {
     width: 260px;
-    flex: none;
     background: $white;
 
     & > .tg-tree-data {
@@ -97,6 +96,12 @@
           }
         }
       }
+    }
+  }
+
+  @media screen and (max-width: 1366px) {
+    & > .tg-container-with-sider--sider.tg-tree-sider-container {
+      width: 200px;
     }
   }
 }
