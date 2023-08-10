@@ -18,7 +18,8 @@ body {
 
 #app {
   position: relative;
-  font-family: pingfang SC, helvetica neue, arial, hiragino sans gb, microsoft yahei ui, microsoft yahei, simsun, sans-serif !important;
+  font-family: pingfang SC, helvetica neue, arial, hiragino sans gb, microsoft yahei ui, microsoft yahei, simsun,
+    sans-serif !important;
   // font-family: Avenir, Helvetica, Arial, sans-serif;
   color: #2c3e50;
 
@@ -124,8 +125,11 @@ body {
   column-gap: 10px;
   padding: 12px 20px;
   background: $white;
-  max-height: 8lh;
   overflow: auto;
+
+  &:not(.fe-statistical-analysis-inquiry) {
+    max-height: 8lh;
+  }
 
   &.ant-form-inline .ant-form-item-with-help {
     margin-bottom: 0;
