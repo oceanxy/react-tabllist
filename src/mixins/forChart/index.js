@@ -24,6 +24,10 @@ export default () => ({
     collapsible: {
       type: Boolean,
       default: false
+    },
+    maxHeight: {
+      type: String,
+      default: '100%'
     }
   },
   data() {
@@ -42,13 +46,11 @@ export default () => ({
   render() {
     return (
       <div
-        class={`tg-container-chart-container${
-          this.isTableExist ? '' : ' tg-no-table'
-        }${
-          this.collapsible ? ' tg-collapsed-chart' : ''
-        }${
-          this.isCollapsed ? ' collapsed' : ''
-        }`}
+        class={`tg-container-chart-container${this.isTableExist ? '' : ' tg-no-table'
+          }${this.collapsible ? ' tg-collapsed-chart' : ''
+          }${this.isCollapsed ? ' collapsed' : ''
+          }`}
+        style={{ maxHeight: this.maxHeight }}
       >
         {
           this.collapsible
