@@ -9,7 +9,7 @@
   }
 
   &.tg-collapsed-chart {
-    transition: min-height .2s;
+    transition: min-height 0.2s;
     overflow: hidden;
 
     &.collapsed {
@@ -27,7 +27,7 @@
     font-size: 16px;
     font-weight: bolder;
     opacity: 0;
-    transition: .2s all cubic-bezier(0.18, 0.93, 0.38, 0.99);
+    transition: 0.2s all cubic-bezier(0.18, 0.93, 0.38, 0.99);
     transform: translateX(50%);
 
     &.parent-collapsed {
@@ -41,5 +41,18 @@
     top: 14px;
     right: 20px;
     z-index: 1111;
+  }
+}
+.tg-container {
+  .tg-tree-container {
+    > .tg-tree-content-container {
+      > .tg-container-chart-container {
+        &.tg-collapsed-chart {
+          &.collapsed {
+            flex: none;
+          }
+        }
+      }
+    }
   }
 }
