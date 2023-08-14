@@ -305,6 +305,8 @@ export default ({
        * @param [customApiName] {string} 自定义请求接口名，一般在要修改状态字段的表格位于弹窗内时使用。
        * @param [stateName] {string} store.state 中存储该表格数据的字段名，默认 'list'
        * @param [optimisticUpdate=true] {string} 乐观更新，是否在成功调用更新接口后向服务器请求新的列表数据。
+       * @param [submoduleName] 在submoduleName被stateName重置的时候可以传入submoduleName值重置
+       * @param [custStatusParameter] {object} 自定义状态参数配置，默认{open：1，close：2}
        * 默认true，使用乐观更新，即不向服务器请求新的列表数据，前端执行乐观更新操作。
        * @returns {Promise<void>}
        */
@@ -317,6 +319,8 @@ export default ({
         nameKey = 'fullName',
         customApiName,
         stateName,
+        submoduleName,
+        custStatusParameter = { open: 1, close: 2 },
         optimisticUpdate = true
       } = {}) {
         stateName = stateName || _stateName
@@ -326,9 +330,10 @@ export default ({
           customFieldName,
           customApiName,
           stateName: stateName !== 'list' ? stateName : '',
+          submoduleName,
           payload: {
             [idKey]: record[this.tableProps.rowKey || 'id'],
-            [customFieldName]: checked ? 1 : 2
+            [customFieldName]: checked ? custStatusParameter.open : custStatusParameter.close
           }
         })
 

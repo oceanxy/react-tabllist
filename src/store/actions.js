@@ -99,11 +99,10 @@ export default {
     if (customApiName) {
       api = customApiName
     } else {
-      api = `get${
-        submoduleName
-          ? `${firstLetterToUppercase(submoduleName)}Of`
-          : ''
-      }${firstLetterToUppercase(moduleName)}`
+      api = `get${submoduleName
+        ? `${firstLetterToUppercase(submoduleName)}Of`
+        : ''
+        }${firstLetterToUppercase(moduleName)}`
     }
 
     if (this.apis[api]) {
@@ -222,9 +221,8 @@ export default {
 
     let api = 'getDetails'
 
-    api = customApiName || `getDetailsOf${firstLetterToUppercase(moduleName)}${
-      submoduleName ? firstLetterToUppercase(submoduleName) : ''
-    }`
+    api = customApiName || `getDetailsOf${firstLetterToUppercase(moduleName)}${submoduleName ? firstLetterToUppercase(submoduleName) : ''
+      }`
 
     const res = await this.apis[api](payload)
 
@@ -510,6 +508,7 @@ export default {
    * @param [customFieldName='status'] {string} 自定义字段名，默认 status
    * @param [customApiName] {string} 自定义接口名
    * @param [stateName] {string} 需要设置状态的数据源。
+   * @param [submoduleName] 在submoduleName被stateName重置的时候可以传入submoduleName值重置
    * （默认store.state.list保存列表数据；默认store.state.loading保存列表加载状态；
    * 除这二者之外的需要传递字段名，以告之具体需要修改的对象）
    * @returns {Promise<*>}
@@ -519,6 +518,7 @@ export default {
     payload,
     customFieldName,
     customApiName,
+    submoduleName,
     stateName
   }) {
     // stateName并不是子模块名，但是可以看做子模块来传递参数，可以达到相同目的，例如：
@@ -527,20 +527,18 @@ export default {
     commit('setLoading', {
       value: true,
       moduleName,
-      submoduleName: stateName
+      submoduleName: submoduleName || stateName
     })
 
-    const api = customApiName || `update${
-      firstLetterToUppercase(moduleName)
-    }${
-      firstLetterToUppercase(customFieldName)
-    }`
+    const api = customApiName || `update${firstLetterToUppercase(moduleName)
+      }${firstLetterToUppercase(customFieldName)
+      }`
     const { status } = await this.apis[api](payload)
 
     commit('setLoading', {
       value: false,
       moduleName,
-      submoduleName: stateName
+      submoduleName: submoduleName || stateName
     })
 
     return status
@@ -591,11 +589,10 @@ export default {
       isBatchDeletion = true
     }
 
-    const response = await this.apis[`delete${
-      submoduleName
-        ? `${firstLetterToUppercase(submoduleName)}Of`
-        : ''
-    }${firstLetterToUppercase(moduleName)}`](payload)
+    const response = await this.apis[`delete${submoduleName
+      ? `${firstLetterToUppercase(submoduleName)}Of`
+      : ''
+      }${firstLetterToUppercase(moduleName)}`](payload)
 
     if (response.status) {
       // 非批量操作时，只从选中行数组中移除被删除的行的key，
@@ -687,11 +684,9 @@ export default {
     if (customApiName) {
       api = customApiName
     } else {
-      api = `export${submoduleName ? `${
-        firstLetterToUppercase(submoduleName)}Of` : ''
-      }${
-        firstLetterToUppercase(moduleName)
-      }`
+      api = `export${submoduleName ? `${firstLetterToUppercase(submoduleName)}Of` : ''
+        }${firstLetterToUppercase(moduleName)
+        }`
     }
 
     const params = cloneDeep({ ...additionalQueryParameters, ...payload })
