@@ -174,7 +174,9 @@ module.exports = {
         // 预加载子项目路由
         APP_ROUTES: resolve(join(__dirname, `src/apps/${buildConfig.availableProjectName}/router/routes.js`)),
         // 预加载子项目登录组件
-        LOGIN_COMPONENT
+        LOGIN_COMPONENT,
+        // 预加载iconfont文件
+        APP_ICON_FONT: resolve(join(__dirname, `src/apps/${buildConfig.availableProjectName}/assets/iconfont.js`))
       }
     ])
 
