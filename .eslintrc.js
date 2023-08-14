@@ -9,6 +9,7 @@ module.exports = {
     APP_CONFIG: true,
     APP_COMPONENT: true,
     APP_ROUTES: true,
+    APP_ICON_FONT: true,
     LOGIN_COMPONENT: true,
     PROJ_APP_NAME: true,
     DEV_DEFAULT_ACCOUNT: true,
