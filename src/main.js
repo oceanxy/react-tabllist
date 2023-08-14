@@ -42,7 +42,7 @@ function loadScript(url) {
   document.body.appendChild(script)
 }
 
-const { NODE_ENV, VUE_APP_PUBLIC_PATH, VUE_APP_DOMAIN_NAME } = process.env
+const { NODE_ENV, VUE_APP_PUBLIC_PATH, VUE_APP_DOMAIN_NAME = '' } = process.env
 
 // 加载主题（生产环境和开发环境因为webpack打包机制的不同，所以采用不同的方式实现）
 if (NODE_ENV === 'production') {
