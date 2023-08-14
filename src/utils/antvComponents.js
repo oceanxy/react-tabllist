@@ -50,7 +50,13 @@ export default function useComponents(config) {
   // 全局消息弹窗设置
   Message.config({ maxCount: config.maxMessageCount })
 
-  const IconFont = Icon.createFromIconfontCN({ scriptUrl: config.iconFontSymbol })
+  let iconfontUrl = config.iconFontSymbol
+
+  if (!config.iconFontSymbol) {
+    iconfontUrl = APP_ICON_FONT
+  }
+
+  const IconFont = Icon.createFromIconfontCN({ scriptUrl: iconfontUrl })
 
   // 按需注册特定组件
   Vue.component(Layout.name, Layout)

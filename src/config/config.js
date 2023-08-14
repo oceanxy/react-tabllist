@@ -16,7 +16,7 @@ module.exports = {
   defaultRouteName: 'home',
   // 首页是否需要权限才能访问（该配置可能会被移除）
   homePermissions: true,
-  // iconfont
+  // iconfont，为空时自动调用 src/assets/iconfont.js 或各子项目下的 assets/iconfont.js
   iconFontSymbol: '//at.alicdn.com/t/c/font_3996750_sgcx6ewq6y.js',
   /**
    * iconfont菜单图标在 active 状态下的后缀（该后缀会直接加到iconfont图标名称的最后，需在iconfont中预先定义好该图标；
