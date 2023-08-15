@@ -5,6 +5,7 @@ import useComponents from '@/utils/antvComponents'
 import router, { resetRoutes } from './router'
 import store from './store'
 import getVariablesStyle from '@/assets/styles'
+import { join, resolve } from 'path'
 
 useComponents(config)
 
@@ -48,15 +49,15 @@ const { NODE_ENV, VUE_APP_PUBLIC_PATH } = process.env
 if (NODE_ENV === 'production') {
   const theme = localStorage.getItem('theme') || config.theme.default
 
-  fetch(VUE_APP_PUBLIC_PATH + '/manifest.json')
+  fetch(resolve(join(__dirname, VUE_APP_PUBLIC_PATH, '/manifest.json')))
     .then(response => response.json())
     .then(async data => {
       if (!data[`${theme}.css`]) {
-        loadStyle(`${VUE_APP_PUBLIC_PATH}/${data[config.theme.default]}`)
-        loadScript(`${VUE_APP_PUBLIC_PATH}/${data[config.theme.default]}`)
+        loadStyle(resolve(join(__dirname, VUE_APP_PUBLIC_PATH, data[config.theme.default])))
+        loadScript(resolve(join(__dirname, VUE_APP_PUBLIC_PATH, data[config.theme.default])))
       } else {
-        loadStyle(`${VUE_APP_PUBLIC_PATH}/${data[`${theme}.css`]}`)
-        loadScript(`${VUE_APP_PUBLIC_PATH}/${data[`${theme}.js`]}`)
+        loadStyle(resolve(join(__dirname, `${VUE_APP_PUBLIC_PATH}/${data[`${theme}.css`]}`)))
+        loadScript(resolve(join(__dirname, `${VUE_APP_PUBLIC_PATH}/${data[`${theme}.js`]}`)))
       }
     })
 } else {
