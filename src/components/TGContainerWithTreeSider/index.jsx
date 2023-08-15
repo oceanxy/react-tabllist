@@ -106,7 +106,9 @@ export default {
       expandedKeysFormEvent: [],
       // 上一次设置的用于保存树选中值的字段名
       // （通常用于 this.treeIdField 会发生变化的时候。如点击树的不同层级，传递的字段名不一样的情况）
-      oldTreeIdField: ''
+      oldTreeIdField: '',
+      // 是否是手动折叠树默。仅当触发onExpand事件为折叠状态时，给isCollapsedManually赋值为true
+      isCollapsedManually: false
     }
   },
   computed: {
@@ -135,10 +137,15 @@ export default {
         return this.getAllParentIds(this.treeDataSource)
       }
 
+      if (this.isCollapsedManually) {
+        return this.expandedKeysFormEvent
+      }
+
       // 默认展开的树节点，如果 defaultExpandedTreeIds 为空，则默认展开所有层级的第一个子节点
       return this.defaultExpandedTreeIds?.length
         ? this.defaultExpandedTreeIds
         : this.getAllParentIds(this.treeDataSource, true)
+
     }
   },
   provide() {
@@ -471,7 +478,8 @@ export default {
      * 展开树
      * @param expandedKeys
      */
-    onExpand(expandedKeys) {
+    onExpand(expandedKeys, { expanded }) {
+      this.isCollapsedManually = !expanded
       this.expandedKeysFormEvent = expandedKeys
     }
   },
