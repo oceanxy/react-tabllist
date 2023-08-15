@@ -2,17 +2,19 @@
   height: auto;
   padding: 24px;
   position: relative;
+  max-height: 300px;
 
   &.tg-no-table {
     flex: auto;
   }
 
   &.tg-collapsed-chart {
-    transition: min-height 0.2s;
+    //max-height: 400px;
+    transition: max-height .2s;
     overflow: hidden;
 
     &.collapsed {
-      min-height: 50px;
+      max-height: 50px;
 
       & > .chart {
         opacity: 0;
@@ -26,7 +28,7 @@
     font-size: 16px;
     font-weight: bolder;
     opacity: 0;
-    transition: 0.2s all cubic-bezier(0.18, 0.93, 0.38, 0.99);
+    transition: .2s all cubic-bezier(0.18, 0.93, 0.38, 0.99);
     transform: translateX(50%);
 
     &.parent-collapsed {
@@ -40,18 +42,5 @@
     top: 14px;
     right: 20px;
     z-index: 1111;
-  }
-}
-.tg-container {
-  .tg-tree-container {
-    > .tg-tree-content-container {
-      > .tg-container-chart-container {
-        &.tg-collapsed-chart {
-          &.collapsed {
-            flex: none;
-          }
-        }
-      }
-    }
   }
 }
