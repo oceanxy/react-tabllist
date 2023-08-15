@@ -323,6 +323,10 @@ body {
     //width: 100%;
     flex: auto;
 
+    .ant-spin-container > * {
+      height: 100%;
+    }
+
     .icon {
       font-size: 24px;
     }
