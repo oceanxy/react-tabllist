@@ -10,6 +10,8 @@ appModulesFiles.keys().reduce((modules, modulePath) => {
   if (value.default) {
     const TemConstructor = Vue.extend(value.default)
 
-    new TemConstructor({ el: '#global-modal', store, router })
+    new TemConstructor({
+      el: '#global-modal', store, router
+    })
   }
 }, {})

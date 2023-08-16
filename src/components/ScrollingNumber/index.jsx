@@ -57,9 +57,7 @@ export default {
         <div
           class="tg-scrolling-number-value"
           style={
-            {
-              height: this.valueHeight + 'px'
-            }
+            { height: this.valueHeight + 'px' }
           }
         >
           {
