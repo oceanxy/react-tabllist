@@ -18,6 +18,10 @@ export default {
     dataSource: {
       type: Array,
       default: () => []
+    },
+    height: {
+      type: String,
+      default: '300px'
     }
   },
   data() {
@@ -57,7 +61,7 @@ export default {
         <Transfer
           showSearch
           titles={this.titles}
-          listStyle={{ width: '300px', height: '60vh', minHeight: '300px' }}
+          listStyle={{ width: '300px', height: this.height, minHeight: '300px' }}
           targetKeys={this.targetKeys}
           dataSource={this.dataSource}
           render={this.renderItem}
