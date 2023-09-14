@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "dev-cmp": "dotenv -e ./src/apps/carrent-merchant-platform/config/.env.development -- vue-cli-service serve --app-proj carrent-merchant-platform --app-separately 1",
+    "dev-cop": "dotenv -e ./src/apps/carrent-operation-platform/config/.env.development -- vue-cli-service serve --app-proj carrent-operation-platform --app-separately 1",
     "dev-shm": "dotenv -e ./src/apps/student-health-management/config/.env.development -- vue-cli-service serve --app-proj student-health-management --app-separately 1",
     "dev-rcc": "dotenv -e ./src/apps/rongchang-comprehensive-management-platform/config/.env.development -- vue-cli-service serve --app-proj rongchang-comprehensive-management-platform --app-separately 1",
     "dev-rcv": "dotenv -e ./src/apps/rongchang-visualization/config/.env.development -- vue-cli-service serve --app-proj rongchang-visualization --app-separately 1",
