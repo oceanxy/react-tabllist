@@ -2,7 +2,7 @@ import './assets/styles/index.scss'
 import { Empty, Icon, Input, Spin, Tree } from 'ant-design-vue'
 import { getFirstLetterOfEachWordOfAppName } from '@/utils/utilityFunction'
 import TGContainerWithSider from '@/components/TGContainerWithSider'
-import { cloneDeep, debounce } from 'lodash'
+import { debounce, cloneDeep } from 'lodash'
 
 export default {
   inject: ['moduleName'],
@@ -137,11 +137,13 @@ export default {
         return this.getAllParentIds(this.treeDataSource)
       }
 
+
       if (this.isCollapsedManually) {
         return this.expandedKeysFormEvent
       }
 
       // 默认展开的树节点，如果 defaultExpandedTreeIds 为空，则默认展开所有层级的第一个子节点
+
       return this.defaultExpandedTreeIds?.length
         ? this.defaultExpandedTreeIds
         : this.getAllParentIds(this.treeDataSource, true)
@@ -170,10 +172,14 @@ export default {
     }
   },
   watch: {
-    dataSource: {
+    'dataSource.list': {
       deep: true,
-      handler(value) {
-        this.treeDataSource = value.list
+      handler(value, value2) {
+        if (value === value2) {
+          return
+        }
+
+        this.treeDataSource = value
       }
     },
     searchValue(value) {
@@ -327,6 +333,8 @@ export default {
         const treeIdField = this.getFieldNameForTreeId(e.node.pos.split('-').length - 1)
 
         if (this.oldTreeIdField !== treeIdField) {
+          console.log(treeIdField)
+
           // 清空search内上一次树操作的键与值
           if (this.oldTreeIdField) {
             this.$store.commit('setSearch', {
@@ -349,7 +357,11 @@ export default {
           this.oldTreeIdField = treeIdField
         }
 
+        console.log('2', treeIdField)
+
         if (e.selected) {
+
+          console.log('4', treeIdField)
           payload = {
             ...this.injectSearchParamsOfTable(e.node.$attrs.dataSource),
             [this.treeIdField]: selectedKeys[0]
@@ -364,6 +376,7 @@ export default {
         }
 
         if (this.treeIdField && payload[this.treeIdField] !== this.treeId[0]) {
+          console.log(3)
           await this.$store.dispatch('setSearch', {
             payload,
             moduleName: this.moduleName,
@@ -471,6 +484,7 @@ export default {
      * @param e
      */
     onTreeSearch(e) {
+      console.log('111', e)
       this.expandedKeysFormEvent = []
       this.searchValue = e.target.value
     },
@@ -484,6 +498,7 @@ export default {
     }
   },
   render() {
+
     return (
       <TGContainerWithSider
         class="tg-tree-container"
