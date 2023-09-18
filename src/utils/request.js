@@ -24,7 +24,9 @@ export default function getService(conf, router, store) {
         }
       }
 
-      config.data = INTERFACE_MAPPINGS?.request(config.data) ?? config.data
+      if (typeof INTERFACE_MAPPINGS?.request === 'function') {
+        config.data = INTERFACE_MAPPINGS.request(config.data)
+      }
 
       return config
     },
@@ -44,7 +46,9 @@ export default function getService(conf, router, store) {
   // response interceptor
   service.interceptors.response.use(
     async response => {
-      const res = INTERFACE_MAPPINGS?.response(response.data) ?? response.data
+      const res = typeof INTERFACE_MAPPINGS?.response === 'function'
+        ? INTERFACE_MAPPINGS.response(response.data)
+        : response.data
 
       if (res?.status || response.config.responseType === 'blob') {
         return Promise.resolve(res)
