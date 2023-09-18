@@ -9,7 +9,11 @@ const { accessSync, constants, readdirSync } = require('fs')
 const WebpackAssetsManifest = require('webpack-assets-manifest')
 
 const buildConfig = getBuildConfig()
-const { account, password, ...devServer } = getDevServer(buildConfig)
+const {
+  account,
+  password,
+  ...devServer
+} = getDevServer(buildConfig)
 
 module.exports = {
   ...buildConfig.config,
@@ -176,7 +180,12 @@ module.exports = {
         // 预加载子项目登录组件
         LOGIN_COMPONENT,
         // 预加载iconfont文件
-        APP_ICON_FONT: resolve(join(__dirname, `src/apps/${buildConfig.availableProjectName}/assets/iconfont.js`))
+        APP_ICON_FONT: resolve(join(__dirname, `src/apps/${buildConfig.availableProjectName}/assets/iconfont.js`)),
+        // 预加载接口映射器
+        INTERFACE_MAPPINGS: resolve(join(
+          __dirname,
+          `src/apps/${buildConfig.availableProjectName}/config/interfaceMappings.js`
+        ))
       }
     ])
 
