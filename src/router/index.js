@@ -37,7 +37,7 @@ Vue.use(VueRouter)
  * @returns {Object[]}
  */
 function initializeDynamicRoutes(menus) {
-  return menus.map(menu => {
+  return menus?.map(menu => {
     const route = { meta: {}, children: [] }
     const {
       name,
@@ -117,7 +117,7 @@ function initializeDynamicRoutes(menus) {
     }
 
     return route
-  })
+  }) ?? []
 }
 
 /**
