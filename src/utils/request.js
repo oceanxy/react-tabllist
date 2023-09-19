@@ -1,4 +1,5 @@
 import axios from 'axios'
+import qs from 'qs'
 import { showMessage } from '@/utils/message'
 
 export default function getService(conf, router, store) {
@@ -25,7 +26,7 @@ export default function getService(conf, router, store) {
       }
 
       if (typeof INTERFACE_MAPPINGS?.request === 'function') {
-        config.data = INTERFACE_MAPPINGS.request(config.data)
+        config.data = INTERFACE_MAPPINGS.request(config.data, qs)
       }
 
       return config
