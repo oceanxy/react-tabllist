@@ -5,7 +5,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const { resolve, join } = require('path')
 const { getBuildConfig, getDevServer } = require('./build/configs')
 const { ProvidePlugin, DefinePlugin } = require('webpack')
-const { accessSync, constants, access } = require('fs')
+const { accessSync, constants } = require('fs')
 const WebpackAssetsManifest = require('webpack-assets-manifest')
 
 const buildConfig = getBuildConfig()
@@ -189,19 +189,17 @@ module.exports = {
       `src/apps/${buildConfig.availableProjectName}/config/interfaceMappings.js`
     ))
 
-    access(
-      resolve(join(__dirname, INTERFACE_MAPPINGS)),
-      constants.F_OK,
-      err => {
-        if (!err) {
-          PROVIDE_PLUGIN_PAYLOAD = {
-            ...PROVIDE_PLUGIN_PAYLOAD,
-            // 预加载接口映射器
-            INTERFACE_MAPPINGS
-          }
-        }
+    try {
+      accessSync(INTERFACE_MAPPINGS, constants.F_OK)
+
+      PROVIDE_PLUGIN_PAYLOAD = {
+        ...PROVIDE_PLUGIN_PAYLOAD,
+        // 预加载接口映射器
+        INTERFACE_MAPPINGS
       }
-    )
+    } catch (e) {
+      console.info('未找到项目对应的接口字段映射（interfaceMappings）。')
+    }
     /**********************************************************************/
 
     config.plugin('ProvidePlugin').use(ProvidePlugin, [PROVIDE_PLUGIN_PAYLOAD])
