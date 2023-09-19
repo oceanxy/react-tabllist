@@ -22,7 +22,7 @@ export function createStoreModule(module = {}, excludeFromState = []) {
       loading: false,
       search: {},
       pagination: {
-        pageIndex: 0,
+        pageIndex: 1,
         pageSize: 15,
         total: 0
       },
