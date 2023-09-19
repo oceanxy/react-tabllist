@@ -5,7 +5,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const { resolve, join } = require('path')
 const { getBuildConfig, getDevServer } = require('./build/configs')
 const { ProvidePlugin, DefinePlugin } = require('webpack')
-const { accessSync, constants, readdirSync } = require('fs')
+const { accessSync, constants, access } = require('fs')
 const WebpackAssetsManifest = require('webpack-assets-manifest')
 
 const buildConfig = getBuildConfig()
@@ -167,27 +167,44 @@ module.exports = {
     //   }
     // })
 
-    config.plugin('ProvidePlugin').use(ProvidePlugin, [
-      {
-        // 预加载子项目配置文件
-        APP_CONFIG: resolve(join(__dirname, `src/apps/${buildConfig.availableProjectName}/config/index.js`)),
-        // 预加载子项目入口组件
-        APP_COMPONENT: buildConfig.availableProjectName
-          ? resolve(join(__dirname, `src/apps/${buildConfig.availableProjectName}/App.jsx`))
-          : resolve(join(__dirname, 'src/App.jsx')),
-        // 预加载子项目路由
-        APP_ROUTES: resolve(join(__dirname, `src/apps/${buildConfig.availableProjectName}/router/routes.js`)),
-        // 预加载子项目登录组件
-        LOGIN_COMPONENT,
-        // 预加载iconfont文件
-        APP_ICON_FONT: resolve(join(__dirname, `src/apps/${buildConfig.availableProjectName}/assets/iconfont.js`)),
-        // 预加载接口映射器
-        INTERFACE_MAPPINGS: resolve(join(
-          __dirname,
-          `src/apps/${buildConfig.availableProjectName}/config/interfaceMappings.js`
-        ))
+    // 欲使用 ProvidePlugin 预加载的文件集合
+    let PROVIDE_PLUGIN_PAYLOAD = {
+      // 预加载子项目配置文件
+      APP_CONFIG: resolve(join(__dirname, `src/apps/${buildConfig.availableProjectName}/config/index.js`)),
+      // 预加载子项目入口组件
+      APP_COMPONENT: buildConfig.availableProjectName
+        ? resolve(join(__dirname, `src/apps/${buildConfig.availableProjectName}/App.jsx`))
+        : resolve(join(__dirname, 'src/App.jsx')),
+      // 预加载子项目路由
+      APP_ROUTES: resolve(join(__dirname, `src/apps/${buildConfig.availableProjectName}/router/routes.js`)),
+      // 预加载子项目登录组件
+      LOGIN_COMPONENT,
+      // 预加载iconfont文件
+      APP_ICON_FONT: resolve(join(__dirname, `src/apps/${buildConfig.availableProjectName}/assets/iconfont.js`))
+    }
+
+    /***************** 预加载接口映射器，判断文件是否存在 ***********************/
+    const INTERFACE_MAPPINGS = resolve(join(
+      __dirname,
+      `src/apps/${buildConfig.availableProjectName}/config/interfaceMappings.js`
+    ))
+
+    access(
+      resolve(join(__dirname, INTERFACE_MAPPINGS)),
+      constants.F_OK,
+      err => {
+        if (!err) {
+          PROVIDE_PLUGIN_PAYLOAD = {
+            ...PROVIDE_PLUGIN_PAYLOAD,
+            // 预加载接口映射器
+            INTERFACE_MAPPINGS
+          }
+        }
       }
-    ])
+    )
+    /**********************************************************************/
+
+    config.plugin('ProvidePlugin').use(ProvidePlugin, [PROVIDE_PLUGIN_PAYLOAD])
 
     config.plugin('DefinePlugin').use(DefinePlugin, [
       {
