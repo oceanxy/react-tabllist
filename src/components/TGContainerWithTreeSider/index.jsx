@@ -187,7 +187,10 @@ export default {
     'dataSource.list': {
       deep: true,
       handler(value, value2) {
-        console.log(value)
+        if (value === value2) {
+          return
+        }
+
         this.treeDataSource = value
       }
     },
@@ -380,7 +383,7 @@ export default {
           if (this.treeIdField) {
             payload = {
               ...this.injectSearchParamsOfTable(this.notNoneMode ? this.dataSource.list?.[0] : {}),
-              [this.treeIdField]: this.notNoneMode ? this.dataSource.list?.[0]?.[this.replaceFields.key] : ''
+              [this.treeIdField]: this.notNoneMode ? this.dataSource.list?.[0]?.[this.replaceFields.value] : ''
             }
           }
         }
@@ -450,7 +453,7 @@ export default {
     getTreeNode(dataSource) {
       return (
         dataSource?.map(item => (
-          <Tree.TreeNode key={item.id} dataSource={item}>
+          <Tree.TreeNode key={item[this.replaceFields.value]} dataSource={item}>
             {
               !Array.isArray(item?.[this.replaceFields.children]) || !item[this.replaceFields.children].length
                 ? (
