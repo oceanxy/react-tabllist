@@ -168,7 +168,7 @@ module.exports = {
     // })
 
     // 欲使用 ProvidePlugin 预加载的文件集合
-    let PROVIDE_PLUGIN_PAYLOAD = {
+    const PROVIDE_PLUGIN_PAYLOAD = {
       // 预加载子项目配置文件
       APP_CONFIG: resolve(join(__dirname, `src/apps/${buildConfig.availableProjectName}/config/index.js`)),
       // 预加载子项目入口组件
@@ -193,7 +193,6 @@ module.exports = {
       accessSync(INTERFACE_MAPPINGS, constants.F_OK)
       PROVIDE_PLUGIN_PAYLOAD.INTERFACE_MAPPINGS = INTERFACE_MAPPINGS
     } catch (e) {
-      PROVIDE_PLUGIN_PAYLOAD.INTERFACE_MAPPINGS = {}
       console.info('未找到项目对应的接口字段映射（interfaceMappings）。')
     }
     /**********************************************************************/
