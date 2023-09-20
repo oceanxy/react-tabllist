@@ -191,13 +191,9 @@ module.exports = {
 
     try {
       accessSync(INTERFACE_MAPPINGS, constants.F_OK)
-
-      PROVIDE_PLUGIN_PAYLOAD = {
-        ...PROVIDE_PLUGIN_PAYLOAD,
-        // 预加载接口映射器
-        INTERFACE_MAPPINGS
-      }
+      PROVIDE_PLUGIN_PAYLOAD.INTERFACE_MAPPINGS = INTERFACE_MAPPINGS
     } catch (e) {
+      PROVIDE_PLUGIN_PAYLOAD.INTERFACE_MAPPINGS = {}
       console.info('未找到项目对应的接口字段映射（interfaceMappings）。')
     }
     /**********************************************************************/
