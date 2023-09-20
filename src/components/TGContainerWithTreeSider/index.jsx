@@ -94,6 +94,20 @@ export default {
     actionsForUpdateTree: {
       type: Array,
       default: () => []
+    },
+    /**
+    * 替换 treeNode 中 title,key,children 字段为 treeData 中对应的字段。
+    */
+    replaceFields: {
+      type: Object,
+      default: () => {
+        return {
+          children: 'children',
+          title: 'title',
+          key: 'id',
+          value: 'id'
+        }
+      }
     }
   },
   data() {
@@ -175,10 +189,7 @@ export default {
     'dataSource.list': {
       deep: true,
       handler(value, value2) {
-        if (value === value2) {
-          return
-        }
-
+        console.log(value)
         this.treeDataSource = value
       }
     },
@@ -210,6 +221,7 @@ export default {
     }
 
     if (this.status) {
+
       const treeIdField = this.getFieldNameForTreeId(1)
 
       // 更新 store.state 里面用于树ID的键名（主要适配每一级树所使用的键名不同的情况）
@@ -230,7 +242,7 @@ export default {
           await this.$store.dispatch('setSearch', {
             payload: {
               ...this.injectSearchParamsOfTable(this.dataSource.list?.[0] ?? {}), // 获取额外请求参数
-              [this.treeIdField]: this.dataSource.list?.[0]?.id, // 获取树ID
+              [this.treeIdField]: this.dataSource.list?.[0]?.dictCode, // 获取树ID
               ...this.$route.query, // 获取地址栏的值
               /* #1 （一个书签，与本组件 #2 书签配合） */
               ...this.$route.params // 获取清空 query 后，通过 route.params 传递的参数。
@@ -276,9 +288,9 @@ export default {
       let ids = []
 
       for (const item of treeDataSource) {
-        if (item.isParent || (Array.isArray(item.children) && item.children?.length)) {
-          ids.push(item.id)
-          ids = ids.concat(this.getAllParentIds(item.children, onlyFirstParentNode))
+        if (item.isParent || (Array.isArray(item[this.replaceFields.children]) && item[this.replaceFields.children]?.length)) {
+          ids.push(item[this.replaceFields.key])
+          ids = ids.concat(this.getAllParentIds(item[this.replaceFields.children], onlyFirstParentNode))
         }
 
         if (onlyFirstParentNode) break
@@ -296,12 +308,12 @@ export default {
       const temp = []
 
       for (const item of dataSource) {
-        if (item.name.includes(searchValue)) {
+        if (item[this.replaceFields.title].includes(searchValue)) {
           temp.push(item)
-        } else if (Array.isArray(item.children) && item.children.length) {
-          item.children = this.filter(item.children, searchValue)
+        } else if (Array.isArray(item[this.replaceFields.children]) && item[this.replaceFields.children].length) {
+          item[this.replaceFields.children] = this.filter(item[this.replaceFields.children], searchValue)
 
-          if (item.children.length) {
+          if (item[this.replaceFields.children].length) {
             temp.push(item)
           }
         }
@@ -333,7 +345,6 @@ export default {
         const treeIdField = this.getFieldNameForTreeId(e.node.pos.split('-').length - 1)
 
         if (this.oldTreeIdField !== treeIdField) {
-          console.log(treeIdField)
 
           // 清空search内上一次树操作的键与值
           if (this.oldTreeIdField) {
@@ -357,11 +368,7 @@ export default {
           this.oldTreeIdField = treeIdField
         }
 
-        console.log('2', treeIdField)
-
         if (e.selected) {
-
-          console.log('4', treeIdField)
           payload = {
             ...this.injectSearchParamsOfTable(e.node.$attrs.dataSource),
             [this.treeIdField]: selectedKeys[0]
@@ -370,13 +377,12 @@ export default {
           if (this.treeIdField) {
             payload = {
               ...this.injectSearchParamsOfTable(this.notNoneMode ? this.dataSource.list?.[0] : {}),
-              [this.treeIdField]: this.notNoneMode ? this.dataSource.list?.[0]?.id : ''
+              [this.treeIdField]: this.notNoneMode ? this.dataSource.list?.[0]?.[this.replaceFields.key] : ''
             }
           }
         }
 
         if (this.treeIdField && payload[this.treeIdField] !== this.treeId[0]) {
-          console.log(3)
           await this.$store.dispatch('setSearch', {
             payload,
             moduleName: this.moduleName,
@@ -392,24 +398,24 @@ export default {
      * @returns {JSX.Element}
      */
     highlight(treeNode) {
-      const childrenNumber = Array.isArray(treeNode?.children) && treeNode.children.length
-        ? `(${treeNode.children.length})`
+      const childrenNumber = Array.isArray(treeNode?.[this.replaceFields.children]) && treeNode[this.replaceFields.children].length
+        ? `(${treeNode[this.replaceFields.children].length})`
         : ''
 
       return this.searchValue ? (
         <span
           slot={'title'}
-          title={treeNode.name + childrenNumber}
+          title={treeNode[this.replaceFields.title] + childrenNumber}
           domPropsInnerHTML={
-            treeNode.name.replace(
+            treeNode[this.replaceFields.title].replace(
               this.searchValue,
               `<span style="color: ${this.primaryColor}">${this.searchValue}</span>`
             ) + childrenNumber
           }
         />
       ) : (
-        <span slot={'title'} title={treeNode.name + childrenNumber}>
-          {treeNode.name + childrenNumber}
+        <span slot={'title'} title={treeNode[this.replaceFields.title] + childrenNumber}>
+          {treeNode[this.replaceFields.title] + childrenNumber}
         </span>
       )
     },
@@ -443,7 +449,7 @@ export default {
         dataSource?.map(item => (
           <Tree.TreeNode key={item.id} dataSource={item}>
             {
-              !Array.isArray(item?.children) || !item.children.length
+              !Array.isArray(item?.[this.replaceFields.children]) || !item[this.replaceFields.children].length
                 ? (
                   <span slot={'switcherIcon'} class={'ant-tree-switcher'} style={'visibility: visible'}>
                     <i class={'anticon anticon-file ant-tree-switcher-line-icon'}>
@@ -465,8 +471,8 @@ export default {
             {this.getIcon(item)}
             {this.highlight(item)}
             {
-              Array.isArray(item?.children)
-                ? this.getTreeNode(item.children)
+              Array.isArray(item?.[this.replaceFields.children])
+                ? this.getTreeNode(item[this.replaceFields.children])
                 : null
             }
           </Tree.TreeNode>
@@ -484,7 +490,6 @@ export default {
      * @param e
      */
     onTreeSearch(e) {
-      console.log('111', e)
       this.expandedKeysFormEvent = []
       this.searchValue = e.target.value
     },
