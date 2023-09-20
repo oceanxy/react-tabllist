@@ -2,7 +2,7 @@ import './assets/styles/index.scss'
 import { Empty, Icon, Input, Spin, Tree } from 'ant-design-vue'
 import { getFirstLetterOfEachWordOfAppName } from '@/utils/utilityFunction'
 import TGContainerWithSider from '@/components/TGContainerWithSider'
-import { debounce, cloneDeep } from 'lodash'
+import { cloneDeep, debounce } from 'lodash'
 
 export default {
   inject: ['moduleName'],
@@ -96,18 +96,17 @@ export default {
       default: () => []
     },
     /**
-    * 替换 treeNode 中 title,key,children 字段为 treeData 中对应的字段。
-    */
+     * 替换 treeNode 中 title,key,children 字段为 treeData 中对应的字段。
+     * 参考 https://1x.antdv.com/components/tree-cn/#API
+     */
     replaceFields: {
       type: Object,
-      default: () => {
-        return {
-          children: 'children',
-          title: 'title',
-          key: 'id',
-          value: 'id'
-        }
-      }
+      default: () => ({
+        children: 'children',
+        title: 'name',
+        key: 'id',
+        value: 'id'
+      })
     }
   },
   data() {
@@ -150,7 +149,6 @@ export default {
       if (this.searchValue) {
         return this.getAllParentIds(this.treeDataSource)
       }
-
 
       if (this.isCollapsedManually) {
         return this.expandedKeysFormEvent
@@ -221,7 +219,6 @@ export default {
     }
 
     if (this.status) {
-
       const treeIdField = this.getFieldNameForTreeId(1)
 
       // 更新 store.state 里面用于树ID的键名（主要适配每一级树所使用的键名不同的情况）
@@ -242,7 +239,7 @@ export default {
           await this.$store.dispatch('setSearch', {
             payload: {
               ...this.injectSearchParamsOfTable(this.dataSource.list?.[0] ?? {}), // 获取额外请求参数
-              [this.treeIdField]: this.dataSource.list?.[0]?.dictCode, // 获取树ID
+              [this.treeIdField]: this.dataSource.list?.[0]?.[this.replaceFields.value], // 获取树ID
               ...this.$route.query, // 获取地址栏的值
               /* #1 （一个书签，与本组件 #2 书签配合） */
               ...this.$route.params // 获取清空 query 后，通过 route.params 传递的参数。
@@ -288,8 +285,14 @@ export default {
       let ids = []
 
       for (const item of treeDataSource) {
-        if (item.isParent || (Array.isArray(item[this.replaceFields.children]) && item[this.replaceFields.children]?.length)) {
-          ids.push(item[this.replaceFields.key])
+        if (
+          item.isParent ||
+          (
+            Array.isArray(item[this.replaceFields.children]) &&
+            item[this.replaceFields.children]?.length
+          )
+        ) {
+          ids.push(item[this.replaceFields.value])
           ids = ids.concat(this.getAllParentIds(item[this.replaceFields.children], onlyFirstParentNode))
         }
 
