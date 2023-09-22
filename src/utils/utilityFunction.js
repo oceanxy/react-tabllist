@@ -22,8 +22,8 @@ export function toLowerCase(field) {
 
 /**
  * 图片转base64
- * @param file
- * @returns {Promise<unknown>}
+ * @param {File | Blob} file
+ * @returns {Promise<string>}
  */
 export function getBase64(file) {
   return new Promise((resolve, reject) => {

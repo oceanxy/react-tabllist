@@ -2,7 +2,7 @@ export default {
   /**
    * 获取状态
    * @param state
-   * detectPresence {boolean} 检测store模块内是否存在该参数。默认true，共用模块内建议设为false
+   * detectPresence {boolean} 检测store模块内是否存在该参数。默认true，通用模块内建议设为false
    * @returns {function(*, *, string=, boolean=): *}
    */
   getState: state => (stateName, moduleName, submoduleName = '', detectPresence = true) => {
