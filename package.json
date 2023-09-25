@@ -16,6 +16,7 @@
     "insp": "vue-cli-service inspect --mode production --app-proj rongchang-comprehensive-management-platform --app-separately 1"
   },
   "dependencies": {
+    "@amap/amap-jsapi-loader": "^1.0.1",
     "@wangeditor/editor": "^5.1.23",
     "@wangeditor/editor-for-vue": "^1.0.2",
     "ant-design-vue": "^1.7.8",
