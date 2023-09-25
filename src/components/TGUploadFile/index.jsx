@@ -57,6 +57,20 @@ export default {
     form: {
       type: Object,
       required: false
+    },
+    /**
+     * OSS文件服务配置
+     */
+    ossConfiguration: {
+      type: Object,
+      default: null
+    },
+    /**
+     * 通过覆盖默认的上传行为，可以自定义自己的上传实现
+     */
+    customRequest: {
+      type: Function,
+      default: null
     }
   },
   data() {
@@ -96,7 +110,9 @@ export default {
     beforeUpload(file, fileList) {
       if (fileList.length > this.limit) {
         this.form?.setFields({
-          [this.$attrs.id]: { errors: [new Error(`上传失败，上传数量限制为${this.limit}个`)] }
+          [this.$attrs.id]: {
+            errors: [new Error(`上传失败，上传数量限制为${this.limit}个`)]
+          }
         })
 
         return false
@@ -117,7 +133,9 @@ export default {
       // this.previewImage = file.url || file.preview
       // this.previewVisible = true
     },
-    handleChange({ fileList }) {
+    handleChange({ file, fileList }) {
+      console.log(file, fileList)
+
       this.fileList = []
       let err = false
 
@@ -160,6 +178,9 @@ export default {
 
         this.$emit('change', this.fileList)
       }
+    },
+    setFileList(value) {
+      this.fileList = [value]
     }
   },
   render() {
@@ -169,7 +190,8 @@ export default {
           margin: '4px 0',
           lineHeight: 0,
           flex: 'auto'
-        }}>
+        }}
+      >
         <Upload
           accept={this.accept}
           action={this.action || this.$config.fileUploadPath}
@@ -181,20 +203,28 @@ export default {
           onChange={this.handleChange}
           headers={this.headers}
           multiple={true}
-          disabled={this.disabled}>
-          {this.limit > this.fileList.length ? (
-            this.listType === 'picture-card' ? (
-              <div>
-                <Icon type="plus"></Icon>
-                <p>{this.placeholder}</p>
-              </div>
-            ) : (
-              <Button disabled={this.disabled} type={this.buttonType} size={this.buttonSize}>
-                <Icon type="upload" />
-                {this.placeholder}
-              </Button>
-            )
-          ) : null}
+          disabled={this.disabled}
+          customRequest={
+            this.customRequest
+              ? rcUploadResponse => this.customRequest(rcUploadResponse, this.setFileList)
+              : null
+          }
+        >
+          {
+            this.limit > this.fileList.length ? (
+              this.listType === 'picture-card' ? (
+                <div>
+                  <Icon type="plus"></Icon>
+                  <p>{this.placeholder}</p>
+                </div>
+              ) : (
+                <Button disabled={this.disabled} type={this.buttonType} size={this.buttonSize}>
+                  <Icon type="upload" />
+                  {this.placeholder}
+                </Button>
+              )
+            ) : null
+          }
         </Upload>
       </div>
     )
