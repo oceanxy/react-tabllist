@@ -301,6 +301,8 @@ export default ({
        * @param [actualFieldName='status'] {string} 列表中实际用于保存该状态的字段名，主要用于被修改状态的字段名不为 'status' 的情况下更新本地数据。
        *  当修改的状态的字段名不为 status 时必传。默认 'status'
        * @param [idKey='id'] {string} 自定义参数ID的名称， 默认 'id'
+       * @param [afferentKey='id'] {string} 配置传入接口参数ID的名称， 默认 'id'
+       * @param [isBulkOperation] {Array} 'id'默认是传字符串，开启之后支持传数组， 默认 'false'
        * @param [nameKey='fullName'] {string} 自定义名称字段的键，主要用于页面提示。 默认 'fullName'
        * @param [customApiName] {string} 自定义请求接口名，一般在要修改状态字段的表格位于弹窗内时使用。
        * @param [stateName] {string} store.state 中存储该表格数据的字段名，默认 'list'
@@ -316,6 +318,8 @@ export default ({
         customFieldName = 'status',
         actualFieldName = 'status',
         idKey = 'id',
+        afferentKey = 'id',
+        isBulkOperation = false,
         nameKey = 'fullName',
         customApiName,
         stateName,
@@ -332,7 +336,7 @@ export default ({
           stateName: stateName !== 'list' ? stateName : '',
           submoduleName,
           payload: {
-            [idKey]: record[this.tableProps.rowKey || 'id'],
+            [afferentKey]: isBulkOperation ? [record[this.tableProps.rowKey || 'id']] : record[this.tableProps.rowKey || 'id'],
             [customFieldName]: checked ? custStatusParameter.open : custStatusParameter.close
           }
         })
