@@ -134,8 +134,6 @@ export default {
       // this.previewVisible = true
     },
     handleChange({ file, fileList }) {
-      console.log(file, fileList)
-
       this.fileList = []
       let err = false
 
@@ -180,7 +178,28 @@ export default {
       }
     },
     setFileList(value) {
-      this.fileList = [value]
+      /**
+       * 记录一个坑（此注释不要删除，留作警示）
+       * 直接改变 this.fileList 会导致 ant-design-vue Upload 组件报错：
+       * invalid prop: custom validator check failed for prop "fileList".
+       * invalid prop: custom validator check failed for prop "items".
+       *
+       * 报错代码：
+       * this.fileList = [value]
+       *
+       * 解决方案：
+       * 不要对 this.fileList 数组重新赋值（内存地址不能变），但可以对其内部的元素进行更改
+       */
+
+      /**
+       * @type {number}
+       */
+      const index = this.fileList.findIndex(item => item.uid === value.uid)
+
+      this.fileList[index] = {
+        ...this.fileList,
+        ...value
+      }
     }
   },
   render() {
