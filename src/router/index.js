@@ -159,6 +159,10 @@ function resetRoutes() {
 const router = createRouter()
 
 router.beforeEach((to, from, next) => {
+  if (to.query.title) {
+    to.meta.title = decodeURIComponent(to.query.title)
+  }
+
   let title = to.meta.title || ''
 
   if (title) {
