@@ -18,6 +18,11 @@ export default {
           min: 0.4
         }
       }
+    },
+    // 默认封面图
+    defaultCover: {
+      type: String,
+      default: ''
     }
   },
   data() {
@@ -34,7 +39,7 @@ export default {
   },
   computed: {
     firstUrl() {
-      let url = ''
+      let url = this.defaultCover
 
       if (this.imageUrls.length) {
         url = this.imageUrls.at(-1)
@@ -100,10 +105,12 @@ export default {
 
       if (event.wheelDelta > 0 && this.scale < this.scaleZoom.max) {
         this.scale += 0.2 * speed
-        this.$refs.dragElement.style.transform = `scale(${this.scale}) translate(${this.translate.x}px, ${this.translate.y}px)`
+        this.$refs.dragElement.style.transform =
+          `scale(${this.scale}) translate(${this.translate.x}px, ${this.translate.y}px)`
       } else if (event.wheelDelta < 0 && this.scale > this.scaleZoom.min) {
         this.scale += 0.2 * speed
-        this.$refs.dragElement.style.transform = `scale(${this.scale}) translate(${this.translate.x}px, ${this.translate.y}px)`
+        this.$refs.dragElement.style.transform =
+          `scale(${this.scale}) translate(${this.translate.x}px, ${this.translate.y}px)`
       }
     },
     onClickImg() {
@@ -151,49 +158,52 @@ export default {
 
     return (
       <div class="tg-image-preview">
-        {this.imageUrls.length ? (
-          [
-            <Badge {...attributes}>
-              {this.firstUrl ? (
-                <img
-                  class="img"
-                  src={this.firstUrl}
-                  alt=""
-                  style={{
-                    width: `${this.width}px`,
-                    height: `${this.height}px`,
-                    border: '1px solid #ededed',
-                    overflow: 'hidden'
-                  }}
-                  onClick={() => this.onClickImg()}
-                />
-              ) : (
-                <span></span>
-              )}
-            </Badge>,
-            <Modal
-              visible={this.visible}
-              zIndex={10000}
-              wrapClassName="tg-image-preview-modal"
-              width="90%"
-              footer={null}
-              oncancel={this.onCancel}>
-              <img ref="dragElement" src={this.curUrl} style={{ cursor: this.isScaleDrag ? 'move' : '' }} />
-              {this.imageUrls.length > 1
-                ? [
-                  <div class="btn up">
-                    <Button shape="circle" icon="left" onClick={() => this.onSwitch('up')} />
-                  </div>,
-                  <div class="btn next">
-                    <Button shape="circle" icon="right" onClick={() => this.onSwitch('next')} />
-                  </div>
-                ]
-                : null}
-            </Modal>
-          ]
-        ) : (
-          <span>-</span>
-        )}
+        <Badge {...attributes}>
+          {
+            this.firstUrl ? (
+              <img
+                class="img"
+                src={this.firstUrl}
+                alt=""
+                style={{
+                  width: `${this.width}px`,
+                  height: `${this.height}px`,
+                  border: '1px solid #ededed',
+                  overflow: 'hidden'
+                }}
+                onClick={() => this.onClickImg()}
+              />
+            ) : (
+              <span></span>
+            )
+          }
+        </Badge>
+        <Modal
+          visible={this.visible}
+          zIndex={10000}
+          wrapClassName="tg-image-preview-modal"
+          width="90%"
+          footer={null}
+          oncancel={this.onCancel}
+        >
+          <img
+            ref="dragElement"
+            src={this.curUrl}
+            style={{ cursor: this.isScaleDrag ? 'move' : '' }}
+          />
+          {
+            this.imageUrls.length > 1
+              ? [
+                <div class="btn up">
+                  <Button shape="circle" icon="left" onClick={() => this.onSwitch('up')} />
+                </div>,
+                <div class="btn next">
+                  <Button shape="circle" icon="right" onClick={() => this.onSwitch('next')} />
+                </div>
+              ]
+              : null
+          }
+        </Modal>
       </div>
     )
   }
