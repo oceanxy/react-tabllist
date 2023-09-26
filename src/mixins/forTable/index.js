@@ -431,7 +431,9 @@ export default ({
        * @param [params] {Object} 删除参数，默认 { ids: [record.id] }
        * @param [done] {() => void} 成功执行删除的回调
        */
-      async onDeleteClick(record, params = {}, done) {
+      async onDeleteClick(record, params = {}, done, { nameKey = 'fullName' }) {
+
+
         if (typeof params === 'function') {
           [params, done] = [{}, params]
         }
@@ -469,7 +471,7 @@ export default ({
           },
           '确定要删除吗？',
           [
-            <span style={{ color: this.primaryColor }}>{record.fullName}</span>,
+            <span style={{ color: this.primaryColor }}>{record[nameKey]}</span>,
             ' 已成功删除！'
           ]
         )
