@@ -308,7 +308,7 @@ export default ({
        *  当修改的状态的字段名不为 status 时必传。默认 'status'
        * @param [idKey='id'] {string} 自定义参数ID的名称， 默认 'id'
        * @param [afferentKey='id'] {string} 配置传入接口参数ID的名称， 默认 'id'
-       * @param [isBulkOperation] {Array} 'id'默认是传字符串，开启之后支持传数组， 默认 'false'
+       * @param [isBulkOperation] {Array} 'id'默认是传字符串，开启之后支持传数组，开启之后record如果是object的namekey会被以数组形式传入 默认 'false'
        * @param [nameKey='fullName'] {string} 自定义名称字段的键，主要用于页面提示。 默认 'fullName'
        * @param [customApiName] {string} 自定义请求接口名，一般在要修改状态字段的表格位于弹窗内时使用。
        * @param [stateName] {string} store.state 中存储该表格数据的字段名，默认 'list'
@@ -335,6 +335,19 @@ export default ({
       } = {}) {
         stateName = stateName || _stateName
 
+        // 开启 isBulkOperation 之后参数必须以数组的形式传入
+        let parameter = []
+
+        if (isBulkOperation) {
+          if (Array.isArray(record)) {
+            record?.forEach(item => {
+              parameter.push(item[idKey])
+            })
+          } else {
+            parameter.push(record[this.tableProps.rowKey || 'id'])
+          }
+        }
+
         const status = await this.$store.dispatch('updateStatus', {
           moduleName: this.moduleName,
           customFieldName,
@@ -342,7 +355,7 @@ export default ({
           stateName: stateName !== 'list' ? stateName : '',
           submoduleName,
           payload: {
-            [afferentKey]: isBulkOperation ? [record[this.tableProps.rowKey || 'id']] : record[this.tableProps.rowKey || 'id'],
+            [afferentKey]: isBulkOperation ? parameter : record[this.tableProps.rowKey || 'id'],
             [customFieldName]: checked ? custStatusParameter.open : custStatusParameter.close
           }
         })
@@ -367,17 +380,50 @@ export default ({
             <span style={{ color: `${this.primaryColor}` }}>
               {name}
             </span>,
-            ' 的状态已更新！'
+            `${isBulkOperation ? '状态已更新！' : '的状态已更新！'}`
           ])
+          parameter = []
         }
 
         if (optimisticUpdate) {
           if (status) {
             // 更新当前行受控Switch组件的值
-            dataSource[index][actualFieldName] = checked ? 1 : 2
+            if (isBulkOperation && Array.isArray(record)) {
+              record?.forEach(d => {
+                dataSource.map(item => {
+                  if (d[idKey] === item[idKey]) {
+                    return item[actualFieldName] = checked ? 1 : 2
+                  }
+                })
+              })
+
+              this.$store.commit('setState', {
+                value: [],
+                moduleName: this.moduleName,
+                stateName: 'selectedRowKeys'
+              })
+              this.$store.commit('setState', {
+                value: [],
+                moduleName: this.moduleName,
+                stateName: 'selectedRows'
+              })
+            } else {
+              dataSource[index][actualFieldName] = checked ? 1 : 2
+            }
           } else {
             // 调用接口失败时，还原值
-            dataSource[index][actualFieldName] = checked ? 2 : 1
+            if (isBulkOperation && Array.isArray(record)) {
+
+              record?.forEach(d => {
+                dataSource.map(item => {
+                  if (d[actualFieldName] === item[actualFieldName]) {
+                    return item[actualFieldName] = checked ? 2 : 1
+                  }
+                })
+              })
+            } else {
+              dataSource[index][actualFieldName] = checked ? 2 : 1
+            }
           }
 
           this.$store.commit('setState', {
@@ -437,7 +483,9 @@ export default ({
        * @param [params] {Object} 删除参数，默认 { ids: [record.id] }
        * @param [done] {() => void} 成功执行删除的回调
        */
-      async onDeleteClick(record, params = {}, done) {
+      async onDeleteClick(record, params = {}, done, nameKey = 'fullName') {
+
+
         if (typeof params === 'function') {
           [params, done] = [{}, params]
         }
@@ -475,7 +523,7 @@ export default ({
           },
           '确定要删除吗？',
           [
-            <span style={{ color: this.primaryColor }}>{record.fullName}</span>,
+            <span style={{ color: this.primaryColor }}>{record[nameKey]}</span>,
             ' 已成功删除！'
           ]
         )
