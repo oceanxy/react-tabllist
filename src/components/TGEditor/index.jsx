@@ -49,6 +49,14 @@ export default {
     value: {
       type: String,
       default: ''
+    },
+    /**
+     * 如果你不想使用 wangEditor 自带的上传功能，例如你要上传到阿里云 OSS
+     * 可以通过 customUpload 来自定义上传
+     */
+    customUpload: {
+      type: Function,
+      default: null
     }
   },
   data() {
@@ -66,7 +74,17 @@ export default {
             // 单个文件的最大体积限制，默认为 2M
             maxFileSize: 20 * 1024 * 1024, // 20M
             // 最多可上传几个文件，默认为 100
-            maxNumberOfFiles: 10
+            maxNumberOfFiles: 10,
+            customUpload: async (file, insertFn) => {
+              if (this.customUpload) {
+                const data = await this.customUpload({ file }, (backFile) => {
+                  console.log(backFile)
+                  insertFn()
+                })
+
+                console.log('data', data)
+              }
+            }
           },
           uploadVideo: {
             ...fileOrVideoCommonConfig,
@@ -97,7 +115,7 @@ export default {
   watch: {
     value: {
       immediate: true,
-      handler(value) {
+      async handler(value) {
         this.html = value
         this.editorConfig.readOnly = this.disabled
       }
