@@ -29,7 +29,7 @@ export default (
     // 如果存在自定义模块名，为了不与其他动态模块混淆，仅动态注册该模块，此时不提供 moduleName
     dynamicState = {
       async created() {
-        // 判断动态模块文件夹内是否存在与moduleName匹配的文件，用以作为动态模块的模版
+        // 判断动态模块文件夹内是否存在与moduleName匹配的文件，用以作为动态模块的模板
         if (this.$store._dynamicModules[customModuleName]) {
           // 判断是否已经注册了该模块
           if (!this.$store.hasModule(customModuleName)) {
@@ -78,7 +78,7 @@ export default (
       mixins: [forModuleName(injectSubmoduleName)],
       created() {
         if (this.moduleName) {
-          // 判断动态模块文件夹内是否存在与moduleName匹配的文件，用以作为动态模块的模版
+          // 判断动态模块文件夹内是否存在与moduleName匹配的文件，用以作为动态模块的模板
           if (this.$store._dynamicModules[this.moduleName]) {
             // 判断是否已经注册了该模块
             if (!this.$store.hasModule(this.moduleName)) {

@@ -404,9 +404,8 @@ export default {
      * @returns {JSX.Element}
      */
     highlight(treeNode) {
-      const childrenNumber = Array.isArray(treeNode?.[this.replaceFields.children]) && treeNode[this.replaceFields.children].length
-        ? `(${treeNode[this.replaceFields.children].length})`
-        : ''
+      const node = treeNode?.[this.replaceFields.children]
+      const childrenNumber = Array.isArray(node) && node.length ? `(${node.length})` : ''
 
       return this.searchValue ? (
         <span

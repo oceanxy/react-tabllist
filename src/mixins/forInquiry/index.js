@@ -16,9 +16,9 @@ import { Button, Form, Space } from 'ant-design-vue'
  * - 在一些特殊场景，搜索按钮只负责改变 store 内的值，例如：
  * 如果其他组件（如左侧树、页面列表等）有请求数据的逻辑，此处请设置为 false，此时搜索按钮仅仅用来控制 store.state.search 的值，将发送请求的逻辑交由这些组件来完成。
  * @param {boolean} [isInitializeFromStore=false] 在组件加载成功时，是否把 store 内对应本组件的模块的搜索参数映射到 Form 组件内。
- * @param {function():boolean} [buttonDisabledFn] 禁用查询按钮的方法。
- * @param {function():Object} [setParams={}] 调用查询接口时需要的额外请求参数。一般用于配置在子模块内的 inquiry 组件获取父模块参数等。
- * @param {function():Object} [setOptions={}] 调用查询接口时需要的`全局Action(setSearch、getList)`配置。一般用于自定义请求接口等配置。
+ * @param {()=>boolean} [buttonDisabledFn] 禁用查询按钮的方法。
+ * @param {()=>Object} [setParams] 调用查询接口时需要的额外请求参数。一般用于配置在子模块内的 inquiry 组件获取父模块参数等。
+ * @param {()=>Object} [setOptions] 调用查询接口时需要的`全局Action(如：setSearch、getList等)`配置。一般用于自定义请求接口等配置。
  * @returns {Object<Vue.mixin>}
  */
 export default function forInquiry({

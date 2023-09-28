@@ -40,7 +40,7 @@ module.exports = {
   // 视频上传地址
   videoUploadPath: '/mgapi/system/upload/videoUpload',
   // 系统名称
-  systemName: '蓝桥后台管理系统快速启动模版',
+  systemName: '蓝桥后台管理系统快速启动模板',
   systemNameEn: 'vue-template-generator',
   /**
    * 菜单样式配置，可选值：
