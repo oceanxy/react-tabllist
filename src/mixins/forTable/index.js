@@ -103,6 +103,9 @@ export default ({
       selectedRowKeys() {
         return this.getState('selectedRowKeys', this.moduleName, this.submoduleName, false)
       },
+      selectedRows() {
+        return this.getState('selectedRows', this.moduleName, this.submoduleName, false)
+      },
       sortFieldList() {
         return this.getState('sortFieldList', this.moduleName, this.submoduleName, false)
       },
@@ -126,9 +129,12 @@ export default ({
       }
     },
     watch: {
-      selectedRowKeys(value) {
-        if (this.tableProps.rowSelection) {
-          this.tableProps.rowSelection.selectedRowKeys = value
+      selectedRowKeys: {
+        immediate: true,
+        handler(value) {
+          if (this.tableProps.rowSelection) {
+            this.tableProps.rowSelection.selectedRowKeys = value
+          }
         }
       },
       /**
