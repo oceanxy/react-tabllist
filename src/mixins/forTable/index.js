@@ -477,7 +477,7 @@ export default ({
        * @param [params] {Object} 删除参数，默认 { ids: [record.id] }
        * @param [done] {() => void} 成功执行删除的回调
        */
-      async onDeleteClick(record, params = {}, done, { nameKey = 'fullName' }) {
+      async onDeleteClick(record, params = {}, done, nameKey = 'fullName') {
 
 
         if (typeof params === 'function') {
