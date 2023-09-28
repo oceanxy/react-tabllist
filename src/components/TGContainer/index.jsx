@@ -7,7 +7,7 @@ export default {
      * 标题文字 或 JSX.Element
      */
     modalTitle: {
-      type: [String, Object],
+      type: [String, Object, Array],
       default: ''
     },
     /**
