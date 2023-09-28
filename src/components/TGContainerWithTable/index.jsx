@@ -21,15 +21,33 @@ export default {
       return [
         this.$slots.inquiry || this.$slots.others,
         this.$slots.chart,
-        this.$slots.table
+        // customContent 和 table 结构只能二选一，如果二者都存在，customContent 优先
+        this.$slots.customContent
           ? (
-            <div class={'tg-container-table-container'}>
-              {this.$slots.table}
-              {this.$slots.pagination}
-              {this.$slots.default}
+            <div class={'tg-container-custom-content-container'}>
+              <div class={'tg-container-custom-content'}>
+                {this.$slots.customContent}
+              </div>
+              {
+                this.$slots.buttonFunctions
+                  ? (
+                    <div class={'tg-container-bottom-functions'}>
+                      {this.$slots.buttonFunctions}
+                    </div>
+                  )
+                  : null
+              }
             </div>
           )
-          : null,
+          : this.$slots.table
+            ? (
+              <div class={'tg-container-table-container'}>
+                {this.$slots.table}
+                {this.$slots.pagination}
+                {this.$slots.default}
+              </div>
+            )
+            : null,
         <div class="tg-container-modals">{this.$slots.modals}</div>
       ]
     }
@@ -57,7 +75,11 @@ export default {
                 {this.filterSlots()}
               </TGContainerWithTreeSider>
             )
-            : <div class="tg-container-content">{this.filterSlots()}</div>
+            : (
+              <div class="tg-container-content">
+                {this.filterSlots()}
+              </div>
+            )
         }
       </div>
     )

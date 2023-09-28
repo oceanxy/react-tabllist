@@ -378,8 +378,37 @@ body {
 }
 
 .tg-function {
-  margin-left: auto;
   flex: none;
+
+  &.right {
+    margin-left: auto;
+  }
+
+  &.center {
+    margin: 0 auto;
+  }
+}
+
+.tg-container-custom-content-container {
+  display: flex;
+  gap: 12px;
+  height: 100%;
+  flex-direction: column;
+
+  .tg-container-custom-content {
+    display: flex;
+    flex: auto;
+    background: var(--white);
+    padding: 12px;
+  }
+
+  .tg-container-bottom-functions {
+    flex: none;
+    display: flex;
+    overflow-x: auto;
+    padding: 12px;
+    background: var(--white);
+  }
 }
 
 .tg-table.ant-table-wrapper,

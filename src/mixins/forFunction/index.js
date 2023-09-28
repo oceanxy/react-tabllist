@@ -35,6 +35,15 @@ export default ({ controlButtonPermissions, overrideDefaultButtons } = {}) => ({
     refreshTree: { default: null }
   },
   mixins: [forIndex],
+  props: {
+    /**
+     * 水平对齐方式
+     */
+    align: {
+      type: String, // 支持 'left','center','right'
+      default: 'right'
+    }
+  },
   data() {
     return {
       editButtonDisabled: true,
@@ -181,7 +190,7 @@ export default ({ controlButtonPermissions, overrideDefaultButtons } = {}) => ({
   },
   render() {
     return (
-      <Space class="tg-function">
+      <Space class={`tg-function ${this.align}`}>
         {
           !overrideDefaultButtons
             ? (
