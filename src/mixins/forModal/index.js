@@ -42,6 +42,7 @@ export default customModuleName => {
       return {
         inModal: true,
         modalProps: {
+          // 全局组件 DragModal 内的表单加载状态，该属性不会传递给Antd vue Modal组件
           loading: false,
           visible: false,
           title: '',
