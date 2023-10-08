@@ -102,7 +102,7 @@ export default {
       api = `get${submoduleName
         ? `${firstLetterToUppercase(submoduleName)}Of`
         : ''
-        }${firstLetterToUppercase(moduleName)}`
+      }${firstLetterToUppercase(moduleName)}`
     }
 
     if (this.apis[api]) {
@@ -220,11 +220,23 @@ export default {
     })
 
     let api = 'getDetails'
+    let res = {}
 
-    api = customApiName || `getDetailsOf${firstLetterToUppercase(moduleName)}${submoduleName ? firstLetterToUppercase(submoduleName) : ''
-      }`
+    api = customApiName || `getDetailsOf${
+      firstLetterToUppercase(moduleName)
+    }${
+      submoduleName ? firstLetterToUppercase(submoduleName) : ''
+    }`
 
-    const res = await this.apis[api](payload)
+    if (this.apis[api]) {
+      res = await this.apis[api](payload)
+    } else {
+      console.error(
+        `接口未定义：${moduleName} 页面${submoduleName
+          ? ` ${submoduleName} 模块`
+          : ''}的 ${api} 接口未定义！`
+      )
+    }
 
     if (res.status) {
       commit('setState', {
@@ -531,8 +543,8 @@ export default {
     })
 
     const api = customApiName || `update${firstLetterToUppercase(moduleName)
-      }${firstLetterToUppercase(customFieldName)
-      }`
+    }${firstLetterToUppercase(customFieldName)
+    }`
     const { status } = await this.apis[api](payload)
 
     commit('setLoading', {
@@ -592,7 +604,7 @@ export default {
     const response = await this.apis[`delete${submoduleName
       ? `${firstLetterToUppercase(submoduleName)}Of`
       : ''
-      }${firstLetterToUppercase(moduleName)}`](payload)
+    }${firstLetterToUppercase(moduleName)}`](payload)
 
     if (response.status) {
       // 非批量操作时，只从选中行数组中移除被删除的行的key，
@@ -685,8 +697,8 @@ export default {
       api = customApiName
     } else {
       api = `export${submoduleName ? `${firstLetterToUppercase(submoduleName)}Of` : ''
-        }${firstLetterToUppercase(moduleName)
-        }`
+      }${firstLetterToUppercase(moduleName)
+      }`
     }
 
     const params = cloneDeep({ ...additionalQueryParameters, ...payload })
