@@ -365,19 +365,18 @@ export default {
    * @param state
    * @param dispatch
    * @param commit
-   * @param moduleName {string} 模块名
-   * @param customApiName {string} 自定义请求API
-   * @param [payload={}] {Object} 参数
-   * @param [isFetchList] {boolean} 是否在成功提交后刷新本模块列表，默认false
-   * @param [isResetSelectedRows] {Boolean} 是否在成功执行后重置对应 store 内 selectedRows，默认false。一般在批量操作时使用
-   * @param [stateName] {string} 用于接收接口返回值的 state 字段名称，该字段需要提前在相应模块的 store.state 内定义好
-   * @param [submoduleName] {string} 子级模块名
-   * @param [visibilityFieldName] {string} 成功执行操作后要关闭的弹窗的控制字段（定义在对应模块的 store.state 内）
-   * @param parametersOfGetListAction {{
-   *  additionalQueryParameters: {};
-   *  stateName: string;
-   *  customApiName: string
-   * }} 用于操作后刷新列表的参数，依赖 isFetchList
+   * @param moduleName {string} - 模块名
+   * @param customApiName {string} - 自定义请求API
+   * @param [payload={}] {Object} - 请求接口的参数
+   * @param [isFetchList=false] {boolean} - 是否在成功提交后刷新本模块列表，默认false
+   * @param [isResetSelectedRows=false] {Boolean} - 是否在成功执行后重置对应 store 内 selectedRows，默认false。一般在批量操作时使用
+   * @param [stateName=null] {string} - 用于接收接口返回值的 state 字段名称，该字段需要提前在相应模块的 store.state 内定义好
+   * @param [submoduleName=null] {string} - 子级模块名
+   * @param [visibilityFieldName=null] {string} - 成功执行操作后要关闭的弹窗的控制字段（定义在对应模块的 store.state 内）
+   * @param [parametersOfGetListAction] {Object} - 用于操作后刷新列表的参数，依赖 isFetchList
+   * @config [additionalQueryParameters] {Object} - 附加查询参数。例如自定义分页相关参数、其他页面跳转过来时携带的参数(如：ID)等非 state.search 固有的查询参数。
+   * @config [stateName] {string} - 需要设置的字段，默认 state.list
+   * @config [customApiName] {string} - 自定义请求api的名字
    * @returns {Promise<*>}
    */
   async custom({
