@@ -13,7 +13,8 @@ import { Button, message, Space } from 'ant-design-vue'
 /**
  * 为表格功能按钮生成 mixin
  *
- * @param [controlButtonPermissions] {selectedRows => ({[fieldName]: boolean})} 用于控制按钮禁用权限的回调函数。
+ * @param [controlButtonPermissions] {(selectedRows:Object[]) => ({[fieldName]: boolean})} 用于控制按钮禁用权限的回调函数，
+ *  仅当selectedRows发生改变时调用。
  *  接收一个参数 selectedRows。当前选中行数组。
  *  返回一个对象，对象的键（fieldName）为控制禁用权限的字段名（如： 'editButtonDisabled'），对象的值为布尔值。
  *  默认不传，相当于至少勾选了一行列表即解除禁用。
