@@ -13,7 +13,7 @@ import { verificationDialog } from '@/utils/message'
 
 /**
  * 用于 table 的混合
- * @param [isInject=true] {boolean} 是否从 inject 导入 moduleName 和 submoduleName，默认 true
+ * @param [isInject=true] {boolean} 是否使用 vue 的 inject API导入 moduleName 和 submoduleName，默认 true
  * @param [isFetchList=true] {boolean} 是否在组件初始化完成后立即获取列表数据，默认 true；
  *  如果 TGContainerWithTreeSider 组件向下级组件提供了 notInitList 属性，则 isFetchList 将被重置为 !notInitList；
  *  如果 forModal 混合向下级组件提供了 inModal=true 属性（即表示该表格存在于弹窗中），则 notInitList 失效，以 forTable.isFetchList 为准。
@@ -294,7 +294,7 @@ export default ({
           additionalQueryParameters: {
             ...(injectQuery ? this.$route.query : {}),
             // 获取子模块数据需要的额外参数，在引用该混合的子模块内覆盖设置。
-            // 请根据参数的取值和性质自行决定在 data 内或 computed 内定义。
+            // 请根据参数的来源自行决定采用哪种方式定义，如vue 组件的 provide/inject、props、data 或 computed 等方式。
             ...(this.additionalQueryParameters || {})
           }
         })
@@ -484,8 +484,6 @@ export default ({
        * @param [done] {() => void} 成功执行删除的回调
        */
       async onDeleteClick(record, params = {}, done, nameKey = 'fullName') {
-
-
         if (typeof params === 'function') {
           [params, done] = [{}, params]
         }
