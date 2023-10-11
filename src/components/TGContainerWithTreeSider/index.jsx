@@ -9,7 +9,7 @@ export default {
   props: {
     /**
      * 获取自定义图标
-     * @params treeNode {Tree.TreeNode} 树节点
+     * @param treeNode {Tree.TreeNode} 树节点
      * @returns Icon.component 控制如何渲染图标，通常是一个渲染根标签为 <svg> 的 Vue 组件，会使 type 属性失效
      */
     getCustomIcon: {
