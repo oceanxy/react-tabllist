@@ -8,6 +8,11 @@ export default {
     showTree: {
       type: Boolean,
       default: false
+    },
+    // 是否显示页面标题
+    showPageTitle: {
+      type: Boolean,
+      default: true
     }
   },
   provide: {
@@ -56,10 +61,16 @@ export default {
     return (
       <div class="tg-container">
         <div class={'tg-content-title'}>
-          <Space class={'tg-content-title-space'}>
-            <IconFont type={this.$route.meta.icon} />
-            {this.$route.meta.title}
-          </Space>
+          {
+            this.showPageTitle
+              ? (
+                <Space class={'tg-content-title-space'}>
+                  <IconFont type={this.$route.meta.icon} />
+                  {this.$route.meta.title}
+                </Space>
+              )
+              : null
+          }
           <div class={'tg-content-function'}>
             {
               this.$slots.functions
