@@ -38,6 +38,7 @@ export default (isSubmoduleName = false) => {
   } else {
     return {
       mixins: [forIndex],
+      inject: { moduleName: { default: undefined } },
       computed: {
         submoduleName() {
           const name = this.$options.name || ''
