@@ -52,7 +52,9 @@ export default function getService(conf, router, store) {
       let res = response.data
 
       try {
-        res = INTERFACE_MAPPINGS.response(response.data)
+        if (response.config.responseType !== 'blob') {
+          res = INTERFACE_MAPPINGS.response(response.data)
+        }
       } catch (err) {
         /**/
       }
