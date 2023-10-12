@@ -215,7 +215,7 @@ export default function forInquiry({
         return temp
       },
       /**
-       * 此函数值保留一些高频共用类参数的处理
+       * 此函数值保留一些高频共用类参数的处理(可在组件内直接覆盖重写该方法）
        * @param values
        * @returns {{}}
        */
