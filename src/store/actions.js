@@ -672,10 +672,12 @@ export default {
    * @param state
    * @param dispatch
    * @param moduleName {string}
-   * @param submoduleName {string}
-   * @param payload {Object} 参数。不能从 store.state.search 直接获取，因为 store.state.search 对象在未点击搜索按钮之前是没有值的
-   * @param additionalQueryParameters {Object} 附加参数。例如其他页面跳转带过来的参数
-   * @param fileName {string} 不包含后缀名
+   * @param [submoduleName] {string}
+   * @param [payload] {Object} 参数，默认为 store.state.search 的值。
+   * 因为版本更迭原因，目前 payload 和 additionalQueryParameters 参数的功能基本一致了。
+   * @param [additionalQueryParameters] {Object} 附加参数。例如其他页面跳转带过来的参数。
+   * 因为版本更迭原因，目前 payload 和 additionalQueryParameters 参数的功能基本一致了。
+   * @param [fileName] {string} 不包含后缀名
    * @param [customApiName] {string} 自定义请求api的名字
    * @param [visibilityFieldName] {string} 成功导出后要关闭的弹窗的控制字段（定义在对应模块的 store.state 内）
    * @returns {Promise<*>}
@@ -695,8 +697,10 @@ export default {
     if (customApiName) {
       api = customApiName
     } else {
-      api = `export${submoduleName ? `${firstLetterToUppercase(submoduleName)}Of` : ''
-      }${firstLetterToUppercase(moduleName)
+      api = `export${submoduleName ? `${
+        firstLetterToUppercase(submoduleName)}Of` : ''
+      }${
+        firstLetterToUppercase(moduleName)
       }`
     }
 
