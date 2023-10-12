@@ -719,7 +719,7 @@ body {
 
 .has-error .ant-select.ant-select-focused.pass .ant-select-selection,
 .has-error .ant-input-affix-wrapper.pass .ant-input:focus,
-.has-error .ant-input-number-focused.pass,
+.has-error .ant-input-number.ant-input-number-focused.pass,
 .has-error .ant-time-picker-input-focused.pass,
 .ant-calendar-picker.pass:focus .ant-calendar-picker-input:not(.ant-input-disabled),
 .has-error .ant-input-number.pass:focus,
@@ -741,7 +741,7 @@ body {
 .has-error .ant-input-number.pass,
 .has-error .ant-time-picker-input.pass,
 .has-error .ant-calendar-picker.pass .ant-calendar-picker-input {
-  border-color: $box-shadow-base;
+  border-color: $border-color-base;
 }
 
 .has-error .ant-select.pass .ant-select-selection .ant-select-arrow {
