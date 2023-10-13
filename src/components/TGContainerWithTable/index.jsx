@@ -34,10 +34,10 @@ export default {
                 {this.$slots.customContent}
               </div>
               {
-                this.$slots.buttonFunctions
+                this.$slots.bottomFunctions
                   ? (
                     <div class={'tg-container-bottom-functions'}>
-                      {this.$slots.buttonFunctions}
+                      {this.$slots.bottomFunctions}
                     </div>
                   )
                   : null
