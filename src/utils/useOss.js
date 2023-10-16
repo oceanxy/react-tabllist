@@ -57,7 +57,8 @@
  * rcUploadResponse的上传成功回调函数
  * @global
  * @callback RcUploadResponse~onSuccess
- * @param {Object} body
+ * @param {Object} result - Response.body
+ * @param {File} [file]
  * @return {void}
  */
 
@@ -65,8 +66,9 @@
  * rcUploadResponse的上传发生错误回调函数
  * @global
  * @callback RcUploadResponse~onError
- * @param {Error} event
- * @param {Object} [body]
+ * @param {Error} err - 错误信息
+ * @param {Object} [response] - Response
+ * @param {File} [file]
  * @return {void}
  */
 
@@ -75,7 +77,7 @@
  * @global
  * @callback RcUploadResponse~onProgress
  * @param {Object} event
- * @config {number} percent
+ * @config {number} percent - 上传进度
  * @return {void}
  */
 
@@ -89,7 +91,7 @@
 
 import apis from '@/apis'
 import store from '@/store'
-import { getBase64, getFirstLetterOfEachWordOfAppName, uuid } from '@/utils/utilityFunction'
+import { getFirstLetterOfEachWordOfAppName, uuid } from '@/utils/utilityFunction'
 import { message } from 'ant-design-vue'
 import OSS from 'ali-oss'
 
@@ -186,11 +188,9 @@ const useOss = {
   /**
    * OSS 上传方法
    * @param {RcUploadResponse} rcUploadResponse
-   // * @param {WrappedFormUtils} form
-   * @param {(fileList: TGUploadFile) => void} setFileList
    * @return {Promise<TGUploadFile>}
    */
-  async put(rcUploadResponse, setFileList) {
+  async put(rcUploadResponse) {
     const ossConfig = this.getOssConfig()
     const ossClient = this.getOssClient()
     let result = true
@@ -200,38 +200,27 @@ const useOss = {
     }
 
     if (result) {
-      const { file: originFileObj } = rcUploadResponse
+      const {
+        file: originFileObj,
+        onProgress,
+        onError,
+        onSuccess
+      } = rcUploadResponse
 
-      /**
-       * 本地文件转换base64，进度按50%计算
-       * @type {TGUploadFile}
-       */
-      const file = {
-        ...originFileObj,
-        originFileObj,
-        percent: 50,
-        status: 'uploading',
-        thumbUrl: await getBase64(originFileObj)
-      }
-
-      setFileList(file)
+      // 模拟一个进度，按50%计算
+      onProgress({ percent: 50 })
 
       try {
         const suffix = originFileObj.name.substring(originFileObj.name.lastIndexOf('.'))
+        const ossResponse = await ossClient.put(ossConfig.filePath + uuid() + suffix, originFileObj)
 
-        await ossClient.put(ossConfig.filePath + uuid() + suffix, originFileObj)
-
-        file.percent = 100
-        file.status = 'done'
-
-        setFileList(file)
+        onProgress({ percent: 100 })
+        onSuccess({
+          ...ossResponse,
+          status: true
+        })
       } catch (error) {
-        file.status = 'error'
-        file.error = new Error(error)
-
-        setFileList(file)
-
-        throw new Error(error)
+        onError(error)
       }
     } else {
       message.error('初始化文件服务失败，请联系管理员处理。')
