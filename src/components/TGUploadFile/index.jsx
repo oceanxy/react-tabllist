@@ -140,13 +140,16 @@ export default {
       for (const file of fileList) {
         if (file.status === 'error' || file.status === 'done') {
           // 监测后端返回的上传失败信息
-          if ('response' in file && !file.response.status) {
+          if ('response' in file && !file.response?.status) {
             file.status = 'error'
             err = true
 
+            // 设置表单验证的提示信息
             this.form?.setFields({
               [this.$attrs.id]: {
-                errors: [new Error(file.response.message)]
+                errors: [
+                  new Error(file.response?.message ?? '上传时出错，请稍后重试！')
+                ]
               }
             })
 
@@ -176,30 +179,6 @@ export default {
 
         this.$emit('change', this.fileList)
       }
-    },
-    setFileList(value) {
-      /**
-       * 记录一个坑（此注释不要删除，留作警示）
-       * 直接改变 this.fileList 会导致 ant-design-vue Upload 组件报错：
-       * invalid prop: custom validator check failed for prop "fileList".
-       * invalid prop: custom validator check failed for prop "items".
-       *
-       * 报错代码：
-       * this.fileList = [value]
-       *
-       * 解决方案：
-       * 不要对 this.fileList 数组重新赋值（内存地址不能变），但可以对其内部的元素进行更改
-       */
-
-      /**
-       * @type {number}
-       */
-      const index = this.fileList.findIndex(item => item.uid === value.uid)
-
-      this.fileList[index] = {
-        ...this.fileList,
-        ...value
-      }
     }
   },
   render() {
@@ -225,7 +204,7 @@ export default {
           disabled={this.disabled}
           customRequest={
             this.customRequest
-              ? rcUploadResponse => this.customRequest(rcUploadResponse, this.setFileList)
+              ? rcUploadResponse => this.customRequest(rcUploadResponse)
               : null
           }
         >
