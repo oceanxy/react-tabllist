@@ -191,8 +191,8 @@ const useOss = {
    * @return {Promise<TGUploadFile>}
    */
   async put(rcUploadResponse) {
-    const ossConfig = this.getOssConfig()
-    const ossClient = this.getOssClient()
+    let ossConfig = this.getOssConfig()
+    let ossClient = this.getOssClient()
     let result = true
 
     if (!ossConfig || !ossClient) {
@@ -200,6 +200,9 @@ const useOss = {
     }
 
     if (result) {
+      ossConfig = this.getOssConfig()
+      ossClient = this.getOssClient()
+
       const {
         file: originFileObj,
         onProgress,
@@ -231,5 +234,6 @@ const useOss = {
 
 export default {
   ...useOss,
+  init: useOss.init.bind(useOss),
   put: useOss.put.bind(useOss)
 }
