@@ -26,6 +26,7 @@ const fileOrVideoCommonConfig = {
   onError(file, err, res) {
     message.error(`${file.name} 上传出错，${err}，${res.message}`)
   },
+  // 自定义插入
   customInsert(res, insertFn) {
     const { status, data } = res
 
@@ -75,16 +76,8 @@ export default {
             maxFileSize: 20 * 1024 * 1024, // 20M
             // 最多可上传几个文件，默认为 100
             maxNumberOfFiles: 10,
-            customUpload: async (file, insertFn) => {
-              if (this.customUpload) {
-                const data = await this.customUpload({ file }, (backFile) => {
-                  console.log(backFile)
-                  insertFn()
-                })
-
-                console.log('data', data)
-              }
-            }
+            // 自定义上传
+            customUpload: this.customUpload
           },
           uploadVideo: {
             ...fileOrVideoCommonConfig,

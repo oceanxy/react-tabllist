@@ -187,7 +187,7 @@ const useOss = {
   },
   /**
    * OSS 上传方法
-   * @param {RcUploadResponse} rcUploadResponse
+   * @param {RcUploadResponse} rcUploadResponse - Antd Vue Upload 组件或 wangEditor 自定义上传函数的回调参数
    * @return {Promise<TGUploadFile>}
    */
   async put(rcUploadResponse) {
@@ -213,19 +213,24 @@ const useOss = {
       } = rcUploadResponse
 
       // 模拟一个进度，按50%计算
-      onProgress({ percent: 50 })
+      onProgress?.({ percent: 50 })
 
       try {
         const suffix = originFileObj.name.substring(originFileObj.name.lastIndexOf('.'))
         const ossResponse = await ossClient.put(ossConfig.filePath + uuid() + suffix, originFileObj)
 
-        onProgress({ percent: 100 })
-        onSuccess({
-          ...ossResponse,
-          status: true
-        })
+        if (ossResponse.res.statusCode === 200) {
+          // Antd Vue Upload 组件
+          onProgress?.({ percent: 100 })
+          onSuccess({
+            ...ossResponse,
+            status: true
+          })
+        } else {
+          onError?.(new Error('上传出错！'))
+        }
       } catch (error) {
-        onError(error)
+        onError?.(error)
       }
     } else {
       message.error('初始化文件服务失败，请联系管理员处理。')
