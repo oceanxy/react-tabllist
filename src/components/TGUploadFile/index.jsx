@@ -59,13 +59,6 @@ export default {
       required: false
     },
     /**
-     * OSS文件服务配置
-     */
-    ossConfiguration: {
-      type: Object,
-      default: null
-    },
-    /**
      * 通过覆盖默认的上传行为，可以自定义自己的上传实现
      */
     customRequest: {
@@ -116,6 +109,9 @@ export default {
         })
 
         return false
+      } else {
+        // 清空错误信息
+        this.form?.setFields({ [this.$attrs.id]: { errors: null } })
       }
 
       if (this.fileSize && file.size / 1024 / 1024 > this.fileSize) {
