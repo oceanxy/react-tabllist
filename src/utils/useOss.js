@@ -197,12 +197,14 @@ const useOss = {
 
     if (!ossConfig || !ossClient) {
       result = await this.init()
+
+      if (result) {
+        ossConfig = this.getOssConfig()
+        ossClient = this.getOssClient()
+      }
     }
 
     if (result) {
-      ossConfig = this.getOssConfig()
-      ossClient = this.getOssClient()
-
       const {
         file: originFileObj,
         onProgress,
