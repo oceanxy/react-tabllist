@@ -1,4 +1,5 @@
 import { Button, Icon, Upload } from 'ant-design-vue'
+import { uuid } from '@/utils/utilityFunction'
 
 export default {
   model: {
@@ -35,7 +36,7 @@ export default {
     // 限制文件大小，单位 Mb
     fileSize: {
       type: Number,
-      required: false
+      default: 2
     },
     listType: {
       type: String,
@@ -75,49 +76,46 @@ export default {
       headers: { token: localStorage.getItem('token') }
     }
   },
-  watch: {
-    value: {
-      immediate: true,
-      handler(value) {
-        if (value && value.length) {
-          this.fileList = value.map((item, index) => {
-            if ('uid' in item) {
-              return item
-            } else {
-              return {
-                uid: item.key + index,
-                key: item.key,
-                url: item.path,
-                status: 'done',
-                name: item.fileName
-              }
-            }
-          })
-        } else {
-          this.fileList = []
+  computed: {
+    isError() {
+      return this.fileList.findIndex(item => item.status === 'error') > -1
+    }
+  },
+  created() {
+    this.fileList = this.value?.map(item => {
+      if ('uid' in item) {
+        return item
+      } else {
+        return {
+          uid: uuid(),
+          key: item.key,
+          url: item.path,
+          status: 'done',
+          name: item.fileName
         }
       }
-    }
+    }) ?? []
   },
   methods: {
     beforeUpload(file, fileList) {
-      if (fileList.length > this.limit) {
-        this.form?.setFields({
-          [this.$attrs.id]: {
-            errors: [new Error(`上传失败，上传数量限制为${this.limit}个`)]
-          }
-        })
+      if (file.size / 1024 / 1024 > this.fileSize) {
+        file.status = 'error'
+        file.error = new Error('文件大小超过限制，上传失败。')
+        file.response = '文件大小超过限制，上传失败。'
 
         return false
-      } else {
-        // 清空错误信息
-        this.form?.setFields({ [this.$attrs.id]: { errors: null } })
       }
 
-      if (this.fileSize && file.size / 1024 / 1024 > this.fileSize) {
-        this.form?.setFields({
-          [this.$attrs.id]: { errors: [new Error(`上传失败，文件大小限制为${this.fileSize}M！`)] }
-        })
+      // 非错误状态的文件都纳入计数范围，统计已经上传和正在上传的文件的总数。
+      // 超过数量限制的文件的状态将被修改为错误状态，即通知组件不再上传该文件
+      const index = this.fileList.concat(fileList)
+        .filter(item => item.status !== 'error')
+        .findIndex(item => item.uid === file.uid)
+
+      if (index >= this.limit) {
+        file.status = 'error'
+        file.error = new Error('文件上传数量超过限制，上传失败')
+        file.response = '文件上传数量超过限制，上传失败'
 
         return false
       }
@@ -129,51 +127,24 @@ export default {
       // this.previewImage = file.url || file.preview
       // this.previewVisible = true
     },
-    handleChange({ file, fileList }) {
-      this.fileList = []
-      let err = false
+    handleChange({ fileList }) {
+      let _fileList = [...fileList]
 
-      for (const file of fileList) {
-        if (file.status === 'error' || file.status === 'done') {
-          // 监测后端返回的上传失败信息
-          if ('response' in file && !file.response?.status) {
-            file.status = 'error'
-            err = true
-
-            // 设置表单验证的提示信息
-            this.form?.setFields({
-              [this.$attrs.id]: {
-                errors: [
-                  new Error(file.response?.message ?? '上传时出错，请稍后重试！')
-                ]
-              }
-            })
-
-            continue
-          }
-
-          // 如果该文件不是新上传的文件且文件路径不存在则判断为上传失败
-          if (!('status' in file)) {
-            err = true
-
-            // 错误提示已在 beforeUpload 方法中提示，此处不再重复提示
-
-            continue
-          }
+      _fileList = _fileList.map(file => {
+        if (file.status === 'done' && file.response?.status) {
+          file.url = file.response.url
         }
 
-        if ('status' in file) {
-          this.fileList.push(file)
-        }
-      }
+        return file
+      })
 
-      if (!err) {
-        // 防止用户多次上传以超过限制个数
-        if (this.fileList.length >= this.limit) {
-          this.fileList = this.fileList.slice(0, this.limit)
-        }
+      this.fileList = _fileList
 
-        this.$emit('change', this.fileList)
+      if (this.isError) {
+        // 只要存在错误，就清空文件列表
+        this.$emit('change', [])
+      } else {
+        this.$emit('change', this.fileList.filter(item => item.status === 'done'))
       }
     }
   },
