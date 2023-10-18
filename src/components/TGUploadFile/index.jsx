@@ -70,6 +70,7 @@ export default {
   data() {
     return {
       fileList: [],
+      fileListBackup: [],
       previewImage: '',
       previewVisible: false,
       name: 'file',
@@ -81,20 +82,36 @@ export default {
       return this.fileList.findIndex(item => item.status === 'error') > -1
     }
   },
-  created() {
-    this.fileList = this.value?.map(item => {
-      if ('uid' in item) {
-        return item
-      } else {
-        return {
-          uid: uuid(),
-          key: item.key,
-          url: item.path,
-          status: 'done',
-          name: item.fileName
+  watch: {
+    value: {
+      deep: true,
+      handler(value) {
+        const temp = []
+
+        if (value?.length) {
+          value.forEach(item => {
+            if (!this.fileListBackup.find(i => i.uid === item.uid)) {
+              if ('uid' in item) {
+                temp.push(item)
+              } else {
+                temp.push({
+                  uid: uuid(),
+                  key: item.key,
+                  url: item.path,
+                  status: 'done',
+                  name: item.fileName
+                })
+              }
+            }
+          })
         }
+
+        // 回填上传组件
+        this.fileList = this.fileListBackup.concat(temp)
+        // 清空缓存值
+        this.fileListBackup = []
       }
-    }) ?? []
+    }
   },
   methods: {
     beforeUpload(file, fileList) {
@@ -138,12 +155,16 @@ export default {
         return file
       })
 
+      // 为上传组件赋值
       this.fileList = _fileList
+      // 缓存值
+      this.fileListBackup = [..._fileList]
 
       if (this.isError) {
-        // 只要存在错误，就清空文件列表
+        // 只要存在错误，就清空回传的文件
         this.$emit('change', [])
       } else {
+        // 没有报错的文件，回传已经上传成功的文件
         this.$emit('change', this.fileList.filter(item => item.status === 'done'))
       }
     }
@@ -177,17 +198,19 @@ export default {
         >
           {
             this.limit > this.fileList.length ? (
-              this.listType === 'picture-card' ? (
-                <div>
-                  <Icon type="plus"></Icon>
-                  <p>{this.placeholder}</p>
-                </div>
-              ) : (
-                <Button disabled={this.disabled} type={this.buttonType} size={this.buttonSize}>
-                  <Icon type="upload" />
-                  {this.placeholder}
-                </Button>
-              )
+              this.listType === 'picture-card'
+                ? (
+                  <div>
+                    <Icon type="plus"></Icon>
+                    <p>{this.placeholder}</p>
+                  </div>
+                )
+                : (
+                  <Button disabled={this.disabled} type={this.buttonType} size={this.buttonSize}>
+                    <Icon type="upload" />
+                    {this.placeholder}
+                  </Button>
+                )
             ) : null
           }
         </Upload>
