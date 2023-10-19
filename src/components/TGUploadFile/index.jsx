@@ -1,5 +1,5 @@
-import { Button, Icon, Upload } from 'ant-design-vue'
-import { uuid } from '@/utils/utilityFunction'
+import { Button, Icon, Modal, Upload, message } from 'ant-design-vue'
+import { uuid, getBase64 } from '@/utils/utilityFunction'
 
 export default {
   model: {
@@ -138,11 +138,28 @@ export default {
       }
     },
     async handlePreview(file) {
-      // if (!file.url && !file.preview) {
-      //   file.preview = await getBase64(file.originFileObj)
-      // }
-      // this.previewImage = file.url || file.preview
-      // this.previewVisible = true
+      const imgType = /(bmp|gif|jpe?g|png|svg|webp)$/i
+      const imgSuffix = /(\.bmp|\.gif|\.jpg|\.jpeg|\.png|\.svg|\.webp)$/i
+
+      if ('type' in file) {
+        if (!imgType.test(file.type)) {
+          return message.warning('只支持图片预览')
+        }
+      } else {
+        if (!imgSuffix.test(file.name)) {
+          return message.warning('只支持图片预览')
+        }
+      }
+
+      if (!file.url && !file.preview) {
+        file.preview = await getBase64(file.originFileObj)
+      }
+
+      this.previewImage = file.url || file.preview
+      this.previewVisible = true
+    },
+    handleCancel() {
+      this.previewVisible = false
     },
     handleChange({ fileList }) {
       let _fileList = [...fileList]
@@ -214,6 +231,9 @@ export default {
             ) : null
           }
         </Upload>
+        <Modal visible={this.previewVisible} footer={null} onCancel={this.handleCancel}>
+          <img alt="example" style="width: 100%" src={this.previewImage} />
+        </Modal>
       </div>
     )
   }
