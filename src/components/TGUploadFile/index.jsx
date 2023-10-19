@@ -139,9 +139,16 @@ export default {
     },
     async handlePreview(file) {
       const imgType = /(bmp|gif|jpe?g|png|svg|webp)$/i
+      const imgSuffix = /(\.bmp|\.gif|\.jpg|\.jpeg|\.png|\.svg|\.webp)$/i
 
-      if (imgType.test(file.type)) {
-        return message.warning('只支持图片预览')
+      if ('type' in file) {
+        if (!imgType.test(file.type)) {
+          return message.warning('只支持图片预览')
+        }
+      } else {
+        if (!imgSuffix.test(file.name)) {
+          return message.warning('只支持图片预览')
+        }
       }
 
       if (!file.url && !file.preview) {
