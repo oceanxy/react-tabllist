@@ -475,17 +475,24 @@ export default ({
       },
       /**
        * 删除
-       * @param record {{_isFreshTree: boolean, [key: string]: any }} 列表数据对象
+       * @param record {{_isFreshTree: boolean, [key: string]: any }} - 列表数据对象
        *  {
        *    ...record,
        *    _isFreshTree: boolean // 是否刷新侧边树，默认false; 当在本表格组件处于侧边树的下级时默认true，所以此时需要显示定义该字段为 false
        *  }
-       * @param [params] {Object} 删除参数，默认 { ids: [record.id] }
-       * @param [done] {() => void} 成功执行删除的回调
+       * @param [params] {Object} - 删除参数，默认 { ids: [record.id] }
+       * @param [done] {() => void} - 成功执行删除的回调
+       * @param [nameKey='fullName'] {string} - 在删除提示中显示当条数据中的某个字段信息
        */
       async onDeleteClick(record, params = {}, done, nameKey = 'fullName') {
-        if (typeof params === 'function') {
-          [params, done] = [{}, params]
+        // 当第二个参数类型为function时，证明忽略了params参数，将arguments[1]赋值给done，将arguments[2]赋值给nameKey
+        if (typeof arguments[1] === 'function') {
+          [params, done, nameKey] = [{}, params, done]
+        }
+
+        // 当第二、三个参数类型为string时，证明忽略了params和done参数，将arguments[1]赋值给nameKey
+        if (typeof arguments[1] === 'string' || typeof arguments[2] === 'string') {
+          [params, done, nameKey] = [{}, undefined, params]
         }
 
         await verificationDialog(
@@ -520,10 +527,12 @@ export default ({
             return status
           },
           '确定要删除吗？',
-          [
-            <span style={{ color: this.primaryColor }}>{record[nameKey]}</span>,
-            ' 已成功删除！'
-          ]
+          record[nameKey]
+            ? [
+              <span style={{ color: this.primaryColor }}>{record[nameKey]}</span>,
+              ' 已成功删除！'
+            ]
+            : '删除成功！'
         )
       },
       /**
