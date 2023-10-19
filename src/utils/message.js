@@ -47,7 +47,7 @@ export async function verifySelected(selection, callback, content) {
  * 显示询问对话框
  * @param callback {() => Promise<boolean>} 点击确认按钮对应的回调函数，回调函数返回一个布尔类型的值，表示回调成功或失败
  * @param content {string | JSX.Element} 询问的内容
- * @param [successfulPrompt] {string} 操作成功的提示内容
+ * @param [successfulPrompt] {string|JSX.Element|JSX.Element[]} 操作成功的提示内容
  * @returns {void}
  */
 export function verificationDialog(callback, content, successfulPrompt) {
