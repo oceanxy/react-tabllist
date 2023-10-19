@@ -557,9 +557,12 @@ export default {
       submoduleName: submoduleName || stateName
     })
 
-    const api = customApiName || `update${firstLetterToUppercase(moduleName)
-    }${firstLetterToUppercase(customFieldName)
+    const api = customApiName || `update${
+      firstLetterToUppercase(moduleName)
+    }${
+      firstLetterToUppercase(customFieldName)
     }`
+
     const { status } = await this.apis[api](payload)
 
     commit('setLoading', {
@@ -616,10 +619,20 @@ export default {
       isBatchDeletion = true
     }
 
-    const response = await this.apis[`delete${submoduleName
+    const apiName = `delete${submoduleName
       ? `${firstLetterToUppercase(submoduleName)}Of`
       : ''
-    }${firstLetterToUppercase(moduleName)}`](payload)
+    }${firstLetterToUppercase(moduleName)}`
+
+    if (!this.apis[apiName]) {
+      console.error(`接口未定义：${moduleName} 页面${submoduleName
+        ? ` ${submoduleName} 模块`
+        : ''}的 ${apiName} 接口未定义！`)
+
+      return false
+    }
+
+    const response = await this.apis[apiName](payload)
 
     if (response.status) {
       // 非批量操作时，只从选中行数组中移除被删除的行的key，
