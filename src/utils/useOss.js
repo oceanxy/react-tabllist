@@ -91,9 +91,11 @@
 
 import apis from '@/apis'
 import store from '@/store'
+import OSS from 'ali-oss'
+import JSZip from 'jszip'
+import { saveAs } from 'file-saver'
 import { getFirstLetterOfEachWordOfAppName, uuid } from '@/utils/utilityFunction'
 import { message } from 'ant-design-vue'
-import OSS from 'ali-oss'
 
 const useOss = {
   /**
@@ -236,7 +238,69 @@ const useOss = {
       message.error('初始化文件服务失败，请联系管理员处理。')
       throw new Error('初始化文件服务失败，请联系管理员处理。')
     }
-  }
+  },
+  /**
+   * OSS 批量打包下载
+   * @param jsonCollects // 需要传入一个被转译的json集合
+   * @param fileName // 设置下载zip包文件名称
+   */
+  async batchDownload(jsonCollects, fileName) {
+    const ossConfig = this.getOssConfig()
+    // promises 对象
+    const promises = []
+    // 创建JSZip实例
+    const zip = new JSZip()
+    const imageUrls = []
+    const collects = JSON.parse(jsonCollects)
+
+    if (Array.isArray(collects)) {
+      collects.forEach(d => {
+        imageUrls.push(`${ossConfig.ossUrl}/${d.name}`)
+      })
+    }
+
+    // 创建一系列的 Promise 对象，用于获取图片数据
+    for (const imageUrl of imageUrls) {
+      const promise = new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest()
+
+        xhr.open('GET', imageUrl, true)
+        xhr.responseType = 'blob'
+
+        xhr.onload = () => {
+          console.log(imageUrl)
+          const fileName = imageUrl.substring(imageUrl.lastIndexOf('/') + 1)
+          const fileBlob = new Blob([xhr.response])
+
+          resolve({ fileName, fileBlob })
+        }
+
+        xhr.onerror = () => {
+          reject(new Error('Failed to fetch image'))
+        }
+
+        xhr.send()
+      })
+
+      promises.push(promise)
+    }
+
+    // 等待所有图片数据的获取完成
+    const imageDataArray = await Promise.all(promises)
+
+    // 将图片数据添加到 ZIP 文件中
+    imageDataArray.forEach(({ fileName, fileBlob }) => {
+      zip.file(fileName, fileBlob)
+    })
+    // 生成 ZIP 文件并保存到本地
+    zip.generateAsync({ type: 'blob' })
+      .then((content) => {
+        saveAs(content, `${fileName}.zip`)
+      })
+      .catch((error) => {
+        console.error('Failed to generate ZIP file:', error)
+      })
+  },
 }
 
 export default {

@@ -65,7 +65,7 @@ module.exports = {
     // 是否在header中显示消息通知
     show: false
   },
-  // 消息
+  // 重置密码
   resetPwd: {
     // 是否在header中显示修改密码图标
     show: false
