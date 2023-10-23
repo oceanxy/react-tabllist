@@ -17,6 +17,7 @@
     justify-content: flex-start;
     padding: 0 24px;
     flex: auto;
+    min-width: 300px;
 
     & > .ant-space-item:last-child {
       margin-left: auto;
