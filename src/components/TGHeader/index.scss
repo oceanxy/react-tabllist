@@ -3,12 +3,12 @@
 .tg-layout-header.tg-layout-header {
   height: 50px;
   padding: 0;
-  background: $primary-color;
+  background: #282f42;
   line-height: unset;
   display: flex;
   position: relative;
   z-index: 1000;
-  @include box-shadow($primary-color);
+  @include box-shadow(#282f42);
 
   .tg-layout-header-content {
     height: 100%;
