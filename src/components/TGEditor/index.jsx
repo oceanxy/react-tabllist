@@ -94,7 +94,7 @@ export default {
             maxFileSize: 20 * 1024 * 1024, // 20M
             // 最多可上传几个文件，默认为 100
             maxNumberOfFiles: 10,
-            timeout: 2, // 5 秒
+            timeout: this.$config.timeout, // 5 秒
             // 自定义上传
             customUpload: this.customUpload
           },
