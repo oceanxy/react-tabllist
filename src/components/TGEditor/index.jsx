@@ -32,14 +32,14 @@ const fileOrVideoCommonConfig = {
   },
   // 单个文件上传失败
   onFailed(file, res) {
-    message.error(`${file.name} 上传失败，${res.message}`)
+    message.error(`${file.name} 上传失败，${res?.message}`)
     setTimeout(function () {
       message.destroy()
     }, 2000)
   },
   // 上传错误，或者触发 timeout 超时
   onError(file, err, res) {
-    message.error(`${file.name} 上传出错，${err}，${res.message}`)
+    message.error(`${file.name} 上传出错，${err}，${res?.message ?? '上传超时'}`)
     setTimeout(function () {
       message.destroy()
     }, 2000)
@@ -94,7 +94,7 @@ export default {
             maxFileSize: 20 * 1024 * 1024, // 20M
             // 最多可上传几个文件，默认为 100
             maxNumberOfFiles: 10,
-            timeout: this.$config.timeout, // 5 秒
+            timeout: 2, // 5 秒
             // 自定义上传
             customUpload: this.customUpload
           },
