@@ -18,13 +18,31 @@ const fileOrVideoCommonConfig = {
   headers: {
     token: localStorage.getItem('token')
   },
+  // 上传之前触发
+  onBeforeUpload(file) {
+    // file 选中的文件，格式如 { key: file }
+    message.loading({
+      content: '上传中...',
+      duration: 0
+    })
+  },
+  // 单个文件上传成功之后
+  onSuccess(file, res) {
+    message.destroy()
+  },
   // 单个文件上传失败
   onFailed(file, res) {
     message.error(`${file.name} 上传失败，${res.message}`)
+    setTimeout(function () {
+      message.destroy()
+    }, 2000)
   },
   // 上传错误，或者触发 timeout 超时
   onError(file, err, res) {
     message.error(`${file.name} 上传出错，${err}，${res.message}`)
+    setTimeout(function () {
+      message.destroy()
+    }, 2000)
   },
   // 自定义插入
   customInsert(res, insertFn) {
@@ -76,6 +94,7 @@ export default {
             maxFileSize: 20 * 1024 * 1024, // 20M
             // 最多可上传几个文件，默认为 100
             maxNumberOfFiles: 10,
+            timeout: 60 * 1000, // 5 秒
             // 自定义上传
             customUpload: this.customUpload
           },
@@ -85,6 +104,7 @@ export default {
             server: this.$config.videoUploadPath,
             // 单个文件的最大体积限制，默认为 10M
             maxFileSize: 20 * 1024 * 1024, // 100M
+            timeout: 60 * 1000, // 5 秒
             // 最多可上传几个文件，默认为 5
             maxNumberOfFiles: 3
           }
