@@ -94,7 +94,7 @@ export default {
             maxFileSize: 20 * 1024 * 1024, // 20M
             // 最多可上传几个文件，默认为 100
             maxNumberOfFiles: 10,
-            timeout: 60 * 1000, // 5 秒
+            timeout: this.$config.timeout, // 5 秒
             // 自定义上传
             customUpload: this.customUpload
           },
@@ -104,7 +104,7 @@ export default {
             server: this.$config.videoUploadPath,
             // 单个文件的最大体积限制，默认为 10M
             maxFileSize: 20 * 1024 * 1024, // 100M
-            timeout: 60 * 1000, // 5 秒
+            timeout: this.$config.timeout, // 5 秒
             // 最多可上传几个文件，默认为 5
             maxNumberOfFiles: 3
           }
