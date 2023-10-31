@@ -36,7 +36,8 @@
     "vue-infinite-scroll": "^2.0.2",
     "vue-router": "^3.6.5",
     "vue-virtual-scroll-list": "^2.3.5",
-    "vuex": "^3.6.2"
+    "vuex": "^3.6.2",
+    "watermark-dom": "^2.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.21.3",

@@ -82,6 +82,8 @@ module.exports = {
   },
   // 全局消息最大显示个数
   maxMessageCount: 1,
+  // 是开启水印 在需要加水印APP项目的app.jsx文件混淆全局的watermark
+  isWatermark: false,
   // 账号密码加密key
   publicKey:
     'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCs7Iu8OPMKCt38fCWV5PdA7+TA+vxgNFnAiC+9xw8F4JifCKNRg07w3zxbSoUmW7dN3NMubM' +
