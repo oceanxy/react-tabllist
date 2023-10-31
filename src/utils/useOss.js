@@ -255,7 +255,7 @@ const useOss = {
 
     if (Array.isArray(collects)) {
       collects.forEach(d => {
-        imageUrls.push(`${ossConfig.ossUrl}/${d.name}`)
+        imageUrls.push(`${ossConfig?.ossUrl}/${d.name}`)
       })
     }
 
