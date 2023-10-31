@@ -19,6 +19,7 @@ export default ({ isWatermark = false } = {}) => {
           watermark_width: 300,
           watermark_height: 200,
           watermark_angle: 25,
+          watermark_fontsize: 12,
           watermark_parent_node: this.$el,
         })
       },
