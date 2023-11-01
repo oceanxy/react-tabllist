@@ -11,7 +11,12 @@ import debounce from 'lodash/debounce'
  * @returns {Object}
  */
 
-export default ({ isWatermark = false } = {}) => {
+export default ({
+  isWatermark = false,
+  userName = 'login_name',
+  userNamePinyin,
+  phone
+} = {}) => {
   let watermarkDev
 
   if (isWatermark) {
@@ -19,23 +24,30 @@ export default ({ isWatermark = false } = {}) => {
       data() {
         return {
           winWidth: 0,
-          winHeight: 0,
+          winHeight: 0
         }
       },
       beforeMount() {
-        this.handleResize = debounce(this.handleResize, 500, {
-          leading: false
-        })
+        this.handleResize = debounce(this.handleResize, 500, { leading: false })
       },
       mounted() {
-        this.$nextTick(() => {
-          window.addEventListener('resize', this.handleResize)
-          this.handleResize()
-        })
+        window.addEventListener('resize', this.handleResize)
+        this.handleResize()
       },
       computed: {
-        userName() {
-          return this.$store.state['login'].userInfo?.login_name
+        userInfo() {
+          return this.$store.state['login'].userInfo
+        },
+        watermarkTxt() {
+          let name = ''
+          let pinyin = ''
+          let tel = ''
+
+          name = userName ? this.userInfo?.[userName] ?? '' : ''
+          pinyin = userNamePinyin ? `,${this.userInfo[userNamePinyin]}` : ''
+          tel = phone ? `,${this.userInfo[phone]}` : ''
+
+          return name + pinyin + tel
         }
       },
       methods: {
@@ -48,7 +60,7 @@ export default ({ isWatermark = false } = {}) => {
         // 绘制水印
         watermarkLoad() {
           watermark.load({
-            watermark_txt: this.userName,
+            watermark_txt: this.watermarkTxt,
             watermark_font: '微软雅黑',
             watermark_color: 'rgba(0,0,0,1)',
             watermark_alpha: 0.1,
