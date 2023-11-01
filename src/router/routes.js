@@ -8,6 +8,7 @@ import config from '@/config'
 export default function getBaseRoutes(routes) {
   let rootRoutes
   const _config = config
+  const homePermissions = typeof config.homePermissions === 'boolean' ? config.homePermissions : true
 
   if (Array.isArray(routes) && routes.length) {
     const homeIndex = routes.findIndex(route => route.path === '/')
@@ -25,10 +26,11 @@ export default function getBaseRoutes(routes) {
         },
         meta: {
           ...routes[homeIndex].meta,
-          requiresAuth: config.homePermissions || routes[homeIndex].meta.requiresAuth
+          requiresAuth: routes[homeIndex].meta.requiresAuth
         }
       }
     } else {
+      // 当 Routes 不包含跟路由时，则直接将该 Routes 视为跟路由的 children
       rootRoutes = [
         {
           path: '/',
@@ -43,7 +45,7 @@ export default function getBaseRoutes(routes) {
           meta: {
             title: '后台',
             keepAlive: false,
-            requiresAuth: config.homePermissions,
+            requiresAuth: homePermissions,
             // icon: () => import('@/assets/images/console.svg') // svg 图标方式
             icon: '' // icon-font symbol 方式
           }
@@ -51,6 +53,7 @@ export default function getBaseRoutes(routes) {
       ]
     }
   } else {
+    // 当未传递 Routes 数据时的默认值
     rootRoutes = [
       {
         path: '/',
@@ -59,7 +62,7 @@ export default function getBaseRoutes(routes) {
         meta: {
           title: '后台',
           keepAlive: false,
-          requiresAuth: config.homePermissions,
+          requiresAuth: homePermissions,
           // icon: () => import('@/assets/images/console.svg') // svg 图标方式
           icon: '' // icon-font symbol 方式
         }

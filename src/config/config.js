@@ -16,7 +16,7 @@ module.exports = {
   dynamicRouting: false,
   // 默认首页（登录之后默认跳转的页面 route.name。这仅仅是一个默认值，如果启用了动态路由，优先以后台设置的数据为准）
   defaultRouteName: 'home',
-  // 首页是否需要权限才能访问（该配置可能会被移除）
+  // 当检测不到已配置的跟路由的访问权限时使用的默认值（默认true，代表跟路由需要权限才能访问）
   homePermissions: true,
   // iconfont，为空时自动调用 src/assets/iconfont.js 或各子项目下的 assets/iconfont.js
   iconFontSymbol: '//at.alicdn.com/t/c/font_3996750_sgcx6ewq6y.js',
