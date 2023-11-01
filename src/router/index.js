@@ -12,7 +12,7 @@ import config from '@/config'
 
 let constRoutes
 
-if (!config.homePermissions) {
+if (APP_ROUTES?.default) {
   constRoutes = getBaseRoutes(APP_ROUTES.default)
 } else {
   constRoutes = getBaseRoutes()
@@ -180,7 +180,14 @@ router.beforeEach((to, from, next) => {
   // 获取存储在localStorage内的token，防止刷新页面导致vuex被清空而跳转到登录页
   const token = localStorage.getItem('token')
 
-  if (to.meta.requiresAuth) {
+  if (
+    to.meta.requiresAuth &&
+    // 生产环境开启跳过权限验证
+    !(
+      process.env.NODE_ENV === 'development' &&
+      process.env.VUE_APP_DEVELOPMENT_ENVIRONMENT_SKIPPING_PERMISSIONS === 'on'
+    )
+  ) {
     if (token) {
       next()
     } else {
