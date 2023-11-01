@@ -11,6 +11,11 @@ const dynamicModulesFiles = require.context('../apps', true, /apis\/modules\/[a-
 
 const commonApis = getApisFromFiles(modulesFiles)
 const appApis = getApisFromFiles(dynamicModulesFiles)
+
+/**
+ * 注入axios后的api函数对象
+ * @type {{[p: string]: (payload?: Object) => Promise}}
+ */
 const apis = {}
 
 // 动态注入参数
