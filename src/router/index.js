@@ -129,7 +129,7 @@ function createRouter(rootRoute) {
   return new VueRouter({
     routes: rootRoute || constRoutes,
     base: process.env.VUE_APP_PUBLIC_PATH,
-    mode: 'history'
+    mode: config.routeMode === 'history' ? 'history' : 'hash'
   })
 }
 

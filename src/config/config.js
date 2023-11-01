@@ -10,6 +10,8 @@ module.exports = {
   timeout: 30000,
   // mock请求延迟时间
   mockDelay: 400,
+  // 路由模式：hash 或者 history 模式，本框架默认 history 模式
+  routeMode: 'history',
   // 动态路由（从后台获取权限菜单）
   dynamicRouting: false,
   // 默认首页（登录之后默认跳转的页面 route.name。这仅仅是一个默认值，如果启用了动态路由，优先以后台设置的数据为准）
