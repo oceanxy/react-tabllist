@@ -154,14 +154,14 @@
             font-size: $font-size-lg; // 全局默认字号+2px
             padding-right: 16px;
 
-            .username {
+            .tg-header-username {
               color: $white;
               // font-size: 14px; // 全局默认字号为14号
               font-weight: 500;
               line-height: 18px;
             }
 
-            .tel {
+            .tg-header-tel {
               color: $primary-color-disabled;
               font-size: 12px;
               font-weight: 400;

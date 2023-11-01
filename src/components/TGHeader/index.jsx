@@ -1,5 +1,18 @@
 import './index.scss'
-import { Avatar, Badge, Button, Divider, Dropdown, Layout, Menu, Popover, Select, Space, Tag } from 'ant-design-vue'
+import {
+  Avatar,
+  Badge,
+  Button,
+  Divider,
+  Dropdown,
+  Icon,
+  Layout,
+  Menu,
+  Popover,
+  Select,
+  Space,
+  Tag
+} from 'ant-design-vue'
 import Logo from '@/components/Logo'
 import { mapActions, mapGetters } from 'vuex'
 import forIndex from '@/mixins/forIndex'
@@ -158,6 +171,12 @@ export default {
         localStorage.setItem('theme', themeFileName || this.$config.theme.default)
         window.location.reload()
       }
+    },
+    toLogin() {
+      this.$router.push({
+        name: 'login',
+        query: { redirect: this.$route.path }
+      })
     }
   },
   render() {
@@ -165,134 +184,177 @@ export default {
       <Layout.Header class={'tg-layout-header'}>
         <Logo />
         <Space class={'tg-layout-header-content'}>
-          {this.page === 'normal' ? (
-            <IconFont
-              type={'icon-global-sq'}
-              class={`tg-layout-header-menu-btn menu-btn-fold${this.collapsed ? ' reverse' : ''}`}
-              onClick={this.onMenuFold}
-              title={!this.collapsed ? '折叠菜单' : '展开菜单'}
-            />
-          ) : null}
+          {
+            this.page === 'normal'
+              ? (
+                <IconFont
+                  type={'icon-global-sq'}
+                  class={`tg-layout-header-menu-btn menu-btn-fold${this.collapsed ? ' reverse' : ''}`}
+                  onClick={this.onMenuFold}
+                  title={!this.collapsed ? '折叠菜单' : '展开菜单'}
+                />
+              )
+              : null
+          }
           {/* <div class={'tg-layout-header-search'}> */}
           {/*   <Input placeholder={'搜功能'} class={'search-input'}> */}
           {/*     <IconFont type={'icon-global-search'} slot={'addonAfter'} /> */}
           {/*   </Input> */}
           {/* </div> */}
-          {this.isLogin ? (
-            <div class={'tg-header-info'}>
-              {this.$config.headerParams?.show
+          <div class={'tg-header-info'}>
+            {
+              this.isLogin
                 ? [
-                  <Select
-                    vModel={this.headerId}
-                    placeholder={this.$config.headerParams?.placeholder ?? '请选择'}
-                    class={'tg-header-params'}
-                    suffixIcon={<IconFont type={'icon-global-down'} />}
-                  >
-                    {this.organListForHeader.list.map(item => (
-                      <Select.Option value={item.id}>{item.organName}</Select.Option>
-                    ))}
-                  </Select>,
-                  <Divider type={'vertical'} class={'tg-header-divider'} />
-                ]
-                : null}
-              <Dropdown class={'tg-header-user'} overlayClassName={'tg-header-user-overlay'}>
-                <div class={'tg-header-user-content'}>
-                  <Avatar class={'tg-avatar'} shape={'circle'}>
-                    {this.avatarForLetter}
-                  </Avatar>
-                  <div class={'tg-user-info'}>
-                    <div class={'username'}>{this.userInfo.nickName || this.userInfo.fullName || '用户名'}</div>
-                    <div class={'tel'}>{this.userInfo.loginName || 'admin'}</div>
-                  </div>
-                  <IconFont type={'icon-global-down'} style={'color: #ffffff'} />
-                </div>
-                <Menu slot={'overlay'}>
-                  {this.$config.resetPwd ? <Menu.Item onClick={this.resetPwd}>重置密码</Menu.Item> : null}
-                  <Menu.Item onClick={this.onLogOut}>注销</Menu.Item>
-                </Menu>
-              </Dropdown>
-              <Divider type={'vertical'} class={'tg-header-divider'} />
-              {this.$config.news?.show ? (
-                <Popover overlayClassName={'tg-header-news-overlay'}>
-                  <Badge
-                    count={this.news.total}
-                    offset={[-12, 4]}
-                    numberStyle={{
-                      width: '18px',
-                      height: '18px',
-                      fontSize: '12px',
-                      lineHeight: '18px',
-                      padding: '0'
-                    }}
-                  >
-                    <Button title={'通知'} shape="circle" type={'link'} class={'tg-header-icon'}>
-                      <IconFont type={'icon-global-tz'} />
-                    </Button>
-                  </Badge>
-                  <Menu slot={'content'} class={'tg-header-news'}>
-                    {this.news.userRefundMessageList.map(item => (
-                      <Menu.Item onClick={() => this.onClick(item)}>
-                        <div>
-                          <Tag>{item.messageTypeStr}</Tag>
-                          {item.noticeTitle}
-                        </div>
-                        <div>{item.createTimeStr}</div>
-                      </Menu.Item>
-                    ))}
-                  </Menu>
-                  {/* <div slot={'content'} class={'tg-header-news'}> */}
-                  {/*   <Tabs */}
-                  {/*     activeKey={this.activeKey} */}
-                  {/*     animated={true} */}
-                  {/*     size={'small'} */}
-                  {/*     onChange={this.onChange} */}
-                  {/*   > */}
-                  {/*     <Tabs.TabPane key={1} tab={<Badge count={99} offset={[12, 2]}>待办事项</Badge>}> */}
-                  {/*       <Menu> */}
-                  {/*         <Menu.Item> */}
-                  {/*           <div>陈思睿发起了新的审核任务，请及时处理</div> */}
-                  {/*           <div>2023-02-23 15:06:06</div> */}
-                  {/*         </Menu.Item> */}
-                  {/*         <Menu.Item> */}
-                  {/*           <div>陈思睿发起了新的审核任务，请及时处理</div> */}
-                  {/*           <div>2023-02-23 15:06:06</div> */}
-                  {/*         </Menu.Item> */}
-                  {/*       </Menu> */}
-                  {/*     </Tabs.TabPane> */}
-                  {/*     <Tabs.TabPane key={2} tab={<Badge count={99} offset={[12, 2]}>待阅消息</Badge>}> */}
-                  {/*       <Menu> */}
-                  {/*         <Menu.Item> */}
-                  {/*           <div>陈思睿发起了新的审核任务，请及时处理</div> */}
-                  {/*           <div>2023-02-23 15:06:06</div> */}
-                  {/*         </Menu.Item> */}
-                  {/*       </Menu> */}
-                  {/*     </Tabs.TabPane> */}
-                  {/*   </Tabs> */}
-                  {/* </div> */}
-                </Popover>
-              ) : null}
-              {this.$config.theme?.show ? (
-                <Dropdown class={'tg-header-themes'} overlayClassName={'tg-header-themes-overlay'}>
-                  <Button title={'切换主题'} shape="circle" type={'link'} class={'tg-header-icon'}>
-                    <IconFont type={'icon-global-hf'} />
-                  </Button>
-                  <Menu slot={'overlay'}>
-                    {this.$config.theme?.availableThemes.map(item => (
-                      <Menu.Item
-                        disabled={this.theme === item.fileName}
-                        onClick={() => this.switchThemes(item.fileName)}
+                  this.$config.headerParams?.show
+                    ? [
+                      <Select
+                        vModel={this.headerId}
+                        placeholder={this.$config.headerParams?.placeholder ?? '请选择'}
+                        class={'tg-header-params'}
+                        suffixIcon={<IconFont type={'icon-global-down'} />}
                       >
-                        {item.name}
-                      </Menu.Item>
-                    ))}
-                  </Menu>
-                </Dropdown>
-              ) : null}
-              {/* <Button shape="circle" type={'link'} class={'tg-header-icon'}> */}
-              {/*   <IconFont type={'icon-global-help'} /> */}
-              {/* </Button> */}
-            </div>
-          ) : null}
+                        {
+                          this.organListForHeader.list.map(item => (
+                            <Select.Option value={item.id}>{item.organName}</Select.Option>
+                          ))
+                        }
+                      </Select>,
+                      <Divider type={'vertical'} class={'tg-header-divider'} />
+                    ]
+                    : null,
+                  <Dropdown class={'tg-header-user'} overlayClassName={'tg-header-user-overlay'}>
+                    <div class={'tg-header-user-content'}>
+                      <Avatar class={'tg-avatar'} shape={'circle'}>
+                        {this.avatarForLetter}
+                      </Avatar>
+                      <div class={'tg-user-info'}>
+                        <div class={'tg-header-username'}>
+                          {this.userInfo.nickName || this.userInfo.fullName || '用户名'}
+                        </div>
+                        <div class={'tg-header-tel'}>
+                          {this.userInfo.loginName || 'admin'}
+                        </div>
+                      </div>
+                      <IconFont type={'icon-global-down'} style={'color: #ffffff'} />
+                    </div>
+                    <Menu slot={'overlay'}>
+                      {
+                        this.$config.resetPwd
+                          ? <Menu.Item onClick={this.resetPwd}>重置密码</Menu.Item>
+                          : null
+                      }
+                      <Menu.Item onClick={this.onLogOut}>注销</Menu.Item>
+                    </Menu>
+                  </Dropdown>,
+                  <Divider type={'vertical'} class={'tg-header-divider'} />,
+                  this.$config.news?.show
+                    ? (
+                      <Popover overlayClassName={'tg-header-news-overlay'}>
+                        <Badge
+                          count={this.news.total}
+                          offset={[-12, 4]}
+                          numberStyle={{
+                            width: '18px',
+                            height: '18px',
+                            fontSize: '12px',
+                            lineHeight: '18px',
+                            padding: '0'
+                          }}
+                        >
+                          <Button title={'通知'} shape="circle" type={'link'} class={'tg-header-icon'}>
+                            <IconFont type={'icon-global-tz'} />
+                          </Button>
+                        </Badge>
+                        <Menu slot={'content'} class={'tg-header-news'}>
+                          {
+                            this.news.userRefundMessageList.map(item => (
+                              <Menu.Item onClick={() => this.onClick(item)}>
+                                <div>
+                                  <Tag>{item.messageTypeStr}</Tag>
+                                  {item.noticeTitle}
+                                </div>
+                                <div>{item.createTimeStr}</div>
+                              </Menu.Item>
+                            ))
+                          }
+                        </Menu>
+                        {/* <div slot={'content'} class={'tg-header-news'}> */}
+                        {/*   <Tabs */}
+                        {/*     activeKey={this.activeKey} */}
+                        {/*     animated={true} */}
+                        {/*     size={'small'} */}
+                        {/*     onChange={this.onChange} */}
+                        {/*   > */}
+                        {/*     <Tabs.TabPane key={1} tab={<Badge count={99} offset={[12, 2]}>待办事项</Badge>}> */}
+                        {/*       <Menu> */}
+                        {/*         <Menu.Item> */}
+                        {/*           <div>陈思睿发起了新的审核任务，请及时处理</div> */}
+                        {/*           <div>2023-02-23 15:06:06</div> */}
+                        {/*         </Menu.Item> */}
+                        {/*         <Menu.Item> */}
+                        {/*           <div>陈思睿发起了新的审核任务，请及时处理</div> */}
+                        {/*           <div>2023-02-23 15:06:06</div> */}
+                        {/*         </Menu.Item> */}
+                        {/*       </Menu> */}
+                        {/*     </Tabs.TabPane> */}
+                        {/*     <Tabs.TabPane key={2} tab={<Badge count={99} offset={[12, 2]}>待阅消息</Badge>}> */}
+                        {/*       <Menu> */}
+                        {/*         <Menu.Item> */}
+                        {/*           <div>陈思睿发起了新的审核任务，请及时处理</div> */}
+                        {/*           <div>2023-02-23 15:06:06</div> */}
+                        {/*         </Menu.Item> */}
+                        {/*       </Menu> */}
+                        {/*     </Tabs.TabPane> */}
+                        {/*   </Tabs> */}
+                        {/* </div> */}
+                      </Popover>
+                    )
+                    : null,
+                  this.$config.theme?.show
+                    ? (
+                      <Dropdown class={'tg-header-themes'} overlayClassName={'tg-header-themes-overlay'}>
+                        <Button title={'切换主题'} shape="circle" type={'link'} class={'tg-header-icon'}>
+                          <IconFont type={'icon-global-hf'} />
+                        </Button>
+                        <Menu slot={'overlay'}>
+                          {
+                            this.$config.theme?.availableThemes.map(item => (
+                              <Menu.Item
+                                disabled={this.theme === item.fileName}
+                                onClick={() => this.switchThemes(item.fileName)}
+                              >
+                                {item.name}
+                              </Menu.Item>
+                            ))
+                          }
+                        </Menu>
+                      </Dropdown>
+                    )
+                    : null,
+                  <Button shape="circle" type={'link'} class={'tg-header-icon'}>
+                    <IconFont type={'icon-global-help'} />
+                  </Button>
+                ]
+                : (
+                  <Dropdown class={'tg-header-user'} overlayClassName={'tg-header-user-overlay'}>
+                    <div class={'tg-header-user-content'}>
+                      <Avatar class={'tg-avatar'} shape={'circle'}>
+                        <Icon type={'user'} />
+                      </Avatar>
+                      <div class={'tg-user-info'}>
+                        <Button
+                          type={'link'}
+                          class={'tg-header-username'}
+                          onClick={this.toLogin}
+                        >
+                          去登录
+                        </Button>
+                      </div>
+                    </div>
+                  </Dropdown>
+                )
+            }
+          </div>
         </Space>
       </Layout.Header>
     )
