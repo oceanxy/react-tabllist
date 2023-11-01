@@ -10,14 +10,7 @@ import VueRouter from 'vue-router'
 import getBaseRoutes from './routes'
 import config from '@/config'
 
-let constRoutes
-
-if (APP_ROUTES?.default) {
-  constRoutes = getBaseRoutes(APP_ROUTES.default)
-} else {
-  constRoutes = getBaseRoutes()
-}
-
+const constRoutes = getRoutes()
 const VueRouterPush = VueRouter.prototype.push
 const VueRouterReplace = VueRouter.prototype.replace
 
@@ -138,10 +131,20 @@ function createRouter(rootRoute) {
  * @returns {VueRouter.route[]}
  */
 function getRoutes() {
-  if (config.dynamicRouting) {
-    return getBaseRoutes(initializeDynamicRoutes(JSON.parse(localStorage.getItem('menu'))))
+  if (config.dynamicRouting && localStorage.getItem('token')) {
+    const menu = JSON.parse(localStorage.getItem('menu'))
+
+    if (menu) {
+      return getBaseRoutes(initializeDynamicRoutes(menu))
+    }
+
+    throw new Error('未获取到菜单信息！')
   } else {
-    return getBaseRoutes(APP_ROUTES.default)
+    if (APP_ROUTES?.default) {
+      return getBaseRoutes(APP_ROUTES.default)
+    }
+
+    return getBaseRoutes()
   }
 }
 
