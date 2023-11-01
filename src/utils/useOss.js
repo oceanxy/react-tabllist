@@ -294,13 +294,13 @@ const useOss = {
     })
     // 生成 ZIP 文件并保存到本地
     zip.generateAsync({ type: 'blob' })
-      .then((content) => {
+      .then(content => {
         saveAs(content, `${fileName}.zip`)
       })
-      .catch((error) => {
+      .catch(error => {
         console.error('Failed to generate ZIP file:', error)
       })
-  },
+  }
 }
 
 export default {
