@@ -62,6 +62,7 @@ module.exports = {
       { name: '红色', fileName: 'red' }
     ]
   },
+  siderLayout: 2, //左侧折叠按钮位置 1:跟随左侧菜单，2：跟随右侧菜单
   // 消息
   news: {
     // 是否在header中显示消息通知
