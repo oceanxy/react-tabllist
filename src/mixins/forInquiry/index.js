@@ -7,6 +7,7 @@
 import { cloneDeep, isBoolean, omit } from 'lodash'
 import moment from 'moment'
 import { Button, Form, Space } from 'ant-design-vue'
+import config from '@/config'
 
 /**
  * 用于表格搜索的混合
@@ -112,10 +113,7 @@ export default function forInquiry({
             >
               查询
             </Button>
-            <Button
-              onClick={this.onClear}
-              icon="reload"
-            >
+            <Button onClick={this.onClear} icon="reload">
               重置并刷新
             </Button>
           </Space>
@@ -125,10 +123,10 @@ export default function forInquiry({
         let content = this.forRender
 
         if (!content) {
-          console.error(`未检测到 ${this.moduleName}${this.submoduleName
-            ? `.${this.submoduleName}`
-            : ''
-          } 内 Inquiry 组件的 forRender 计算属性，请确认！`)
+          console.error(
+            `未检测到 ${this.moduleName}${this.submoduleName ? `.${this.submoduleName}` : ''
+            } 内 Inquiry 组件的 forRender 计算属性，请确认！`
+          )
 
           return undefined
         }
@@ -140,14 +138,10 @@ export default function forInquiry({
 
         // 当渲染数组中至少存在一个表单项时，将其内容全部放进 .inquiry-row-for-fields 容器
         if (content.find(VNode => VNode?.tag?.includes('AFormItem'))) {
-          content = [
-            <div class={'inquiry-row-for-fields'}>
-              {content}
-            </div>
-          ]
+          content = [<div class={'inquiry-row-for-fields'}>{content}</div>]
         }
 
-        if (this.inTree && !this.inModal && !content[0]?.children[0]?.data?.class?.includes('tg-inquiry-side-toggle')) {
+        if (this.inTree && config.siderLayout === 2 && !this.inModal && !content[0]?.children[0]?.data?.class?.includes('tg-inquiry-side-toggle')) {
           content.at(0)?.children?.unshift(this.sideToggle)
         }
 
@@ -167,7 +161,9 @@ export default function forInquiry({
 
             this.$nextTick(() => {
               // 仅仅为了使用 Form 组件的检验功能来改变必填框的错误状态
-              this.form.validateFields(() => {/*写一个空函数，不然控制台会有错误信息输出*/})
+              this.form.validateFields(() => {
+                /*写一个空函数，不然控制台会有错误信息输出*/
+              })
             })
           }
         )
