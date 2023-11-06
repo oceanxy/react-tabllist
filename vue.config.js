@@ -197,6 +197,20 @@ module.exports = {
     }
     /**********************************************************************/
 
+    /***************** 预加载用户信息映射器，判断文件是否存在 ***********************/
+    const USER_INFO_MAPPINGS = resolve(join(
+      __dirname,
+      `src/apps/${buildConfig.availableProjectName}/config/userInfoMappings.js`
+    ))
+
+    try {
+      accessSync(USER_INFO_MAPPINGS, constants.F_OK)
+      PROVIDE_PLUGIN_PAYLOAD.USER_INFO_MAPPINGS = USER_INFO_MAPPINGS
+    } catch (e) {
+      console.info('未找到项目对应的动态菜单映射（menuMappings）。')
+    }
+    /**********************************************************************/
+
     config.plugin('ProvidePlugin').use(ProvidePlugin, [PROVIDE_PLUGIN_PAYLOAD])
 
     config.plugin('DefinePlugin').use(DefinePlugin, [

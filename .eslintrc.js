@@ -14,7 +14,8 @@ module.exports = {
     PROJ_APP_NAME: true,
     DEV_DEFAULT_ACCOUNT: true,
     DEV_DEFAULT_PASSWORD: true,
-    INTERFACE_MAPPINGS: true
+    INTERFACE_MAPPINGS: true,
+    USER_INFO_MAPPINGS: true
   },
   extends: [
     'plugin:vue/essential',
