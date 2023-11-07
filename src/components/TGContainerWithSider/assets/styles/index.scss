@@ -5,6 +5,30 @@
   gap: 10px;
   height: 100%;
   overflow: hidden;
+  position: relative;
+  .tg-container-trigger-new {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 200px;
+    top: calc(50% - 24px);
+    width: 16px;
+    height: 48px;
+    border-radius: 0 6px 6px 0;
+    border: 1px solid #d9d9d9;
+    border-left: 0;
+    cursor: pointer;
+    color: #bfbfbf;
+    transition: all 0.3s;
+
+    &:hover {
+      color: $primary-color;
+    }
+  }
+  .tg-container-trigger-new-collapse {
+    transform: translateX(-200px);
+  }
 
   & > .tg-container-with-sider--main {
     flex: auto;
@@ -25,7 +49,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    transition: width .2s ease;
+    transition: width 0.2s ease;
 
     & > .tg-container-trigger {
       position: absolute;

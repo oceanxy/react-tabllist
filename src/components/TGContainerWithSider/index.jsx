@@ -1,5 +1,6 @@
 import './assets/styles/index.scss'
 import { Button } from 'ant-design-vue'
+import config from '@/config'
 
 export default {
   name: 'TGProfileLayout',
@@ -77,19 +78,23 @@ export default {
           class={`tg-container-with-sider--sider${this.siderClassName}${!this.treeCollapsed ? '' : ' hide'}`}
         >
           {this.$slots.sider}
-          {
-            this.showSiderTrigger
-              ? (
-                <Button
-                  class={'tg-container-trigger'}
-                  icon={!this.treeCollapsed ? 'left' : 'right'}
-                  type={'link'}
-                  onClick={this.onTrigger}
-                />
-              )
-              : null
-          }
+          {/* {this.showSiderTrigger ? (
+            <Button
+              class={'tg-container-trigger'}
+              icon={!this.treeCollapsed ? 'left' : 'right'}
+              type={'link'}
+              onClick={this.onTrigger}
+            />
+          ) : null} */}
         </div>
+        {config.siderLayout === 1 ? (
+          <Button
+            class={`tg-container-trigger-new ${this.treeCollapsed ? 'tg-container-trigger-new-collapse' : ''}`}
+            icon={!this.treeCollapsed ? 'left' : 'right'}
+            type={'link'}
+            onClick={this.onTrigger}
+          />
+        ) : null}
       </div>
     )
   }
