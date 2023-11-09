@@ -21,12 +21,13 @@ npm run dev-?
 ### Compiles and minifies for production
 
 ```
-yarn build --app-proj [appName]
-npm run build -- --app-proj [appName]
+yarn build --app-proj [appName] --app-env [appEnv]
+npm run build -- --app-proj [appName] --app-env [appEnv]
 ```
 
 - 注意使用npm命令时“--”不能省，否则打包会失败
 - appName 为 src/apps 目录下的文件夹名称
+- appEnv 为生产环境的部署环境，默认“production”
 - 更多信息可阅读 build/index.js 的注释
 
 ### Lints and fixes files
