@@ -241,7 +241,7 @@ export default {
                     </div>
                     <Menu slot={'overlay'}>
                       {
-                        this.$config.resetPwd
+                        this.$config.resetPwd.show
                           ? <Menu.Item onClick={this.resetPwd}>重置密码</Menu.Item>
                           : null
                       }
