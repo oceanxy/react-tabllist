@@ -1,5 +1,5 @@
 /**
- * 启动/打包项目自定义配置。
+ * 开发/打包项目自定义配置。
  * 注意：在不清楚本项目的启动/打包逻辑时，为了避免出错，只需使用 --app-proj 即可，其他命令会根据改命令自动配置。
  * 命令行参数：
  *    --app-proj：格式为逗号分割的字符串，如：“appName1, appName2, ...”
@@ -7,6 +7,13 @@
  *      当该命令携带的所有 appName 都不存在时，将自动配置全局配置文件中的 appPrefix 为 --app-pref 命令的值；
  *      当存在有效的 appName 时，打包模式将对每一个有效的子系统分别打包，开发模式只取第一个匹配到的值，其余值将被忽略。
  *    --app-mode：开发模式（dev）/生产模式（build）
+ *    --app-env: 生产模式（build）对应的不同环境，默认 production（生产环境）。
+ *      可选值：
+ *      -  developmentProd（用于部署到开发环境以供测试等人员访问，非本地开发环境）
+ *      -  parallel（并行环境）
+ *      -  integration（集成环境）
+ *      -  stage（生产模拟环境）
+ *      -  production（生产环境）
  *    --app-pref：格式 字符串
  *      配置文件（src/config 或 apps/config）中 appPrefix 字段对应的项目别称。
  *      当存在该值时，将按照该值启动/打包所有匹配到的子项目，打包成一个整体。
@@ -22,8 +29,6 @@ const child_process = require('child_process')
 const { on, getAvailableProjectNames, getAvailableNamesFromProjectConfig } = require('./configs')
 const args = require('minimist')(process.argv.slice(2))
 const dotenv = require('dotenv')
-const { unlinkSync, readdirSync, readdir } = require('fs')
-const { resolve } = require('path')
 
 function start() {
   let mode = ''
@@ -95,7 +100,15 @@ function build(params) {
               appPrefix
             )
           } else {
-            dotenv.config({ path: `src/apps/${availableProjectNames[0]}/config/.env.production` })
+            let env = 'production'
+
+            if (Object.prototype.toString.call(args['app-env']) === '[object String]' && args['app-env'].length) {
+              if (['parallel', 'integration', 'stage', 'production'].includes(args['app-env'])) {
+                env = args['app-env']
+              }
+            }
+
+            dotenv.config({ path: `src/apps/${availableProjectNames[0]}/config/.env.${env}` })
 
             // 不存在 appPrefix，则取 availableProjectNames[0] 打包
             on(
