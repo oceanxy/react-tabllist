@@ -36,7 +36,14 @@ export default {
     }
   },
   actions: {
-    async login({ commit, state }, options) {
+    async login(
+      {
+        commit,
+        state,
+        dispatch
+      },
+      options
+    ) {
       commit('setLoading', true)
 
       const { payload, config } = options
@@ -70,22 +77,7 @@ export default {
         commit('setSiteCache', { menuList, defaultMenuUrl })
         localStorage.setItem('theme', userInfo.themeFileName || config.theme.default)
 
-        if (config.headerParams?.show) {
-          localStorage.setItem('headerId', userInfo.organId || '')
-
-          commit('setState', {
-            value: userInfo.organId,
-            stateName: 'headerId',
-            moduleName: 'common'
-          }, { root: true })
-
-          commit('setState', {
-            value: { list: userInfo.organList },
-            stateName: 'organListForHeader',
-            moduleName: 'common',
-            merge: true
-          }, { root: true })
-        }
+        dispatch('setParamsUseInHeader')
       }
 
       commit('setLoading', false)
@@ -99,7 +91,7 @@ export default {
       const response = await this.apis.logout()
 
       // if (response.status) {
-      await dispatch('clear')
+      dispatch('clear')
       message.destroy()
       // }
 
@@ -107,16 +99,61 @@ export default {
 
       return Promise.resolve(response)
     },
-    async getUserInfo({ commit }) {
-      const response = await this.apis.getUserInfo()
+    async getUserInfo({ commit, dispatch }, payload) {
+      commit('setLoading', true)
 
-      const { status, data } = response
+      const response = await this.apis.getUserInfo(payload)
+      const status = response.status
 
       if (status) {
-        commit('setUserInfo', data)
+        let userInfo
+
+        if (USER_INFO_MAPPINGS) {
+          // 适配非蓝桥后端框架的用户信息返回体
+          const userInfoResponseData = USER_INFO_MAPPINGS.mapping(response.data)
+
+          userInfo = userInfoResponseData.userInfo
+          const menuList = userInfoResponseData.menuList
+          const defaultMenuUrl = userInfoResponseData.defaultMenuUrl
+
+          if (menuList) {
+            commit('setSiteCache', { menuList, defaultMenuUrl })
+          }
+        } else {
+          userInfo = response.data
+        }
+
+        commit('setAuthentication', payload.token)
+        commit('setUserInfo', userInfo)
+        localStorage.setItem('theme', userInfo.themeFileName || config.theme.default)
+
+        dispatch('setParamsUseInHeader')
       }
 
-      return Promise.resolve(true)
+      commit('setLoading', false)
+
+      return Promise.resolve(status)
+    },
+    /**
+     * 设置Header内需要使用的参数
+     */
+    setParamsUseInHeader({ state, commit }) {
+      if (config.headerParams?.show) {
+        localStorage.setItem('headerId', state.userInfo.organId || '')
+
+        commit('setState', {
+          value: state.userInfo.organId,
+          stateName: 'headerId',
+          moduleName: 'common'
+        }, { root: true })
+
+        commit('setState', {
+          value: { list: state.userInfo.organList },
+          stateName: 'organListForHeader',
+          moduleName: 'common',
+          merge: true
+        }, { root: true })
+      }
     },
     /**
      * 清除 store 和本地存储的信息
