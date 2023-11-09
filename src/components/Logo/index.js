@@ -20,7 +20,7 @@ export default {
         onClick={this.goBackHome}
         title={this.$config.systemName}
       >
-        <Icon-font type={'icon-logo'} />
+        <IconFont type={'icon-logo'} />
         {this.$config.systemName}
       </div>
     )
