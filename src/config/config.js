@@ -81,7 +81,9 @@ module.exports = {
     // src/components/TGHeader 组件对对应下拉列表的占位符提示语
     placeholder: '请选择',
     // 需要在 HTTP Request Header 内携带额外参数的字段名，其值为 src/components/TGHeader 组件内对应下拉列表的值
-    fieldName: ''
+    fieldName: '',
+    // 是否额外在接口的请求url中拼接token（为了适配一些奇葩第三方在 POST 方式的 URL 中携带 token 的要求）
+    isInUrl: false
   },
   // 全局消息最大显示个数
   maxMessageCount: 1,
