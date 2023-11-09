@@ -9,8 +9,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import getBaseRoutes from './routes'
 import config from '@/config'
+import { message } from 'ant-design-vue'
 
-const constRoutes = getRoutes()
 const VueRouterPush = VueRouter.prototype.push
 const VueRouterReplace = VueRouter.prototype.replace
 
@@ -114,13 +114,50 @@ function initializeDynamicRoutes(menus) {
 }
 
 /**
+ * 从用户信息映射文件选取菜单数据
+ * @param menus ｛VueRoute[]｝ - 从用户信息映射来的菜单数据，数据类型为vue-router的路由格式
+ * @param routes ｛VueRoute[]｝ - 本项目的路由文件
+ * @return {*[]}
+ */
+function selectDynamicRoutes(menus, routes) {
+  if (routes.length) {
+    const _routes = []
+
+    routes?.forEach(route => {
+      const _menu = menus.find(menu => menu.meta.title === route.meta.title && menu.path === route.path)
+
+      if (_menu) {
+        if (_menu?.children?.length && route?.children?.length) {
+          route.children = selectDynamicRoutes(_menu.children, route.children)
+        }
+
+        if (!_menu?.children?.length && route?.children?.length) {
+          route.children = []
+        }
+
+        if (_menu?.children?.length && !route?.children?.length) {
+          console.warn(`未找到ID为${_menu.id}的菜单数据，请确认后台返回的菜单数据是否与前端路由文件匹配！`)
+        }
+
+        _routes.push(route)
+      }
+    })
+
+    return _routes
+  } else {
+    message.error('未获取到动态菜单数据，请重新登录以完成菜单初始化')
+    throw new Error('未获取到动态菜单数据，请重新登录以完成菜单初始化')
+  }
+}
+
+/**
  * 立即创建一个路由器
  * @param [rootRoute] {Route} 根路由
  * @returns {VueRouter}
  */
 function createRouter(rootRoute) {
   return new VueRouter({
-    routes: rootRoute || constRoutes,
+    routes: rootRoute || getRoutes(),
     base: process.env.VUE_APP_PUBLIC_PATH,
     mode: config.routeMode === 'history' ? 'history' : 'hash'
   })
@@ -135,9 +172,14 @@ function getRoutes() {
     const menu = JSON.parse(localStorage.getItem('menu'))
 
     if (menu) {
+      if (USER_INFO_MAPPINGS) {
+        return getBaseRoutes(selectDynamicRoutes(menu, APP_ROUTES?.default))
+      }
+
       return getBaseRoutes(initializeDynamicRoutes(menu))
     }
 
+    message.error('未获取到菜单信息!')
     throw new Error('未获取到菜单信息！')
   } else {
     if (APP_ROUTES?.default) {
@@ -175,9 +217,9 @@ router.beforeEach((to, from, next) => {
   document.title = title + config.systemName
 
   // 非生产环境通过地址栏传递token的情况，优先使用地址栏的token。因为本地存储的token可能为过期token（上一次页面关闭时未清空的）
-  if (process.env.NODE_ENV !== 'production' && to.query.token) {
-    localStorage.setItem('token', to.query.token)
-  }
+  // if (process.env.NODE_ENV !== 'production' && to.query.token) {
+  //   localStorage.setItem('token', to.query.token)
+  // }
 
   // 判断该路由是否需要登录权限
   // 获取存储在localStorage内的token，防止刷新页面导致vuex被清空而跳转到登录页
@@ -214,11 +256,6 @@ router.beforeEach((to, from, next) => {
 
 router.resetRoutes = resetRoutes
 
-export {
-  createRouter,
-  getRoutes,
-  initializeDynamicRoutes,
-  resetRoutes
-}
+export { resetRoutes }
 
 export default router
