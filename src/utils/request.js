@@ -15,6 +15,13 @@ export default function getService(conf, router, store) {
 
       if (token) {
         config.headers.token = token
+
+        if (conf.headerParams.isInUrl) {
+          config.params = {
+            ...config.params,
+            token
+          }
+        }
       }
 
       if (conf.headerParams?.show) {
