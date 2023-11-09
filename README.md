@@ -2,18 +2,32 @@
 
 ## Project setup
 ```
+npm run install
 yarn install
 ```
 
+## 运行和打包
+
 ### Compiles and hot-reloads for development
+
 ```
-yarn dev
+yarn dev-?
+npm run dev-?
 ```
 
+- dev-? 中的“?”为要启动项目的简称，一般为 src/apps 目录下的文件夹名称的每个单词首字母的组合
+- 具体命令见 package.json，详情可阅读 build/index.js 的注释
+
 ### Compiles and minifies for production
+
 ```
-yarn build
+yarn build --app-proj [appName]
+npm run build -- --app-proj [appName]
 ```
+
+- 注意使用npm命令时“--”不能省，否则打包会失败
+- appName 为 src/apps 目录下的文件夹名称
+- 更多信息可阅读 build/index.js 的注释
 
 ### Lints and fixes files
 ```
