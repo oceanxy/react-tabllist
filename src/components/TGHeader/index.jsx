@@ -75,8 +75,10 @@ export default {
     userInfo: {
       immediate: true,
       async handler(value) {
-        if (!Object.keys(value).length && localStorage.getItem('token')) {
-          await this.getUserInfo()
+        const token = localStorage.getItem('token')
+
+        if (!Object.keys(value).length && token) {
+          await this.getUserInfo({ token })
         }
       }
     },
