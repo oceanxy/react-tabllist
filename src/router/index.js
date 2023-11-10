@@ -179,10 +179,12 @@ function getRoutes() {
       return getBaseRoutes(initializeDynamicRoutes(menu))
     }
 
-    message.error('未获取到菜单信息!')
-    throw new Error('未获取到菜单信息！')
+    message.warn('未获取到菜单信息!')
+    console.warn('未获取到菜单信息！')
+
+    return getBaseRoutes()
   } else {
-    if (APP_ROUTES?.default) {
+    if (!config.dynamicRouting && APP_ROUTES?.default) {
       return getBaseRoutes(APP_ROUTES.default)
     }
 
