@@ -179,8 +179,8 @@ function getRoutes() {
       return getBaseRoutes(initializeDynamicRoutes(menu))
     }
 
-    message.warn('未获取到菜单信息!')
-    console.warn('未获取到菜单信息！')
+    message.error('未获取到菜单信息!')
+    console.error('未获取到菜单信息！')
 
     return getBaseRoutes()
   } else {
