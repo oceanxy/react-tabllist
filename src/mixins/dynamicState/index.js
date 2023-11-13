@@ -14,13 +14,15 @@ import forModuleName from '../forModuleName'
  * @param [customModuleName] {string} 自定义模块名（小驼峰命名规则）。如果存在自定义模块名，仅动态注册该模块
  * @param [isRequestData] {boolean} 是否在注册 customModuleName 模块后立即请求该模块的数据列表。依赖 customModuleName 参数，默认 true
  * @param [injectSubmoduleName] {boolean} 是否同时注册子模块。与 customModuleName 参数互斥，默认 false
+ * @param [setModuleName] {() => string} - 自定义页面的 name 属性，该函数采用 call(this) 方式调用
  * @returns {Object}
  */
 export default (
   {
     customModuleName,
     isRequestData = true,
-    injectSubmoduleName
+    injectSubmoduleName,
+    setModuleName
   } = {}
 ) => {
   let dynamicState
@@ -75,7 +77,7 @@ export default (
     }
   } else {
     dynamicState = {
-      mixins: [forModuleName(injectSubmoduleName)],
+      mixins: [forModuleName(injectSubmoduleName, setModuleName)],
       created() {
         if (this.moduleName) {
           // 判断动态模块文件夹内是否存在与moduleName匹配的文件，用以作为动态模块的模板

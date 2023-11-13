@@ -9,16 +9,17 @@ import forIndex from '@/mixins/forIndex'
 
 /**
  * 根据页面 name 自动生成 moduleName 的混合
- * @param [isSubmoduleName] {boolean} 是否是子模块
+ * @param [isSubmoduleName] {boolean} - 是否是子模块
+ * @param [setModuleName] {() => string} - 自定义页面的 name 属性，该函数采用 call(this) 方式调用
  * @returns {Object}
  */
-export default (isSubmoduleName = false) => {
+export default (isSubmoduleName = false, setModuleName) => {
   if (!isSubmoduleName) {
     return {
       mixins: [forIndex],
       computed: {
         moduleName() {
-          const name = this.$options.name || ''
+          const name = setModuleName?.call(this) || this.$options.name || ''
 
           if (!name) {
             console.warn('请设置组件的名称：name(大驼峰命名规则)，动态创建store模块需要该属性！')
@@ -41,7 +42,7 @@ export default (isSubmoduleName = false) => {
       inject: { moduleName: { default: undefined } },
       computed: {
         submoduleName() {
-          const name = this.$options.name || ''
+          const name = setModuleName?.call(this) || this.$options.name || ''
 
           if (!name) {
             console.warn('请设置组件的名称:name(大驼峰命名规则)，获取子模块数据需要该属性！')
