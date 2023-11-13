@@ -19,7 +19,7 @@ body {
 #app {
   position: relative;
   font-family: pingfang SC, helvetica neue, arial, hiragino sans gb, microsoft yahei ui, microsoft yahei, simsun,
-    sans-serif !important;
+  sans-serif !important;
   // font-family: Avenir, Helvetica, Arial, sans-serif;
   color: #2c3e50;
 
@@ -115,6 +115,10 @@ body {
       background: url('~@/assets/images/notFound.png') no-repeat center top / auto 70%;
     }
   }
+
+  &.no-access .tg-not-found-content .hint {
+    //background-image: url('~@/assets/images/notFound.png');
+  }
 }
 
 .tg-inquiry.tg-inquiry {
@@ -126,6 +130,7 @@ body {
   padding: 12px 20px;
   background: $white;
   overflow: auto;
+
   &:not(.fe-statistical-analysis-inquiry) {
     max-height: 11lh;
   }
