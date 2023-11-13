@@ -168,6 +168,14 @@ function createRouter(rootRoute) {
  * @returns {VueRouter.route[]}
  */
 function getRoutes() {
+  const { NODE_ENV, VUE_APP_DEVELOPMENT_ENVIRONMENT_SKIPPING_PERMISSIONS } = process.env
+
+  // 本地开发环境跳过权限直接获取本地路由
+  if (NODE_ENV === 'development' && VUE_APP_DEVELOPMENT_ENVIRONMENT_SKIPPING_PERMISSIONS === 'on') {
+    return getBaseRoutes(APP_ROUTES.default)
+  }
+
+  // 开启动态路由，且已登录，获取路由
   if (config.dynamicRouting && localStorage.getItem('token')) {
     const menu = JSON.parse(localStorage.getItem('menu'))
 
@@ -179,7 +187,7 @@ function getRoutes() {
       return getBaseRoutes(initializeDynamicRoutes(menu))
     }
 
-    message.error('未获取到菜单信息!', 0)
+    message.error('未获取到菜单信息，稍后请刷新重试！', 0)
 
     return getBaseRoutes()
   } else {
@@ -187,7 +195,7 @@ function getRoutes() {
       return getBaseRoutes(APP_ROUTES.default)
     }
 
-    return getBaseRoutes()
+    return getBaseRoutes(true)
   }
 }
 
