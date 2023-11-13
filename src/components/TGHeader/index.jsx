@@ -107,6 +107,15 @@ export default {
       })
     }
   },
+  async mounted() {
+    // 更新用户信息。因为目前用户信息存在 localStorage 中，直接关闭浏览器窗口不会清空用户信息，
+    // 所以每次进入到系统，需要更新一次用户信息，以确保用户信息不会被缓存污染
+    const token = localStorage.getItem('token')
+
+    if (token) {
+      await this.getUserInfo({ token })
+    }
+  },
   methods: {
     ...mapActions('login', { logout: 'logout', getUserInfo: 'getUserInfo' }),
     async resetPwd() {
@@ -231,10 +240,10 @@ export default {
                       </Avatar>
                       <div class={'tg-user-info'}>
                         <div class={'tg-header-username'}>
-                          {this.userInfo.nickName || this.userInfo.fullName || '用户名'}
+                          {this.userInfo.nickName || this.userInfo.fullName || '暂无用户名'}
                         </div>
                         <div class={'tg-header-tel'}>
-                          {this.userInfo.loginName || 'admin'}
+                          {this.userInfo.loginName}
                         </div>
                       </div>
                       <IconFont type={'icon-global-down'} style={'color: #ffffff'} />
