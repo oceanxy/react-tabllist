@@ -5,22 +5,14 @@
 
 import watermark from 'watermark-dom'
 import debounce from 'lodash/debounce'
+import config from '@/config'
 
 /**
  * 添加水印
- * @param [isWatermark] {boolean} 是否开启水印，开启水印必须在子项目app.jsx中混入watermark
- * @param [userName]
- * @param [userNamePinyin]
- * @param [phone]
  * @returns {Object}
  */
-export default ({
-  isWatermark,
-  userName = 'login_name',
-  userNamePinyin,
-  phone
-} = {}) => {
-  if (!isWatermark) {
+export default () => {
+  if (!config.isWatermark) {
     return {}
   }
 
@@ -34,17 +26,6 @@ export default ({
     computed: {
       userInfo() {
         return this.$store.state['login'].userInfo
-      },
-      watermarkTxt() {
-        let name = ''
-        let pinyin = ''
-        let tel = ''
-
-        name = userName ? this.userInfo?.[userName] ?? '' : ''
-        pinyin = userNamePinyin ? `,${this.userInfo[userNamePinyin]}` : ''
-        tel = phone ? `,${this.userInfo[phone]}` : ''
-
-        return name + pinyin + tel
       }
     },
     beforeMount() {
@@ -67,7 +48,7 @@ export default ({
       // 绘制水印
       watermarkLoad() {
         watermark.load({
-          watermark_txt: this.watermarkTxt,
+          watermark_txt: this.userInfo.nickName,
           watermark_font: '微软雅黑',
           watermark_color: 'rgba(0,0,0,1)',
           watermark_alpha: 0.1,

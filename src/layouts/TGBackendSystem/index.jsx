@@ -5,10 +5,11 @@ import TGMenu from '@/components/TGMenu'
 import TGRouterView from '@/components/TGRouterView'
 import { mapGetters } from 'vuex'
 import TGBreadcrumb from '@/components/TGBreadcrumb'
+import watermark from '@/mixins/watermark'
 
 export default {
   name: 'TGBackendSystemLayout',
-  props: {},
+  mixins: [watermark()],
   computed: {
     ...mapGetters({ getState: 'getState' }),
     collapsed() {
