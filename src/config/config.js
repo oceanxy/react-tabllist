@@ -68,6 +68,11 @@ module.exports = {
     // 是否在header中显示消息通知
     show: false
   },
+  // 网站指引
+  guide: {
+    // 是否在header中显示网站指引
+    show: false
+  },
   // 重置密码
   resetPwd: {
     // 是否在header中显示修改密码图标

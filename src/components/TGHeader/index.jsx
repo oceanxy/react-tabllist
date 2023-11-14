@@ -342,9 +342,13 @@ export default {
                       </Dropdown>
                     )
                     : null,
-                  <Button shape="circle" type={'link'} class={'tg-header-icon'}>
-                    <IconFont type={'icon-global-help'} />
-                  </Button>
+                  this.$config.guide?.show
+                    ? (
+                      <Button shape="circle" type={'link'} class={'tg-header-icon'}>
+                        <IconFont type={'icon-global-help'} />
+                      </Button>
+                    )
+                    : null
                 ]
                 : (
                   <Dropdown class={'tg-header-user'} overlayClassName={'tg-header-user-overlay'}>
