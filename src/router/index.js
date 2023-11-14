@@ -170,33 +170,27 @@ function createRouter(rootRoute) {
 function getRoutes() {
   const { NODE_ENV, VUE_APP_DEVELOPMENT_ENVIRONMENT_SKIPPING_PERMISSIONS } = process.env
 
-  // 本地开发环境跳过权限直接获取本地路由
-  if (NODE_ENV === 'development' && VUE_APP_DEVELOPMENT_ENVIRONMENT_SKIPPING_PERMISSIONS === 'on') {
-    return getBaseRoutes(APP_ROUTES.default)
+  if (
+    // 本地开发环境跳过权限直接获取本地路由
+    (NODE_ENV === 'development' && VUE_APP_DEVELOPMENT_ENVIRONMENT_SKIPPING_PERMISSIONS === 'on') ||
+    // 或启用本地路由
+    !config.dynamicRouting
+  ) {
+    return getBaseRoutes(APP_ROUTES.default || [])
   }
 
-  // 开启动态路由，且已登录，获取路由
-  if (config.dynamicRouting && localStorage.getItem('token')) {
-    const menu = JSON.parse(localStorage.getItem('menu'))
+  const token = localStorage.getItem('token')
+  const menu = JSON.parse(localStorage.getItem('menu'))
 
-    if (menu) {
-      if (USER_INFO_MAPPINGS) {
-        return getBaseRoutes(selectDynamicRoutes(menu, APP_ROUTES?.default))
-      }
-
-      return getBaseRoutes(initializeDynamicRoutes(menu))
+  if (menu && token) {
+    if (USER_INFO_MAPPINGS) {
+      return getBaseRoutes(selectDynamicRoutes(menu, APP_ROUTES?.default || []))
     }
 
-    message.error('未获取到菜单信息，稍后请刷新重试！', 0)
-
-    return getBaseRoutes()
-  } else {
-    if (!config.dynamicRouting && APP_ROUTES?.default) {
-      return getBaseRoutes(APP_ROUTES.default)
-    }
-
-    return getBaseRoutes(true)
+    return getBaseRoutes(initializeDynamicRoutes(menu))
   }
+
+  return getBaseRoutes()
 }
 
 /**

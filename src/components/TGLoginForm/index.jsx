@@ -13,17 +13,7 @@ export default Form.create({ name: 'TGLoginForm' })({
     picCodePath: '',
     hint: false
   }),
-  computed: {
-    ...mapState({ loading: 'loading', codeKey: 'codeKey' }),
-    userTheme() {
-      return localStorage.getItem('theme') ||
-        this.$store.state?.login?.userInfo?.themeFileName ||
-        this.$config.theme.default
-    },
-    currentTheme() {
-      return window.themeVariables.themeFileName
-    }
-  },
+  computed: { ...mapState({ loading: 'loading', codeKey: 'codeKey' }) },
   async mounted() {
     this.setLoading(false)
 
@@ -33,7 +23,11 @@ export default Form.create({ name: 'TGLoginForm' })({
   },
   methods: {
     ...mapMutations({ setLoading: 'setLoading' }),
-    ...mapActions({ login: 'login', getCodeKey: 'getCodeKey' }),
+    ...mapActions({
+      login: 'login',
+      getCodeKey: 'getCodeKey',
+      jump: 'jump'
+    }),
     handleSubmit(e) {
       e.preventDefault()
 
@@ -47,25 +41,7 @@ export default Form.create({ name: 'TGLoginForm' })({
             }
           } else {
             this.hint = true
-            this.$router.resetRoutes()
-
-            // 检测登录页带过来的query参数是否存在重定向
-            const { redirect, ...query } = this.$route.query
-            // 检测本地存储是否存在保存的路由（意外退出的路由），如果有，则在登录成功后直接跳转到该路由
-            const path = localStorage.getItem('selectedKey')
-
-            if (redirect) {
-              await this.$router.replace({ path: `${redirect}`, query })
-            } else if (path) {
-              await this.$router.replace(path)
-            } else {
-              await this.$router.replace({ name: 'home' })
-            }
-
-            if (this.userTheme !== this.currentTheme) {
-              window.location.reload() // to switch theme
-            }
-
+            await this.jump()
             this.hint = false
           }
         }

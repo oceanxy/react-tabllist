@@ -1,6 +1,7 @@
 import JSEncrypt from 'jsencrypt'
 import config from '@/config'
 import { message } from 'ant-design-vue'
+import router from '@/router'
 
 export default {
   namespaced: true,
@@ -36,6 +37,30 @@ export default {
     }
   },
   actions: {
+    async jump({ state }) {
+      router.resetRoutes()
+
+      // 检测query参数是否存在重定向
+      const { redirect, ...query } = router.history.current.query
+      // 检测本地存储是否存在保存的路由（意外退出的路由），如果有，则在登录成功后直接跳转到该路由
+      const path = localStorage.getItem('selectedKey')
+
+      if (redirect) {
+        await router.replace({ path: `${redirect}`, query })
+      } else if (path) {
+        await router.replace(path)
+      } else {
+        await router.replace({ name: 'home' })
+      }
+
+      const userTheme = localStorage.getItem('theme') ||
+        state?.login?.userInfo?.themeFileName ||
+        config.theme.default
+
+      if (userTheme !== window.themeVariables.themeFileName) {
+        window.location.reload() // to switch theme
+      }
+    },
     async login(
       {
         commit,
@@ -158,7 +183,7 @@ export default {
     /**
      * 清除 store 和本地存储的信息
      * @param commit
-     * @param isPassive {boolean} 是否是被动清除，除主动点击“注销”外的其他退出都是被动的
+     * @param [isPassive=false] {boolean} 是否是被动清除，除主动点击“注销”外的其他退出都是被动的
      * @returns {Promise<boolean>}
      */
     async clear({ commit }, isPassive) {
@@ -166,6 +191,7 @@ export default {
       commit('setAuthentication', null)
       commit('setSiteCache', null)
 
+      // 主动注销
       if (!isPassive) {
         localStorage.removeItem('openKeys')
         localStorage.removeItem('selectedKey')
