@@ -147,6 +147,7 @@ const useOss = {
 
         try {
           ossClient = new OSS({
+            secure: true, // 解决报错： RequestError: XHR error (req "error"), PUT http://xxx.xxx/xx.jpg
             region: data.endpoint,
             accessKeyId: data.accessKeyId,
             accessKeySecret: data.accessKeySecret,
@@ -233,6 +234,8 @@ const useOss = {
         }
       } catch (error) {
         onError?.(error)
+        // 暴露错误信息以供调试
+        throw error
       }
     } else {
       message.error('初始化文件服务失败，请联系管理员处理。')
