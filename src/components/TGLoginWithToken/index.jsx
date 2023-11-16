@@ -21,6 +21,11 @@ export default {
     if (searchToken) {
       window.history.replaceState(null, null, window.location.pathname)
     }
+
+    // 如果 hash 中存在 token，则删除之
+    if (this.$route.query.token) {
+      delete this.$route.query.token
+    }
   },
   async mounted() {
     if (this.token) {
