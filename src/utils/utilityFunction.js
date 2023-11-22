@@ -121,3 +121,12 @@ export function uuid(len = 16, radix = 16) {
 
   return uuid.join('')
 }
+
+/**
+ * 删除 route.path 最后的 “/”（如果有）
+ * @param path {string} - 需要处理的 path
+ * @return {string}
+ */
+export function replacePath(path) {
+  return path.replace(/([a-zA-Z0-9\-\/]+)(\/)$/g, '$1')
+}

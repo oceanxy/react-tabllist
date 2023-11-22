@@ -1,6 +1,6 @@
 /**
  * 通用数据
- * 包括各种枚举、省市区数据等
+ * 包括各种枚举、省市区数据等，项目独有的的通用状态请写到每个项目的common文件
  */
 
 export default {
@@ -37,7 +37,9 @@ export default {
     // 学历数据
     degrees: [],
     // 省数据
-    provinces: []
+    provinces: [],
+    // 当前缓存的页面路由
+    pageTabs: []
   },
   mutations: {
     setAdministrativeDivision(state, payload) {
@@ -61,6 +63,9 @@ export default {
     },
     setProvinces(state, payload) {
       state.provinces = payload || []
+    },
+    setPageTabs(state, payload) {
+      state.pageTabs = payload || []
     }
   },
   actions: {

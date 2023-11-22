@@ -2,10 +2,11 @@ import './assets/styles/index.scss'
 import { Layout } from 'ant-design-vue'
 import TGHeader from '@/components/TGHeader'
 import TGMenu from '@/components/TGMenu'
-import TGRouterView from '@/components/TGRouterView'
 import { mapGetters } from 'vuex'
 import TGBreadcrumb from '@/components/TGBreadcrumb'
 import watermark from '@/mixins/watermark'
+import TGPageTabs from '@/components/TGPageTabs'
+import { RouterView } from 'vue-router'
 
 export default {
   name: 'TGBackendSystemLayout',
@@ -28,15 +29,11 @@ export default {
         <Layout>
           <Layout.Sider
             theme={'light'}
-            v-model={this.collapsed}
+            vModel={this.collapsed}
             trigger={null}
             class={`tg-sider${this.collapsed ? ' collapsed' : ''}`}
             collapsible
           >
-            {/* <div style={'padding:15px 20px 0 20px'}> */}
-            {/*   <h4 style={'font-size:16px;margin-bottom:0'}>保交楼信息管理系统</h4> */}
-            {/*   <div style={'font-size:12px;color:#ccc'}>V1.02</div> */}
-            {/* </div> */}
             <TGMenu />
           </Layout.Sider>
           <Layout.Content class="tg-content">
@@ -45,10 +42,11 @@ export default {
                 ? null
                 : <TGBreadcrumb />
             }
-            <TGRouterView />
+            {this.$config.enableTabPage ? <TGPageTabs /> : null}
+            <RouterView />
           </Layout.Content>
         </Layout>
-        <div id="global-modal"></div>
+        <div id="global-modal" />
       </Layout>
     )
   }

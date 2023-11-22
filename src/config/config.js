@@ -31,6 +31,8 @@ module.exports = {
   enableLoginVerification: true,
   // 是否隐藏面包屑
   hideBreadCrumb: false,
+  // 启用标签页并缓存页面状态
+  enableTabPage: false,
   // 面包屑分隔符，如：首页 / 首页
   breadCrumbSeparator: '/',
   // 统一上传地址
