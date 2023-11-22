@@ -1,0 +1,63 @@
+@import '~@/assets/styles/themeFromLess.scss';
+
+.tg-page-tabs {
+  width: 100%;
+  flex: none;
+  padding: 0;
+  border-bottom: 1px solid var(--border-color-base);
+
+  .tg-page-tabs-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+    margin: 6px 12px;
+  }
+
+  .tg-arrow-left,
+  .tg-arrow-right {
+    width: 0;
+    flex: none;
+    overflow: hidden;
+    opacity: .5;
+    cursor: pointer;
+    transition: all .2s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:not(.disabled):hover {
+      opacity: 1;
+    }
+
+    &.show-arrow {
+      width: 20px;
+    }
+
+    &.disabled {
+      cursor: not-allowed;
+    }
+  }
+
+  .tg-page-tabs-layout {
+    flex: auto;
+    overflow: hidden;
+
+    .tg-page-tabs-box {
+      display: inline-flex;
+      flex-wrap: nowrap;
+      gap: 8px;
+
+      .ant-tag {
+        user-select: none;
+        cursor: pointer;
+        margin-right: 0;
+        padding: 4px 8px;
+
+        &.current {
+
+        }
+      }
+    }
+  }
+}
