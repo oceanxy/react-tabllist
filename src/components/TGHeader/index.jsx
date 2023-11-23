@@ -11,6 +11,7 @@ import {
   Popover,
   Select,
   Space,
+  Spin,
   Tag
 } from 'ant-design-vue'
 import Logo from '@/components/Logo'
@@ -33,6 +34,9 @@ export default {
     ...mapGetters({ getState: 'getState' }),
     collapsed() {
       return this.getState('collapsed', 'common')
+    },
+    loading() {
+      return this.getState('loading', 'login')
     },
     userInfo() {
       return this.getState('userInfo', 'login')
@@ -233,8 +237,11 @@ export default {
                       <Divider type={'vertical'} class={'tg-header-divider'} />
                     ]
                     : null,
-                  <Dropdown class={'tg-header-user'} overlayClassName={'tg-header-user-overlay'}>
-                    <div class={'tg-header-user-content'}>
+                  <Dropdown overlayClassName={'tg-header-user-overlay'}>
+                    <Spin
+                      spinning={this.loading}
+                      class={`tg-header-user-content${this.loading ? ' blur' : ''}`}
+                    >
                       <Avatar class={'tg-avatar'} shape={'circle'}>
                         {this.avatarForLetter}
                       </Avatar>
@@ -247,15 +254,21 @@ export default {
                         </div>
                       </div>
                       <IconFont type={'icon-global-down'} style={'color: #ffffff'} />
-                    </div>
-                    <Menu slot={'overlay'}>
-                      {
-                        this.$config.resetPwd.show
-                          ? <Menu.Item onClick={this.resetPwd}>重置密码</Menu.Item>
-                          : null
-                      }
-                      <Menu.Item onClick={this.onLogOut}>注销</Menu.Item>
-                    </Menu>
+                    </Spin>
+                    {
+                      this.loading
+                        ? null
+                        : (
+                          <Menu slot={'overlay'}>
+                            {
+                              this.$config.resetPwd.show
+                                ? <Menu.Item onClick={this.resetPwd}>重置密码</Menu.Item>
+                                : null
+                            }
+                            <Menu.Item onClick={this.onLogOut}>注销</Menu.Item>
+                          </Menu>
+                        )
+                    }
                   </Dropdown>,
                   <Divider type={'vertical'} class={'tg-header-divider'} />,
                   this.$config.news?.show

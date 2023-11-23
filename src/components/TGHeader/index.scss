@@ -140,11 +140,21 @@
         }
       }
 
-      .tg-header-user {
-        display: flex;
-        align-items: center;
+      .tg-header-user-content {
+        &.blur .ant-spin-container {
+          filter: blur(2px);
+        }
 
-        &.tg-header-user-content {
+        .ant-spin-container {
+          display: flex;
+          align-items: center;
+          transition: all .2s ease-in-out;
+
+          &.ant-spin-blur::after {
+            opacity: 0;
+            pointer-events: auto;
+          }
+
           .tg-avatar {
             background: $primary-color-hover;
           }
