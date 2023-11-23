@@ -6,13 +6,9 @@ import { message } from 'ant-design-vue'
 import { getCookie } from '@/utils/cookie'
 
 export default {
-  data() {
-    return { token: '' }
-  },
-  created() {
+  async created() {
     const searchToken = new URL(window.location.href).searchParams.get('token')
-
-    this.token = searchToken ||
+    const token = searchToken ||
       this.$route.query.token ||
       getCookie('token') ||
       localStorage.getItem('token')
@@ -26,19 +22,20 @@ export default {
     if (this.$route.query.token) {
       delete this.$route.query.token
     }
-  },
-  async mounted() {
-    if (this.token) {
-      const response = await this.$store.dispatch('login/getUserInfo', { token: this.token })
 
-      if (!response) {
-        message.error('获取用户信息失败', 0)
+    if (token) {
+      message.destroy()
 
-        await this.$store.dispatch('login/clear')
-        this.$emit('errorStateChange', { status: true, error: new Error('获取用户信息失败') })
-      } else {
+      const response = await this.$store.dispatch('login/getUserInfo', { token })
+
+      if (response.status) {
         await this.$store.dispatch('login/jump')
         this.$emit('errorStateChange', { status: false, error: null })
+      } else {
+        message.error(response.message || '获取用户信息失败', 0)
+
+        await this.$store.dispatch('login/clear')
+        this.$emit('errorStateChange', { status: true, error: new Error(response.message || '获取用户信息失败') })
       }
     } else {
       message.error('获取权限失败', 0)
