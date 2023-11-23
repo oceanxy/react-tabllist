@@ -65,7 +65,11 @@ export default {
             this.showPageTitle
               ? (
                 <Space class={'tg-content-title-space'}>
-                  <IconFont type={this.$route.meta.icon} />
+                  {
+                    this.$route.meta.icon
+                      ? <IconFont type={this.$route.meta.icon} />
+                      : null
+                  }
                   {this.$route.meta.title}
                 </Space>
               )
