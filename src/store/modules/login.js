@@ -2,15 +2,25 @@ import JSEncrypt from 'jsencrypt'
 import config from '@/config'
 import { message } from 'ant-design-vue'
 import router from '@/router'
+import moment from 'moment'
 
 export default {
   namespaced: true,
   state: {
+    // 加载用户信息的状态
     loading: false,
+    // 最后一次登录时间，用来判断用户信息的新旧程度，实现前端主动在一个合适的时间重新验证 token 有效性
+    lastLoginTime: undefined,
+    // 最后一次登录 token，用来比较是否刷新用户信息
+    lastLoginToken: '',
+    // 用户信息
     userInfo: {},
+    // 全局修改密码弹窗的显示状态
     visibilityOfEditPassword: false,
-    currentItem: {},
-    codeKey: ''
+    // 验证码
+    codeKey: '',
+    // 用于保存当前页面内弹窗可能用到的临时数据
+    currentItem: {}
   },
   mutations: {
     setLoading(state, payload) {
@@ -18,6 +28,10 @@ export default {
     },
     setUserInfo(state, payload) {
       state.userInfo = payload
+    },
+    setLastLogin(state, payload) {
+      state.lastLoginTime = payload.time
+      state.lastLoginToken = payload.token
     },
     setAuthentication(state, payload) {
       if (payload) {
@@ -98,6 +112,10 @@ export default {
         } = response.data
 
         commit('setUserInfo', userInfo)
+        commit('setLastLogin', {
+          time: moment().format('YYYY-MM-DD HH:mm:ss'),
+          token
+        })
         commit('setAuthentication', token)
         commit('setSiteCache', { menuList, defaultMenuUrl })
         localStorage.setItem('theme', userInfo.themeFileName || config.theme.default)
@@ -128,6 +146,7 @@ export default {
       commit('setLoading', true)
 
       const response = await this.apis.getUserInfo(payload)
+
       const status = response.status
 
       if (status) {
@@ -150,6 +169,10 @@ export default {
 
         commit('setAuthentication', payload.token)
         commit('setUserInfo', userInfo)
+        commit('setLastLogin', {
+          time: moment().format('YYYY-MM-DD HH:mm:ss'),
+          token: payload.token
+        })
         localStorage.setItem('theme', userInfo.themeFileName || config.theme.default)
 
         dispatch('setParamsUseInHeader')
@@ -157,7 +180,7 @@ export default {
 
       commit('setLoading', false)
 
-      return Promise.resolve(status)
+      return Promise.resolve(response)
     },
     /**
      * 设置Header内需要使用的参数
@@ -188,6 +211,7 @@ export default {
      */
     async clear({ commit }, isPassive) {
       commit('setUserInfo', {})
+      commit('setLastLogin', {})
       commit('setAuthentication', null)
       commit('setSiteCache', null)
 
