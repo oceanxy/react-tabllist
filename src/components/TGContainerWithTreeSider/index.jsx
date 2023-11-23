@@ -402,22 +402,24 @@ export default {
       const node = treeNode?.[this.replaceFields.children]
       const childrenNumber = Array.isArray(node) && node.length ? `(${node.length})` : ''
 
-      return this.searchValue ? (
-        <span
-          slot={'title'}
-          title={treeNode[this.replaceFields.title] + childrenNumber}
-          domPropsInnerHTML={
-            treeNode[this.replaceFields.title].replace(
-              this.searchValue,
-              `<span style="color: ${this.primaryColor}">${this.searchValue}</span>`
-            ) + childrenNumber
-          }
-        />
-      ) : (
-        <span slot={'title'} title={treeNode[this.replaceFields.title] + childrenNumber}>
-          {treeNode[this.replaceFields.title] + childrenNumber}
-        </span>
-      )
+      return this.searchValue
+        ? (
+          <span
+            slot={'title'}
+            title={treeNode[this.replaceFields.title] + childrenNumber}
+            domPropsInnerHTML={
+              treeNode[this.replaceFields.title].replace(
+                this.searchValue,
+                `<span style="color: ${this.primaryColor}">${this.searchValue}</span>`
+              ) + childrenNumber
+            }
+          />
+        )
+        : (
+          <span slot={'title'} title={treeNode[this.replaceFields.title] + childrenNumber}>
+            {treeNode[this.replaceFields.title] + childrenNumber}
+          </span>
+        )
     },
     /**
      * 设置树每一级的图标
@@ -425,13 +427,21 @@ export default {
      * @returns {*|(function(): Promise<*>)|undefined}
      */
     getIcon(treeNode) {
-      return Object.prototype.toString.call(this.getCustomIcon) === '[object Function]' ? (
-        <span slot={'icon'}>{this.getCustomIcon(treeNode)}</span>
-      ) : treeNode.obj?.menuIcon?.includes?.('.svg') ? (
-        <Icon slot={'slot'} class={'icon'} component={() => import(`@/assets/images/${treeNode.obj.menuIcon}`)} />
-      ) // : <Icon slot={'slot'} type="caret-right" />
-      // : <IconFont slot={'slot'} type="caret-right" />
-        : undefined
+      return Object.prototype.toString.call(this.getCustomIcon) === '[object Function]'
+        ? (
+          <span slot={'icon'}>{this.getCustomIcon(treeNode)}</span>
+        )
+        : treeNode.obj?.menuIcon?.includes?.('.svg')
+          ? (
+            <Icon
+              slot={'slot'}
+              class={'icon'}
+              component={() => import(`@/assets/images/${treeNode.obj.menuIcon}`)}
+            />
+          )
+          // : <Icon slot={'slot'} type="caret-right" />
+          // : <IconFont slot={'slot'} type="caret-right" />
+          : undefined
     },
     /**
      * 获取树节点集合（注意此处有递归）
@@ -442,27 +452,33 @@ export default {
       return (
         dataSource?.map(item => (
           <Tree.TreeNode key={item[this.replaceFields.value]} dataSource={item}>
-            {!Array.isArray(item?.[this.replaceFields.children]) || !item[this.replaceFields.children].length ? (
-              <span slot={'switcherIcon'} class={'ant-tree-switcher'} style={'visibility: visible'}>
-                <i class={'anticon anticon-file ant-tree-switcher-line-icon'}>
-                  <svg
-                    viewBox="200 200 650 650"
-                    version="1.1"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="1em"
-                    height="1em"
-                    fill="currentColor"
-                  >
-                    <path d="M512 601.6a89.6 89.6 0 1 0-89.6-89.6 89.59 89.59 0 0 0 89.6 89.6z m0 0" />
-                  </svg>
-                </i>
-              </span>
-            ) : null}
+            {
+              !Array.isArray(item?.[this.replaceFields.children]) || !item[this.replaceFields.children].length
+                ? (
+                  <span slot={'switcherIcon'} class={'ant-tree-switcher'} style={'visibility: visible'}>
+                    <i class={'anticon anticon-file ant-tree-switcher-line-icon'}>
+                      <svg
+                        viewBox="200 200 650 650"
+                        version="1.1"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="1em"
+                        height="1em"
+                        fill="currentColor"
+                      >
+                        <path d="M512 601.6a89.6 89.6 0 1 0-89.6-89.6 89.59 89.59 0 0 0 89.6 89.6z m0 0" />
+                      </svg>
+                    </i>
+                  </span>
+                )
+                : null
+            }
             {this.getIcon(item)}
             {this.highlight(item)}
-            {Array.isArray(item?.[this.replaceFields.children])
-              ? this.getTreeNode(item[this.replaceFields.children])
-              : null}
+            {
+              Array.isArray(item?.[this.replaceFields.children])
+                ? this.getTreeNode(item[this.replaceFields.children])
+                : null
+            }
           </Tree.TreeNode>
         )) ?? []
       )
@@ -508,21 +524,25 @@ export default {
             onChange={debounce(this.onTreeSearch, 300)}
           />
           <Spin spinning={this.dataSource.loading}>
-            {this.treeDataSource?.length ? (
-              <Tree
-                showLine
-                showIcon
-                switcherIcon={<Icon type="caret-down" />}
-                selectedKeys={this.treeId}
-                onSelect={this.onSelect}
-                expandedKeys={this.expandedKeys}
-                onExpand={this.onExpand}
-              >
-                {this.getTreeNode(this.treeDataSource)}
-              </Tree>
-            ) : (
-              <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-            )}
+            {
+              this.treeDataSource?.length
+                ? (
+                  <Tree
+                    showLine
+                    showIcon
+                    switcherIcon={<Icon type="caret-down" />}
+                    selectedKeys={this.treeId}
+                    onSelect={this.onSelect}
+                    expandedKeys={this.expandedKeys}
+                    onExpand={this.onExpand}
+                  >
+                    {this.getTreeNode(this.treeDataSource)}
+                  </Tree>
+                )
+                : (
+                  <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                )
+            }
           </Spin>
         </div>
       </TGContainerWithSider>
