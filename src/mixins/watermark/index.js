@@ -35,8 +35,14 @@ export default () => {
       window.addEventListener('resize', this.handleResize)
       this.handleResize()
     },
-    beforeDestroy() {
-      watermark.remove()
+    destroyed() {
+      const wmDiv = document.getElementById('wm_div_id')
+
+      if (wmDiv) {
+        window.removeEventListener('resize', this.handleResize)
+        // 移除水印的逻辑，使用你自己的方法或第三方库
+        watermark.remove()
+      }
     },
     methods: {
       // 获取屏幕宽高
@@ -58,6 +64,8 @@ export default () => {
           watermark_fontsize: 12,
           watermark_parent_node: this.$el
         })
+
+
       }
     }
   }
