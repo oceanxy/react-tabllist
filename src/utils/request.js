@@ -11,9 +11,12 @@ export default function getService(conf, router, store) {
   // request interceptor
   service.interceptors.request.use(
     async config => {
+      const highPriorityToken = config.params?.token
       const token = localStorage.getItem('token')
 
-      if (token) {
+      if (highPriorityToken) {
+        config.headers.token = highPriorityToken
+      } else if (token) {
         config.headers.token = token
 
         if (conf.headerParams.isInUrl) {
@@ -104,7 +107,8 @@ export default function getService(conf, router, store) {
       return Promise.resolve({
         code: 0,
         status: false,
-        data: res.data
+        data: res.data,
+        message: res.message
       })
     },
     error => {
@@ -115,7 +119,8 @@ export default function getService(conf, router, store) {
 
       return Promise.resolve({
         code: 0,
-        status: false
+        status: false,
+        message: error.message
       })
     }
   )
