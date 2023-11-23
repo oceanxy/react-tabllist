@@ -18,6 +18,7 @@ import Logo from '@/components/Logo'
 import { mapActions, mapGetters } from 'vuex'
 import forIndex from '@/mixins/forIndex'
 import { getFirstLetterOfEachWordOfAppName } from '@/utils/utilityFunction'
+import moment from 'moment'
 
 export default {
   name: 'TGHeader',
@@ -40,6 +41,12 @@ export default {
     },
     userInfo() {
       return this.getState('userInfo', 'login')
+    },
+    lastLoginTime() {
+      return this.getState('lastLoginTime', 'login')
+    },
+    lastLoginToken() {
+      return this.getState('lastLoginToken', 'login')
     },
     isLogin() {
       return !!window.localStorage.getItem('token')
@@ -79,10 +86,17 @@ export default {
     userInfo: {
       immediate: true,
       async handler(value) {
-        const token = localStorage.getItem('token')
+        if (!this.loading) {
+          const token = localStorage.getItem('token')
+          const loginTimeDiff = moment().diff(moment(this.lastLoginTime), 'seconds')
 
-        if (!Object.keys(value).length && token) {
-          await this.getUserInfo({ token })
+          if (
+            token !== this.lastLoginToken || // 兼容第三方携带token登录的方式
+            loginTimeDiff >= 3600 || // 与上一次登录时间间隔大于1小时之后刷新一下用户信息
+            (token && !Object.keys(value).length)
+          ) {
+            await this.getUserInfo({ token })
+          }
         }
       }
     },
@@ -109,15 +123,6 @@ export default {
         stateName: 'organListForHeader',
         customApiName: 'getSitesOfStaff'
       })
-    }
-  },
-  async mounted() {
-    // 更新用户信息。因为目前用户信息存在 localStorage 中，直接关闭浏览器窗口不会清空用户信息，
-    // 所以每次进入到系统，需要更新一次用户信息，以确保用户信息不会被缓存污染
-    const token = localStorage.getItem('token')
-
-    if (token) {
-      await this.getUserInfo({ token })
     }
   },
   methods: {
