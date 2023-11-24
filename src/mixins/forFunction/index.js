@@ -9,6 +9,7 @@ import forIndex from '@/mixins/forIndex'
 import { verificationDialog, verifySelected } from '@/utils/message'
 import { mapGetters } from 'vuex'
 import { Button, message, Space } from 'ant-design-vue'
+import moment from 'moment'
 
 /**
  * 为表格功能按钮生成 mixin
@@ -167,20 +168,24 @@ export default ({ controlButtonPermissions, overrideDefaultButtons } = {}) => ({
      * @param [fileName] {string} 导出文件名 默认为本页面的 title
      * @param [payload] {Object} 自定义导出参数，会联合该模块的 store.state.search 一起传递给接口
      * @param [customApiName] {string} 自定义导出接口名
+     * @param [isTimeName] {boolean} 默认false，开启之后filename后添加时间格式命名
      * @returns {Promise<void>}
      */
-    async onCustomExport(fileName, payload, customApiName) {
+    async onCustomExport(fileName, payload, customApiName, isTimeName = false) {
       message.loading({
         content: '正在导出，请稍候...',
         duration: 0
       })
+
+      // 获取当前日期
+      const date = moment(new Date()).format('YYYYMMDD')
 
       this.exportButtonDisabled = true
 
       await this.$store.dispatch('export', {
         moduleName: this.moduleName,
         additionalQueryParameters: this.$route.query,
-        fileName: fileName || this.$route.meta.title,
+        fileName: `${fileName || this.$route.meta.title}${isTimeName ? date : ''}`,
         payload,
         customApiName
       })
