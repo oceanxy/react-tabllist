@@ -1,6 +1,7 @@
 import zhCN from 'ant-design-vue/lib/locale-provider/zh_CN'
 import { ConfigProvider } from 'ant-design-vue'
 import { merge } from 'lodash'
+import { RouterView } from 'vue-router'
 
 export default {
   name: 'TGApp',
@@ -72,15 +73,7 @@ export default {
           </div>
         </div>
         <ConfigProvider locale={zhCN}>
-          {
-            this.$route.meta.keepAlive
-              ? (
-                <KeepAlive>
-                  <RouterView key={this.$route.fullPath} />
-                </KeepAlive>
-              )
-              : <RouterView key={this.$route.fullPath} />
-          }
+          <RouterView />
         </ConfigProvider>
       </div>
     )
