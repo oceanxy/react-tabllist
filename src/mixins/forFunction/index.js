@@ -178,7 +178,7 @@ export default ({ controlButtonPermissions, overrideDefaultButtons } = {}) => ({
       })
 
       // 获取当前日期
-      const date = moment(new Date()).format('YYYYMMDD')
+      const date = moment(new Date()).format('YYYYMMDDHHmmss')
 
       this.exportButtonDisabled = true
 
