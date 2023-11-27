@@ -36,12 +36,10 @@
         border-top: 1px solid $border-color-base;
       }
     }
-
   }
 
   &.ant-menu-inline-collapsed {
-    &>.ant-menu-submenu-selected {
-
+    & > .ant-menu-submenu-selected {
       .ant-menu-item-title,
       .ant-menu-submenu-title {
         background: $primary-color-light-hover;
@@ -50,15 +48,13 @@
   }
 
   &.ant-menu-inline-collapsed {
-
-    &>.ant-menu-item,
-    &>.ant-menu-item-group>.ant-menu-item-group-list>.ant-menu-item,
-    &>.ant-menu-item-group>.ant-menu-item-group-list>.ant-menu-submenu>.ant-menu-submenu-title,
-    &>.ant-menu-submenu>.ant-menu-submenu-title {
-
-      &>div {
+    & > .ant-menu-item,
+    & > .ant-menu-item-group > .ant-menu-item-group-list > .ant-menu-item,
+    & > .ant-menu-item-group > .ant-menu-item-group-list > .ant-menu-submenu > .ant-menu-submenu-title,
+    & > .ant-menu-submenu > .ant-menu-submenu-title {
+      & > div {
         justify-content: center;
-
+        display: flex;
       }
 
       padding: 0 16px !important;
@@ -74,8 +70,6 @@
     }
   }
 
-
-
   .ant-menu-item:hover,
   .ant-menu-submenu .ant-menu-submenu-title:hover {
     border-radius: $border-radius-base;
@@ -84,7 +78,6 @@
 
   .ant-menu-item,
   .ant-menu-submenu {
-
     .ant-menu-item-title,
     .ant-menu-submenu-title {
       div {
@@ -97,7 +90,7 @@
 
           svg {
             width: 1.1em;
-            height: 1.1em
+            height: 1.1em;
           }
         }
 
@@ -118,7 +111,7 @@
       }
 
       &,
-      &>.ant-menu-submenu-title {
+      & > .ant-menu-submenu-title {
         // color: $primary-color-active;
         background: $primary-color-light-hover;
         border-radius: 4px;
@@ -148,7 +141,7 @@
 
 // 折叠状态下的子菜单
 .ant-menu-submenu.ant-menu-submenu-popup {
-  &>.ant-menu {
+  & > .ant-menu {
     max-height: 100vh;
     overflow-y: auto;
 
@@ -162,11 +155,9 @@
   }
 
   &.t-g-menu-popup.background {
-    &>.ant-menu {
-
+    & > .ant-menu {
       // &:not(.ant-menu-horizontal) .ant-menu-item-selected {
       //   background: none;
-
 
       // }
 
@@ -174,6 +165,5 @@
       //  padding-left: 16px;
       //}
     }
-
   }
 }
