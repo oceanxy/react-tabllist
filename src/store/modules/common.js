@@ -39,7 +39,9 @@ export default {
     // 省数据
     provinces: [],
     // 当前缓存的页面路由
-    pageTabs: []
+    pageTabs: [],
+    // 当前缓存的页面名称（VUE 组件实例的 name 属性）
+    pageNames: []
   },
   mutations: {
     setAdministrativeDivision(state, payload) {
@@ -66,6 +68,9 @@ export default {
     },
     setPageTabs(state, payload) {
       state.pageTabs = payload || []
+    },
+    setPageNames(state, payload) {
+      state.pageNames = payload || []
     }
   },
   actions: {

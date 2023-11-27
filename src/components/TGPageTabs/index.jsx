@@ -8,6 +8,7 @@
 import './index.scss'
 import { Icon, Tag } from 'ant-design-vue'
 import { replacePath } from '@/utils/utilityFunction'
+import config from '@/config'
 
 export default {
   name: 'TGPageTabs',
@@ -41,27 +42,45 @@ export default {
     $route: {
       immediate: true,
       handler(value) {
-        const isExistent = this.pageTabs.find(route => {
-          return replacePath(route.path) === replacePath(value.path)
-        })
-
-        if (!isExistent) {
-          this.$store.commit('common/setPageTabs', this.pageTabs.concat(value))
-        }
-
-        const isHomeRouteExistent = this.pageTabs.find(route => {
-          return replacePath(route.path) === replacePath(this.homeRoute.path)
-        })
-
-        if (!isHomeRouteExistent) {
-          this.$store.commit('common/setPageTabs', [this.homeRoute].concat(this.pageTabs))
-        }
+        this.setCurrentPageTabs(value)
+        // TODO 手动管理已经缓存的页面（vue组件实例的name属性），keep-alive的include属性
+        // 目前这种方式不可行，因为动态name属性不好动态获取，即使获取到了（setCurrentPageName方法所示），
+        // 在其他组件内交互也无法获取，需要思考新的方式来处理该问题
+        // this.setCurrentPageName()
       }
     }
   },
   methods: {
-    replacePath(value) {
-      return value.replace(/([a-zA-Z0-9\-\/]+)(\/)$/g, '$1')
+    setCurrentPageTabs(currentRoute) {
+      const isExistent = this.pageTabs.find(route => {
+        return replacePath(route.path) === replacePath(currentRoute.path)
+      })
+
+      if (!isExistent) {
+        if (replacePath(currentRoute.path) === replacePath(this.homeRoute.path)) {
+          this.$store.commit('common/setPageTabs', [this.homeRoute].concat(this.pageTabs))
+        } else {
+          this.$store.commit('common/setPageTabs', this.pageTabs.concat(currentRoute))
+
+          this.setCurrentPageTabs(this.homeRoute)
+        }
+      }
+    },
+    setCurrentPageName() {
+      this.$nextTick(() => {
+        /** 获取当前路由对应页面的 VUE 组件实例的 name 属性 **/
+        let component = this.$options.parent.$children.at(-1)
+
+        while (component && !component.moduleName) {
+          component = component?.$children?.at(-1)
+        }
+
+        if (component?.$options.name && !this.pageNames.find(name => name === component.$options.name)) {
+          if (!config.associateKeepAliveAndTabPage || this.$route.meta.keepAlive) {
+            this.$store.commit('common/setPageNames', this.pageNames.concat(component.$options.name))
+          }
+        }
+      })
     },
     resize(force) {
       const sl = this.$refs.pageTabs

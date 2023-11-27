@@ -33,6 +33,13 @@ module.exports = {
   hideBreadCrumb: false,
   // 启用标签页并缓存页面状态
   enableTabPage: false,
+  /**
+   * TODO 该配置暂未实现，引用位置：@/components/TGPageTabs
+   * 是否把标签页的缓存和路由的缓存（route.meta.keepAlive）进行强关联，依赖 enableTabPage。
+   * - true：打开的标签页是否进行缓存取决于 route.meta.keepAlive 的值
+   * - false(默认)：打开的标签页必定被缓存
+   */
+  associateKeepAliveAndTabPage: false,
   // 面包屑分隔符，如：首页 / 首页
   breadCrumbSeparator: '/',
   // 统一上传地址

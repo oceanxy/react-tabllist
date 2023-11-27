@@ -7,6 +7,7 @@ import TGBreadcrumb from '@/components/TGBreadcrumb'
 import watermark from '@/mixins/watermark'
 import TGPageTabs from '@/components/TGPageTabs'
 import { RouterView } from 'vue-router'
+import config from '@/config'
 
 export default {
   name: 'TGBackendSystemLayout',
@@ -43,7 +44,15 @@ export default {
                 : <TGBreadcrumb />
             }
             {this.$config.enableTabPage ? <TGPageTabs /> : null}
-            <RouterView />
+            {
+              config.enableTabPage || this.$route.meta.keepAlive
+                ? (
+                  <KeepAlive>
+                    <RouterView key={this.$route.fullPath} />
+                  </KeepAlive>
+                )
+                : <RouterView key={this.$route.fullPath} />
+            }
           </Layout.Content>
         </Layout>
         <div id="global-modal" />
