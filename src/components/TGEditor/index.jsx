@@ -113,14 +113,14 @@ export default {
       mode: 'default' // or 'simple'
     }
   },
+  mounted() {
+  },
   methods: {
     onCreated(editor) {
       this.editor = Object.seal(editor) // 一定要用 Object.seal() ，否则会报错
-
     },
     onChange(editor) {
-      if (editor.isEmpty()) {
-        editor.setContent('')
+      if (editor.isEmpty() && this.value) {
         this.$emit('change', '')
       } else {
         this.$emit('change', editor.getHtml())
