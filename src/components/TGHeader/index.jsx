@@ -370,7 +370,10 @@ export default {
                 ]
                 : (
                   <Dropdown class={'tg-header-user'} overlayClassName={'tg-header-user-overlay'}>
-                    <div class={'tg-header-user-content'}>
+                    <Spin
+                      spinning={this.loading}
+                      class={`tg-header-user-content${this.loading ? ' blur' : ''}`}
+                    >
                       <Avatar class={'tg-avatar'} shape={'circle'}>
                         <Icon type={'user'} />
                       </Avatar>
@@ -383,7 +386,7 @@ export default {
                           去登录
                         </Button>
                       </div>
-                    </div>
+                    </Spin>
                   </Dropdown>
                 )
             }
