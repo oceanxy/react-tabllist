@@ -89,9 +89,18 @@ export default {
         if (!this.loading) {
           const token = localStorage.getItem('token')
           const loginTimeDiff = moment().diff(moment(this.lastLoginTime), 'seconds')
+          const {
+            NODE_ENV,
+            VUE_APP_DEVELOPMENT_ENVIRONMENT_SKIPPING_PERMISSIONS
+          } = process.env.NODE_ENV !== 'production'
 
           if (
-            token &&
+            (
+              // 验证token是否存在
+              token ||
+              // 验证开发环境是否开启跳过权限
+              (NODE_ENV === 'development' && VUE_APP_DEVELOPMENT_ENVIRONMENT_SKIPPING_PERMISSIONS === 'on')
+            ) &&
             (
               token !== this.lastLoginToken || // 兼容第三方携带token登录的方式
               loginTimeDiff >= 3600 || // 与上一次登录时间间隔大于1小时之后刷新一下用户信息
