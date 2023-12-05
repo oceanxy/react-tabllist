@@ -91,9 +91,12 @@ export default {
           const loginTimeDiff = moment().diff(moment(this.lastLoginTime), 'seconds')
 
           if (
-            token !== this.lastLoginToken || // 兼容第三方携带token登录的方式
-            loginTimeDiff >= 3600 || // 与上一次登录时间间隔大于1小时之后刷新一下用户信息
-            (token && !Object.keys(value).length)
+            token &&
+            (
+              token !== this.lastLoginToken || // 兼容第三方携带token登录的方式
+              loginTimeDiff >= 3600 || // 与上一次登录时间间隔大于1小时之后刷新一下用户信息
+              !Object.keys(value).length
+            )
           ) {
             await this.getUserInfo({ token })
           }
