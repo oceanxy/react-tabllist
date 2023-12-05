@@ -38,7 +38,7 @@ export default {
         this.$emit('errorStateChange', { status: true, error: new Error(response.message || '获取用户信息失败') })
       }
     } else {
-      message.error('获取权限失败', 0)
+      message.error('未检测到登录令牌或登录令牌已失效', 0)
       this.$emit('errorStateChange', { status: true, error: new Error('请检查TOKEN是否有效') })
     }
   },
