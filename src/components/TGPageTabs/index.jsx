@@ -121,16 +121,13 @@ export default {
       await this.$router.push(route)
     },
     async onTabClose(routeClosed) {
-      // 如果关闭的是当前页，则回退到上一页
-      if (replacePath(routeClosed.path) === replacePath(this.$route.path)) {
-        await this.$router.push(this.pageTabs.at(-2))
-      }
-
+      // 寻找当前页在 pageTabs 中对应的位置
       const routeIndexClosed = this.pageTabs.findIndex(route => {
         return replacePath(route.path) === replacePath(routeClosed.path)
       })
 
       this.pageTabs.splice(routeIndexClosed, 1)
+      await this.$router.push(this.pageTabs.at(-1))
       this.$store.commit('common/setPageTabs', [...this.pageTabs])
     }
   },
