@@ -123,6 +123,18 @@ export default {
         return false
       }
 
+      // 判断格式是否正确
+      const suffix = file.type.split('/')[1]
+
+      if (!this.accept.includes(suffix) && this.accept !== '*') {
+        file.status = 'error'
+        file.error = new Error('文件格式不正确，上传失败。')
+        file.response = '文件格式不正确，上传失败。'
+
+        return false
+      }
+
+
       // 非错误状态的文件都纳入计数范围，统计已经上传和正在上传的文件的总数。
       // 超过数量限制的文件的状态将被修改为错误状态，即通知组件不再上传该文件
       const index = this.fileList.concat(fileList)
