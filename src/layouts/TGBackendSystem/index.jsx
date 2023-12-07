@@ -6,8 +6,8 @@ import { mapGetters } from 'vuex'
 import TGBreadcrumb from '@/components/TGBreadcrumb'
 import watermark from '@/mixins/watermark'
 import TGPageTabs from '@/components/TGPageTabs'
+import { replacePath } from '@/utils/utilityFunction'
 import { RouterView } from 'vue-router'
-import config from '@/config'
 
 export default {
   name: 'TGBackendSystemLayout',
@@ -45,13 +45,14 @@ export default {
             }
             {this.$config.enableTabPage ? <TGPageTabs /> : null}
             {
-              config.enableTabPage || this.$route.meta.keepAlive
+              // this.$config.enableTabPage ||
+              this.$route.meta.keepAlive
                 ? (
                   <KeepAlive>
-                    <RouterView key={this.$route.fullPath} />
+                    <RouterView key={replacePath(this.$route.fullPath)} />
                   </KeepAlive>
                 )
-                : <RouterView key={this.$route.fullPath} />
+                : <RouterView key={replacePath(this.$route.fullPath)} />
             }
           </Layout.Content>
         </Layout>
