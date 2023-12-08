@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 /**
  * 验证邮件格式
  * @param rule
@@ -85,6 +87,59 @@ export function verifyPhoneNumber(rule, value, callback) {
 
     if (!MOBILE_NUMBER_REG.test(value) && !LANDLINE_NUMBER_REG.test(value)) {
       callback(new Error('电话号码格式有误！'))
+    }
+  }
+
+  callback()
+}
+
+/**
+ * 验证给定日期范围是否与目标日期范围存在交叉
+ * @param range {[Moment, Moment][]} - 目标日期范围
+ * @param [unit] {string} - 如果要将粒度限制为毫秒以外的单位，请将单位作为第三个参数传递。详见：https://momentjs.cn/docs/#/query/is-between/
+ * @return {(function(*, *, *): void)|*}
+ */
+export const verifyIsDateRangeBetween = (range, unit = 'second') => (rule, value, callback) => {
+  if (rule.required || value) {
+    for (const r of range) {
+      if (
+        !(
+          moment(value[1]).endOf(unit).isBefore(r[0].startOf(unit)) ||
+          moment(value[0]).startOf(unit).isAfter(r[1].endOf(unit)))
+      ) {
+        rule.message = rule.message.replace(
+          '{date}',
+          moment(value[0]).format('YYYY-MM-DD') + ' 至 ' + moment(value[1]).format('YYYY-MM-DD') + ' '
+        )
+
+        callback(new Error(rule.message))
+      }
+    }
+  }
+
+  callback()
+}
+
+/**
+ * 验证给定日期是否介于目标日期范围之间
+ * @param range {[Moment, Moment][]} - 目标日期范围
+ * @param [unit] {string} - 如果要将粒度限制为毫秒以外的单位，请将单位作为第三个参数传递。详见：https://momentjs.cn/docs/#/query/is-between/
+ * @param [inclusivity] {string} - 日期包容性，默认“()”。详见 https://momentjs.cn/docs/#/query/is-between/
+ * @return {(function(*, *, *): void)|*}
+ */
+export const verifyIsDateBetween = (range, unit = 'second', inclusivity = '()') => (rule, value, callback) => {
+  if (rule.required || value) {
+    for (const r of range) {
+      if (
+        moment(value).isBetween(
+          r[0].startOf(unit),
+          r[1].endOf(unit),
+          unit,
+          inclusivity
+        )
+      ) {
+        callback(new Error(rule.message.replace('{date}', moment(value).format('YYYY-MM-DD')) + ' '))
+      }
     }
   }
 
