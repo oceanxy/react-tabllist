@@ -41,7 +41,7 @@ export default {
     renderItem(item) {
       const customLabel = (
         <div class="tg-transfer-custom-item">
-          {item.title} - {item.mobile} <span class={'tg-transfer-right'}>{item._status}</span>
+          {item.title} {item.mobile ? '-' : ''} {item.mobile} <span class={'tg-transfer-right'}>{item._status}</span>
         </div>
       )
 
