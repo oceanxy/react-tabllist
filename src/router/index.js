@@ -248,7 +248,15 @@ router.beforeEach((to, from, next) => {
       } else {
         // 登录状态下直接在地址栏中拼接 token，且新 token 与旧 token 一致，则删除之
         if (localToken && token === localToken) {
-          next({ ...to, query: { ...to.query, token: undefined } })
+          // 如果 search 中存在 token，则删除之
+          if (token) {
+            window.history.replaceState(null, null, window.location.pathname)
+          }
+
+          // 如果 hash 中存在 token，则删除之
+          if (to.query.token) {
+            delete to.query.token
+          }
         }
 
         next()
