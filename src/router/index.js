@@ -219,8 +219,9 @@ router.beforeEach((to, from, next) => {
 
   document.title = title + config.systemName
 
+  const searchToken = new URL(window.location.href).searchParams.get('token')
   // 通过地址栏传递 token 的情况，优先使用地址栏的 token。因为本地存储的 token 可能已过期（上一次页面关闭时未清空）
-  const token = new URL(window.location.href).searchParams.get('token') || to.query.token
+  const token = searchToken || to.query.token
   // 获取存储在localStorage内的token，防止刷新页面导致vuex被清空而跳转到登录页
   const localToken = localStorage.getItem('token')
 
@@ -248,6 +249,12 @@ router.beforeEach((to, from, next) => {
       } else {
         // 登录状态下直接在地址栏中拼接 token，且新 token 与旧 token 一致，则删除之
         if (localToken && token === localToken) {
+          // 如果 search 中存在 token，则删除之
+          if (searchToken) {
+            window.history.replaceState(null, null, window.location.pathname)
+          }
+
+          // 如果 hash 中存在 token，则删除之
           next({ ...to, query: { ...to.query, token: undefined } })
         }
 
