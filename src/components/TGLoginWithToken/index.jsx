@@ -36,10 +36,35 @@ export default {
 
         await this.$store.dispatch('login/clear')
         this.$emit('errorStateChange', { status: true, error: new Error(response.message || '获取用户信息失败') })
+
+        this.$nextTick(() => {
+          this.jumpToThirdPartyLogin()
+        })
       }
     } else {
       message.error('未检测到登录令牌或登录令牌已失效', 0)
       this.$emit('errorStateChange', { status: true, error: new Error('请检查TOKEN是否有效') })
+
+      this.$nextTick(() => {
+        this.jumpToThirdPartyLogin()
+      })
+    }
+  },
+  methods: {
+    jumpToThirdPartyLogin() {
+      if (process.env.VUE_APP_LOGIN_ADDRESS) {
+        let url
+
+        try {
+          const URL = new URL(process.env.VUE_APP_LOGIN_ADDRESS)
+
+          url = URL.href
+        } catch (e) {
+          url = window.location.origin + process.env.VUE_APP_LOGIN_ADDRESS
+        } finally {
+          window.location.href = url
+        }
+      }
     }
   },
   render() {
