@@ -228,7 +228,7 @@ router.beforeEach((to, from, next) => {
   // 通过地址栏传递 token 的情况，优先使用地址栏的 token。因为本地存储的 token 可能已过期（上一次页面关闭时未清空）
   const token = searchToken || to.query.token
   // 获取存储在localStorage内的token，防止刷新页面导致vuex被清空而跳转到登录页
-  const localToken = localStorage.getItem('token')
+  const localToken = localStorage.getItem(`${appName}-token`)
 
   if (
     to.meta.requiresAuth &&

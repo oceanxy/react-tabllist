@@ -187,14 +187,14 @@ export default {
 
         this.$nextTick(() => {
           this.openKeys = this.selectedKeys.toReversed().slice(1) // 排除最后一级（最后一级一般不是可展开的菜单层级）
-          localStorage.setItem('openKeys', JSON.stringify(this.openKeys))
+          localStorage.setItem(`${appName}-openKeys`, JSON.stringify(this.openKeys))
         })
       }
     }
   },
   async created() {
     // 从缓存中取出openKeys，设置到菜单中
-    const openKeys = localStorage.getItem('openKeys')
+    const openKeys = localStorage.getItem(`${appName}-openKeys`)
 
     if (openKeys) {
       this.openKeys = JSON.parse(openKeys)
@@ -292,7 +292,7 @@ export default {
       }
 
       // 将当前打开的父级菜单存入缓存中
-      localStorage.setItem('openKeys', JSON.stringify(keyPath))
+      localStorage.setItem(`${appName}-openKeys`, JSON.stringify(keyPath))
 
       // 等待菜单打开动画执行完成，在下一次渲染周期执行
       // 将当前菜单的pathKey赋值给openKeys，以实现只打开一个折叠菜单的功能
