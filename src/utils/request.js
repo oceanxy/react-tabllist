@@ -1,6 +1,9 @@
 import axios from 'axios'
 import qs from 'qs'
 import { showMessage } from '@/utils/message'
+import { getFirstLetterOfEachWordOfAppName } from '@/utils/utilityFunction'
+
+const appName = getFirstLetterOfEachWordOfAppName()
 
 export default function getService(conf, router, store) {
   const service = axios.create({
@@ -12,7 +15,7 @@ export default function getService(conf, router, store) {
   service.interceptors.request.use(
     async config => {
       const highPriorityToken = config.params?.token
-      const token = localStorage.getItem('token')
+      const token = localStorage.getItem(`${appName}-token`)
 
       if (highPriorityToken) {
         config.headers.token = highPriorityToken
@@ -29,7 +32,7 @@ export default function getService(conf, router, store) {
 
       if (conf.headerParams?.show) {
         if (conf.headerParams.fieldName) {
-          config.headers[conf.headerParams.fieldName] = localStorage.getItem('headerId')
+          config.headers[conf.headerParams.fieldName] = localStorage.getItem(`${appName}-headerId`)
         } else {
           throw new Error('未在 src/config/index.js 中配置 headerParams.fieldName 字段。')
         }
@@ -95,7 +98,7 @@ export default function getService(conf, router, store) {
 
       // 未登录或登录失效，需要重新登录
       if (+res.code === 30001) {
-        if (localStorage.getItem('token')) {
+        if (localStorage.getItem(`${appName}-token`)) {
           await store.dispatch('login/clear', true)
         }
 

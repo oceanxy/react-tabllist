@@ -41,6 +41,9 @@
 <script>
 import '@/components/TGMenu/assets/styles/index.scss'
 import { Menu } from 'ant-design-vue'
+import { getFirstLetterOfEachWordOfAppName } from '@/utils/utilityFunction'
+
+const appName = getFirstLetterOfEachWordOfAppName()
 
 // 函数组件 自定义子菜单
 const TGSubMenu = {
@@ -131,7 +134,7 @@ const TGSubMenu = {
     activeSuffixForMenuIcon() {
       return this.$config.activeSuffixForMenuIcon.replace(
         '{themeName}',
-        `-${localStorage.getItem('theme') || this.$config.theme.default}`
+        `-${localStorage.getItem(`${appName}-theme`) || this.$config.theme.default}`
       )
     },
     popupSubMenuClassName() {
@@ -171,7 +174,7 @@ export default {
     activeSuffixForMenuIcon() {
       return this.$config.activeSuffixForMenuIcon.replace(
         '{themeName}',
-        `-${localStorage.getItem('theme') || this.$config.theme.default}`
+        `-${localStorage.getItem(`${appName}-theme`) || this.$config.theme.default}`
       )
     }
   },
@@ -180,7 +183,7 @@ export default {
       immediate: true,
       handler(route) {
         this.selectedKeys = this.getSelectedKeys(route)
-        localStorage.setItem('selectedKey', route.path)
+        localStorage.setItem(`${appName}-selectedKey`, route.path)
 
         this.$nextTick(() => {
           this.openKeys = this.selectedKeys.toReversed().slice(1) // 排除最后一级（最后一级一般不是可展开的菜单层级）

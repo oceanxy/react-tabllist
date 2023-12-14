@@ -6,13 +6,16 @@
  */
 
 import './themeFromLess.scss'
+import { getFirstLetterOfEachWordOfAppName } from '@/utils/utilityFunction'
+
+const appName = getFirstLetterOfEachWordOfAppName()
 
 export default function getVariablesStyle(config, store) {
-  let _theme = localStorage.getItem('theme')
+  let _theme = localStorage.getItem(`${appName}-theme`)
 
   if (!_theme) {
     _theme = config.theme.default
-    localStorage.setItem('theme', _theme)
+    localStorage.setItem(`${appName}-theme`, _theme)
   }
 
   // 加载主题

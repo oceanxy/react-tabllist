@@ -3,6 +3,9 @@ import config from '@/config'
 import { message } from 'ant-design-vue'
 import router from '@/router'
 import moment from 'moment'
+import { getFirstLetterOfEachWordOfAppName } from '@/utils/utilityFunction'
+
+const appName = getFirstLetterOfEachWordOfAppName()
 
 export default {
   namespaced: true,
@@ -35,18 +38,18 @@ export default {
     },
     setAuthentication(state, payload) {
       if (payload) {
-        localStorage.setItem('token', payload)
+        localStorage.setItem(`${appName}-token`, payload)
       } else {
-        localStorage.removeItem('token')
+        localStorage.removeItem(`${appName}-token`)
       }
     },
     setSiteCache(state, payload) {
       if (payload) {
-        localStorage.setItem('defaultRoute', payload.defaultMenuUrl || '')
-        localStorage.setItem('menu', JSON.stringify(payload.menuList))
+        localStorage.setItem(`${appName}-defaultRoute`, payload.defaultMenuUrl || '')
+        localStorage.setItem(`${appName}-menu`, JSON.stringify(payload.menuList))
       } else {
-        localStorage.removeItem('defaultRoute')
-        localStorage.removeItem('menu')
+        localStorage.removeItem(`${appName}-defaultRoute`)
+        localStorage.removeItem(`${appName}-menu`)
       }
     }
   },
@@ -57,7 +60,7 @@ export default {
       // 检测query参数是否存在重定向
       const { redirect, ...query } = router.history.current.query
       // 检测本地存储是否存在保存的路由（意外退出的路由），如果有，则在登录成功后直接跳转到该路由
-      const path = localStorage.getItem('selectedKey')
+      const path = localStorage.getItem(`${appName}-selectedKey`)
 
       if (redirect) {
         await router.replace({ path: `${redirect}`, query })
@@ -67,7 +70,7 @@ export default {
         await router.replace({ name: 'home' })
       }
 
-      const userTheme = localStorage.getItem('theme') ||
+      const userTheme = localStorage.getItem(`${appName}-theme`) ||
         state?.login?.userInfo?.themeFileName ||
         config.theme.default
 
@@ -118,7 +121,7 @@ export default {
         })
         commit('setAuthentication', token)
         commit('setSiteCache', { menuList, defaultMenuUrl })
-        localStorage.setItem('theme', userInfo.themeFileName || config.theme.default)
+        localStorage.setItem(`${appName}-theme`, userInfo.themeFileName || config.theme.default)
 
         dispatch('setParamsUseInHeader')
       }
@@ -173,7 +176,7 @@ export default {
           time: moment().format('YYYY-MM-DD HH:mm:ss'),
           token: payload.token
         })
-        localStorage.setItem('theme', userInfo.themeFileName || config.theme.default)
+        localStorage.setItem(`${appName}-theme`, userInfo.themeFileName || config.theme.default)
 
         dispatch('setParamsUseInHeader')
       }
@@ -187,7 +190,7 @@ export default {
      */
     setParamsUseInHeader({ state, commit }) {
       if (config.headerParams?.show) {
-        localStorage.setItem('headerId', state.userInfo.organId || '')
+        localStorage.setItem(`${appName}-headerId`, state.userInfo.organId || '')
 
         commit('setState', {
           value: state.userInfo.organId,
@@ -219,7 +222,7 @@ export default {
       if (!isPassive) {
         localStorage.removeItem('openKeys')
         localStorage.removeItem('selectedKey')
-        localStorage.setItem('theme', config.theme.default)
+        localStorage.setItem(`${appName}-theme`, config.theme.default)
 
         if (config.headerParams?.show) {
           localStorage.removeItem('headerId')

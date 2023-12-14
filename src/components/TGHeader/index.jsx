@@ -20,6 +20,8 @@ import forIndex from '@/mixins/forIndex'
 import { getFirstLetterOfEachWordOfAppName } from '@/utils/utilityFunction'
 import moment from 'moment'
 
+const appName = getFirstLetterOfEachWordOfAppName()
+
 export default {
   name: 'TGHeader',
   mixins: [forIndex],
@@ -49,7 +51,7 @@ export default {
       return this.getState('lastLoginToken', 'login')
     },
     isLogin() {
-      return !!window.localStorage.getItem('token')
+      return !!window.localStorage.getItem(`${appName}-token`)
     },
     news() {
       return this.getState('news', 'common')
@@ -59,10 +61,10 @@ export default {
     },
     headerId: {
       get() {
-        return this.getState('headerId', 'common') || localStorage.getItem('headerId')
+        return this.getState('headerId', 'common') || localStorage.getItem(`${appName}-headerId`)
       },
       set(value) {
-        localStorage.setItem('headerId', value)
+        localStorage.setItem(`${appName}-headerId`, value)
         this.$store.commit('setState', {
           value,
           moduleName: 'common',
@@ -77,7 +79,7 @@ export default {
     },
     theme() {
       return (
-        localStorage.getItem('theme') || this.$store.state?.login?.userInfo?.themeFileName || this.$config.theme.default
+        localStorage.getItem(`${appName}-theme`) || this.$store.state?.login?.userInfo?.themeFileName || this.$config.theme.default
       )
     }
   },
@@ -87,7 +89,7 @@ export default {
       immediate: true,
       async handler(value) {
         if (!this.loading) {
-          const token = localStorage.getItem('token')
+          const token = localStorage.getItem(`${appName}-token`)
           const loginTimeDiff = moment().diff(moment(this.lastLoginTime), 'seconds')
           const {
             NODE_ENV,
@@ -200,7 +202,7 @@ export default {
           merge: true
         })
 
-        localStorage.setItem('theme', themeFileName || this.$config.theme.default)
+        localStorage.setItem(`${appName}-theme`, themeFileName || this.$config.theme.default)
         window.location.reload()
       }
     },

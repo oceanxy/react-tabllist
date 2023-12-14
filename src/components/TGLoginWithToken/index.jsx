@@ -4,6 +4,9 @@
 
 import { message } from 'ant-design-vue'
 import { getCookie } from '@/utils/cookie'
+import { getFirstLetterOfEachWordOfAppName } from '@/utils/utilityFunction'
+
+const appName = getFirstLetterOfEachWordOfAppName()
 
 export default {
   async created() {
@@ -11,7 +14,7 @@ export default {
     const token = searchToken ||
       this.$route.query.token ||
       getCookie('token') ||
-      localStorage.getItem('token')
+      localStorage.getItem(`${appName}-token`)
 
     // 如果 search 中存在 token，则删除之
     if (searchToken) {

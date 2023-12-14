@@ -6,6 +6,9 @@ import router from './router'
 import store from './store'
 import getVariablesStyle from '@/assets/styles'
 import { join, resolve } from 'path'
+import { getFirstLetterOfEachWordOfAppName } from '@/utils/utilityFunction'
+
+const appName = getFirstLetterOfEachWordOfAppName()
 
 useComponents(config)
 
@@ -43,7 +46,7 @@ const { NODE_ENV, VUE_APP_PUBLIC_PATH } = process.env
 
 // 加载主题（生产环境和开发环境因为webpack打包机制的不同，所以采用不同的方式实现）
 if (NODE_ENV === 'production') {
-  const theme = localStorage.getItem('theme') || config.theme.default
+  const theme = localStorage.getItem(`${appName}-theme`) || config.theme.default
 
   fetch(resolve(join(__dirname, VUE_APP_PUBLIC_PATH, '/manifest.json')))
     .then(response => response.json())

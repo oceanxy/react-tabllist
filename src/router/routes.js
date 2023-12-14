@@ -1,4 +1,7 @@
 import config from '@/config'
+import { getFirstLetterOfEachWordOfAppName } from '@/utils/utilityFunction'
+
+const appName = getFirstLetterOfEachWordOfAppName()
 
 /**
  * 获取基础路由数据
@@ -21,7 +24,7 @@ export default function getBaseRoutes(routes) {
         name: 'home',
         redirect: {
           name: config.dynamicRouting
-            ? localStorage.getItem('defaultRoute') || config.defaultRouteName
+            ? localStorage.getItem(`${appName}-defaultRoute`) || config.defaultRouteName
             : config.defaultRouteName
         },
         meta: {
@@ -38,7 +41,7 @@ export default function getBaseRoutes(routes) {
           component: () => import(`@/layouts/${_config.layout}`),
           redirect: {
             name: config.dynamicRouting
-              ? localStorage.getItem('defaultRoute') || config.defaultRouteName
+              ? localStorage.getItem(`${appName}-defaultRoute`) || config.defaultRouteName
               : config.defaultRouteName
           },
           children: routes,
@@ -61,7 +64,7 @@ export default function getBaseRoutes(routes) {
         component: () => import('@/views/Home'),
         redirect: () => {
           // 登录状态下无可用菜单跳转到无权限页面
-          if (localStorage.getItem('token')) {
+          if (localStorage.getItem(`${appName}-token`)) {
             return { name: 'noAccess', query: { 'no-link': 1 } }
           }
 

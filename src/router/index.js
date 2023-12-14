@@ -10,6 +10,9 @@ import VueRouter from 'vue-router'
 import getBaseRoutes from './routes'
 import config from '@/config'
 import { message } from 'ant-design-vue'
+import { getFirstLetterOfEachWordOfAppName } from '@/utils/utilityFunction'
+
+const appName = getFirstLetterOfEachWordOfAppName()
 
 const VueRouterPush = VueRouter.prototype.push
 const VueRouterReplace = VueRouter.prototype.replace
@@ -76,7 +79,7 @@ function initializeDynamicRoutes(menus) {
       } else {
         route.component = () => {
           let target = '_blank'
-          const defaultRoute = localStorage.getItem('defaultRoute') || config.defaultRouteName
+          const defaultRoute = localStorage.getItem(`${appName}-defaultRoute`) || config.defaultRouteName
 
           // 检测系统的默认首页是否是需要通过 window.open 跳转，并且是否是从登录页直接跳转的，
           // 如果以上条件成立，则采用 “_self” 模式，否则采用 “_blank” 模式
@@ -84,8 +87,10 @@ function initializeDynamicRoutes(menus) {
             target = '_self'
           }
 
+          // TODO 以下代码需要适配所有项目
+
           if (process.env.NODE_ENV !== 'production') {
-            const token = localStorage.getItem('token')
+            const token = localStorage.getItem(`${appName}-token`)
 
             window.open(`http://localhost:8193${component}/?token=${token}`, target)
           } else {
@@ -179,8 +184,8 @@ function getRoutes() {
     return getBaseRoutes(APP_ROUTES.default || [])
   }
 
-  const token = localStorage.getItem('token')
-  const menu = JSON.parse(localStorage.getItem('menu'))
+  const token = localStorage.getItem(`${appName}-token`)
+  const menu = JSON.parse(localStorage.getItem(`${appName}-menu`))
 
   if (menu && token) {
     if (USER_INFO_MAPPINGS) {

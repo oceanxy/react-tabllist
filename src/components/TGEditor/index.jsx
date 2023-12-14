@@ -9,6 +9,9 @@ import '@wangeditor/editor/dist/css/style.css'
 import './index.scss'
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 import { message } from 'ant-design-vue'
+import { getFirstLetterOfEachWordOfAppName } from '@/utils/utilityFunction'
+
+const appName = getFirstLetterOfEachWordOfAppName()
 
 // 图片和视频上传共同配置部分
 const fileOrVideoCommonConfig = {
@@ -16,7 +19,7 @@ const fileOrVideoCommonConfig = {
   fieldName: 'file',
   // 自定义增加 http  header
   headers: {
-    token: localStorage.getItem('token')
+    token: localStorage.getItem(`${appName}-token`)
   },
   // 上传之前触发
   onBeforeUpload(file) {
