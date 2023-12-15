@@ -48,9 +48,7 @@ export default {
       message.error('未检测到登录令牌或登录令牌已失效', 0)
       this.$emit('errorStateChange', { status: true, error: new Error('请检查TOKEN是否有效') })
 
-      this.$nextTick(() => {
-        this.jumpToThirdPartyLogin()
-      })
+      this.jumpToThirdPartyLogin()
     }
   },
   methods: {
@@ -59,7 +57,7 @@ export default {
         let url
 
         try {
-          const URL = new URL(process.env.VUE_APP_LOGIN_ADDRESS)
+          const URL = new window.URL(process.env.VUE_APP_LOGIN_ADDRESS)
 
           url = URL.href
         } catch (e) {
