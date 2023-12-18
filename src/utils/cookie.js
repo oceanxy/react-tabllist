@@ -1,19 +1,31 @@
 /**
  * 获取cookie
- * @param cookieName
+ * @param name {string}
  * @return {undefined|string}
  */
-export function getCookie(cookieName) {
-  const strCookie = document.cookie
-  const cookieList = strCookie.split(';')
+export function getCookie(name) {
+  const result = document.cookie.match('(^|[^;]+)\\s*' + name + '\\s*=\\s*([^;]+)')
 
-  for (let i = 0; i < cookieList.length; i++) {
-    const arr = cookieList[i].split('=')
+  return result ? result.pop() : undefined
+}
 
-    if (cookieName === arr[0].trim()) {
-      return arr[1]
-    }
+/**
+ * 设置cookie
+ * @param name ｛string｝
+ * @param value {*}
+ * @param [expireDays] ｛number｝ 过期时长，单位：天
+ * @param [path] {string}
+ */
+export function setCookie(name, value, expireDays, path = '/') {
+  let expires = ''
+
+  if (expireDays) {
+    const date = new Date()
+
+    date.setTime(date.getTime() + (expireDays * 24 * 60 * 60 * 1000))
+    expires = '; expires=' + date.toUTCString()
   }
 
-  return undefined
+  document.cookie = name + '=' + (value || '') + expires + '; path=' + path
 }
+
