@@ -67,8 +67,7 @@ module.exports = {
     default: 'blue',
     // 可用的主题文件 （位于 @/assets/styles/theme）
     availableThemes: [
-      { name: '蓝色', fileName: 'blue' },
-      { name: '红色', fileName: 'red' }
+      { name: '蓝色', fileName: 'tech-blue' }
     ]
   },
   siderLayout: 2, //左侧折叠按钮位置 1:跟随左侧菜单，2：跟随右侧菜单
