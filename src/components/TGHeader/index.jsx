@@ -153,7 +153,11 @@ export default {
       const response = await this.logout()
 
       if (response.status) {
-        await this.$router.replace({ name: 'login' })
+        await this.$router.replace({
+          name: 'login',
+          // 提供给子项目的登录页面处理注销后的逻辑
+          params: { logout: '1' }
+        })
       }
     },
     onMenuFold() {
