@@ -1,5 +1,6 @@
 import { Icon, message, Modal, Upload } from 'ant-design-vue'
 import { getBase64, getFirstLetterOfEachWordOfAppName } from '@/utils/utilityFunction'
+import config from '@/config'
 
 const appName = getFirstLetterOfEachWordOfAppName()
 
@@ -34,7 +35,7 @@ export default {
       previewImage: '',
       previewVisible: false,
       name: 'file',
-      headers: { token: localStorage.getItem(`${appName}-token`) }
+      headers: { token: localStorage.getItem(`${appName}-${config.tokenConfig.fieldName}`) }
     }
   },
   watch: {

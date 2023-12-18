@@ -5,16 +5,17 @@
 import { message } from 'ant-design-vue'
 import { getCookie } from '@/utils/cookie'
 import { getFirstLetterOfEachWordOfAppName } from '@/utils/utilityFunction'
+import config from '@/config'
 
 const appName = getFirstLetterOfEachWordOfAppName()
 
 export default {
   async created() {
-    const searchToken = new URL(window.location.href).searchParams.get('token')
+    const searchToken = new URL(window.location.href).searchParams.get(config.tokenConfig.fieldName)
     const token = searchToken ||
-      this.$route.query.token ||
-      getCookie('token') ||
-      localStorage.getItem(`${appName}-token`)
+      this.$route.query[config.tokenConfig.fieldName] ||
+      getCookie(config.tokenConfig.fieldName) ||
+      localStorage.getItem(`${appName}-${config.tokenConfig.fieldName}`)
 
     // 如果 search 中存在 token，则删除之
     if (searchToken) {

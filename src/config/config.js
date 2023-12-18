@@ -95,9 +95,14 @@ module.exports = {
     // src/components/TGHeader 组件对对应下拉列表的占位符提示语
     placeholder: '请选择',
     // 需要在 HTTP Request Header 内携带额外参数的字段名，其值为 src/components/TGHeader 组件内对应下拉列表的值
-    fieldName: '',
+    fieldName: ''
+  },
+  // 登录令牌相关设置
+  tokenConfig: {
     // 是否额外在接口的请求url中拼接token（为了适配一些奇葩第三方在 POST 方式的 URL 中携带 token 的要求）
-    isInUrl: false
+    isInUrl: false,
+    // 从其他渠道获取登录令牌的字段，它们通常保存于 URL/cookie/localStorage/sessionStorage 等地方。
+    fieldName: 'token'
   },
   // 全局消息最大显示个数
   maxMessageCount: 1,

@@ -10,6 +10,7 @@ import './index.scss'
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 import { message } from 'ant-design-vue'
 import { getFirstLetterOfEachWordOfAppName } from '@/utils/utilityFunction'
+import config from '@/config'
 
 const appName = getFirstLetterOfEachWordOfAppName()
 
@@ -19,7 +20,7 @@ const fileOrVideoCommonConfig = {
   fieldName: 'file',
   // 自定义增加 http  header
   headers: {
-    token: localStorage.getItem(`${appName}-token`)
+    token: localStorage.getItem(`${appName}-${config.tokenConfig.fieldName}`)
   },
   // 上传之前触发
   onBeforeUpload(file) {

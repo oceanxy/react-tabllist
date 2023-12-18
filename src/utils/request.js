@@ -2,6 +2,7 @@ import axios from 'axios'
 import qs from 'qs'
 import { showMessage } from '@/utils/message'
 import { getFirstLetterOfEachWordOfAppName } from '@/utils/utilityFunction'
+import config from '@/config'
 
 const appName = getFirstLetterOfEachWordOfAppName()
 
@@ -15,14 +16,14 @@ export default function getService(conf, router, store) {
   service.interceptors.request.use(
     async config => {
       const highPriorityToken = config.params?.token
-      const token = localStorage.getItem(`${appName}-token`)
+      const token = localStorage.getItem(`${appName}-${conf.tokenConfig.fieldName}`)
 
       if (highPriorityToken) {
         config.headers.token = highPriorityToken
       } else if (token) {
         config.headers.token = token
 
-        if (conf.headerParams.isInUrl) {
+        if (conf.tokenConfig?.isInUrl) {
           config.params = {
             ...config.params,
             token
@@ -98,7 +99,7 @@ export default function getService(conf, router, store) {
 
       // 未登录或登录失效，需要重新登录
       if (+res.code === 30001) {
-        if (localStorage.getItem(`${appName}-token`)) {
+        if (localStorage.getItem(`${appName}-${config.tokenConfig.fieldName}`)) {
           await store.dispatch('login/clear', true)
         }
 

@@ -90,7 +90,7 @@ function initializeDynamicRoutes(menus) {
           // TODO 以下代码需要适配所有项目
 
           if (process.env.NODE_ENV !== 'production') {
-            const token = localStorage.getItem(`${appName}-token`)
+            const token = localStorage.getItem(`${appName}-${config.tokenConfig.fieldName}`)
 
             window.open(`http://localhost:8193${component}/?token=${token}`, target)
           } else {
@@ -184,7 +184,7 @@ function getRoutes() {
     return getBaseRoutes(APP_ROUTES.default || [])
   }
 
-  const token = localStorage.getItem(`${appName}-token`)
+  const token = localStorage.getItem(`${appName}-${config.tokenConfig.fieldName}`)
   const menu = JSON.parse(localStorage.getItem(`${appName}-menu`))
 
   if (menu && token) {
@@ -228,7 +228,7 @@ router.beforeEach((to, from, next) => {
   // 通过地址栏传递 token 的情况，优先使用地址栏的 token。因为本地存储的 token 可能已过期（上一次页面关闭时未清空）
   const token = searchToken || to.query.token
   // 获取存储在localStorage内的token，防止刷新页面导致vuex被清空而跳转到登录页
-  const localToken = localStorage.getItem(`${appName}-token`)
+  const localToken = localStorage.getItem(`${appName}-${config.tokenConfig.fieldName}`)
 
   if (
     to.meta.requiresAuth &&

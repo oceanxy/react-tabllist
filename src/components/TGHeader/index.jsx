@@ -19,6 +19,7 @@ import { mapActions, mapGetters } from 'vuex'
 import forIndex from '@/mixins/forIndex'
 import { getFirstLetterOfEachWordOfAppName } from '@/utils/utilityFunction'
 import moment from 'moment'
+import config from '@/config'
 
 const appName = getFirstLetterOfEachWordOfAppName()
 
@@ -51,7 +52,7 @@ export default {
       return this.getState('lastLoginToken', 'login')
     },
     isLogin() {
-      return !!window.localStorage.getItem(`${appName}-token`)
+      return !!window.localStorage.getItem(`${appName}-${config.tokenConfig.fieldName}`)
     },
     news() {
       return this.getState('news', 'common')
@@ -89,7 +90,7 @@ export default {
       immediate: true,
       async handler(value) {
         if (!this.loading) {
-          const token = localStorage.getItem(`${appName}-token`)
+          const token = localStorage.getItem(`${appName}-${config.tokenConfig.fieldName}`)
           const loginTimeDiff = moment().diff(moment(this.lastLoginTime), 'seconds')
           const {
             NODE_ENV,

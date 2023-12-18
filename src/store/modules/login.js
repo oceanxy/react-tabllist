@@ -38,9 +38,9 @@ export default {
     },
     setAuthentication(state, payload) {
       if (payload) {
-        localStorage.setItem(`${appName}-token`, payload)
+        localStorage.setItem(`${appName}-${config.tokenConfig.fieldName}`, payload)
       } else {
-        localStorage.removeItem(`${appName}-token`)
+        localStorage.removeItem(`${appName}-${config.tokenConfig.fieldName}`)
       }
     },
     setSiteCache(state, payload) {
