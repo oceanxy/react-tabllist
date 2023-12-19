@@ -5,6 +5,7 @@ import config from '@/config'
 const appName = getFirstLetterOfEachWordOfAppName()
 
 export default {
+  name: 'TGUploadFile',
   model: {
     prop: 'value',
     event: 'change'
@@ -88,6 +89,7 @@ export default {
   watch: {
     value: {
       deep: true,
+      immediate: true,
       handler(value) {
         const temp = []
 
