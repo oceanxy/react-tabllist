@@ -36,6 +36,9 @@ export default {
     },
     homeRoute() {
       return this.$router.resolve({ name: 'home' }).route
+    },
+    primaryColor() {
+      return window.themeVariables?.primaryColor ?? ''
     }
   },
   watch: {
@@ -157,7 +160,7 @@ export default {
                     closable={replacePath(route.path) !== replacePath(this.homeRoute.path)}
                     color={`${
                       replacePath(route.path) === replacePath(this.$route.path)
-                        ? window.themeVariables.primaryColor
+                        ? this.primaryColor
                         : ''
                     }`}
                     onClick={() => this.onTabClick(route)}
