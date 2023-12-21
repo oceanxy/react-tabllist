@@ -51,8 +51,8 @@ if (NODE_ENV === 'production') {
     .then(async data => {
       const theme = localStorage.getItem(`${appName}-theme`) || config.theme.default
 
-      loadScript(resolve(join(__dirname, `${VUE_APP_PUBLIC_PATH}/${data[`${theme}.js`]}`)))
       loadStyle(resolve(join(__dirname, `${VUE_APP_PUBLIC_PATH}/${data[`${theme}.css`]}`)))
+      loadScript(resolve(join(__dirname, `${VUE_APP_PUBLIC_PATH}/${data[`${theme}.js`]}`)))
     })
 } else {
   getVariablesStyle(config, store)
