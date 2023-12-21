@@ -62,13 +62,13 @@ module.exports = {
      * https://cli.vuejs.org/zh/guide/html-and-static-assets.html#prefetch
      * 而且预渲染时生成的prefetch标签是modern版本的，低版本浏览器是不需要的
      */
-    config.plugins.delete('preload-index')
-    config.plugins.delete('prefetch-index')
+    // config.plugins.delete('preload-index')
+    // config.plugins.delete('prefetch-index')
 
     if (process.env.NODE_ENV === 'production') {
       buildConfig.appConfig[buildConfig.availableProjectName].theme.availableThemes.forEach(t => {
-        config.plugins.delete(`preload-${t.fileName}`)
-        config.plugins.delete(`prefetch-${t.fileName}`)
+        // config.plugins.delete(`preload-${t.fileName}`)
+        // config.plugins.delete(`prefetch-${t.fileName}`)
 
         // 删除多余的 html-webpack-plugin 配置，（自定义主题入口来打包编译less文件，vue-cli自动添加的冗余配置）
         config.plugins.delete(`html-${t.fileName}`)
