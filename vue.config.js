@@ -66,29 +66,53 @@ module.exports = {
     // config.plugins.delete('prefetch-index')
 
     if (process.env.NODE_ENV === 'production') {
+      // 默认在dist目录下生成 manifest.json（追踪所有模块到输出 bundle 之间的映射）
+      config.plugin('manifest').use(WebpackAssetsManifest)
+
       buildConfig.appConfig[buildConfig.availableProjectName].theme.availableThemes.forEach(t => {
         // config.plugins.delete(`preload-${t.fileName}`)
         // config.plugins.delete(`prefetch-${t.fileName}`)
 
-        // 删除多余的 html-webpack-plugin 配置，（自定义主题入口来打包编译less文件，vue-cli自动添加的冗余配置）
+        // 删除多余的 html-webpack-plugin 配置（自定义主题入口打包编译less文件时，vue-cli自动添加的冗余配置）
         config.plugins.delete(`html-${t.fileName}`)
 
         themeNames.push(t.fileName)
       })
 
-      // 在index.html中排除对主题样式文件的引用
-      config.plugin('html-index').tap(config => {
-        config[0].excludeChunks = themeNames
-        config[0].title = buildConfig.appConfig[buildConfig.availableProjectName].systemName
+      // 修改 html-webpack-plugin 插件配置
+      config.plugin('html-index').tap(options => {
+        // 在index.html中排除对主题样式文件的引用，通过在程序中点击切换主题时再动态加载对应的主题文件，防止样式污染
+        options[0].excludeChunks = themeNames
+        options[0].title = buildConfig.appConfig[buildConfig.availableProjectName].systemName
 
-        return config
+        /**
+         * 通过 html-webpack-plugin 将 cdn 注入到 index.html 之中，
+         * 注意 CDN 部分需要配合 configureWebpack.externals 使用
+         */
+        options[0].cdn = {
+          css: [
+            // 'https://cdn.jsdelivr.net/npm/ant-design-vue@1.7.8/dist/antd.min.css'
+          ],
+          js: [
+            // 'https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.min.js',
+            // 'https://cdn.jsdelivr.net/npm/vuex@3.6.2/dist/vuex.min.js',
+            // 'https://cdn.jsdelivr.net/npm/vue-router@3.6.5/dist/vue-router.min.js',
+            // 'https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js',
+            // 'https://cdn.jsdelivr.net/npm/axios@1.3.4/dist/axios.min.js',
+            // 'https://cdn.jsdelivr.net/npm/moment@2.29.3/dist/moment.min.js',
+            // 'https://cdn.jsdelivr.net/npm/echarts@5.4.1/dist/echarts.min.js',
+            // 'https://cdn.jsdelivr.net/npm/ant-design-vue@1.7.8/dist/antd.min.js'
+          ]
+        }
+
+        return options
       })
     } else {
       // 在index.html中排除对主题样式文件的引用
-      config.plugin('html-index').tap(config => {
-        config[0].title = buildConfig.appConfig[buildConfig.availableProjectName].systemName
+      config.plugin('html-index').tap(options => {
+        options[0].title = buildConfig.appConfig[buildConfig.availableProjectName].systemName
 
-        return config
+        return options
       })
     }
 
@@ -167,7 +191,7 @@ module.exports = {
     //   }
     // })
 
-    // 欲使用 ProvidePlugin 预加载的文件集合
+    // 使用 ProvidePlugin 预加载的文件集合
     const PROVIDE_PLUGIN_PAYLOAD = {
       // 预加载子项目配置文件
       APP_CONFIG: resolve(join(__dirname, `src/apps/${buildConfig.availableProjectName}/config/index.js`)),
@@ -227,8 +251,8 @@ module.exports = {
     if (process.env.NODE_ENV === 'production') {
       config.optimization.minimizer('terser').tap(args => {
         args[0].terserOptions.compress.warnings = true
-        args[0].terserOptions.compress.drop_debugger = true
-        args[0].terserOptions.compress.drop_console = true
+        args[0].terserOptions.compress.drop_debugger = false
+        args[0].terserOptions.compress.drop_console = false
 
         return args
       })
@@ -281,35 +305,10 @@ module.exports = {
         }
       ])
 
-      // 默认在dist目录下生成 manifest.json（追踪所有模块到输出 bundle 之间的映射）
-      config.plugin('manifest').use(WebpackAssetsManifest)
-
       // Webpack包文件分析器(https://github.com/webpack-contrib/webpack-bundle-analyzer)
       // config
       //   .plugin('BundleAnalyzerPlugin')
       //   .use(BundleAnalyzerPlugin)
-
-      // 通过 html-webpack-plugin 将 cdn 注入到 index.html 之中，配合 configureWebpack.externals 使用
-      // config.plugin('html')
-      //   .tap(args => {
-      //     args[0].cdn = {
-      //       css: [
-      //         'https://cdn.jsdelivr.net/npm/ant-design-vue@1.7.8/dist/antd.min.css'
-      //       ],
-      //       js: [
-      //         'https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.min.js',
-      //         'https://cdn.jsdelivr.net/npm/vuex@3.6.2/dist/vuex.min.js',
-      //         'https://cdn.jsdelivr.net/npm/vue-router@3.6.5/dist/vue-router.min.js',
-      //         'https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js',
-      //         'https://cdn.jsdelivr.net/npm/axios@1.3.4/dist/axios.min.js',
-      //         'https://cdn.jsdelivr.net/npm/moment@2.29.3/dist/moment.min.js',
-      //         'https://cdn.jsdelivr.net/npm/echarts@5.4.1/dist/echarts.min.js',
-      //         'https://cdn.jsdelivr.net/npm/ant-design-vue@1.7.8/dist/antd.min.js'
-      //       ]
-      //     }
-      //
-      //     return args
-      //   })
     } else {
       // 移动端模拟开发者工具(https://github.com/diamont1001/vconsole-webpack-plugin https://github.com/Tencent/vConsole)
       // config.plugins.push(
