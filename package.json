@@ -13,7 +13,7 @@
     "dev.auto": "node ./build --app-mode dev",
     "build": "node ./build --app-mode build",
     "lint": "vue-cli-service lint",
-    "insp": "vue-cli-service inspect --mode production --app-proj rongchang-comprehensive-management-platform --app-separately 1"
+    "insp": "vue-cli-service inspect --mode production --app-proj carrent-operation-platform --app-separately 1 --app-env integration"
   },
   "dependencies": {
     "@amap/amap-jsapi-loader": "^1.0.1",
