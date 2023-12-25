@@ -37,12 +37,12 @@ export default {
     },
     /**
      * 关闭弹窗操作
-     *  1、清空 currentItem 数据。
-     *  2、设置对应弹窗的可见性为false，弹窗的控制字段请对应store内定义的字段
+     *  1、清空 currentItem 数据，可将 isClearCurrentItem 设置为 false 来跳过该步骤。
+     *  2、设置对应弹窗的可见性为 false，弹窗的控制字段请对应 store 内定义的字段。
      * @param [visibilityFieldName] {string} 默认值为打开编辑弹窗的可见性控制字段：visibilityOfEdit
      * @param [moduleName] {string} 目标模块名，在一个模块内调用另外一个模块的 state 时，需要传递对应模块的 moduleName
      * @param [submoduleName] {string} 子模块模块名，依赖 moduleName
-     * @param [isClearCurrentItem] {boolean} 是否清空currentItem数据，默认true
+     * @param [isClearCurrentItem] {boolean} 是否清空 currentItem 数据，默认 true
      * @returns {Promise<void>}
      * @private
      */
