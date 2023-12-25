@@ -129,6 +129,12 @@ export default {
       this.pageTabs.splice(routeIndexClosed, 1)
       await this.$router.push(this.pageTabs.at(-1))
       this.$store.commit('common/setPageTabs', [...this.pageTabs])
+    },
+    getIsHomeRoute(route) {
+      return replacePath(route.path) === replacePath(this.homeRoute.path)
+    },
+    getButtonType(route) {
+      return replacePath(route.path) === replacePath(this.$route.path) ? 'primary' : 'default'
     }
   },
   mounted() {
@@ -149,19 +155,28 @@ export default {
             <div ref={'pageTabsBox'} class={'tg-page-tabs-box'}>
               {
                 this.pageTabs.map(route => (
-                  <Button
-                    key={route.path}
-                    class={'tg-page-tabs-box-button'}
-                    type={replacePath(route.path) === replacePath(this.$route.path) ? 'primary' : 'default'}
-                    onClick={() => this.onTabClick(route)}
-                  >
-                    {route.meta.title}
+                  <div key={route.path} class={'tg-page-tabs-box-button'}>
+                    <Button
+                      class={`${!this.getIsHomeRoute(route) ? 'show-close' : ''}`}
+                      type={this.getButtonType(route)}
+                      onClick={() => this.onTabClick(route)}
+                    >
+                      {route.meta.title}
+                    </Button>
                     {
-                      replacePath(route.path) !== replacePath(this.homeRoute.path)
-                        ? <Icon onClick={() => this.onTabClose(route)} type="close" />
+                      !this.getIsHomeRoute(route)
+                        ? (
+                          <Button
+                            class={'close-btn'}
+                            type={this.getButtonType(route)}
+                            onClick={() => this.onTabClose(route)}
+                          >
+                            <Icon type="close" />
+                          </Button>
+                        )
                         : undefined
                     }
-                  </Button>
+                  </div>
                 ))
               }
             </div>
