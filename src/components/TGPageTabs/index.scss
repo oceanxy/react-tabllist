@@ -48,14 +48,12 @@
       flex-wrap: nowrap;
       gap: 8px;
 
-      .ant-tag {
+      .tg-page-tabs-box-button {
         user-select: none;
         cursor: pointer;
-        margin-right: 0;
-        padding: 4px 8px;
 
-        &.current {
-
+        .anticon {
+          font-size: var(--font-size-sm);
         }
       }
     }

@@ -6,7 +6,7 @@
  */
 
 import './index.scss'
-import { Icon, Tag } from 'ant-design-vue'
+import { Button, Icon } from 'ant-design-vue'
 import { replacePath } from '@/utils/utilityFunction'
 import config from '@/config'
 
@@ -36,9 +36,6 @@ export default {
     },
     homeRoute() {
       return this.$router.resolve({ name: 'home' }).route
-    },
-    primaryColor() {
-      return window.themeVariables?.primaryColor ?? ''
     }
   },
   watch: {
@@ -138,9 +135,6 @@ export default {
     window.addEventListener('resize', this.resize)
     this.resize(true)
   },
-  beforeDestroy() {
-    window.addEventListener('resize', this.resize)
-  },
   render() {
     return (
       <div class={'tg-page-tabs'}>
@@ -155,19 +149,19 @@ export default {
             <div ref={'pageTabsBox'} class={'tg-page-tabs-box'}>
               {
                 this.pageTabs.map(route => (
-                  <Tag
+                  <Button
                     key={route.path}
-                    closable={replacePath(route.path) !== replacePath(this.homeRoute.path)}
-                    color={`${
-                      replacePath(route.path) === replacePath(this.$route.path)
-                        ? this.primaryColor
-                        : ''
-                    }`}
+                    class={'tg-page-tabs-box-button'}
+                    type={replacePath(route.path) === replacePath(this.$route.path) ? 'primary' : 'default'}
                     onClick={() => this.onTabClick(route)}
-                    onClose={() => this.onTabClose(route)}
                   >
                     {route.meta.title}
-                  </Tag>
+                    {
+                      replacePath(route.path) !== replacePath(this.homeRoute.path)
+                        ? <Icon onClick={() => this.onTabClose(route)} type="close" />
+                        : undefined
+                    }
+                  </Button>
                 ))
               }
             </div>
@@ -183,4 +177,3 @@ export default {
     )
   }
 }
-
