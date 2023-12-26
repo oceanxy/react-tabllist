@@ -224,9 +224,12 @@ router.beforeEach((to, from, next) => {
 
   document.title = title + config.systemName
 
-  const searchToken = new URL(window.location.href).searchParams.get('token')
+  // 优先从 cookie 中获取 token
+  // const cookieToken =
+  // 从search中获取token
+  const searchToken = new URL(window.location.href).searchParams.get(config.tokenConfig.fieldName)
   // 通过地址栏传递 token 的情况，优先使用地址栏的 token。因为本地存储的 token 可能已过期（上一次页面关闭时未清空）
-  const token = searchToken || to.query.token
+  const token = searchToken || to.query[config.tokenConfig.fieldName]
   // 获取存储在localStorage内的token，防止刷新页面导致vuex被清空而跳转到登录页
   const localToken = localStorage.getItem(`${appName}-${config.tokenConfig.fieldName}`)
 
@@ -238,36 +241,11 @@ router.beforeEach((to, from, next) => {
       process.env.VUE_APP_DEVELOPMENT_ENVIRONMENT_SKIPPING_PERMISSIONS === 'on'
     )
   ) {
-    if (localToken) {
-      // 如果地址栏带了 token 且目的页面不是登录页，强制重定向到登录页鉴权
-      if (token && to.name !== 'login' && token !== localToken) {
-        next({
-          name: 'login',
-          params: to.params,
-          query: {
-            ...to.query,
-            // 将跳转的路由path作为参数，登录成功后跳转到该路由
-            redirect: to.path,
-            token
-          }
-        })
-      } else {
-        // 登录状态下直接在地址栏中拼接 token，且新 token 与旧 token 一致，则删除之
-        if (localToken && token === localToken) {
-          // 如果 search 中存在 token，则删除之
-          if (searchToken) {
-            window.history.replaceState(null, null, window.location.pathname)
-          }
-
-          // 如果 hash 中存在 token，则删除之
-          next({ ...to, query: { ...to.query, token: undefined } })
-        }
-
-        next()
-      }
-    } else {
+    // 如果地址栏带了 token，且与本地存储的token不一致，强制重定向到登录页鉴权
+    if (!localToken || (token && token !== localToken)) {
       next({
         name: 'login',
+        params: to.params,
         query: {
           // 将跳转的路由path作为参数，登录成功后跳转到该路由
           redirect: to.path,
@@ -275,12 +253,53 @@ router.beforeEach((to, from, next) => {
         }
       })
     }
-  } else {
-    if (to.name === 'login' && localToken && localToken === token) {
-      next({ name: 'home' })
-    } else {
-      next()
+
+    // 如果地址栏带了 token，且新旧 token 一致，则删除地址栏中的 token，路由正常跳转
+    if (token === localToken) {
+      // 如果 search 中存在 token，则删除之
+      if (searchToken) {
+        window.history.replaceState(null, null, window.location.pathname)
+      }
+
+      // 如果 hash 中存在 token，则删除之
+      next({
+        ...to, query: {
+          ...to.query,
+          [config.tokenConfig.fieldName]: undefined
+        }
+      })
     }
+
+    next()
+  } else {
+    if (to.name === 'login') {
+      if (token && localToken && token === localToken) {
+        if (searchToken) {
+          window.history.replaceState(null, null, window.location.pathname)
+        }
+
+        if (to.query.redirect) {
+          next({
+            path: to.query.redirect,
+            query: {
+              ...to.query,
+              redirect: undefined,
+              [config.tokenConfig.fieldName]: undefined
+            }
+          })
+        }
+
+        next({
+          name: 'home',
+          query: {
+            ...to.query,
+            [config.tokenConfig.fieldName]: undefined
+          }
+        })
+      }
+    }
+
+    next()
   }
 })
 

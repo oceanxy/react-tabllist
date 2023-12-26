@@ -74,7 +74,8 @@ export default {
         state?.login?.userInfo?.themeFileName ||
         config.theme.default
 
-      if (userTheme !== window.themeVariables.themeFileName) {
+      // todo 此处主题文件可能还未加载完成，window.themeVariables可能还未赋值，需要优化
+      if (userTheme !== window.themeVariables?.themeFileName) {
         window.location.reload() // to switch theme
       }
     },

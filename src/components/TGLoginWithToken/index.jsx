@@ -12,10 +12,12 @@ const appName = getFirstLetterOfEachWordOfAppName()
 export default {
   async created() {
     const searchToken = new URL(window.location.href).searchParams.get(config.tokenConfig.fieldName)
+    const localToken = localStorage.getItem(`${appName}-${config.tokenConfig.fieldName}`)
+
     const token = searchToken ||
       this.$route.query[config.tokenConfig.fieldName] ||
       getCookie(config.tokenConfig.fieldName) ||
-      localStorage.getItem(`${appName}-${config.tokenConfig.fieldName}`)
+      localToken
 
     // 如果 search 中存在 token，则删除之
     if (searchToken) {
@@ -47,7 +49,9 @@ export default {
       }
     } else {
       message.error('未检测到登录令牌或登录令牌已失效', 0)
-      this.$emit('errorStateChange', { status: true, error: new Error('请检查TOKEN是否有效') })
+
+      await this.$store.dispatch('login/clear')
+      this.$emit('errorStateChange', { status: true, error: new Error('请检查登录令牌是否有效') })
 
       this.jumpToThirdPartyLogin()
     }
