@@ -42,6 +42,7 @@ export default {
     $route: {
       immediate: true,
       handler(value) {
+        this.resize()
         this.setCurrentPageTabs(value)
         // TODO 手动管理已经缓存的页面（vue组件实例的name属性），keep-alive的include属性
         // 目前这种方式不可行，因为动态name属性不好动态获取，即使获取到了（setCurrentPageName方法所示），
