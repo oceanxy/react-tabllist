@@ -211,7 +211,8 @@ export default ({
       }
 
       window.addEventListener('resize', this.delayResize)
-
+      // 在页面初始化的时候重新获取表格的宽高
+      this.delayResize()
       this.$on('hook:beforeDestroy', () => {
         window.removeEventListener('resize', this.delayResize)
 
