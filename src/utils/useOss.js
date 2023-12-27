@@ -266,15 +266,12 @@ const useOss = {
     const collects = JSON.parse(jsonCollects)
 
     if (Array.isArray(collects)) {
-      collects.forEach(d => {
+      collects?.forEach(d => {
         if (d?.url) {
           imageUrls.push(`${ossConfig?.ossUrl}/${d.url}`)
-        } else {
-          return
         }
       })
     }
-
 
     // 创建一系列的 Promise 对象，用于获取图片数据
     for (const imageUrl of imageUrls) {
