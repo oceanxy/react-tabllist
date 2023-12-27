@@ -249,6 +249,15 @@ const useOss = {
    */
   async batchDownload(jsonCollects, fileName) {
     const ossConfig = this.getOssConfig()
+
+    if (!Object.keys(ossConfig).length) {
+      return
+    }
+
+    message.loading({
+      content: '压缩包生成中...',
+      duration: 0
+    })
     // promises 对象
     const promises = []
     // 创建JSZip实例
@@ -258,9 +267,14 @@ const useOss = {
 
     if (Array.isArray(collects)) {
       collects.forEach(d => {
-        imageUrls.push(`${ossConfig?.ossUrl}/${d.name}`)
+        if (d?.url) {
+          imageUrls.push(`${ossConfig?.ossUrl}/${d.url}`)
+        } else {
+          return
+        }
       })
     }
+
 
     // 创建一系列的 Promise 对象，用于获取图片数据
     for (const imageUrl of imageUrls) {
@@ -269,9 +283,7 @@ const useOss = {
 
         xhr.open('GET', imageUrl, true)
         xhr.responseType = 'blob'
-
         xhr.onload = () => {
-          console.log(imageUrl)
           const fileName = imageUrl.substring(imageUrl.lastIndexOf('/') + 1)
           const fileBlob = new Blob([xhr.response])
 
@@ -289,20 +301,27 @@ const useOss = {
     }
 
     // 等待所有图片数据的获取完成
-    const imageDataArray = await Promise.all(promises)
-
-    // 将图片数据添加到 ZIP 文件中
-    imageDataArray.forEach(({ fileName, fileBlob }) => {
-      zip.file(fileName, fileBlob)
+    const imageDataArray = await Promise.all(promises).then((results) => {
+      return results
+    }).catch((err) => {
+      return message.warning('图片打包失败')
     })
-    // 生成 ZIP 文件并保存到本地
-    zip.generateAsync({ type: 'blob' })
-      .then(content => {
-        saveAs(content, `${fileName}.zip`)
+
+    if (imageDataArray && imageDataArray.length) {
+      message.destroy()
+      // 将图片数据添加到 ZIP 文件中
+      imageDataArray?.forEach(({ fileName, fileBlob }) => {
+        zip.file(fileName, fileBlob)
       })
-      .catch(error => {
-        console.error('Failed to generate ZIP file:', error)
-      })
+      // 生成 ZIP 文件并保存到本地
+      zip.generateAsync({ type: 'blob' })
+        .then(content => {
+          saveAs(content, `${fileName}.zip`)
+        })
+        .catch(error => {
+          console.error('Failed to generate ZIP file:', error)
+        })
+    }
   }
 }
 
