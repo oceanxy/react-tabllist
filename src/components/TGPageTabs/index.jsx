@@ -130,6 +130,7 @@ export default {
       this.pageTabs.splice(routeIndexClosed, 1)
       await this.$router.push(this.pageTabs.at(-1))
       this.$store.commit('common/setPageTabs', [...this.pageTabs])
+      this.resize(true)
     },
     getIsHomeRoute(route) {
       return replacePath(route.path) === replacePath(this.homeRoute.path)
