@@ -265,13 +265,14 @@ const useOss = {
     const imageUrls = []
     const collects = JSON.parse(jsonCollects)
 
-    if (Array.isArray(collects)) {
-      collects?.forEach(d => {
-        if (d?.url) {
-          imageUrls.push(`${ossConfig?.ossUrl}/${d.url}`)
-        }
-      })
-    }
+    collects?.forEach(d => {
+      if (d?.url) {
+        imageUrls.push(`${ossConfig?.ossUrl}/${d.url}`)
+      } else {
+        return message.warning('图片打包失败')
+      }
+    })
+
 
     // 创建一系列的 Promise 对象，用于获取图片数据
     for (const imageUrl of imageUrls) {
