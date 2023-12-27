@@ -106,7 +106,7 @@ export default {
       } else {
         let scrollLeft = 0
 
-        if (this._lastTableScrollTop) {
+        if (this._lastTableScrollLeft) {
           scrollLeft = this._lastTableScrollLeft + deltaY
         } else {
           scrollLeft = deltaY
