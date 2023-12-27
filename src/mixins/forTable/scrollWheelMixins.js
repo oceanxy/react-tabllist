@@ -23,6 +23,7 @@ export default {
 
         this._allTableContainers = null
         this._lastTableScrollTop = null
+        this._lastTableScrollLeft = null
         isBindScrollWheel = false
       }
     },
@@ -33,7 +34,7 @@ export default {
      *    具体位置在 node_modules\ant-design-vue\es\vc-table\src\Table
      if (window.navigator.userAgent.match(/Trident/7./) && scroll.y) 改为 if (scroll.y)
      2、重写源码中的 handleBodyScroll 事件
-     为了在 handleWheel 事件中使用一个 _lastTableScrollTop 变量
+     为了在 handleWheel 事件中使用一个 _lastTableScrollTop 和 _lastTableScrollLeft 变量
      * @returns void
      */
     addScrollWheelToTable() {
@@ -65,8 +66,10 @@ export default {
       const target = e.target
 
       e.preventDefault()
+
       // Remember last scrollTop for scroll direction detecting.
       this._lastTableScrollTop = target.scrollTop
+      this._lastTableScrollLeft = target.scrollLeft
     },
     handleWheelCustom(event) {
       const ref_bodyTable = document.querySelector('.ant-table-scroll .ant-table-body')
@@ -75,30 +78,43 @@ export default {
 
       event.preventDefault()
 
-      const wd = event.deltaY
-      const target = event.target
+      const { shiftKey, deltaY, target } = event
       const bodyTable = ref_bodyTable
       const fixedColumnsBodyLeft = ref_fixedColumnsBodyLeft
       const fixedColumnsBodyRight = ref_fixedColumnsBodyRight
 
-      let scrollTop = 0
+      if (!shiftKey) {
+        let scrollTop = 0
 
-      if (this._lastTableScrollTop) {
-        scrollTop = this._lastTableScrollTop + wd
+        if (this._lastTableScrollTop) {
+          scrollTop = this._lastTableScrollTop + deltaY
+        } else {
+          scrollTop = deltaY
+        }
+
+        if (fixedColumnsBodyLeft && target !== fixedColumnsBodyLeft) {
+          fixedColumnsBodyLeft.scrollTop = scrollTop
+        }
+
+        if (fixedColumnsBodyRight && target !== fixedColumnsBodyRight) {
+          fixedColumnsBodyRight.scrollTop = scrollTop
+        }
+
+        if (bodyTable && target !== bodyTable) {
+          bodyTable.scrollTop = scrollTop
+        }
       } else {
-        scrollTop = wd
-      }
+        let scrollLeft = 0
 
-      if (fixedColumnsBodyLeft && target !== fixedColumnsBodyLeft) {
-        fixedColumnsBodyLeft.scrollTop = scrollTop
-      }
+        if (this._lastTableScrollTop) {
+          scrollLeft = this._lastTableScrollLeft + deltaY
+        } else {
+          scrollLeft = deltaY
+        }
 
-      if (fixedColumnsBodyRight && target !== fixedColumnsBodyRight) {
-        fixedColumnsBodyRight.scrollTop = scrollTop
-      }
-
-      if (bodyTable && target !== bodyTable) {
-        bodyTable.scrollTop = scrollTop
+        if (bodyTable && target !== bodyTable) {
+          bodyTable.scrollLeft = scrollLeft
+        }
       }
     }
   }
