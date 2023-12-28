@@ -54,7 +54,7 @@ export default {
     }
   },
   actions: {
-    async jump({ state }) {
+    async jump() {
       router.resetRoutes()
 
       // 检测query参数是否存在重定向
@@ -68,15 +68,6 @@ export default {
         await router.replace(path)
       } else {
         await router.replace({ name: 'home' })
-      }
-
-      const userTheme = localStorage.getItem(`${appName}-theme`) ||
-        state?.login?.userInfo?.themeFileName ||
-        config.theme.default
-
-      // todo 此处主题文件可能还未加载完成，window.themeVariables可能还未赋值，需要优化
-      if (userTheme !== window.themeVariables?.themeFileName) {
-        window.location.reload() // to switch theme
       }
     },
     async login(

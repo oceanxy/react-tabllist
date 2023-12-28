@@ -251,8 +251,8 @@ module.exports = {
     if (process.env.NODE_ENV === 'production') {
       config.optimization.minimizer('terser').tap(args => {
         args[0].terserOptions.compress.warnings = true
-        args[0].terserOptions.compress.drop_debugger = false
-        args[0].terserOptions.compress.drop_console = false
+        args[0].terserOptions.compress.drop_debugger = true
+        args[0].terserOptions.compress.drop_console = true
 
         return args
       })

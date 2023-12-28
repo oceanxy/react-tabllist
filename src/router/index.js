@@ -224,8 +224,6 @@ router.beforeEach((to, from, next) => {
 
   document.title = title + config.systemName
 
-  // 优先从 cookie 中获取 token
-  // const cookieToken =
   // 从search中获取token
   const searchToken = new URL(window.location.href).searchParams.get(config.tokenConfig.fieldName)
   // 通过地址栏传递 token 的情况，优先使用地址栏的 token。因为本地存储的 token 可能已过期（上一次页面关闭时未清空）
@@ -272,31 +270,29 @@ router.beforeEach((to, from, next) => {
 
     next()
   } else {
-    if (to.name === 'login') {
-      if (token && localToken && token === localToken) {
-        if (searchToken) {
-          window.history.replaceState(null, null, window.location.pathname)
-        }
+    if (to.name === 'login' && token && localToken && token === localToken) {
+      if (searchToken) {
+        window.history.replaceState(null, null, window.location.pathname)
+      }
 
-        if (to.query.redirect) {
-          next({
-            path: to.query.redirect,
-            query: {
-              ...to.query,
-              redirect: undefined,
-              [config.tokenConfig.fieldName]: undefined
-            }
-          })
-        }
-
+      if (to.query.redirect) {
         next({
-          name: 'home',
+          path: to.query.redirect,
           query: {
             ...to.query,
+            redirect: undefined,
             [config.tokenConfig.fieldName]: undefined
           }
         })
       }
+
+      next({
+        name: 'home',
+        query: {
+          ...to.query,
+          [config.tokenConfig.fieldName]: undefined
+        }
+      })
     }
 
     next()

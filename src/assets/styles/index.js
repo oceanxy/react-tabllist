@@ -6,9 +6,21 @@
  */
 
 import './themeFromLess.scss'
+import store from '@/store'
 import { getFirstLetterOfEachWordOfAppName } from '@/utils/utilityFunction'
+import config from '@/config'
 
 const appName = getFirstLetterOfEachWordOfAppName()
+
+export function reloadTheme() {
+  const userTheme = localStorage.getItem(`${appName}-theme`) ||
+    store.state?.login?.userInfo?.themeFileName ||
+    config.theme.default
+
+  if (userTheme !== window.themeVariables?.themeFileName) {
+    window.location.reload() // to switch theme
+  }
+}
 
 export function loadStyle(url) {
   const link = document.createElement('link')
@@ -27,6 +39,10 @@ export function loadScript(url) {
 
   script.type = 'text/javascript'
   script.src = url
+
+  script.onload = function() {
+    reloadTheme()
+  }
 
   document.body.appendChild(script)
 }
