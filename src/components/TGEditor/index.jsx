@@ -80,12 +80,15 @@ export default {
     customUpload: {
       type: Function,
       default: null
+    },
+    toolbarConfig: {
+      type: Object,
+      default: () => { }
     }
   },
   data() {
     return {
       editor: null,
-      toolbarConfig: {},
       editorConfig: {
         placeholder: '请输入内容...',
         MENU_CONF: {
@@ -122,6 +125,8 @@ export default {
   methods: {
     onCreated(editor) {
       this.editor = Object.seal(editor) // 一定要用 Object.seal() ，否则会报错
+
+      console.log('editor created', this.editor.getConfig())
     },
     onChange(editor) {
       if (editor.isEmpty() && this.value) {
