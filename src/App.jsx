@@ -2,6 +2,9 @@ import zhCN from 'ant-design-vue/lib/locale-provider/zh_CN'
 import { ConfigProvider } from 'ant-design-vue'
 import { merge } from 'lodash'
 import { RouterView } from 'vue-router'
+import { getFirstLetterOfEachWordOfAppName } from '@/utils/utilityFunction'
+
+const appName = getFirstLetterOfEachWordOfAppName()
 
 export default {
   name: 'TGApp',
@@ -45,7 +48,7 @@ export default {
     //   this.ratioY = window.innerHeight / 1080
     // },
     setStore() {
-      localStorage.setItem('state', JSON.stringify(this.$store.state))
+      localStorage.setItem(`${appName}-state`, JSON.stringify(this.$store.state))
     }
   },
   destroyed() {
