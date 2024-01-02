@@ -1,5 +1,6 @@
 import Mock from 'mockjs'
 import APP_CONFIG from '@/config'
+import { getBaseApi } from '@/utils/env'
 
 const URL = require('url')
 
@@ -18,7 +19,7 @@ const mockModule = modulesFiles.keys().reduce((modules, modulePath) => {
 
   if (modulePath.includes('/manager') || modulePath.includes('/client')) {
     Object.entries(value.default).forEach(([key, value]) => {
-      newModules[process.env.VUE_APP_BASE_API + key] = value
+      newModules[getBaseApi() + key] = value
     })
   } else {
     newModules = value.default

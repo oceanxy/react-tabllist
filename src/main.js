@@ -8,6 +8,14 @@ import { loadScript, loadStyle, loadVariablesStyle } from '@/assets/styles'
 import { join, resolve } from 'path'
 import { getFirstLetterOfEachWordOfAppName } from '@/utils/utilityFunction'
 
+function createVue() {
+  new Vue({
+    router,
+    store,
+    render: h => h(APP_COMPONENT.default)
+  }).$mount('#app')
+}
+
 const appName = getFirstLetterOfEachWordOfAppName()
 
 useComponents(config)
@@ -33,12 +41,20 @@ if (NODE_ENV === 'production') {
       loadStyle(resolve(join(__dirname, `${VUE_APP_PUBLIC_PATH}/${data[`${theme}.css`]}`)))
       loadScript(resolve(join(__dirname, `${VUE_APP_PUBLIC_PATH}/${data[`${theme}.js`]}`)))
     })
+
+  if (ENV_PRODUCTION) {
+    fetch(resolve(join(__dirname, VUE_APP_PUBLIC_PATH, '/env.production.json')))
+      .then(response => response.json())
+      .then(data => {
+        localStorage.setItem(`${appName}-baseApi`, data.VUE_APP_BASE_API)
+
+        createVue()
+      })
+  } else {
+    createVue()
+  }
 } else {
   loadVariablesStyle(config, store)
-}
 
-new Vue({
-  router,
-  store,
-  render: h => h(APP_COMPONENT.default)
-}).$mount('#app')
+  createVue()
+}

@@ -1,6 +1,7 @@
 import './index.scss'
 import { createNamespacedHelpers } from 'vuex'
 import { Button, Form, Input } from 'ant-design-vue'
+import { getBaseApi } from '@/utils/env'
 
 const {
   mapState,
@@ -50,7 +51,7 @@ export default Form.create({ name: 'TGLoginForm' })({
     async genCode() {
       await this.getCodeKey()
 
-      this.picCodePath = `${process.env.VUE_APP_BASE_API}/auth/verifyCode/loginImg?verifyCodeKey=${this.codeKey}`
+      this.picCodePath = `${getBaseApi()}/auth/verifyCode/loginImg?verifyCodeKey=${this.codeKey}`
     }
   },
   render() {

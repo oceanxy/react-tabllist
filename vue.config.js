@@ -116,31 +116,47 @@ module.exports = {
       })
     }
 
-    // 替换svg loader
-    const svgRule = config.module.rule('svg')
+    /* =============================   复制静态文件   ===================================== */
+    // 检测需要暴露的环境变量文件是否存在
+    let isExistEnvProduction = false
 
-    svgRule.uses.clear()
-    svgRule.use('vue-svg-loader').loader('vue-svg-loader')
+    // 生产环境下检查是否存在需要暴露的环境变量文件
+    if (process.env.NODE_ENV === 'production') {
+      const ENV_PRODUCTION = resolve(join(
+        __dirname,
+        `src/apps/${buildConfig.availableProjectName}/public/env.production.json`
+      ))
 
-    /* ========================   复制 favicon.ico 图标    ===================================== */
-    // 复制 icon 图标
+      try {
+        accessSync(ENV_PRODUCTION, constants.F_OK)
+        isExistEnvProduction = true
+      } catch (e) {
+        isExistEnvProduction = false
+      }
+    }
+
+    // 复制 public 内文件
     config.plugin('copyWebpackPlugin').use(CopyWebpackPlugin, [
       {
         patterns: [
           {
             force: true,
-            from: resolve(__dirname, `src/apps/${buildConfig.availableProjectName}/assets/images/favicon.ico`),
-            to: resolve(__dirname, `dist/${
-              +buildConfig.appSeparately === 1
-                ? buildConfig.appPrefix || buildConfig.availableProjectName
-                : 'favicon.ico'
-            }`)
+            from: resolve(__dirname, `src/apps/${buildConfig.availableProjectName}/public`),
+            to: resolve(__dirname, +buildConfig.appSeparately === 1
+              ? `dist/${buildConfig.appPrefix || buildConfig.availableProjectName}`
+              : 'dist')
           }
         ]
       }
     ])
 
     /* ======================================================================================== */
+
+    // 替换svg loader
+    const svgRule = config.module.rule('svg')
+
+    svgRule.uses.clear()
+    svgRule.use('vue-svg-loader').loader('vue-svg-loader')
 
     /* ==================================   定义全局变量    ===================================== */
     // 检测子项目是否定义了 Login 组件，否则使用主框架的默认登录组件
@@ -242,7 +258,8 @@ module.exports = {
         // 注入项目名称
         PROJ_APP_NAME: JSON.stringify(buildConfig.availableProjectName),
         DEV_DEFAULT_ACCOUNT: JSON.stringify(process.env.NODE_ENV === 'development' ? account : ''),
-        DEV_DEFAULT_PASSWORD: JSON.stringify(process.env.NODE_ENV === 'development' ? password : '')
+        DEV_DEFAULT_PASSWORD: JSON.stringify(process.env.NODE_ENV === 'development' ? password : ''),
+        ENV_PRODUCTION: JSON.stringify(isExistEnvProduction ? 'OK' : '')
       }
     ])
 
