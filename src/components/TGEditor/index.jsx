@@ -80,12 +80,15 @@ export default {
     customUpload: {
       type: Function,
       default: null
+    },
+    toolbarConfig: {
+      type: Object,
+      default: () => { }
     }
   },
   data() {
     return {
       editor: null,
-      toolbarConfig: {},
       editorConfig: {
         placeholder: '请输入内容...',
         MENU_CONF: {
