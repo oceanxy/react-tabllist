@@ -4,7 +4,7 @@ import config from './config'
 import useComponents from '@/utils/antvComponents'
 import router from './router'
 import store from './store'
-import { loadScript, loadStyle, loadVariablesStyle } from '@/assets/styles'
+import { loadScript, loadStyle, loadVariablesStyle, reloadTheme } from '@/assets/styles'
 import { join, resolve } from 'path'
 import { getFirstLetterOfEachWordOfAppName } from '@/utils/utilityFunction'
 
@@ -31,6 +31,19 @@ if (process.env.NODE_ENV === 'development' && config.mock) {
 
 const { NODE_ENV, VUE_APP_PUBLIC_PATH } = process.env
 
+// 加载第三方/远程文件
+if (config.loadFiles?.length) {
+  config.loadFiles.forEach(file => {
+    let host = file.host
+
+    if (host.includes('localhost')) host = file.defaultHost
+
+    loadScript(`${host}${file.filePath}`, () => {
+      console.log(`${file.filename}文件加载完成！`)
+    })
+  })
+}
+
 // 加载主题（生产环境和开发环境因为webpack打包机制的不同，所以采用不同的方式实现）
 if (NODE_ENV === 'production') {
   fetch(resolve(join(__dirname, VUE_APP_PUBLIC_PATH, '/manifest.json')))
@@ -39,7 +52,12 @@ if (NODE_ENV === 'production') {
       const theme = localStorage.getItem(`${appName}-theme`) || config.theme.default
 
       loadStyle(resolve(join(__dirname, `${VUE_APP_PUBLIC_PATH}/${data[`${theme}.css`]}`)))
-      loadScript(resolve(join(__dirname, `${VUE_APP_PUBLIC_PATH}/${data[`${theme}.js`]}`)))
+      loadScript(
+        resolve(join(__dirname, `${VUE_APP_PUBLIC_PATH}/${data[`${theme}.js`]}`)),
+        () => {
+          reloadTheme()
+        }
+      )
     })
 
   if (config.prodGateways?.configuration) {

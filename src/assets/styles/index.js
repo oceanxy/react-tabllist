@@ -9,6 +9,7 @@ import './themeFromLess.scss'
 import store from '@/store'
 import { getFirstLetterOfEachWordOfAppName } from '@/utils/utilityFunction'
 import config from '@/config'
+import { message } from '@/utils/message'
 
 const appName = getFirstLetterOfEachWordOfAppName()
 
@@ -34,14 +35,18 @@ export function loadStyle(url) {
   head.appendChild(link)
 }
 
-export function loadScript(url) {
+export function loadScript(url, callback) {
   const script = document.createElement('script')
 
   script.type = 'text/javascript'
   script.src = url
 
-  script.onload = function() {
-    reloadTheme()
+  if (typeof callback === 'function') {
+    script.onload = callback
+  }
+
+  script.onerror = e => {
+    message(false, e.message)
   }
 
   document.body.appendChild(script)

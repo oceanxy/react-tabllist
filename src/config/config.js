@@ -111,6 +111,19 @@ module.exports = {
     // 文件内用于保存网关地址的字段名同环境变量（.env）中的网关字段名
     filename: 'env.production.json'
   },
+  /**
+   * @global
+   * @typedef LoadFiles
+   * @property host {string} - 资源文件的host
+   * @property defaultHost {string} - 默认host地址
+   * @property filePath {string} - 文件地址
+   * @property filename {string} - 文件备注
+   */
+  /**
+   * 加载第三方文件
+   * @type LoadFiles
+   */
+  loadFiles: [],
   // 生产模式下是否抽离网关地址（接口地址）成单独的配置文件，位于打包后的根目录（通常是 dist/）下的 env.production.json 文件。
   configurableGateways: false,
   // 全局消息最大显示个数
