@@ -42,7 +42,7 @@ if (NODE_ENV === 'production') {
       loadScript(resolve(join(__dirname, `${VUE_APP_PUBLIC_PATH}/${data[`${theme}.js`]}`)))
     })
 
-  if (ENV_PRODUCTION) {
+  if (config.prodGateways?.configuration) {
     fetch(resolve(join(__dirname, VUE_APP_PUBLIC_PATH, '/env.production.json')))
       .then(response => response.json())
       .then(data => {

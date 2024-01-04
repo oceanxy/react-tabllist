@@ -103,6 +103,16 @@ module.exports = {
     // 从其他渠道获取登录令牌的字段，它们通常保存于 URL/cookie/localStorage/sessionStorage 等地方。
     fieldName: 'token'
   },
+  // 生产模式下网关（接口）相关配置，（应某些特殊需求，用于生产环境的包必须包含一个可配置网关地址的文件）
+  prodGateways: {
+    // 是否在打包后生产一个配置文件，该文件位于打包目录的根路径下（一般是 dist/）。
+    configurable: false,
+    // 打包后生成的配置文件的名称，（默认 env.production.json），目前只支持 json 文件，
+    // 文件内用于保存网关地址的字段名同环境变量（.env）中的网关字段名
+    filename: 'env.production.json'
+  },
+  // 生产模式下是否抽离网关地址（接口地址）成单独的配置文件，位于打包后的根目录（通常是 dist/）下的 env.production.json 文件。
+  configurableGateways: false,
   // 全局消息最大显示个数
   maxMessageCount: 1,
   // 是开启水印 在需要加水印APP项目的app.jsx文件混淆全局的watermark

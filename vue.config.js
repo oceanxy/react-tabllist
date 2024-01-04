@@ -5,8 +5,12 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const { resolve, join } = require('path')
 const { getBuildConfig, getDevServer } = require('./build/configs')
 const { ProvidePlugin, DefinePlugin } = require('webpack')
-const { accessSync, constants } = require('fs')
 const WebpackAssetsManifest = require('webpack-assets-manifest')
+const {
+  accessSync,
+  constants,
+  writeFile
+} = require('fs')
 
 const buildConfig = getBuildConfig()
 const {
@@ -65,6 +69,7 @@ module.exports = {
     // config.plugins.delete('preload-index')
     // config.plugins.delete('prefetch-index')
 
+    // 生产环境相关处理
     if (process.env.NODE_ENV === 'production') {
       // 默认在dist目录下生成 manifest.json（追踪所有模块到输出 bundle 之间的映射）
       config.plugin('manifest').use(WebpackAssetsManifest)
@@ -117,34 +122,16 @@ module.exports = {
     }
 
     /* =============================   复制静态文件   ===================================== */
-    // 检测需要暴露的环境变量文件是否存在
-    let isExistEnvProduction = false
-
-    // 生产环境下检查是否存在需要暴露的环境变量文件
-    if (process.env.NODE_ENV === 'production') {
-      const ENV_PRODUCTION = resolve(join(
-        __dirname,
-        `src/apps/${buildConfig.availableProjectName}/public/env.production.json`
-      ))
-
-      try {
-        accessSync(ENV_PRODUCTION, constants.F_OK)
-        isExistEnvProduction = true
-      } catch (e) {
-        isExistEnvProduction = false
-      }
-    }
-
     // 复制 public 内文件
     config.plugin('copyWebpackPlugin').use(CopyWebpackPlugin, [
       {
         patterns: [
           {
             force: true,
-            from: resolve(__dirname, `src/apps/${buildConfig.availableProjectName}/public`),
-            to: resolve(__dirname, +buildConfig.appSeparately === 1
+            from: resolve(join(__dirname, `src/apps/${buildConfig.availableProjectName}/public`)),
+            to: resolve(join(__dirname, +buildConfig.appSeparately === 1
               ? `dist/${buildConfig.appPrefix || buildConfig.availableProjectName}`
-              : 'dist')
+              : 'dist'))
           }
         ]
       }
@@ -258,8 +245,7 @@ module.exports = {
         // 注入项目名称
         PROJ_APP_NAME: JSON.stringify(buildConfig.availableProjectName),
         DEV_DEFAULT_ACCOUNT: JSON.stringify(process.env.NODE_ENV === 'development' ? account : ''),
-        DEV_DEFAULT_PASSWORD: JSON.stringify(process.env.NODE_ENV === 'development' ? password : ''),
-        ENV_PRODUCTION: JSON.stringify(isExistEnvProduction ? 'OK' : '')
+        DEV_DEFAULT_PASSWORD: JSON.stringify(process.env.NODE_ENV === 'development' ? password : '')
       }
     ])
 
@@ -321,6 +307,25 @@ module.exports = {
           minRatio: 0.8
         }
       ])
+
+      // 抽离网关地址成单独的配置文件
+      if (buildConfig.appConfig[buildConfig.availableProjectName].prodGateways.configurable) {
+        config.plugin('configurableGateways').use({
+          apply: compiler => {
+            compiler.hooks.done.tap('configurableGateways', compilation => {
+              writeFile(
+                resolve(join(__dirname, 'dist/env.production.json')),
+                `{"VUE_APP_BASE_API": "${process.env.VUE_APP_BASE_API}"}`,
+                error => {
+                  if (error) {
+                    console.log(`env.production.json 生成失败，错误详情：${error}`)
+                  }
+                }
+              )
+            })
+          }
+        })
+      }
 
       // Webpack包文件分析器(https://github.com/webpack-contrib/webpack-bundle-analyzer)
       // config
