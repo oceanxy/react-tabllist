@@ -175,7 +175,7 @@ function getBuildConfig() {
     }
   }
 
-  // 分别独立打包时，使用各自 apps 下的 main.js
+  // 分别独立打包时，在“dist/”下按项目名称创建打包文件夹
   if (+appSeparately === 1) {
     config.outputDir = `dist/${appPrefix || availableProjectNames[0]}`
   }
