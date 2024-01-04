@@ -34,9 +34,9 @@ const { NODE_ENV, VUE_APP_PUBLIC_PATH } = process.env
 // 加载第三方/远程文件
 if (config.loadFiles?.length) {
   config.loadFiles.forEach(file => {
-    let host = file.host
+    let host = window.location.host
 
-    if (host.includes('localhost')) host = file.defaultHost
+    if (host.includes('localhost')) host = file.host
 
     loadScript(`${host}${file.filePath}`, () => {
       console.log(`${file.filename}文件加载完成！`)

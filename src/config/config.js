@@ -114,8 +114,7 @@ module.exports = {
   /**
    * @global
    * @typedef LoadFiles
-   * @property host {string} - 资源文件的host
-   * @property defaultHost {string} - 默认host地址
+   * @property host {string} - 资源文件的默认host
    * @property filePath {string} - 文件地址
    * @property filename {string} - 文件备注
    */
