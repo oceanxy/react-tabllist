@@ -36,7 +36,7 @@ if (config.loadFiles?.length) {
   config.loadFiles.forEach(file => {
     let host = window.location.host
 
-    if (host.includes('localhost')) host = file.host
+    if (!host.includes('http')) host = file.host
 
     loadScript(`${host}${file.filePath}`, () => {
       console.log(`${file.filename}文件加载完成！`)
