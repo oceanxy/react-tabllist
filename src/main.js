@@ -43,7 +43,17 @@ if (NODE_ENV === 'production') {
     })
 
   if (config.prodGateways?.configuration) {
-    fetch(resolve(join(__dirname, VUE_APP_PUBLIC_PATH, '/env.production.json')))
+    let ENV_PRODUCTION = config.prodGateways?.filename
+
+    if (ENV_PRODUCTION?.length) {
+      if (!/.+\.json$/.test(ENV_PRODUCTION)) {
+        ENV_PRODUCTION += '.json'
+      }
+    } else {
+      ENV_PRODUCTION = '/env.production.json'
+    }
+
+    fetch(resolve(join(__dirname, VUE_APP_PUBLIC_PATH, ENV_PRODUCTION)))
       .then(response => response.json())
       .then(data => {
         localStorage.setItem(`${appName}-baseApi`, data.VUE_APP_BASE_API)

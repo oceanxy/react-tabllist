@@ -313,8 +313,18 @@ module.exports = {
         config.plugin('configurableGateways').use({
           apply: compiler => {
             compiler.hooks.done.tap('configurableGateways', compilation => {
+              let ENV_PRODUCTION = buildConfig.appConfig[buildConfig.availableProjectName].prodGateways?.filename
+
+              if (ENV_PRODUCTION?.length) {
+                if (!/.+\.json$/.test(ENV_PRODUCTION)) {
+                  ENV_PRODUCTION += '.json'
+                }
+              } else {
+                ENV_PRODUCTION = 'env.production.json'
+              }
+
               writeFile(
-                resolve(join(__dirname, 'dist/env.production.json')),
+                resolve(join(__dirname, 'dist', ENV_PRODUCTION)),
                 `{"VUE_APP_BASE_API": "${process.env.VUE_APP_BASE_API}"}`,
                 error => {
                   if (error) {
