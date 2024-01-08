@@ -34,20 +34,18 @@ const { NODE_ENV, VUE_APP_PUBLIC_PATH } = process.env
 // 加载第三方/远程文件
 if (config.loadFiles?.length) {
   config.loadFiles.forEach(file => {
-    if (!window?.JegotripAjax) {
-      if (file.host) {
-        let host = file.host
-        const regex = /^\{([A-Z0-9_]+)}$/
+    if (file.host) {
+      let host = file.host
+      const regex = /^\{([A-Z0-9_]+)}$/
 
-        if (regex.test(file.host)) {
-          host = process.env[host.replace(regex, '$1')]
-        }
+      if (regex.test(file.host)) {
+        host = process.env[host.replace(regex, '$1')]
+      }
 
-        if (host) {
-          loadScript(`${host}${file.filePath}`, () => {
-            console.log(`${file.filename}文件加载完成！`)
-          })
-        }
+      if (host) {
+        loadScript(`${host}${file.filePath}`, () => {
+          console.log(`${file.filename}文件加载完成！`)
+        })
       }
     }
   })
