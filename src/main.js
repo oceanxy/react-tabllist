@@ -29,37 +29,27 @@ if (process.env.NODE_ENV === 'development' && config.mock) {
   require('../mock/index.js')
 }
 
-const { NODE_ENV, VUE_APP_PUBLIC_PATH, VUE_APP_ENV } = process.env
+const { NODE_ENV, VUE_APP_PUBLIC_PATH } = process.env
 
 // 加载第三方/远程文件
 if (config.loadFiles?.length) {
   config.loadFiles.forEach(file => {
-    let jsUrl = ''
-
     if (!window?.JegotripAjax) {
-      switch (VUE_APP_ENV) {
-        case 'development':
-        case 'parallel':
-          jsUrl = 'https://jtoss.jegotrip.com.cn'
-          break
-        case 'integration':
-          jsUrl = 'https://sztoss.jegotrip.com.cn'
-          break
-        case 'production':
-          jsUrl = 'https://cdn.jegotrip.com.cn'
-          break
-        case 'stage':
-          jsUrl = 'https://szsvcdn.jegotrip.com.cn'
-          break
-        default:
-          jsUrl = 'https://cdn.jegotrip.com.cn'
+      if (file.host) {
+        let host = file.host
+        const regex = /^\{([A-Z0-9_]+)}$/
+
+        if (regex.test(file.host)) {
+          host = process.env[host.replace(regex, '$1')]
+        }
+
+        if (host) {
+          loadScript(`${host}${file.filePath}`, () => {
+            console.log(`${file.filename}文件加载完成！`)
+          })
+        }
       }
-
-      loadScript(`${jsUrl}${file.filePath}`, () => {
-        console.log(`${file.filename}文件加载完成！`)
-      })
     }
-
   })
 }
 

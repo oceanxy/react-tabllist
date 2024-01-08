@@ -114,7 +114,7 @@ module.exports = {
   /**
    * @global
    * @typedef LoadFiles
-   * @property host {string} - 资源文件的默认host
+   * @property host {string} - 资源文件的默认host，也可使用 '{环境变量}' 的方式加载指定的环境变量的值
    * @property filePath {string} - 文件地址
    * @property filename {string} - 文件备注
    */
