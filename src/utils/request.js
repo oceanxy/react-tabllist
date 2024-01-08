@@ -3,13 +3,13 @@ import qs from 'qs'
 import { showMessage } from '@/utils/message'
 import { getFirstLetterOfEachWordOfAppName } from '@/utils/utilityFunction'
 import config from '@/config'
-import { getBaseApi } from '@/utils/env'
+import { getEnvVar } from '@/utils/env'
 
 const appName = getFirstLetterOfEachWordOfAppName()
 
 export default function getService(conf, router, store) {
   const service = axios.create({
-    baseURL: getBaseApi(),
+    baseURL: getEnvVar(),
     timeout: conf.timeout
   })
 

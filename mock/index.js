@@ -1,6 +1,6 @@
 import Mock from 'mockjs'
 import APP_CONFIG from '@/config'
-import { getBaseApi } from '@/utils/env'
+import { getEnvVar } from '@/utils/env'
 
 const URL = require('url')
 
@@ -19,7 +19,7 @@ const mockModule = modulesFiles.keys().reduce((modules, modulePath) => {
 
   if (modulePath.includes('/manager') || modulePath.includes('/client')) {
     Object.entries(value.default).forEach(([key, value]) => {
-      newModules[getBaseApi() + key] = value
+      newModules[getEnvVar() + key] = value
     })
   } else {
     newModules = value.default
