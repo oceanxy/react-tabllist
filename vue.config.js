@@ -210,7 +210,7 @@ module.exports = {
       APP_ICON_FONT: resolve(join(__dirname, `src/apps/${buildConfig.availableProjectName}/assets/iconfont.js`))
     }
 
-    /***************** 预加载接口映射器，判断文件是否存在 ***********************/
+    /***************** 预加载接口映射器，并判断文件是否存在 ***********************/
     const INTERFACE_MAPPINGS = resolve(join(
       __dirname,
       `src/apps/${buildConfig.availableProjectName}/config/interfaceMappings.js`
@@ -224,7 +224,7 @@ module.exports = {
     }
     /**********************************************************************/
 
-    /***************** 预加载用户信息映射器，判断文件是否存在 ***********************/
+    /***************** 预加载用户信息映射器，并判断文件是否存在 ***********************/
     const USER_INFO_MAPPINGS = resolve(join(
       __dirname,
       `src/apps/${buildConfig.availableProjectName}/config/userInfoMappings.js`
@@ -328,7 +328,7 @@ module.exports = {
                 `{"VUE_APP_BASE_API": "${process.env.VUE_APP_BASE_API}"}`,
                 error => {
                   if (error) {
-                    console.log(`env.production.json 生成失败，错误详情：${error}`)
+                    console.log(`${ENV_PRODUCTION} 生成失败，错误详情：${error}`)
                   }
                 }
               )
