@@ -39,7 +39,13 @@ if (config.loadFiles?.length) {
       const regex = /^\{([A-Z0-9_]+)}$/
 
       if (regex.test(file.host)) {
-        host = process.env[host.replace(regex, '$1')]
+        const temp = host.replace(regex, '$1')
+
+        if (config.prodGateways.configurable) {
+          host = localStorage.getItem(`${appName}--${temp}`)
+        }
+
+        host = process.env[temp]
       }
 
       if (host) {
@@ -81,7 +87,9 @@ if (NODE_ENV === 'production') {
     fetch(resolve(join(__dirname, VUE_APP_PUBLIC_PATH, ENV_PRODUCTION)))
       .then(response => response.json())
       .then(data => {
-        localStorage.setItem(`${appName}-baseApi`, data.VUE_APP_BASE_API)
+        Object.entries(data).forEach(([key, value]) => {
+          localStorage.setItem(`${appName}--${key}`, value)
+        })
 
         createVue()
       })

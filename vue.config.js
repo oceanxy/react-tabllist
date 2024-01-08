@@ -323,15 +323,41 @@ module.exports = {
                 ENV_PRODUCTION = 'env.production.json'
               }
 
-              writeFile(
-                resolve(join(__dirname, 'dist', ENV_PRODUCTION)),
-                `{"VUE_APP_BASE_API": "${process.env.VUE_APP_BASE_API}"}`,
-                error => {
-                  if (error) {
-                    console.log(`${ENV_PRODUCTION} 生成失败，错误详情：${error}`)
+              // 检测子项目是否存在需要加载的第三方文件，且该文件使用了环境变量，此时需要将该环境变量一并暴露出去
+              const envVariables = []
+              const regex = /^\{([A-Z0-9_]+)}$/
+
+              // 寻找要加载的第三方文件中使用了环境变量的文件
+              buildConfig.appConfig[buildConfig.availableProjectName].loadFiles.forEach(item => {
+                if (regex.test(item.host)) {
+                  const temp = item.host.replace(regex, '$1')
+
+                  // 去重
+                  if (envVariables.filter(i => i.name === temp).length === 0) {
+                    envVariables.push({
+                      name: temp,
+                      value: process.env[temp]
+                    })
                   }
                 }
-              )
+              })
+
+              // 定义文件默认内容
+              let fileStr = `{\n\t"VUE_APP_BASE_API": "${process.env.VUE_APP_BASE_API}"\n}`
+
+              // 组装文件
+              envVariables.forEach(item => {
+                fileStr = fileStr.slice(0, -2) +
+                  `,\n\t"${[item.name]}": "${item.value}"` +
+                  fileStr.slice(-2)
+              })
+
+              // 根据条件生成文件
+              writeFile(resolve(join(__dirname, 'dist', ENV_PRODUCTION)), fileStr, error => {
+                if (error) {
+                  console.log(`${ENV_PRODUCTION} 生成失败，错误详情：${error}`)
+                }
+              })
             })
           }
         })
