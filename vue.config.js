@@ -160,40 +160,6 @@ module.exports = {
       LOGIN_COMPONENT = resolve(join(__dirname, 'src/views/Login/index.jsx'))
     }
 
-    // 加载子项目的 store 模块
-    // const storeModules = {}
-    //
-    // readdirSync(
-    //   join(__dirname, `src/apps/${buildConfig.availableProjectName}/store`),
-    //   { withFileTypes: true }
-    // ).forEach(Dirent => {
-    //   if (Dirent.isDirectory()) {
-    //     let files
-    //
-    //     if (Dirent.name === 'modules') {
-    //       const alias = buildConfig.availableProjectName.split('-').map(i => i[0]).join('')
-    //
-    //       files = readdirSync(join(__dirname, `src/apps/${buildConfig.availableProjectName}/store`, Dirent.name))
-    //       files.forEach(file => {
-    //         storeModules[`${alias}/${file.substring(0, file.length - 3)}`] =
-    //           `@/apps/${buildConfig.availableProjectName}/store/${Dirent.name}/${file}`
-    //       })
-    //     } else {
-    //       files = readdirSync(join(
-    //         __dirname,
-    //         `src/apps/${buildConfig.availableProjectName}/store`,
-    //         Dirent.name,
-    //         'modules'
-    //       ))
-    //
-    //       files.forEach(file => {
-    //         storeModules[file.substring(0, file.length - 3)] =
-    //           `@/apps/${buildConfig.availableProjectName}/store/${Dirent.name}/modules/${file}`
-    //       })
-    //     }
-    //   }
-    // })
-
     // 使用 ProvidePlugin 预加载的文件集合
     const PROVIDE_PLUGIN_PAYLOAD = {
       // 预加载子项目配置文件
@@ -324,31 +290,27 @@ module.exports = {
               }
 
               // 检测子项目是否存在需要加载的第三方文件，且该文件使用了环境变量，此时需要将该环境变量一并暴露出去
-              const envVariables = []
+              let envVariables = []
               const regex = /^\{([A-Z0-9_]+)}$/
 
               // 寻找要加载的第三方文件中使用了环境变量的文件
               buildConfig.appConfig[buildConfig.availableProjectName].loadFiles.forEach(item => {
                 if (regex.test(item.host)) {
-                  const temp = item.host.replace(regex, '$1')
-
-                  // 去重
-                  if (envVariables.filter(i => i.name === temp).length === 0) {
-                    envVariables.push({
-                      name: temp,
-                      value: process.env[temp]
-                    })
-                  }
+                  // 获取需要暴露的环境变量
+                  envVariables.push(item.host.replace(regex, '$1'))
                 }
               })
+
+              // 去重
+              envVariables = [...new Set(envVariables)]
 
               // 定义文件默认内容
               let fileStr = `{\n\t"VUE_APP_BASE_API": "${process.env.VUE_APP_BASE_API}"\n}`
 
               // 组装文件
-              envVariables.forEach(item => {
+              envVariables.forEach(env => {
                 fileStr = fileStr.slice(0, -2) +
-                  `,\n\t"${[item.name]}": "${item.value}"` +
+                  `,\n\t"${env}": "${process.env[env]}"` +
                   fileStr.slice(-2)
               })
 
