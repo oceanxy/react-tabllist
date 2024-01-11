@@ -188,11 +188,15 @@ function getRoutes() {
   const menu = JSON.parse(localStorage.getItem(`${appName}-menu`))
 
   if (menu && token) {
-    if (USER_INFO_MAPPINGS) {
-      return getBaseRoutes(selectDynamicRoutes(menu, APP_ROUTES?.default || []))
-    }
+    try {
+      if (USER_INFO_MAPPINGS) {
+        return getBaseRoutes(selectDynamicRoutes(menu, APP_ROUTES?.default || []))
+      }
 
-    return getBaseRoutes(initializeDynamicRoutes(menu))
+      return getBaseRoutes(initializeDynamicRoutes(menu))
+    } catch (e) {
+      return getBaseRoutes(initializeDynamicRoutes(menu))
+    }
   }
 
   return getBaseRoutes()

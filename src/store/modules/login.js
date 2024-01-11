@@ -147,18 +147,22 @@ export default {
       if (status) {
         let userInfo
 
-        if (USER_INFO_MAPPINGS) {
-          // 适配非蓝桥后端框架的用户信息返回体
-          const userInfoResponseData = USER_INFO_MAPPINGS.mapping(response.data)
+        try {
+          if (USER_INFO_MAPPINGS) {
+            // 适配非蓝桥后端框架的用户信息返回体
+            const userInfoResponseData = USER_INFO_MAPPINGS.mapping(response.data)
 
-          userInfo = userInfoResponseData.userInfo
-          const menuList = userInfoResponseData.menuList
-          const defaultMenuUrl = userInfoResponseData.defaultMenuUrl
+            userInfo = userInfoResponseData.userInfo
+            const menuList = userInfoResponseData.menuList
+            const defaultMenuUrl = userInfoResponseData.defaultMenuUrl
 
-          if (menuList) {
-            commit('setSiteCache', { menuList, defaultMenuUrl })
+            if (menuList) {
+              commit('setSiteCache', { menuList, defaultMenuUrl })
+            }
+          } else {
+            userInfo = response.data
           }
-        } else {
+        } catch (e) {
           userInfo = response.data
         }
 
