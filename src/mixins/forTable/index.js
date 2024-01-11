@@ -634,7 +634,7 @@ export default ({
 
             // 这里配合了css的flex布局实现
             if (HTML_TABLE_BODY_HEIGHT + HTML_TABLE_HEADER_HEIGHT + TABLE_TITLE_HEIGHT > TABLE_CONTAINER_HEIGHT) {
-              scroll.y = TABLE_CONTAINER_HEIGHT - HTML_TABLE_HEADER_HEIGHT - FOOTER_HEIGHT - TABLE_TITLE_HEIGHT - 2
+              scroll.y = TABLE_CONTAINER_HEIGHT - HTML_TABLE_HEADER_HEIGHT - FOOTER_HEIGHT - TABLE_TITLE_HEIGHT
             }
 
             this.tableProps.scroll = scroll
