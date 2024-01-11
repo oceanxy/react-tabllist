@@ -1,4 +1,5 @@
 import '@/assets/styles/app.scss'
+import { detectZoom } from '@/utils/detectZoom'
 import Vue from 'vue'
 import config from './config'
 import useComponents from '@/utils/antvComponents'
@@ -17,6 +18,10 @@ function createVue() {
 }
 
 const appName = getFirstLetterOfEachWordOfAppName()
+const m = detectZoom()
+
+// 处理笔记本系统默认系统比例为150%带来的布局影响
+document.body.style.zoom = 100 / Number(m)
 
 useComponents(config)
 
