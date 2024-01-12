@@ -11,6 +11,7 @@ import getBaseRoutes from './routes'
 import config from '@/config'
 import { message } from 'ant-design-vue'
 import { getFirstLetterOfEachWordOfAppName } from '@/utils/utilityFunction'
+import { getCookie } from '@/utils/cookie'
 
 const appName = getFirstLetterOfEachWordOfAppName()
 
@@ -243,8 +244,13 @@ router.beforeEach((to, from, next) => {
       process.env.VUE_APP_DEVELOPMENT_ENVIRONMENT_SKIPPING_PERMISSIONS === 'on'
     )
   ) {
-    // 如果地址栏带了 token，且与本地存储的token不一致，强制重定向到登录页鉴权
-    if (!localToken || (token && token !== localToken)) {
+    if (
+      !localToken ||
+      // 如果地址栏带了 token，且与本地存储的 token 不一致，强制重定向到登录页鉴权
+      (token && token !== localToken) ||
+      // 处理某些第三方不通过地址栏传递 token，而通过 cookie 的方式传递 token 的情况
+      getCookie(config.tokenConfig.fieldName) !== localToken
+    ) {
       next({
         name: 'login',
         params: to.params,

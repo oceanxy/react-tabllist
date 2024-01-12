@@ -61,7 +61,6 @@ export default function getBaseRoutes(routes) {
       {
         path: '/',
         name: 'home',
-        component: () => import('@/views/Home'),
         redirect: () => {
           // 登录状态下无可用菜单跳转到无权限页面
           if (localStorage.getItem(`${appName}-${config.tokenConfig.fieldName}`)) {
