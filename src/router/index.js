@@ -93,7 +93,7 @@ function initializeDynamicRoutes(menus) {
           if (process.env.NODE_ENV !== 'production') {
             const token = localStorage.getItem(`${appName}-${config.tokenConfig.fieldName}`)
 
-            window.open(`http://localhost:8193${component}/?token=${token}`, target)
+            window.open(`http://localhost:8193${component}/?${config.tokenConfig.fieldName}=${token}`, target)
           } else {
             window.open(component, target)
           }
