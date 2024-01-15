@@ -216,6 +216,26 @@ function resetRoutes() {
 // 创建路由器
 const router = createRouter()
 
+/**
+ * 解决生产环境 chunk 包一定概率会加载失败的问题，
+ * 导致该问题的根本原因暂时未知，全网也没有明确的答案，
+ * 可能是 webpack 打包的 bug，
+ * 也可能是 vue 预加载插件 prefetch 导致的。
+ * 如果问题特别严重，可以尝试禁用 vue-cli 内置的插件 prefetch，
+ * 也可用结合以下错误监听做一些处理，
+ * 总之，目前导致该问题的根本原因未明，
+ * 通过监听错误事件基本可以解决该问题。
+ */
+router.onError((error) => {
+  const pattern = /Loading chunk (\d)+ failed/g
+  const isChunkLoadFailed = error.message.match(pattern)
+  const targetPath = router.history.pending.fullPath
+
+  if (isChunkLoadFailed) {
+    router.replace(targetPath)
+  }
+})
+
 router.beforeEach((to, from, next) => {
   if (to.query.title) {
     to.meta.title = decodeURIComponent(to.query.title)
