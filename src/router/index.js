@@ -235,6 +235,8 @@ router.beforeEach((to, from, next) => {
   const token = searchToken || to.query[config.tokenConfig.fieldName]
   // 获取存储在localStorage内的token，防止刷新页面导致vuex被清空而跳转到登录页
   const localToken = localStorage.getItem(`${appName}-${config.tokenConfig.fieldName}`)
+  // 某些第三方不通过地址栏传递 token，而通过 cookie 的方式传递 token
+  const cookieToken = getCookie(config.tokenConfig.fieldName)
 
   if (
     to.meta.requiresAuth &&
@@ -249,11 +251,11 @@ router.beforeEach((to, from, next) => {
       // 如果地址栏带了 token，且与本地存储的 token 不一致，强制重定向到登录页鉴权
       (token && token !== localToken) ||
       // 处理某些第三方不通过地址栏传递 token，而通过 cookie 的方式传递 token 的情况
-      getCookie(config.tokenConfig.fieldName) !== localToken
+      (cookieToken && cookieToken !== localToken)
     ) {
       next({
+        ...to,
         name: 'login',
-        params: to.params,
         query: {
           // 将跳转的路由path作为参数，登录成功后跳转到该路由
           redirect: to.path,
@@ -271,7 +273,8 @@ router.beforeEach((to, from, next) => {
 
       // 如果 hash 中存在 token，则删除之
       next({
-        ...to, query: {
+        ...to,
+        query: {
           ...to.query,
           [config.tokenConfig.fieldName]: undefined
         }
@@ -280,29 +283,39 @@ router.beforeEach((to, from, next) => {
 
     next()
   } else {
-    if (to.name === 'login' && token && localToken && token === localToken) {
-      if (searchToken) {
-        window.history.replaceState(null, null, window.location.pathname)
-      }
-
-      if (to.query.redirect) {
-        next({
-          path: to.query.redirect,
-          query: {
-            ...to.query,
-            redirect: undefined,
-            [config.tokenConfig.fieldName]: undefined
-          }
-        })
-      }
-
-      next({
-        name: 'home',
-        query: {
-          ...to.query,
-          [config.tokenConfig.fieldName]: undefined
+    if (to.name === 'login' && localToken) {
+      if (
+        // 地址栏传递了新 token，以新 token 为准
+        (token && token === localToken) ||
+        // 处理某些第三方不通过地址栏传递 token，而通过 cookie 的方式传递 token 的情况
+        (cookieToken && cookieToken === localToken)
+      ) {
+        if (searchToken) {
+          window.history.replaceState(null, null, window.location.pathname)
         }
-      })
+
+        if (to.query.redirect) {
+          next({
+            ...to,
+            path: to.query.redirect,
+            query: {
+              ...to.query,
+              redirect: undefined,
+              [config.tokenConfig.fieldName]: undefined
+            }
+          })
+        } else {
+          next({
+            ...to,
+            path: 'home',
+            query: {
+              ...to.query,
+              redirect: undefined,
+              [config.tokenConfig.fieldName]: undefined
+            }
+          })
+        }
+      }
     }
 
     next()
