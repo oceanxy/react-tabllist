@@ -205,7 +205,7 @@ export default {
     /**
      * 清除 store 和本地存储的信息
      * @param commit
-     * @param [isPassive=false] {boolean} 是否是被动清除，除主动点击“注销”外的其他退出都是被动的
+     * @param [isPassive=false] {boolean} - 是否是被动清除，除主动点击“注销”外的其他退出都是被动的
      * @returns {Promise<boolean>}
      */
     async clear({ commit }, isPassive) {
@@ -216,12 +216,12 @@ export default {
 
       // 主动注销
       if (!isPassive) {
-        localStorage.removeItem('openKeys')
-        localStorage.removeItem('selectedKey')
+        localStorage.removeItem(`${appName}-openKeys`)
+        localStorage.removeItem(`${appName}-selectedKey`)
         localStorage.setItem(`${appName}-theme`, config.theme.default)
 
         if (config.headerParams?.show) {
-          localStorage.removeItem('headerId')
+          localStorage.removeItem(`${appName}-headerId`)
 
           commit('setState', {
             value: undefined,
