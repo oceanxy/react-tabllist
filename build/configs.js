@@ -16,7 +16,7 @@ function on(workerProcess, ordinal, filepath) {
   workerProcess.stdout.on('data', function(data) {
     if (data.replace(/\+/g, '').replace(/[\r\n]/g, '')) {
       if (ordinal) {
-        console.info(`第${ordinal}个APP(${filepath})信息: ${data}`)
+        console.info(`第${ordinal}个APP(${filepath}): ${data}`)
       } else {
         console.info(data)
       }
@@ -25,7 +25,7 @@ function on(workerProcess, ordinal, filepath) {
 
   workerProcess.stderr.on('data', function(data) {
     if (ordinal) {
-      console.info(`第${ordinal}个APP(${filepath})信息: ${data}`)
+      console.info(`第${ordinal}个APP(${filepath}): ${data}`)
     } else {
       console.info(data)
     }
@@ -33,7 +33,7 @@ function on(workerProcess, ordinal, filepath) {
 
   workerProcess.on('close', function(code) {
     if (ordinal) {
-      console.info(`第${ordinal}个APP(${filepath})已打包完成，退出码: ${code}`)
+      console.info(`第${ordinal}个APP(${filepath})：已打包完成，退出码: ${code}`)
     } else {
       console.info('退出码：' + code)
     }

@@ -4,6 +4,7 @@ const CompressionPlugin = require('compression-webpack-plugin') // Gzip
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const { resolve, join } = require('path')
 const { getBuildConfig, getDevServer } = require('./build/configs')
+const createZip = require('./build/zip')
 const { ProvidePlugin, DefinePlugin } = require('webpack')
 const WebpackAssetsManifest = require('webpack-assets-manifest')
 const {
@@ -319,6 +320,12 @@ module.exports = {
                 if (error) {
                   console.log(`${ENV_PRODUCTION} 生成失败，错误详情：${error}`)
                 }
+
+                // 执行文件压缩
+                createZip(
+                  buildConfig.appConfig[buildConfig.availableProjectName].zipName ||
+                  buildConfig.availableProjectName
+                )
               })
             })
           }
