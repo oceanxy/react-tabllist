@@ -9,6 +9,7 @@ const fs = require('fs')
 const archiver = require('archiver')
 const path = require('path')
 const moment = require('moment')
+const { subDir } = require('./params')
 
 function createZip(zipName) {
   /* 打包环境用来区分 正式包还是测试包 */
@@ -69,7 +70,8 @@ function createZip(zipName) {
   // pipe archive data to the file
   // 通过管道将数据归档到压缩文件
   archive.pipe(output)
-  archive.directory(path.resolve(__dirname, '../dist'), false)
+  // 打包后的压缩包一律移动到 dist 目录下
+  archive.directory(path.resolve(__dirname, `../dist${subDir ? `/${subDir}` : ''}`), false)
 
   // 压缩文件
   // finalize the archive (ie we are done appending files but streams have to finish yet)

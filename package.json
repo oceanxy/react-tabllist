@@ -3,17 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev-cmp": "dotenv -e ./src/apps/carrent-merchant-platform/config/.env.development -- vue-cli-service serve --app-proj carrent-merchant-platform --app-separately 1",
-    "dev-cop": "dotenv -e ./src/apps/carrent-operation-platform/config/.env.development -- vue-cli-service serve --app-proj carrent-operation-platform --app-separately 1",
-    "dev-shm": "dotenv -e ./src/apps/student-health-management/config/.env.development -- vue-cli-service serve --app-proj student-health-management --app-separately 1",
-    "dev-rcc": "dotenv -e ./src/apps/rongchang-comprehensive-management-platform/config/.env.development -- vue-cli-service serve --app-proj rongchang-comprehensive-management-platform --app-separately 1",
-    "dev-rcv": "dotenv -e ./src/apps/rongchang-visualization/config/.env.development -- vue-cli-service serve --app-proj rongchang-visualization --app-separately 1",
-    "dev-xzl": "dotenv -e ./src/apps/federation-of-new-social-class-professionals/config/.env.development -- vue-cli-service serve --app-proj federation-of-new-social-class-professionals --app-separately 1",
-    "dev-yx": "dotenv -e ./src/apps/ensuring-deliveries-of-presold-homes/config/.env.development -- vue-cli-service serve --app-proj ensuring-deliveries-of-presold-homes --app-separately 1",
+    "dev-cmp": "dotenv -e ./src/apps/carrent-merchant-platform/config/.env.development -- vue-cli-service serve --app-proj carrent-merchant-platform",
+    "dev-cop": "dotenv -e ./src/apps/carrent-operation-platform/config/.env.development -- vue-cli-service serve --app-proj carrent-operation-platform",
+    "dev-shm": "dotenv -e ./src/apps/student-health-management/config/.env.development -- vue-cli-service serve --app-proj student-health-management",
+    "dev-rcc": "dotenv -e ./src/apps/rongchang-comprehensive-management-platform/config/.env.development -- vue-cli-service serve --app-proj rongchang-comprehensive-management-platform",
+    "dev-rcv": "dotenv -e ./src/apps/rongchang-visualization/config/.env.development -- vue-cli-service serve --app-proj rongchang-visualization",
+    "dev-xzl": "dotenv -e ./src/apps/federation-of-new-social-class-professionals/config/.env.development -- vue-cli-service serve --app-proj federation-of-new-social-class-professionals",
+    "dev-yx": "dotenv -e ./src/apps/ensuring-deliveries-of-presold-homes/config/.env.development -- vue-cli-service serve --app-proj ensuring-deliveries-of-presold-homes",
     "dev.auto": "node ./build --app-mode dev",
-    "build": "node ./build --app-mode build",
+    "build": "node ./build",
     "lint": "vue-cli-service lint",
-    "insp": "vue-cli-service inspect --mode production --app-proj carrent-operation-platform --app-separately 1 --app-env integration"
+    "insp": "vue-cli-service inspect --mode production --app-proj carrent-operation-platform --app-env integration"
   },
   "dependencies": {
     "@amap/amap-jsapi-loader": "^1.0.1",

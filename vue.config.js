@@ -3,25 +3,28 @@
 const CompressionPlugin = require('compression-webpack-plugin') // Gzip
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const { resolve, join } = require('path')
-const { getBuildConfig, getDevServer } = require('./build/configs')
-const createZip = require('./build/zip')
 const { ProvidePlugin, DefinePlugin } = require('webpack')
 const WebpackAssetsManifest = require('webpack-assets-manifest')
+const { getBuildConfig, getDevServer } = require('./build/webpackConfigs')
+const { config: webpackConfig, externals } = getBuildConfig()
+const { accessSync, constants } = require('fs')
+const EnvProductionPlugin = require('./build/env.production.plugin')
+const createZip = require('./build/zip')
 const {
-  accessSync,
-  constants,
-  writeFile
-} = require('fs')
-
-const buildConfig = getBuildConfig()
+  appConfig,
+  availableProjectNames,
+  subDir
+} = require('./build/params')
 const {
   account,
   password,
   ...devServer
-} = getDevServer(buildConfig)
+} = getDevServer()
+
+const apn = availableProjectNames[0]
 
 module.exports = {
-  ...buildConfig.config,
+  ...webpackConfig,
   publicPath: process.env.VUE_APP_PUBLIC_PATH,
   // 是否使用包含运行时编译器的 Vue 构建版本。设置为 true 后可以在 Vue 组件中使用 template 选项，但应用会额外增加 10kb 左右。
   // 默认值是false
@@ -49,7 +52,7 @@ module.exports = {
         //   'echarts': 'echarts', // 成功（大体积）
         //   'ant-design-vue': 'antd' // 未成功 受 babel.config.js 里按需使用antd组件配置的影响
       },
-      buildConfig.externals
+      externals
     ]
   },
   // 生产环境是否生成 sourceMap 文件。设置为 false 以加速生产环境构建。
@@ -75,7 +78,7 @@ module.exports = {
       // 默认在dist目录下生成 manifest.json（追踪所有模块到输出 bundle 之间的映射）
       config.plugin('manifest').use(WebpackAssetsManifest)
 
-      buildConfig.appConfig[buildConfig.availableProjectName].theme.availableThemes.forEach(t => {
+      appConfig[apn].theme.availableThemes.forEach(t => {
         // config.plugins.delete(`preload-${t.fileName}`)
         // config.plugins.delete(`prefetch-${t.fileName}`)
 
@@ -89,7 +92,7 @@ module.exports = {
       config.plugin('html-index').tap(options => {
         // 在index.html中排除对主题样式文件的引用，通过在程序中点击切换主题时再动态加载对应的主题文件，防止样式污染
         options[0].excludeChunks = themeNames
-        options[0].title = buildConfig.appConfig[buildConfig.availableProjectName].systemName
+        options[0].title = appConfig[apn].systemName
 
         /**
          * 通过 html-webpack-plugin 将 cdn 注入到 index.html 之中，
@@ -116,7 +119,7 @@ module.exports = {
     } else {
       // 在index.html中排除对主题样式文件的引用
       config.plugin('html-index').tap(options => {
-        options[0].title = buildConfig.appConfig[buildConfig.availableProjectName].systemName
+        options[0].title = appConfig[apn].systemName
 
         return options
       })
@@ -129,10 +132,8 @@ module.exports = {
         patterns: [
           {
             force: true,
-            from: resolve(join(__dirname, `src/apps/${buildConfig.availableProjectName}/public`)),
-            to: resolve(join(__dirname, +buildConfig.appSeparately === 1
-              ? `dist/${buildConfig.appPrefix || buildConfig.availableProjectName}`
-              : 'dist'))
+            from: resolve(join(__dirname, `src/apps/${apn}/public`)),
+            to: resolve(join(__dirname, `dist${subDir ? `/${subDir}` : ''}`))
           }
         ]
       }
@@ -152,11 +153,11 @@ module.exports = {
 
     try {
       accessSync(
-        join(__dirname, `src/apps/${buildConfig.availableProjectName}/views/Login/index.jsx`),
+        join(__dirname, `src/apps/${apn}/views/Login/index.jsx`),
         constants.F_OK
       )
 
-      LOGIN_COMPONENT = resolve(join(__dirname, `src/apps/${buildConfig.availableProjectName}/views/Login/index.jsx`))
+      LOGIN_COMPONENT = resolve(join(__dirname, `src/apps/${apn}/views/Login/index.jsx`))
     } catch (e) {
       LOGIN_COMPONENT = resolve(join(__dirname, 'src/views/Login/index.jsx'))
     }
@@ -164,44 +165,44 @@ module.exports = {
     // 使用 ProvidePlugin 预加载的文件集合
     const PROVIDE_PLUGIN_PAYLOAD = {
       // 预加载子项目配置文件
-      APP_CONFIG: resolve(join(__dirname, `src/apps/${buildConfig.availableProjectName}/config/index.js`)),
+      APP_CONFIG: resolve(join(__dirname, `src/apps/${apn}/config/index.js`)),
       // 预加载子项目入口组件
-      APP_COMPONENT: buildConfig.availableProjectName
-        ? resolve(join(__dirname, `src/apps/${buildConfig.availableProjectName}/App.jsx`))
+      APP_COMPONENT: apn
+        ? resolve(join(__dirname, `src/apps/${apn}/App.jsx`))
         : resolve(join(__dirname, 'src/App.jsx')),
       // 预加载子项目路由
-      APP_ROUTES: resolve(join(__dirname, `src/apps/${buildConfig.availableProjectName}/router/routes.js`)),
+      APP_ROUTES: resolve(join(__dirname, `src/apps/${apn}/router/routes.js`)),
       // 预加载子项目登录组件
       LOGIN_COMPONENT,
       // 预加载iconfont文件
-      APP_ICON_FONT: resolve(join(__dirname, `src/apps/${buildConfig.availableProjectName}/assets/iconfont.js`))
+      APP_ICON_FONT: resolve(join(__dirname, `src/apps/${apn}/assets/iconfont.js`))
     }
 
     /***************** 预加载接口映射器，并判断文件是否存在 ***********************/
     const INTERFACE_MAPPINGS = resolve(join(
       __dirname,
-      `src/apps/${buildConfig.availableProjectName}/config/interfaceMappings.js`
+      `src/apps/${apn}/config/interfaceMappings.js`
     ))
 
     try {
       accessSync(INTERFACE_MAPPINGS, constants.F_OK)
       PROVIDE_PLUGIN_PAYLOAD.INTERFACE_MAPPINGS = INTERFACE_MAPPINGS
     } catch (e) {
-      console.info('未找到项目对应的接口字段映射（interfaceMappings）。')
+      console.info('项目接口字段映射文件(interfaceMappings)：无')
     }
     /**********************************************************************/
 
     /***************** 预加载用户信息映射器，并判断文件是否存在 ***********************/
     const USER_INFO_MAPPINGS = resolve(join(
       __dirname,
-      `src/apps/${buildConfig.availableProjectName}/config/userInfoMappings.js`
+      `src/apps/${apn}/config/userInfoMappings.js`
     ))
 
     try {
       accessSync(USER_INFO_MAPPINGS, constants.F_OK)
       PROVIDE_PLUGIN_PAYLOAD.USER_INFO_MAPPINGS = USER_INFO_MAPPINGS
     } catch (e) {
-      console.info('未找到项目对应的动态菜单映射（menuMappings）。')
+      console.info('项目动态菜单映射(menuMappings)：无')
     }
     /**********************************************************************/
 
@@ -210,7 +211,7 @@ module.exports = {
     config.plugin('DefinePlugin').use(DefinePlugin, [
       {
         // 注入项目名称
-        PROJ_APP_NAME: JSON.stringify(buildConfig.availableProjectName),
+        PROJ_APP_NAME: JSON.stringify(apn),
         DEV_DEFAULT_ACCOUNT: JSON.stringify(process.env.NODE_ENV === 'development' ? account : ''),
         DEV_DEFAULT_PASSWORD: JSON.stringify(process.env.NODE_ENV === 'development' ? password : '')
       }
@@ -230,7 +231,7 @@ module.exports = {
       /* ===============================   抽取主题样式为单独的文件    ================================== */
       const themeGroups = {}
 
-      buildConfig.appConfig[buildConfig.availableProjectName].theme.availableThemes.forEach(t => {
+      appConfig[apn].theme.availableThemes.forEach(t => {
         themeGroups[`${t.fileName}Theme`] = {
           name: t.fileName,
           test: (module, chunk, entry = t.fileName) => {
@@ -276,57 +277,19 @@ module.exports = {
       ])
 
       // 抽离网关地址成单独的配置文件
-      if (buildConfig.appConfig[buildConfig.availableProjectName].prodGateways.configurable) {
-        config.plugin('configurableGateways').use({
+      if (appConfig[apn].prodGateways.configurable) {
+        config.plugin('configurableGatewaysAndCreateZip').use(EnvProductionPlugin, [
+          {
+            appConfig: appConfig[apn],
+            subDir,
+            callback: () => createZip(appConfig[apn].zipName || apn)
+          }
+        ])
+      } else {
+        config.plugin('createZip').use({
           apply: compiler => {
-            compiler.hooks.done.tap('configurableGateways', compilation => {
-              let ENV_PRODUCTION = buildConfig.appConfig[buildConfig.availableProjectName].prodGateways?.filename
-
-              if (ENV_PRODUCTION?.length) {
-                if (!/.+\.json$/.test(ENV_PRODUCTION)) {
-                  ENV_PRODUCTION += '.json'
-                }
-              } else {
-                ENV_PRODUCTION = 'env.production.json'
-              }
-
-              // 检测子项目是否存在需要加载的第三方文件，且该文件使用了环境变量，此时需要将该环境变量一并暴露出去
-              let envVariables = []
-              const regex = /^\{([A-Z0-9_]+)}$/
-
-              // 寻找要加载的第三方文件中使用了环境变量的文件
-              buildConfig.appConfig[buildConfig.availableProjectName].loadFiles.forEach(item => {
-                if (regex.test(item.host)) {
-                  // 获取需要暴露的环境变量
-                  envVariables.push(item.host.replace(regex, '$1'))
-                }
-              })
-
-              // 去重
-              envVariables = [...new Set(envVariables)]
-
-              // 定义文件默认内容
-              let fileStr = `{\n\t"VUE_APP_BASE_API": "${process.env.VUE_APP_BASE_API}"\n}`
-
-              // 组装文件
-              envVariables.forEach(env => {
-                fileStr = fileStr.slice(0, -2) +
-                  `,\n\t"${env}": "${process.env[env]}"` +
-                  fileStr.slice(-2)
-              })
-
-              // 根据条件生成文件
-              writeFile(resolve(join(__dirname, 'dist', ENV_PRODUCTION)), fileStr, error => {
-                if (error) {
-                  console.log(`${ENV_PRODUCTION} 生成失败，错误详情：${error}`)
-                }
-
-                // 执行文件压缩
-                createZip(
-                  buildConfig.appConfig[buildConfig.availableProjectName].zipName ||
-                  buildConfig.availableProjectName
-                )
-              })
+            compiler.hooks.done.tap('createZip', compilation => {
+              createZip(appConfig[apn].zipName || apn)
             })
           }
         })
