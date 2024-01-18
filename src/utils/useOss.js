@@ -96,6 +96,9 @@ import JSZip from 'jszip'
 import { saveAs } from 'file-saver'
 import { getFirstLetterOfEachWordOfAppName, uuid } from '@/utils/utilityFunction'
 import { message } from 'ant-design-vue'
+import moment from 'moment'
+
+let expireTime = ''
 
 const useOss = {
   /**
@@ -118,6 +121,19 @@ const useOss = {
     return store.getters.getState('ossClient', this.moduleName)
   },
   /**
+   * 是否过期更新oss
+   */
+  isBefore() {
+    if (!expireTime) {
+      return false
+    } else {
+      const endTime = moment()
+      const isBefore = endTime.isBefore(expireTime)
+
+      return isBefore
+    }
+  },
+  /**
    * 初始化OSS服务
    * @param [config={}] ｛Object｝ 参数
    * @param [force] {boolean} 是否强制初始化（当store内存在已经实例化的 ossClient 对象时，需要强制执行才能重新初始化）
@@ -130,7 +146,9 @@ const useOss = {
     const ossConfig = this.getOssConfig()
     let ossClient = this.getOssClient()
 
-    if (!ossConfig || !ossClient || force) {
+    console.log(this.isBefore())
+
+    if (!this.isBefore() || !ossClient || !ossConfig || force) {
       const { status, data } = await apis.getStsToken({
         keyCode: process.env.VUE_APP_WUYOUXING_PUBLIC_KEY_CODE,
         appendDateFormatted: true,
@@ -152,7 +170,8 @@ const useOss = {
             accessKeyId: data.accessKeyId,
             accessKeySecret: data.accessKeySecret,
             bucket: data.bucketName,
-            stsToken: data.securityToken
+            stsToken: data.securityToken,
+            expiration: data.expiration
           })
 
           store.commit('setState', {
@@ -160,6 +179,14 @@ const useOss = {
             stateName: 'ossClient',
             moduleName: this.moduleName
           })
+
+          if (data?.expiration) {
+            expireTime = data.expiration
+          } else {
+            const curTime = moment().add(10, 'minutes')
+
+            expireTime = moment(curTime).format('YYYY-MM-DD HH:mm:ss')
+          }
 
           return Promise.resolve(true)
         } catch (err) {
@@ -198,7 +225,8 @@ const useOss = {
     let ossClient = this.getOssClient()
     let result = true
 
-    if (!ossConfig || !ossClient) {
+    if (!this.isBefore() || !ossConfig || !ossClient) {
+
       result = await this.init()
 
       if (result) {
