@@ -53,10 +53,10 @@ class EnvProductionPlugin {
         error => {
           if (error) {
             console.warn(`${ENV_PRODUCTION} 生成失败，错误详情：${error}`)
+          } else {
+            // 执行回调
+            this.callback?.()
           }
-
-          // 执行文件压缩
-          this.callback?.()
         }
       )
     })
