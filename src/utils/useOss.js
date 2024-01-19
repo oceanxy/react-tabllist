@@ -146,8 +146,6 @@ const useOss = {
     const ossConfig = this.getOssConfig()
     let ossClient = this.getOssClient()
 
-    console.log(this.isBefore())
-
     if (!this.isBefore() || !ossClient || !ossConfig || force) {
       const { status, data } = await apis.getStsToken({
         keyCode: process.env.VUE_APP_WUYOUXING_PUBLIC_KEY_CODE,
