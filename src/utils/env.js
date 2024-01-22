@@ -10,8 +10,8 @@ const appName = getFirstLetterOfEachWordOfAppName()
  * @return {string}
  */
 export function getEnvVar(envName = 'VUE_APP_BASE_API') {
-  if (config.prodGateways?.configuration) {
-    localStorage.getItem(`${appName}--${envName}`)
+  if (config.prodGateways?.configurable) {
+    return localStorage.getItem(`${appName}--${envName}`)
   } else {
     return process.env[envName]
   }

@@ -44,13 +44,13 @@ if (config.loadFiles?.length) {
       const regex = /^\{([A-Z0-9_]+)}$/
 
       if (regex.test(file.host)) {
-        const temp = host.replace(regex, '$1')
+        const VUE_APP_JEGOTRIP_AJAX = host.replace(regex, '$1')
 
         if (config.prodGateways.configurable) {
-          host = localStorage.getItem(`${appName}--${temp}`)
+          host = localStorage.getItem(`${appName}--${VUE_APP_JEGOTRIP_AJAX}`)
+        } else {
+          host = process.env[VUE_APP_JEGOTRIP_AJAX]
         }
-
-        host = process.env[temp]
       }
 
       if (host) {
@@ -78,7 +78,7 @@ if (NODE_ENV === 'production') {
       )
     })
 
-  if (config.prodGateways?.configuration) {
+  if (config.prodGateways?.configurable) {
     let ENV_PRODUCTION = config.prodGateways?.filename
 
     if (ENV_PRODUCTION?.length) {
