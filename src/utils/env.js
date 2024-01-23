@@ -10,7 +10,7 @@ const appName = getFirstLetterOfEachWordOfAppName()
  * @return {string}
  */
 export function getEnvVar(envName = 'VUE_APP_BASE_API') {
-  if (config.prodGateways?.configurable) {
+  if (process.env.NODE_ENV === 'production' && config.prodGateways?.configurable) {
     return localStorage.getItem(`${appName}--${envName}`)
   } else {
     return process.env[envName]
