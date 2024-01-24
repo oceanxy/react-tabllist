@@ -105,26 +105,49 @@ module.exports = {
     // 从其他渠道获取登录令牌的字段，它们通常保存于 URL/cookie/localStorage/sessionStorage 等地方。
     fieldName: 'token'
   },
-  // 生产模式下网关（接口）相关配置，（应某些特殊需求，用于生产环境的包必须包含一个可配置网关地址的文件）
-  // 该配置会在打包时生效，开发环境下不生效。
-  prodGateways: {
-    // 是否在打包后生成一个配置文件，该文件位于打包目录的根路径下（一般是 dist/）。
-    // 该配置会为true时，会将 loadFiles 中使用到的环境变量同步生成到打包后呃配置文件中。
+  /**
+   * 生产环境(process.env.NODE_ENV === 'production')是否可配置环境变量，注意：
+   * - 该配置开发环境下无效。
+   * - 该配置生产环境下运行时有效，编译时无效。
+   * @global
+   * @typedef ProdEnvVar
+   * @property {boolean} configurable - 打包后是否生成一个配置文件，该文件位于打包目录的根路径下（一般是`dist/`）。
+   * 注意：该配置值为`true`时，
+   * - 会将`loadFiles`中使用到的环境变量同步生成到打包后的配置文件中，不管`prodEnvVar.envVars`中是否配置了该环境变量。
+   * - 获取环境变量的方式为`utils/env.js`内的`getEnvVar`方法，该方法可传递一个参数`envName`，默认为`VUE_APP_ENV`。
+   *
+   * @property {string[]} envVars - 需要同步到打包后的配置文件中的环境变量名，`prodEnvVar.configurable`值为`true`时生效。默认值/固定值（不需要手动配置）：
+   * - `VUE_APP_ENV`：生产环境不同阶段的变量。
+   * - `loadFiles`中使用到的环境变量。
+   *
+   * 注意并不是所有配置的环境变量都会生效，注意区分运行时环境变量（生效）和编译时环境变量（不生效）。比如：
+   *
+   * - `webpack`打包需要的公共资源路径（`VUE_APP_PUBLIC_PATH`）属于编译时环境变量，所以不会生效。
+   * - 网关地址前缀/接口地址前缀（`VUE_APP_BASE_API`）属于运行时环境变量，所以会生效。
+   *
+   * @property {string} filename - 打包后生成的配置文件的名称，（默认`env.production.json`），目前只支持`*.json`文件，
+   * 文件内用于保存网关地址的字段名同环境变量文件（`.env.*`）中的网关字段名
+   */
+  /**
+   * 生产环境是否可配置环境变量
+   * @type ProdEnvVar
+   */
+  prodEnvVar: {
     configurable: false,
-    // 打包后生成的配置文件的名称，（默认 env.production.json），目前只支持 json 文件，
-    // 文件内用于保存网关地址的字段名同环境变量（.env）中的网关字段名
+    envVars: [],
     filename: 'env.production.json'
   },
   /**
+   * 要加载的第三方文件信息
    * @global
    * @typedef LoadFiles
-   * @property host {string} - 资源文件的默认host，也可使用 '{环境变量}' 的方式加载指定的环境变量的值
-   * @property filePath {string} - 文件地址
-   * @property filename {string} - 文件备注
+   * @property {string} host - 资源文件的默认host，也可使用 '{环境变量}' 的方式加载指定的环境变量的值
+   * @property {string} filePath - 文件地址
+   * @property {string} filename - 文件备注
    */
   /**
-   * 加载第三方文件
-   * @type LoadFiles
+   * 加载第三方文件集合
+   * @type LoadFiles[]
    */
   loadFiles: [],
   // 生产模式下是否抽离网关地址（接口地址）成单独的配置文件，位于打包后的根目录（通常是 dist/）下的 env.production.json 文件。

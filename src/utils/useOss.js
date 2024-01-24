@@ -1,5 +1,5 @@
 /**
- * 文件上传状态
+ * 阿里云 OSS 文件服务
  * @global
  * @typedef {'error' | 'success' | 'done' | 'uploading' | 'removed'} AntdVueUploadFileStatus
  */
@@ -91,7 +91,7 @@
 
 import apis from '@/apis'
 import store from '@/store'
-import OSS from 'ali-oss'
+import OSS from 'tiny-oss'
 import JSZip from 'jszip'
 import { saveAs } from 'file-saver'
 import { getFirstLetterOfEachWordOfAppName, uuid } from '@/utils/utilityFunction'
@@ -127,10 +127,7 @@ const useOss = {
     if (!expireTime) {
       return false
     } else {
-      const endTime = moment()
-      const isBefore = endTime.isBefore(expireTime)
-
-      return isBefore
+      return moment().isBefore(expireTime)
     }
   },
   /**
@@ -299,7 +296,6 @@ const useOss = {
       }
     })
 
-
     // 创建一系列的 Promise 对象，用于获取图片数据
     for (const imageUrl of imageUrls) {
       const promise = new Promise((resolve, reject) => {
@@ -325,11 +321,13 @@ const useOss = {
     }
 
     // 等待所有图片数据的获取完成
-    const imageDataArray = await Promise.all(promises).then((results) => {
-      return results
-    }).catch((err) => {
-      return message.warning('图片打包失败')
-    })
+    const imageDataArray = await Promise
+      .all(promises).then(results => {
+        return results
+      })
+      .catch(err => {
+        return message.warning('图片打包失败')
+      })
 
     if (imageDataArray && imageDataArray.length) {
       message.destroy()

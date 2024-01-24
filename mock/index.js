@@ -19,7 +19,7 @@ const mockModule = modulesFiles.keys().reduce((modules, modulePath) => {
 
   if (modulePath.includes('/manager') || modulePath.includes('/client')) {
     Object.entries(value.default).forEach(([key, value]) => {
-      newModules[getEnvVar() + key] = value
+      newModules[getEnvVar('VUE_APP_BASE_API') + key] = value
     })
   } else {
     newModules = value.default

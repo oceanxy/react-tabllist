@@ -51,7 +51,7 @@ export default Form.create({ name: 'TGLoginForm' })({
     async genCode() {
       await this.getCodeKey()
 
-      this.picCodePath = `${getEnvVar()}/auth/verifyCode/loginImg?verifyCodeKey=${this.codeKey}`
+      this.picCodePath = `${getEnvVar('VUE_APP_BASE_API')}/auth/verifyCode/loginImg?verifyCodeKey=${this.codeKey}`
     }
   },
   render() {

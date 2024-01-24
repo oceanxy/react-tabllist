@@ -1,9 +1,8 @@
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin // Webpack包文件分析器
 // const VConsolePlugin = require('vconsole-webpack-plugin') // 引入 移动端模拟开发者工具 插件 （另：https://github.com/liriliri/eruda）
 const CompressionPlugin = require('compression-webpack-plugin') // Gzip
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const { resolve, join } = require('path')
-const { ProvidePlugin, DefinePlugin } = require('webpack')
+const { ProvidePlugin, DefinePlugin, ContextReplacementPlugin } = require('webpack')
 const WebpackAssetsManifest = require('webpack-assets-manifest')
 const { getBuildConfig, getDevServer } = require('./build/webpackConfigs')
 const { config: webpackConfig, externals } = getBuildConfig()
@@ -241,12 +240,51 @@ module.exports = {
           },
           chunks: 'all',
           enforce: true,
-          priority: 50
+          priority: 0
         }
       })
 
       config.optimization.splitChunks({
         cacheGroups: {
+          jszip: {
+            name: 'chunk-jszip',
+            priority: 100,
+            test: /[\\/]node_modules[\\/]jszip[\\/]/
+          },
+          echarts: {
+            name: 'chunk-echarts',
+            priority: 90,
+            test: /[\\/]node_modules[\\/]echarts[\\/]/
+          },
+          editor: {
+            name: 'chunk-wangeditor',
+            priority: 80,
+            test: /[\\/]node_modules[\\/]@wangeditor[\\/]/
+          },
+          lodash: {
+            name: 'chunk-lodash',
+            priority: 60,
+            test: /[\\/]node_modules[\\/]lodash[\\/]/
+          },
+
+          vue: {
+            name: 'chunk-vue',
+            priority: 50,
+            test: /[\\/]node_modules[\\/]vue[\\/]/
+          },
+
+          // antDesign: {
+          //   name: 'chunk-ant-design',
+          //   priority: 30,
+          //   test: /[\\/]node_modules[\\/]@ant-design[\\/]/
+          // },
+          // antDesignVue: {
+          //   name: 'chunk-ant-design-vue',
+          //   priority: 20,
+          //   test: /[\\/]node_modules[\\/]ant-design-vue[\\/]/
+          // },
+
+          ...themeGroups,
           vendors: {
             name: 'chunk-vendors',
             test: /[\\/]node_modules[\\/]/,
@@ -255,12 +293,15 @@ module.exports = {
           },
           common: {
             name: 'chunk-commons',
-            minChunks: 2, // common 组的模块必须至少被 2 个 chunk 共用 (本次分割前)
+            // common 组的模块必须至少被 2 个 chunk 共用 (本次分割前)
+            minChunks: 2,
             priority: -20,
-            chunks: 'initial', // 只针对同步 chunk
-            reuseExistingChunk: true // 复用已被拆出的依赖模块，而不是继续包含在该组一起生成
-          },
-          ...themeGroups
+            // 只针对同步 chunk
+            chunks: 'initial',
+            // 缓存组可以继承和/或覆盖来自 splitChunks.* 的任何选项。
+            // 但是 test、priority 和 reuseExistingChunk 只能在缓存组级别上进行配置。默认 true。
+            reuseExistingChunk: true
+          }
         }
       })
       /* ======================================================================================== */
@@ -276,8 +317,24 @@ module.exports = {
         }
       ])
 
+      // 去除 moment 多余的本地化文件
+      config.plugin('contextReplacementPluginForMomentLocal').use(ContextReplacementPlugin, [
+        /moment[/\\]locale$/, /zh-cn/
+      ])
+
+      // config.plugin('contextReplacementPlugin').use(ContextReplacementPlugin, [
+      //   /src[/\\]apps/,
+      //   context => {
+      //     if (/src[/\\]apps$/.test(context.resource)) {
+      //       Object.assign(context, { request: /^@\/apps/.test(context.request) ? `@/apps/${apn}` : `../apps/${apn}` })
+      //     }
+      //
+      //     console.log(context)
+      //   }
+      // ])
+
       // 抽离网关地址成单独的配置文件
-      if (appConfig[apn].prodGateways.configurable) {
+      if (appConfig[apn].prodEnvVar.configurable) {
         config.plugin('configurableGatewaysAndCreateZip').use(EnvProductionPlugin, [
           {
             appConfig: appConfig[apn],

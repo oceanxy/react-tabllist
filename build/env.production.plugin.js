@@ -10,7 +10,7 @@ class EnvProductionPlugin {
 
   apply(compiler) {
     compiler.hooks.done.tap('configurableGatewaysAndCreateZip', compilation => {
-      let ENV_PRODUCTION = this.appConfig.prodGateways?.filename
+      let ENV_PRODUCTION = this.appConfig.prodEnvVar?.filename
 
       if (ENV_PRODUCTION?.length) {
         if (!/.+\.json$/.test(ENV_PRODUCTION)) {
@@ -21,7 +21,7 @@ class EnvProductionPlugin {
       }
 
       // 检测子项目是否存在需要加载的第三方文件，且该文件使用了环境变量，此时需要将该环境变量一并暴露出去
-      let envVariables = []
+      let envVariables = this.appConfig.prodEnvVar?.envVars ?? []
       const regex = /^\{([A-Z0-9_]+)}$/
 
       // 寻找要加载的第三方文件中使用了环境变量的文件
@@ -36,7 +36,7 @@ class EnvProductionPlugin {
       envVariables = [...new Set(envVariables)]
 
       // 定义文件默认内容
-      let fileStr = `{\n\t"VUE_APP_BASE_API": "${process.env.VUE_APP_BASE_API}"\n}`
+      let fileStr = `{\n\t"VUE_APP_ENV": "${process.env.VUE_APP_ENV}"\n}`
 
       // 组装文件
       envVariables.forEach(env => {

@@ -38,7 +38,11 @@ export default function getBaseRoutes(routes) {
         {
           path: '/',
           name: 'home',
-          component: () => import(`@/layouts/${_config.layout}`),
+          component: resolve => require.ensure(
+            [],
+            () => resolve(require('@/layouts/' + _config.layout)),
+            'chunk-home'
+          ),
           redirect: {
             name: config.dynamicRouting
               ? localStorage.getItem(`${appName}-defaultRoute`) || config.defaultRouteName
@@ -96,7 +100,11 @@ export default function getBaseRoutes(routes) {
     {
       path: '/no-access',
       name: 'noAccess',
-      component: () => import('@/views/NoAccess'),
+      component: resolve => require.ensure(
+        [],
+        () => resolve(require('@/views/NoAccess')),
+        'chunk-no-access'
+      ),
       meta: {
         title: '无访问权限',
         keep: false,
@@ -106,7 +114,11 @@ export default function getBaseRoutes(routes) {
     {
       path: '/404',
       name: 'notFound',
-      component: () => import('@/views/NotFound'),
+      component: resolve => require.ensure(
+        [],
+        () => resolve(require('@/views/NotFound')),
+        'chunk-not-found'
+      ),
       meta: {
         title: '404',
         keep: false,
