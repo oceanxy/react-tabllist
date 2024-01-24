@@ -1,5 +1,5 @@
 /**
- * 文件上传状态
+ * 阿里云 OSS 文件服务
  * @global
  * @typedef {'error' | 'success' | 'done' | 'uploading' | 'removed'} AntdVueUploadFileStatus
  */
