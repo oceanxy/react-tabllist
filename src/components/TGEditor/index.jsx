@@ -81,6 +81,10 @@ export default {
       type: Function,
       default: null
     },
+    maxLength: {
+      type: Number,
+      default: 30000
+    },
     toolbarConfig: {
       type: Object,
       default: () => { }
@@ -91,6 +95,7 @@ export default {
       editor: null,
       editorConfig: {
         placeholder: '请输入内容...',
+        maxLength: this.maxLength,
         MENU_CONF: {
           // 上传图片的配置
           uploadImage: {
@@ -167,6 +172,7 @@ export default {
           vModel={this.html}
           defaultConfig={this.editorConfig}
           mode={this.mode}
+          max
           onOnCreated={this.onCreated}
           onOnChange={this.onChange}
         />
