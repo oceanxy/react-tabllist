@@ -277,7 +277,7 @@ module.exports = {
       ])
 
       // 抽离网关地址成单独的配置文件
-      if (appConfig[apn].prodGateways.configurable) {
+      if (appConfig[apn].prodEnvVar.configurable) {
         config.plugin('configurableGatewaysAndCreateZip').use(EnvProductionPlugin, [
           {
             appConfig: appConfig[apn],

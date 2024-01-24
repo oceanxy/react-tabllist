@@ -5,12 +5,13 @@ const appName = getFirstLetterOfEachWordOfAppName()
 
 /**
  * 获取环境变量
- * 为了适配生产环境下暴露了环境变量的情形下，不能直接使用env环境变量，而要使用打包文件内单独生成的文件内的变量
- * @param envName {string} 环境变量名，默认
+ * 为了适配全局配置文件中的 prodEnvVar 配置，该方法会自动根据配置返回正确的环境变量。
+ * @global
+ * @param {string} [envName=VUE_APP_ENV] 环境变量名，默认
  * @return {string}
  */
-export function getEnvVar(envName = 'VUE_APP_BASE_API') {
-  if (process.env.NODE_ENV === 'production' && config.prodGateways?.configurable) {
+export function getEnvVar(envName = 'VUE_APP_ENV') {
+  if (process.env.NODE_ENV === 'production' && config.prodEnvVar?.configurable) {
     return localStorage.getItem(`${appName}--${envName}`)
   } else {
     return process.env[envName]

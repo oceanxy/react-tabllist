@@ -9,7 +9,7 @@ const appName = getFirstLetterOfEachWordOfAppName()
 
 export default function getService(conf, router, store) {
   const service = axios.create({
-    baseURL: getEnvVar(),
+    baseURL: getEnvVar('VUE_APP_BASE_API'),
     timeout: conf.timeout
   })
 
