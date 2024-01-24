@@ -67,15 +67,29 @@ function initializeDynamicRoutes(menus) {
     }
 
     if (!component || component === '@/components/TGRouterView') {
-      route.component = () => import('@/components/TGRouterView')
+      route.component = resolve => require.ensure(
+        [],
+        () => resolve(require('@/components/TGRouterView')),
+        'chunk-router-view'
+      )
     } else {
       if (component.includes('@/')) {
         if (component.includes('layouts')) {
-          route.component = () => import('@/layouts/' + component.slice(10))
+          route.component = resolve => require.ensure(
+            [],
+            () => resolve(require('@/layouts/' + component.slice(10))),
+            'chunk-layouts'
+          )
         } else if (component.includes('apps')) {
-          route.component = () => import('@/apps/' + component.slice(7))
+          route.component = resolve => require.ensure(
+            [],
+            () => resolve(require('@/apps/' + component.slice(7)))
+          )
         } else {
-          route.component = () => import('@/views/' + component.slice(8))
+          route.component = resolve => require.ensure(
+            [],
+            () => resolve(require('@/views/' + component.slice(8)))
+          )
         }
       } else {
         route.component = () => {
