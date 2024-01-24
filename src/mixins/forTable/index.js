@@ -214,6 +214,7 @@ export default ({
       // 在页面初始化的时候重新获取表格的宽高
       this.delayResize()
       this.$on('hook:beforeDestroy', () => {
+        this.clearSelectedRows()
         window.removeEventListener('resize', this.delayResize)
 
         if (this.observer) {
@@ -399,16 +400,7 @@ export default ({
                 })
               })
 
-              this.$store.commit('setState', {
-                value: [],
-                moduleName: this.moduleName,
-                stateName: 'selectedRowKeys'
-              })
-              this.$store.commit('setState', {
-                value: [],
-                moduleName: this.moduleName,
-                stateName: 'selectedRows'
-              })
+              this.clearSelectedRows()
             } else {
               dataSource[index][actualFieldName] = checked ? 1 : 2
             }
@@ -644,6 +636,18 @@ export default ({
       delayResize() {
         // 设置延迟是因为 .row-inquiry 容器 和 .tg-collapsed-chart 容器 的 css过渡动画时间为200ms
         this.timer = setTimeout(this.resize, 200)
+      },
+      clearSelectedRows() {
+        this.$store.commit('setState', {
+          value: [],
+          moduleName: this.moduleName,
+          stateName: 'selectedRowKeys'
+        })
+        this.$store.commit('setState', {
+          value: [],
+          moduleName: this.moduleName,
+          stateName: 'selectedRows'
+        })
       }
     },
     render() {
