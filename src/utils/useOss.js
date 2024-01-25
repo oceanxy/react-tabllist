@@ -91,7 +91,7 @@
 
 import apis from '@/apis'
 import store from '@/store'
-import OSS from 'tiny-oss'
+import OSS from 'ali-oss'
 import JSZip from 'jszip'
 import { saveAs } from 'file-saver'
 import { getFirstLetterOfEachWordOfAppName, uuid } from '@/utils/utilityFunction'

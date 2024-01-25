@@ -246,6 +246,11 @@ module.exports = {
 
       config.optimization.splitChunks({
         cacheGroups: {
+          oss: {
+            name: 'chunk-ali-oss',
+            priority: 100,
+            test: /[\\/]node_modules[\\/]ali-oss[\\/]/
+          },
           jszip: {
             name: 'chunk-jszip',
             priority: 100,
