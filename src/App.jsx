@@ -48,7 +48,11 @@ export default {
     //   this.ratioY = window.innerHeight / 1080
     // },
     setStore() {
-      localStorage.setItem(`${appName}-state`, JSON.stringify(this.$store.state))
+      try {
+        localStorage.setItem(`${appName}-state`, JSON.stringify(this.$store.state))
+      } catch (e) {
+        /**/
+      }
     }
   },
   destroyed() {
