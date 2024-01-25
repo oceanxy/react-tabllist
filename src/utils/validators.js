@@ -95,17 +95,20 @@ export function verifyPhoneNumber(rule, value, callback) {
 
 /**
  * 验证给定日期范围是否与目标日期范围存在交叉
- * @param range {[Moment, Moment][]} - 目标日期范围
- * @param [unit] {string} - 如果要将粒度限制为毫秒以外的单位，请将单位作为第三个参数传递。详见：https://momentjs.cn/docs/#/query/is-between/
+ * @param {() => [Moment, Moment][]} getDateRange - 目标日期范围
+ * @param {string} [unit] - 如果要将粒度限制为毫秒以外的单位，请将单位作为第三个参数传递。详见：https://momentjs.cn/docs/#/query/is-between/
+ * @param {(value: any) => [Moment, Moment]} [formatValue]  - 格式化时间控件值的函数。
+ * 请确保`value`的格式为`[Moment, Moment]`：第一个`Moment`为要比对的开始时间，第二个`Moment`为要比对的结束时间。
  * @return {(function(*, *, *): void)|*}
  */
-export const verifyIsDateRangeBetween = (range, unit = 'second') => (rule, value, callback) => {
-  if (rule.required || value) {
-    for (const r of range) {
+export const verifyIsDateRangeBetween = (getDateRange, unit = 'second', formatValue) => (rule, value, callback) => {
+  value = formatValue?.(value) ?? value
+
+  if (rule.required || value?.length) {
+    for (const range of getDateRange()) {
       if (
-        !(
-          moment(value[1]).endOf(unit).isBefore(r[0].startOf(unit)) ||
-          moment(value[0]).startOf(unit).isAfter(r[1].endOf(unit)))
+        !moment(value[1]).endOf(unit).isBefore(range[0].startOf(unit)) &&
+        !moment(value[0]).startOf(unit).isAfter(range[1].endOf(unit))
       ) {
         rule.message = rule.message.replace(
           '{date}',
