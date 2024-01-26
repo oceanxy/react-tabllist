@@ -120,15 +120,15 @@ const useOss = {
   getOssClient() {
     return store.getters.getState('ossClient', this.moduleName)
   },
-  /**
-   * 是否过期更新oss
-   */
-  isBefore() {
-    if (!expireTime) {
-      return false
-    } else {
-      return moment().isBefore(expireTime)
-    }
+  async getOssToken(config) {
+    const res = await apis.getStsToken({
+      keyCode: process.env.VUE_APP_WUYOUXING_PUBLIC_KEY_CODE,
+      appendDateFormatted: true,
+      keySerialId: '',
+      ...config
+    })
+
+    return res
   },
   /**
    * 初始化OSS服务
@@ -143,13 +143,8 @@ const useOss = {
     const ossConfig = this.getOssConfig()
     let ossClient = this.getOssClient()
 
-    if (!this.isBefore() || !ossClient || !ossConfig || force) {
-      const { status, data } = await apis.getStsToken({
-        keyCode: process.env.VUE_APP_WUYOUXING_PUBLIC_KEY_CODE,
-        appendDateFormatted: true,
-        keySerialId: '',
-        ...config
-      })
+    if (!ossClient || !ossConfig || force) {
+      const { data, status } = await this.getOssToken(config)
 
       if (status) {
         store.commit('setState', {
@@ -166,7 +161,18 @@ const useOss = {
             accessKeySecret: data.accessKeySecret,
             bucket: data.bucketName,
             stsToken: data.securityToken,
-            expiration: data.expiration
+            expiration: data.expiration, // 有效期
+            refreshSTSToken: async () => { // 刷新临时访问凭证的回调，在上传文件时，过期自动刷新
+              const res = await this.getOssToken()
+
+              return {
+                accessKeyId: res.data?.accessKeyId,
+                accessKeySecret: res.data?.accessKeySecret,
+                stsToken: res.data?.securityToken,
+              }
+            },
+            // 过期时间是后端配置的，根据返回的时间换算成毫秒
+            refreshSTSTokenInterval: new Date(data.expiration) - new Date()
           })
 
           store.commit('setState', {
@@ -220,7 +226,7 @@ const useOss = {
     let ossClient = this.getOssClient()
     let result = true
 
-    if (!this.isBefore() || !ossConfig || !ossClient) {
+    if (!ossConfig || !ossClient) {
 
       result = await this.init()
 
