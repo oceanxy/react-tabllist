@@ -98,8 +98,6 @@ import { getFirstLetterOfEachWordOfAppName, uuid } from '@/utils/utilityFunction
 import { message } from 'ant-design-vue'
 import moment from 'moment'
 
-let expireTime = ''
-
 const useOss = {
   /**
    * 定义 ossConfiguration 和 ossClient 保存的 store 模块名称
@@ -180,14 +178,6 @@ const useOss = {
             stateName: 'ossClient',
             moduleName: this.moduleName
           })
-
-          if (data?.expiration) {
-            expireTime = data.expiration
-          } else {
-            const curTime = moment().add(10, 'minutes')
-
-            expireTime = moment(curTime).format('YYYY-MM-DD HH:mm:ss')
-          }
 
           return Promise.resolve(true)
         } catch (err) {
