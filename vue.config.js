@@ -259,7 +259,9 @@ module.exports = {
           echarts: {
             name: 'chunk-echarts',
             priority: 90,
-            test: /[\\/]node_modules[\\/]echarts[\\/]/
+            test: isExistCustomizeProdTinyEcharts
+              ? /[\\/]src[\\/]apps[\\/].+[\\/]echarts.min.js$/
+              : /[\\/]node_modules[\\/]echarts[\\/]/
           },
           editor: {
             name: 'chunk-wangeditor',

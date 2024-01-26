@@ -23,7 +23,7 @@
     "ant-design-vue": "^1.7.8",
     "axios": "^1.6.5",
     "core-js": "^3.29.1",
-    "echarts": "^5.4.2",
+    "echarts": "^5.4.3",
     "element-resize-detector": "^1.2.4",
     "file-saver": "^2.0.5",
     "glob": "^8.1.0",

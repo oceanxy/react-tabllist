@@ -1,5 +1,4 @@
 import './index.scss'
-import * as echarts from 'echarts'
 // 引入监听dom变化的组件
 import elementResizeDetectorMaker from 'element-resize-detector'
 
@@ -15,6 +14,7 @@ export default {
     }
   },
   data: () => ({
+    $_echarts: null,
     $_chartHeight: '',
     $_chartInstance: '',
     $_elementResizeDetector: ''
@@ -32,14 +32,21 @@ export default {
     }
   },
   mounted() {
+    this.initChart()
+
     this.$_elementResizeDetector = elementResizeDetectorMaker()
     this.$_elementResizeDetector.listenTo(this.$refs.chart, this.listener)
-
-    this.initChart()
   },
   methods: {
     initChart() {
-      this.$_chartInstance = echarts.init(this.$refs.chart)
+      if (!this.$_echarts) {
+        // webpack optimization.splitChunks.cacheGroups.echarts 为了优化 echarts 打包大小而使用的定制包。
+        // 生产环境需要读取定制的 echarts.min.js 文件，定制地址：https://echarts.apache.org/zh/builder.html，
+        // 非生产环境不需要读 echarts.min.js 文件，直接引用 node_modules 下的 echarts。
+        this.$_echarts = CUSTOMIZE_PROD_TINY_ECHARTS
+      }
+
+      this.$_chartInstance = this.$_echarts.init(this.$refs.chart)
       this.$_chartInstance.setOption(this.option || {})
     },
     listener() {
@@ -48,8 +55,8 @@ export default {
       })
     }
   },
-  destroyed() {
-    // this.$_elementResizeDetector?.removeListener(this.$refs.chart, this.listener)
+  beforeDestroy() {
+    this.$_elementResizeDetector?.removeListener(this.$refs.chart, this.listener)
   },
   render() {
     return (
