@@ -74,8 +74,15 @@ function getBuildConfig() {
       index: {
         entry: 'src/main.js',
         title: '',
-        chunks: ['chunk-vendors', 'chunk-commons', 'index']
-        // chunks: ['index']
+        chunks: [
+          'chunk-ant-design-icons',
+          'chunk-ant-design-vue',
+          'chunk-lodash',
+          'chunk-vue',
+          'chunk-vendors',
+          'chunk-commons',
+          'index'
+        ]
       },
       ...appConfig[projectNames].theme.availableThemes.reduce((themes, cur) => {
         themes[cur.fileName] = `src/assets/styles/themes/${cur.fileName}`

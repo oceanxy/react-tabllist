@@ -187,21 +187,35 @@ module.exports = {
       accessSync(INTERFACE_MAPPINGS, constants.F_OK)
       PROVIDE_PLUGIN_PAYLOAD.INTERFACE_MAPPINGS = INTERFACE_MAPPINGS
     } catch (e) {
-      console.info('项目接口字段映射文件(interfaceMappings)：无')
+      console.info(apn, '：无接口字段映射文件(interfaceMappings)文件')
     }
     /**********************************************************************/
 
     /***************** 预加载用户信息映射器，并判断文件是否存在 ***********************/
-    const USER_INFO_MAPPINGS = resolve(join(
-      __dirname,
-      `src/apps/${apn}/config/userInfoMappings.js`
-    ))
+    const USER_INFO_MAPPINGS = resolve(join(__dirname, `src/apps/${apn}/config/userInfoMappings.js`))
 
     try {
       accessSync(USER_INFO_MAPPINGS, constants.F_OK)
       PROVIDE_PLUGIN_PAYLOAD.USER_INFO_MAPPINGS = USER_INFO_MAPPINGS
     } catch (e) {
-      console.info('项目动态菜单映射(menuMappings)：无')
+      console.info(apn, '：无动态菜单映射(menuMappings)文件')
+    }
+    /**********************************************************************/
+
+    /***************** 预加载 echarts.min.js，并判断文件是否存在 **********************
+     * 生产环境推荐使用定制的 echarts.min.js 文件，定制地址：https://echarts.apache.org/zh/builder.html，
+     * 非生产环境先尝试寻找 echarts.min.js，如果不存在则直接引用 node_modules 下的 echarts。
+     */
+    let CUSTOMIZE_PROD_TINY_ECHARTS = resolve(join(__dirname, `src/apps/${apn}/assets/echarts.min.js`))
+    let isExistCustomizeProdTinyEcharts = false
+
+    try {
+      accessSync(CUSTOMIZE_PROD_TINY_ECHARTS, constants.F_OK)
+      isExistCustomizeProdTinyEcharts = true
+    } catch (e) {
+      CUSTOMIZE_PROD_TINY_ECHARTS = resolve(join(__dirname, 'node_modules/echarts'))
+    } finally {
+      PROVIDE_PLUGIN_PAYLOAD.CUSTOMIZE_PROD_TINY_ECHARTS = CUSTOMIZE_PROD_TINY_ECHARTS
     }
     /**********************************************************************/
 
@@ -245,6 +259,9 @@ module.exports = {
       })
 
       config.optimization.splitChunks({
+        chunks: 'all',
+        maxInitialRequests: Infinity,
+
         cacheGroups: {
           oss: {
             name: 'chunk-ali-oss',
@@ -273,30 +290,28 @@ module.exports = {
             priority: 60,
             test: /[\\/]node_modules[\\/]lodash[\\/]/
           },
-
           vue: {
             name: 'chunk-vue',
             priority: 50,
             test: /[\\/]node_modules[\\/]vue[\\/]/
           },
-
-          // antDesign: {
-          //   name: 'chunk-ant-design',
-          //   priority: 30,
-          //   test: /[\\/]node_modules[\\/]@ant-design[\\/]/
-          // },
-          // antDesignVue: {
-          //   name: 'chunk-ant-design-vue',
-          //   priority: 20,
-          //   test: /[\\/]node_modules[\\/]ant-design-vue[\\/]/
-          // },
-
+          '@ant-design': {
+            name: 'chunk-ant-design-icons',
+            priority: 30,
+            test: /[\\/]node_modules[\\/]@ant-design[\\/]/
+          },
+          'ant-design-vue': {
+            name: 'chunk-ant-design-vue',
+            priority: 20,
+            test: /[\\/]node_modules[\\/]ant-design-vue[\\/]/
+          },
           ...themeGroups,
           vendors: {
             name: 'chunk-vendors',
             test: /[\\/]node_modules[\\/]/,
             priority: -10, // 缓存组权重，数字越大优先级越高
-            chunks: 'initial' // 只处理初始 chunk
+            chunks: 'all', // 只处理初始 chunk
+            reuseExistingChunk: true
           },
           common: {
             name: 'chunk-commons',
