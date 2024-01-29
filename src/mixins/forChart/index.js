@@ -26,7 +26,7 @@ import { Button, Icon } from 'ant-design-vue'
  *   }
  *   // other code
  * }
- * @returns {JSX.Element|{isCollapsed: boolean, title: undefined}|{data(): {isCollapsed: boolean, title: *}, methods: {onFold(): void}, inject: {isTableExist: {default: boolean}, moduleName: {default: undefined}}, render(): *, props: {maxHeight: {default: string, type: StringConstructor}, collapsible: {default: boolean, type: BooleanConstructor}}}}
+ * @returns {Object<Vue.mixin>}
  */
 export default function forChart() {
   return {

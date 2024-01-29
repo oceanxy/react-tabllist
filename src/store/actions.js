@@ -320,15 +320,22 @@ export default {
    * }} 用于操作后刷新列表的参数，依赖 isFetchList。parametersOfGetListAction.moduleName 默认为 moduleName
    * @returns {Promise<*>}
    */
-  async update({ state, dispatch, commit }, {
-    moduleName,
-    payload = {},
-    visibilityFieldName,
-    customApiName,
-    isFetchList,
-    isResetSelectedRows,
-    parametersOfGetListAction
-  }) {
+  async update(
+    {
+      state,
+      dispatch,
+      commit
+    },
+    {
+      moduleName,
+      payload = {},
+      visibilityFieldName,
+      customApiName,
+      isFetchList,
+      isResetSelectedRows,
+      parametersOfGetListAction
+    }
+  ) {
     const response = await this.apis[customApiName || `update${firstLetterToUppercase(moduleName)}`](payload)
 
     if (response.status) {

@@ -25,9 +25,7 @@ export default {
     }
   },
   data() {
-    return {
-      targetKeys: []
-    }
+    return { targetKeys: [] }
   },
   watch: {
     value: {
@@ -61,7 +59,11 @@ export default {
         <Transfer
           showSearch
           titles={this.titles}
-          listStyle={{ width: '300px', height: this.height, minHeight: '300px' }}
+          listStyle={{
+            width: '300px',
+            height: this.height,
+            minHeight: '300px'
+          }}
           targetKeys={this.targetKeys}
           dataSource={this.dataSource}
           render={this.renderItem}

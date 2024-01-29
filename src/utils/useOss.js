@@ -96,7 +96,6 @@ import JSZip from 'jszip'
 import { saveAs } from 'file-saver'
 import { getFirstLetterOfEachWordOfAppName, uuid } from '@/utils/utilityFunction'
 import { message } from 'ant-design-vue'
-import moment from 'moment'
 
 const useOss = {
   /**
@@ -119,14 +118,12 @@ const useOss = {
     return store.getters.getState('ossClient', this.moduleName)
   },
   async getOssToken(config) {
-    const res = await apis.getStsToken({
+    return await apis.getStsToken({
       keyCode: process.env.VUE_APP_WUYOUXING_PUBLIC_KEY_CODE,
       appendDateFormatted: true,
       keySerialId: '',
       ...config
     })
-
-    return res
   },
   /**
    * 初始化OSS服务
@@ -161,12 +158,12 @@ const useOss = {
             stsToken: data.securityToken,
             expiration: data.expiration, // 有效期
             refreshSTSToken: async () => { // 刷新临时访问凭证的回调，在上传文件时，过期自动刷新
-              const res = await this.getOssToken()
+              const { data } = await this.getOssToken()
 
               return {
-                accessKeyId: res.data?.accessKeyId,
-                accessKeySecret: res.data?.accessKeySecret,
-                stsToken: res.data?.securityToken,
+                accessKeyId: data?.accessKeyId,
+                accessKeySecret: data?.accessKeySecret,
+                stsToken: data?.securityToken
               }
             },
             // 过期时间是后端配置的，根据返回的时间换算成毫秒

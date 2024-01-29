@@ -78,7 +78,11 @@ export default {
 
       event.preventDefault()
 
-      const { shiftKey, deltaY, target } = event
+      const {
+        shiftKey,
+        deltaY,
+        target
+      } = event
       const bodyTable = ref_bodyTable
       const fixedColumnsBodyLeft = ref_fixedColumnsBodyLeft
       const fixedColumnsBodyRight = ref_fixedColumnsBodyRight

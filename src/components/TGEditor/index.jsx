@@ -19,9 +19,7 @@ const fileOrVideoCommonConfig = {
   // form-data fieldName ，默认值 'wangeditor-uploaded-video'
   fieldName: 'file',
   // 自定义增加 http  header
-  headers: {
-    token: localStorage.getItem(`${appName}-${config.tokenConfig.fieldName}`)
-  },
+  headers: { token: localStorage.getItem(`${appName}-${config.tokenConfig.fieldName}`) },
   // 上传之前触发
   onBeforeUpload(file) {
     // file 选中的文件，格式如 { key: file }
@@ -37,14 +35,14 @@ const fileOrVideoCommonConfig = {
   // 单个文件上传失败
   onFailed(file, res) {
     message.error(`${file.name} 上传失败，${res?.message}`)
-    setTimeout(function () {
+    setTimeout(function() {
       message.destroy()
     }, 2000)
   },
   // 上传错误，或者触发 timeout 超时
   onError(file, err, res) {
     message.error(`${file.name} 上传出错，${err}，${res?.message ?? '上传超时'}`)
-    setTimeout(function () {
+    setTimeout(function() {
       message.destroy()
     }, 2000)
   },
@@ -87,7 +85,7 @@ export default {
     },
     toolbarConfig: {
       type: Object,
-      default: () => { }
+      default: () => ({})
     }
   },
   data() {
@@ -124,8 +122,6 @@ export default {
       },
       mode: 'default' // or 'simple'
     }
-  },
-  mounted() {
   },
   methods: {
     onCreated(editor) {

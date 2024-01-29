@@ -5,8 +5,8 @@
  */
 
 import { cloneDeep, isBoolean, omit } from 'lodash'
-import moment from 'moment'
 import { Button, Form, Space } from 'ant-design-vue'
+import moment from 'moment'
 import config from '@/config'
 
 /**
@@ -141,7 +141,12 @@ export default function forInquiry({
           content = [<div class={'inquiry-row-for-fields'}>{content}</div>]
         }
 
-        if (this.inTree && config.siderLayout === 2 && !this.inModal && !content[0]?.children[0]?.data?.class?.includes('tg-inquiry-side-toggle')) {
+        if (
+          this.inTree &&
+          config.siderLayout === 2 &&
+          !this.inModal &&
+          !content[0]?.children[0]?.data?.class?.includes('tg-inquiry-side-toggle')
+        ) {
           content.at(0)?.children?.unshift(this.sideToggle)
         }
 

@@ -552,7 +552,11 @@ export default ({
        * @param [visibilityFieldName] 成功导出后需要关闭的弹窗控制字段，一般在弹出
        * @returns {Promise<void>}
        */
-      async onExport({ payload, fileName, visibilityFieldName }) {
+      async onExport({
+        payload,
+        fileName,
+        visibilityFieldName
+      }) {
         message.loading({
           content: '正在导出，请稍候...',
           duration: 0

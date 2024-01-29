@@ -1,19 +1,6 @@
 import './index.scss'
-import {
-  Avatar,
-  Badge,
-  Button,
-  Divider,
-  Dropdown,
-  Icon,
-  Layout,
-  Menu,
-  Popover,
-  Select,
-  Space,
-  Spin,
-  Tag
-} from 'ant-design-vue'
+// eslint-disable-next-line max-len
+import { Avatar, Badge, Button, Divider, Dropdown, Icon, Layout, Menu, Popover, Select, Space, Spin, Tag } from 'ant-design-vue'
 import Logo from '@/components/Logo'
 import { mapActions, mapGetters } from 'vuex'
 import forIndex from '@/mixins/forIndex'
@@ -80,7 +67,9 @@ export default {
     },
     theme() {
       return (
-        localStorage.getItem(`${appName}-theme`) || this.$store.state?.login?.userInfo?.themeFileName || this.$config.theme.default
+        localStorage.getItem(`${appName}-theme`) ||
+        this.$store.state?.login?.userInfo?.themeFileName ||
+        this.$config.theme.default
       )
     }
   },

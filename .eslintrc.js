@@ -322,7 +322,10 @@ module.exports = {
           'multiline': true,
           'minProperties': 3
         },
-        'ImportDeclaration': 'never',
+        'ImportDeclaration': {
+          'multiline': false,
+          'minProperties': 0
+        },
         'ExportDeclaration': {
           'multiline': true,
           'minProperties': 3

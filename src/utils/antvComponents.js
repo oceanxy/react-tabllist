@@ -1,49 +1,7 @@
 // 引入特定组件
 // 配合babel-plugin-import，此时会自动引入对应的样式文件
 // eslint-disable-next-line max-len
-import {
-  Alert,
-  Avatar,
-  Badge,
-  Breadcrumb,
-  Button,
-  Card,
-  Cascader,
-  Checkbox,
-  Collapse,
-  Comment,
-  DatePicker,
-  Descriptions,
-  Divider,
-  Dropdown,
-  Empty,
-  Form,
-  Icon,
-  Input,
-  InputNumber,
-  Layout,
-  Menu,
-  Modal,
-  Pagination,
-  Popover,
-  Progress,
-  Radio,
-  Select,
-  Space,
-  Spin,
-  Statistic,
-  Switch,
-  Table,
-  Tabs,
-  Tag,
-  Timeline,
-  TimePicker,
-  Tooltip,
-  Tree,
-  TreeSelect,
-  Upload,
-  message as Message
-} from 'ant-design-vue'
+import { Alert, Avatar, Badge, Breadcrumb, Button, Card, Cascader, Checkbox, Collapse, Comment, DatePicker, Descriptions, Divider, Dropdown, Empty, Form, Icon, Input, InputNumber, Layout, Menu, message as Message, Modal, Pagination, Popover, Progress, Radio, Select, Space, Spin, Statistic, Switch, Table, Tabs, Tag, Timeline, TimePicker, Tooltip, Tree, TreeSelect, Upload } from 'ant-design-vue'
 import Vue from 'vue'
 
 export default function useComponents(config) {
