@@ -240,15 +240,15 @@ const router = createRouter()
  * 总之，目前导致该问题的根本原因未明，
  * 通过监听错误事件基本可以解决该问题。
  */
-// router.onError(async error => {
-//   const pattern = /Loading chunk (\d)+ failed/g
-//   const isChunkLoadFailed = error.message.match(pattern)
-//   const targetPath = router.history.pending.fullPath
-//
-//   if (isChunkLoadFailed) {
-//     await router.replace(targetPath)
-//   }
-// })
+router.onError(async error => {
+  const pattern = /Loading chunk (\d)+ failed/g
+  const isChunkLoadFailed = error.message.match(pattern)
+  const targetPath = router.history.pending.fullPath
+
+  if (isChunkLoadFailed) {
+    await router.replace(targetPath)
+  }
+})
 
 router.beforeEach((to, from, next) => {
   if (to.query.title) {
