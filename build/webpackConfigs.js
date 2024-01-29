@@ -113,31 +113,7 @@ function getBuildConfig() {
   return {
     config,
     projectNames,
-    externals(context, request, callback) {
-      if (typeof context === 'string' && !context.includes('node_modules')) {
-        for (const external of externals) {
-          if (
-            typeof context === 'string' && context.includes('apps') &&
-            typeof request === 'string' && request.includes(external)
-          ) {
-            // 重置 src/apps 下不需要打包的子仓库的文件
-            // https://v4.webpack.docschina.org/configuration/externals/#externals
-            // if (request.includes('/config/index.js')) {
-            //   return callback(null, 'require {}')
-            // } else if (request.includes('/routes.js')) {
-            //   return callback(null, 'import []')
-            // } else {
-            //   return callback(null, 'import {}')
-            // }
-
-            return callback(null, '{}')
-          }
-        }
-      }
-
-      // 继续下一步且不外部化引用
-      callback()
-    }
+    externalProjNames: externals
   }
 }
 

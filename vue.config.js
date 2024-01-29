@@ -2,10 +2,10 @@
 const CompressionPlugin = require('compression-webpack-plugin') // Gzip
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const { resolve, join } = require('path')
-const { ProvidePlugin, DefinePlugin, ContextReplacementPlugin } = require('webpack')
+const { ProvidePlugin, DefinePlugin, ContextReplacementPlugin, IgnorePlugin } = require('webpack')
 const WebpackAssetsManifest = require('webpack-assets-manifest')
 const { getBuildConfig, getDevServer } = require('./build/webpackConfigs')
-const { config: webpackConfig, externals } = getBuildConfig()
+const { config: webpackConfig, externalProjNames } = getBuildConfig()
 const { accessSync, constants } = require('fs')
 const EnvProductionPlugin = require('./build/env.production.plugin')
 const createZip = require('./build/zip')
@@ -40,19 +40,18 @@ module.exports = {
     }
   },
   configureWebpack: {
-    externals: [
-      {
-        //   'vue': 'Vue',
-        //   'vue-router': 'VueRouter',
-        //   'vuex': 'Vuex',
-        //   'lodash': '_',
-        //   'axios': 'axios',
-        //   'moment': 'moment',
-        //   'echarts': 'echarts', // 成功（大体积）
-        //   'ant-design-vue': 'antd' // 未成功 受 babel.config.js 里按需使用antd组件配置的影响
-      },
-      externals
-    ]
+    // externals: [
+    //   {
+    //     'vue': 'Vue',
+    //     'vue-router': 'VueRouter',
+    //     'vuex': 'Vuex',
+    //     'lodash': '_',
+    //     'axios': 'axios',
+    //     'moment': 'moment',
+    //     'echarts': 'echarts', // 成功（大体积）
+    //     'ant-design-vue': 'antd' // 未成功 受 babel.config.js 里按需使用antd组件配置的影响
+    //   }
+    // ]
   },
   // 生产环境是否生成 sourceMap 文件。设置为 false 以加速生产环境构建。
   // 默认 true
@@ -230,6 +229,25 @@ module.exports = {
       }
     ])
 
+    // 去除 moment 多余的本地化文件
+    config.plugin('contextReplacementPlugin').use(ContextReplacementPlugin, [
+      /moment[/\\]locale$/, /zh-cn/
+    ])
+
+    // 去掉 apps 下其他子项目的文件
+    config.plugin('ignorePlugin').use(IgnorePlugin, [
+      {
+        checkResource(resource) {
+          for (const externalProjName of externalProjNames) {
+            if (resource.includes('/' + externalProjName + '/')) return true
+          }
+
+          // 不打包子项目里面的 .md 和 .ico 资源
+          return /.*\.(md|ico)$/.test(resource)
+        }
+      }
+    ])
+
     /* ======================================================================================== */
 
     if (process.env.NODE_ENV === 'production') {
@@ -338,22 +356,6 @@ module.exports = {
           minRatio: 0.8
         }
       ])
-
-      // 去除 moment 多余的本地化文件
-      config.plugin('contextReplacementPluginForMomentLocal').use(ContextReplacementPlugin, [
-        /moment[/\\]locale$/, /zh-cn/
-      ])
-
-      // config.plugin('contextReplacementPlugin').use(ContextReplacementPlugin, [
-      //   /src[/\\]apps/,
-      //   context => {
-      //     if (/src[/\\]apps$/.test(context.resource)) {
-      //       Object.assign(context, { request: /^@\/apps/.test(context.request) ? `@/apps/${apn}` : `../apps/${apn}` })
-      //     }
-      //
-      //     console.log(context)
-      //   }
-      // ])
 
       // 抽离网关地址成单独的配置文件
       if (appConfig[apn].prodEnvVar.configurable) {
