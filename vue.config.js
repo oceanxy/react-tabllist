@@ -4,9 +4,8 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const { resolve, join } = require('path')
 const { ProvidePlugin, DefinePlugin, ContextReplacementPlugin, IgnorePlugin } = require('webpack')
 const WebpackAssetsManifest = require('webpack-assets-manifest')
-const { getBuildConfig, getDevServer } = require('./build/webpackConfigs')
+const { getBuildConfig, getDevServer, preloadResources } = require('./build/webpackConfigs')
 const { config: webpackConfig, externalProjNames } = getBuildConfig()
-const { accessSync, constants } = require('fs')
 const EnvProductionPlugin = require('./build/env.production.plugin')
 const createZip = require('./build/zip')
 const {
@@ -60,71 +59,7 @@ module.exports = {
   // 对内部的 webpack 配置进行更细粒度的修改
   // https://github.com/neutrinojs/webpack-chain see https://github.com/vuejs/vue-cli/blob/dev/docs/webpack.md
   chainWebpack: config => {
-    const themeNames = []
-
-    /**
-     * =======================================================================================
-     * 删除懒加载模块的prefetch，降低带宽压力
-     * https://cli.vuejs.org/zh/guide/html-and-static-assets.html#prefetch
-     * 而且预渲染时生成的prefetch标签是modern版本的，低版本浏览器是不需要的
-     */
-    // config.plugins.delete('preload-index')
-    // config.plugins.delete('prefetch-index')
-
-    // 生产环境相关处理
-    if (process.env.NODE_ENV === 'production') {
-      // 默认在dist目录下生成 manifest.json（追踪所有模块到输出 bundle 之间的映射）
-      config.plugin('manifest').use(WebpackAssetsManifest)
-
-      appConfig[apn].theme.availableThemes.forEach(t => {
-        // config.plugins.delete(`preload-${t.fileName}`)
-        // config.plugins.delete(`prefetch-${t.fileName}`)
-
-        // 删除多余的 html-webpack-plugin 配置（自定义主题入口打包编译less文件时，vue-cli自动添加的冗余配置）
-        config.plugins.delete(`html-${t.fileName}`)
-
-        themeNames.push(t.fileName)
-      })
-
-      // 修改 html-webpack-plugin 插件配置
-      config.plugin('html-index').tap(options => {
-        // 在index.html中排除对主题样式文件的引用，通过在程序中点击切换主题时再动态加载对应的主题文件，防止样式污染
-        options[0].excludeChunks = themeNames
-        options[0].title = appConfig[apn].systemName
-
-        /**
-         * 通过 html-webpack-plugin 将 cdn 注入到 index.html 之中，
-         * 注意 CDN 部分需要配合 configureWebpack.externals 使用
-         */
-        options[0].cdn = {
-          css: [
-            // 'https://cdn.jsdelivr.net/npm/ant-design-vue@1.7.8/dist/antd.min.css'
-          ],
-          js: [
-            // 'https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.min.js',
-            // 'https://cdn.jsdelivr.net/npm/vuex@3.6.2/dist/vuex.min.js',
-            // 'https://cdn.jsdelivr.net/npm/vue-router@3.6.5/dist/vue-router.min.js',
-            // 'https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js',
-            // 'https://cdn.jsdelivr.net/npm/axios@1.3.4/dist/axios.min.js',
-            // 'https://cdn.jsdelivr.net/npm/moment@2.29.3/dist/moment.min.js',
-            // 'https://cdn.jsdelivr.net/npm/echarts@5.4.1/dist/echarts.min.js',
-            // 'https://cdn.jsdelivr.net/npm/ant-design-vue@1.7.8/dist/antd.min.js'
-          ]
-        }
-
-        return options
-      })
-    } else {
-      // 在index.html中排除对主题样式文件的引用
-      config.plugin('html-index').tap(options => {
-        options[0].title = appConfig[apn].systemName
-
-        return options
-      })
-    }
-
-    /* =============================   复制静态文件   ===================================== */
-    // 复制 public 内文件
+    // 复制 public 内静态文件
     config.plugin('copyWebpackPlugin').use(CopyWebpackPlugin, [
       {
         patterns: [
@@ -137,28 +72,11 @@ module.exports = {
       }
     ])
 
-    /* ======================================================================================== */
-
     // 替换svg loader
     const svgRule = config.module.rule('svg')
 
     svgRule.uses.clear()
     svgRule.use('vue-svg-loader').loader('vue-svg-loader')
-
-    /* ==================================   定义全局变量    ===================================== */
-    // 检测子项目是否定义了 Login 组件，否则使用主框架的默认登录组件
-    let LOGIN_COMPONENT = ''
-
-    try {
-      accessSync(
-        join(__dirname, `src/apps/${apn}/views/Login/index.jsx`),
-        constants.F_OK
-      )
-
-      LOGIN_COMPONENT = resolve(join(__dirname, `src/apps/${apn}/views/Login/index.jsx`))
-    } catch (e) {
-      LOGIN_COMPONENT = resolve(join(__dirname, 'src/views/Login/index.jsx'))
-    }
 
     // 使用 ProvidePlugin 预加载的文件集合
     const PROVIDE_PLUGIN_PAYLOAD = {
@@ -170,58 +88,46 @@ module.exports = {
         : resolve(join(__dirname, 'src/App.jsx')),
       // 预加载子项目路由
       APP_ROUTES: resolve(join(__dirname, `src/apps/${apn}/router/routes.js`)),
-      // 预加载子项目登录组件
-      LOGIN_COMPONENT,
       // 预加载iconfont文件
-      APP_ICON_FONT: resolve(join(__dirname, `src/apps/${apn}/assets/iconfont.js`))
+      APP_ICON_FONT: resolve(join(__dirname, `src/apps/${apn}/assets/iconfont.js`)),
+      // 预加载接口映射器
+      INTERFACE_MAPPINGS: preloadResources(
+        `src/apps/${apn}/config/interfaceMappings.js`,
+        '无接口字段映射文件(interfaceMappings)文件'
+      ),
+      USER_INFO_MAPPINGS: preloadResources(
+        `src/apps/${apn}/config/userInfoMappings.js`,
+        '无动态菜单映射(menuMappings)文件'
+      )
     }
 
-    /***************** 预加载接口映射器，并判断文件是否存在 ***********************/
-    const INTERFACE_MAPPINGS = resolve(join(
-      __dirname,
-      `src/apps/${apn}/config/interfaceMappings.js`
-    ))
+    // 预加载子项目登录组件
+    PROVIDE_PLUGIN_PAYLOAD.LOGIN_COMPONENT = preloadResources(`src/apps/${apn}/views/Login/index.jsx`)
 
-    try {
-      accessSync(INTERFACE_MAPPINGS, constants.F_OK)
-      PROVIDE_PLUGIN_PAYLOAD.INTERFACE_MAPPINGS = INTERFACE_MAPPINGS
-    } catch (e) {
-      PROVIDE_PLUGIN_PAYLOAD.INTERFACE_MAPPINGS = undefined
-      console.info(apn, '：无接口字段映射文件(interfaceMappings)文件')
+    // 检测子项目是否定义了 Login 组件，否则使用主框架的默认登录组件
+    if (!PROVIDE_PLUGIN_PAYLOAD.LOGIN_COMPONENT) {
+      PROVIDE_PLUGIN_PAYLOAD.LOGIN_COMPONENT = preloadResources('src/views/Login/index.jsx')
     }
-    /**********************************************************************/
 
-    /***************** 预加载用户信息映射器，并判断文件是否存在 ***********************/
-    const USER_INFO_MAPPINGS = resolve(join(__dirname, `src/apps/${apn}/config/userInfoMappings.js`))
-
-    try {
-      accessSync(USER_INFO_MAPPINGS, constants.F_OK)
-      PROVIDE_PLUGIN_PAYLOAD.USER_INFO_MAPPINGS = USER_INFO_MAPPINGS
-    } catch (e) {
-      PROVIDE_PLUGIN_PAYLOAD.USER_INFO_MAPPINGS = undefined
-      console.info(apn, '：无动态菜单映射(menuMappings)文件')
-    }
-    /**********************************************************************/
-
-    /***************** 预加载 echarts.min.js，并判断文件是否存在 **********************
-     * 生产环境推荐使用定制的 echarts.min.js 文件，定制地址：https://echarts.apache.org/zh/builder.html，
-     * 非生产环境先尝试寻找 echarts.min.js，如果不存在则直接引用 node_modules 下的 echarts。
+    /**
+     * 预加载 echarts.min.js。
+     * - 生产环境推荐使用定制的 echarts.min.js 文件，定制地址：https://echarts.apache.org/zh/builder.html。
+     * - 非生产环境先尝试寻找 echarts.min.js，如果不存在则直接引用 node_modules 下的 echarts 包。
      */
-    let CUSTOMIZE_PROD_TINY_ECHARTS = resolve(join(__dirname, `src/apps/${apn}/assets/echarts.min.js`))
+    const CUSTOMIZE_PROD_TINY_ECHARTS = preloadResources(`src/apps/${apn}/assets/echarts.min.js`)
     let isExistCustomizeProdTinyEcharts = false
 
-    try {
-      accessSync(CUSTOMIZE_PROD_TINY_ECHARTS, constants.F_OK)
+    if (CUSTOMIZE_PROD_TINY_ECHARTS) {
       isExistCustomizeProdTinyEcharts = true
-    } catch (e) {
-      CUSTOMIZE_PROD_TINY_ECHARTS = resolve(join(__dirname, 'node_modules/echarts'))
-    } finally {
       PROVIDE_PLUGIN_PAYLOAD.CUSTOMIZE_PROD_TINY_ECHARTS = CUSTOMIZE_PROD_TINY_ECHARTS
+    } else {
+      PROVIDE_PLUGIN_PAYLOAD.CUSTOMIZE_PROD_TINY_ECHARTS = resolve(join(__dirname, 'node_modules/echarts'))
     }
-    /**********************************************************************/
 
+    // 预解析资源
     config.plugin('ProvidePlugin').use(ProvidePlugin, [PROVIDE_PLUGIN_PAYLOAD])
 
+    // 预加载资源
     config.plugin('DefinePlugin').use(DefinePlugin, [
       {
         // 注入项目名称
@@ -250,9 +156,21 @@ module.exports = {
       }
     ])
 
-    /* ======================================================================================== */
-
+    // 生产环境相关处理
     if (process.env.NODE_ENV === 'production') {
+      /**
+       * =======================================================================================
+       * 删除懒加载模块的prefetch，降低带宽压力
+       * https://cli.vuejs.org/zh/guide/html-and-static-assets.html#prefetch
+       * 而且预渲染时生成的prefetch标签是modern版本的，低版本浏览器是不需要的
+       */
+      // config.plugins.delete('preload-index')
+      // config.plugins.delete('prefetch-index')
+
+      // 默认在dist目录下生成 manifest.json（追踪所有模块到输出 bundle 之间的映射）
+      config.plugin('manifest').use(WebpackAssetsManifest)
+
+      // 配置压缩选项
       config.optimization.minimizer('terser').tap(args => {
         args[0].terserOptions.compress.warnings = true
         args[0].terserOptions.compress.drop_debugger = true
@@ -261,7 +179,7 @@ module.exports = {
         return args
       })
 
-      /* ===============================   抽取主题样式为单独的文件    ================================== */
+      // 抽取主题样式为单独的文件
       const themeGroups = {}
 
       appConfig[apn].theme.availableThemes.forEach(t => {
@@ -278,6 +196,7 @@ module.exports = {
         }
       })
 
+      // 抽取指定 chunk 为单独的文件
       config.optimization.splitChunks({
         chunks: 'all',
         maxInitialRequests: Infinity,
@@ -346,7 +265,6 @@ module.exports = {
           }
         }
       })
-      /* ======================================================================================== */
 
       // 文件开启Gzip，也可以通过服务端(如：nginx)(https://github.com/webpack-contrib/compression-webpack-plugin)
       config.plugin('compressionPlugin').use(CompressionPlugin, [
@@ -359,9 +277,9 @@ module.exports = {
         }
       ])
 
-      // 抽离网关地址成单独的配置文件
+      // 在打包文件中生成可配置的环境变量文件
       if (appConfig[apn].prodEnvVar.configurable) {
-        config.plugin('configurableGatewaysAndCreateZip').use(EnvProductionPlugin, [
+        config.plugin('configurableEnvAndCreateZip').use(EnvProductionPlugin, [
           {
             appConfig: appConfig[apn],
             subDir,
@@ -378,11 +296,62 @@ module.exports = {
         })
       }
 
+      // 主题样式文件处理
+      const themeNames = []
+
+      appConfig[apn].theme.availableThemes.forEach(t => {
+        // config.plugins.delete(`preload-${t.fileName}`)
+        // config.plugins.delete(`prefetch-${t.fileName}`)
+
+        // 删除多余的 html-webpack-plugin 配置（自定义主题入口打包编译less文件时，vue-cli自动添加的冗余配置）
+        config.plugins.delete(`html-${t.fileName}`)
+
+        themeNames.push(t.fileName)
+      })
+
+      // 修改 html-webpack-plugin 插件配置
+      config.plugin('html-index').tap(options => {
+        // 设置网站 title
+        options[0].title = appConfig[apn].systemName
+
+        // 在index.html中排除对主题样式文件的引用，通过在程序中点击切换主题时再动态加载对应的主题文件，防止样式污染
+        options[0].excludeChunks = themeNames
+
+        /**
+         * 通过 html-webpack-plugin 将 cdn 注入到 index.html 之中，
+         * 注意 CDN 部分需要配合 configureWebpack.externals 使用
+         */
+        options[0].cdn = {
+          css: [
+            // 'https://cdn.jsdelivr.net/npm/ant-design-vue@1.7.8/dist/antd.min.css'
+          ],
+          js: [
+            // 'https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.min.js',
+            // 'https://cdn.jsdelivr.net/npm/vuex@3.6.2/dist/vuex.min.js',
+            // 'https://cdn.jsdelivr.net/npm/vue-router@3.6.5/dist/vue-router.min.js',
+            // 'https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js',
+            // 'https://cdn.jsdelivr.net/npm/axios@1.3.4/dist/axios.min.js',
+            // 'https://cdn.jsdelivr.net/npm/moment@2.29.3/dist/moment.min.js',
+            // 'https://cdn.jsdelivr.net/npm/echarts@5.4.1/dist/echarts.min.js',
+            // 'https://cdn.jsdelivr.net/npm/ant-design-vue@1.7.8/dist/antd.min.js'
+          ]
+        }
+
+        return options
+      })
+
       // Webpack包文件分析器(https://github.com/webpack-contrib/webpack-bundle-analyzer)
       // config
       //   .plugin('BundleAnalyzerPlugin')
       //   .use(BundleAnalyzerPlugin)
     } else {
+      // 设置网站 title
+      config.plugin('html-index').tap(options => {
+        options[0].title = appConfig[apn].systemName
+
+        return options
+      })
+
       // 移动端模拟开发者工具(https://github.com/diamont1001/vconsole-webpack-plugin https://github.com/Tencent/vConsole)
       // config.plugins.push(
       //   new VConsolePlugin({

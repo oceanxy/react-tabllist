@@ -14,6 +14,8 @@ const {
   subDir,
   files
 } = require('./params.js')
+const { resolve, join } = require('path')
+const { accessSync, constants } = require('fs')
 
 /**
  * 监听子进程
@@ -57,6 +59,22 @@ function on(workerProcess, ordinal, total) {
 
 function getDevServer() {
   return require(`../src/apps/${apns}/config/devServer.js`)
+}
+
+function preloadResources(url, noFilePrompts) {
+  const resource = resolve(join(__dirname, '..', url))
+
+  try {
+    accessSync(resource, constants.F_OK)
+
+    return resource
+  } catch (e) {
+    if (noFilePrompts) {
+      console.info(apns[0], noFilePrompts)
+    }
+
+    return undefined
+  }
 }
 
 function getBuildConfig() {
@@ -120,5 +138,6 @@ function getBuildConfig() {
 module.exports = {
   on,
   getBuildConfig,
-  getDevServer
+  getDevServer,
+  preloadResources
 }
