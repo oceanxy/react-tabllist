@@ -40,10 +40,8 @@ export default function getService(conf, router, store) {
         }
       }
 
-      try {
+      if (INTERFACE_MAPPINGS) {
         config.data = INTERFACE_MAPPINGS?.request(config.data, qs)
-      } catch (err) {
-        /**/
       }
 
       return config
@@ -66,12 +64,8 @@ export default function getService(conf, router, store) {
     async response => {
       let res = response.data
 
-      try {
-        if (response.config.responseType !== 'blob') {
-          res = INTERFACE_MAPPINGS.response(response.data)
-        }
-      } catch (err) {
-        /**/
+      if (response.config.responseType !== 'blob' && INTERFACE_MAPPINGS) {
+        res = INTERFACE_MAPPINGS.response(response.data)
       }
 
       if (res?.status || response.config.responseType === 'blob') {

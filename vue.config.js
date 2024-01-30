@@ -186,6 +186,7 @@ module.exports = {
       accessSync(INTERFACE_MAPPINGS, constants.F_OK)
       PROVIDE_PLUGIN_PAYLOAD.INTERFACE_MAPPINGS = INTERFACE_MAPPINGS
     } catch (e) {
+      PROVIDE_PLUGIN_PAYLOAD.INTERFACE_MAPPINGS = undefined
       console.info(apn, '：无接口字段映射文件(interfaceMappings)文件')
     }
     /**********************************************************************/
@@ -197,6 +198,7 @@ module.exports = {
       accessSync(USER_INFO_MAPPINGS, constants.F_OK)
       PROVIDE_PLUGIN_PAYLOAD.USER_INFO_MAPPINGS = USER_INFO_MAPPINGS
     } catch (e) {
+      PROVIDE_PLUGIN_PAYLOAD.USER_INFO_MAPPINGS = undefined
       console.info(apn, '：无动态菜单映射(menuMappings)文件')
     }
     /**********************************************************************/
