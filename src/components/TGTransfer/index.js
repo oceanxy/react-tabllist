@@ -2,6 +2,7 @@ import './index.scss'
 import { Transfer } from 'ant-design-vue'
 
 export default {
+  name: 'TGTransfer',
   model: {
     prop: 'value',
     event: 'change'

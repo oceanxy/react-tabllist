@@ -5,6 +5,7 @@ import TGContainerWithSider from '@/components/TGContainerWithSider'
 import { cloneDeep, debounce } from 'lodash'
 
 export default {
+  name: 'TGContainerWithTreeSider',
   inject: ['moduleName'],
   props: {
     /**

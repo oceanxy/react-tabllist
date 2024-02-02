@@ -3,6 +3,7 @@ import './index.scss'
 import elementResizeDetectorMaker from 'element-resize-detector'
 
 export default {
+  name: 'TGChart',
   props: {
     option: {
       type: Object,

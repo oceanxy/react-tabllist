@@ -58,6 +58,7 @@ const fileOrVideoCommonConfig = {
 }
 
 export default {
+  name: 'TGEditor',
   model: {
     prop: 'value',
     event: 'change'

@@ -2,6 +2,7 @@ import { Badge, Button, Modal } from 'ant-design-vue'
 import './index.scss'
 
 export default {
+  name: 'TGImagePreview',
   props: {
     imageUrls: Array,
     width: Number,

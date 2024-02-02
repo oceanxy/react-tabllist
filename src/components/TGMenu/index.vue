@@ -47,6 +47,7 @@ const appName = getFirstLetterOfEachWordOfAppName()
 
 // 函数组件 自定义子菜单
 const TGSubMenu = {
+  name: 'TGSubMenu',
   template: `
     <a-sub-menu
       :key="menuInfo.key"
@@ -105,7 +106,6 @@ const TGSubMenu = {
     </template>
     </a-sub-menu>
   `,
-  name: 'TGSubMenu',
   // must add isSubMenu: true
   isSubMenu: true,
   props: {

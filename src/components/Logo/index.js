@@ -2,6 +2,7 @@ import './styles/index.scss'
 import { mapGetters } from 'vuex'
 
 export default {
+  name: 'TGLogo',
   computed: {
     ...mapGetters({ getState: 'getState' }),
     collapsed() {

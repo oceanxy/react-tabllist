@@ -2,6 +2,7 @@ import './index.scss'
 import _ from 'lodash'
 
 export default {
+  name: 'TGScrollingNumber',
   props: {
     itemHeight: {
       type: Number,

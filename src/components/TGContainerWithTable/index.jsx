@@ -3,6 +3,7 @@ import TGContainerWithTreeSider from '@/components/TGContainerWithTreeSider'
 import { Space } from 'ant-design-vue'
 
 export default {
+  name: 'TGContainerWithTable',
   props: {
     // 是否显示侧边树
     showTree: {

@@ -10,6 +10,7 @@ const {
 } = createNamespacedHelpers('login')
 
 export default Form.create({ name: 'TGLoginForm' })({
+  name: 'TGLoginForm',
   data: () => ({
     picCodePath: '',
     hint: false

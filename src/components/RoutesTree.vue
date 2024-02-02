@@ -83,7 +83,7 @@
 
 <script>
 export default {
-  name: 'RoutesTree',
+  name: 'TGRoutesTree',
   data: () => ({
     // 当前正在编辑的树节点名称
     currentNodeTitle: '',

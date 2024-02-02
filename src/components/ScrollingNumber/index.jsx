@@ -2,12 +2,7 @@ import './index.scss'
 import Scroll from './Scroll'
 
 export default {
-  data() {
-    return {
-      innerText: '',
-      innerValue: ''
-    }
-  },
+  name: 'TGScrollingNumberMain',
   props: {
     text: {
       type: String,
@@ -26,6 +21,12 @@ export default {
     gap: {
       type: Number,
       default: 10
+    }
+  },
+  data() {
+    return {
+      innerText: '',
+      innerValue: ''
     }
   },
   watch: {

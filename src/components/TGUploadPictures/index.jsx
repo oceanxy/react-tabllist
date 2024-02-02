@@ -5,6 +5,7 @@ import config from '@/config'
 const appName = getFirstLetterOfEachWordOfAppName()
 
 export default {
+  name: 'TGUploadPictures',
   model: {
     prop: 'value',
     event: 'change'

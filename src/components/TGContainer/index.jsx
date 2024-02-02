@@ -2,6 +2,7 @@ import './index.scss'
 import { Button } from 'ant-design-vue'
 
 export default {
+  name: 'TGContainer',
   props: {
     /**
      * 标题文字 或 JSX.Element

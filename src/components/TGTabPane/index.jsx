@@ -1,6 +1,7 @@
 import { Icon, Tabs } from 'ant-design-vue'
 
 export default {
+  name: 'TGTabPane',
   functional: true,
   render(h, { props, scopedSlots }) {
     return (

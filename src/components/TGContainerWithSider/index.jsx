@@ -3,7 +3,7 @@ import { Button } from 'ant-design-vue'
 import config from '@/config'
 
 export default {
-  name: 'TGProfileLayout',
+  name: 'TGContainerWithSider',
   props: {
     /**
      * 主容器样式表名

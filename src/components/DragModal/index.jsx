@@ -2,6 +2,7 @@ import { Modal, Spin } from 'ant-design-vue'
 import _ from 'lodash'
 
 const Title = {
+  name: 'TGDragModal',
   props: ['isShow'],
   data: () => ({
     position: {

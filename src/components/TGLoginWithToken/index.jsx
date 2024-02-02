@@ -10,6 +10,7 @@ import config from '@/config'
 const appName = getFirstLetterOfEachWordOfAppName()
 
 export default {
+  name: 'TGLoginWithToken',
   async created() {
     const searchToken = new URL(window.location.href).searchParams.get(config.tokenConfig.fieldName)
     const localToken = localStorage.getItem(`${appName}-${config.tokenConfig.fieldName}`)
