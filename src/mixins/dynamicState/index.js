@@ -28,7 +28,7 @@ export default (
   let dynamicState
 
   if (customModuleName) {
-    // 如果存在自定义模块名，为了不与其他动态模块混淆，仅动态注册该模块，此时不提供 moduleName
+    // 如果存在自定义模块名，为了不与其他动态模块混淆，仅动态注册该模块的store，此时不提供 moduleName
     dynamicState = {
       async created() {
         // 判断动态模块文件夹内是否存在与moduleName匹配的文件，用以作为动态模块的模板
