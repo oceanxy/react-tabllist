@@ -1,11 +1,11 @@
 // const VConsolePlugin = require('vconsole-webpack-plugin') // 引入 移动端模拟开发者工具 插件 （另：https://github.com/liriliri/eruda）
 const CompressionPlugin = require('compression-webpack-plugin') // Gzip
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const { resolve, join } = require('path')
-const { ProvidePlugin, DefinePlugin, ContextReplacementPlugin, IgnorePlugin } = require('webpack')
+const {resolve, join} = require('path')
+const {ProvidePlugin, DefinePlugin, ContextReplacementPlugin, IgnorePlugin} = require('webpack')
 const WebpackAssetsManifest = require('webpack-assets-manifest')
-const { getBuildConfig, getDevServer, preloadResources } = require('./build/webpackConfigs')
-const { config: webpackConfig, externalProjNames } = getBuildConfig()
+const {getBuildConfig, getDevServer, preloadResources} = require('./build/webpackConfigs')
+const {config: webpackConfig, externalProjNames} = getBuildConfig()
 const EnvProductionPlugin = require('./build/env.production.plugin')
 const createZip = require('./build/zip')
 const {
@@ -33,9 +33,9 @@ module.exports = {
     requireModuleExtension: true,
     loaderOptions: {
       // 引入sass全局变量文件
-      sass: { sassOptions: { prependData: '@import "~@/assets/styles/themeFromLess.scss"' } }, // 未生效
+      sass: {sassOptions: {prependData: '@import "~@/assets/styles/themeFromLess.scss"'}}, // 未生效
       // 启用内联JavaScript。ant-design-vue使用less编写，且使用了内联写法，所以需要开启
-      less: { lessOptions: { javascriptEnabled: true, math: 'always' } }
+      less: {lessOptions: {javascriptEnabled: true, math: 'always'}}
     }
   },
   configureWebpack: {
@@ -89,53 +89,77 @@ module.exports = {
       // 预加载子项目路由
       APP_ROUTES: resolve(join(__dirname, `src/apps/${apn}/router/routes.js`)),
       // 预加载iconfont文件
-      APP_ICON_FONT: resolve(join(__dirname, `src/apps/${apn}/assets/iconfont.js`)),
-      // 预加载接口映射器
-      INTERFACE_MAPPINGS: preloadResources(
-        `src/apps/${apn}/config/interfaceMappings.js`,
-        '无接口字段映射文件(interfaceMappings)文件'
-      ),
-      USER_INFO_MAPPINGS: preloadResources(
-        `src/apps/${apn}/config/userInfoMappings.js`,
-        '无动态菜单映射(menuMappings)文件'
-      )
+      APP_ICON_FONT: resolve(join(__dirname, `src/apps/${apn}/assets/iconfont.js`))
     }
+
+    const DEFINE_PLUGIN_PAYLOAD = {
+      // 注入项目名称
+      PROJ_APP_NAME: JSON.stringify(apn),
+      // 注入开发环境账号
+      DEV_DEFAULT_ACCOUNT: JSON.stringify(process.env.NODE_ENV === 'development' ? account : ''),
+      // 注入开发环境密码
+      DEV_DEFAULT_PASSWORD: JSON.stringify(process.env.NODE_ENV === 'development' ? password : '')
+    }
+
+    // 预加载接口映射器
+    preloadResources(
+      `src/apps/${apn}/config/interfaceMappings.js`,
+      resource => PROVIDE_PLUGIN_PAYLOAD.INTERFACE_MAPPINGS = resource,
+      () => {
+        DEFINE_PLUGIN_PAYLOAD.INTERFACE_MAPPINGS = undefined
+        console.info(apn, '开发环境编译信息：无接口字段映射文件(interfaceMappings)，已忽略。')
+      }
+    )
+
+    // 预加载用户信息和菜单信息映射器
+    preloadResources(
+      `src/apps/${apn}/config/userInfoMappings.js`,
+      resource => PROVIDE_PLUGIN_PAYLOAD.USER_INFO_MAPPINGS = resource,
+      () => {
+        DEFINE_PLUGIN_PAYLOAD.USER_INFO_MAPPINGS = undefined
+        console.info(apn, '开发环境编译信息：无动态菜单映射文件(menuMappings)，已忽略。')
+      }
+    )
 
     // 预加载子项目登录组件
-    PROVIDE_PLUGIN_PAYLOAD.LOGIN_COMPONENT = preloadResources(`src/apps/${apn}/views/Login/index.jsx`)
-
-    // 检测子项目是否定义了 Login 组件，否则使用主框架的默认登录组件
-    if (!PROVIDE_PLUGIN_PAYLOAD.LOGIN_COMPONENT) {
-      PROVIDE_PLUGIN_PAYLOAD.LOGIN_COMPONENT = preloadResources('src/views/Login/index.jsx')
-    }
+    // // 检测子项目是否定义了 Login 组件，否则使用主框架的默认登录组件
+    preloadResources(
+      `src/apps/${apn}/views/Login/index.jsx`,
+      resource => PROVIDE_PLUGIN_PAYLOAD.LOGIN_COMPONENT = resource,
+      () => {
+        preloadResources(
+          'src/views/Login/index.jsx',
+          resource => PROVIDE_PLUGIN_PAYLOAD.LOGIN_COMPONENT = resource,
+          () => {
+            DEFINE_PLUGIN_PAYLOAD.LOGIN_COMPONENT = undefined
+          }
+        )
+      }
+    )
 
     /**
      * 预加载 echarts.min.js。
      * - 生产环境推荐使用定制的 echarts.min.js 文件，定制地址：https://echarts.apache.org/zh/builder.html。
      * - 非生产环境先尝试寻找 echarts.min.js，如果不存在则直接引用 node_modules 下的 echarts 包。
      */
-    const CUSTOMIZE_PROD_TINY_ECHARTS = preloadResources(`src/apps/${apn}/assets/echarts.min.js`)
     let isExistCustomizeProdTinyEcharts = false
 
-    if (CUSTOMIZE_PROD_TINY_ECHARTS) {
-      isExistCustomizeProdTinyEcharts = true
-      PROVIDE_PLUGIN_PAYLOAD.CUSTOMIZE_PROD_TINY_ECHARTS = CUSTOMIZE_PROD_TINY_ECHARTS
-    } else {
-      PROVIDE_PLUGIN_PAYLOAD.CUSTOMIZE_PROD_TINY_ECHARTS = resolve(join(__dirname, 'node_modules/echarts'))
-    }
+    preloadResources(
+      `src/apps/${apn}/assets/echarts.min.js`,
+      resource => {
+        isExistCustomizeProdTinyEcharts = true
+        PROVIDE_PLUGIN_PAYLOAD.CUSTOMIZE_PROD_TINY_ECHARTS = CUSTOMIZE_PROD_TINY_ECHARTS = resource
+      },
+      () => {
+        PROVIDE_PLUGIN_PAYLOAD.CUSTOMIZE_PROD_TINY_ECHARTS = resolve(join(__dirname, 'node_modules/echarts'))
+      }
+    )
 
     // 预解析资源
     config.plugin('ProvidePlugin').use(ProvidePlugin, [PROVIDE_PLUGIN_PAYLOAD])
 
     // 预加载资源
-    config.plugin('DefinePlugin').use(DefinePlugin, [
-      {
-        // 注入项目名称
-        PROJ_APP_NAME: JSON.stringify(apn),
-        DEV_DEFAULT_ACCOUNT: JSON.stringify(process.env.NODE_ENV === 'development' ? account : ''),
-        DEV_DEFAULT_PASSWORD: JSON.stringify(process.env.NODE_ENV === 'development' ? password : '')
-      }
-    ])
+    config.plugin('DefinePlugin').use(DefinePlugin, [DEFINE_PLUGIN_PAYLOAD])
 
     // 去除 moment 多余的本地化文件
     config.plugin('contextReplacementPlugin').use(ContextReplacementPlugin, [

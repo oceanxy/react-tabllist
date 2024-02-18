@@ -14,8 +14,8 @@ const {
   subDir,
   files
 } = require('./params.js')
-const { resolve, join } = require('path')
-const { accessSync, constants } = require('fs')
+const {resolve, join} = require('path')
+const {accessSync, constants} = require('fs')
 
 /**
  * 监听子进程
@@ -61,19 +61,20 @@ function getDevServer() {
   return require(`../src/apps/${apns}/config/devServer.js`)
 }
 
-function preloadResources(url, noFilePrompts) {
+/**
+ * 预加载资源文件（基于 webpack.ProvidePlugin 插件）
+ * @param {string} url - 资源地址
+ * @param {(resource) => void} onSuccess - 资源读取成功的回调函数
+ * @param {() => void} [onError] - 资源读取失败的回调函数
+ */
+function preloadResources(url, onSuccess, onError) {
   const resource = resolve(join(__dirname, '..', url))
 
   try {
     accessSync(resource, constants.F_OK)
-
-    return resource
+    onSuccess?.(resource)
   } catch (e) {
-    if (noFilePrompts) {
-      console.info(apns[0], noFilePrompts)
-    }
-
-    return undefined
+    onError?.()
   }
 }
 
@@ -109,7 +110,7 @@ function getBuildConfig() {
       }, {})
     }
   } else {
-    config.pages = { index: 'src/main.js' }
+    config.pages = {index: 'src/main.js'}
   }
 
   if (subDir) {
