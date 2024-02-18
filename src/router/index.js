@@ -12,6 +12,7 @@ import config from '@/config'
 import { message } from 'ant-design-vue'
 import { getFirstLetterOfEachWordOfAppName } from '@/utils/utilityFunction'
 import { getCookie } from '@/utils/cookie'
+import TGRouterView from '@/components/TGRouterView'
 
 const appName = getFirstLetterOfEachWordOfAppName()
 
@@ -67,11 +68,12 @@ function initializeDynamicRoutes(menus) {
     }
 
     if (!component || component === '@/components/TGRouterView') {
-      route.component = resolve => require.ensure(
-        [],
-        () => resolve(require('@/components/TGRouterView')),
-        'chunk-router-view'
-      )
+      // route.component = resolve => require.ensure(
+      //   [],
+      //   () => resolve(require('@/components/TGRouterView')),
+      //   'chunk-router-view'
+      // )
+      route.component = TGRouterView
     } else {
       if (component.includes('@/')) {
         if (component.includes('layouts')) {
