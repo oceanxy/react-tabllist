@@ -20,19 +20,24 @@ module.exports = {
   jsxSingleQuote: false,
   // 在对象前后添加空格，默认true eg: { foo: bar }
   bracketSpacing: true,
-  // 多属性html标签的‘>’折行放置
+  // JSX多属性标签的‘>’同行放置
   jsxBracketSameLine: false,
   // 无需顶部注释即可格式化
   requirePragma: false,
   // 在已被 prettier 格式化的文件顶部加上标注
   insertPragma: false,
-  // 对HTML全局空白不敏感
-  htmlWhitespaceSensitivity: 'ignore',
   // 不对vue中的script及style标签缩进
   vueIndentScriptAndStyle: false,
   // 对引用代码进行格式化
   embeddedLanguageFormatting: 'auto',
-
-  eslintIntegration: true,
-  stylelintIntegration: true
+  // 使用默认的折行标准
+  proseWrap: 'preserve',
+  // 根据显示样式决定 html 要不要折行
+  htmlWhitespaceSensitivity: 'ignore',
+  // 不让prettier使用eslint的代码格式进行校验
+  eslintIntegration: false,
+  // 不让prettier使用stylelint的代码格式进行校验
+  stylelintIntegration: false,
+  // 代码的解析引擎，默认为babylon，与babel相同
+  parser: 'babylon'
 }
