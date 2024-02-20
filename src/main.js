@@ -1,18 +1,20 @@
 import '@/assets/styles/app.scss'
 import { detectZoom } from '@/utils/detectZoom'
 import Vue from 'vue'
-import config from './config'
+import config from '@/config'
 import useComponents from '@/utils/antvComponents'
-import router from './router'
-import store from './store'
+import store from '@/store'
+import router from '@/router'
 import { loadScript, loadStyle, loadVariablesStyle, reloadTheme } from '@/assets/styles'
 import { join, resolve } from 'path'
 import { getFirstLetterOfEachWordOfAppName } from '@/utils/utilityFunction'
+import { TGKeepAlive } from '@/components/TGRouterView'
 
 function createVue() {
   new Vue({
     router,
     store,
+    components: { TGKeepAlive },
     render: h => h(APP_COMPONENT.default)
   }).$mount('#app')
 }
@@ -93,7 +95,7 @@ if (NODE_ENV === 'production') {
       .then(response => response.json())
       .then(data => {
         Object.entries(data).forEach(([key, value]) => {
-          localStorage.setItem(`${appName}--${key}`, value)
+          localStorage.setItem(`${appName}--${key}`, /**@type string*/value)
         })
 
         createVue()

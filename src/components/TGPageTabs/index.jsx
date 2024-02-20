@@ -8,7 +8,6 @@
 import './index.scss'
 import { Button, Icon } from 'ant-design-vue'
 import { replacePath } from '@/utils/utilityFunction'
-import config from '@/config'
 
 export default {
   name: 'TGPageTabs',
@@ -31,11 +30,8 @@ export default {
     pageTabs() {
       return this.$store.state.common?.pageTabs || []
     },
-    pageNames() {
-      return this.$store.state.common?.pageNames || []
-    },
     homeRoute() {
-      return this.$router.resolve({ name: 'home' }).route
+      return this.$router.resolve({name: 'home'}).route
     }
   },
   watch: {
@@ -44,17 +40,21 @@ export default {
       handler(value) {
         this.resize()
         this.setCurrentPageTabs(value)
-        // TODO 手动管理已经缓存的页面（vue组件实例的name属性），keep-alive的include属性
-        // 目前这种方式不可行，因为动态name属性不好动态获取，即使获取到了（setCurrentPageName方法所示），
-        // 在其他组件内交互也无法获取，需要思考新的方式来处理该问题
-        // this.setCurrentPageName()
       }
     }
   },
+  mounted() {
+    window.addEventListener('resize', this.resize)
+    this.resize(true)
+  },
   methods: {
+    /**
+     * 保存当前页面的 Tab
+     * @param {Route} currentRoute - 当前路由
+     */
     setCurrentPageTabs(currentRoute) {
       const isExistent = this.pageTabs.find(route => {
-        return replacePath(route.path) === replacePath(currentRoute.path)
+        return replacePath(route.path) === replacePath(currentRoute?.path)
       })
 
       if (!isExistent) {
@@ -66,22 +66,6 @@ export default {
           this.setCurrentPageTabs(this.homeRoute)
         }
       }
-    },
-    setCurrentPageName() {
-      this.$nextTick(() => {
-        /** 获取当前路由对应页面的 VUE 组件实例的 name 属性 **/
-        let component = this.$options.parent.$children.at(-1)
-
-        while (component && !component.moduleName) {
-          component = component?.$children?.at(-1)
-        }
-
-        if (component?.$options.name && !this.pageNames.find(name => name === component.$options.name)) {
-          if (!config.associateKeepAliveAndTabPage || this.$route.meta.keepAlive) {
-            this.$store.commit('common/setPageNames', this.pageNames.concat(component.$options.name))
-          }
-        }
-      })
     },
     resize(force) {
       const sl = this.$refs.pageTabs
@@ -104,7 +88,10 @@ export default {
         this.disabledPrev = value - this.distance <= 0
         this.disabledNext = value - this.distance + sl.clientWidth >= this.$refs.pageTabsBox.clientWidth
 
-        this.$refs['pageTabs'].scrollTo({ left: value - this.distance, behavior: 'smooth' })
+        this.$refs['pageTabs'].scrollTo({
+          left: value - this.distance,
+          behavior: 'smooth'
+        })
       }
     },
     onNextClick() {
@@ -115,7 +102,7 @@ export default {
         this.disabledPrev = value + this.distance <= 0
         this.disabledNext = value + this.distance + sl.clientWidth >= this.$refs.pageTabsBox.clientWidth
 
-        this.$refs['pageTabs'].scrollTo({ left: value + this.distance, behavior: 'smooth' })
+        this.$refs['pageTabs'].scrollTo({left: value + this.distance, behavior: 'smooth'})
       }
     },
     async onTabClick(route) {
@@ -139,16 +126,18 @@ export default {
       return replacePath(route.path) === replacePath(this.$route.path) ? 'primary' : 'default'
     }
   },
-  mounted() {
-    window.addEventListener('resize', this.resize)
-    this.resize(true)
-  },
   render() {
     return (
       <div class={'tg-page-tabs'}>
         <div class={'tg-page-tabs-container'}>
           <div
-            class={`tg-arrow-left${this.showMore ? ' show-arrow' : ''}${this.disabledPrev ? ' disabled' : ''}`}
+            class={
+              `tg-arrow-left${
+                this.showMore ? ' show-arrow' : ''
+              }${
+                this.disabledPrev ? ' disabled' : ''
+              }`
+            }
             onClick={this.onPrevClick}
           >
             <Icon type={'left'} />
@@ -184,7 +173,13 @@ export default {
             </div>
           </div>
           <div
-            class={`tg-arrow-right${this.showMore ? ' show-arrow' : ''}${this.disabledNext ? ' disabled' : ''}`}
+            class={
+              `tg-arrow-right${
+                this.showMore ? ' show-arrow' : ''
+              }${
+                this.disabledNext ? ' disabled' : ''
+              }`
+            }
             onClick={this.onNextClick}
           >
             <Icon type={'right'} />
