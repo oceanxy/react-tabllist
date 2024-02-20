@@ -16,6 +16,11 @@ export default function getBaseRoutes(routes) {
   if (Array.isArray(routes) && routes.length) {
     const homeIndex = routes.findIndex(route => route.path === '/')
 
+    // 查询子项目路由中是否存在 静态路由 如果有就把静态路由插入到rootRoutes中
+    if (APP_ROUTES.staticRoutes?.length) {
+      routes.unshift(...APP_ROUTES.staticRoutes)
+    }
+
     // 检查路由数据是否包含根路由
     if (homeIndex > -1) {
       rootRoutes = routes
