@@ -1,3 +1,10 @@
+/**
+ * 路由。
+ * 注意，若需要使 `route.meta.keepAlive = true` 页面缓存生效，请确保要缓存的页面组件注入了 moduleName 属性，
+ * 如何注入 moduleName，详见：
+ * @see src/mixins/forModuleName
+ */
+
 import config from '@/config'
 import { getFirstLetterOfEachWordOfAppName } from '@/utils/utilityFunction'
 

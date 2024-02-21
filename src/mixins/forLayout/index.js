@@ -13,8 +13,7 @@ export default {
     return {
       // 这里主要添加的是实现页面缓存逻辑所必需的组件的名称，未明确需求和缓存实现逻辑的情况下请勿轻易改动
       defaultPageNames: ['TGKeepAlive', 'TGRouterView'],
-      cacheComponentName: '',
-      currentComponentName: ''
+      cacheComponentName: ''
     }
   },
   computed: {
@@ -55,7 +54,7 @@ export default {
       handler(value) {
         if (value.meta.keepAlive) {
           // 手动管理已经缓存的页面（vue组件实例的name属性），keep-alive的include属性
-          this.setCurrentPageName()
+          this.$nextTick(this.setCurrentPageName)
         }
       }
     }
@@ -86,15 +85,14 @@ export default {
     /**
      * 递归获取组件
      * @param {Vue.Element[]} components 当前页面组件或当前页面的父级 RouterView 组件集合
-     * @param {boolean} [isTop] 是否是循环的顶端，仅在本组件的 setCurrentPageName 方法内调用时传递为 true
-     * @return {{moduleName}|*}
+     * @param {boolean} [isLikeParentOfTargetComponent=true] 是否可能是目标组件的父级 RouterView 组件（外部调用一般传递为 true）
+     * @return {Vue.Element|undefined}
      * @private
      */
-    _getComponent(components, isTop) {
+    _getComponent(components, isLikeParentOfTargetComponent = true) {
       // 清空缓存值
-      if (isTop) {
+      if (isLikeParentOfTargetComponent) {
         this.cacheComponentName = ''
-        this.currentComponentName = ''
       }
 
       let _component
@@ -103,21 +101,29 @@ export default {
         // 组件中存在 _routerViewCache 时，证明该组件为 RouterView 组件，其子级可能为 RouterView 组件，也可能为页面组件
         const _cacheComponentName = component._routerViewCache?.default.component.name
 
-        if (_cacheComponentName && _cacheComponentName !== 'TGRouterView' && !this.cacheComponentName) {
-          this.cacheComponentName = _cacheComponentName
-        }
-
-        // 存在 moduleName 属性，则为页面组件。页面组件中的 moduleName 的注入逻辑见 src/mixins/dynamicState。
-        if (component.moduleName) {
-          this.currentComponentName = component.$options.name
-
-          if (!this.cacheComponentName || this.cacheComponentName === this.currentComponentName) {
-            _component = component
-            break
-          }
+        // 如果缓存对象保存的组件指向 TGRouterView，则直接筛选子级的所有 TGRouterView 组件作为下级遍历对象，明确跳过其他组件
+        if (_cacheComponentName === 'TGRouterView') {
+          _component = this._getComponent(
+            component.$children.filter(children => children.$vnode.tag.includes('TGRouterView')),
+            true
+          )
         } else {
-          // 二级菜单
-          _component = this._getComponent(component.$children)
+          if (_cacheComponentName && !this.cacheComponentName) {
+            this.cacheComponentName = _cacheComponentName
+          }
+
+          // 存在 moduleName 属性时，则为页面组件。页面组件中的 moduleName 的注入逻辑见 src/mixins/dynamicState。
+          if (component.moduleName) {
+            const _moduleName = `${component.moduleName.charAt(0).toUpperCase()}${component.moduleName.slice(1)}`
+
+            if (!this.cacheComponentName || this.cacheComponentName === _moduleName) {
+              _component = component
+              break
+            }
+          } else {
+            // 次级菜单
+            _component = this._getComponent(component.$children, _cacheComponentName === 'TGRouterView')
+          }
         }
       }
 
@@ -129,9 +135,7 @@ export default {
     setCurrentPageName() {
       // 保证此函数内逻辑的执行晚于私有函数 _setDefaultPageNames
       this.$nextTick(() => {
-        const component = this._getComponent([this.$refs['keepAlive']], true)
-
-        console.log(component.$options.name)
+        const component = this._getComponent([this.$refs['keepAlive']])
 
         if (component?.$options.name && !this.pageNames.includes(component.$options.name)) {
           this.$store.commit('common/setPageNames', this.pageNames.concat(component.$options.name))

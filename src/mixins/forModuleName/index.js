@@ -1,5 +1,9 @@
 /**
- * 根据页面 name 自动生成 moduleName 的混合
+ * 根据页面 name 自动生成 moduleName 的混合。
+ * 请始终为本框架内的页面级组件添加本混合，以注册页面的 moduleName 属性，
+ * moduleName 功能：
+ * - 用于注册页面的动态 store 模块；
+ * - 用于获取路由中`route.meta.keepAlive = true`时，页面组件的名称，以配合 VUE 的 keep-alive 组件缓存页面；
  * @Author: Omsber
  * @Email: xyzsyx@163.com
  * @Date: 2022-06-27 周一 10:09:06
