@@ -12,7 +12,7 @@ export default {
   data() {
     return {
       // 这里主要添加的是实现页面缓存逻辑所必需的组件的名称，未明确需求和缓存实现逻辑的情况下请勿轻易改动
-      defaultPageNames: ['TGKeepAlive', 'TGRouterView'],
+      defaultPageNames: ['TGRouterView'],
       cacheComponentName: ''
     }
   },
@@ -60,7 +60,9 @@ export default {
     }
   },
   created() {
-    this._setDefaultPageNames()
+    if (this.$route.meta.keepAlive) {
+      this._setDefaultPageNames()
+    }
   },
   methods: {
     /**
