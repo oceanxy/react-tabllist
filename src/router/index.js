@@ -31,12 +31,17 @@ Vue.use(VueRouter)
 
 /**
  * 根据后台数据生成路由
- * @param [menus] {Array} 用来生成菜单的数据
+ * @param {Array} [menus] 用来生成菜单的数据
+ * @param {(path:string, target:string) => void} [redirectCallback] - 外部跳转自定义回调，
+ * 默认使用以下代码跳转：
+ *
+ * `window.open(menu.obj.component, '_blank')`
+ *
  * @returns {Object[]}
  */
-function initializeDynamicRoutes(menus) {
+function initializeDynamicRoutes(menus, redirectCallback) {
   return menus?.map(menu => {
-    const route = { meta: {}, children: [] }
+    const route = {meta: {}, children: []}
     const {
       name,
       icon,
@@ -75,6 +80,7 @@ function initializeDynamicRoutes(menus) {
       // )
       route.component = TGRouterView
     } else {
+      // 项目内部页面组件跳转
       if (component.includes('@/')) {
         if (component.includes('layouts')) {
           route.component = resolve => require.ensure(
@@ -93,7 +99,7 @@ function initializeDynamicRoutes(menus) {
             () => resolve(require('@/views/' + component.slice(8)))
           )
         }
-      } else {
+      }/** 外部链接跳转 */ else {
         route.component = () => {
           let target = '_blank'
           const defaultRoute = localStorage.getItem(`${appName}-defaultRoute`) || config.defaultRouteName
@@ -104,12 +110,8 @@ function initializeDynamicRoutes(menus) {
             target = '_self'
           }
 
-          // TODO 以下代码需要适配所有项目
-
-          if (process.env.NODE_ENV !== 'production') {
-            const token = localStorage.getItem(`${appName}-${config.tokenConfig.fieldName}`)
-
-            window.open(`http://localhost:8193${component}/?${config.tokenConfig.fieldName}=${token}`, target)
+          if (typeof redirectCallback === 'function') {
+            redirectCallback(component, target)
           } else {
             window.open(component, target)
           }
@@ -124,11 +126,11 @@ function initializeDynamicRoutes(menus) {
     }
 
     if (redirect) {
-      route.redirect = { name: redirectRouteName }
+      route.redirect = {name: redirectRouteName}
     }
 
     if (children?.length) {
-      route.children = initializeDynamicRoutes(children)
+      route.children = initializeDynamicRoutes(children, redirectCallback)
     }
 
     return route
@@ -179,7 +181,7 @@ function selectDynamicRoutes(menus, routes) {
  */
 function createRouter(rootRoute) {
   return new VueRouter({
-    routes: rootRoute || getRoutes(),
+    routes: rootRoute || getRoutes(APP_ROUTES.open),
     base: process.env.VUE_APP_PUBLIC_PATH,
     mode: config.routeMode === 'history' ? 'history' : 'hash'
   })
@@ -189,8 +191,16 @@ function createRouter(rootRoute) {
  * 获取当前项目下所有可用的子项目的路由表
  * @returns {VueRouter.route[]}
  */
-function getRoutes() {
-  const { NODE_ENV, VUE_APP_DEVELOPMENT_ENVIRONMENT_SKIPPING_PERMISSIONS } = process.env
+/**
+ * 获取路由
+ * @param {(path:string, target:string) => void} [redirectCallback] - 外部跳转自定义回调，
+ * 默认使用以下代码跳转：
+ *
+ * `window.open(menu.obj.component, '_blank')`
+ * @return {VueRouter.Route[]|*}
+ */
+function getRoutes(redirectCallback) {
+  const {NODE_ENV, VUE_APP_DEVELOPMENT_ENVIRONMENT_SKIPPING_PERMISSIONS} = process.env
 
   if (
     // 本地开发环境跳过权限直接获取本地路由
@@ -209,7 +219,7 @@ function getRoutes() {
       return getBaseRoutes(selectDynamicRoutes(menu, APP_ROUTES?.default || []))
     }
 
-    return getBaseRoutes(initializeDynamicRoutes(menu))
+    return getBaseRoutes(initializeDynamicRoutes(menu, redirectCallback))
   }
 
   return getBaseRoutes()
@@ -219,7 +229,7 @@ function getRoutes() {
  * 重置路由
  */
 function resetRoutes() {
-  const menus = getRoutes()
+  const menus = getRoutes(APP_ROUTES.open)
 
   router.matcher = createRouter(menus).matcher
   router.options.routes = menus
