@@ -21,12 +21,14 @@ export default function getBaseRoutes(routes) {
   const homePermissions = typeof config.homePermissions === 'boolean' ? config.homePermissions : true
 
   if (Array.isArray(routes) && routes.length) {
-    const homeIndex = routes.findIndex(route => route.path === '/')
+    // 查询子项目路由中是否存在静态路由，如果有就把静态路由插入到 rootRoutes 中
+    APP_ROUTES.staticRoutes?.forEach(staticRoute => {
+      if (routes.findIndex(route => route.name === staticRoute.name) === -1) {
+        routes.unshift(staticRoute)
+      }
+    })
 
-    // 查询子项目路由中是否存在 静态路由 如果有就把静态路由插入到rootRoutes中
-    if (APP_ROUTES.staticRoutes?.length) {
-      routes.unshift(...APP_ROUTES.staticRoutes)
-    }
+    const homeIndex = routes.findIndex(route => route.path === '/')
 
     // 检查路由数据是否包含根路由
     if (homeIndex > -1) {
@@ -80,11 +82,11 @@ export default function getBaseRoutes(routes) {
         redirect: () => {
           // 登录状态下无可用菜单跳转到无权限页面
           if (localStorage.getItem(`${appName}-${config.tokenConfig.fieldName}`)) {
-            return { name: 'noAccess', query: { 'no-link': 1 } }
+            return {name: 'noAccess', query: {'no-link': 1}}
           }
 
           // 未登录状态下跳转到登录页
-          return { name: 'login' }
+          return {name: 'login'}
         },
         meta: {
           title: '后台',
@@ -139,7 +141,7 @@ export default function getBaseRoutes(routes) {
     },
     {
       path: '*', // 此处需特别注意至于最底部
-      redirect: { name: 'notFound' }
+      redirect: {name: 'notFound'}
     }
   ]
 }
