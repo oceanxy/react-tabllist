@@ -84,8 +84,8 @@ export default {
       } else {
         temp = this.pageNames.filter(item => !this.defaultPageNames.includes(item))
 
-        if (temp.length) {
-          this.$store.commit('common/setPageNames', temp)
+        if (!temp.length) {
+          this.$store.commit('common/setPageNames', [])
         }
       }
     },
