@@ -52,16 +52,13 @@ export default {
     $route: {
       immediate: true,
       handler(value) {
+        this._setDefaultPageNames(value.meta.keepAlive)
+
         if (value.meta.keepAlive) {
           // 手动管理已经缓存的页面（vue组件实例的name属性），keep-alive的include属性
           this.$nextTick(this.setCurrentPageName)
         }
       }
-    }
-  },
-  created() {
-    if (this.$route.meta.keepAlive) {
-      this._setDefaultPageNames()
     }
   },
   methods: {
@@ -71,17 +68,25 @@ export default {
      * @see ../src/components/TGRouterView
      * @private
      */
-    _setDefaultPageNames() {
-      const temp = []
+    _setDefaultPageNames(keepAlive) {
+      let temp = []
 
-      this.defaultPageNames.forEach(item => {
-        if (!this.pageNames.includes(item)) {
-          temp.push(item)
+      if (keepAlive) {
+        this.defaultPageNames.forEach(item => {
+          if (!this.pageNames.includes(item)) {
+            temp.push(item)
+          }
+        })
+
+        if (temp.length) {
+          this.$store.commit('common/setPageNames', temp.concat(this.pageNames))
         }
-      })
+      } else {
+        temp = this.pageNames.filter(item => !this.defaultPageNames.includes(item))
 
-      if (temp.length) {
-        this.$store.commit('common/setPageNames', temp.concat(this.pageNames))
+        if (temp.length) {
+          this.$store.commit('common/setPageNames', temp)
+        }
       }
     },
     /**
