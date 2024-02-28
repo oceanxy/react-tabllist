@@ -7,14 +7,11 @@
 
 import { mapGetters } from 'vuex'
 import { RouterView } from 'vue-router'
+import { TGKeepAlive } from '@/components/TGRouterView'
 
 export default {
   data() {
-    return {
-      // 这里主要添加的是实现页面缓存逻辑所必需的组件的名称，未明确需求和缓存实现逻辑的情况下请勿轻易改动
-      defaultPageNames: ['TGKeepAlive', 'TGRouterView'],
-      cacheComponentName: ''
-    }
+    return {cacheComponentName: ''}
   },
   computed: {
     ...mapGetters({getState: 'getState'}),
@@ -40,11 +37,11 @@ export default {
      * @return {JSX.Element}
      * @constructor
      */
-    RouterView() {
+    getRouterView() {
       return (
-        <KeepAlive include={this.pageNames}>
-          <RouterView ref={'keepAlive'} />
-        </KeepAlive>
+        <TGKeepAlive include={this.pageNames} max={this.$config.keepAliveMaxCount}>
+          <RouterView ref={'keepAlive'} key={this.$route.fullPath} />
+        </TGKeepAlive>
       )
     }
   },
@@ -52,8 +49,6 @@ export default {
     $route: {
       immediate: true,
       handler(value) {
-        this._setDefaultPageNames(value.meta.keepAlive)
-
         if (value.meta.keepAlive) {
           // 手动管理已经缓存的页面（vue组件实例的name属性），keep-alive的include属性
           this.$nextTick(this.setCurrentPageName)
@@ -62,33 +57,6 @@ export default {
     }
   },
   methods: {
-    /**
-     * 私有函数：添加实现缓存必要的组件名称。
-     * 根据 VUE keep-alive 组件的实现逻辑，封装了一个支持多级路由的`KeepAlive`组件，详情：
-     * @see ../src/components/TGRouterView
-     * @private
-     */
-    _setDefaultPageNames(keepAlive) {
-      let temp = []
-
-      if (keepAlive) {
-        this.defaultPageNames.forEach(item => {
-          if (!this.pageNames.includes(item)) {
-            temp.push(item)
-          }
-        })
-
-        if (temp.length) {
-          this.$store.commit('common/setPageNames', temp.concat(this.pageNames))
-        }
-      } else {
-        temp = this.pageNames.filter(item => !this.defaultPageNames.includes(item))
-
-        if (!temp.length) {
-          this.$store.commit('common/setPageNames', [])
-        }
-      }
-    },
     /**
      * 递归获取组件
      * @param {Vue.Element[]} components 当前页面组件或当前页面的父级 RouterView 组件集合
@@ -140,14 +108,11 @@ export default {
      * 保存当前页面组件的 name 属性
      */
     setCurrentPageName() {
-      // 保证此函数内逻辑的执行晚于私有函数 _setDefaultPageNames
-      this.$nextTick(() => {
-        const component = this._getComponent([this.$refs['keepAlive']])
+      const component = this._getComponent([this.$refs['keepAlive']])
 
-        if (component?.$options.name && !this.pageNames.includes(component.$options.name)) {
-          this.$store.commit('common/setPageNames', this.pageNames.concat(component.$options.name))
-        }
-      })
+      if (component?.$options.name && !this.pageNames.includes(component.$options.name)) {
+        this.$store.commit('common/setPageNames', this.pageNames.concat(component.$options.name))
+      }
     }
   }
 }

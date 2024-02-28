@@ -20,6 +20,8 @@ module.exports = {
   defaultRouteName: 'home',
   // 根路由（"/"）的访问权限。默认true，代表根路由需要权限才能访问。注意当后端返回的菜单数据中包含了根路由时，根路由的访问权限以后端返回的为准。
   homePermissions: true,
+  // VUE 的 KeepAlive 组件最大缓存数量，当缓存的数量超过该值时，会优先清空最久未被激活的页面，默认值：3
+  keepAliveMaxCount: 3,
   // iconfont，为空时自动调用 src/assets/iconfont.js 或各子项目下的 assets/iconfont.js
   iconFontSymbol: '//at.alicdn.com/t/c/font_3996750_sgcx6ewq6y.js',
   /**

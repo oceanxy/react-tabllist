@@ -32,7 +32,7 @@ export default {
           <Layout.Content class="tg-content">
             {this.$config.hideBreadCrumb || this.$route.meta.hideBreadCrumb ? null : <TGBreadcrumb />}
             {this.$config.enableTabPage ? <TGPageTabs /> : null}
-            {this.RouterView}
+            {this.getRouterView}
           </Layout.Content>
         </Layout>
         <div id="global-modal" />
