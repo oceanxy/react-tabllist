@@ -1,10 +1,14 @@
+/**
+ * 该配置文件作为基准配置的默认值，所有子项目的配置文件都是基于这个文件做配置合并。
+ */
+
 module.exports = {
-  // 当前生效配置的前缀，默认 'index'，代表取 src/config/index.js 作为项目运行的配置文件。
-  // 为其他有效值时，则取对应的文件作为项目运行的配置文件。位于 src/apps/子系统/config/index.js 中的 appPrefix 字段值。
+  // 当前要运行/打包的项目默认值，该值指向各个子项目配置文件的同名字段：src/apps/*/config/index.js 中的 appPrefix 字段值。
+  // 执行编译时，会优先读取命令行中的 app-prefix 值，然后才会使用该默认值。
   appPrefix: 'wuyouxing',
   // 打包后生成压缩包的名称（默认为子项目仓库名）
   zipName: '',
-  // 布局组件（src/layouts）默认 TGBackendSystem 组件。后台管理系统
+  // 要使用的布局组件名，位于 src/layouts。默认 TGBackendSystem 组件，后台管理系统。
   layout: 'TGBackendSystem',
   // mock数据开关。开发模式下生效
   mock: false,
@@ -23,7 +27,7 @@ module.exports = {
   // VUE 的 KeepAlive 组件最大缓存数量，当缓存的数量超过该值时，会优先清空最久未被激活的页面，默认值：3
   keepAliveMaxCount: 3,
   // iconfont，为空时自动调用 src/assets/iconfont.js 或各子项目下的 assets/iconfont.js
-  iconFontSymbol: '//at.alicdn.com/t/c/font_3996750_sgcx6ewq6y.js',
+  iconFontSymbol: '',
   /**
    * iconfont菜单图标在 active 状态下的后缀（该后缀会直接加到iconfont图标名称的最后，需在iconfont中预先定义好该图标；
    * - 如果留空则自动根据主题色填充该图标在active状态下的颜色）；

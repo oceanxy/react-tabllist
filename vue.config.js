@@ -82,7 +82,7 @@ module.exports = {
     const PROVIDE_PLUGIN_PAYLOAD = {
       // 预加载子项目配置文件
       APP_CONFIG: resolve(join(__dirname, `src/apps/${apn}/config/index.js`)),
-      // 预加载子项目入口组件
+      // 预加载子项目入口组件，如果子项目内找不到则使用默认值
       APP_COMPONENT: apn
         ? resolve(join(__dirname, `src/apps/${apn}/App.jsx`))
         : resolve(join(__dirname, 'src/App.jsx')),
@@ -122,7 +122,7 @@ module.exports = {
     )
 
     // 预加载子项目登录组件
-    // // 检测子项目是否定义了 Login 组件，否则使用主框架的默认登录组件
+    // 检测子项目是否定义了 Login 组件，否则使用主框架的默认登录组件
     preloadResources(
       `src/apps/${apn}/views/Login/index.jsx`,
       resource => PROVIDE_PLUGIN_PAYLOAD.LOGIN_COMPONENT = resource,
