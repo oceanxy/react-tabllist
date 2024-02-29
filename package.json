@@ -10,7 +10,7 @@
     "dev-rcv": "dotenv -e ./src/apps/rongchang-visualization/config/.env.development -- vue-cli-service serve --app-proj rongchang-visualization",
     "dev-xzl": "dotenv -e ./src/apps/federation-of-new-social-class-professionals/config/.env.development -- vue-cli-service serve --app-proj federation-of-new-social-class-professionals",
     "dev-yx": "dotenv -e ./src/apps/ensuring-deliveries-of-presold-homes/config/.env.development -- vue-cli-service serve --app-proj ensuring-deliveries-of-presold-homes",
-    "dev.auto": "node ./build --app-mode dev",
+    "dev": "node ./build --app-mode dev",
     "build": "node ./build",
     "lint": "vue-cli-service lint",
     "insp": "vue-cli-service inspect --mode production --app-proj carrent-operation-platform --app-env integration"
