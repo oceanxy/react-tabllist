@@ -59,17 +59,20 @@ function pruneCache(keepAliveInstance, filter) {
 function pruneCacheEntry(cache, key, keys, current, store, pageNames) {
   const entry = cache[key]
 
+  if (pageNames.includes(entry.name)) {
+    store.commit('common/setPageNames', pageNames.filter(name => name !== entry.name))
+  }
+
+  cache[key] = null
+  remove$2(keys, key)
+
+  // 尽可能延迟执行缓存组件的销毁，否则可能导致刚失活的组件内部逻辑未做非空验证而报错
   Vue.nextTick(() => {
-    if (pageNames.includes(entry.name)) {
-      store.commit('common/setPageNames', pageNames.filter(name => name !== entry.name))
-    }
-
     if (entry && (!current || entry.tag !== current.tag)) {
-      entry.componentInstance.$destroy()
+      Vue.nextTick(() => {
+        entry.componentInstance.$destroy()
+      })
     }
-
-    cache[key] = null
-    remove$2(keys, key)
   })
 }
 
