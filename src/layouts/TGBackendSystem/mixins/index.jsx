@@ -54,7 +54,7 @@ export default {
     return (
       <div
         id="app"
-        class={'carrent-operation-platform'}
+        class={this.className ?? ''}
         style={
           this.ratioX && this.ratioY
             ? {
