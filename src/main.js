@@ -9,12 +9,13 @@ import { loadScript, loadStyle, loadVariablesStyle, reloadTheme } from '@/assets
 import { join, resolve } from 'path'
 import { getFirstLetterOfEachWordOfAppName } from '@/utils/utilityFunction'
 import { TGKeepAlive } from '@/components/TGRouterView'
+import dotenv from 'dotenv'
 
 function createVue() {
   new Vue({
     router,
     store,
-    components: { TGKeepAlive },
+    components: {TGKeepAlive},
     render: h => h(APP_COMPONENT.default)
   }).$mount('#app')
 }
@@ -36,7 +37,7 @@ if (process.env.NODE_ENV === 'development' && config.mock) {
   require('../mock/index.js')
 }
 
-const { NODE_ENV, VUE_APP_PUBLIC_PATH } = process.env
+const {NODE_ENV, VUE_APP_PUBLIC_PATH} = process.env
 
 // 加载第三方/远程文件
 if (config.loadFiles?.length) {
@@ -84,17 +85,17 @@ if (NODE_ENV === 'production') {
     let ENV_PRODUCTION = config.prodEnvVar?.filename
 
     if (ENV_PRODUCTION?.length) {
-      if (!/.+\.json$/.test(ENV_PRODUCTION)) {
-        ENV_PRODUCTION += '.json'
+      if (!/^\.env(\.[a-z0-9]+)*$/.test(ENV_PRODUCTION)) {
+        ENV_PRODUCTION = '.env.' + ENV_PRODUCTION
       }
     } else {
-      ENV_PRODUCTION = '/env.production.json'
+      ENV_PRODUCTION = '.env.production'
     }
 
     fetch(resolve(join(__dirname, VUE_APP_PUBLIC_PATH, ENV_PRODUCTION)))
-      .then(response => response.json())
+      .then(response => response.text())
       .then(data => {
-        Object.entries(data).forEach(([key, value]) => {
+        Object.entries(dotenv.parse(data) || {}).forEach(([key, value]) => {
           localStorage.setItem(`${appName}--${key}`, /**@type string*/value)
         })
 

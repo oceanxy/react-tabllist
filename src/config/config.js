@@ -124,7 +124,7 @@ module.exports = {
    * - `webpack`打包需要的公共资源路径（`VUE_APP_PUBLIC_PATH`）属于编译时环境变量，所以不会生效。
    * - 网关地址前缀/接口地址前缀（`VUE_APP_BASE_API`）属于运行时环境变量，所以会生效。
    *
-   * @property {string} filename - 打包后生成的配置文件的名称，（默认`env.production.json`），目前只支持`*.json`文件，
+   * @property {string} filename - 打包后生成的配置文件的名称，默认`.env.production`，注意：文件名命名规范及其内容请遵循 dotenv 规则。
    * 文件内用于保存网关地址的字段名同环境变量文件（`.env.*`）中的网关字段名
    */
   /**
@@ -134,7 +134,7 @@ module.exports = {
   prodEnvVar: {
     configurable: false,
     envVars: [],
-    filename: 'env.production.json'
+    filename: '.env.production'
   },
   /**
    * 要加载的第三方文件信息
