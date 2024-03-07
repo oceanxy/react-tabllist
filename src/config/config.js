@@ -71,7 +71,17 @@ module.exports = {
       { name: '蓝色', fileName: 'tech-blue' }
     ]
   },
-  siderLayout: 2, //左侧折叠按钮位置 1:跟随左侧菜单，2：跟随右侧菜单
+  // 页面筛选树配置（如果存在筛选树）
+  siderTree: {
+    // 是否显示筛选树折叠按钮，当不显示该按钮时，可以通过 store.state.common.treeCollapsed 自定义展开/折叠逻辑。
+    showTrigger: true,
+    /**
+     * 折叠按钮位置。可选值：
+     * - inInquiry 在搜索栏内展示，默认
+     * - inTree 在树的右侧展示
+     */
+    togglePosition: 'inInquiry'
+  },
   // 消息
   news: {
     // 是否在header中显示消息通知

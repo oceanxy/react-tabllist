@@ -5,29 +5,9 @@
   gap: 10px;
   height: 100%;
   overflow: hidden;
-  position: relative;
-  .tg-container-trigger-new {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    left: 200px;
-    top: calc(50% - 24px);
-    width: 16px;
-    height: 48px;
-    border-radius: 0 6px 6px 0;
-    border: 1px solid #d9d9d9;
-    border-left: 0;
-    cursor: pointer;
-    color: #bfbfbf;
-    transition: all 0.3s;
 
-    &:hover {
-      color: $primary-color;
-    }
-  }
-  .tg-container-trigger-new-collapse {
-    transform: translateX(-200px);
+  &.tree-collapsed {
+    gap: 0;
   }
 
   & > .tg-container-with-sider--main {
@@ -49,20 +29,19 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    transition: width 0.2s ease;
+    transition: width .2s ease-in-out;
 
     & > .tg-container-trigger {
       position: absolute;
       display: flex;
       justify-content: center;
       align-items: center;
-      right: -16px;
+      right: -1px;
       top: calc(50% - 24px);
       width: 16px;
       height: 48px;
-      border-radius: 0 6px 6px 0;
+      border-radius: 6px 0 0 6px;
       border: 1px solid #d9d9d9;
-      border-left: 0;
       cursor: pointer;
       color: #bfbfbf;
 
@@ -73,8 +52,14 @@
 
     &.hide {
       width: 0 !important;
-      overflow: hidden;
-      margin-left: -12px; // 抵消容器gap值对布局的影响
+      overflow: unset;
+      background: none;
+
+      & > .tg-container-trigger {
+        border-radius: 0 6px 6px 0;
+        right: -16px;
+        background: var(--white);
+      }
 
       & > *:not(.tg-container-trigger) {
         opacity: 0;

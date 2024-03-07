@@ -7,7 +7,6 @@
 import { cloneDeep, isBoolean, omit } from 'lodash'
 import { Button, Form, Space } from 'ant-design-vue'
 import moment from 'moment'
-import config from '@/config'
 
 /**
  * 用于表格搜索的混合
@@ -31,18 +30,18 @@ export default function forInquiry({
 } = {}) {
   return {
     inject: {
-      moduleName: { default: '' },
-      submoduleName: { default: '' },
+      moduleName: {default: ''},
+      submoduleName: {default: ''},
       /**
        * 注入树标识：判断当前组件是否启用侧边树
        * 来自于 @/components/TGContainerWithTreeSider
        */
-      inTree: { default: false },
+      inTree: {default: false},
       /**
        * 注入弹窗标识：判断当前组件是否在弹窗内
        * 来自于 @/mixins/forModal
        */
-      inModal: { default: false }
+      inModal: {default: false}
     },
     data() {
       return {
@@ -143,7 +142,8 @@ export default function forInquiry({
 
         if (
           this.inTree &&
-          config.siderLayout === 2 &&
+          this.$config.siderTree.showTrigger &&
+          this.$config.siderTree.togglePosition === 'inInquiry' &&
           !this.inModal &&
           !content[0]?.children[0]?.data?.class?.includes('tg-inquiry-side-toggle')
         ) {
@@ -166,9 +166,7 @@ export default function forInquiry({
 
             this.$nextTick(() => {
               // 仅仅为了使用 Form 组件的检验功能来改变必填框的错误状态
-              this.form.validateFields(() => {
-                /*写一个空函数，不然控制台会有错误信息输出*/
-              })
+              this.form.validateFields(() => {/**/})
             })
           }
         )
@@ -177,7 +175,7 @@ export default function forInquiry({
       // 同步 store.state.search 与 混入组件中定义的 initialValues，
       // 根据初始值的来源，可自行选择在混入组件的 computed 或 data 中定义 initialValues 对象
       if (isInitializeFromStore) {
-        this.initialValues = { ...this.initialValues, ...cloneDeep(this.search) }
+        this.initialValues = {...this.initialValues, ...cloneDeep(this.search)}
       }
 
       // 监听搜索表单的值的变化，与 store 做同步。以便其他组件执行表格查询时的参数统一
@@ -297,7 +295,7 @@ export default function forInquiry({
           if (!err) {
             const payload = this.transformValue(values)
 
-            await this.onSearch({ ...payload, ...this.params }, this.options)
+            await this.onSearch({...payload, ...this.params}, this.options)
           }
         })
       },

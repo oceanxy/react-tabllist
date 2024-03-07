@@ -4,6 +4,7 @@
   @include container-border-radius;
   gap: 12px;
   //overflow: unset;
+
   .tg-container {
     // 消除本组件下 TGContainerWithTable 组件的内边距值
     padding: 0;
@@ -14,12 +15,12 @@
   }
 
   & > .tg-container-with-sider--sider.tg-tree-sider-container {
-    width: 260px;
+    width: 220px;
     background: $white;
 
     & > .tg-tree-data {
       height: 100%;
-      padding: 10px;
+      padding: 10px 18px 10px 10px;
       display: flex;
       flex-direction: column;
       gap: 10px;
@@ -99,7 +100,7 @@
 
   @media screen and (max-width: 1366px) {
     & > .tg-container-with-sider--sider.tg-tree-sider-container {
-      width: 200px;
+      width: 180px;
     }
   }
 }

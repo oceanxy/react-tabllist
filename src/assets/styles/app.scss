@@ -130,10 +130,7 @@ body {
   padding: 12px 20px;
   background: $white;
   overflow: auto;
-
-  &:not(.fe-statistical-analysis-inquiry) {
-    max-height: 11lh;
-  }
+  max-height: 11lh;
 
   &.ant-form-inline .ant-form-item-with-help {
     margin-bottom: 0;

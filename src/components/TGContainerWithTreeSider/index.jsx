@@ -156,7 +156,6 @@ export default {
       }
 
       // 默认展开的树节点，如果 defaultExpandedTreeIds 为空，则默认展开所有层级的第一个子节点
-
       return this.defaultExpandedTreeIds?.length
         ? this.defaultExpandedTreeIds
         : this.getAllParentIds(this.treeDataSource, true)
@@ -290,7 +289,10 @@ export default {
       for (const item of treeDataSource) {
         if (
           item.isParent ||
-          (Array.isArray(item[this.replaceFields.children]) && item[this.replaceFields.children]?.length)
+          (
+            Array.isArray(item[this.replaceFields.children]) &&
+            item[this.replaceFields.children]?.length
+          )
         ) {
           ids.push(item[this.replaceFields.value])
           ids = ids.concat(this.getAllParentIds(item[this.replaceFields.children], onlyFirstParentNode))
@@ -313,7 +315,10 @@ export default {
       for (const item of dataSource) {
         if (item[this.replaceFields.title].includes(searchValue)) {
           temp.push(item)
-        } else if (Array.isArray(item[this.replaceFields.children]) && item[this.replaceFields.children].length) {
+        } else if (
+          Array.isArray(item[this.replaceFields.children]) &&
+          item[this.replaceFields.children].length
+        ) {
           item[this.replaceFields.children] = this.filter(item[this.replaceFields.children], searchValue)
 
           if (item[this.replaceFields.children].length) {
@@ -502,7 +507,7 @@ export default {
      * 展开树
      * @param expandedKeys
      */
-    onExpand(expandedKeys, { expanded }) {
+    onExpand(expandedKeys, {expanded}) {
       this.isCollapsedManually = !expanded
       this.expandedKeysFormEvent = expandedKeys
     }
@@ -515,11 +520,12 @@ export default {
         contentClass={`tg-tree-content-container${this.contentClass ? ` ${this.contentClass}` : ''}`}
         siderOnLeft
         onSidebarSwitch={this.onSidebarSwitch}
+        showSiderTrigger={this.$config.siderTree.showTrigger}
       >
         {this.$slots.default}
         <div slot={'sider'} class="tg-tree-data">
           <Input
-            prefix={<Icon type={'search'} style={{ fontSize: '14px' }} />}
+            prefix={<Icon type={'search'} style={{fontSize: '14px'}} />}
             allowClear
             placeholder={this.placeholder}
             onChange={debounce(this.onTreeSearch, 300)}

@@ -1,6 +1,5 @@
 import './assets/styles/index.scss'
 import { Button } from 'ant-design-vue'
-import config from '@/config'
 
 export default {
   name: 'TGContainerWithSider',
@@ -28,7 +27,6 @@ export default {
     },
     /**
      * 是否显示侧边栏隐藏按钮。
-     * 当不显示该按钮时，可以通过 store.state.common.treeCollapsed 自定义展开/折叠逻辑。
      */
     showSiderTrigger: {
       type: Boolean,
@@ -68,33 +66,29 @@ export default {
   },
   render() {
     return (
-      <div class="tg-container-with-sider">
+      <div class={`tg-container-with-sider${this.treeCollapsed ? ' tree-collapsed' : ''}`}>
         <div class={`tg-container-with-sider--main${this.contentClass ? ` ${this.contentClass}` : ''}`}>
           {this.$slots.default}
         </div>
         <div
           ref={'containerSider'}
-          style={{ order: this.siderOnLeft ? -1 : 1 }}
+          style={{order: this.siderOnLeft ? -1 : 1}}
           class={`tg-container-with-sider--sider${this.siderClassName}${!this.treeCollapsed ? '' : ' hide'}`}
         >
           {this.$slots.sider}
-          {/* {this.showSiderTrigger ? (
-            <Button
-              class={'tg-container-trigger'}
-              icon={!this.treeCollapsed ? 'left' : 'right'}
-              type={'link'}
-              onClick={this.onTrigger}
-            />
-          ) : null} */}
+          {
+            this.showSiderTrigger && this.$config.siderTree.togglePosition === 'inTree'
+              ? (
+                <Button
+                  class={'tg-container-trigger'}
+                  icon={!this.treeCollapsed ? 'left' : 'right'}
+                  type={'link'}
+                  onClick={this.onTrigger}
+                />
+              )
+              : null
+          }
         </div>
-        {config.siderLayout === 1 ? (
-          <Button
-            class={`tg-container-trigger-new ${this.treeCollapsed ? 'tg-container-trigger-new-collapse' : ''}`}
-            icon={!this.treeCollapsed ? 'left' : 'right'}
-            type={'link'}
-            onClick={this.onTrigger}
-          />
-        ) : null}
       </div>
     )
   }
