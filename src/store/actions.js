@@ -498,7 +498,7 @@ export default {
       value: true,
       moduleName,
       submoduleName,
-      stateName: stateName
+      stateName
     })
 
     const response = await this.apis[customApiName](payload)
@@ -529,7 +529,7 @@ export default {
       value: false,
       moduleName,
       submoduleName,
-      stateName: stateName
+      stateName
     })
 
     return response.status
