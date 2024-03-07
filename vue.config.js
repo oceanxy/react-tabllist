@@ -104,21 +104,23 @@ module.exports = {
     // 预加载接口映射器
     preloadResources(
       `src/apps/${apn}/config/interfaceMappings.js`,
-      resource => PROVIDE_PLUGIN_PAYLOAD.INTERFACE_MAPPINGS = resource,
-      () => {
-        DEFINE_PLUGIN_PAYLOAD.INTERFACE_MAPPINGS = undefined
-        console.info(apn, '开发环境编译信息：无接口字段映射文件(interfaceMappings)，已忽略。')
-      }
+      resource => {
+        PROVIDE_PLUGIN_PAYLOAD.INTERFACE_MAPPINGS = resource
+
+        console.info(apn, '开发环境编译信息：检测到接口映射文件(interfaceMappings)，已成功预加载。')
+      },
+      () => DEFINE_PLUGIN_PAYLOAD.INTERFACE_MAPPINGS = undefined
     )
 
     // 预加载用户信息和菜单信息映射器
     preloadResources(
       `src/apps/${apn}/config/userInfoMappings.js`,
-      resource => PROVIDE_PLUGIN_PAYLOAD.USER_INFO_MAPPINGS = resource,
-      () => {
-        DEFINE_PLUGIN_PAYLOAD.USER_INFO_MAPPINGS = undefined
-        console.info(apn, '开发环境编译信息：无动态菜单映射文件(menuMappings)，已忽略。')
-      }
+      resource => {
+        PROVIDE_PLUGIN_PAYLOAD.USER_INFO_MAPPINGS = resource
+
+        console.info(apn, '开发环境编译信息：检测到动态菜单映射文件(menuMappings)，已成功预加载。')
+      },
+      () => DEFINE_PLUGIN_PAYLOAD.USER_INFO_MAPPINGS = undefined
     )
 
     // 预加载子项目登录组件
