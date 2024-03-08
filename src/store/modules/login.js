@@ -60,12 +60,12 @@ export default {
       // 检测query参数是否存在重定向
       const { redirect, ...query } = router.history.current.query
       // 检测本地存储是否存在保存的路由（意外退出的路由），如果有，则在登录成功后直接跳转到该路由
-      const path = localStorage.getItem(`${appName}-selectedKey`)
+      const selectedRoute = localStorage.getItem(`${appName}-selectedKey`)
 
       if (redirect) {
         await router.replace({ path: `${redirect}`, query })
-      } else if (path) {
-        await router.replace(path)
+      } else if (selectedRoute) {
+        await router.replace(selectedRoute)
       } else {
         await router.replace({ name: 'home' })
       }

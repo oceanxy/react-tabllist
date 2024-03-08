@@ -56,54 +56,54 @@ const TGSubMenu = {
       @titleClick="titleClick"
       :popupClassName="popupSubMenuClassName"
     >
-    <div slot="title">
-      <a-icon
-        theme="filled"
-        v-if="menuInfo.meta.icon && typeof menuInfo.meta.icon !== 'string'"
-        :component="menuInfo.meta.icon"
-      />
-      <icon-font
-        v-else-if="menuInfo.meta.icon"
-        :type="menuInfo.meta.icon + (selectedKeys.includes(menuInfo.key)
+      <div slot="title">
+        <a-icon
+          theme="filled"
+          v-if="menuInfo.meta.icon && typeof menuInfo.meta.icon !== 'string'"
+          :component="menuInfo.meta.icon"
+        />
+        <icon-font
+          v-else-if="menuInfo.meta.icon"
+          :type="menuInfo.meta.icon + (selectedKeys.includes(menuInfo.key)
           ? activeSuffixForMenuIcon
           : ''
         )"
-      />
-      <span>{{ menuInfo.meta && menuInfo.meta.title }}</span>
-    </div>
-    <template v-for="route in menuInfo.children">
-      <t-g-sub-menu
-        v-if="!route.meta.hideChildren && route.children && route.children.length"
-        :key="route.key"
-        :menu-info="route"
-        @subMenuClick="titleClick"
-        :style="route.meta.hide ? { display: 'none' } : ''"
-        :selected-keys="selectedKeys"
-      />
-      <a-menu-item
-        v-else
-        :key="route.key"
-        :style="route.meta.hide ? { display: 'none' } : ''"
-      >
-        <div class="ant-menu-item-title">
-          <div>
-            <a-icon
-              theme="filled"
-              v-if="showSubIcon && route.meta.icon && typeof route.meta.icon !== 'string'"
-              :component="route.meta.icon"
-            />
-            <icon-font
-              v-else-if="showSubIcon && route.meta.icon"
-              :type="route.meta.icon + (selectedKeys.includes(route.key)
+        />
+        <span>{{ menuInfo.meta && menuInfo.meta.title }}</span>
+      </div>
+      <template v-for="route in menuInfo.children">
+        <t-g-sub-menu
+          v-if="!route.meta.hideChildren && route.children && route.children.length"
+          :key="route.key"
+          :menu-info="route"
+          @subMenuClick="titleClick"
+          :style="route.meta.hide ? { display: 'none' } : ''"
+          :selected-keys="selectedKeys"
+        />
+        <a-menu-item
+          v-else
+          :key="route.key"
+          :style="route.meta.hide ? { display: 'none' } : ''"
+        >
+          <div class="ant-menu-item-title">
+            <div>
+              <a-icon
+                theme="filled"
+                v-if="showSubIcon && route.meta.icon && typeof route.meta.icon !== 'string'"
+                :component="route.meta.icon"
+              />
+              <icon-font
+                v-else-if="showSubIcon && route.meta.icon"
+                :type="route.meta.icon + (selectedKeys.includes(route.key)
                 ? activeSuffixForMenuIcon
                 : ''
               )"
-            />
-            <span>{{ route.meta && route.meta.title }}</span>
+              />
+              <span>{{ route.meta && route.meta.title }}</span>
+            </div>
           </div>
-        </div>
-      </a-menu-item>
-    </template>
+        </a-menu-item>
+      </template>
     </a-sub-menu>
   `,
   // must add isSubMenu: true
@@ -182,13 +182,17 @@ export default {
     $route: {
       immediate: true,
       handler(route) {
-        this.selectedKeys = this.getSelectedKeys(route)
-        localStorage.setItem(`${appName}-selectedKey`, route.path)
+        // 修复通过帐号密码登录，当token过期后重新登录无法跳转到首页的问题
+        // 具体原因是 store/login/jump 函数获取到错误的 selectedKey 而出现跳转异常
+        if (route.name !== 'login' && route.name !== 'noAccess' && route.name !== 'notFound') {
+          this.selectedKeys = this.getSelectedKeys(route)
+          localStorage.setItem(`${appName}-selectedKey`, route.path)
 
-        this.$nextTick(() => {
-          this.openKeys = this.selectedKeys.toReversed().slice(1) // 排除最后一级（最后一级一般不是可展开的菜单层级）
-          localStorage.setItem(`${appName}-openKeys`, JSON.stringify(this.openKeys))
-        })
+          this.$nextTick(() => {
+            this.openKeys = this.selectedKeys.toReversed().slice(1) // 排除最后一级（最后一级一般不是可展开的菜单层级）
+            localStorage.setItem(`${appName}-openKeys`, JSON.stringify(this.openKeys))
+          })
+        }
       }
     }
   },
@@ -227,7 +231,7 @@ export default {
       return keyPath
     },
     // 点击菜单，路由跳转，当点击 MenuItem 才会触发此函数
-    menuClick({ key }) {
+    menuClick({key}) {
       const toPath = key
         // 替换path中所有 '//'
         .replaceAll('//', '/')
@@ -258,7 +262,7 @@ export default {
        *  查阅文档发现 Chrome 在最近版本中删除了该属性！！！！
        *  具体信息参考：https://bugs.chromium.org/p/chromium/issues/detail?id=1277431
        */
-      let { path } = e.domEvent
+      let {path} = e.domEvent
 
       if (!path) {
         path = e.domEvent.composedPath()
