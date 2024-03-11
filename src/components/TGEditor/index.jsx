@@ -19,7 +19,7 @@ const fileOrVideoCommonConfig = {
   // form-data fieldName ，默认值 'wangeditor-uploaded-video'
   fieldName: 'file',
   // 自定义增加 http  header
-  headers: { token: localStorage.getItem(`${appName}-${config.tokenConfig.fieldName}`) },
+  headers: {token: localStorage.getItem(`${appName}-${config.tokenConfig.fieldName}`)},
   // 上传之前触发
   onBeforeUpload(file) {
     // file 选中的文件，格式如 { key: file }
@@ -48,7 +48,7 @@ const fileOrVideoCommonConfig = {
   },
   // 自定义插入
   customInsert(res, insertFn) {
-    const { status, data } = res
+    const {status, data} = res
 
     // 从 res 中找到 url alt href ，然后插入图片
     if (status && data[0]) {
@@ -87,6 +87,10 @@ export default {
     toolbarConfig: {
       type: Object,
       default: () => ({})
+    },
+    height: {
+      type: Number,
+      default: 566
     }
   },
   data() {
@@ -156,24 +160,28 @@ export default {
     editor.destroy() // 组件销毁时，及时销毁编辑器
   },
   render() {
-    return (
-      <div class={`tg-editor ant-input${this.disabled ? ' disabled' : ''}`}>
-        <Toolbar
-          style={'border-bottom: 1px solid #ccc'}
-          editor={this.editor}
-          defaultConfig={this.toolbarConfig}
-          mode={this.mode}
-        />
-        <Editor
-          style="height: 500px; overflow-y: hidden;"
-          vModel={this.html}
-          defaultConfig={this.editorConfig}
-          mode={this.mode}
-          max
-          onOnCreated={this.onCreated}
-          onOnChange={this.onChange}
-        />
-      </div>
-    )
+    return this.height
+      ? (
+        <div
+          class={`tg-editor ant-input${this.disabled ? ' disabled' : ''}`}
+          style={{height: this.height + 'px'}}
+        >
+          <Toolbar
+            class={'tg-editor-toolbar'}
+            editor={this.editor}
+            defaultConfig={this.toolbarConfig}
+            mode={this.mode}
+          />
+          <Editor
+            class={'tg-editor-content'}
+            vModel={this.html}
+            defaultConfig={this.editorConfig}
+            mode={this.mode}
+            max
+            onOnCreated={this.onCreated}
+            onOnChange={this.onChange}
+          />
+        </div>
+      ) : null
   }
 }

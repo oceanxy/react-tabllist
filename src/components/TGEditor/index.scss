@@ -1,11 +1,12 @@
 @import '~@/assets/styles/themeFromLess.scss';
 
 .tg-editor {
-  height: auto;
   border: 1px solid $border-color-base;
   border-radius: $border-radius-base;
   overflow: hidden;
   background: $white;
+  display: flex;
+  flex-direction: column;
 
   &.w-e-full-screen-container {
     z-index: 1001;
@@ -21,7 +22,15 @@
       background: unset;
     }
   }
-}
-.tg-editor.ant-input {
-  height: auto !important;
+
+  .tg-editor-toolbar {
+    border-bottom: 1px solid #ccc;
+    min-height: 40px;
+    flex: none;
+  }
+
+  .tg-editor-content {
+    flex: auto;
+    overflow-y: hidden;
+  }
 }
