@@ -484,9 +484,14 @@ export default ({
           [params, done, nameKey] = [{}, params, done]
         }
 
-        // 当第二、三个参数类型为string时，证明忽略了params和done参数，将arguments[1]赋值给nameKey
-        if (typeof arguments[1] === 'string' || typeof arguments[2] === 'string') {
+        // 当第二个参数类型为string时，证明忽略了params和done参数，将arguments[1]赋值给nameKey
+        if (typeof arguments[1] === 'string') {
           [params, done, nameKey] = [{}, undefined, params]
+        }
+
+        // 当第三个参数类型为string时，证明忽略了done参数，将arguments[1]赋值给nameKey
+        if (typeof arguments[2] === 'string') {
+          [done, nameKey] = [undefined, done]
         }
 
         await verificationDialog(
