@@ -94,7 +94,7 @@ module.exports = {
   },
   // 重置密码
   resetPwd: {
-    // 是否在header中显示修改密码图标
+    // 是否在header中显示修改密码图标，此功能需要配合 src/extend 和子项目的 extend 使用
     show: false
   },
   // 需要在 HTTP Request Header 内携带额外参数的字段名（下拉列表）

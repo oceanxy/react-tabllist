@@ -11,7 +11,10 @@ appModulesFiles.keys().reduce((modules, modulePath) => {
     const TemConstructor = Vue.extend(value.default)
 
     new TemConstructor({
-      el: '#global-modal', store, router
+      // #global-modal 标签位于 src/layouts/TGBackendSystem，因此要使用此功能，需结合该布局组件使用
+      el: '#global-modal',
+      store,
+      router
     })
   }
 }, {})

@@ -11,6 +11,7 @@ export default {
   name: 'TGBackendSystemLayout',
   mixins: [forLayout, watermark()],
   mounted() {
+    // 注册全局扩展组件
     this.$nextTick(async () => {
       await import('@/extend')
     })
