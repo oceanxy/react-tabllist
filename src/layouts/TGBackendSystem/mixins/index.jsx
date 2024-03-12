@@ -2,14 +2,13 @@ import zhCN from 'ant-design-vue/lib/locale-provider/zh_CN'
 import { ConfigProvider } from 'ant-design-vue'
 import { merge } from 'lodash'
 import { mapGetters } from 'vuex'
-import { RouterView } from 'vue-router'
 import { getFirstLetterOfEachWordOfAppName } from '@/utils/utilityFunction'
 
 const appName = getFirstLetterOfEachWordOfAppName()
 
 export default {
   computed: {
-    ...mapGetters({getState: 'getState'}),
+    ...mapGetters({ getState: 'getState' }),
     include() {
       return this.getState('pageNames', 'common') || []
     }
@@ -79,10 +78,8 @@ export default {
         <ConfigProvider locale={zhCN}>
           {
             this.forRender || (
-              <KeepAlive>
-                {/* 此处加载布局组件，默认 src/layouts/TGBackendSystem */}
-                <RouterView />
-              </KeepAlive>
+              // 此处加载布局组件，默认 src/layouts/TGBackendSystem
+              <RouterView />
             )
           }
         </ConfigProvider>
