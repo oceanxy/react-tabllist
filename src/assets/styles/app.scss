@@ -853,3 +853,11 @@ body {
 .ant-calendar-time-picker-select-option-disabled {
   display: none;
 }
+
+.ant-cascader-menus {
+  .ant-cascader-menu-item {
+    .ant-cascader-menu-item-keyword {
+      color: var(--primary-color);
+    }
+  }
+}
