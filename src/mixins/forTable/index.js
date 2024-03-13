@@ -355,7 +355,7 @@ export default ({
           moduleName: this.moduleName,
           customFieldName,
           customApiName,
-          stateName: stateName !== 'list' ? stateName : '',
+          loadingFieldName: stateName !== 'list' ? stateName : '',
           submoduleName,
           payload: {
             [afferentKey]: isBulkOperation ? parameter : record[this.tableProps.rowKey || 'id'],

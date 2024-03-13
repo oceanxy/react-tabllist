@@ -532,7 +532,13 @@ export default {
    * @param commit
    * @param moduleName {string} 模块名
    * @param [submoduleName] {string} 子模块名
-   * @param [stateName] {string} 要变更的状态值所在的对象。主要用于修改状态值所在对象的`loading`值（如果存在）。`loading`值为请求接口状态。
+   * @param [loadingFieldName] {string} 请求接口时的 loading 状态值的字段名。该值有如下几种情况：
+   * - 该值指向一个对象时，`loading`状态值的取值为`[loadingFieldName].loading`，其结构一般为`{ loading: boolean, list: Array }`;
+   * - 该值指向一个数组时，`loading`状态值的取值为`store.state`中`loadingFieldName`字段所在对象中的`loading`字段，
+   *   其结构一般为`{ ..., loading: boolean, [loadingFieldName]: Array }`;
+   * - 非以上两种情况时，`loading`状态值的取值为`loadingFieldName`。
+   * <br>
+   * 该值更详细逻辑请参考全局 mutations 中的 setLoading 函数。
    * @param [customApiName] {string} 自定义接口名。传递该值后，不会再动态生成接口函数名称，所以该值与`customFieldName`互斥。优先使用该值。
    * @param [customFieldName='status'] {string} 自定义变更的字段名，默认 'status'。
    *  该参数在`customApiName`未传递的情况下用于动态生成接口函数名称，请确保与`api`文件内的接口函数名称对应。
@@ -542,7 +548,7 @@ export default {
   async updateStatus({ commit }, {
     moduleName,
     submoduleName,
-    stateName,
+    loadingFieldName,
     payload,
     customFieldName,
     customApiName
@@ -551,7 +557,7 @@ export default {
       value: true,
       moduleName,
       submoduleName,
-      stateName
+      stateName: loadingFieldName
     })
 
     let api = customApiName
@@ -570,7 +576,7 @@ export default {
       value: false,
       moduleName,
       submoduleName,
-      stateName
+      stateName: loadingFieldName
     })
 
     return status
