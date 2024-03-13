@@ -1,5 +1,5 @@
 import { cloneDeep, omit } from 'lodash'
-import { downloadFile, firstLetterToUppercase } from '@/utils/utilityFunction'
+import { downloadFile, firstLetterToUppercase as FLTU } from '@/utils/utilityFunction'
 import Vue from 'vue'
 
 export default {
@@ -99,10 +99,7 @@ export default {
     if (customApiName) {
       api = customApiName
     } else {
-      api = `get${submoduleName
-        ? `${firstLetterToUppercase(submoduleName)}Of`
-        : ''
-      }${firstLetterToUppercase(moduleName)}`
+      api = `get${submoduleName ? `${FLTU(submoduleName)}Of` : ''}${FLTU(moduleName)}`
     }
 
     if (this.apis[api]) {
@@ -222,11 +219,7 @@ export default {
     let api = 'getDetails'
     let res = {}
 
-    api = customApiName || `getDetailsOf${
-      firstLetterToUppercase(moduleName)
-    }${
-      submoduleName ? firstLetterToUppercase(submoduleName) : ''
-    }`
+    api = customApiName || `getDetailsOf${FLTU(moduleName)}${submoduleName ? FLTU(submoduleName) : ''}`
 
     if (this.apis[api]) {
       res = await this.apis[api](payload)
@@ -279,7 +272,7 @@ export default {
     visibilityFieldName,
     parametersOfGetListAction
   }) {
-    const response = await this.apis[`add${firstLetterToUppercase(moduleName)}`](payload)
+    const response = await this.apis[`add${FLTU(moduleName)}`](payload)
 
     if (response.status) {
       dispatch('setModalVisible', {
@@ -336,7 +329,7 @@ export default {
       parametersOfGetListAction
     }
   ) {
-    const response = await this.apis[customApiName || `update${firstLetterToUppercase(moduleName)}`](payload)
+    const response = await this.apis[customApiName || `update${FLTU(moduleName)}`](payload)
 
     if (response.status) {
       dispatch('setModalVisible', {
@@ -565,9 +558,9 @@ export default {
 
     if (!api) {
       if (submoduleName) {
-        api = `update${firstLetterToUppercase(moduleName)}${firstLetterToUppercase(customFieldName)}`
+        api = `update${FLTU(moduleName)}${FLTU(customFieldName)}`
       } else {
-        api = `update${firstLetterToUppercase(moduleName)}${firstLetterToUppercase(submoduleName)}${firstLetterToUppercase(customFieldName)}`
+        api = `update${FLTU(moduleName)}${FLTU(submoduleName)}${FLTU(customFieldName)}`
       }
     }
 
@@ -628,10 +621,7 @@ export default {
       isBatchDeletion = true
     }
 
-    const apiName = `delete${submoduleName
-      ? `${firstLetterToUppercase(submoduleName)}Of`
-      : ''
-    }${firstLetterToUppercase(moduleName)}`
+    const apiName = `delete${submoduleName ? `${FLTU(submoduleName)}Of` : ''}${FLTU(moduleName)}`
 
     if (!this.apis[apiName]) {
       console.error(`接口未定义：${moduleName} 页面${submoduleName
@@ -735,11 +725,7 @@ export default {
     if (customApiName) {
       api = customApiName
     } else {
-      api = `export${submoduleName ? `${
-        firstLetterToUppercase(submoduleName)}Of` : ''
-      }${
-        firstLetterToUppercase(moduleName)
-      }`
+      api = `export${submoduleName ? `${FLTU(submoduleName)}Of` : ''}${FLTU(moduleName)}`
     }
 
     const params = cloneDeep({ ...additionalQueryParameters, ...payload })
