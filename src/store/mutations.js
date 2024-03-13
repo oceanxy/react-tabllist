@@ -4,11 +4,14 @@ export default {
   /**
    * 设置数据列表的loading
    * @param state {Object}
-   * @param value {boolean}
-   * @param moduleName {string}
-   * @param [submoduleName] {string}
-   * @param [stateName] {string | Object} 指定的加载状态字段名或一个带有 'loading' 字段的对象，如：
-   *    { loading: boolean, list: Array }
+   * @param value {boolean} 状态值
+   * @param moduleName {string} 模块名
+   * @param [submoduleName] {string} 子模块名称
+   * @param [stateName='loading'] {string | Object | Array} `loading`状态值的字段名。
+   * - 该值指向一个对象时，`loading`状态值的取值为`[loadingFieldName].loading`，其结构一般为`{ loading: boolean, list: Array }`;
+   * - 该值指向一个数组时，`loading`状态值的取值为`store.state`中`loadingFieldName`字段所在对象中的`loading`字段，
+   *   其结构一般为`{ ..., loading: boolean, [loadingFieldName]: Array }`;
+   * - 非以上两种情况时，`loading`状态值的取值为`loadingFieldName`。
    */
   setLoading(state, {
     value,
