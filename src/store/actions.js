@@ -537,45 +537,47 @@ export default {
   /**
    * 更新状态
    * @param commit
-   * @param moduleName {string}
-   * @param payload {Object}
-   * @param [customFieldName='status'] {string} 自定义字段名，默认 status
-   * @param [customApiName] {string} 自定义接口名
-   * @param [stateName] {string} 需要设置状态的数据源。
-   * @param [submoduleName] 在submoduleName被stateName重置的时候可以传入submoduleName值重置
-   * （默认store.state.list保存列表数据；默认store.state.loading保存列表加载状态；
-   * 除这二者之外的需要传递字段名，以告之具体需要修改的对象）
+   * @param moduleName {string} 模块名
+   * @param [submoduleName] {string} 子模块名
+   * @param [stateName] {string} 要变更的状态值所在的对象。主要用于修改状态值所在对象的`loading`值（如果存在）。`loading`值为请求接口状态。
+   * @param [customApiName] {string} 自定义接口名。传递该值后，不会再动态生成接口函数名称，所以该值与`customFieldName`互斥。优先使用该值。
+   * @param [customFieldName='status'] {string} 自定义变更的字段名，默认 'status'。
+   *  该参数在`customApiName`未传递的情况下用于动态生成接口函数名称，请确保与`api`文件内的接口函数名称对应。
+   * @param payload {Object} 参数
    * @returns {Promise<*>}
    */
   async updateStatus({ commit }, {
     moduleName,
+    submoduleName,
+    stateName,
     payload,
     customFieldName,
-    customApiName,
-    submoduleName,
-    stateName
+    customApiName
   }) {
-    // stateName并不是子模块名，但是可以看做子模块来传递参数，可以达到相同目的，例如：
-    // 在 vuex 暴露出来的 store.state 的数据结构中，
-    // store.state[moduleName][submoduleName] 与 store.state[moduleName][stateName] 的数据结构是完全一致的
     commit('setLoading', {
       value: true,
       moduleName,
-      submoduleName: submoduleName || stateName
+      submoduleName,
+      stateName
     })
 
-    const api = customApiName || `update${
-      firstLetterToUppercase(moduleName)
-    }${
-      firstLetterToUppercase(customFieldName)
-    }`
+    let api = customApiName
+
+    if (!api) {
+      if (submoduleName) {
+        api = `update${firstLetterToUppercase(moduleName)}${firstLetterToUppercase(customFieldName)}`
+      } else {
+        api = `update${firstLetterToUppercase(moduleName)}${firstLetterToUppercase(submoduleName)}${firstLetterToUppercase(customFieldName)}`
+      }
+    }
 
     const { status } = await this.apis[api](payload)
 
     commit('setLoading', {
       value: false,
       moduleName,
-      submoduleName: submoduleName || stateName
+      submoduleName,
+      stateName
     })
 
     return status
