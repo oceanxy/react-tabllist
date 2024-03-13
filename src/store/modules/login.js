@@ -209,12 +209,12 @@ export default {
       commit('setLastLogin', {})
       commit('setAuthentication', null)
       commit('setSiteCache', null)
+      localStorage.setItem(`${appName}-theme`, config.theme.default)
 
       // 主动注销
       if (!isPassive) {
         localStorage.removeItem(`${appName}-openKeys`)
         localStorage.removeItem(`${appName}-selectedKey`)
-        localStorage.setItem(`${appName}-theme`, config.theme.default)
 
         if (config.headerParams?.show) {
           localStorage.removeItem(`${appName}-headerId`)
