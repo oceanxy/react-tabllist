@@ -53,17 +53,17 @@ export function loadScript(url, callback) {
 }
 
 export function loadVariablesStyle(config, store) {
-  let _theme = localStorage.getItem(`${appName}-theme`)
-
-  if (!_theme) {
-    _theme = config.theme.default
-    localStorage.setItem(`${appName}-theme`, _theme)
-  }
-
-  // 加载主题
-  const theme = store?.state?.login?.userInfo?.themeFileName || _theme
-
   if (process.env.NODE_ENV !== 'production') {
+    let _theme = localStorage.getItem(`${appName}-theme`)
+
+    if (!_theme) {
+      _theme = config.theme.default
+      localStorage.setItem(`${appName}-theme`, _theme)
+    }
+
+    // 加载主题
+    const theme = store?.state?.login?.userInfo?.themeFileName || _theme
+
     try {
       window.themeVariables = require(`./themes/${theme}/index.less`)
     } catch (e) {
