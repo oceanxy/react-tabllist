@@ -304,21 +304,21 @@ export default ({
       },
       /**
        * 行内改变状态
-       * @param checked {boolean} 当前状态
-       * @param record {Object} 列表数据对象
-       * @param [customFieldName='status'] {string} 自定义参数名，用于传递状态变更值。默认 'status'
-       * @param [actualFieldName='status'] {string} 列表中实际用于保存该状态的字段名，主要用于被修改状态的字段名不为 'status' 的情况下更新本地数据。
-       *  当修改的状态的字段名不为 status 时必传。默认 'status'
-       * @param [idKey='id'] {string} 自定义参数ID的名称， 默认 'id'
-       * @param [afferentKey='id'] {string} 配置传入接口参数ID的名称， 默认 'id'
-       * @param [isBulkOperation] {Array} 'id'默认是传字符串，开启之后支持传数组，开启之后record如果是object的namekey会被以数组形式传入 默认 'false'
-       * @param [nameKey='fullName'] {string} 自定义名称字段的键，主要用于页面提示。 默认 'fullName'
-       * @param [customApiName] {string} 自定义请求接口名，一般在要修改状态字段的表格位于弹窗内时使用。
+       * @param checked {boolean} 要变更的状态值
+       * @param record {Object|Object[]} 列表数据对象
+       * @param [customFieldName='status'] {string} 自定义保存状态值的字段名。默认 'status'
+       * @param [actualFieldName='status'] {string} 列表中实际用于保存该状态的字段名。当要修改的状态的字段名不为 'status' 时，调用接口后，用于更新本地数据。
+       *  当修改的状态的字段名不为 'status' 时必传。默认 'status'
+       * @param [idKey='id'] {string} 自定义接口中传递ID的字段名称。`isBulkOperation=false`时默认为 'id'，为`true`时无默认值，需要手动传递。
+       * @param [getIds=(record)=>record.id] {(Object) => string} 从数据中获取id值，默认取`record`的`id`字段。
+       * @param [isBulkOperation] {boolean} 是否是批量操作，默认 'false'。传递给后端的id默认是传字符串，该值设为 true 后，id变为数组。
+       * @param [nameKey='fullName'] {string} 指定 record 数据对象中用来显示的字段名，主要用于操作之后的提示。 默认 'fullName'。
+       *  例如：`$｛fullName｝的状态已更新！`
+       * @param [customApiName] {string} 自定义接口名，一般在要修改状态字段的表格位于弹窗内时使用。因为此时可能无法自动生成对用的接口名。
        * @param [stateName] {string} store.state 中存储该表格数据的字段名，默认 'list'
-       * @param [optimisticUpdate=true] {string} 乐观更新，是否在成功调用更新接口后向服务器请求新的列表数据。
-       * @param [submoduleName] 在submoduleName被stateName重置的时候可以传入submoduleName值重置
-       * @param [custStatusParameter] {object} 自定义状态参数配置，默认{open：1，close：2}
-       * 默认true，使用乐观更新，即不向服务器请求新的列表数据，前端执行乐观更新操作。
+       * @param [optimisticUpdate=true] {boolean} 乐观更新，是否在成功调用更新接口后向服务器请求新的列表数据。
+       *  默认true，使用乐观更新，即不向服务器请求新的列表数据，前端执行乐观更新操作。
+       * @param [customStatusValue=｛OPENED:1, CLOSED:2｝] {object} 自定义状态值，默认 {OPENED：1，CLOSED：2}
        * @returns {Promise<void>}
        */
       async onStatusChange({
@@ -327,52 +327,41 @@ export default ({
         customFieldName = 'status',
         actualFieldName = 'status',
         idKey = 'id',
-        afferentKey = 'id',
+        getIds = record => record.id,
         isBulkOperation = false,
         nameKey = 'fullName',
         customApiName,
         stateName,
-        submoduleName,
-        custStatusParameter = { open: 1, close: 2 },
+        customStatusValue = { OPENED: 1, CLOSED: 2 },
         optimisticUpdate = true
       } = {}) {
         stateName = stateName || _stateName
 
-        // 开启 isBulkOperation 之后参数必须以数组的形式传入
-        let parameter = []
+        // 开启 isBulkOperation 之后，要更新状态的数据ID以数组的形式传给`idKey`
+        let ids
 
-        if (isBulkOperation) {
-          if (Array.isArray(record)) {
-            record?.forEach(item => {
-              parameter.push(item[idKey])
-            })
-          } else {
-            parameter.push(record[this.tableProps.rowKey || 'id'])
-          }
+        if (isBulkOperation && Array.isArray(record)) {
+          ids = record?.map(item => getIds(item))
+        } else {
+          ids = [getIds(record)]
         }
 
         const status = await this.$store.dispatch('updateStatus', {
           moduleName: this.moduleName,
+          submoduleName: this.submoduleName,
           customFieldName,
           customApiName,
           loadingFieldName: stateName !== 'list' ? stateName : '',
-          submoduleName,
           payload: {
-            [afferentKey]: isBulkOperation ? parameter : record[this.tableProps.rowKey || 'id'],
-            [customFieldName]: checked ? custStatusParameter.open : custStatusParameter.close
+            [idKey]: isBulkOperation ? ids : ids[0],
+            [customFieldName]: checked ? customStatusValue.OPENED : customStatusValue.CLOSED
           }
         })
-
-        const state = this.$store.state[this.moduleName]
-        const _dataSource = cloneDeep((state[this.submoduleName] ?? state)[stateName])
-        // _dataSource.list 取值是为了适配 store.state 中定义为 “{ loading: false, list: [] }” 结构的数据类型。
-        // 如果遇到新的数据结构，可能需要另外的逻辑来适配，这里为了避免报错，赋值为空数组。
-        const dataSource = Array.isArray(_dataSource) ? _dataSource : _dataSource.list || []
-        const index = dataSource.findIndex(item => item[idKey] === record[idKey])
 
         if (status) {
           let name
 
+          // 适配`nameKey`的值为`a.b`的形式，解析为`record[a][b]`
           if (nameKey.includes('.')) {
             name = nameKey.split('.').reduce((prev, curr) => prev[curr], record)
           } else {
@@ -385,38 +374,45 @@ export default ({
             </span>,
             `${isBulkOperation ? '状态已更新！' : '的状态已更新！'}`
           ])
-          parameter = []
+
+          ids = []
         }
 
         if (optimisticUpdate) {
+          const state = this.$store.state[this.moduleName]
+          const _dataSource = cloneDeep((state[this.submoduleName] ?? state)[stateName])
+          // _dataSource.list 取值是为了适配 store.state 中定义为 “{ loading: false, list: [] }” 结构的数据类型。
+          // 如果遇到新的数据结构，可能需要另外的逻辑来适配，这里为了避免报错，赋值为空数组。
+          const dataSource = Array.isArray(_dataSource) ? _dataSource : _dataSource.list || []
+          const index = dataSource.findIndex(item => getIds(item) === getIds(record))
+
           if (status) {
             // 更新当前行受控Switch组件的值
             if (isBulkOperation && Array.isArray(record)) {
               record?.forEach(d => {
                 dataSource.map(item => {
-                  if (d[idKey] === item[idKey]) {
-                    return item[actualFieldName] = checked ? 1 : 2
+                  if (getIds(d) === getIds(item)) {
+                    return item[actualFieldName] = checked ? customStatusValue.OPENED : customStatusValue.CLOSED
                   }
                 })
               })
 
               this.clearSelectedRows()
             } else {
-              dataSource[index][actualFieldName] = checked ? 1 : 2
+              dataSource[index][actualFieldName] = checked ? customStatusValue.OPENED : customStatusValue.CLOSED
             }
           } else {
             // 调用接口失败时，还原值
             if (isBulkOperation && Array.isArray(record)) {
-
               record?.forEach(d => {
                 dataSource.map(item => {
                   if (d[actualFieldName] === item[actualFieldName]) {
-                    return item[actualFieldName] = checked ? 2 : 1
+                    return item[actualFieldName] = checked ? customStatusValue.CLOSED : customStatusValue.OPENED
                   }
                 })
               })
             } else {
-              dataSource[index][actualFieldName] = checked ? 2 : 1
+              dataSource[index][actualFieldName] = checked ? customStatusValue.CLOSED : customStatusValue.OPENED
             }
           }
 
