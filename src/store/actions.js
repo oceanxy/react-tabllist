@@ -570,7 +570,17 @@ export default {
       }
     }
 
-    const { status } = await this.apis[api](payload)
+    let res = {}
+
+    if (this.apis[api]) {
+      res = await this.apis[api](payload)
+    } else {
+      console.error(
+        `接口未定义：${moduleName} 页面${submoduleName
+          ? ` ${submoduleName} 模块`
+          : ''}的 ${api} 接口未定义！`
+      )
+    }
 
     commit('setLoading', {
       value: false,
@@ -579,7 +589,7 @@ export default {
       stateName: loadingFieldName
     })
 
-    return status
+    return res.status
   },
   /**
    * 删除站点应用
