@@ -134,7 +134,7 @@ const TGSubMenu = {
     activeSuffixForMenuIcon() {
       return this.$config.activeSuffixForMenuIcon.replace(
         '{themeName}',
-        `-${localStorage.getItem(`${appName}-theme`) || this.$config.theme.default}`
+        `-${localStorage.getItem(`${appName}-theme`) || this.$config.header.buttons.theme.default}`
       )
     },
     popupSubMenuClassName() {
@@ -174,7 +174,7 @@ export default {
     activeSuffixForMenuIcon() {
       return this.$config.activeSuffixForMenuIcon.replace(
         '{themeName}',
-        `-${localStorage.getItem(`${appName}-theme`) || this.$config.theme.default}`
+        `-${localStorage.getItem(`${appName}-theme`) || this.$config.header.buttons.theme.default}`
       )
     }
   },

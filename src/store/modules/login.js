@@ -113,7 +113,7 @@ export default {
         })
         commit('setAuthentication', token)
         commit('setSiteCache', { menuList, defaultMenuUrl })
-        localStorage.setItem(`${appName}-theme`, userInfo.themeFileName || config.theme.default)
+        localStorage.setItem(`${appName}-theme`, userInfo.themeFileName || config.header.buttons.theme.default)
 
         dispatch('setParamsUseInHeader')
       }
@@ -168,7 +168,7 @@ export default {
           time: moment().format('YYYY-MM-DD HH:mm:ss'),
           token: payload.token
         })
-        localStorage.setItem(`${appName}-theme`, userInfo.themeFileName || config.theme.default)
+        localStorage.setItem(`${appName}-theme`, userInfo.themeFileName || config.header.buttons.theme.default)
 
         dispatch('setParamsUseInHeader')
       }
@@ -181,7 +181,7 @@ export default {
      * 设置Header内需要使用的参数
      */
     setParamsUseInHeader({ state, commit }) {
-      if (config.headerParams?.show) {
+      if (config.header?.params?.show) {
         localStorage.setItem(`${appName}-headerId`, state.userInfo.organId || '')
 
         commit('setState', {
@@ -209,14 +209,14 @@ export default {
       commit('setLastLogin', {})
       commit('setAuthentication', null)
       commit('setSiteCache', null)
-      localStorage.setItem(`${appName}-theme`, config.theme.default)
+      localStorage.setItem(`${appName}-theme`, config.header.buttons.theme.default)
 
       // 主动注销
       if (!isPassive) {
         localStorage.removeItem(`${appName}-openKeys`)
         localStorage.removeItem(`${appName}-selectedKey`)
 
-        if (config.headerParams?.show) {
+        if (config.header?.params?.show) {
           localStorage.removeItem(`${appName}-headerId`)
 
           commit('setState', {

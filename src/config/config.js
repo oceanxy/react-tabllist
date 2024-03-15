@@ -60,17 +60,6 @@ module.exports = {
    * - background 背景颜色
    */
   menuStyle: 'bordered',
-  // 主题
-  theme: {
-    // 是否在header中显示切换主题按钮
-    show: true,
-    // 默认主题文件名
-    default: 'blue',
-    // 可用的主题文件 （位于 @/assets/styles/theme）
-    availableThemes: [
-      { name: '蓝色', fileName: 'tech-blue' }
-    ]
-  },
   // 页面筛选树配置（如果存在筛选树）
   siderTree: {
     // 是否显示筛选树折叠按钮，当不显示该按钮时，可以通过 store.state.common.treeCollapsed 自定义展开/折叠逻辑。
@@ -82,30 +71,60 @@ module.exports = {
      */
     togglePosition: 'inInquiry'
   },
-  // 消息
-  news: {
-    // 是否在header中显示消息通知
-    show: false
-  },
-  // 网站指引
-  guide: {
-    // 是否在header中显示网站指引
-    show: false
-  },
-  // 重置密码
-  resetPwd: {
-    // 是否在header中显示修改密码图标，此功能需要配合 src/extend 和子项目的 extend 使用
-    show: false
-  },
-  // 需要在 HTTP Request Header 内携带额外参数的字段名（下拉列表）
-  // 注意：本框架会始终在 HTTP Request Header 中携带 token 字段，不受此处配置影响。
-  headerParams: {
-    // 是否需要在 HTTP Request Header 内携带额外参数
-    show: false,
-    // src/components/TGHeader 组件对对应下拉列表的占位符提示语
-    placeholder: '请选择',
-    // 需要在 HTTP Request Header 内携带额外参数的字段名，其值为 src/components/TGHeader 组件内对应下拉列表的值
-    fieldName: ''
+  // HEADER 相关设置
+  header: {
+    // HTTP Request HEADER 内传递的额外参数配置
+    params: {
+      // 是否需要在 HTTP Request HEADER 内携带额外参数。启用时会自动在 TGHeader 组件内注入一个下拉选择列表，作为选取额外参数的入口。
+      // 注意：本框架会始终在 HTTP Request HEADER 中携带 token 字段，不受此处配置影响。
+      show: false,
+      // 下拉列表的占位符提示语
+      placeholder: '请选择',
+      // 需要在 HTTP Request HEADER 内携带额外参数的名称，其值为下拉列表选取的值
+      fieldName: ''
+    },
+    // TGHeader 组件内右上角功能区的按钮配置
+    buttons: {
+      // 重置密码
+      resetPwd: {
+        // 是否显示修改密码按钮，默认 false。此功能需要配合 src/extend 和子项目的 extend 使用
+        show: false
+      },
+      // 消息
+      news: {
+        // 是否显示消息通知按钮，默认 false。
+        show: false
+      },
+      // 网站指引
+      guide: {
+        // 是否显示网站指引，默认 false。
+        show: false
+      },
+      // 主题
+      theme: {
+        // 是否显示切换主题按钮，默认 true。
+        show: true,
+        // 默认主题文件名
+        default: 'tech-blue',
+        // 可用的主题文件 （位于 @/assets/styles/theme）
+        availableThemes: [
+          { name: '科技蓝', fileName: 'tech-blue' }
+        ]
+      },
+      /**
+       * 自定义按钮对象
+       * @global
+       * @typedef HeaderExtarButtons
+       * @property {string} text - 按钮显示文本
+       * @property {string} icon - 按钮图标名称
+       * @property {string} event - 按钮调用事件
+       */
+      /**
+       * 需要显示的额外按钮
+       * @type HeaderExtarButtons[]
+       */
+      extraButtons: []
+    }
   },
   // 登录令牌相关设置
   tokenConfig: {

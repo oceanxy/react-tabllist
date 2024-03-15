@@ -103,7 +103,7 @@ function getBuildConfig() {
           'index'
         ]
       },
-      ...appConfig[projectNames].theme.availableThemes.reduce((themes, cur) => {
+      ...appConfig[projectNames].header.buttons.theme.availableThemes.reduce((themes, cur) => {
         themes[cur.fileName] = `src/assets/styles/themes/${cur.fileName}`
 
         return themes

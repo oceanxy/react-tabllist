@@ -69,7 +69,7 @@ export default {
       return (
         localStorage.getItem(`${appName}-theme`) ||
         this.$store.state?.login?.userInfo?.themeFileName ||
-        this.$config.theme.default
+        this.$config.header?.buttons?.theme.default
       )
     }
   },
@@ -113,7 +113,7 @@ export default {
     }
   },
   async created() {
-    if (this.$config.news?.show) {
+    if (this.$config.header.buttons.news?.show) {
       await this.$store.dispatch('getListWithLoadingStatus', {
         moduleName: 'common',
         stateName: 'news',
@@ -121,7 +121,7 @@ export default {
       })
     }
 
-    if (this.$config.headerParams?.show && !this.organListForHeader.list.length) {
+    if (this.$config.header?.params?.show && !this.organListForHeader.list.length) {
       await this.$store.dispatch('getListWithLoadingStatus', {
         moduleName: 'common',
         stateName: 'organListForHeader',
@@ -233,11 +233,11 @@ export default {
             {
               this.isLogin
                 ? [
-                  this.$config.headerParams?.show
+                  this.$config.header?.params?.show
                     ? [
                       <Select
                         vModel={this.headerId}
-                        placeholder={this.$config.headerParams?.placeholder ?? '请选择'}
+                        placeholder={this.$config.header?.params?.placeholder ?? '请选择'}
                         class={'tg-header-params'}
                         suffixIcon={<IconFont type={'icon-global-down'} />}
                       >
@@ -274,7 +274,7 @@ export default {
                         : (
                           <Menu slot={'overlay'}>
                             {
-                              this.$config.resetPwd.show
+                              this.$config.header?.buttons?.resetPwd?.show
                                 ? <Menu.Item onClick={this.resetPwd}>重置密码</Menu.Item>
                                 : null
                             }
@@ -284,7 +284,7 @@ export default {
                     }
                   </Dropdown>,
                   <Divider type={'vertical'} class={'tg-header-divider'} />,
-                  this.$config.news?.show
+                  this.$config.header.buttons.news?.show
                     ? (
                       <Popover overlayClassName={'tg-header-news-overlay'}>
                         <Badge
@@ -347,7 +347,7 @@ export default {
                       </Popover>
                     )
                     : null,
-                  this.$config.theme?.show
+                  this.$config.header?.buttons?.theme?.show
                     ? (
                       <Dropdown class={'tg-header-themes'} overlayClassName={'tg-header-themes-overlay'}>
                         <Button title={'切换主题'} shape="circle" type={'link'} class={'tg-header-icon'}>
@@ -355,7 +355,7 @@ export default {
                         </Button>
                         <Menu slot={'overlay'}>
                           {
-                            this.$config.theme?.availableThemes.map(item => (
+                            this.$config.header?.buttons?.theme?.availableThemes.map(item => (
                               <Menu.Item
                                 disabled={this.theme === item.fileName}
                                 onClick={() => this.switchThemes(item.fileName)}
@@ -368,7 +368,7 @@ export default {
                       </Dropdown>
                     )
                     : null,
-                  this.$config.guide?.show
+                  this.$config.header.buttons.guide?.show
                     ? (
                       <Button shape="circle" type={'link'} class={'tg-header-icon'}>
                         <IconFont type={'icon-global-help'} />

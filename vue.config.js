@@ -208,7 +208,7 @@ module.exports = {
       // 抽取主题样式为单独的文件
       const themeGroups = {}
 
-      appConfig[apn].theme.availableThemes.forEach(t => {
+      appConfig[apn].header.buttons.theme.availableThemes.forEach(t => {
         themeGroups[`${t.fileName}Theme`] = {
           name: t.fileName,
           test: (module, chunk, entry = t.fileName) => {
@@ -325,7 +325,7 @@ module.exports = {
       // 主题样式文件处理
       const themeNames = []
 
-      appConfig[apn].theme.availableThemes.forEach(t => {
+      appConfig[apn].header.buttons.theme.availableThemes.forEach(t => {
         // config.plugins.delete(`preload-${t.fileName}`)
         // config.plugins.delete(`prefetch-${t.fileName}`)
 

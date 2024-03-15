@@ -32,11 +32,11 @@ export default function getService(conf, router, store) {
         }
       }
 
-      if (conf.headerParams?.show) {
-        if (conf.headerParams.fieldName) {
-          config.headers[conf.headerParams.fieldName] = localStorage.getItem(`${appName}-headerId`)
+      if (conf.header?.params?.show) {
+        if (conf.header.params.fieldName) {
+          config.headers[conf.header.params.fieldName] = localStorage.getItem(`${appName}-headerId`)
         } else {
-          throw new Error('未在 src/config/index.js 中配置 headerParams.fieldName 字段。')
+          throw new Error('未在 src/config/index.js 中配置 header.params.fieldName 字段。')
         }
       }
 
