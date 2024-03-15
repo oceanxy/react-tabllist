@@ -5,7 +5,7 @@ import config from '@/config'
 import useComponents from '@/utils/antvComponents'
 import store from '@/store'
 import router from '@/router'
-import { loadScript, loadStyle, loadVariablesStyle, reloadTheme } from '@/assets/styles'
+import { fetchProdEnvTheme, loadDevEnvTheme, loadScript } from '@/assets/styles'
 import { join, resolve } from 'path'
 import { getFirstLetterOfEachWordOfAppName } from '@/utils/utilityFunction'
 import { TGKeepAlive } from '@/components/TGRouterView'
@@ -15,7 +15,7 @@ function createVue() {
   new Vue({
     router,
     store,
-    components: {TGKeepAlive},
+    components: { TGKeepAlive },
     render: h => h(APP_COMPONENT.default)
   }).$mount('#app')
 }
@@ -37,7 +37,7 @@ if (process.env.NODE_ENV === 'development' && config.mock) {
   require('../mock/index.js')
 }
 
-const {NODE_ENV, VUE_APP_PUBLIC_PATH} = process.env
+const { NODE_ENV, VUE_APP_PUBLIC_PATH } = process.env
 
 // 加载第三方/远程文件
 if (config.loadFiles?.length) {
@@ -67,19 +67,8 @@ if (config.loadFiles?.length) {
 
 // 加载主题（生产环境和开发环境因为webpack打包机制的不同，所以采用不同的方式实现）
 if (NODE_ENV === 'production') {
-  fetch(resolve(join(__dirname, VUE_APP_PUBLIC_PATH, '/manifest.json')))
-    .then(response => response.json())
-    .then(async data => {
-      const theme = localStorage.getItem(`${appName}-theme`) || config.theme.default
-
-      loadStyle(resolve(join(__dirname, `${VUE_APP_PUBLIC_PATH}/${data[`${theme}.css`]}`)))
-      loadScript(
-        resolve(join(__dirname, `${VUE_APP_PUBLIC_PATH}/${data[`${theme}.js`]}`)),
-        () => {
-          reloadTheme()
-        }
-      )
-    })
+  // 加载默认主题
+  fetchProdEnvTheme()
 
   if (config.prodEnvVar?.configurable) {
     let ENV_PRODUCTION = config.prodEnvVar?.filename
@@ -105,7 +94,8 @@ if (NODE_ENV === 'production') {
     createVue()
   }
 } else {
-  loadVariablesStyle(config, store)
+  // 加载默认主题
+  loadDevEnvTheme()
 
   createVue()
 }

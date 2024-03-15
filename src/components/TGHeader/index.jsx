@@ -4,9 +4,10 @@ import { Avatar, Badge, Button, Divider, Dropdown, Icon, Layout, Menu, Popover, 
 import Logo from '@/components/Logo'
 import { mapActions, mapGetters } from 'vuex'
 import forIndex from '@/mixins/forIndex'
-import { getFirstLetterOfEachWordOfAppName } from '@/utils/utilityFunction'
+import { getFirstLetterOfEachWordOfAppName, showAppLoading } from '@/utils/utilityFunction'
 import moment from 'moment'
 import config from '@/config'
+import { fetchProdEnvTheme } from '@/assets/styles'
 
 const appName = getFirstLetterOfEachWordOfAppName()
 
@@ -181,9 +182,7 @@ export default {
       }
     },
     async switchThemes(themeFileName) {
-      if (document.querySelector('#tg-responsive-layout')) {
-        document.querySelector('#tg-responsive-layout').style.display = 'none'
-
+      await showAppLoading(false, async () => {
         await this.$store.dispatch('custom', {
           customApiName: 'setThemeFileName',
           payload: { themeFileName }
@@ -196,9 +195,17 @@ export default {
           merge: true
         })
 
-        localStorage.setItem(`${appName}-theme`, themeFileName || this.$config.theme.default)
-        window.location.reload()
-      }
+        localStorage.setItem(`${appName}-theme`, themeFileName)
+
+        return Promise.resolve()
+      })
+
+      // 采用注释的方式会到导致某些已经渲染的组件无法更新主题色
+      // if (process.env.NODE_ENV === 'production') {
+      //   fetchProdEnvTheme()
+      // }
+      // 所以采用重新载入的方式刷新主题
+      window.location.reload()
     },
     toLogin() {
       this.$router.push({

@@ -4,6 +4,7 @@ import { message } from 'ant-design-vue'
 import router from '@/router'
 import moment from 'moment'
 import { getFirstLetterOfEachWordOfAppName } from '@/utils/utilityFunction'
+import { fetchProdEnvTheme, loadDevEnvTheme } from '@/assets/styles'
 
 const appName = getFirstLetterOfEachWordOfAppName()
 
@@ -55,7 +56,15 @@ export default {
   },
   actions: {
     async jump() {
+      // 重置路由
       router.resetRoutes()
+
+      // 重置主题
+      if (process.env.NODE_ENV === 'production') {
+        fetchProdEnvTheme()
+      } else {
+        loadDevEnvTheme()
+      }
 
       // 检测query参数是否存在重定向
       const { redirect, ...query } = router.history.current.query

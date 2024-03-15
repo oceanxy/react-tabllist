@@ -130,3 +130,20 @@ export function uuid(len = 16, radix = 16) {
 export function replacePath(path) {
   return path.replace(/([a-zA-Z0-9\-\/]+)(\/)$/g, '$1')
 }
+
+/**
+ * 显示 APP 级别的 loading 状态图标
+ * @param activelyHide {boolean} 是否主动隐藏 loading 图标
+ * @param callback {() => Promise} loading状态下需要做的事情
+ * @return {Promise<void>}
+ */
+export async function showAppLoading(activelyHide, callback) {
+  if (document.querySelector('#tg-responsive-layout')) {
+    document.querySelector('#tg-responsive-layout').style.display = 'none'
+    await callback()
+
+    if (activelyHide) {
+      document.querySelector('#tg-responsive-layout').style.display = 'unset'
+    }
+  }
+}

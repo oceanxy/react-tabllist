@@ -7,19 +7,63 @@
 
 import './themeFromLess.scss'
 import store from '@/store'
-import { getFirstLetterOfEachWordOfAppName } from '@/utils/utilityFunction'
 import config from '@/config'
+import { getFirstLetterOfEachWordOfAppName } from '@/utils/utilityFunction'
 import { message } from '@/utils/message'
+import { join, resolve } from 'path'
 
 const appName = getFirstLetterOfEachWordOfAppName()
+const { VUE_APP_PUBLIC_PATH } = process.env
 
-export function reloadTheme() {
-  const userTheme = localStorage.getItem(`${appName}-theme`) ||
-    store.state?.login?.userInfo?.themeFileName ||
-    config.theme.default
+/**
+ * 开发环境载入主题
+ */
+export function loadDevEnvTheme() {
+  if (process.env.NODE_ENV !== 'production') {
+    let _theme = localStorage.getItem(`${appName}-theme`)
 
-  if (userTheme !== window.themeVariables?.themeFileName) {
-    window.location.reload() // to switch theme
+    if (!_theme) {
+      _theme = config.header.buttons.theme.default
+      localStorage.setItem(`${appName}-theme`, _theme)
+    }
+
+    // 加载主题
+    const theme = store?.state?.login?.userInfo?.themeFileName || _theme
+
+    try {
+      window.themeVariables = require(`./themes/${theme}/index.less`)
+    } catch (e) {
+      window.themeVariables = require(`./themes/${config.header.buttons.theme.default}/index.less`)
+    }
+
+    document
+      .querySelector(':root')
+      .setAttribute('class', window.themeVariables.themeFileName)
+  }
+}
+
+/**
+ * 生产环境加载主题
+ */
+export function fetchProdEnvTheme() {
+  if (process.env.NODE_ENV === 'production') {
+    const userTheme = localStorage.getItem(`${appName}-theme`) ||
+      store?.state?.login?.userInfo?.themeFileName ||
+      config.header.buttons.theme.default
+
+    fetch(resolve(join(__dirname, VUE_APP_PUBLIC_PATH, '/manifest.json')))
+      .then(response => response.json())
+      .then(async data => {
+        loadStyle(resolve(join(__dirname, `${VUE_APP_PUBLIC_PATH}/${data[`${userTheme}.css`]}`)))
+        loadScript(
+          resolve(join(__dirname, `${VUE_APP_PUBLIC_PATH}/${data[`${userTheme}.js`]}`)),
+          () => {
+            document
+              .querySelector(':root')
+              .setAttribute('class', window.themeVariables.themeFileName)
+          }
+        )
+      })
   }
 }
 
@@ -50,24 +94,4 @@ export function loadScript(url, callback) {
   }
 
   document.body.appendChild(script)
-}
-
-export function loadVariablesStyle(config, store) {
-  if (process.env.NODE_ENV !== 'production') {
-    let _theme = localStorage.getItem(`${appName}-theme`)
-
-    if (!_theme) {
-      _theme = config.theme.default
-      localStorage.setItem(`${appName}-theme`, _theme)
-    }
-
-    // 加载主题
-    const theme = store?.state?.login?.userInfo?.themeFileName || _theme
-
-    try {
-      window.themeVariables = require(`./themes/${theme}/index.less`)
-    } catch (e) {
-      window.themeVariables = require(`./themes/${config.theme.default}/index.less`)
-    }
-  }
 }
