@@ -14,6 +14,11 @@ export default {
     showPageTitle: {
       type: Boolean,
       default: true
+    },
+    // 自定义容器的额外样式表
+    customContentClassName: {
+      type: String,
+      default: ''
     }
   },
   provide: {
@@ -31,7 +36,13 @@ export default {
         this.$slots.customContent
           ? (
             <div class={'tg-container-custom-content-container'}>
-              <div class={'tg-container-custom-content'}>
+              <div
+                class={
+                  `tg-container-custom-content${this.customContentClassName
+                    ? ` ${this.customContentClassName}`
+                    : ''}`
+                }
+              >
                 {this.$slots.customContent}
               </div>
               {
