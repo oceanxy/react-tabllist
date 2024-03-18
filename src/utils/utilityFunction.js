@@ -147,3 +147,12 @@ export async function showAppLoading(activelyHide, callback) {
     }
   }
 }
+
+/**
+ * 睡眠函数
+ * @param [time=200] {number} 睡眠时间，默认200毫秒
+ * @return {Promise<unknown>}
+ */
+export function sleep(time = 200) {
+  return new Promise(resolve => setTimeout(resolve, time))
+}
