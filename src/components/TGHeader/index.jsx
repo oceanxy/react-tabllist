@@ -7,7 +7,6 @@ import forIndex from '@/mixins/forIndex'
 import { getFirstLetterOfEachWordOfAppName, showAppLoading } from '@/utils/utilityFunction'
 import moment from 'moment'
 import config from '@/config'
-import { fetchProdEnvTheme } from '@/assets/styles'
 
 const appName = getFirstLetterOfEachWordOfAppName()
 
