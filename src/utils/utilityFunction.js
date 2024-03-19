@@ -156,3 +156,18 @@ export async function showAppLoading(activelyHide, callback) {
 export function sleep(time = 200) {
   return new Promise(resolve => setTimeout(resolve, time))
 }
+
+/**
+ * 在一个对象中，用字符串形式的 key 来取值
+ * @example `object['a.b.c']`解析为`object[a][b][c]`
+ * @param stringKey {string} key
+ * @param obj {Object} 取值对象
+ * @return {*}
+ */
+export function getValueFromStringKey(stringKey, obj) {
+  if (stringKey.includes('.')) {
+    return stringKey.split('.').reduce((prev, curr) => prev[curr], obj)
+  } else {
+    return obj[stringKey]
+  }
+}
