@@ -256,7 +256,10 @@ export default {
    * @param dispatch
    * @param moduleName {string} 模块名
    * @param payload {Object} 参数
-   * @param visibilityFieldName {string} 控制弹窗显示的字段名
+   * @param [customApiName] {string} 自定义请求API
+   * @param [visibilityFieldName] {string} 控制弹窗显示的字段名
+   * @param [inModal=true] {boolean} 是否处于对话框中，默认 true。
+   *  处于对话框中的新增功能需要在操作成功后关闭对话框以及刷新列表。如果不处于对话框，请设置为false，避免执行无用逻辑。
    * @param parametersOfGetListAction {{
    *  moduleName: string;
    *  submoduleName: string;
@@ -269,12 +272,14 @@ export default {
   async add({ state, dispatch }, {
     moduleName,
     payload,
+    customApiName,
     visibilityFieldName,
+    inModal = true,
     parametersOfGetListAction
   }) {
-    const response = await this.apis[`add${FLTU(moduleName)}`](payload)
+    const response = await this.apis[customApiName || `add${FLTU(moduleName)}`](payload)
 
-    if (response.status) {
+    if (inModal && response.status) {
       dispatch('setModalVisible', {
         statusField: visibilityFieldName,
         statusValue: false,
@@ -301,7 +306,9 @@ export default {
    * @param moduleName {string} 模块名
    * @param [payload={}] {Object} 参数
    * @param [visibilityFieldName='visibilityOfEdit'] {string} 控制弹窗显示的字段名
-   * @param customApiName {string} 自定义请求API
+   * @param [inModal=true] {boolean} 是否处于对话框中，默认 true。
+   *  处于对话框中的编辑功能需要在操作成功后关闭对话框以及刷新列表。如果不处于对话框，请设置为false，避免执行无用逻辑。
+   * @param [customApiName] {string} 自定义请求API
    * @param [isFetchList] {boolean} 默认 false。当为 true 时，请特别注意参数问题（parametersOfOtherAction）
    * @param [isResetSelectedRows] {boolean} 默认false（批量操作默认true），是都在成功执行后清空已选中行（批量更新时很重要）
    * @param parametersOfGetListAction {{
@@ -323,6 +330,7 @@ export default {
       moduleName,
       payload = {},
       visibilityFieldName,
+      inModal = true,
       customApiName,
       isFetchList,
       isResetSelectedRows,
@@ -331,7 +339,7 @@ export default {
   ) {
     const response = await this.apis[customApiName || `update${FLTU(moduleName)}`](payload)
 
-    if (response.status) {
+    if (inModal && response.status) {
       dispatch('setModalVisible', {
         statusField: visibilityFieldName,
         statusValue: false,
