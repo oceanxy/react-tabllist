@@ -11,6 +11,7 @@ import forIndex from '@/mixins/forIndex'
 import { cloneDeep, omit } from 'lodash'
 import { verificationDialog } from '@/utils/message'
 import scrollWheelMixins from '@/mixins/forTable/scrollWheelMixins'
+import { getValueFromStringKey } from '@/utils/utilityFunction'
 
 /**
  * 用于 table 的混合
@@ -359,14 +360,8 @@ export default ({
         })
 
         if (status) {
-          let name
-
           // 适配`nameKey`的值为`a.b`的形式，解析为`record[a][b]`
-          if (nameKey.includes('.')) {
-            name = nameKey.split('.').reduce((prev, curr) => prev[curr], record)
-          } else {
-            name = record[nameKey]
-          }
+          const name = getValueFromStringKey(nameKey, record)
 
           message.success([
             <span style={{ color: `${this.primaryColor}` }}>
