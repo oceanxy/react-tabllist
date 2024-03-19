@@ -117,9 +117,9 @@ export default customModuleName => {
     methods: {
       /**
        * 取消/关闭 弹窗
-       * @param [visibilityFieldName] {string} 对应store模块内控制该弹窗的字段名。默认为新增/编辑弹窗的字段名：visibilityOfEdit
-       * @param [submoduleName] {string} 子模块名，必须通过参数传入（在需要时传入），否则会引起bug
-       * @param [callback] {Function} 关闭后的回调函数
+       * @param [visibilityFieldName] {string|null} 对应store模块内控制该弹窗的字段名。默认为新增/编辑弹窗的字段名：visibilityOfEdit
+       * @param [submoduleName] {string|null} 子模块名，必须通过参数传入（在需要时传入），否则会引起bug
+       * @param [callback] {Function|null} 关闭后的回调函数
        * @param [isClearCurrentItem] {boolean} 是否清空currentItem数据，默认true
        * @returns {Promise<void>}
        */

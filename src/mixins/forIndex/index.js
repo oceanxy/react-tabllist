@@ -12,9 +12,9 @@ export default {
      *  1、设置 currentItem 数据。（当前用于操作的数据）
      *  2、设置对应弹窗的可见性为true，弹窗的控制字段请对应store内定义的字段
      * @param [record] {Object} 当前用于操作的数据。编辑弹窗为回显数据，详情弹窗为详情数据，为假值时不会对当前的currentItem做任何改变
-     * @param [visibilityFieldName] {string} 默认值为打开编辑弹窗的可见性控制字段：visibilityOfEdit
-     * @param [moduleName] {string} 目标模块名，在一个模块内调用另外一个模块的 state 时，需要传递对应模块的 moduleName
-     * @param [submoduleName] {string} 子模块模块名，依赖 moduleName
+     * @param [visibilityFieldName] {string|null} 默认值为打开编辑弹窗的可见性控制字段：visibilityOfEdit
+     * @param [moduleName] {string|null} 目标模块名，在一个模块内调用另外一个模块的 state 时，需要传递对应模块的 moduleName，默认本模块的 moduleName
+     * @param [submoduleName] {string|null} 子模块模块名，依赖 moduleName
      * @param [merge] {boolean} 是否合并，默认false
      * @returns {Promise<void>}
      */
