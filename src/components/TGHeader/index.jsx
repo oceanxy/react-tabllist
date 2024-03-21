@@ -26,6 +26,9 @@ export default {
     collapsed() {
       return this.getState('collapsed', 'common')
     },
+    show() {
+      return this.getState('showMenu', 'common')
+    },
     loading() {
       return this.getState('loading', 'login')
     },
@@ -219,7 +222,7 @@ export default {
         <Logo />
         <Space class={'tg-layout-header-content'}>
           {
-            this.page === 'normal'
+            this.page === 'normal' && this.show
               ? (
                 <IconFont
                   type={'icon-global-sq'}
@@ -355,8 +358,16 @@ export default {
                     : null,
                   this.$config.header?.buttons?.theme?.show
                     ? (
-                      <Dropdown class={'tg-header-themes'} overlayClassName={'tg-header-themes-overlay'}>
-                        <Button title={'切换主题'} shape="circle" type={'link'} class={'tg-header-icon'}>
+                      <Dropdown
+                        class={'tg-header-themes'}
+                        overlayClassName={'tg-header-themes-overlay'}
+                      >
+                        <Button
+                          title={'切换主题'}
+                          shape="circle"
+                          type={'link'}
+                          class={'tg-header-icon'}
+                        >
                           <IconFont type={'icon-global-hf'} />
                         </Button>
                         <Menu slot={'overlay'}>

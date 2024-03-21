@@ -10,6 +10,11 @@ import TGPageTabs from '@/components/TGPageTabs'
 export default {
   name: 'TGBackendSystemLayout',
   mixins: [forLayout, watermark()],
+  computed: {
+    showMenu() {
+      return this.$store.state.common.showMenu
+    }
+  },
   mounted() {
     // 注册全局扩展组件
     this.$nextTick(async () => {
@@ -23,16 +28,21 @@ export default {
         <Layout>
           <Layout.Sider
             theme={'light'}
+            collapsible
+            width={0}
             vModel={this.collapsed}
             trigger={null}
-            class={`tg-sider${this.collapsed ? ' collapsed' : ''}`}
-            collapsible
+            class={`tg-sider${
+              !this.showMenu
+                ? ''
+                : this.collapsed ? ' collapsed' : ' normal'
+            }`}
           >
-            <TGMenu />
+            {this.showMenu ? <TGMenu /> : null}
           </Layout.Sider>
           <Layout.Content class="tg-content">
-            {this.$config.hideBreadCrumb || this.$route.meta.hideBreadCrumb ? null : <TGBreadcrumb />}
-            {this.$config.enableTabPage ? <TGPageTabs /> : null}
+            {this.$config.hideBreadCrumb || this.$route.meta.hideBreadCrumb || !this.showMenu ? null : <TGBreadcrumb />}
+            {this.$config.enableTabPage && this.showMenu ? <TGPageTabs /> : null}
             {this.getRouterView}
           </Layout.Content>
         </Layout>

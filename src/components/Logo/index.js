@@ -7,11 +7,16 @@ export default {
     ...mapGetters({ getState: 'getState' }),
     collapsed() {
       return this.getState('collapsed', 'common')
+    },
+    showMenu() {
+      return this.getState('showMenu', 'common')
     }
   },
   methods: {
     async goBackHome() {
-      await this.$router.push({ name: 'home' })
+      if (this.showMenu) {
+        await this.$router.push({ name: 'home' })
+      }
     }
   },
   render() {
