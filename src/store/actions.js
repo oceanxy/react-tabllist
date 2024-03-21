@@ -197,7 +197,8 @@ export default {
    * @param [submoduleName] {string} 子模块名
    * @param [payload] {Object} 查询参数
    * @param [stateName='details'] {string} 需要设置的字段，默认 store.state.details
-   * @param [customApiName] {string} 自定义接口名称，默认根据 moduleName 和 submoduleName 生成
+   * @param [loadingStateName] {string} 加载详情的 loading 状态字段，默认当前 store 模块的 loadingDetails
+   * @param [customApiName='loadingDetails'] {string} 自定义接口名称，默认根据 moduleName 和 submoduleName 生成
    * @param [merge] {boolean} 如果 stateName 指定的字段存在旧数据，是否使用新值对其进行合并
    * @returns {Promise<void>}
    */
@@ -206,6 +207,7 @@ export default {
     submoduleName,
     payload = {},
     stateName = 'details',
+    loadingStateName = 'loadingDetails',
     customApiName,
     merge = false
   }) {
@@ -213,7 +215,7 @@ export default {
       value: true,
       moduleName,
       submoduleName,
-      stateName: 'loadingDetails'
+      stateName: loadingStateName
     })
 
     let api = 'getDetails'
@@ -245,7 +247,7 @@ export default {
       value: false,
       moduleName,
       submoduleName,
-      stateName: 'loadingDetails'
+      stateName: loadingStateName
     })
 
     return res
