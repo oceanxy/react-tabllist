@@ -7,7 +7,6 @@
 
 import forIndex from '@/mixins/forIndex'
 import { verificationDialog, verifySelected } from '@/utils/message'
-import { mapGetters } from 'vuex'
 import { Button, message, Space } from 'ant-design-vue'
 import moment from 'moment'
 
@@ -57,37 +56,33 @@ export default ({ controlButtonPermissions, overrideDefaultButtons } = {}) => ({
     }
   },
   computed: {
-    ...mapGetters({ getState: 'getState' }),
     selectedRowKeys() {
-      return this.getState('selectedRowKeys', this.moduleName)
+      return this.$store.state[this.moduleName]?.selectedRowKeys ?? []
     },
     selectedRows() {
-      return this.getState('selectedRows', this.moduleName)
+      return this.$store.state[this.moduleName]?.selectedRows ?? []
     }
   },
-  created() {
-    this.$watch(
-      () => this.$store.state[this.moduleName].selectedRows,
-      selectedRows => {
-        this.editButtonDisabled = selectedRows.length !== 1
-        this.deleteButtonDisabled = !selectedRows.length
-        this.auditButtonDisabled = !selectedRows.length
+  watch: {
+    selectedRows(value) {
+      this.editButtonDisabled = value.length !== 1
+      this.deleteButtonDisabled = !value.length
+      this.auditButtonDisabled = !value.length
 
-        if (typeof controlButtonPermissions === 'function') {
-          Object.entries(controlButtonPermissions(selectedRows)).forEach(([key, value]) => {
-            this[key] = value
-          })
-        }
-
-        if (selectedRows.length === 1) {
-          this.editedRow = selectedRows[0]
-        } else {
-          this.editedRow = {}
-        }
-
-        this.ids = selectedRows.map(item => item.id).join()
+      if (typeof controlButtonPermissions === 'function') {
+        Object.entries(controlButtonPermissions(value)).forEach(([key, value]) => {
+          this[key] = value
+        })
       }
-    )
+
+      if (value.length === 1) {
+        this.editedRow = value[0]
+      } else {
+        this.editedRow = {}
+      }
+
+      this.ids = value.map(item => item.id).join()
+    }
   },
   methods: {
     /**
@@ -124,7 +119,7 @@ export default ({ controlButtonPermissions, overrideDefaultButtons } = {}) => ({
           const status = await this.$store.dispatch('delete', { moduleName: this.moduleName })
 
           if (status && this.inTree) {
-            this.refreshTree()
+            await this.refreshTree()
           }
 
           if (status && typeof done === 'function') {
