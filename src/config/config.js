@@ -117,7 +117,10 @@ module.exports = {
        * @typedef HeaderExtarButtons
        * @property {string} text - 按钮显示文本
        * @property {string} icon - 按钮图标名称
-       * @property {string} event - 按钮调用事件
+       * @property {string} iconType - icon 图标来源
+       * - font：来自项目加载的 iconfont 文件
+       * - antd：来自 ant-design-vue 的内置图标
+       * @property {string} event - 按钮调用事件，此配置中的所有事件统一从本项目的 utils/projectHelpers 中获取
        */
       /**
        * 需要显示的额外按钮

@@ -376,14 +376,37 @@ export default {
                     : null,
                   this.$config.header.buttons.guide?.show
                     ? (
-                      <Button shape="circle" type={'link'} class={'tg-header-icon'}>
+                      <Button
+                        shape="circle"
+                        type={'link'}
+                        class={'tg-header-icon'}
+                        onClick={() => {/**/}}
+                      >
                         <IconFont type={'icon-global-help'} />
                       </Button>
                     )
-                    : null
+                    : null,
+                  this.$config.header.buttons.extraButtons?.map(button => (
+                    <Button
+                      shape="circle"
+                      type={'link'}
+                      title={button.text}
+                      class={'tg-header-icon'}
+                      onClick={e => {EVENT_MAPPINGS?.[button.event]?.call(this, e)}}
+                    >
+                      {
+                        button.iconType === 'antd'
+                          ? <Icon style={{ fontSize: '0.84em' }} type={button.icon} />
+                          : <IconFont type={button.icon} />
+                      }
+                    </Button>
+                  ))
                 ]
                 : (
-                  <Dropdown class={'tg-header-user'} overlayClassName={'tg-header-user-overlay'}>
+                  <Dropdown
+                    class={'tg-header-user'}
+                    overlayClassName={'tg-header-user-overlay'}
+                  >
                     <Spin
                       spinning={this.loading}
                       class={`tg-header-user-content${this.loading ? ' blur' : ''}`}
