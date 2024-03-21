@@ -16,6 +16,7 @@ module.exports = {
     DEV_DEFAULT_PASSWORD: true,
     INTERFACE_MAPPINGS: true,
     USER_INFO_MAPPINGS: true,
+    EVENT_MAPPINGS: true,
     CUSTOMIZE_PROD_TINY_ECHARTS: true
   },
   extends: [

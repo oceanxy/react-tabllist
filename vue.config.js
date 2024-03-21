@@ -123,6 +123,17 @@ module.exports = {
       () => DEFINE_PLUGIN_PAYLOAD.USER_INFO_MAPPINGS = undefined
     )
 
+    // 预加载事件映射器
+    preloadResources(
+      `src/apps/${apn}/config/eventMappings.js`,
+      resource => {
+        PROVIDE_PLUGIN_PAYLOAD.EVENT_MAPPINGS = resource
+
+        console.info(apn, '开发环境编译信息：检测到事件映射文件(eventMappings)，已成功预加载。')
+      },
+      () => DEFINE_PLUGIN_PAYLOAD.EVENT_MAPPINGS = undefined
+    )
+
     // 预加载子项目登录组件
     // 检测子项目是否定义了 Login 组件，否则使用主框架的默认登录组件
     preloadResources(
