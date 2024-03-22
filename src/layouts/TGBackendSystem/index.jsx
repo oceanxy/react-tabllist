@@ -29,10 +29,11 @@ export default {
           <Layout.Sider
             theme={'light'}
             collapsible
-            width={0}
+            width={this.showMenu && !this.collapsed ? 240 : 0}
+            style={!this.showMenu ? { transition: 'unset' } : {}}
             vModel={this.collapsed}
             trigger={null}
-            class={`tg-sider${
+            class={`tg-responsive-layout-sider${
               !this.showMenu
                 ? ''
                 : this.collapsed ? ' collapsed' : ' normal'
@@ -40,7 +41,7 @@ export default {
           >
             {this.showMenu ? <TGMenu /> : null}
           </Layout.Sider>
-          <Layout.Content class="tg-content">
+          <Layout.Content class="tg-responsive-layout-content">
             {this.$config.hideBreadCrumb || this.$route.meta.hideBreadCrumb || !this.showMenu ? null : <TGBreadcrumb />}
             {this.$config.enableTabPage && this.showMenu ? <TGPageTabs /> : null}
             {this.getRouterView}

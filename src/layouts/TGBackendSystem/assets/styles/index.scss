@@ -24,23 +24,25 @@
     color: #1890ff;
   }
 
-  .tg-content {
+  .tg-responsive-layout-content {
     display: flex;
     flex-direction: column;
     height: 100%;
     overflow: hidden;
     background: $background-color-base;
-    //min-width: 1106px;
   }
 
-  .ant-layout {
-    overflow: hidden;
-    flex: auto;
-    flex-direction: row;
-  }
+  .tg-responsive-layout-sider {
+    .ant-layout-sider-children {
+      display: flex;
+      flex-direction: column;
+    }
 
-  .ant-menu-inline-collapsed {
-    width: 68px;
+    &.collapsed {
+      .anticon {
+        margin: 0;
+      }
+    }
   }
 
   @media screen and (max-width: 1366px) {
@@ -54,7 +56,7 @@
       // }
     }
 
-    .tg-content {
+    .tg-responsive-layout-content {
       .tg-breadcrumb {
         padding: 10px 20px;
         // font-size: 14px; // 全局默认字号为14号
@@ -65,16 +67,29 @@
       }
     }
 
-    .tg-sider {
+    .tg-responsive-layout-sider {
       &.normal {
+        // 因为 antdv Layout.Sider 组件采用内联写法，所以这里需要处理优先级
         width: 180px !important;
         flex: 0 0 180px !important;
         max-width: 180px !important;
         min-width: 180px !important;
       }
 
+      &.collapsed {
+        // 因为 antdv Layout.Sider 组件采用内联写法，所以这里需要处理优先级
+        width: 68px !important;
+        flex: 0 0 68px !important;
+        max-width: 68px !important;
+        min-width: 68px !important;
+      }
+
       &.ant-layout-sider-has-trigger {
         padding-bottom: 32px;
+      }
+
+      .ant-menu-inline-collapsed {
+        width: 68px;
       }
 
       .ant-menu-item,
@@ -101,31 +116,6 @@
         height: 36px;
         right: -12px;
         // font-size: 14px; // 全局默认字号为14号
-      }
-    }
-  }
-
-  .tg-sider {
-    .ant-layout-sider-children {
-      display: flex;
-      flex-direction: column;
-    }
-
-    &.normal {
-      width: 240px !important;
-      flex: 0 0 240px !important;
-      max-width: 240px !important;
-      min-width: 240px !important;
-    }
-
-    &.collapsed {
-      width: 68px !important;
-      flex: 0 0 68px !important;
-      max-width: 68px !important;
-      min-width: 68px !important;
-
-      .anticon {
-        margin: 0;
       }
     }
   }
