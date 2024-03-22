@@ -122,7 +122,7 @@ module.exports = {
        * - antd：来自 ant-design-vue 的内置图标
        * @property {string} event - eventHandlerName（按钮事件处理函数名称）。
        *  此配置中的所有事件 handler 需要在该子项目中定义映射文件：config/eventMapping.js，
-       *  该文采用 CommonJS 模块规范编写。例如：
+       *  该文件采用 CommonJS 模块规范编写。例如：
        *
        *  ```
        *    module.exports = {
