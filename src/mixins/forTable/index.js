@@ -468,38 +468,34 @@ export default ({
        *    _isFreshTree: boolean
        *  }
        *  ```
-       * @param [params] {Object} - 删除参数，默认 { ids: [record.id] }
-       * @param [done] {() => void} - 成功执行删除的回调
-       * @param [nameKey='fullName'] {string} - 在删除提示中显示当条数据中的某个字段信息
+       * @param options 其他配置
+       * @config [isBulkOperation=true] {boolean} 是否批量操作，默认 true。该参数会改变 idFieldName 的默认行为。
+       *  在没有显示的设置 idFieldName 的情况下：
+       *  - 该值为 false 时，idFieldName 默认值为 'id'
+       *  - 该值为 true 时，idFieldName 默认值为 'ids'
+       * @config [idFieldName='id'|'ids'] {string} 删除接口用于接收删除ID的字段名，默认值受 isBulkOperation 影响。
+       * @config [params] {Object} - 其他删除参数。
+       * @config [done] {() => void} - 成功执行删除的回调
+       * @config [nameKey='fullName'] {string} - 在删除提示中显示当条数据中的某个字段信息
        */
-      async onDeleteClick(
-        record,
-        params = {},
-        done,
-        nameKey = 'fullName'
-      ) {
-        // 当第二个参数类型为function时，证明忽略了params参数，将arguments[1]赋值给done，将arguments[2]赋值给nameKey
-        if (typeof arguments[1] === 'function') {
-          [params, done, nameKey] = [{}, params, done]
-        }
-
-        // 当第二个参数类型为string时，证明忽略了params和done参数，将arguments[1]赋值给nameKey
-        if (typeof arguments[1] === 'string') {
-          [params, done, nameKey] = [{}, undefined, params]
-        }
-
-        // 当第三个参数类型为string时，证明忽略了done参数，将arguments[1]赋值给nameKey
-        if (typeof arguments[2] === 'string') {
-          [done, nameKey] = [undefined, done]
-        }
-
+      async onDeleteClick(record, options = { isBulkOperation: true, nameKey: 'fullName' }) {
         await verificationDialog(
           async () => {
+            if (!('idFieldName' in options)) {
+              if (options.isBulkOperation) {
+                options.idFieldName = 'ids'
+              } else {
+                options.idFieldName = 'id'
+              }
+            }
+
             const status = await this.$store.dispatch('delete', {
               payload: {
-                ...params,
-                ids: [record.id]
+                ...options.params,
+                [options.idFieldName]: options.isBulkOperation ? [record.id] : record.id
               },
+              isBulkOperation: options.isBulkOperation,
+              idFieldName: options.idFieldName,
               stateName: _stateName,
               moduleName: this.moduleName,
               submoduleName: this.submoduleName,
@@ -514,20 +510,20 @@ export default ({
             if (status) {
               // 执行侧边树数据更新
               if (this.inTree && (record._isFreshTree !== false)) {
-                this.refreshTree()
+                await this.refreshTree()
               }
 
               if (typeof done === 'function') {
-                done()
+                options.done()
               }
             }
 
             return status
           },
           '确定要删除吗？',
-          record[nameKey]
+          record[options.nameKey]
             ? [
-              <span style={{ color: this.primaryColor }}>{record[nameKey]}</span>,
+              <span style={{ color: this.primaryColor }}>{record[options.nameKey]}</span>,
               ' 已成功删除！'
             ]
             : '删除成功！'

@@ -606,11 +606,13 @@ export default {
    * @param state
    * @param dispatch
    * @param commit
-   * @param moduleName {string}
-   * @param submoduleName {string}
-   * @param [stateName='list'] {string} store中用于存放列表数据的字段名，默认 'list'
    * @param payload {Object} 调用删除接口的参数
-   * @param additionalQueryParameters {Object} 删除成功后刷新列表的参数（注意此参数非调用删除接口的参数）
+   * @param moduleName {string}
+   * @param [submoduleName] {string}
+   * @param [idFieldName='ids'] {string} 删除接口用于接收删除ID的字段名，默认 'ids'
+   * @param [isBulkOperation] {boolean} 是否批量操作，默认 true。
+   * @param [stateName='list'] {string} store中用于存放列表数据的字段名，默认 'list'
+   * @param [additionalQueryParameters] {Object} 删除成功后刷新列表的参数（注意此参数非调用删除接口的参数）
    * @returns {Promise<*>}
    */
   async delete({
@@ -618,18 +620,19 @@ export default {
     dispatch,
     commit
   }, {
+    idFieldName = 'ids',
+    isBulkOperation = true,
     moduleName,
     submoduleName,
     stateName = 'list',
     payload = {},
     additionalQueryParameters = {}
   }) {
-    let isBatchDeletion = false
+    debugger
+
     const module = state[moduleName][submoduleName] ?? state[moduleName]
-    const selectedRows = module.selectedRows
-    const selectedRowKeys = module.selectedRowKeys
-    const newSelectedRows = []
-    const newSelectedRowKeys = []
+    const selectedRows = [...module.selectedRows]
+    const selectedRowKeys = [...module.selectedRowKeys]
 
     commit('setLoading', {
       value: true,
@@ -639,13 +642,6 @@ export default {
     // 子模块内的列表操作后，除了要刷新当前列表，还要刷新父级模块的列表
     // （TODO 目前不支持不刷新父级模块内列表的操作，后期如有需求再来适配）
     submoduleName && commit('setLoading', { value: true, moduleName })
-
-    // 通过 forFunction 混合调用时，一般为批量操作，即勾选了行选择框的操作，
-    // 需要更新对应 store 模块内的 selectedRowKeys 和 selectedRows。
-    if (!payload.ids?.length) {
-      payload.ids = selectedRowKeys
-      isBatchDeletion = true
-    }
 
     const apiName = `delete${submoduleName ? `${FLTU(submoduleName)}Of` : ''}${FLTU(moduleName)}`
 
@@ -657,39 +653,66 @@ export default {
       return false
     }
 
-    const response = await this.apis[apiName](payload)
+    const params = { ...payload }
+
+    // 通过 forFunction 混合调用时，一般为批量操作，即勾选了行选择框的操作，
+    // 需要更新对应 store 模块内的 selectedRowKeys 和 selectedRows。
+    if (isBulkOperation && !payload[idFieldName]?.length) {
+      params[idFieldName] = selectedRowKeys
+    }
+
+    const response = await this.apis[apiName](params)
 
     if (response.status) {
-      // 非批量操作时，只从选中行数组中移除被删除的行的key，
-      // 批量操作时，直接清空选中行数组
-      if (selectedRows?.length && !isBatchDeletion) {
-        const index = newSelectedRowKeys.findIndex(key => key === payload.ids[0])
+      // 通过列表内的删除按钮删除数据时，只从 store 内的选中行数组中移除被删除的行数据，
+      if (selectedRowKeys?.length) {
+        const index = selectedRowKeys.findIndex(key => {
+          if (Array.isArray(payload[idFieldName])) {
+            return key === payload[idFieldName][0]
+          }
 
-        if (index > 0) {
-          newSelectedRowKeys.splice(index, 1)
+          return key === payload[idFieldName]
+        })
+
+        if (index >= 0) {
+          selectedRowKeys.splice(index, 1)
           selectedRows.splice(index, 1)
+
+          commit('setRowSelected', {
+            moduleName,
+            submoduleName,
+            payload: {
+              selectedRowKeys,
+              selectedRows
+            }
+          })
         }
       }
 
-      commit('setRowSelected', {
-        moduleName,
-        submoduleName,
-        payload: {
-          selectedRowKeys: newSelectedRowKeys,
-          selectedRows: newSelectedRows
-        }
-      })
+      // // 通过列表外的删除按钮删除数据时，直接清空 store 内的选中行数组
+      if (isBulkOperation && !payload[idFieldName]?.length) {
+        commit('setRowSelected', {
+          moduleName,
+          submoduleName,
+          payload: {
+            selectedRowKeys: [],
+            selectedRows: []
+          }
+        })
+      }
+
+      const length = Array.isArray(payload[idFieldName]) ? payload[idFieldName].length : 1
 
       // 删除数据后，刷新分页数据，避免请求不存在的页码
-      if (module[stateName].length <= payload.ids.length && module.pagination?.pageIndex) {
+      if (module[stateName].length <= length && module.pagination?.pageIndex) {
         const { pageIndex, pageSize } = module.pagination
 
         commit('setPagination', {
           value: {
             pageIndex: pageIndex - (
-              payload.ids.length % pageSize > module[stateName].length
-                ? Math.ceil(payload.ids.length / pageSize)
-                : Math.floor(payload.ids.length / pageSize)
+              length % pageSize > module[stateName].length
+                ? Math.ceil(payload[idFieldName].length / pageSize)
+                : Math.floor(payload[idFieldName].length / pageSize)
             )
           },
           moduleName,
