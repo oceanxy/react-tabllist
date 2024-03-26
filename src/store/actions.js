@@ -628,8 +628,6 @@ export default {
     payload = {},
     additionalQueryParameters = {}
   }) {
-    debugger
-
     const module = state[moduleName][submoduleName] ?? state[moduleName]
     const selectedRows = [...module.selectedRows]
     const selectedRowKeys = [...module.selectedRowKeys]
