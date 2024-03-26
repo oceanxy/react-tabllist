@@ -461,15 +461,23 @@ export default ({
       /**
        * 删除
        * @param record {{_isFreshTree: boolean, [key: string]: any }} - 列表数据对象
+       * ```json
        *  {
        *    ...record,
-       *    _isFreshTree: boolean // 是否刷新侧边树，默认false; 当在本表格组件处于侧边树的下级时默认true，所以此时需要显示定义该字段为 false
+       *    // 是否刷新侧边树，默认false; 当在本表格组件处于侧边树的下级时默认true，所以此时需要显示定义该字段为 false
+       *    _isFreshTree: boolean
        *  }
+       *  ```
        * @param [params] {Object} - 删除参数，默认 { ids: [record.id] }
        * @param [done] {() => void} - 成功执行删除的回调
        * @param [nameKey='fullName'] {string} - 在删除提示中显示当条数据中的某个字段信息
        */
-      async onDeleteClick(record, params = {}, done, nameKey = 'fullName') {
+      async onDeleteClick(
+        record,
+        params = {},
+        done,
+        nameKey = 'fullName'
+      ) {
         // 当第二个参数类型为function时，证明忽略了params参数，将arguments[1]赋值给done，将arguments[2]赋值给nameKey
         if (typeof arguments[1] === 'function') {
           [params, done, nameKey] = [{}, params, done]
