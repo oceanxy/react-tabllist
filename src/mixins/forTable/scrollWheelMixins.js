@@ -27,14 +27,17 @@ export default {
         isBindScrollWheel = false
       }
     },
-    //
     /**
-     * 给ant-design-vue的table组件中 有fixed属性的 元素
-     *  1、重写源码中的 handleWheel 事件
-     *    具体位置在 node_modules\ant-design-vue\es\vc-table\src\Table
-     if (window.navigator.userAgent.match(/Trident/7./) && scroll.y) 改为 if (scroll.y)
-     2、重写源码中的 handleBodyScroll 事件
-     为了在 handleWheel 事件中使用一个 _lastTableScrollTop 和 _lastTableScrollLeft 变量
+     * 给 ant-design-vue 的 Table 组件中有 fixed 属性的元素做一些重写工作。
+     *  1. 重写源码中的 handleWheel 事件。具体位置在 node_modules\ant-design-vue\es\vc-table\src\Table
+     *    ```
+     *      if (window.navigator.userAgent.match(/Trident/7./) && scroll.y)
+     *    ```
+     *    改为
+     *    ```
+     *      if (scroll.y)
+     *    ```
+     *  2. 重写源码中的 handleBodyScroll 事件。为了在 handleWheel 事件中使用一个 _lastTableScrollTop 和 _lastTableScrollLeft 变量
      * @returns void
      */
     addScrollWheelToTable() {
