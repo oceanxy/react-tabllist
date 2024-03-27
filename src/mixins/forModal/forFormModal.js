@@ -251,12 +251,12 @@ export default ({
 
                 // 执行侧边树刷新操作
                 if (refreshTree && this.inTree) {
-                  this.refreshTree()
+                  await this.refreshTree()
                 }
 
                 // 执行回调
                 if (typeof done === 'function') {
-                  done(response)
+                  done.call(this, response)
                 }
               }
             })
