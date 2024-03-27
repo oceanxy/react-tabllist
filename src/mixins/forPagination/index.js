@@ -23,10 +23,11 @@ export default {
     },
     /**
      * 是否导入本页面路由的 query 作为请求分页数据的参数。非子模块默认true，子模块默认false。
+     * 具体逻辑见 injectQuery 监听
      */
     injectQuery: {
       type: Boolean,
-      default: false
+      default: null
     },
     /**
      * 是否在子模块的分页请求参数中注入父级模块的 store.state.search 搜索对象。仅在子模块内的分页请求生效。
