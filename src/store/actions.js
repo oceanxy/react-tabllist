@@ -573,7 +573,7 @@ export default {
     let api = customApiName
 
     if (!api) {
-      if (submoduleName) {
+      if (!submoduleName) {
         api = `update${FLTU(moduleName)}${FLTU(customFieldName)}`
       } else {
         api = `update${FLTU(moduleName)}${FLTU(submoduleName)}${FLTU(customFieldName)}`
